@@ -1,0 +1,9 @@
+.banner-card {
+  padding: 0px;
+  transition: none !important;
+  box-shadow: none !important;
+}
+
+.logo-image {
+  height: 150px;
+}

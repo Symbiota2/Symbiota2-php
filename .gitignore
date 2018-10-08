@@ -1,0 +1,76 @@
+.settings/org.eclipse.wst.jsdt.ui.superType.name
+.settings/.jsdtscope
+.project
+.settings/org.eclipse.wst.jsdt.ui.superType.container
+.buildpath
+/collections/editor/includes/config/occurVarDefault.php
+/collections/editor/includes/config/occurVarGenObsDefault.php
+/config/dbconnection.php
+/config/symbini.php
+/css/jquery-ui.css
+/css/main.css
+/css/speciesprofile.css
+/taxa/includes/config/taxaProfileElementsCustom.php
+/taxa/includes/config/taxaProfileTemplateCustom.php
+/footer.php
+/header.php
+/leftmenu.php
+/robots.txt
+.settings/org.eclipse.php.core.prefs
+/index.php
+
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/dist-server
+/tmp
+/out-tsc
+
+# dependencies
+/node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
+# System Files
+.DS_Store
+Thumbs.db
+
+/vendor
+/.idea
+Homestead.json
+Homestead.yaml
+/.env
+/composer.lock
+/package-lock.json
+/storage/oauth-private.key
+/storage/oauth-public.key
