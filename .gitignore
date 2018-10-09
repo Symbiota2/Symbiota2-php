@@ -70,6 +70,7 @@ Thumbs.db
 Homestead.json
 Homestead.yaml
 /.env
+/.rnd
 /composer.lock
 /package-lock.json
 /config/database.php
