@@ -72,5 +72,6 @@ Homestead.yaml
 /.env
 /composer.lock
 /package-lock.json
+/config/database.php
 /storage/oauth-private.key
 /storage/oauth-public.key
