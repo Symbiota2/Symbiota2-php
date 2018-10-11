@@ -4,6 +4,7 @@ namespace App\Entities;
 
 use App\Entities\Traits\UsesPasswordGrant;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
@@ -22,6 +23,32 @@ use App\Repositories\UserRepository;
 class User implements AuthenticatableContract, CanResetPasswordContract
 {
     use Authenticatable, CanResetPassword, Timestamps, Notifiable, HasApiTokens, UsesPasswordGrant;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'firstname',
+        'lastname',
+        'username',
+        'email',
+        'password',
+        'verified',
+        'verification_token',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'verification_token',
+    ];
 
     /**
      * @var int
@@ -670,17 +697,5 @@ class User implements AuthenticatableContract, CanResetPasswordContract
     public function getAuthIdentifier()
     {
         return $this->getUid();
-    }
-
-    /**
-     * Get allusers.
-     *
-     * @return array
-     */
-    public function getAllUsers()
-    {
-        return $this
-            ->getRepository(User::class)
-            ->getAllUsers();
     }
 }

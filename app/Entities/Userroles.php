@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Userroles
  *
- * @ORM\Table(name="userroles", indexes={@ORM\Index(name="FK_userroles_uid_idx", columns={"uid"}), @ORM\Index(name="FK_usrroles_uid2_idx", columns={"uidassignedby"}), @ORM\Index(name="Index_userroles_table", columns={"tablename", "tablepk"})})
+ * @ORM\Table(name="userroles", indexes={@ORM\Index(name="FK_userroles_uid_idx", columns={"uid"}), @ORM\Index(name="FK_usrroles_uid2_idx", columns={"uidassignedby"}), @ORM\Index(name="Index_userroles_table", columns={"tablepk"})})
  * @ORM\Entity
  */
 class Userroles
@@ -29,13 +29,6 @@ class Userroles
     private $role;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="tablename", type="string", length=45, precision=0, scale=0, nullable=true, unique=false)
-     */
-    private $tablename;
-
-    /**
      * @var int|null
      *
      * @ORM\Column(name="tablepk", type="integer", precision=0, scale=0, nullable=true, unique=false)
@@ -48,13 +41,6 @@ class Userroles
      * @ORM\Column(name="secondaryVariable", type="string", length=45, precision=0, scale=0, nullable=true, unique=false)
      */
     private $secondaryvariable;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="notes", type="string", length=250, precision=0, scale=0, nullable=true, unique=false)
-     */
-    private $notes;
 
     /**
      * @var \DateTime
@@ -119,30 +105,6 @@ class Userroles
     }
 
     /**
-     * Set tablename.
-     *
-     * @param string|null $tablename
-     *
-     * @return Userroles
-     */
-    public function setTablename($tablename = null)
-    {
-        $this->tablename = $tablename;
-
-        return $this;
-    }
-
-    /**
-     * Get tablename.
-     *
-     * @return string|null
-     */
-    public function getTablename()
-    {
-        return $this->tablename;
-    }
-
-    /**
      * Set tablepk.
      *
      * @param int|null $tablepk
@@ -188,30 +150,6 @@ class Userroles
     public function getSecondaryvariable()
     {
         return $this->secondaryvariable;
-    }
-
-    /**
-     * Set notes.
-     *
-     * @param string|null $notes
-     *
-     * @return Userroles
-     */
-    public function setNotes($notes = null)
-    {
-        $this->notes = $notes;
-
-        return $this;
-    }
-
-    /**
-     * Get notes.
-     *
-     * @return string|null
-     */
-    public function getNotes()
-    {
-        return $this->notes;
     }
 
     /**

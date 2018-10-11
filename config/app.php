@@ -168,6 +168,7 @@ return [
         LaravelDoctrine\Extensions\BeberleiExtensionsServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
+        Flugg\Responder\ResponderServiceProvider::class,
 
     ],
 
@@ -220,6 +221,8 @@ return [
         'EntityManager' => LaravelDoctrine\ORM\Facades\EntityManager::class,
         'Registry'      => LaravelDoctrine\ORM\Facades\Registry::class,
         'Doctrine'      => LaravelDoctrine\ORM\Facades\Doctrine::class,
+        'Responder' => Flugg\Responder\Facades\Responder::class,
+        'Transformation' => Flugg\Responder\Facades\Transformation::class,
 
     ],
 

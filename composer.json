@@ -11,6 +11,7 @@
         "creof/doctrine2-spatial": "^1.2",
         "fideloper/proxy": "^4.0",
         "floriansemm/solr-bundle": "^1.6",
+        "flugger/laravel-responder": "^3.0",
         "gedmo/doctrine-extensions": "^2.4",
         "laravel-doctrine/extensions": "^1.0",
         "laravel-doctrine/migrations": "^1.2",

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Entities\User;
+use App\Transformers\UserTransformer;
+use Illuminate\Http\Request;
 use EntityManager;
+use Responder;
 use Auth;
 
 class UserController extends Controller
@@ -18,124 +20,78 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified user.
+     * Display a listing of the resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getMe()
+    public function index(Responder $responder)
     {
-        try {
-            $oUser = User::where('id', Auth::user()->id)->first();
-            return response()->success($oUser);
-        } catch (Exception $e) {
-            return response()->exception($e->getMessage(), $e->getCode());
-        }
+        return responder()->success($this->userRepository->findAll(), UserTransformer::class, 'uid')->respond();
     }
 
-    public function logoutApi()
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        try {
-            if (Auth::check()) {
-                $result = Auth::user()->AauthAcessToken()->delete();
-                return response()->success($result);
-            }
-        } catch (Exception $e) {
-            return response()->exception($e->getMessage(), $e->getCode());
-        }
+        //
     }
-
-
-
-
-
-
 
     /**
-     * Exibir uma listagem dos registros
+     * Store a newly created resource in storage.
      *
-     * @return Response
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function index($id = null) {
-
-//        dd(\App\User::orderBy('id', 'asc')->get());
-//        dd($this->userRepository->getAllUsers());
-
-        if ($id == null) {
-            return $this->userRepository->getAllUsers(); //User::orderBy('id', 'asc')->get();
-        } else {
-            return $this->show($id);
-        }
+    public function store(Request $request)
+    {
+        //
     }
-
 
     /**
-     * Salva um registro recém-criado.
+     * Display the specified resource.
      *
-     * @param  Request  $request
-     * @return Response
+     * @param  \App\Entities\User  $user
+     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
-        $post = new User();
-
-
-        $post->nome = $request->input('nome');
-//        $post->email = $request->input('email');
-        $post->telefone = $request->input('telefone');
-        $post->posicao = $request->input('posicao');
-        $post->save();
-
-
-        return 'User criado com sucesso com o id ' . $post->getId();
+    public function show(Responder $responder, User $user)
+    {
+        return responder()->success($user, UserTransformer::class, 'uid')->respond();
     }
-
 
     /**
-     * Exibir um registo expecífico.
+     * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return Response
+     * @param  \App\Entities\User  $user
+     * @return \Illuminate\Http\Response
      */
-    public function show($id) {
-        return $this->userRepository->find($id); // User::find($id);
+    public function edit(User $user)
+    {
+        //
     }
-
 
     /**
-     * Editar um registro específico.
+     * Update the specified resource in storage.
      *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Entities\User  $user
+     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
-        $User = User::find($id);
-
-
-        $User->nome = $request->input('nome');
-        $User->email = $request->input('email');
-        $User->telefone = $request->input('telefone');
-        $User->posicao = $request->input('posicao');
-        $User->save();
-
-
-        return "Usuário #" . $User->id . " editado com sucesso.";
+    public function update(Request $request, User $user)
+    {
+        //
     }
-
 
     /**
-     * Remover um registro específico.
+     * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return Response
+     * @param  \App\Entities\User  $user
+     * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $id) {
-
-        $User = User::find($id);
-        $User->delete();
-
-
-        return "User #" . $id. " excluído com sucesso.";
+    public function destroy(User $user)
+    {
+        //
     }
-
 }

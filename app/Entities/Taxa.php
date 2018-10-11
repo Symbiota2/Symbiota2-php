@@ -917,7 +917,7 @@ class Taxa
      *
      * @return Taxa
      */
-    public function addTsid(\App\Entities\Tmtraits $tsid)
+    public function addTsid(\App\Entities\Taxstatus $tsid)
     {
         $this->tsid[] = $tsid;
 

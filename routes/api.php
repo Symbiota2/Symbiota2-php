@@ -18,10 +18,9 @@ use Illuminate\Http\Request;
 });*/
 
 Route::post('register', 'Auth\RegisterController@register');
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user()->getEmail();
-});
+//Route::middleware('auth:api')->get('users','UserController@index');
 Route::group(['middleware' => ['cors','auth:api']], function () {
-    Route::get('me','UserController@getMe');
+    Route::get('users','UserController@index');
+    Route::get('me','UserController@show');
     Route::post('logout','UserController@logoutApi');
 });
