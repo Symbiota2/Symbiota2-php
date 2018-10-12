@@ -3,20 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Entities\User;
+use App\Http\Controllers\ApiController;
 use App\Transformers\UserTransformer;
 use Illuminate\Http\Request;
 use EntityManager;
 use Responder;
 use Auth;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
     /* @var \App\Repositories\UsersRepository $userRepository */
     protected $userRepository;
 
     public function __construct()
     {
+        parent::__construct();
         $this->userRepository = EntityManager::getRepository(User::class);
+        $this->middleware('client.credentials')->only(['store', 'resend']);
+        $this->middleware('auth:api')->except(['store', 'verify', 'resend']);
+        $this->middleware('transform.input:' . UserTransformer::class)->only(['store', 'update']);
+        //$this->middleware('scope:manage-account')->only(['show', 'update']);
+        //$this->middleware('can:view,user')->only('show');
+        $this->middleware('can:update,user')->only('update');
+        $this->middleware('can:delete,user')->only('destroy');
     }
 
     /**
@@ -24,8 +33,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Responder $responder)
+    public function index()
     {
+        $this->allowedAdminAction();
+        if ($this->userRepository->count([]) === 0) {
+            return responder()->error(404, 'No data')->respond();
+        }
         return responder()->success($this->userRepository->findAll(), UserTransformer::class, 'uid')->respond();
     }
 
@@ -56,9 +69,9 @@ class UserController extends Controller
      * @param  \App\Entities\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Responder $responder, User $user)
+    public function show(Request $request)
     {
-        return responder()->success($user, UserTransformer::class, 'uid')->respond();
+        return responder()->success($request->user(), UserTransformer::class, 'uid')->respond();
     }
 
     /**

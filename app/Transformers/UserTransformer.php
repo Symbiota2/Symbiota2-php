@@ -50,4 +50,54 @@ class UserTransformer extends Transformer
             //'lastlogindate' => (string) date("Y-m-d H:i:s", strtotime($user->getLastlogindate())),
         ];
     }
+
+    public static function originalAttribute($index)
+    {
+        $attributes = [
+            'uid' => 'uid',
+            'username' => 'username',
+            'firstname' => 'firstname',
+            'middleinitial' => 'middleinitial',
+            'lastname' => 'lastname',
+            'title' => 'title',
+            'institution' => 'institution',
+            'department' => 'department',
+            'address' => 'address',
+            'city' => 'city',
+            'state' => 'state',
+            'zip' => 'zip',
+            'country' => 'country',
+            'email' => 'email',
+            'url' => 'url',
+            'biography' => 'biography',
+            'ispublic' => 'ispublic',
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
+
+    public static function transformedAttribute($index)
+    {
+        $attributes = [
+            'uid' => 'uid',
+            'username' => 'username',
+            'firstname' => 'firstname',
+            'middleinitial' => 'middleinitial',
+            'lastname' => 'lastname',
+            'title' => 'title',
+            'institution' => 'institution',
+            'department' => 'department',
+            'address' => 'address',
+            'city' => 'city',
+            'state' => 'state',
+            'zip' => 'zip',
+            'country' => 'country',
+            'email' => 'email',
+            'url' => 'url',
+            'biography' => 'biography',
+            'ispublic' => 'ispublic',
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
 }

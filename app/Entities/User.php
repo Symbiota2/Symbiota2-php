@@ -2,7 +2,8 @@
 
 namespace App\Entities;
 
-use App\Entities\Traits\UsesPasswordGrant;
+use App\Traits\UsesPasswordGrant;
+use App\Transformers\UserTransformer;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -47,8 +48,9 @@ class User implements AuthenticatableContract, CanResetPasswordContract
     protected $hidden = [
         'password',
         'remember_token',
-        'verification_token',
     ];
+
+    public $transformer = UserTransformer::class;
 
     /**
      * @var int

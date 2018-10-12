@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entities\Traits;
+namespace App\Traits;
 
 use App\Entities\User;
 use EntityManager;

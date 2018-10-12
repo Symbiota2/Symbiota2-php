@@ -13,12 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
-
 Route::post('register', 'Auth\RegisterController@register');
-//Route::middleware('auth:api')->get('users','UserController@index');
 Route::group(['middleware' => ['cors','auth:api']], function () {
     Route::get('users','UserController@index');
     Route::get('me','UserController@show');
