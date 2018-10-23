@@ -1,6 +1,16 @@
 ## Welcome to the Symbiota2 development repository
 
-Symbiota2 is currently under development. Though some portions of the application may work, the application as a whole is not ready for use. Symbiota2 can be installed in the following steps:
+Symbiota2 is currently under development. Though some portions of the application may work, the application as a whole is not ready for use. Symbiota2 uses the Laravel framework and requires PHP 7.1.3 or greater to be installed. In addition, the following PHP extensions need to be enabled:
+
+- OpenSSL
+- PDO
+- Mbstring
+- Tokenizer
+- XML
+- Ctype
+- JSON
+
+Symbiota2 can be installed in the following steps:
 
 - Clone the code in this repository
 `git clone https://github.com/Symbiota2/Symbiota2.git portal-name`
