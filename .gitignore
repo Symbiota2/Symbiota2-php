@@ -76,3 +76,5 @@ Homestead.yaml
 /config/database.php
 /storage/oauth-private.key
 /storage/oauth-public.key
+/src/environments/environment.prod.ts
+/src/environments/environment.ts
