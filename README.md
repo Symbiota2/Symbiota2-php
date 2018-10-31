@@ -24,4 +24,7 @@ Symbiota2 can be installed in the following steps:
 - `php artisan doctrine:migrations:diff`
 - `php artisan doctrine:migrations:migrate`
 - `php artisan passport:install`
+- After `php artisan passport:install` has completed there should be two records in the oath_clients table of your database
+- If you are installing a development environment: copy /src/environments/environment.ts.example to /src/environments/environment.ts and within that file, change [API base URL] with the base URL of your backend API (ex. http://localhost/public/) and [client secret] to the value in the secret field of the second record (id = 2) in the oath_clients table of your database
+- If you are installing a production environment: copy /src/environments/environment.prod.ts.example to /src/environments/environment.prod.ts and within that file, change [API base URL] with the base URL of your backend API (ex. http://localhost/public/) and [client secret] to the value in the secret field of the second record (id = 2) in the oath_clients table of your database
 - `ng serve`
