@@ -18,8 +18,8 @@ export class LoginService {
         .pipe(catchError( this.handleError ))
   }
 
-  getMe(){
-    let url = this.environmentService.setApiService('me');
+  getUser(){
+    let url = this.environmentService.setApiService('user');
     return this._http.get(url)
         .pipe(map(res=> res))
         .pipe(catchError( this.handleError ))

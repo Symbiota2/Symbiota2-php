@@ -35,11 +35,12 @@ export class LoginComponent implements OnInit {
   }
 
   public login() {
-    this.authService.login(this.loginData).subscribe((value) => {
-      this.loginService.getMe().subscribe((value) => {
-        localStorage.setItem('userInfo', JSON.stringify(value.data));
-        //console.log(JSON.parse(localStorage.getItem('userInfo')).name);
-        this.notificationService.onSuccess('Welcome...'+JSON.parse(localStorage.getItem('userInfo')).name);
+      console.log('login');
+      this.authService.login(this.loginData).subscribe((value) => {
+      this.loginService.getUser().subscribe((value) => {
+        localStorage.setItem('userInfo', JSON.stringify(value));
+        console.log(JSON.parse(localStorage.getItem('userInfo')).username);
+        //this.notificationService.onSuccess('Welcome...'+JSON.parse(localStorage.getItem('userInfo')).name);
         //this.router.navigateByUrl('book');
       });
     }, err => {

@@ -52,14 +52,14 @@ export class AuthenticationService implements AuthService {
     var service = this.environmentService.setAuthService('oauth/token/refresh');
     return this.tokenStorage
       .getRefreshToken()
-      .pipe(switchMap((refreshToken: string) => {
+      /*.pipe(switchMap((refreshToken: string) => {
         return this.http.post(service, { refreshToken });
         }),
         tap(this.saveAccessData.bind(this)),
         catchError((err) => {
           this.logout();
           return Observable.throw(err);
-        }));
+        }));*/
   }
 
   /**
@@ -90,8 +90,9 @@ export class AuthenticationService implements AuthService {
   public login(loginData): Observable<any> {
     var service = this.environmentService.setAuthService('oauth/token');
     var loginFormData = this.environmentService.setLoginJson(loginData);
-    return this.http.post(service, loginFormData)
-    .pipe(tap((tokens: AccessData) => this.saveAccessData(tokens)));
+    /*return this.http.post(service, loginFormData)
+    .pipe(tap((tokens: AccessData) => this.saveAccessData(tokens)));*/
+    return;
   }
 
   /**
