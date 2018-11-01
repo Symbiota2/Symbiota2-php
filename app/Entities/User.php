@@ -13,13 +13,12 @@ use Laravel\Passport\HasApiTokens;
 use LaravelDoctrine\Extensions\Timestamps\Timestamps;
 use LaravelDoctrine\ORM\Auth\Authenticatable;
 use LaravelDoctrine\ORM\Notifications\Notifiable;
-use App\Repositories\UserRepository;
 
 /**
  * User
  *
  * @ORM\Table(name="users")
- * @ORM\Entity(repositoryClass="App\Repositories\UserRepository")
+ * @ORM\Entity
  */
 class User implements AuthenticatableContract, CanResetPasswordContract
 {
@@ -200,6 +199,13 @@ class User implements AuthenticatableContract, CanResetPasswordContract
      * @ORM\Column(name="InitialTimeStamp", type="datetime", precision=0, scale=0, nullable=false, options={"default"="CURRENT_TIMESTAMP"}, unique=false)
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entities\Userroles", mappedBy="uid", fetch="EAGER", orphanRemoval=true)
+     */
+    private $permissions;
 
     /**
      * Get uid.
@@ -689,6 +695,42 @@ class User implements AuthenticatableContract, CanResetPasswordContract
     public function getInitialtimestamp()
     {
         return $this->initialtimestamp;
+    }
+
+    /**
+     * Add permissions.
+     *
+     * @param \App\Entities\Userroles $permissions
+     *
+     * @return User
+     */
+    public function addPermissions(\App\Entities\Userroles $permission)
+    {
+        $this->permissions[] = $permission;
+
+        return $this;
+    }
+
+    /**
+     * Remove permissions.
+     *
+     * @param \App\Entities\Userroles $permissions
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removePermissions(\App\Entities\Userroles $permission)
+    {
+        return $this->permissions->removeElement($permission);
+    }
+
+    /**
+     * Get permissions.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPermissions()
+    {
+        return $this->permissions;
     }
 
     /**

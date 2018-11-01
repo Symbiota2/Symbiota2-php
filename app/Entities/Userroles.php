@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Userroles
 {
+    public $transformer = UserrolesTransformer::class;
+
     /**
      * @var int
      *
@@ -50,17 +52,17 @@ class Userroles
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var \App\Entities\User
+     * @var int
      *
      * @ORM\ManyToOne(targetEntity="App\Entities\User")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid", nullable=true)
+     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid", nullable=false)
      * })
      */
     private $uid;
 
     /**
-     * @var \App\Entities\User
+     * @var int|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entities\User")
      * @ORM\JoinColumns({
@@ -179,11 +181,11 @@ class Userroles
     /**
      * Set uid.
      *
-     * @param \App\Entities\User|null $uid
+     * @param int|null $uid
      *
      * @return Userroles
      */
-    public function setUid(\App\Entities\User $uid = null)
+    public function setUid($uid)
     {
         $this->uid = $uid;
 
@@ -193,7 +195,7 @@ class Userroles
     /**
      * Get uid.
      *
-     * @return \App\Entities\User|null
+     * @return int|null $uid
      */
     public function getUid()
     {

@@ -3,6 +3,7 @@
 namespace App\Transformers;
 
 use App\Entities\User;
+use App\Transformers\UserrolesTransformer;
 use Flugg\Responder\Transformers\Transformer;
 
 class UserTransformer extends Transformer

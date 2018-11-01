@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Entities\User;
 use App\Http\Controllers\ApiController;
 use App\Transformers\UserTransformer;
+use App\Transformers\UserrolesTransformer;
 use Illuminate\Http\Request;
 use EntityManager;
 use Responder;
