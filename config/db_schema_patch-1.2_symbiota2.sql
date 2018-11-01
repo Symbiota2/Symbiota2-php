@@ -140,8 +140,6 @@ ALTER TABLE `tmtraittaxalink`
   DROP FOREIGN KEY `FK_traittaxalink_traitid`,
   DROP INDEX `FK_traittaxalink_traitid_idx`;
 
-ALTER TABLE `taxstatus` DROP PRIMARY KEY;
-
 ALTER TABLE `taxstatus`
   DROP FOREIGN KEY `FK_taxstatus_parent`,
   DROP FOREIGN KEY `FK_taxstatus_taid`,
