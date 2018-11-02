@@ -1,14 +1,14 @@
 .NSFLogo {
-  width: 100px;
-  height: 100px;
+    width: 100px;
+    height: 100px;
 }
 
 .NSFstatement {
-  margin-left: 20px;
+    margin-left: 20px;
 }
 
 .footer-card {
-  padding: 10px;
-  transition: none !important;
-  box-shadow: none !important;
+    padding: 10px;
+    transition: none !important;
+    box-shadow: none !important;
 }

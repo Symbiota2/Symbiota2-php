@@ -1,13 +1,13 @@
 <mat-sidenav-container>
-  <mat-sidenav #sidenav role="navigation">
-    <sidepanel-outlet (sidenavToggle)="sidenav.toggle()"></sidepanel-outlet>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <header-outlet (sidenavToggle)="sidenav.toggle()"></header-outlet>
-    <main>
-      <router-outlet></router-outlet>
-    </main>
-    <footer-outlet></footer-outlet>
-  </mat-sidenav-content>
+    <mat-sidenav #sidenav role="navigation">
+        <sidepanel-outlet (sidenavToggle)="sidenav.toggle()"></sidepanel-outlet>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <header-outlet (sidenavToggle)="sidenav.toggle()"></header-outlet>
+        <main>
+            <router-outlet></router-outlet>
+        </main>
+        <footer-outlet></footer-outlet>
+    </mat-sidenav-content>
 </mat-sidenav-container>
 

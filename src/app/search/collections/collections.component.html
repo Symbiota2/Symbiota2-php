@@ -1,28 +1,29 @@
 <mat-tree #colltree [dataSource]="dataSource" [treeControl]="treeControl">
-  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
-    <button mat-icon-button disabled></button>
-    <mat-checkbox class="checklist-leaf-node"
-                  [checked]="checklistSelection.isSelected(node)"
-                  (change)="checklistSelection.toggle(node);">{{node.name}}</mat-checkbox>
-  </mat-tree-node>
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+        <button mat-icon-button disabled></button>
+        <mat-checkbox class="checklist-leaf-node"
+                      [checked]="checklistSelection.isSelected(node)"
+                      (change)="checklistSelection.toggle(node);">{{node.name}}
+        </mat-checkbox>
+    </mat-tree-node>
 
-  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-    <button mat-icon-button matTreeNodeToggle
-            [attr.aria-label]="'toggle ' + node.filename" *ngIf="treeControl.getLevel(node) > 0">
-      <mat-icon class="mat-icon-rtl-mirror">
-        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-      </mat-icon>
-    </button>
-    <button mat-icon-button disabled *ngIf="treeControl.getLevel(node) === 0"></button>
-    <mat-checkbox [checked]="descendantsAllSelected(node)"
-                  [indeterminate]="descendantsPartiallySelected(node)"
-                  (change)="todoItemSelectionToggle(node)" *ngIf="treeControl.getLevel(node) > 0">
-      {{node.name}}
-    </mat-checkbox>
-    <mat-checkbox [checked]="descendantsAllSelected(node)"
-                  [indeterminate]="descendantsPartiallySelected(node)"
-                  (change)="todoItemSelectionToggle(node)" *ngIf="treeControl.getLevel(node) === 0">
-      Select all
-    </mat-checkbox>
-  </mat-tree-node>
+    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+        <button mat-icon-button matTreeNodeToggle
+                [attr.aria-label]="'toggle ' + node.filename" *ngIf="treeControl.getLevel(node) > 0">
+            <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+        </button>
+        <button mat-icon-button disabled *ngIf="treeControl.getLevel(node) === 0"></button>
+        <mat-checkbox [checked]="descendantsAllSelected(node)"
+                      [indeterminate]="descendantsPartiallySelected(node)"
+                      (change)="todoItemSelectionToggle(node)" *ngIf="treeControl.getLevel(node) > 0">
+            {{node.name}}
+        </mat-checkbox>
+        <mat-checkbox [checked]="descendantsAllSelected(node)"
+                      [indeterminate]="descendantsPartiallySelected(node)"
+                      (change)="todoItemSelectionToggle(node)" *ngIf="treeControl.getLevel(node) === 0">
+            Select all
+        </mat-checkbox>
+    </mat-tree-node>
 </mat-tree>

@@ -1,29 +1,29 @@
 a {
-  text-decoration: none;
-  color: white;
-  cursor: pointer;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
 }
 
 a:hover, a:active {
-  color: lightgray;
+    color: lightgray;
 }
 
 .sidenav-links {
-  height: 100%;
+    height: 100%;
 }
 
 .navigation-items {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .navigation-items-sub {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .navigation-items-sub a {
-  color: black;
+    color: black;
 }

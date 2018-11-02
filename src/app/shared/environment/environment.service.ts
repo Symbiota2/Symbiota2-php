@@ -1,39 +1,41 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
+
 @Injectable()
 export class EnvironmentService {
-	
-	apiUrl = environment.apiUrl;
 
-  	constructor(private http: HttpClient) { }
+    apiUrl = environment.apiUrl;
 
-  	setApiService(serviceStr){
-	    return this.apiUrl +'api/'+ serviceStr;
-	}
+    constructor(private http: HttpClient) {
+    }
 
-	setApiServiceWithPage(serviceStr, pageNo){
-	    return this.apiUrl +'api/'+ serviceStr +'?page='+ pageNo;
-	}
+    setApiService(serviceStr) {
+        return this.apiUrl + 'api/' + serviceStr;
+    }
 
-	setApiServiceById(serviceStr, id){
-	    return this.apiUrl +'api/'+ serviceStr +'/'+ id;
-	}
+    setApiServiceWithPage(serviceStr, pageNo) {
+        return this.apiUrl + 'api/' + serviceStr + '?page=' + pageNo;
+    }
 
-	setAuthService(serviceStr){
-	    return this.apiUrl + serviceStr;
-	}
+    setApiServiceById(serviceStr, id) {
+        return this.apiUrl + 'api/' + serviceStr + '/' + id;
+    }
 
-	setAuthServiceById(serviceStr, id){
-	    return this.apiUrl + serviceStr +'/'+ id;
-	}
+    setAuthService(serviceStr) {
+        return this.apiUrl + serviceStr;
+    }
 
-	setLoginJson(longinData) {
-		let formObject = longinData;
-		formObject.client_secret = environment.clientSecret;
-		formObject.grant_type = environment.grantType;
-		formObject.client_id = environment.clientId;
-		return formObject;
-	}
+    setAuthServiceById(serviceStr, id) {
+        return this.apiUrl + serviceStr + '/' + id;
+    }
+
+    setLoginJson(longinData) {
+        let formObject = longinData;
+        formObject.client_secret = environment.clientSecret;
+        formObject.grant_type = environment.grantType;
+        formObject.client_id = environment.clientId;
+        return formObject;
+    }
 
 }

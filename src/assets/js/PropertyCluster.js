@@ -49,63 +49,63 @@ import VectorSource from 'ol/source/Vector.js';
  * @extends {module:ol/source/Vector}
  * @api
  */
-const PropertyCluster = function(options) {
-  VectorSource.call(this, {
-    attributions: options.attributions,
-    extent: options.extent,
-    projection: options.projection,
-    wrapX: options.wrapX
-  });
+const PropertyCluster = function (options) {
+    VectorSource.call(this, {
+        attributions: options.attributions,
+        extent: options.extent,
+        projection: options.projection,
+        wrapX: options.wrapX
+    });
 
-  /**
-   * @type {number|undefined}
-   * @protected
-   */
-  this.resolution = undefined;
+    /**
+     * @type {number|undefined}
+     * @protected
+     */
+    this.resolution = undefined;
 
-  /**
-   * @type {number}
-   * @protected
-   */
-  this.distance = options.distance !== undefined ? options.distance : 20;
+    /**
+     * @type {number}
+     * @protected
+     */
+    this.distance = options.distance !== undefined ? options.distance : 20;
 
-  /**
-   * @type {string}
-   * @protected
-   */
-  this.clusterkey = options.clusterkey !== undefined ? options.clusterkey : '';
+    /**
+     * @type {string}
+     * @protected
+     */
+    this.clusterkey = options.clusterkey !== undefined ? options.clusterkey : '';
 
-  /**
-   * @type {string}
-   * @protected
-   */
-  this.indexkey = options.indexkey !== undefined ? options.indexkey : '';
+    /**
+     * @type {string}
+     * @protected
+     */
+    this.indexkey = options.indexkey !== undefined ? options.indexkey : '';
 
-  /**
-   * @type {Array.<module:ol/Feature>}
-   * @protected
-   */
-  this.features = [];
+    /**
+     * @type {Array.<module:ol/Feature>}
+     * @protected
+     */
+    this.features = [];
 
-  /**
-   * @param {module:ol/Feature} feature Feature.
-   * @return {module:ol/geom/Point} PropertyCluster calculation point.
-   * @protected
-   */
-  this.geometryFunction = options.geometryFunction || function(feature) {
-    const geometry = /** @type {module:ol/geom/Point} */ (feature.getGeometry());
-    assert(geometry instanceof Point,
-      10); // The default `geometryFunction` can only handle `module:ol/geom/Point~Point` geometries
-    return geometry;
-  };
+    /**
+     * @param {module:ol/Feature} feature Feature.
+     * @return {module:ol/geom/Point} PropertyCluster calculation point.
+     * @protected
+     */
+    this.geometryFunction = options.geometryFunction || function (feature) {
+        const geometry = /** @type {module:ol/geom/Point} */ (feature.getGeometry());
+        assert(geometry instanceof Point,
+            10); // The default `geometryFunction` can only handle `module:ol/geom/Point~Point` geometries
+        return geometry;
+    };
 
-  /**
-   * @type {module:ol/source/Vector}
-   * @protected
-   */
-  this.source = options.source;
+    /**
+     * @type {module:ol/source/Vector}
+     * @protected
+     */
+    this.source = options.source;
 
-  listen(this.source, EventType.CHANGE, this.refresh, this);
+    listen(this.source, EventType.CHANGE, this.refresh, this);
 };
 
 inherits(PropertyCluster, VectorSource);
@@ -116,8 +116,8 @@ inherits(PropertyCluster, VectorSource);
  * @return {number} Distance.
  * @api
  */
-PropertyCluster.prototype.getDistance = function() {
-  return this.distance;
+PropertyCluster.prototype.getDistance = function () {
+    return this.distance;
 };
 
 
@@ -126,8 +126,8 @@ PropertyCluster.prototype.getDistance = function() {
  * @return {string} Field name.
  * @api
  */
-PropertyCluster.prototype.getClusterkey = function() {
-  return this.clusterkey;
+PropertyCluster.prototype.getClusterkey = function () {
+    return this.clusterkey;
 };
 
 
@@ -136,8 +136,8 @@ PropertyCluster.prototype.getClusterkey = function() {
  * @return {string} Field name.
  * @api
  */
-PropertyCluster.prototype.getIndexkey = function() {
-  return this.indexkey;
+PropertyCluster.prototype.getIndexkey = function () {
+    return this.indexkey;
 };
 
 
@@ -146,22 +146,22 @@ PropertyCluster.prototype.getIndexkey = function() {
  * @return {module:ol/source/Vector} Source.
  * @api
  */
-PropertyCluster.prototype.getSource = function() {
-  return this.source;
+PropertyCluster.prototype.getSource = function () {
+    return this.source;
 };
 
 
 /**
  * @inheritDoc
  */
-PropertyCluster.prototype.loadFeatures = function(extent, resolution, projection) {
-  this.source.loadFeatures(extent, resolution, projection);
-  if (resolution !== this.resolution) {
-    this.clear();
-    this.resolution = resolution;
-    this.cluster();
-    this.addFeatures(this.features);
-  }
+PropertyCluster.prototype.loadFeatures = function (extent, resolution, projection) {
+    this.source.loadFeatures(extent, resolution, projection);
+    if (resolution !== this.resolution) {
+        this.clear();
+        this.resolution = resolution;
+        this.cluster();
+        this.addFeatures(this.features);
+    }
 };
 
 
@@ -170,9 +170,9 @@ PropertyCluster.prototype.loadFeatures = function(extent, resolution, projection
  * @param {number} distance The distance in pixels.
  * @api
  */
-PropertyCluster.prototype.setDistance = function(distance) {
-  this.distance = distance;
-  this.refresh();
+PropertyCluster.prototype.setDistance = function (distance) {
+    this.distance = distance;
+    this.refresh();
 };
 
 
@@ -181,9 +181,9 @@ PropertyCluster.prototype.setDistance = function(distance) {
  * @param {string} clusterkey The field name.
  * @api
  */
-PropertyCluster.prototype.setClusterkey = function(clusterkey) {
-  this.clusterkey = clusterkey;
-  this.refresh();
+PropertyCluster.prototype.setClusterkey = function (clusterkey) {
+    this.clusterkey = clusterkey;
+    this.refresh();
 };
 
 
@@ -192,9 +192,9 @@ PropertyCluster.prototype.setClusterkey = function(clusterkey) {
  * @param {string} indexkey The field name.
  * @api
  */
-PropertyCluster.prototype.setIndexkey = function(indexkey) {
-  this.indexkey = indexkey;
-  this.refresh();
+PropertyCluster.prototype.setIndexkey = function (indexkey) {
+    this.indexkey = indexkey;
+    this.refresh();
 };
 
 
@@ -202,67 +202,67 @@ PropertyCluster.prototype.setIndexkey = function(indexkey) {
  * handle the source changing
  * @override
  */
-PropertyCluster.prototype.refresh = function() {
-  this.clear();
-  this.cluster();
-  this.addFeatures(this.features);
-  VectorSource.prototype.refresh.call(this);
+PropertyCluster.prototype.refresh = function () {
+    this.clear();
+    this.cluster();
+    this.addFeatures(this.features);
+    VectorSource.prototype.refresh.call(this);
 };
 
 
 /**
  * @protected
  */
-PropertyCluster.prototype.cluster = function() {
-  if (this.resolution === undefined) {
-    return;
-  }
-  this.features.length = 0;
-  const extent = createEmpty();
-  const mapDistance = this.distance * this.resolution;
-  const features = this.source.getFeatures();
-
-  /**
-   * @type {!Object.<string, boolean>}
-   */
-  const clustered = {};
-
-  for (let i = 0, ii = features.length; i < ii; i++) {
-    const feature = features[i];
-    if (!(getUid(feature).toString() in clustered)) {
-      const geometry = this.geometryFunction(feature);
-      if (geometry) {
-        const cKey = feature.get(this.clusterkey);
-        const coordinates = geometry.getCoordinates();
-        createOrUpdateFromCoordinate(coordinates, extent);
-        buffer(extent, mapDistance, extent);
-
-        let neighbors = this.source.getFeaturesInExtent(extent);
-        let realNeighbors = [];
-        let indexVals = [];
-        for(i in neighbors) {
-          let nfeature = neighbors[i];
-          let nKey = nfeature.get(this.clusterkey);
-          if(nKey === cKey){
-            let iVal = nfeature.get(this.indexkey);
-            realNeighbors.push(nfeature);
-            indexVals.push(iVal);
-          }
-        }
-        neighbors = realNeighbors;
-        neighbors = neighbors.filter(function(neighbor) {
-          const uid = getUid(neighbor).toString();
-          if (!(uid in clustered)) {
-            clustered[uid] = true;
-            return true;
-          } else {
-            return false;
-          }
-        });
-        this.features.push(this.createCluster(cKey,indexVals,neighbors));
-      }
+PropertyCluster.prototype.cluster = function () {
+    if (this.resolution === undefined) {
+        return;
     }
-  }
+    this.features.length = 0;
+    const extent = createEmpty();
+    const mapDistance = this.distance * this.resolution;
+    const features = this.source.getFeatures();
+
+    /**
+     * @type {!Object.<string, boolean>}
+     */
+    const clustered = {};
+
+    for (let i = 0, ii = features.length; i < ii; i++) {
+        const feature = features[i];
+        if (!(getUid(feature).toString() in clustered)) {
+            const geometry = this.geometryFunction(feature);
+            if (geometry) {
+                const cKey = feature.get(this.clusterkey);
+                const coordinates = geometry.getCoordinates();
+                createOrUpdateFromCoordinate(coordinates, extent);
+                buffer(extent, mapDistance, extent);
+
+                let neighbors = this.source.getFeaturesInExtent(extent);
+                let realNeighbors = [];
+                let indexVals = [];
+                for (i in neighbors) {
+                    let nfeature = neighbors[i];
+                    let nKey = nfeature.get(this.clusterkey);
+                    if (nKey === cKey) {
+                        let iVal = nfeature.get(this.indexkey);
+                        realNeighbors.push(nfeature);
+                        indexVals.push(iVal);
+                    }
+                }
+                neighbors = realNeighbors;
+                neighbors = neighbors.filter(function (neighbor) {
+                    const uid = getUid(neighbor).toString();
+                    if (!(uid in clustered)) {
+                        clustered[uid] = true;
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+                this.features.push(this.createCluster(cKey, indexVals, neighbors));
+            }
+        }
+    }
 };
 
 
@@ -273,22 +273,22 @@ PropertyCluster.prototype.cluster = function() {
  * @return {module:ol/Feature} The cluster feature.
  * @protected
  */
-PropertyCluster.prototype.createCluster = function(cKey,iVals,features) {
-  const centroid = [0, 0];
-  for (let i = features.length - 1; i >= 0; --i) {
-    const geometry = this.geometryFunction(features[i]);
-    if (geometry) {
-      addCoordinate(centroid, geometry.getCoordinates());
-    } else {
-      features.splice(i, 1);
+PropertyCluster.prototype.createCluster = function (cKey, iVals, features) {
+    const centroid = [0, 0];
+    for (let i = features.length - 1; i >= 0; --i) {
+        const geometry = this.geometryFunction(features[i]);
+        if (geometry) {
+            addCoordinate(centroid, geometry.getCoordinates());
+        } else {
+            features.splice(i, 1);
+        }
     }
-  }
-  scaleCoordinate(centroid, 1 / features.length);
+    scaleCoordinate(centroid, 1 / features.length);
 
-  const cluster = new Feature(new Point(centroid));
-  cluster.set('features', features);
-  cluster.set('clusterkey', cKey);
-  cluster.set('identifiers', iVals);
-  return cluster;
+    const cluster = new Feature(new Point(centroid));
+    cluster.set('features', features);
+    cluster.set('clusterkey', cKey);
+    cluster.set('identifiers', iVals);
+    return cluster;
 };
 export default PropertyCluster;

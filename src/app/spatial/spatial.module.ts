@@ -1,20 +1,21 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 
-import { SharedModule } from "../shared/shared.module";
+import {SharedModule} from "../shared/shared.module";
 
-import { SpatialComponent } from "./spatial.component";
+import {SpatialComponent} from "./spatial.component";
 
 @NgModule({
-  declarations: [
-    SpatialComponent
-  ],
-  imports: [
-    SharedModule
-  ],
-  exports: [
-    SpatialComponent
-  ],
-  providers: [],
-  bootstrap: [ SpatialComponent ]
+    declarations: [
+        SpatialComponent
+    ],
+    imports: [
+        SharedModule
+    ],
+    exports: [
+        SpatialComponent
+    ],
+    providers: [],
+    bootstrap: [SpatialComponent]
 })
-export class LayoutModule { }
+export class LayoutModule {
+}

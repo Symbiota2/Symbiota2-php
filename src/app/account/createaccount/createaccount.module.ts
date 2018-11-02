@@ -1,20 +1,21 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 
-import { SharedModule } from "../../shared/shared.module";
+import {SharedModule} from "../../shared/shared.module";
 
-import { CreateaccountComponent } from './createaccount.component';
+import {CreateaccountComponent} from './createaccount.component';
 
 @NgModule({
-  declarations: [
-    CreateaccountComponent
-  ],
-  imports: [
-    SharedModule
-  ],
-  exports: [
-    CreateaccountComponent
-  ],
-  providers: [],
-  bootstrap: [ CreateaccountComponent ]
+    declarations: [
+        CreateaccountComponent
+    ],
+    imports: [
+        SharedModule
+    ],
+    exports: [
+        CreateaccountComponent
+    ],
+    providers: [],
+    bootstrap: [CreateaccountComponent]
 })
-export class CreateAccountModule { }
+export class CreateAccountModule {
+}
