@@ -21,7 +21,6 @@ import {UIService} from "./shared/ui.service";
 import {omcollectionsService} from "./search/omcollections.service";
 import {SnotifyModule, SnotifyService, ToastDefaults} from 'ng-snotify';
 import {AuthenticationService} from "./auth/authentication.service";
-import {ServerService} from "./server.service";
 import {TokenStorageService} from "./auth/token-storage.service";
 
 @NgModule({
@@ -48,7 +47,6 @@ import {TokenStorageService} from "./auth/token-storage.service";
         omcollectionsService,
         UIService,
         AuthenticationService,
-        ServerService,
         TokenStorageService,
         {provide: 'SnotifyToastConfig', useValue: ToastDefaults},
         SnotifyService
