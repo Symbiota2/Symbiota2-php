@@ -22,7 +22,7 @@ export class LoginService {
     getUser() {
         let url = this.environmentService.setApiService('user');
         return this._http.get(url)
-            .pipe(map(res => res))
+            .pipe(map(res => res['data']))
             .pipe(catchError(this.handleError))
     }
 
