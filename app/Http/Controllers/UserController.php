@@ -36,9 +36,9 @@ class UserController extends ApiController
      */
     public function index()
     {
-        $this->allowedAdminAction();
+        //$this->allowedAdminAction();
         if ($this->userRepository->count([]) === 0) {
-            return responder()->error(404, 'No data')->respond();
+            //return responder()->error(404, 'No data')->respond();
         }
         return responder()->success($this->userRepository->findAll(), UserTransformer::class, 'uid')->respond();
     }
