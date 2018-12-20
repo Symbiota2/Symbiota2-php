@@ -1,0 +1,29 @@
+a {
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
+a:hover, a:active {
+    color: lightgray;
+}
+
+.sidenav-links {
+    height: 100%;
+}
+
+.navigation-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navigation-items-sub {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navigation-items-sub a {
+    color: black;
+}

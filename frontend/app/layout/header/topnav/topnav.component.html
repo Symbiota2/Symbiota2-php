@@ -1,0 +1,49 @@
+<div class="top-navigation-bar">
+    <div fxFlex fxLayout fxLayoutAlign="left center" class="side-nav-toggle" fxHide.gt-sm>
+        <button mat-icon-button (click)="toggleSidenav()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        Menu
+    </div>
+    <div fxFlex fxLayout fxLayoutAlign="left center" class="left-links" fxHide.lt-md>
+        <ul fxLayout fxLayoutGap="40px" class="navigation-items">
+            <li><a routerLink="/">Home</a></li>
+            <li><a [matMenuTriggerFor]="search">Search</a></li>
+            <li><a [matMenuTriggerFor]="images">Images</a></li>
+            <li><a [matMenuTriggerFor]="symbiota">Symbiota</a></li>
+        </ul>
+    </div>
+    <div fxFlex fxLayout fxLayoutAlign="end center" class="right-links" fxHide.xs>
+        <ul fxLayout fxLayoutGap="15px" class="navigation-items">
+            <li *ngIf="isAuth">Welcome username!</li>
+            <li *ngIf="isAuth"><a routerLink="/myprofile">My Profile</a></li>
+            <li *ngIf="isAuth"><a routerLink="/logout" (click)="onLogout()">Logout</a></li>
+            <li *ngIf="!isAuth"><a routerLink="/login">Login</a></li>
+            <li *ngIf="!isAuth"><a routerLink="/createaccount">New Account</a></li>
+            <li><a routerLink="/sitemap">Sitemap</a></li>
+        </ul>
+    </div>
+    <mat-menu #search="matMenu">
+        <ul fxLayout="column" fxLayoutGap="15px" class="navigation-items-sub">
+            <li mat-menu-item><a routerLink="/searchcollections">Search Collections</a></li>
+            <li mat-menu-item><a routerLink="/spatial">Spatial Search</a></li>
+            <li mat-menu-item><a routerLink="/dynamicchecklist">Dynamic Checklist</a></li>
+            <li mat-menu-item><a routerLink="/taxonomyexplorer">Taxonomy Explorer</a></li>
+        </ul>
+    </mat-menu>
+    <mat-menu #images="matMenu">
+        <ul fxLayout="column" fxLayoutGap="15px" class="navigation-items-sub">
+            <li mat-menu-item><a routerLink="/imagesearch">Image Search</a></li>
+            <li mat-menu-item><a routerLink="/imagelibrary">Image Library</a></li>
+        </ul>
+    </mat-menu>
+    <mat-menu #symbiota="matMenu">
+        <ul fxLayout="column" fxLayoutGap="15px" class="navigation-items-sub">
+            <li mat-menu-item><a href="http://symbiota.org/docs/" target="_blank">Symbiota</a></li>
+            <li mat-menu-item><a href="http://symbiota.org/docs/symbiota-introduction/symbiota-help-pages/"
+                                 target="_blank">Symbiota Help</a></li>
+            <li mat-menu-item><a href="http://symbiota.org/docs/google-group/" target="_blank">Sybmbiota Google
+                Group</a></li>
+        </ul>
+    </mat-menu>
+</div>
