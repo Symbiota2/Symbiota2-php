@@ -33,140 +33,140 @@ class Fmchecklists
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Title", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Title", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $title = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Locality", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Locality", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $locality = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Publication", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Publication", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $publication = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Abstract", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Abstract", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $abstract = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Authors", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Authors", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $authors = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Type", type="string", length=50, nullable=true, options={"default"="'static'"})
+     * @ORM\Column(name="Type", type="string", length=50, nullable=true, options={"default"="static"})
      */
-    private $type = '\'static\'';
+    private $type = 'static';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="politicalDivision", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="politicalDivision", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $politicaldivision = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicsql", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dynamicsql", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $dynamicsql = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Parent", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Parent", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $parent = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="parentclid", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="parentclid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $parentclid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Notes", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Notes", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var float|null
      *
-     * @ORM\Column(name="LatCentroid", type="float", precision=9, scale=6, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="LatCentroid", type="float", precision=9, scale=6, nullable=true, options={"default"=NULL})
      */
     private $latcentroid = 'NULL';
 
     /**
      * @var float|null
      *
-     * @ORM\Column(name="LongCentroid", type="float", precision=9, scale=6, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="LongCentroid", type="float", precision=9, scale=6, nullable=true, options={"default"=NULL})
      */
     private $longcentroid = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="pointradiusmeters", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="pointradiusmeters", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $pointradiusmeters = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="footprintWKT", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="footprintWKT", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $footprintwkt = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="percenteffort", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="percenteffort", type="integer", nullable=true, options={"default"=NULL})
      */
     private $percenteffort = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Access", type="string", length=45, nullable=true, options={"default"="'private'"})
+     * @ORM\Column(name="Access", type="string", length=45, nullable=true, options={"default"="private"})
      */
-    private $access = '\'private\'';
+    private $access = 'private';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="defaultSettings", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="defaultSettings", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $defaultsettings = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="iconUrl", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="iconUrl", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $iconurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="headerUrl", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="headerUrl", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $headerurl = 'NULL';
 
@@ -180,23 +180,23 @@ class Fmchecklists
     /**
      * @var int|null
      *
-     * @ORM\Column(name="expiration", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="expiration", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $expiration = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="DateLastModified", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="DateLastModified", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $datelastmodified = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Users

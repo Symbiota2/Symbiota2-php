@@ -24,9 +24,9 @@ class Imagetag
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Images

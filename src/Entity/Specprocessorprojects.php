@@ -31,84 +31,84 @@ class Specprocessorprojects
     /**
      * @var string|null
      *
-     * @ORM\Column(name="projecttype", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="projecttype", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $projecttype = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="specKeyPattern", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="specKeyPattern", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $speckeypattern = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="patternReplace", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="patternReplace", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $patternreplace = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="replaceStr", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="replaceStr", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $replacestr = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="speckeyretrieval", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="speckeyretrieval", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $speckeyretrieval = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="coordX1", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="coordX1", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $coordx1 = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="coordX2", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="coordX2", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $coordx2 = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="coordY1", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="coordY1", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $coordy1 = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="coordY2", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="coordY2", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $coordy2 = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourcePath", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="sourcePath", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $sourcepath = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="targetPath", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="targetPath", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $targetpath = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="imgUrl", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="imgUrl", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $imgurl = 'NULL';
 
@@ -157,23 +157,23 @@ class Specprocessorprojects
     /**
      * @var string|null
      *
-     * @ORM\Column(name="source", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="source", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $source = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="lastrundate", type="date", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="lastrundate", type="date", nullable=true, options={"default"=NULL})
      */
     private $lastrundate = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialTimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialTimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Omcollections

@@ -24,7 +24,7 @@ class Guidoccurdeterminations
     /**
      * @var int|null
      *
-     * @ORM\Column(name="detid", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="detid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $detid = 'NULL';
 
@@ -38,23 +38,23 @@ class Guidoccurdeterminations
     /**
      * @var string|null
      *
-     * @ORM\Column(name="archiveobj", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="archiveobj", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $archiveobj = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getGuid(): ?string
     {

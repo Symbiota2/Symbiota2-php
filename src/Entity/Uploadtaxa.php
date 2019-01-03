@@ -24,35 +24,35 @@ class Uploadtaxa
     /**
      * @var int|null
      *
-     * @ORM\Column(name="TID", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="TID", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $tid = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="SourceId", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="SourceId", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $sourceid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Family", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Family", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $family = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="RankId", type="smallint", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="RankId", type="smallint", nullable=true, options={"default"=NULL})
      */
     private $rankid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="RankName", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="RankName", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $rankname = 'NULL';
 
@@ -66,63 +66,63 @@ class Uploadtaxa
     /**
      * @var string|null
      *
-     * @ORM\Column(name="SciName", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="SciName", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $sciname = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitInd1", type="string", length=1, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="UnitInd1", type="string", length=1, nullable=true, options={"default"=NULL})
      */
     private $unitind1 = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitName1", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="UnitName1", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $unitname1 = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitInd2", type="string", length=1, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="UnitInd2", type="string", length=1, nullable=true, options={"default"=NULL})
      */
     private $unitind2 = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitName2", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="UnitName2", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $unitname2 = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitInd3", type="string", length=7, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="UnitInd3", type="string", length=7, nullable=true, options={"default"=NULL})
      */
     private $unitind3 = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitName3", type="string", length=35, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="UnitName3", type="string", length=35, nullable=true, options={"default"=NULL})
      */
     private $unitname3 = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Author", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Author", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $author = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="InfraAuthor", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="InfraAuthor", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $infraauthor = 'NULL';
 
@@ -136,49 +136,49 @@ class Uploadtaxa
     /**
      * @var int|null
      *
-     * @ORM\Column(name="TidAccepted", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="TidAccepted", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $tidaccepted = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="AcceptedStr", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="AcceptedStr", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $acceptedstr = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="SourceAcceptedId", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="SourceAcceptedId", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $sourceacceptedid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnacceptabilityReason", type="string", length=24, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="UnacceptabilityReason", type="string", length=24, nullable=true, options={"default"=NULL})
      */
     private $unacceptabilityreason = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="ParentTid", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="ParentTid", type="integer", nullable=true, options={"default"=NULL})
      */
     private $parenttid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="ParentStr", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="ParentStr", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $parentstr = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="SourceParentId", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="SourceParentId", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $sourceparentid = 'NULL';
 
@@ -192,51 +192,51 @@ class Uploadtaxa
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Source", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Source", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $source = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="vernacular", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="vernacular", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $vernacular = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="vernlang", type="string", length=15, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="vernlang", type="string", length=15, nullable=true, options={"default"=NULL})
      */
     private $vernlang = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Hybrid", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Hybrid", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $hybrid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="ErrorStatus", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="ErrorStatus", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $errorstatus = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getUptid(): ?int
     {

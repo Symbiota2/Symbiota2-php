@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="taxa", uniqueConstraints={@ORM\UniqueConstraint(name="sciname_unique", columns={"SciName", "RankId", "Author"})}, indexes={@ORM\Index(name="idx_taxacreated", columns={"InitialTimeStamp"}), @ORM\Index(name="FK_taxa_uid_idx", columns={"modifiedUid"}), @ORM\Index(name="unitname1_index", columns={"UnitName1", "UnitName2"}), @ORM\Index(name="sciname_index", columns={"SciName"}), @ORM\Index(name="rankid_index", columns={"RankId"})})
  * @ORM\Entity(repositoryClass="App\Repository\TaxaRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
+ *
  */
 class Taxa
 {
@@ -26,14 +32,14 @@ class Taxa
     /**
      * @var string|null
      *
-     * @ORM\Column(name="kingdomName", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="kingdomName", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $kingdomname = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="RankId", type="smallint", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="RankId", type="smallint", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $rankid = 'NULL';
 
@@ -47,7 +53,7 @@ class Taxa
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitInd1", type="string", length=1, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="UnitInd1", type="string", length=1, nullable=true, options={"default"=NULL})
      */
     private $unitind1 = 'NULL';
 
@@ -61,70 +67,70 @@ class Taxa
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitInd2", type="string", length=1, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="UnitInd2", type="string", length=1, nullable=true, options={"default"=NULL})
      */
     private $unitind2 = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitName2", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="UnitName2", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $unitname2 = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitInd3", type="string", length=7, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="UnitInd3", type="string", length=7, nullable=true, options={"default"=NULL})
      */
     private $unitind3 = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitName3", type="string", length=35, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="UnitName3", type="string", length=35, nullable=true, options={"default"=NULL})
      */
     private $unitname3 = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Author", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Author", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $author = 'NULL';
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="PhyloSortSequence", type="boolean", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="PhyloSortSequence", type="boolean", nullable=true, options={"default"=NULL})
      */
     private $phylosortsequence = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Status", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Status", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $status = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Source", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Source", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $source = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Hybrid", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Hybrid", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $hybrid = 'NULL';
 
@@ -138,16 +144,16 @@ class Taxa
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $modifiedtimestamp = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Users

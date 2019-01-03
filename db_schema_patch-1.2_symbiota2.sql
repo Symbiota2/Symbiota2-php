@@ -625,6 +625,9 @@ ALTER TABLE `usertaxonomy`
   DROP INDEX `FK_usertaxonomy_tid_idx`,
   DROP INDEX `FK_usertaxonomy_taxauthid_idx`;
 
+ALTER TABLE `taxalinks`
+  DROP FOREIGN KEY `FK_taxalinks_taxa`;
+
 DELETE FROM taxonunits WHERE taxonunitid > 152;
 
 TRUNCATE TABLE omoccurgeoindex;

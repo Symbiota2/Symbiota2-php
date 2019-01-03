@@ -24,14 +24,14 @@ class Omcrowdsourcecentral
     /**
      * @var string|null
      *
-     * @ORM\Column(name="instructions", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="instructions", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $instructions = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="trainingurl", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="trainingurl", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $trainingurl = 'NULL';
 
@@ -45,16 +45,16 @@ class Omcrowdsourcecentral
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Omcollections

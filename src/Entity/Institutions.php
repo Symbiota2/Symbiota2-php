@@ -38,100 +38,100 @@ class Institutions
     /**
      * @var string|null
      *
-     * @ORM\Column(name="InstitutionName2", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="InstitutionName2", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $institutionname2 = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Address1", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Address1", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $address1 = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Address2", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Address2", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $address2 = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="City", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="City", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $city = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="StateProvince", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="StateProvince", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $stateprovince = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="PostalCode", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="PostalCode", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $postalcode = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Country", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Country", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $country = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Phone", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Phone", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $phone = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Contact", type="string", length=65, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Contact", type="string", length=65, nullable=true, options={"default"=NULL})
      */
     private $contact = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Email", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Email", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $email = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Url", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Url", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $url = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $modifiedtimestamp = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="IntialTimeStamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="IntialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $intialtimestamp = 'current_timestamp()';
+    private $intialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Users

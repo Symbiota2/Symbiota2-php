@@ -33,7 +33,7 @@ class Omcollections
     /**
      * @var string|null
      *
-     * @ORM\Column(name="CollectionCode", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="CollectionCode", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $collectioncode = 'NULL';
 
@@ -47,86 +47,86 @@ class Omcollections
     /**
      * @var string|null
      *
-     * @ORM\Column(name="collectionId", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="collectionId", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $collectionid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="datasetName", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="datasetName", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $datasetname = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="fulldescription", type="string", length=2000, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="fulldescription", type="string", length=2000, nullable=true, options={"default"=NULL})
      */
     private $fulldescription = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Homepage", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Homepage", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $homepage = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="IndividualUrl", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="IndividualUrl", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $individualurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Contact", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Contact", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $contact = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="email", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="email", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $email = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="latitudedecimal", type="decimal", precision=8, scale=6, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="latitudedecimal", type="decimal", precision=8, scale=6, nullable=true, options={"default"=NULL})
      */
     private $latitudedecimal = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="longitudedecimal", type="decimal", precision=9, scale=6, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="longitudedecimal", type="decimal", precision=9, scale=6, nullable=true, options={"default"=NULL})
      */
     private $longitudedecimal = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="icon", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="icon", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $icon = 'NULL';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="CollType", type="string", length=45, nullable=false, options={"default"="'Preserved Specimens'","comment"="Preserved Specimens, General Observations, Observations"})
+     * @ORM\Column(name="CollType", type="string", length=45, nullable=false, options={"default"="Preserved Specimens","comment"="Preserved Specimens, General Observations, Observations"})
      */
-    private $colltype = '\'Preserved Specimens\'';
+    private $colltype = 'Preserved Specimens';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="ManagementType", type="string", length=45, nullable=true, options={"default"="'Snapshot'","comment"="Snapshot, Live Data"})
+     * @ORM\Column(name="ManagementType", type="string", length=45, nullable=true, options={"default"="Snapshot","comment"="Snapshot, Live Data"})
      */
-    private $managementtype = '\'Snapshot\'';
+    private $managementtype = 'Snapshot';
 
     /**
      * @var int
@@ -138,100 +138,100 @@ class Omcollections
     /**
      * @var string|null
      *
-     * @ORM\Column(name="collectionguid", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="collectionguid", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $collectionguid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="securitykey", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="securitykey", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $securitykey = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="guidtarget", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="guidtarget", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $guidtarget = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="rightsHolder", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="rightsHolder", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $rightsholder = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="rights", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="rights", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $rights = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="usageTerm", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="usageTerm", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $usageterm = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="publishToGbif", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="publishToGbif", type="integer", nullable=true, options={"default"=NULL})
      */
     private $publishtogbif = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="publishToIdigbio", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="publishToIdigbio", type="integer", nullable=true, options={"default"=NULL})
      */
     private $publishtoidigbio = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="aggKeysStr", type="string", length=1000, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="aggKeysStr", type="string", length=1000, nullable=true, options={"default"=NULL})
      */
     private $aggkeysstr = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dwcaUrl", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dwcaUrl", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $dwcaurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="bibliographicCitation", type="string", length=1000, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="bibliographicCitation", type="string", length=1000, nullable=true, options={"default"=NULL})
      */
     private $bibliographiccitation = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="accessrights", type="string", length=1000, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="accessrights", type="string", length=1000, nullable=true, options={"default"=NULL})
      */
     private $accessrights = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="SortSeq", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="SortSeq", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $sortseq = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Institutions

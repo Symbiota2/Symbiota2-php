@@ -31,14 +31,14 @@ class Geothesstateprovince
     /**
      * @var string|null
      *
-     * @ORM\Column(name="abbreviation", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="abbreviation", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $abbreviation = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="code", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="code", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $code = 'NULL';
 
@@ -52,16 +52,16 @@ class Geothesstateprovince
     /**
      * @var string|null
      *
-     * @ORM\Column(name="footprintWKT", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="footprintWKT", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $footprintwkt = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Geothescountry

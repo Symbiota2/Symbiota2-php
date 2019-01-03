@@ -26,147 +26,147 @@ class Omoccurloans
     /**
      * @var string|null
      *
-     * @ORM\Column(name="loanIdentifierOwn", type="string", length=30, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="loanIdentifierOwn", type="string", length=30, nullable=true, options={"default"=NULL})
      */
     private $loanidentifierown = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="loanIdentifierBorr", type="string", length=30, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="loanIdentifierBorr", type="string", length=30, nullable=true, options={"default"=NULL})
      */
     private $loanidentifierborr = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateSent", type="date", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dateSent", type="date", nullable=true, options={"default"=NULL})
      */
     private $datesent = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateSentReturn", type="date", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dateSentReturn", type="date", nullable=true, options={"default"=NULL})
      */
     private $datesentreturn = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="receivedStatus", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="receivedStatus", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $receivedstatus = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="totalBoxes", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="totalBoxes", type="integer", nullable=true, options={"default"=NULL})
      */
     private $totalboxes = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="totalBoxesReturned", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="totalBoxesReturned", type="integer", nullable=true, options={"default"=NULL})
      */
     private $totalboxesreturned = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="numSpecimens", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="numSpecimens", type="integer", nullable=true, options={"default"=NULL})
      */
     private $numspecimens = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="shippingMethod", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="shippingMethod", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $shippingmethod = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="shippingMethodReturn", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="shippingMethodReturn", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $shippingmethodreturn = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateDue", type="date", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dateDue", type="date", nullable=true, options={"default"=NULL})
      */
     private $datedue = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateReceivedOwn", type="date", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dateReceivedOwn", type="date", nullable=true, options={"default"=NULL})
      */
     private $datereceivedown = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateReceivedBorr", type="date", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dateReceivedBorr", type="date", nullable=true, options={"default"=NULL})
      */
     private $datereceivedborr = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateClosed", type="date", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dateClosed", type="date", nullable=true, options={"default"=NULL})
      */
     private $dateclosed = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="forWhom", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="forWhom", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $forwhom = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=1000, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="description", type="string", length=1000, nullable=true, options={"default"=NULL})
      */
     private $description = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="invoiceMessageOwn", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="invoiceMessageOwn", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $invoicemessageown = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="invoiceMessageBorr", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="invoiceMessageBorr", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $invoicemessageborr = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="createdByOwn", type="string", length=30, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="createdByOwn", type="string", length=30, nullable=true, options={"default"=NULL})
      */
     private $createdbyown = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="createdByBorr", type="string", length=30, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="createdByBorr", type="string", length=30, nullable=true, options={"default"=NULL})
      */
     private $createdbyborr = 'NULL';
 
@@ -180,37 +180,37 @@ class Omoccurloans
     /**
      * @var string|null
      *
-     * @ORM\Column(name="processedByOwn", type="string", length=30, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="processedByOwn", type="string", length=30, nullable=true, options={"default"=NULL})
      */
     private $processedbyown = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="processedByBorr", type="string", length=30, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="processedByBorr", type="string", length=30, nullable=true, options={"default"=NULL})
      */
     private $processedbyborr = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="processedByReturnOwn", type="string", length=30, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="processedByReturnOwn", type="string", length=30, nullable=true, options={"default"=NULL})
      */
     private $processedbyreturnown = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="processedByReturnBorr", type="string", length=30, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="processedByReturnBorr", type="string", length=30, nullable=true, options={"default"=NULL})
      */
     private $processedbyreturnborr = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialTimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialTimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Omcollections

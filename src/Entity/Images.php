@@ -33,140 +33,140 @@ class Images
     /**
      * @var string|null
      *
-     * @ORM\Column(name="thumbnailurl", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="thumbnailurl", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $thumbnailurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="originalurl", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="originalurl", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $originalurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="archiveurl", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="archiveurl", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $archiveurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="photographer", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="photographer", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $photographer = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="imagetype", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="imagetype", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $imagetype = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="format", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="format", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $format = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="caption", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="caption", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $caption = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="owner", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="owner", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $owner = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourceurl", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="sourceurl", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $sourceurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="referenceUrl", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="referenceUrl", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $referenceurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="copyright", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="copyright", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $copyright = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="rights", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="rights", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $rights = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="accessrights", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="accessrights", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $accessrights = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="locality", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="locality", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $locality = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=350, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=350, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="anatomy", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="anatomy", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $anatomy = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="username", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="username", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $username = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourceIdentifier", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="sourceIdentifier", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $sourceidentifier = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="mediaMD5", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="mediaMD5", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $mediamd5 = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $dynamicproperties = 'NULL';
 
@@ -180,9 +180,9 @@ class Images
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Omoccurrences
@@ -215,42 +215,11 @@ class Images
     private $photographeruid;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Imageprojects", inversedBy="imgid")
-     * @ORM\JoinTable(name="imageprojectlink",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="imgid", referencedColumnName="imgid")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="imgprojid", referencedColumnName="imgprojid")
-     *   }
-     * )
-     */
-    private $imgprojid;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Taxaprofilepubs", inversedBy="imgid")
-     * @ORM\JoinTable(name="taxaprofilepubimagelink",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="imgid", referencedColumnName="imgid")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="tppid", referencedColumnName="tppid")
-     *   }
-     * )
-     */
-    private $tppid;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->imgprojid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->tppid = new \Doctrine\Common\Collections\ArrayCollection();
+
     }
 
     public function getImgid(): ?int
@@ -566,58 +535,6 @@ class Images
     public function setPhotographeruid(?Users $photographeruid): self
     {
         $this->photographeruid = $photographeruid;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Imageprojects[]
-     */
-    public function getImgprojid(): Collection
-    {
-        return $this->imgprojid;
-    }
-
-    public function addImgprojid(Imageprojects $imgprojid): self
-    {
-        if (!$this->imgprojid->contains($imgprojid)) {
-            $this->imgprojid[] = $imgprojid;
-        }
-
-        return $this;
-    }
-
-    public function removeImgprojid(Imageprojects $imgprojid): self
-    {
-        if ($this->imgprojid->contains($imgprojid)) {
-            $this->imgprojid->removeElement($imgprojid);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Taxaprofilepubs[]
-     */
-    public function getTppid(): Collection
-    {
-        return $this->tppid;
-    }
-
-    public function addTppid(Taxaprofilepubs $tppid): self
-    {
-        if (!$this->tppid->contains($tppid)) {
-            $this->tppid[] = $tppid;
-        }
-
-        return $this;
-    }
-
-    public function removeTppid(Taxaprofilepubs $tppid): self
-    {
-        if ($this->tppid->contains($tppid)) {
-            $this->tppid->removeElement($tppid);
-        }
 
         return $this;
     }

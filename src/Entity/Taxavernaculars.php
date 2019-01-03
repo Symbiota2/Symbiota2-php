@@ -22,35 +22,35 @@ class Taxavernaculars
     /**
      * @var string
      *
-     * @ORM\Column(name="Language", type="string", length=15, nullable=false, options={"default"="'English'"})
+     * @ORM\Column(name="Language", type="string", length=15, nullable=false, options={"default"="English"})
      */
-    private $language = '\'English\'';
+    private $language = 'English';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Source", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Source", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $source = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="username", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="username", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $username = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="isupperterm", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="isupperterm", type="integer", nullable=true, options={"default"=NULL})
      */
     private $isupperterm = 'NULL';
 
@@ -73,9 +73,9 @@ class Taxavernaculars
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Adminlanguages

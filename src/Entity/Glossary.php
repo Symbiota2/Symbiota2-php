@@ -33,58 +33,58 @@ class Glossary
     /**
      * @var string|null
      *
-     * @ORM\Column(name="definition", type="string", length=2000, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="definition", type="string", length=2000, nullable=true, options={"default"=NULL})
      */
     private $definition = 'NULL';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="language", type="string", length=45, nullable=false, options={"default"="'English'"})
+     * @ORM\Column(name="language", type="string", length=45, nullable=false, options={"default"="English"})
      */
-    private $language = '\'English\'';
+    private $language = 'English';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="source", type="string", length=1000, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="source", type="string", length=1000, nullable=true, options={"default"=NULL})
      */
     private $source = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="translator", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="translator", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $translator = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="author", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="author", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $author = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="resourceurl", type="string", length=600, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="resourceurl", type="string", length=600, nullable=true, options={"default"=NULL})
      */
     private $resourceurl = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Users

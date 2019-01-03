@@ -15,7 +15,7 @@ class Fmvouchers
     /**
      * @var int|null
      *
-     * @ORM\Column(name="TID", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="TID", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $tid = 'NULL';
 
@@ -31,30 +31,30 @@ class Fmvouchers
     /**
      * @var string|null
      *
-     * @ORM\Column(name="editornotes", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="editornotes", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $editornotes = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="preferredImage", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="preferredImage", type="integer", nullable=true, options={"default"=NULL})
      */
     private $preferredimage = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Omoccurrences

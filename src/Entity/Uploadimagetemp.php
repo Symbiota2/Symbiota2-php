@@ -24,7 +24,7 @@ class Uploadimagetemp
     /**
      * @var int|null
      *
-     * @ORM\Column(name="tid", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="tid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $tid = 'NULL';
 
@@ -38,121 +38,121 @@ class Uploadimagetemp
     /**
      * @var string|null
      *
-     * @ORM\Column(name="thumbnailurl", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="thumbnailurl", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $thumbnailurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="originalurl", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="originalurl", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $originalurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="archiveurl", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="archiveurl", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $archiveurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="photographer", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="photographer", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $photographer = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="photographeruid", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="photographeruid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $photographeruid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="imagetype", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="imagetype", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $imagetype = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="format", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="format", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $format = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="caption", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="caption", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $caption = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="owner", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="owner", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $owner = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="occid", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="occid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $occid = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="collid", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="collid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $collid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dbpk", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dbpk", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $dbpk = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="specimengui", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="specimengui", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $specimengui = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="username", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="username", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $username = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="sortsequence", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="sortsequence", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $sortsequence = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getUpimgid(): ?int
     {

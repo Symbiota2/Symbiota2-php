@@ -45,86 +45,86 @@ class Fmchklsttaxalink
     /**
      * @var string|null
      *
-     * @ORM\Column(name="familyoverride", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="familyoverride", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $familyoverride = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Habitat", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Habitat", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $habitat = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Abundance", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Abundance", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $abundance = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Notes", type="string", length=2000, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Notes", type="string", length=2000, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="explicitExclude", type="smallint", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="explicitExclude", type="smallint", nullable=true, options={"default"=NULL})
      */
     private $explicitexclude = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="source", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="source", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $source = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Nativity", type="string", length=50, nullable=true, options={"default"="NULL","comment"="native, introducted"})
+     * @ORM\Column(name="Nativity", type="string", length=50, nullable=true, options={"default"=NULL,"comment"="native, introducted"})
      */
     private $nativity = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Endemic", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Endemic", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $endemic = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="invasive", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="invasive", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $invasive = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="internalnotes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="internalnotes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $internalnotes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $dynamicproperties = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getCltlid(): ?int
     {

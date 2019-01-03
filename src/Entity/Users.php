@@ -76,7 +76,7 @@ class Users implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="firstname", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="firstname", type="string", length=45, nullable=true, options={"default"=NULL})
      * @Groups({"get", "post"})
      * @Assert\Length(max=45, groups={"post"})
      */
@@ -159,7 +159,7 @@ class Users implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="title", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="title", type="string", length=150, nullable=true, options={"default"=NULL})
      * @Groups({"get", "post"})
      * @Assert\Length(max=150, groups={"post"})
      */
@@ -168,7 +168,7 @@ class Users implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="institution", type="string", length=200, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="institution", type="string", length=200, nullable=true, options={"default"=NULL})
      * @Groups({"get", "post"})
      * @Assert\Length(max=200, groups={"post"})
      */
@@ -177,7 +177,7 @@ class Users implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="department", type="string", length=200, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="department", type="string", length=200, nullable=true, options={"default"=NULL})
      * @Groups({"get", "post"})
      * @Assert\Length(max=200, groups={"post"})
      */
@@ -186,7 +186,7 @@ class Users implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="address", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="address", type="string", length=255, nullable=true, options={"default"=NULL})
      * @Groups({"get", "post"})
      * @Assert\Length(max=255, groups={"post"})
      */
@@ -195,7 +195,7 @@ class Users implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="city", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="city", type="string", length=100, nullable=true, options={"default"=NULL})
      * @Groups({"get", "post"})
      * @Assert\Length(max=100, groups={"post"})
      */
@@ -204,7 +204,7 @@ class Users implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="state", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="state", type="string", length=50, nullable=true, options={"default"=NULL})
      * @Groups({"get", "post"})
      * @Assert\Length(max=50, groups={"post"})
      */
@@ -213,7 +213,7 @@ class Users implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="zip", type="string", length=15, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="zip", type="string", length=15, nullable=true, options={"default"=NULL})
      * @Groups({"get", "post"})
      * @Assert\Length(max=15, groups={"post"})
      */
@@ -222,7 +222,7 @@ class Users implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="country", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="country", type="string", length=50, nullable=true, options={"default"=NULL})
      * @Groups({"get", "post"})
      * @Assert\Length(max=50, groups={"post"})
      */
@@ -231,7 +231,7 @@ class Users implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="phone", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="phone", type="string", length=45, nullable=true, options={"default"=NULL})
      * @Groups({"get", "post"})
      * @Assert\Length(max=45, groups={"post"})
      */
@@ -251,7 +251,7 @@ class Users implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="url", type="string", length=400, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="url", type="string", length=400, nullable=true, options={"default"=NULL})
      * @Groups({"get", "post"})
      * @Assert\Length(max=400, groups={"post"})
      */
@@ -260,7 +260,7 @@ class Users implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Biography", type="string", length=1500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Biography", type="string", length=1500, nullable=true, options={"default"=NULL})
      * @Groups({"get", "post"})
      * @Assert\Length(max=1500, groups={"post"})
      */
@@ -277,21 +277,21 @@ class Users implements UserInterface
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="lastlogindate", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="lastlogindate", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $lastlogindate = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="middleinitial", type="string", length=2, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="middleinitial", type="string", length=2, nullable=true, options={"default"=NULL})
      * @Groups({"get", "post"})
      * @Assert\Length(max=2, groups={"post"})
      */
@@ -314,7 +314,7 @@ class Users implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="verification_token", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="verification_token", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $verificationToken = 'NULL';
 

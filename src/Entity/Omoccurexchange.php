@@ -24,135 +24,135 @@ class Omoccurexchange
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identifier", type="string", length=30, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="identifier", type="string", length=30, nullable=true, options={"default"=NULL})
      */
     private $identifier = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="iid", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="iid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $iid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="transactionType", type="string", length=10, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="transactionType", type="string", length=10, nullable=true, options={"default"=NULL})
      */
     private $transactiontype = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="in_out", type="string", length=3, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="in_out", type="string", length=3, nullable=true, options={"default"=NULL})
      */
     private $inOut = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateSent", type="date", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dateSent", type="date", nullable=true, options={"default"=NULL})
      */
     private $datesent = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateReceived", type="date", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dateReceived", type="date", nullable=true, options={"default"=NULL})
      */
     private $datereceived = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="totalBoxes", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="totalBoxes", type="integer", nullable=true, options={"default"=NULL})
      */
     private $totalboxes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="shippingMethod", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="shippingMethod", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $shippingmethod = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="totalExMounted", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="totalExMounted", type="integer", nullable=true, options={"default"=NULL})
      */
     private $totalexmounted = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="totalExUnmounted", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="totalExUnmounted", type="integer", nullable=true, options={"default"=NULL})
      */
     private $totalexunmounted = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="totalGift", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="totalGift", type="integer", nullable=true, options={"default"=NULL})
      */
     private $totalgift = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="totalGiftDet", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="totalGiftDet", type="integer", nullable=true, options={"default"=NULL})
      */
     private $totalgiftdet = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="adjustment", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="adjustment", type="integer", nullable=true, options={"default"=NULL})
      */
     private $adjustment = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="invoiceBalance", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="invoiceBalance", type="integer", nullable=true, options={"default"=NULL})
      */
     private $invoicebalance = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="invoiceMessage", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="invoiceMessage", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $invoicemessage = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=1000, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="description", type="string", length=1000, nullable=true, options={"default"=NULL})
      */
     private $description = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="createdBy", type="string", length=20, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="createdBy", type="string", length=20, nullable=true, options={"default"=NULL})
      */
     private $createdby = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialTimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialTimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Omcollections

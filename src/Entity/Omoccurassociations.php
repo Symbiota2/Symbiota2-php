@@ -31,79 +31,79 @@ class Omoccurassociations
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identifier", type="string", length=250, nullable=true, options={"default"="NULL","comment"="e.g. GUID"})
+     * @ORM\Column(name="identifier", type="string", length=250, nullable=true, options={"default"=NULL,"comment"="e.g. GUID"})
      */
     private $identifier = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="basisOfRecord", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="basisOfRecord", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $basisofrecord = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="resourceurl", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="resourceurl", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $resourceurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="verbatimsciname", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="verbatimsciname", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $verbatimsciname = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="locationOnHost", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="locationOnHost", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $locationonhost = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="condition", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="condition", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $condition = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateEmerged", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dateEmerged", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $dateemerged = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $dynamicproperties = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="datelastmodified", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="datelastmodified", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $datelastmodified = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Omoccurrences

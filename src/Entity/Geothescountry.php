@@ -33,28 +33,28 @@ class Geothescountry
     /**
      * @var string|null
      *
-     * @ORM\Column(name="abbreviation", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="abbreviation", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $abbreviation = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="iso", type="string", length=2, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="iso", type="string", length=2, nullable=true, options={"default"=NULL})
      */
     private $iso = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="iso3", type="string", length=3, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="iso3", type="string", length=3, nullable=true, options={"default"=NULL})
      */
     private $iso3 = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="numcode", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="numcode", type="integer", nullable=true, options={"default"=NULL})
      */
     private $numcode = 'NULL';
 
@@ -68,16 +68,16 @@ class Geothescountry
     /**
      * @var string|null
      *
-     * @ORM\Column(name="footprintWKT", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="footprintWKT", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $footprintwkt = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Geothescontinent

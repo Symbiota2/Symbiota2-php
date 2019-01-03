@@ -31,28 +31,28 @@ class Fmprojectcategories
     /**
      * @var string|null
      *
-     * @ORM\Column(name="managers", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="managers", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $managers = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="description", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $description = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="parentpid", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="parentpid", type="integer", nullable=true, options={"default"=NULL})
      */
     private $parentpid = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="occurrencesearch", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="occurrencesearch", type="integer", nullable=true, options={"default"=NULL})
      */
     private $occurrencesearch = 'NULL';
 
@@ -66,23 +66,23 @@ class Fmprojectcategories
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="sortsequence", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="sortsequence", type="integer", nullable=true, options={"default"=NULL})
      */
     private $sortsequence = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Fmprojects

@@ -31,37 +31,37 @@ class Specprocnlpversion
     /**
      * @var string|null
      *
-     * @ORM\Column(name="processingvariables", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="processingvariables", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $processingvariables = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="score", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="score", type="integer", nullable=true, options={"default"=NULL})
      */
     private $score = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="source", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="source", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $source = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Specprocessorrawlabels

@@ -31,44 +31,44 @@ class Taxaresourcelinks
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourceidentifier", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="sourceidentifier", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $sourceidentifier = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourceguid", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="sourceguid", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $sourceguid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="url", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="url", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $url = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="ranking", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="ranking", type="integer", nullable=true, options={"default"=NULL})
      */
     private $ranking = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Taxa

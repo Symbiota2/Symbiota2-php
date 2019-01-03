@@ -24,28 +24,28 @@ class Taxstatus
     /**
      * @var string|null
      *
-     * @ORM\Column(name="hierarchystr", type="string", length=200, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="hierarchystr", type="string", length=200, nullable=true, options={"default"=NULL})
      */
     private $hierarchystr = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="family", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="family", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $family = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnacceptabilityReason", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="UnacceptabilityReason", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $unacceptabilityreason = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
@@ -59,9 +59,9 @@ class Taxstatus
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Taxa

@@ -26,30 +26,30 @@ class Taxadescrblock
     /**
      * @var string|null
      *
-     * @ORM\Column(name="caption", type="string", length=40, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="caption", type="string", length=40, nullable=true, options={"default"=NULL})
      */
     private $caption = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="source", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="source", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $source = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourceurl", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="sourceurl", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $sourceurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="language", type="string", length=45, nullable=true, options={"default"="'English'"})
+     * @ORM\Column(name="language", type="string", length=45, nullable=true, options={"default"="English"})
      */
-    private $language = '\'English\'';
+    private $language = 'English';
 
     /**
      * @var int
@@ -68,16 +68,16 @@ class Taxadescrblock
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Adminlanguages
@@ -100,26 +100,11 @@ class Taxadescrblock
     private $tid;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Taxaprofilepubs", inversedBy="tdbid")
-     * @ORM\JoinTable(name="taxaprofilepubdesclink",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="tdbid", referencedColumnName="tdbid")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="tppid", referencedColumnName="tppid")
-     *   }
-     * )
-     */
-    private $tppid;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->tppid = new \Doctrine\Common\Collections\ArrayCollection();
+
     }
 
     public function getTdbid(): ?int
@@ -243,32 +228,6 @@ class Taxadescrblock
     public function setTid(?Taxa $tid): self
     {
         $this->tid = $tid;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Taxaprofilepubs[]
-     */
-    public function getTppid(): Collection
-    {
-        return $this->tppid;
-    }
-
-    public function addTppid(Taxaprofilepubs $tppid): self
-    {
-        if (!$this->tppid->contains($tppid)) {
-            $this->tppid[] = $tppid;
-        }
-
-        return $this;
-    }
-
-    public function removeTppid(Taxaprofilepubs $tppid): self
-    {
-        if ($this->tppid->contains($tppid)) {
-            $this->tppid->removeElement($tppid);
-        }
 
         return $this;
     }

@@ -56,23 +56,23 @@ class Kmcslang
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="description", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $description = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="intialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="intialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $intialtimestamp = 'current_timestamp()';
+    private $intialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getCid(): ?int
     {

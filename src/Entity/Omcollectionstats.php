@@ -22,65 +22,65 @@ class Omcollectionstats
     /**
      * @var int|null
      *
-     * @ORM\Column(name="georefcnt", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="georefcnt", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $georefcnt = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="familycnt", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="familycnt", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $familycnt = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="genuscnt", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="genuscnt", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $genuscnt = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="speciescnt", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="speciescnt", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $speciescnt = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="uploaddate", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="uploaddate", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $uploaddate = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="datelastmodified", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="datelastmodified", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $datelastmodified = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="uploadedby", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="uploadedby", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $uploadedby = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicProperties", type="text", length=0, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dynamicProperties", type="text", length=0, nullable=true, options={"default"=NULL})
      */
     private $dynamicproperties = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Omcollections

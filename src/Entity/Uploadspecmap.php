@@ -31,9 +31,9 @@ class Uploadspecmap
     /**
      * @var string
      *
-     * @ORM\Column(name="symbdatatype", type="string", length=45, nullable=false, options={"default"="'string'","comment"="string, numeric, datetime"})
+     * @ORM\Column(name="symbdatatype", type="string", length=45, nullable=false, options={"default"="string","comment"="string, numeric, datetime"})
      */
-    private $symbdatatype = '\'string\'';
+    private $symbdatatype = 'string';
 
     /**
      * @var string
@@ -45,9 +45,9 @@ class Uploadspecmap
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Uploadspecparameters

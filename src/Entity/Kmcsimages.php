@@ -45,30 +45,30 @@ class Kmcsimages
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="sortsequence", type="string", length=45, nullable=false, options={"default"="'50'"})
+     * @ORM\Column(name="sortsequence", type="string", length=45, nullable=false, options={"default"="50"})
      */
-    private $sortsequence = '\'50\'';
+    private $sortsequence = '50';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="username", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="username", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $username = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getCsimgid(): ?int
     {

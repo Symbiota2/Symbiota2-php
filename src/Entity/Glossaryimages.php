@@ -31,37 +31,37 @@ class Glossaryimages
     /**
      * @var string|null
      *
-     * @ORM\Column(name="thumbnailurl", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="thumbnailurl", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $thumbnailurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="structures", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="structures", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $structures = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="createdBy", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="createdBy", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $createdby = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Users

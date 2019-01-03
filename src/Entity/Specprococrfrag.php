@@ -31,30 +31,30 @@ class Specprococrfrag
     /**
      * @var string|null
      *
-     * @ORM\Column(name="secondword", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="secondword", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $secondword = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="keyterm", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="keyterm", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $keyterm = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="wordorder", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="wordorder", type="integer", nullable=true, options={"default"=NULL})
      */
     private $wordorder = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Specprocessorrawlabels

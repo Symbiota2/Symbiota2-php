@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Specprocessorrawlabelsfulltext
  *
- * @ORM\Table(name="specprocessorrawlabelsfulltext", indexes={@ORM\Index(name="Index_ocr_fulltext", columns={"rawstr"}), @ORM\Index(name="Index_ocr_imgid", columns={"imgid"})})
+ * @ORM\Table(name="specprocessorrawlabelsfulltext", indexes={@ORM\Index(name="Index_ocr_fulltext", columns={"rawstr"}, flags={"fulltext"}), @ORM\Index(name="Index_ocr_imgid", columns={"imgid"})})
  * @ORM\Entity(repositoryClass="App\Repository\SpecprocessorrawlabelsfulltextRepository")
  */
 class Specprocessorrawlabelsfulltext

@@ -82,7 +82,7 @@ class Fmchklsttaxastatus
     /**
      * @var string|null
      *
-     * @ORM\Column(name="nativeStatus", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="nativeStatus", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $nativestatus = 'NULL';
 
@@ -96,58 +96,58 @@ class Fmchklsttaxastatus
     /**
      * @var string|null
      *
-     * @ORM\Column(name="protectedStatus", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="protectedStatus", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $protectedstatus = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="localitySecurity", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="localitySecurity", type="integer", nullable=true, options={"default"=NULL})
      */
     private $localitysecurity = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="localitySecurityReason", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="localitySecurityReason", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $localitysecurityreason = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="invasiveStatus", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="invasiveStatus", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $invasivestatus = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="modifiedUid", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="modifiedUid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $modifieduid = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $modifiedtimestamp = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getClid(): ?int
     {

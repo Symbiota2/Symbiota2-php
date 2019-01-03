@@ -15,37 +15,37 @@ class Glossarysources
     /**
      * @var string|null
      *
-     * @ORM\Column(name="contributorTerm", type="string", length=1000, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="contributorTerm", type="string", length=1000, nullable=true, options={"default"=NULL})
      */
     private $contributorterm = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="contributorImage", type="string", length=1000, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="contributorImage", type="string", length=1000, nullable=true, options={"default"=NULL})
      */
     private $contributorimage = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="translator", type="string", length=1000, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="translator", type="string", length=1000, nullable=true, options={"default"=NULL})
      */
     private $translator = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="additionalSources", type="string", length=1000, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="additionalSources", type="string", length=1000, nullable=true, options={"default"=NULL})
      */
     private $additionalsources = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Taxa

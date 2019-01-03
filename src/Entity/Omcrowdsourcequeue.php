@@ -38,7 +38,7 @@ class Omcrowdsourcequeue
     /**
      * @var int|null
      *
-     * @ORM\Column(name="points", type="integer", nullable=true, options={"default"="NULL","comment"="0=fail, 1=minor edits, 2=no edits <default>, 3=excelled"})
+     * @ORM\Column(name="points", type="integer", nullable=true, options={"default"=NULL,"comment"="0=fail, 1=minor edits, 2=no edits <default>, 3=excelled"})
      */
     private $points = 'NULL';
 
@@ -52,16 +52,16 @@ class Omcrowdsourcequeue
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Omoccurrences

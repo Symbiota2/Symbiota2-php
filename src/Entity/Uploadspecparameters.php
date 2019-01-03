@@ -38,100 +38,100 @@ class Uploadspecparameters
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Platform", type="string", length=45, nullable=true, options={"default"="'1'","comment"="1 = MySQL; 2 = MSSQL; 3 = ORACLE; 11 = MS Access; 12 = FileMaker"})
+     * @ORM\Column(name="Platform", type="string", length=45, nullable=true, options={"default"="1","comment"="1 = MySQL; 2 = MSSQL; 3 = ORACLE; 11 = MS Access; 12 = FileMaker"})
      */
-    private $platform = '\'1\'';
+    private $platform = '1';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="server", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="server", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $server = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="port", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="port", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $port = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="driver", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="driver", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $driver = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Code", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Code", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $code = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Path", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Path", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $path = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="PkField", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="PkField", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $pkfield = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Username", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Username", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $username = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Password", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Password", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $password = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="SchemaName", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="SchemaName", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $schemaname = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="QueryStr", type="string", length=2000, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="QueryStr", type="string", length=2000, nullable=true, options={"default"=NULL})
      */
     private $querystr = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="cleanupsp", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="cleanupsp", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $cleanupsp = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="dlmisvalid", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="dlmisvalid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $dlmisvalid = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Omcollections

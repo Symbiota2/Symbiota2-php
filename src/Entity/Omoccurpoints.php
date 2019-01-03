@@ -38,23 +38,23 @@ class Omoccurpoints
     /**
      * @var polygon|null
      *
-     * @ORM\Column(name="errradiuspoly", type="polygon", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="errradiuspoly", type="polygon", nullable=true, options={"default"=NULL})
      */
     private $errradiuspoly = 'NULL';
 
     /**
      * @var polygon|null
      *
-     * @ORM\Column(name="footprintpoly", type="polygon", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="footprintpoly", type="polygon", nullable=true, options={"default"=NULL})
      */
     private $footprintpoly = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getGeoid(): ?int
     {

@@ -38,44 +38,44 @@ class Tmstates
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="description", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $description = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="refurl", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="refurl", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $refurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="sortseq", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="sortseq", type="integer", nullable=true, options={"default"=NULL})
      */
     private $sortseq = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="datelastmodified", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="datelastmodified", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $datelastmodified = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Users

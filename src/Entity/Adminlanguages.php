@@ -33,30 +33,30 @@ class Adminlanguages
     /**
      * @var string|null
      *
-     * @ORM\Column(name="iso639_1", type="string", length=10, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="iso639_1", type="string", length=10, nullable=true, options={"default"=NULL})
      */
     private $iso6391 = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="iso639_2", type="string", length=10, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="iso639_2", type="string", length=10, nullable=true, options={"default"=NULL})
      */
     private $iso6392 = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Doctrine\Common\Collections\Collection

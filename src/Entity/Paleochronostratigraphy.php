@@ -26,35 +26,35 @@ class Paleochronostratigraphy
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Eon", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Eon", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $eon = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Era", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Era", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $era = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Period", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Period", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $period = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Epoch", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Epoch", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $epoch = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Stage", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Stage", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $stage = 'NULL';
 

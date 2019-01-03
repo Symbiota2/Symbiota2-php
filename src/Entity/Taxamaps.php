@@ -33,16 +33,16 @@ class Taxamaps
     /**
      * @var string|null
      *
-     * @ORM\Column(name="title", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="title", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $title = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Taxa
@@ -55,26 +55,11 @@ class Taxamaps
     private $tid;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Taxaprofilepubs", inversedBy="mid")
-     * @ORM\JoinTable(name="taxaprofilepubmaplink",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="mid", referencedColumnName="mid")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="tppid", referencedColumnName="tppid")
-     *   }
-     * )
-     */
-    private $tppid;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->tppid = new \Doctrine\Common\Collections\ArrayCollection();
+
     }
 
     public function getMid(): ?int
@@ -126,32 +111,6 @@ class Taxamaps
     public function setTid(?Taxa $tid): self
     {
         $this->tid = $tid;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Taxaprofilepubs[]
-     */
-    public function getTppid(): Collection
-    {
-        return $this->tppid;
-    }
-
-    public function addTppid(Taxaprofilepubs $tppid): self
-    {
-        if (!$this->tppid->contains($tppid)) {
-            $this->tppid[] = $tppid;
-        }
-
-        return $this;
-    }
-
-    public function removeTppid(Taxaprofilepubs $tppid): self
-    {
-        if ($this->tppid->contains($tppid)) {
-            $this->tppid->removeElement($tppid);
-        }
 
         return $this;
     }

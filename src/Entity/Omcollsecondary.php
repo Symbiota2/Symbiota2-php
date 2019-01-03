@@ -31,7 +31,7 @@ class Omcollsecondary
     /**
      * @var string|null
      *
-     * @ORM\Column(name="CollectionCode", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="CollectionCode", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $collectioncode = 'NULL';
 
@@ -45,86 +45,86 @@ class Omcollsecondary
     /**
      * @var string|null
      *
-     * @ORM\Column(name="BriefDescription", type="string", length=300, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="BriefDescription", type="string", length=300, nullable=true, options={"default"=NULL})
      */
     private $briefdescription = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="FullDescription", type="string", length=1000, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="FullDescription", type="string", length=1000, nullable=true, options={"default"=NULL})
      */
     private $fulldescription = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Homepage", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Homepage", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $homepage = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="IndividualUrl", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="IndividualUrl", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $individualurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Contact", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Contact", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $contact = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Email", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Email", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $email = 'NULL';
 
     /**
      * @var float|null
      *
-     * @ORM\Column(name="LatitudeDecimal", type="float", precision=10, scale=0, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="LatitudeDecimal", type="float", precision=10, scale=0, nullable=true, options={"default"=NULL})
      */
     private $latitudedecimal = 'NULL';
 
     /**
      * @var float|null
      *
-     * @ORM\Column(name="LongitudeDecimal", type="float", precision=10, scale=0, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="LongitudeDecimal", type="float", precision=10, scale=0, nullable=true, options={"default"=NULL})
      */
     private $longitudedecimal = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="icon", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="icon", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $icon = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="CollType", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="CollType", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $colltype = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="SortSeq", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="SortSeq", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $sortseq = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="InitialTimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Omcollections

@@ -40,42 +40,42 @@ class Taxauthority
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="description", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $description = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="editors", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="editors", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $editors = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="contact", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="contact", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $contact = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="email", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="email", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $email = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="url", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="url", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $url = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
@@ -89,9 +89,9 @@ class Taxauthority
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Doctrine\Common\Collections\Collection

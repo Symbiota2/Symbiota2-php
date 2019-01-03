@@ -24,72 +24,72 @@ class Omoccurrevisions
     /**
      * @var string|null
      *
-     * @ORM\Column(name="oldValues", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="oldValues", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $oldvalues = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="newValues", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="newValues", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $newvalues = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="externalSource", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="externalSource", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $externalsource = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="externalEditor", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="externalEditor", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $externaleditor = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="guid", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="guid", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $guid = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="reviewStatus", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="reviewStatus", type="integer", nullable=true, options={"default"=NULL})
      */
     private $reviewstatus = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="appliedStatus", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="appliedStatus", type="integer", nullable=true, options={"default"=NULL})
      */
     private $appliedstatus = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="errorMessage", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="errorMessage", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $errormessage = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="externalTimestamp", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="externalTimestamp", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $externaltimestamp = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Omoccurrences

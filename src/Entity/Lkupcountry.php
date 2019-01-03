@@ -31,30 +31,30 @@ class Lkupcountry
     /**
      * @var string|null
      *
-     * @ORM\Column(name="iso", type="string", length=2, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="iso", type="string", length=2, nullable=true, options={"default"=NULL})
      */
     private $iso = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="iso3", type="string", length=3, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="iso3", type="string", length=3, nullable=true, options={"default"=NULL})
      */
     private $iso3 = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="numcode", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="numcode", type="integer", nullable=true, options={"default"=NULL})
      */
     private $numcode = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getCountryid(): ?int
     {

@@ -31,9 +31,9 @@ class Schemaversion
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateapplied", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="dateapplied", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $dateapplied = 'current_timestamp()';
+    private $dateapplied = 'CURRENT_TIMESTAMP';
 
     public function getId(): ?int
     {

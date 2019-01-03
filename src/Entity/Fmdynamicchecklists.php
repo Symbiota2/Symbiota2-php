@@ -26,35 +26,35 @@ class Fmdynamicchecklists
     /**
      * @var string|null
      *
-     * @ORM\Column(name="name", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="name", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $name = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="details", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="details", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $details = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="uid", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="uid", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $uid = 'NULL';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=45, nullable=false, options={"default"="'DynamicList'"})
+     * @ORM\Column(name="type", type="string", length=45, nullable=false, options={"default"="DynamicList"})
      */
-    private $type = '\'DynamicList\'';
+    private $type = 'DynamicList';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
@@ -68,9 +68,9 @@ class Fmdynamicchecklists
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Doctrine\Common\Collections\Collection

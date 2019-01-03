@@ -31,79 +31,79 @@ class Media
     /**
      * @var string|null
      *
-     * @ORM\Column(name="caption", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="caption", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $caption = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="author", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="author", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $author = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="mediatype", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="mediatype", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $mediatype = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="owner", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="owner", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $owner = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourceurl", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="sourceurl", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $sourceurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="locality", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="locality", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $locality = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=1000, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="description", type="string", length=1000, nullable=true, options={"default"=NULL})
      */
     private $description = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="mediaMD5", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="mediaMD5", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $mediamd5 = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="sortsequence", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="sortsequence", type="integer", nullable=true, options={"default"=NULL})
      */
     private $sortsequence = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Omoccurrences

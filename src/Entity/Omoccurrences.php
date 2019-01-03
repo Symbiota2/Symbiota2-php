@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Omoccurrences
  *
- * @ORM\Table(name="omoccurrences", uniqueConstraints={@ORM\UniqueConstraint(name="Index_collid", columns={"collid", "dbpk"})}, indexes={@ORM\Index(name="Index_latestDateCollected", columns={"latestDateCollected"}), @ORM\Index(name="Index_county", columns={"county"}), @ORM\Index(name="Index_eventDate", columns={"eventDate"}), @ORM\Index(name="Index_occurDateEntered", columns={"dateEntered"}), @ORM\Index(name="Index_sciname", columns={"sciname"}), @ORM\Index(name="Index_ownerInst", columns={"ownerInstitutionCode"}), @ORM\Index(name="occelevmin", columns={"minimumElevationInMeters"}), @ORM\Index(name="Index_otherCatalogNumbers", columns={"otherCatalogNumbers"}), @ORM\Index(name="Index_state", columns={"stateProvince"}), @ORM\Index(name="Index_catalognumber", columns={"catalogNumber"}), @ORM\Index(name="Index_occurDateLastModifed", columns={"dateLastModified"}), @ORM\Index(name="FK_omoccurrences_uid", columns={"observeruid"}), @ORM\Index(name="Index_gui", columns={"occurrenceID"}), @ORM\Index(name="occelevmax", columns={"maximumElevationInMeters"}), @ORM\Index(name="Index_locality", columns={"locality"}), @ORM\Index(name="Index_country", columns={"country"}), @ORM\Index(name="Index_collnum", columns={"recordNumber"}), @ORM\Index(name="Index_occurrences_typestatus", columns={"typeStatus"}), @ORM\Index(name="FK_omoccurrences_tid", columns={"tidinterpreted"}), @ORM\Index(name="Index_collector", columns={"recordedBy"}), @ORM\Index(name="Index_occurrences_procstatus", columns={"processingstatus"}), @ORM\Index(name="Index_occurRecordEnteredBy", columns={"recordEnteredBy"}), @ORM\Index(name="Index_family", columns={"family"}), @ORM\Index(name="Index_municipality", columns={"municipality"}), @ORM\Index(name="Index_occurrences_cult", columns={"cultivationStatus"}), @ORM\Index(name="IDX_C48904CFEA1D339B", columns={"collid"})})
+ * @ORM\Table(name="omoccurrences", uniqueConstraints={@ORM\UniqueConstraint(name="Index_collid", columns={"collid", "dbpk"})}, indexes={@ORM\Index(name="Index_latestDateCollected", columns={"latestDateCollected"}), @ORM\Index(name="Index_county", columns={"county"}), @ORM\Index(name="Index_eventDate", columns={"eventDate"}), @ORM\Index(name="Index_occurDateEntered", columns={"dateEntered"}), @ORM\Index(name="Index_sciname", columns={"sciname"}), @ORM\Index(name="Index_ownerInst", columns={"ownerInstitutionCode"}), @ORM\Index(name="occelevmin", columns={"minimumElevationInMeters"}), @ORM\Index(name="Index_otherCatalogNumbers", columns={"otherCatalogNumbers"}), @ORM\Index(name="Index_state", columns={"stateProvince"}), @ORM\Index(name="Index_catalognumber", columns={"catalogNumber"}), @ORM\Index(name="Index_occurDateLastModifed", columns={"dateLastModified"}), @ORM\Index(name="FK_omoccurrences_uid", columns={"observeruid"}), @ORM\Index(name="Index_gui", columns={"occurrenceID"}), @ORM\Index(name="occelevmax", columns={"maximumElevationInMeters"}), @ORM\Index(name="Index_locality", columns={"locality"}, flags={"fulltext"}), @ORM\Index(name="Index_country", columns={"country"}), @ORM\Index(name="Index_collnum", columns={"recordNumber"}), @ORM\Index(name="Index_occurrences_typestatus", columns={"typeStatus"}), @ORM\Index(name="FK_omoccurrences_tid", columns={"tidinterpreted"}), @ORM\Index(name="Index_collector", columns={"recordedBy"}), @ORM\Index(name="Index_occurrences_procstatus", columns={"processingstatus"}), @ORM\Index(name="Index_occurRecordEnteredBy", columns={"recordEnteredBy"}), @ORM\Index(name="Index_family", columns={"family"}), @ORM\Index(name="Index_municipality", columns={"municipality"}), @ORM\Index(name="Index_occurrences_cult", columns={"cultivationStatus"}), @ORM\Index(name="IDX_C48904CFEA1D339B", columns={"collid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OmoccurrencesRepository")
  */
 class Omoccurrences
@@ -26,716 +26,716 @@ class Omoccurrences
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dbpk", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dbpk", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $dbpk = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="basisOfRecord", type="string", length=32, nullable=true, options={"default"="'PreservedSpecimen'","comment"="PreservedSpecimen, LivingSpecimen, HumanObservation"})
+     * @ORM\Column(name="basisOfRecord", type="string", length=32, nullable=true, options={"default"="PreservedSpecimen","comment"="PreservedSpecimen, LivingSpecimen, HumanObservation"})
      */
-    private $basisofrecord = '\'PreservedSpecimen\'';
+    private $basisofrecord = 'PreservedSpecimen';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="occurrenceID", type="string", length=255, nullable=true, options={"default"="NULL","comment"="UniqueGlobalIdentifier"})
+     * @ORM\Column(name="occurrenceID", type="string", length=255, nullable=true, options={"default"=NULL,"comment"="UniqueGlobalIdentifier"})
      */
     private $occurrenceid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="catalogNumber", type="string", length=32, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="catalogNumber", type="string", length=32, nullable=true, options={"default"=NULL})
      */
     private $catalognumber = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="otherCatalogNumbers", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="otherCatalogNumbers", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $othercatalognumbers = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="ownerInstitutionCode", type="string", length=32, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="ownerInstitutionCode", type="string", length=32, nullable=true, options={"default"=NULL})
      */
     private $ownerinstitutioncode = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="institutionID", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="institutionID", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $institutionid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="collectionID", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="collectionID", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $collectionid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="datasetID", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="datasetID", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $datasetid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="institutionCode", type="string", length=64, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="institutionCode", type="string", length=64, nullable=true, options={"default"=NULL})
      */
     private $institutioncode = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="collectionCode", type="string", length=64, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="collectionCode", type="string", length=64, nullable=true, options={"default"=NULL})
      */
     private $collectioncode = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="family", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="family", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $family = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="scientificName", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="scientificName", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $scientificname = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sciname", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="sciname", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $sciname = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="genus", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="genus", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $genus = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="specificEpithet", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="specificEpithet", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $specificepithet = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="taxonRank", type="string", length=32, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="taxonRank", type="string", length=32, nullable=true, options={"default"=NULL})
      */
     private $taxonrank = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="infraspecificEpithet", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="infraspecificEpithet", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $infraspecificepithet = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="scientificNameAuthorship", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="scientificNameAuthorship", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $scientificnameauthorship = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="taxonRemarks", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="taxonRemarks", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $taxonremarks = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identifiedBy", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="identifiedBy", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $identifiedby = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dateIdentified", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dateIdentified", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $dateidentified = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identificationReferences", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="identificationReferences", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $identificationreferences = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identificationRemarks", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="identificationRemarks", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $identificationremarks = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identificationQualifier", type="string", length=255, nullable=true, options={"default"="NULL","comment"="cf, aff, etc"})
+     * @ORM\Column(name="identificationQualifier", type="string", length=255, nullable=true, options={"default"=NULL,"comment"="cf, aff, etc"})
      */
     private $identificationqualifier = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="typeStatus", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="typeStatus", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $typestatus = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="recordedBy", type="string", length=255, nullable=true, options={"default"="NULL","comment"="Collector(s)"})
+     * @ORM\Column(name="recordedBy", type="string", length=255, nullable=true, options={"default"=NULL,"comment"="Collector(s)"})
      */
     private $recordedby = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="recordNumber", type="string", length=45, nullable=true, options={"default"="NULL","comment"="Collector Number"})
+     * @ORM\Column(name="recordNumber", type="string", length=45, nullable=true, options={"default"=NULL,"comment"="Collector Number"})
      */
     private $recordnumber = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="associatedCollectors", type="string", length=255, nullable=true, options={"default"="NULL","comment"="not DwC"})
+     * @ORM\Column(name="associatedCollectors", type="string", length=255, nullable=true, options={"default"=NULL,"comment"="not DwC"})
      */
     private $associatedcollectors = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="eventDate", type="date", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="eventDate", type="date", nullable=true, options={"default"=NULL})
      */
     private $eventdate = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="latestDateCollected", type="date", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="latestDateCollected", type="date", nullable=true, options={"default"=NULL})
      */
     private $latestdatecollected = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="year", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="year", type="integer", nullable=true, options={"default"=NULL})
      */
     private $year = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="month", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="month", type="integer", nullable=true, options={"default"=NULL})
      */
     private $month = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="day", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="day", type="integer", nullable=true, options={"default"=NULL})
      */
     private $day = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="startDayOfYear", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="startDayOfYear", type="integer", nullable=true, options={"default"=NULL})
      */
     private $startdayofyear = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="endDayOfYear", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="endDayOfYear", type="integer", nullable=true, options={"default"=NULL})
      */
     private $enddayofyear = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="verbatimEventDate", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="verbatimEventDate", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $verbatimeventdate = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="habitat", type="text", length=65535, nullable=true, options={"default"="NULL","comment"="Habitat, substrait, etc"})
+     * @ORM\Column(name="habitat", type="text", length=65535, nullable=true, options={"default"=NULL,"comment"="Habitat, substrait, etc"})
      */
     private $habitat = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="substrate", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="substrate", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $substrate = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="fieldNotes", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="fieldNotes", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $fieldnotes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="fieldnumber", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="fieldnumber", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $fieldnumber = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="eventID", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="eventID", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $eventid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="occurrenceRemarks", type="text", length=65535, nullable=true, options={"default"="NULL","comment"="General Notes"})
+     * @ORM\Column(name="occurrenceRemarks", type="text", length=65535, nullable=true, options={"default"=NULL,"comment"="General Notes"})
      */
     private $occurrenceremarks = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="informationWithheld", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="informationWithheld", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $informationwithheld = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dataGeneralizations", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dataGeneralizations", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $datageneralizations = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="associatedOccurrences", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="associatedOccurrences", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $associatedoccurrences = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="associatedTaxa", type="text", length=65535, nullable=true, options={"default"="NULL","comment"="Associated Species"})
+     * @ORM\Column(name="associatedTaxa", type="text", length=65535, nullable=true, options={"default"=NULL,"comment"="Associated Species"})
      */
     private $associatedtaxa = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $dynamicproperties = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="verbatimAttributes", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="verbatimAttributes", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $verbatimattributes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="behavior", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="behavior", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $behavior = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="reproductiveCondition", type="string", length=255, nullable=true, options={"default"="NULL","comment"="Phenology: flowers, fruit, sterile"})
+     * @ORM\Column(name="reproductiveCondition", type="string", length=255, nullable=true, options={"default"=NULL,"comment"="Phenology: flowers, fruit, sterile"})
      */
     private $reproductivecondition = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="cultivationStatus", type="integer", nullable=true, options={"default"="NULL","comment"="0 = wild, 1 = cultivated"})
+     * @ORM\Column(name="cultivationStatus", type="integer", nullable=true, options={"default"=NULL,"comment"="0 = wild, 1 = cultivated"})
      */
     private $cultivationstatus = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="establishmentMeans", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="establishmentMeans", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $establishmentmeans = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="lifeStage", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="lifeStage", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $lifestage = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sex", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="sex", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $sex = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="individualCount", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="individualCount", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $individualcount = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="samplingProtocol", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="samplingProtocol", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $samplingprotocol = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="samplingEffort", type="string", length=200, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="samplingEffort", type="string", length=200, nullable=true, options={"default"=NULL})
      */
     private $samplingeffort = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="preparations", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="preparations", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $preparations = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="locationID", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="locationID", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $locationid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="waterBody", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="waterBody", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $waterbody = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="country", type="string", length=64, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="country", type="string", length=64, nullable=true, options={"default"=NULL})
      */
     private $country = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="stateProvince", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="stateProvince", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $stateprovince = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="county", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="county", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $county = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="municipality", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="municipality", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $municipality = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="locality", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="locality", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $locality = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="localitySecurity", type="integer", nullable=true, options={"default"="NULL","comment"="0 = no security; 1 = hidden locality"})
+     * @ORM\Column(name="localitySecurity", type="integer", nullable=true, options={"default"=NULL,"comment"="0 = no security; 1 = hidden locality"})
      */
     private $localitysecurity = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="localitySecurityReason", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="localitySecurityReason", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $localitysecurityreason = 'NULL';
 
     /**
      * @var float|null
      *
-     * @ORM\Column(name="decimalLatitude", type="float", precision=10, scale=0, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="decimalLatitude", type="float", precision=10, scale=0, nullable=true, options={"default"=NULL})
      */
     private $decimallatitude = 'NULL';
 
     /**
      * @var float|null
      *
-     * @ORM\Column(name="decimalLongitude", type="float", precision=10, scale=0, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="decimalLongitude", type="float", precision=10, scale=0, nullable=true, options={"default"=NULL})
      */
     private $decimallongitude = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="geodeticDatum", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="geodeticDatum", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $geodeticdatum = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="coordinateUncertaintyInMeters", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="coordinateUncertaintyInMeters", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $coordinateuncertaintyinmeters = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="footprintWKT", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="footprintWKT", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $footprintwkt = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="coordinatePrecision", type="decimal", precision=9, scale=7, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="coordinatePrecision", type="decimal", precision=9, scale=7, nullable=true, options={"default"=NULL})
      */
     private $coordinateprecision = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="locationRemarks", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="locationRemarks", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $locationremarks = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="verbatimCoordinates", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="verbatimCoordinates", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $verbatimcoordinates = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="verbatimCoordinateSystem", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="verbatimCoordinateSystem", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $verbatimcoordinatesystem = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="georeferencedBy", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="georeferencedBy", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $georeferencedby = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="georeferenceProtocol", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="georeferenceProtocol", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $georeferenceprotocol = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="georeferenceSources", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="georeferenceSources", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $georeferencesources = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="georeferenceVerificationStatus", type="string", length=32, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="georeferenceVerificationStatus", type="string", length=32, nullable=true, options={"default"=NULL})
      */
     private $georeferenceverificationstatus = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="georeferenceRemarks", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="georeferenceRemarks", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $georeferenceremarks = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="minimumElevationInMeters", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="minimumElevationInMeters", type="integer", nullable=true, options={"default"=NULL})
      */
     private $minimumelevationinmeters = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="maximumElevationInMeters", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="maximumElevationInMeters", type="integer", nullable=true, options={"default"=NULL})
      */
     private $maximumelevationinmeters = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="verbatimElevation", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="verbatimElevation", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $verbatimelevation = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="minimumDepthInMeters", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="minimumDepthInMeters", type="integer", nullable=true, options={"default"=NULL})
      */
     private $minimumdepthinmeters = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="maximumDepthInMeters", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="maximumDepthInMeters", type="integer", nullable=true, options={"default"=NULL})
      */
     private $maximumdepthinmeters = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="verbatimDepth", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="verbatimDepth", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $verbatimdepth = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="previousIdentifications", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="previousIdentifications", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $previousidentifications = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="disposition", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="disposition", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $disposition = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="storageLocation", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="storageLocation", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $storagelocation = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="genericcolumn1", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="genericcolumn1", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $genericcolumn1 = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="genericcolumn2", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="genericcolumn2", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $genericcolumn2 = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modified", type="datetime", nullable=true, options={"default"="NULL","comment"="DateLastModified"})
+     * @ORM\Column(name="modified", type="datetime", nullable=true, options={"default"=NULL,"comment"="DateLastModified"})
      */
     private $modified = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="language", type="string", length=20, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="language", type="string", length=20, nullable=true, options={"default"=NULL})
      */
     private $language = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="processingstatus", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="processingstatus", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $processingstatus = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="recordEnteredBy", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="recordEnteredBy", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $recordenteredby = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="duplicateQuantity", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="duplicateQuantity", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $duplicatequantity = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="labelProject", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="labelProject", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $labelproject = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicFields", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dynamicFields", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $dynamicfields = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateEntered", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dateEntered", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $dateentered = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateLastModified", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="dateLastModified", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $datelastmodified = 'current_timestamp()';
+    private $datelastmodified = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Taxa
@@ -766,13 +766,6 @@ class Omoccurrences
      * })
      */
     private $collid;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Omcollpublications", mappedBy="occid")
-     */
-    private $pubid;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -830,7 +823,6 @@ class Omoccurrences
      */
     public function __construct()
     {
-        $this->pubid = new \Doctrine\Common\Collections\ArrayCollection();
         $this->omenid = new \Doctrine\Common\Collections\ArrayCollection();
         $this->duplicateid = new \Doctrine\Common\Collections\ArrayCollection();
         $this->chronoid = new \Doctrine\Common\Collections\ArrayCollection();
@@ -2099,34 +2091,6 @@ class Omoccurrences
     public function setCollid(?Omcollections $collid): self
     {
         $this->collid = $collid;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Omcollpublications[]
-     */
-    public function getPubid(): Collection
-    {
-        return $this->pubid;
-    }
-
-    public function addPubid(Omcollpublications $pubid): self
-    {
-        if (!$this->pubid->contains($pubid)) {
-            $this->pubid[] = $pubid;
-            $pubid->addOccid($this);
-        }
-
-        return $this;
-    }
-
-    public function removePubid(Omcollpublications $pubid): self
-    {
-        if ($this->pubid->contains($pubid)) {
-            $this->pubid->removeElement($pubid);
-            $pubid->removeOccid($this);
-        }
 
         return $this;
     }

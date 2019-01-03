@@ -24,21 +24,21 @@ class Usertaxonomy
     /**
      * @var string|null
      *
-     * @ORM\Column(name="editorstatus", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="editorstatus", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $editorstatus = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="geographicScope", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="geographicScope", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $geographicscope = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
@@ -52,16 +52,16 @@ class Usertaxonomy
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $modifiedtimestamp = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Taxauthority

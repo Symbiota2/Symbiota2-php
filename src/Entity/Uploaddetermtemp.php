@@ -24,21 +24,21 @@ class Uploaddetermtemp
     /**
      * @var int|null
      *
-     * @ORM\Column(name="occid", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="occid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $occid = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="collid", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="collid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $collid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dbpk", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dbpk", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $dbpk = 'NULL';
 
@@ -59,7 +59,7 @@ class Uploaddetermtemp
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateIdentifiedInterpreted", type="date", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dateIdentifiedInterpreted", type="date", nullable=true, options={"default"=NULL})
      */
     private $dateidentifiedinterpreted = 'NULL';
 
@@ -73,49 +73,49 @@ class Uploaddetermtemp
     /**
      * @var string|null
      *
-     * @ORM\Column(name="scientificNameAuthorship", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="scientificNameAuthorship", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $scientificnameauthorship = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identificationQualifier", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="identificationQualifier", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $identificationqualifier = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="iscurrent", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="iscurrent", type="integer", nullable=true, options={"default"=NULL})
      */
     private $iscurrent = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="detType", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="detType", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $dettype = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identificationReferences", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="identificationReferences", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $identificationreferences = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identificationRemarks", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="identificationRemarks", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $identificationremarks = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourceIdentifier", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="sourceIdentifier", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $sourceidentifier = 'NULL';
 
@@ -129,9 +129,9 @@ class Uploaddetermtemp
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getUpdetid(): ?int
     {

@@ -33,177 +33,177 @@ class Referenceobject
     /**
      * @var string|null
      *
-     * @ORM\Column(name="secondarytitle", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="secondarytitle", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $secondarytitle = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="shorttitle", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="shorttitle", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $shorttitle = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="tertiarytitle", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="tertiarytitle", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $tertiarytitle = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="alternativetitle", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="alternativetitle", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $alternativetitle = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="typework", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="typework", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $typework = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="figures", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="figures", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $figures = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="pubdate", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="pubdate", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $pubdate = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="edition", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="edition", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $edition = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="volume", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="volume", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $volume = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="numbervolumnes", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="numbervolumnes", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $numbervolumnes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="number", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="number", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $number = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="pages", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="pages", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $pages = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="section", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="section", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $section = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="placeofpublication", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="placeofpublication", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $placeofpublication = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="publisher", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="publisher", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $publisher = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="isbn_issn", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="isbn_issn", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $isbnIssn = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="url", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="url", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $url = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="guid", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="guid", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $guid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="ispublished", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="ispublished", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $ispublished = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="cheatauthors", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="cheatauthors", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $cheatauthors = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="cheatcitation", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="cheatcitation", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $cheatcitation = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="modifieduid", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="modifieduid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $modifieduid = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $modifiedtimestamp = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Referencetype

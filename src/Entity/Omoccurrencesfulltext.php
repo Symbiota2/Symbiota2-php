@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Omoccurrencesfulltext
  *
- * @ORM\Table(name="omoccurrencesfulltext", indexes={@ORM\Index(name="ft_occur_locality", columns={"locality"}), @ORM\Index(name="ft_occur_recordedby", columns={"recordedby"})})
+ * @ORM\Table(name="omoccurrencesfulltext", indexes={@ORM\Index(name="ft_occur_locality", columns={"locality"}, flags={"fulltext"}), @ORM\Index(name="ft_occur_recordedby", columns={"recordedby"})})
  * @ORM\Entity(repositoryClass="App\Repository\OmoccurrencesfulltextRepository")
  */
 class Omoccurrencesfulltext
@@ -24,14 +24,14 @@ class Omoccurrencesfulltext
     /**
      * @var string|null
      *
-     * @ORM\Column(name="locality", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="locality", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $locality = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="recordedby", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="recordedby", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $recordedby = 'NULL';
 

@@ -15,58 +15,58 @@ class Tmattributes
     /**
      * @var string|null
      *
-     * @ORM\Column(name="modifier", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="modifier", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $modifier = 'NULL';
 
     /**
      * @var float|null
      *
-     * @ORM\Column(name="xvalue", type="float", precision=15, scale=5, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="xvalue", type="float", precision=15, scale=5, nullable=true, options={"default"=NULL})
      */
     private $xvalue = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="imagecoordinates", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="imagecoordinates", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $imagecoordinates = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="source", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="source", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $source = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="statuscode", type="boolean", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="statuscode", type="boolean", nullable=true, options={"default"=NULL})
      */
     private $statuscode = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="datelastmodified", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="datelastmodified", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $datelastmodified = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Tmstates

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Taxalinks
  *
- * @ORM\Table(name="taxalinks", indexes={@ORM\Index(name="Index_unique", columns={"tid", "url"}), @ORM\Index(name="IDX_5C8832E452596C31", columns={"tid"})})
+ * @ORM\Table(name="taxalinks", indexes={@ORM\Index(name="Index_unique", columns={"tid", "url"})})
  * @ORM\Entity(repositoryClass="App\Repository\TaxalinksRepository")
  */
 class Taxalinks
@@ -38,21 +38,21 @@ class Taxalinks
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourceIdentifier", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="sourceIdentifier", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $sourceidentifier = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="owner", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="owner", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $owner = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="icon", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="icon", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $icon = 'NULL';
 
@@ -66,7 +66,7 @@ class Taxalinks
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
@@ -80,9 +80,9 @@ class Taxalinks
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Taxa

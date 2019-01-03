@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Omoccurdeterminations
  *
- * @ORM\Table(name="omoccurdeterminations", uniqueConstraints={@ORM\UniqueConstraint(name="Index_unique", columns={"occid", "dateIdentified", "identifiedBy", "sciname"})}, indexes={@ORM\Index(name="FK_omoccurdets_idby_idx", columns={"idbyid"}), @ORM\Index(name="FK_omoccurdets_tid", columns={"tidinterpreted"}), @ORM\Index(name="Index_dateIdentInterpreted", columns={"dateIdentifiedInterpreted"}), @ORM\Index(name="IDX_CA5B5A7F40A24FBA", columns={"occid"})})
+ * @ORM\Table(name="omoccurdeterminations", uniqueConstraints={@ORM\UniqueConstraint(name="Index_unique", columns={"occid", "dateIdentified", "identifiedBy", "sciname"})}, indexes={@ORM\Index(name="FK_omoccurdets_tid", columns={"tidinterpreted"}), @ORM\Index(name="Index_dateIdentInterpreted", columns={"dateIdentifiedInterpreted"}), @ORM\Index(name="IDX_CA5B5A7F40A24FBA", columns={"occid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OmoccurdeterminationsRepository")
  */
 class Omoccurdeterminations
@@ -38,7 +38,7 @@ class Omoccurdeterminations
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateIdentifiedInterpreted", type="date", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dateIdentifiedInterpreted", type="date", nullable=true, options={"default"=NULL})
      */
     private $dateidentifiedinterpreted = 'NULL';
 
@@ -52,28 +52,28 @@ class Omoccurdeterminations
     /**
      * @var string|null
      *
-     * @ORM\Column(name="scientificNameAuthorship", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="scientificNameAuthorship", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $scientificnameauthorship = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identificationQualifier", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="identificationQualifier", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $identificationqualifier = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="iscurrent", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="iscurrent", type="integer", nullable=true, options={"default"=NULL})
      */
     private $iscurrent = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="printqueue", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="printqueue", type="integer", nullable=true, options={"default"=NULL})
      */
     private $printqueue = 'NULL';
 
@@ -87,28 +87,28 @@ class Omoccurdeterminations
     /**
      * @var string|null
      *
-     * @ORM\Column(name="detType", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="detType", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $dettype = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identificationReferences", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="identificationReferences", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $identificationreferences = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identificationRemarks", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="identificationRemarks", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $identificationremarks = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourceIdentifier", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="sourceIdentifier", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $sourceidentifier = 'NULL';
 
@@ -122,9 +122,9 @@ class Omoccurdeterminations
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Omoccurrences
@@ -145,16 +145,6 @@ class Omoccurdeterminations
      * })
      */
     private $tidinterpreted;
-
-    /**
-     * @var \Omcollectors
-     *
-     * @ORM\ManyToOne(targetEntity="Omcollectors")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idbyid", referencedColumnName="recordedById")
-     * })
-     */
-    private $idbyid;
 
     public function getDetid(): ?int
     {
@@ -364,18 +354,5 @@ class Omoccurdeterminations
 
         return $this;
     }
-
-    public function getIdbyid(): ?Omcollectors
-    {
-        return $this->idbyid;
-    }
-
-    public function setIdbyid(?Omcollectors $idbyid): self
-    {
-        $this->idbyid = $idbyid;
-
-        return $this;
-    }
-
 
 }

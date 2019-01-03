@@ -31,16 +31,16 @@ class Lkupstateprovince
     /**
      * @var string|null
      *
-     * @ORM\Column(name="abbrev", type="string", length=2, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="abbrev", type="string", length=2, nullable=true, options={"default"=NULL})
      */
     private $abbrev = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Lkupcountry

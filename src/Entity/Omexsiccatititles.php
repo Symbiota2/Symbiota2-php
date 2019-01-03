@@ -31,65 +31,65 @@ class Omexsiccatititles
     /**
      * @var string|null
      *
-     * @ORM\Column(name="abbreviation", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="abbreviation", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $abbreviation = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="editor", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="editor", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $editor = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="exsrange", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="exsrange", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $exsrange = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="startdate", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="startdate", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $startdate = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="enddate", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="enddate", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $enddate = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="source", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="source", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $source = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=2000, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=2000, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="lasteditedby", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="lasteditedby", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $lasteditedby = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getOmetid(): ?int
     {

@@ -33,49 +33,49 @@ class Fmprojects
     /**
      * @var string|null
      *
-     * @ORM\Column(name="displayname", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="displayname", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $displayname = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="managers", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="managers", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $managers = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="briefdescription", type="string", length=300, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="briefdescription", type="string", length=300, nullable=true, options={"default"=NULL})
      */
     private $briefdescription = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="fulldescription", type="string", length=2000, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="fulldescription", type="string", length=2000, nullable=true, options={"default"=NULL})
      */
     private $fulldescription = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="iconUrl", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="iconUrl", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $iconurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="headerUrl", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="headerUrl", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $headerurl = 'NULL';
 
@@ -96,7 +96,7 @@ class Fmprojects
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $dynamicproperties = 'NULL';
 
@@ -110,9 +110,9 @@ class Fmprojects
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Fmprojects

@@ -24,7 +24,7 @@ class Kmdescr
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Modifier", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Modifier", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $modifier = 'NULL';
 
@@ -40,21 +40,21 @@ class Kmdescr
     /**
      * @var float|null
      *
-     * @ORM\Column(name="X", type="float", precision=15, scale=5, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="X", type="float", precision=15, scale=5, nullable=true, options={"default"=NULL})
      */
     private $x = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="TXT", type="text", length=0, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="TXT", type="text", length=0, nullable=true, options={"default"=NULL})
      */
     private $txt = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="PseudoTrait", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="PseudoTrait", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $pseudotrait = 'NULL';
 
@@ -68,37 +68,37 @@ class Kmdescr
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Inherited", type="string", length=50, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Inherited", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $inherited = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Source", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Source", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $source = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="Seq", type="integer", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Seq", type="integer", nullable=true, options={"default"=NULL})
      */
     private $seq = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Notes", type="text", length=0, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="Notes", type="text", length=0, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="DateEntered", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="DateEntered", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $dateentered = 'current_timestamp()';
+    private $dateentered = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Taxa

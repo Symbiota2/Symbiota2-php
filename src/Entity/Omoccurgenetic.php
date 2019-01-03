@@ -24,7 +24,7 @@ class Omoccurgenetic
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identifier", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="identifier", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $identifier = 'NULL';
 
@@ -38,35 +38,35 @@ class Omoccurgenetic
     /**
      * @var string|null
      *
-     * @ORM\Column(name="title", type="string", length=150, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="title", type="string", length=150, nullable=true, options={"default"=NULL})
      */
     private $title = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="locus", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="locus", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $locus = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="resourceurl", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="resourceurl", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $resourceurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="initialtimestamp", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="initialtimestamp", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $initialtimestamp = 'NULL';
 

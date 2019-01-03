@@ -33,37 +33,37 @@ class Referenceauthors
     /**
      * @var string|null
      *
-     * @ORM\Column(name="firstname", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="firstname", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $firstname = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="middlename", type="string", length=100, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="middlename", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $middlename = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="modifieduid", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="modifieduid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $modifieduid = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $modifiedtimestamp = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Doctrine\Common\Collections\Collection

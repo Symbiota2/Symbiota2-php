@@ -33,58 +33,58 @@ class Tmtraits
     /**
      * @var string
      *
-     * @ORM\Column(name="traittype", type="string", length=2, nullable=false, options={"default"="'UM'"})
+     * @ORM\Column(name="traittype", type="string", length=2, nullable=false, options={"default"="UM"})
      */
-    private $traittype = '\'UM\'';
+    private $traittype = 'UM';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="units", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="units", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $units = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="description", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $description = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="refurl", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="refurl", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $refurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true, options={"default"=NULL})
      */
     private $dynamicproperties = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="datelastmodified", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="datelastmodified", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $datelastmodified = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Users

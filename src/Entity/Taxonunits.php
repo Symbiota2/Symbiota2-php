@@ -24,7 +24,7 @@ class Taxonunits
     /**
      * @var string
      *
-     * @ORM\Column(name="kingdomName", type="string", length=45, nullable=false, options={"default"="'Organism'"})
+     * @ORM\Column(name="kingdomName", type="string", length=45, nullable=false, options={"default"="Organism"})
      */
     private $kingdomname = 'Organism';
 
@@ -45,7 +45,7 @@ class Taxonunits
     /**
      * @var string|null
      *
-     * @ORM\Column(name="suffix", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="suffix", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $suffix = 'NULL';
 
@@ -59,30 +59,30 @@ class Taxonunits
     /**
      * @var int|null
      *
-     * @ORM\Column(name="reqparentrankid", type="smallint", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="reqparentrankid", type="smallint", nullable=true, options={"default"=NULL})
      */
     private $reqparentrankid = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="modifiedby", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="modifiedby", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $modifiedby = 'NULL';
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $modifiedtimestamp = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getTaxonunitid(): ?int
     {

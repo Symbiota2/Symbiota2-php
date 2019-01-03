@@ -33,16 +33,16 @@ class Kmcharacters
     /**
      * @var string
      *
-     * @ORM\Column(name="chartype", type="string", length=2, nullable=false, options={"default"="'UM'"})
+     * @ORM\Column(name="chartype", type="string", length=2, nullable=false, options={"default"="UM"})
      */
-    private $chartype = '\'UM\'';
+    private $chartype = 'UM';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="defaultlang", type="string", length=45, nullable=false, options={"default"="'English'"})
+     * @ORM\Column(name="defaultlang", type="string", length=45, nullable=false, options={"default"="English"})
      */
-    private $defaultlang = '\'English\'';
+    private $defaultlang = 'English';
 
     /**
      * @var int
@@ -54,56 +54,56 @@ class Kmcharacters
     /**
      * @var string|null
      *
-     * @ORM\Column(name="units", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="units", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $units = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="description", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $description = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=255, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="notes", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $notes = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="helpurl", type="string", length=500, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="helpurl", type="string", length=500, nullable=true, options={"default"=NULL})
      */
     private $helpurl = 'NULL';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="enteredby", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="enteredby", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $enteredby = 'NULL';
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="sortsequence", type="integer", nullable=true, options={"default"="NULL","unsigned"=true})
+     * @ORM\Column(name="sortsequence", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
      */
     private $sortsequence = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="current_timestamp()"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $initialtimestamp = 'current_timestamp()';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="display", type="string", length=45, nullable=true, options={"default"="NULL"})
+     * @ORM\Column(name="display", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $display = 'NULL';
 
