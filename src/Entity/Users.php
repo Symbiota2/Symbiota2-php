@@ -269,10 +269,10 @@ class Users implements UserInterface
     /**
      * @var int
      *
-     * @ORM\Column(name="ispublic", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="ispublic", type="integer", nullable=false, options={"unsigned"=true, "default"="1"})
      * @Assert\NotBlank(groups={"post"})
      */
-    private $ispublic;
+    private $ispublic = '1';
 
     /**
      * @var \DateTime|null
@@ -300,14 +300,14 @@ class Users implements UserInterface
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     * @ORM\Column(name="updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $updatedAt;
+    private $updatedAt = 'CURRENT_TIMESTAMP';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="verified", type="integer", nullable=false)
+     * @ORM\Column(name="verified", type="integer", nullable=false, options={"default"="0"})
      */
     private $verified = '0';
 

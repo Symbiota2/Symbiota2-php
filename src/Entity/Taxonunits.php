@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Taxonunits
  *
- * @ORM\Table(name="taxonunits", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQUE_taxonunits", columns={"kingdomName", "rankid"})})
+ * @ORM\Table(name="taxonunits", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQUE_taxonunits", columns={"rankid", "rankname"})})
  * @ORM\Entity(repositoryClass="App\Repository\TaxonunitsRepository")
  */
 class Taxonunits
@@ -20,13 +20,6 @@ class Taxonunits
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $taxonunitid;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="kingdomName", type="string", length=45, nullable=false, options={"default"="Organism"})
-     */
-    private $kingdomname = 'Organism';
 
     /**
      * @var int
@@ -87,18 +80,6 @@ class Taxonunits
     public function getTaxonunitid(): ?int
     {
         return $this->taxonunitid;
-    }
-
-    public function getKingdomname(): ?string
-    {
-        return $this->kingdomname;
-    }
-
-    public function setKingdomname(string $kingdomname): self
-    {
-        $this->kingdomname = $kingdomname;
-
-        return $this;
     }
 
     public function getRankid(): ?int

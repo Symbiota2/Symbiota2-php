@@ -30,13 +30,6 @@ class Taxa
     private $tid;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="kingdomName", type="string", length=45, nullable=true, options={"default"=NULL})
-     */
-    private $kingdomname = 'NULL';
-
-    /**
      * @var int|null
      *
      * @ORM\Column(name="RankId", type="smallint", nullable=true, options={"default"=NULL,"unsigned"=true})
@@ -137,9 +130,9 @@ class Taxa
     /**
      * @var int
      *
-     * @ORM\Column(name="SecurityStatus", type="integer", nullable=false, options={"unsigned"=true,"comment"="0 = no security; 1 = hidden locality"})
+     * @ORM\Column(name="SecurityStatus", type="integer", nullable=false, options={"unsigned"=true,"default"="0","comment"="0 = no security; 1 = hidden locality"})
      */
-    private $securitystatus;
+    private $securitystatus = '0';
 
     /**
      * @var \DateTime|null
@@ -239,18 +232,6 @@ class Taxa
     public function getTid(): ?int
     {
         return $this->tid;
-    }
-
-    public function getKingdomname(): ?string
-    {
-        return $this->kingdomname;
-    }
-
-    public function setKingdomname(?string $kingdomname): self
-    {
-        $this->kingdomname = $kingdomname;
-
-        return $this;
     }
 
     public function getRankid(): ?int
