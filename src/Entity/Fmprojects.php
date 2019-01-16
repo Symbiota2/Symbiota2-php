@@ -26,7 +26,7 @@ class Fmprojects
     /**
      * @var string
      *
-     * @ORM\Column(name="projname", type="string", length=45, nullable=false)
+     * @ORM\Column(name="projname", type="string", length=60, nullable=false)
      */
     private $projname;
 
