@@ -628,6 +628,9 @@ ALTER TABLE `usertaxonomy`
 ALTER TABLE `taxalinks`
   DROP FOREIGN KEY `FK_taxalinks_taxa`;
 
+ALTER TABLE `taxonunits`
+  DROP INDEX `UNIQUE_taxonunits`;
+
 DELETE FROM taxonunits
 WHERE RankName IN("Organism","Kingdom","Subkingdom","Division","Phylum","Subdivision","Subphylum","Superclass",
 	"Class","Subclass","Order","Suborder","Family","Subfamily","Tribe","Subtribe","Genus","Subgenus",

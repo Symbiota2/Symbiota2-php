@@ -24,13 +24,6 @@ class Taxstatus
     /**
      * @var string|null
      *
-     * @ORM\Column(name="hierarchystr", type="string", length=200, nullable=true, options={"default"=NULL})
-     */
-    private $hierarchystr = 'NULL';
-
-    /**
-     * @var string|null
-     *
      * @ORM\Column(name="family", type="string", length=50, nullable=true, options={"default"=NULL})
      */
     private $family = 'NULL';
@@ -106,18 +99,6 @@ class Taxstatus
     public function getTsid(): ?int
     {
         return $this->tsid;
-    }
-
-    public function getHierarchystr(): ?string
-    {
-        return $this->hierarchystr;
-    }
-
-    public function setHierarchystr(?string $hierarchystr): self
-    {
-        $this->hierarchystr = $hierarchystr;
-
-        return $this;
     }
 
     public function getFamily(): ?string
