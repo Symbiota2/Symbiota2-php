@@ -18,10 +18,21 @@ Symbiota2 can be installed for development in the following steps:
 - `composer install`
 - `npm install`
 - Edit /.env with database connection parameters
-- `php bin/console doctrine:migrations:diff`
-- `php bin/console doctrine:migrations:migrate`
-- To populate development database with data `php bin/console doctrine:database:import config/sql/dev_data.sql --env=dev`
-- To populate production database with default data `php bin/console doctrine:database:import config/sql/default_data.sql --env=prod`
+- To install the pre-populated Symbiota2 development database:
+  - Unzip config/sql/symbiota2_dev_db.zip
+  - From project root run `php bin/console doctrine:database:import config/sql/dev/* --env=dev`
+  - All users have the password: password
+- To use an existing Symbiota database:
+  - Ensure that the database has been updated to schema 1.1
+  - `php bin/console doctrine:database:import config/sql/db_schema-1.1_patch.sql --env=dev`
+  - `php bin/console doctrine:migrations:diff`
+  - `php bin/console doctrine:migrations:migrate`
+  - All existing users will need to update their passwords before successfully logging in
+- To install an empty Symbiota2 database with default lookup data:
+  - `php bin/console doctrine:migrations:diff`
+  - `php bin/console doctrine:migrations:migrate`
+  - `php bin/console doctrine:database:import config/sql/default_data.sql --env=dev`
+  - One admin user will be added to the database with username: admin and password: admin
 - Generate private key by `openssl genrsa -out config/jwt/private.pem -aes256 4096` and use JWT_PASSPHRASE value from /.env file as pass phrase when prompted, then enter value again to verify
 - Generate public key by `openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem` and use JWT_PASSPHRASE value from /.env file as pass phrase when prompted
 - Within /frontend/environments/environment.ts, change [API base URL] with the base URL of your backend API (ex. http://localhost/public/)
