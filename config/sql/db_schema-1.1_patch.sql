@@ -628,7 +628,39 @@ ALTER TABLE `usertaxonomy`
 ALTER TABLE `taxalinks`
   DROP FOREIGN KEY `FK_taxalinks_taxa`;
 
-DELETE FROM taxonunits WHERE taxonunitid > 152;
+DELETE FROM taxonunits
+WHERE RankName IN("Organism","Kingdom","Subkingdom","Division","Phylum","Subdivision","Subphylum","Superclass",
+	"Class","Subclass","Order","Suborder","Family","Subfamily","Tribe","Subtribe","Genus","Subgenus",
+	"Section","Subsection","Species","Subspecies","Variety","Morph","Subvariety","Form","Subform","Cultivated");
+
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (1, 'Organism', 1, 1);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (10, 'Kingdom', 1, 1);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (20, 'Subkingdom', 10, 10);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (30, 'Division', 20, 10);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (30, 'Phylum', 20, 10);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (40, 'Subdivision', 30, 30);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (40, 'Subphylum', 30, 30);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (50, 'Superclass', 40, 30);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (60, 'Class', 50, 30);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (70, 'Subclass', 60, 60);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (100, 'Order', 70, 60);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (110, 'Suborder', 100, 100);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (140, 'Family', 110, 100);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (150, 'Subfamily', 140, 140);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (160, 'Tribe', 150, 140);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (170, 'Subtribe', 160, 140);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (180, 'Genus', 170, 140);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (190, 'Subgenus', 180, 180);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (200, 'Section', 190, 180);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (210, 'Subsection', 200, 180);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (220, 'Species', 210, 180);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (230, 'Subspecies', 220, 180);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (240, 'Variety', 220, 180);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (240, 'Morph', 220, 180);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (250, 'Subvariety', 240, 180);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (260, 'Form', 220, 180);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (270, 'Subform', 260, 180);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (300, 'Cultivated', 220, 220);
 
 TRUNCATE TABLE omoccurgeoindex;
 

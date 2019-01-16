@@ -2,7 +2,7 @@
 INSERT INTO `schemaversion`(`versionnumber`) VALUES ('2.0');
 
 -- Create the general admin user
-INSERT INTO `users`(`uid`, `firstname`, `lastname`, `username`, `password`, `email`) VALUES (1, 'General', 'Administrator', 'admin', '*4ACFE3202A5FF5CF467898FC58AAB1D615029441', 'NA');
+INSERT INTO `users`(`uid`, `firstname`, `lastname`, `username`, `password`, `email`) VALUES (1, 'General', 'Administrator', 'admin', '$2y$13$hf01Dqnk.yzLADw0jbwjme/7Vn/TlR9M.MeOu39FQf4vEwBacRZIe', 'NA');
 INSERT INTO `userroles`(`uid`, `role`) VALUES (1, 'SuperAdmin');
 
 -- Prime taxa tables
