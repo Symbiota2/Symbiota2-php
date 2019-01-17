@@ -691,3 +691,5 @@ UPDATE omcrowdsourcecentral c INNER JOIN omcrowdsourcequeue q ON c.omcsid = q.om
   INNER JOIN userroles r ON c.collid = r.tablepk AND q.uidprocessor = r.uid
   SET q.isvolunteer = 0
   WHERE r.role IN("CollAdmin","CollEditor") AND q.isvolunteer = 1;
+
+INSERT INTO `schemaversion`(`versionnumber`) VALUES ('2.0');
