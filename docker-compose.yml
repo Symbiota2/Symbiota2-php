@@ -44,14 +44,3 @@ services:
       - 8080:80
     links:
       - mysql
-
-  db:
-    image: postgres:10-alpine
-    environment:
-      - POSTGRES_DB=symbiota2
-      - POSTGRES_USER=symbiota2
-      - POSTGRES_PASSWORD=symbiota2
-    volumes:
-      - ./docker/data/postgresdb:/var/lib/mysql
-    ports:
-      - 5432:5432
