@@ -28,10 +28,10 @@ services:
     volumes:
       - ./docker/data/mysqldb:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: symbiota2
-      MYSQL_USER: symbiota2
-      MYSQL_PASSWORD: symbiota2
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
     container_name: mysql
 
   phpmyadmin:
@@ -44,3 +44,14 @@ services:
       - 8080:80
     links:
       - mysql
+
+  postgres:
+    image: postgres:10-alpine
+    environment:
+      - POSTGRES_DB=symbiota2
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./docker/data/postgresdb:/var/lib/postgresql/data:rw
+    ports:
+      - "5432:5432"
