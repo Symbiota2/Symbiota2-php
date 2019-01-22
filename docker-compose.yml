@@ -2,68 +2,56 @@ version: '3.4'
 
 services:
   php:
-    build:
-      context: './docker/php/'
-      args:
-        PHP_VERSION: ${PHP_VERSION}
-    networks:
-      - backend
+    build: ./docker/php
     volumes:
-      - ${PROJECT_ROOT}/:/var/www/html/
+      - .:/home/wwwroot/symbiota2
+    depends_on:
+      - mysql
     container_name: php
 
   apache:
-    build:
-      context: './docker/apache/'
-      args:
-        APACHE_VERSION: ${APACHE_VERSION}
+    build: ./docker/apache
+    container_name: apache
+    ports:
+      - 80:80
+    volumes:
+      - ./docker/apache/vhosts:/etc/apache2/sites-enabled
+      - .:/home/wwwroot/symbiota2
     depends_on:
       - php
-      - mysql
-    networks:
-      - frontend
-      - backend
-    ports:
-      - "80:80"
-    volumes:
-      - ${PROJECT_ROOT}/:/var/www/html/
-    container_name: apache
 
   mysql:
-    image: mysql:${MYSQL_VERSION:-latest}
-    restart: always
+    image: mysql
+    command: "--default-authentication-plugin=mysql_native_password"
     ports:
       - "3306:3306"
     volumes:
-      - data:/var/lib/mysql
-    networks:
-      - backend
+      - ./docker/data/mysqldb:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
-      MYSQL_DATABASE: "${DB_NAME}"
-      MYSQL_USER: "${DB_USERNAME}"
-      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: symbiota2
+      MYSQL_USER: symbiota2
+      MYSQL_PASSWORD: symbiota2
     container_name: mysql
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - 8080:80
+    links:
+      - mysql
+
   db:
-    # In production, you may want to use a managed database service
     image: postgres:10-alpine
     environment:
-      - POSTGRES_DB=api
-      - POSTGRES_USER=api-platform
-      # You should definitely change the password in production
-      - POSTGRES_PASSWORD=!ChangeMe!
+      - POSTGRES_DB=symbiota2
+      - POSTGRES_USER=symbiota2
+      - POSTGRES_PASSWORD=symbiota2
     volumes:
-      - db-data:/var/lib/postgresql/data:rw
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
+      - ./docker/data/postgresdb:/var/lib/mysql
     ports:
-      - "5432:5432"
-
-networks:
-  frontend:
-  backend:
-
-volumes:
-  db-data:
-  data:
+      - 5432:5432

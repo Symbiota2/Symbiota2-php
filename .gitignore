@@ -60,3 +60,4 @@ Homestead.yaml
 /frontend/environments/environment.prod.ts
 /frontend/environments/environment.ts
 /config/sql/dev/
+/docker/data/
