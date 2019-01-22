@@ -57,7 +57,5 @@ Homestead.json
 Homestead.yaml
 /.rnd
 /package-lock.json
-/frontend/environments/environment.prod.ts
-/frontend/environments/environment.ts
 /config/sql/dev/
 /docker/data/

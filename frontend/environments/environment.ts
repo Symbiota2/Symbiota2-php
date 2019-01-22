@@ -4,8 +4,8 @@
 
 export const environment = {
     production: false,
-    apiUrl: '[API base URL]',
-    clientSecret: '[client secret]',
+    apiUrl: 'http://localhost/public/',
+    clientSecret: '123456789',
     clientId: 2,
     grantType: 'password',
 };

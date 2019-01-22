@@ -53,9 +53,7 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "pre-update-cmd": [
-            "@php -r \"file_exists('.env') || copy('.env.dist', '.env');\"",
-            "@php -r \"file_exists('./frontend/environments/environment.prod.ts') || copy('./frontend/environments/environment.prod.ts.dist', './frontend/environments/environment.prod.ts');\"",
-            "@php -r \"file_exists('./frontend/environments/environment.ts') || copy('./frontend/environments/environment.ts.dist', './frontend/environments/environment.ts');\""
+            "@php -r \"file_exists('.env') || copy('.env.dist', '.env');\""
         ],
         "post-install-cmd": [
             "@auto-scripts"
