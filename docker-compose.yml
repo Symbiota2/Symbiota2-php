@@ -4,28 +4,28 @@ services:
   php:
     build: ./docker/php
     container_name: php
+    working_dir: /application
     volumes:
-      - .:/home/wwwroot/symbiota2
-    depends_on:
-      - mysql
+      - .:/application
+      - ./docker/php/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
 
-  apache:
-    build: ./docker/apache
-    container_name: apache
-    ports:
-      - 80:80
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    working_dir: /application
     volumes:
-      - ./docker/apache/vhosts:/etc/apache2/sites-enabled
-      - .:/home/wwwroot/symbiota2
-    depends_on:
-      - php
+      - .:/application
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
 
   mysql:
-    image: mysql
+    image: mysql:8.0
     container_name: mysql
+    working_dir: /application
     command: "--default-authentication-plugin=mysql_native_password"
     ports:
-      - "3306:3306"
+      - "3310:3306"
     volumes:
       - ./docker/data/mysqldb:/var/lib/mysql
     environment:
@@ -41,13 +41,13 @@ services:
       - 8080:80
     environment:
       PMA_HOST: mysql
-      PMA_PORT: 3306
+      PMA_PORT: 3310
 
   postgres:
     image: postgres:10-alpine
     container_name: postgres
     ports:
-      - "5432:5432"
+      - "5430:5432"
     volumes:
       - ./docker/data/postgresdb:/var/lib/postgresql/data:rw
     environment:
