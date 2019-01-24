@@ -35,8 +35,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: symbiota2
-      MYSQL_USER: root
-      MYSQL_PASSWORD: password
     networks:
       - symbiota2
 
@@ -48,6 +46,8 @@ services:
     environment:
       PMA_HOST: mysql
       PMA_PORT: 3310
+    depends_on:
+      - mysql
     networks:
       - symbiota2
 
