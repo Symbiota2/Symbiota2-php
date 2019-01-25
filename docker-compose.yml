@@ -1,69 +1,44 @@
-version: '3.4'
+version: '3'
 
 services:
   php:
     build: ./docker/php
-    container_name: php
     working_dir: /application
     volumes:
       - .:/application
       - ./docker/php/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
-    networks:
-      - symbiota2
 
   nginx:
     image: nginx:alpine
-    container_name: nginx
     working_dir: /application
     volumes:
       - .:/application
       - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
       - "80:80"
-    networks:
-      - symbiota2
 
   mysql:
-    image: mysql:8.0
-    container_name: mysql
-    working_dir: /application
+    image: mysql:5.7
     command: "--default-authentication-plugin=mysql_native_password"
-    ports:
-      - "3310:3306"
     volumes:
       - ./docker/data/mysqldb:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: symbiota2
-    networks:
-      - symbiota2
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
     ports:
       - 8080:80
     environment:
       PMA_HOST: mysql
-      PMA_PORT: 3310
+      PMA_PORT: 3306
     depends_on:
       - mysql
-    networks:
-      - symbiota2
 
   postgres:
-    image: postgres:10-alpine
-    container_name: postgres
-    ports:
-      - "5430:5432"
+    image: postgres:11-alpine
     volumes:
       - ./docker/data/postgresdb:/var/lib/postgresql/data:rw
     environment:
-      - POSTGRES_DB=symbiota2
-      - POSTGRES_USER=root
       - POSTGRES_PASSWORD=password
-    networks:
-      - symbiota2
-
-networks:
-  symbiota2:
