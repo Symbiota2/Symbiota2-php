@@ -18,6 +18,9 @@ Symbiota2 can be installed for development in the following steps:
 - `composer install`
 - `npm install`
 - Edit /.env with database connection parameters
+- To start development environment `docker-compose up -d`
+- To connect with development server `docker-compose exec apache bash`
+- To shut down development environment `docker-compose down`
 - To install the pre-populated Symbiota2 development database:
   - Unzip config/sql/symbiota2_dev_db.zip
   - From project root run `php bin/console doctrine:database:import config/sql/dev/* --env=dev`

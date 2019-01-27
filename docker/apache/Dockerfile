@@ -48,4 +48,4 @@ RUN { \
 		echo 'opcache.enable_cli=1'; \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
-WORKDIR /var/www/html
+WORKDIR /home/wwwroot/symbiota2
