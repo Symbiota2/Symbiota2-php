@@ -30,11 +30,12 @@ services:
       MYSQL_DATABASE: symbiota2
 
   postgres:
-    image: postgres:11-alpine
+    image: mdillon/postgis:11
     volumes:
       - ./docker/data/postgres:/var/lib/postgresql/data:rw
     environment:
-      - POSTGRES_PASSWORD=password
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: symbiota2
 
   adminer:
     image: adminer:4.7
