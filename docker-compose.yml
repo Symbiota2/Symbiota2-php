@@ -1,19 +1,11 @@
 version: '3'
 
 services:
-  php:
-    build: ./docker/php
-    working_dir: /application
+  apache:
+    build: ./docker/apache
     volumes:
-      - .:/application
-      - ./docker/php/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
-
-  nginx:
-    image: nginx:alpine
-    working_dir: /application
-    volumes:
-      - .:/application
-      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/apache/vhosts:/etc/apache2/sites-enabled
+      - .:/home/wwwroot/symbiota2
     ports:
       - "80:80"
 
