@@ -8,12 +8,8 @@ doctrine:
         driver: '%env(resolve:DATABASE_DRIVER)%'
         server_version: '%env(resolve:DATABASE_SERVER_VERSION)%'
         url: '%env(resolve:DATABASE_URL)%'
-        types:
-            geometry:   CrEOF\Spatial\DBAL\Types\GeometryType
-            point:      CrEOF\Spatial\DBAL\Types\Geometry\PointType
-            polygon:    CrEOF\Spatial\DBAL\Types\Geometry\PolygonType
-            linestring: CrEOF\Spatial\DBAL\Types\Geometry\LineStringType
-            geography:  CrEOF\Spatial\DBAL\Types\GeographyType
+        mapping_types:
+            _text: string
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore

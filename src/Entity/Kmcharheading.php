@@ -17,7 +17,7 @@ class Kmcharheading
      *
      * @ORM\Column(name="hid", type="integer", nullable=false, options={"unsigned"=true})
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $hid;
 
@@ -59,8 +59,6 @@ class Kmcharheading
     /**
      * @var \Adminlanguages
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Adminlanguages")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="langid", referencedColumnName="langid")

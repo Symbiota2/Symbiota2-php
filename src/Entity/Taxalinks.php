@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Taxalinks
  *
- * @ORM\Table(name="taxalinks", indexes={@ORM\Index(name="Index_unique", columns={"tid", "url"})})
+ * @ORM\Table(name="taxalinks", indexes={@ORM\Index(name="Index_unique_taxalinks", columns={"tid", "url"})})
  * @ORM\Entity(repositoryClass="App\Repository\TaxalinksRepository")
  */
 class Taxalinks

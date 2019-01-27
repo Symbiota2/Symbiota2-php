@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Lkupcounty
  *
- * @ORM\Table(name="lkupcounty", uniqueConstraints={@ORM\UniqueConstraint(name="unique_county", columns={"stateId", "countyName"})}, indexes={@ORM\Index(name="index_countyname", columns={"countyName"}), @ORM\Index(name="fk_stateprovince", columns={"stateId"})})
+ * @ORM\Table(name="lkupcounty", uniqueConstraints={@ORM\UniqueConstraint(name="unique_county", columns={"stateId", "countyName"})}, indexes={@ORM\Index(name="index_countyname", columns={"countyName"}), @ORM\Index(name="fk_stateprovince_lkupcounty", columns={"stateId"})})
  * @ORM\Entity(repositoryClass="App\Repository\LkupcountyRepository")
  */
 class Lkupcounty

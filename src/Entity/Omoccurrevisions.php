@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Omoccurrevisions
  *
- * @ORM\Table(name="omoccurrevisions", uniqueConstraints={@ORM\UniqueConstraint(name="guid_UNIQUE", columns={"guid"})}, indexes={@ORM\Index(name="fk_omrevisions_uid_idx", columns={"uid"}), @ORM\Index(name="Index_omrevisions_reviewed", columns={"reviewStatus"}), @ORM\Index(name="fk_omrevisions_occid_idx", columns={"occid"}), @ORM\Index(name="Index_omrevisions_applied", columns={"appliedStatus"}), @ORM\Index(name="Index_omrevisions_editor", columns={"externalEditor"}), @ORM\Index(name="Index_omrevisions_source", columns={"externalSource"})})
+ * @ORM\Table(name="omoccurrevisions", uniqueConstraints={@ORM\UniqueConstraint(name="guid_UNIQUE_omoccurrevisions", columns={"guid"})}, indexes={@ORM\Index(name="fk_omrevisions_uid_idx", columns={"uid"}), @ORM\Index(name="Index_omrevisions_reviewed", columns={"reviewStatus"}), @ORM\Index(name="fk_omrevisions_occid_idx", columns={"occid"}), @ORM\Index(name="Index_omrevisions_applied", columns={"appliedStatus"}), @ORM\Index(name="Index_omrevisions_editor", columns={"externalEditor"}), @ORM\Index(name="Index_omrevisions_source", columns={"externalSource"})})
  * @ORM\Entity(repositoryClass="App\Repository\OmoccurrevisionsRepository")
  */
 class Omoccurrevisions

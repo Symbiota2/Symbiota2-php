@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Uploadspecmap
  *
- * @ORM\Table(name="uploadspecmap", uniqueConstraints={@ORM\UniqueConstraint(name="Index_unique", columns={"uspid", "symbspecfield", "sourcefield"})}, indexes={@ORM\Index(name="IDX_2B717C4B248B8A2F", columns={"uspid"})})
+ * @ORM\Table(name="uploadspecmap", uniqueConstraints={@ORM\UniqueConstraint(name="Index_unique_uploadspecmap", columns={"uspid", "symbspecfield", "sourcefield"})}, indexes={@ORM\Index(name="IDX_2B717C4B248B8A2F", columns={"uspid"})})
  * @ORM\Entity(repositoryClass="App\Repository\UploadspecmapRepository")
  */
 class Uploadspecmap
