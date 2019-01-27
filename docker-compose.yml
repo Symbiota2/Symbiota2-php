@@ -7,30 +7,37 @@ services:
       - ./docker/apache/vhosts:/etc/apache2/sites-enabled
       - .:/home/wwwroot/symbiota2
     ports:
-      - "80:80"
+      - 80:80
 
   mysql:
     image: mysql:5.7
     command: "--default-authentication-plugin=mysql_native_password"
     volumes:
-      - ./docker/data/mysqldb:/var/lib/mysql
+      - ./docker/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
+      - ./docker/data/mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: symbiota2
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - 8080:80
+  mariadb:
+    image: mariadb:10.4
+    command: "--default-authentication-plugin=mysql_native_password"
+    volumes:
+      - ./docker/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
+      - ./docker/data/mariadb:/var/lib/mysql
     environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
-    depends_on:
-      - mysql
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: symbiota2
 
   postgres:
     image: postgres:11-alpine
     volumes:
-      - ./docker/data/postgresdb:/var/lib/postgresql/data:rw
+      - ./docker/data/postgres:/var/lib/postgresql/data:rw
     environment:
       - POSTGRES_PASSWORD=password
+
+  adminer:
+    image: adminer:4.7
+    restart: always
+    ports:
+      - 8080:8080
