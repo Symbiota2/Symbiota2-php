@@ -24,6 +24,16 @@ class Omoccurrences
     private $occid;
 
     /**
+     * @var \Omcollections
+     *
+     * @ORM\ManyToOne(targetEntity="Omcollections")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
+     * })
+     */
+    private $collid;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="dbpk", type="string", length=150, nullable=true, options={"default"=NULL})
@@ -120,6 +130,16 @@ class Omoccurrences
      * @ORM\Column(name="sciname", type="string", length=255, nullable=true, options={"default"=NULL})
      */
     private $sciname = 'NULL';
+
+    /**
+     * @var \Taxa
+     *
+     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tidinterpreted", referencedColumnName="TID")
+     * })
+     */
+    private $tidinterpreted;
 
     /**
      * @var string|null
@@ -689,6 +709,16 @@ class Omoccurrences
     private $language = 'NULL';
 
     /**
+     * @var \Users
+     *
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="observeruid", referencedColumnName="uid")
+     * })
+     */
+    private $observeruid;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="processingstatus", type="string", length=45, nullable=true, options={"default"=NULL})
@@ -736,36 +766,6 @@ class Omoccurrences
      * @ORM\Column(name="dateLastModified", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $datelastmodified = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Taxa
-     *
-     * @ORM\ManyToOne(targetEntity="Taxa")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tidinterpreted", referencedColumnName="TID")
-     * })
-     */
-    private $tidinterpreted;
-
-    /**
-     * @var \Users
-     *
-     * @ORM\ManyToOne(targetEntity="Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="observeruid", referencedColumnName="uid")
-     * })
-     */
-    private $observeruid;
-
-    /**
-     * @var \Omcollections
-     *
-     * @ORM\ManyToOne(targetEntity="Omcollections")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
-     * })
-     */
-    private $collid;
 
     /**
      * @var \Doctrine\Common\Collections\Collection

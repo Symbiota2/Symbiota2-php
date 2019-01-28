@@ -24,6 +24,16 @@ class Taxamaps
     private $mid;
 
     /**
+     * @var \Taxa
+     *
+     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     * })
+     */
+    private $tid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255, nullable=false)
@@ -43,16 +53,6 @@ class Taxamaps
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Taxa
-     *
-     * @ORM\ManyToOne(targetEntity="Taxa")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
-     * })
-     */
-    private $tid;
 
     /**
      * Constructor

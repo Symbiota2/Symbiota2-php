@@ -13,6 +13,18 @@ use Doctrine\ORM\Mapping as ORM;
 class Omcollectionstats
 {
     /**
+     * @var \Omcollections
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Omcollections")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
+     * })
+     */
+    private $collid;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="recordcnt", type="integer", nullable=false, options={"unsigned"=true})
@@ -81,18 +93,6 @@ class Omcollectionstats
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Omcollections
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Omcollections")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
-     * })
-     */
-    private $collid;
 
     public function getRecordcnt(): ?int
     {

@@ -52,6 +52,16 @@ class Kmcharacters
     private $difficultyrank = '1';
 
     /**
+     * @var \Kmcharheading
+     *
+     * @ORM\ManyToOne(targetEntity="Kmcharheading")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="hid", referencedColumnName="hid")
+     * })
+     */
+    private $hid;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="units", type="string", length=45, nullable=true, options={"default"=NULL})
@@ -106,16 +116,6 @@ class Kmcharacters
      * @ORM\Column(name="display", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $display = 'NULL';
-
-    /**
-     * @var \Kmcharheading
-     *
-     * @ORM\ManyToOne(targetEntity="Kmcharheading")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="hid", referencedColumnName="hid")
-     * })
-     */
-    private $hid;
 
     /**
      * @var \Doctrine\Common\Collections\Collection

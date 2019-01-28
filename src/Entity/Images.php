@@ -24,6 +24,16 @@ class Images
     private $imgid;
 
     /**
+     * @var \Taxa
+     *
+     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     * })
+     */
+    private $tid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255, nullable=false)
@@ -57,6 +67,16 @@ class Images
      * @ORM\Column(name="photographer", type="string", length=100, nullable=true, options={"default"=NULL})
      */
     private $photographer = 'NULL';
+
+    /**
+     * @var \Users
+     *
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="photographeruid", referencedColumnName="uid")
+     * })
+     */
+    private $photographeruid;
 
     /**
      * @var string|null
@@ -129,6 +149,16 @@ class Images
     private $locality = 'NULL';
 
     /**
+     * @var \Omoccurrences
+     *
+     * @ORM\ManyToOne(targetEntity="Omoccurrences")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     * })
+     */
+    private $occid;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="notes", type="string", length=350, nullable=true, options={"default"=NULL})
@@ -183,36 +213,6 @@ class Images
      * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Omoccurrences
-     *
-     * @ORM\ManyToOne(targetEntity="Omoccurrences")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
-     * })
-     */
-    private $occid;
-
-    /**
-     * @var \Taxa
-     *
-     * @ORM\ManyToOne(targetEntity="Taxa")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
-     * })
-     */
-    private $tid;
-
-    /**
-     * @var \Users
-     *
-     * @ORM\ManyToOne(targetEntity="Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="photographeruid", referencedColumnName="uid")
-     * })
-     */
-    private $photographeruid;
 
     /**
      * Constructor

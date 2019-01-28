@@ -22,6 +22,16 @@ class Omoccurrevisions
     private $orid;
 
     /**
+     * @var \Omoccurrences
+     *
+     * @ORM\ManyToOne(targetEntity="Omoccurrences")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     * })
+     */
+    private $occid;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="oldValues", type="text", length=65535, nullable=true, options={"default"=NULL})
@@ -78,6 +88,16 @@ class Omoccurrevisions
     private $errormessage = 'NULL';
 
     /**
+     * @var \Users
+     *
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+     * })
+     */
+    private $uid;
+
+    /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="externalTimestamp", type="datetime", nullable=true, options={"default"=NULL})
@@ -90,26 +110,6 @@ class Omoccurrevisions
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Omoccurrences
-     *
-     * @ORM\ManyToOne(targetEntity="Omoccurrences")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
-     * })
-     */
-    private $occid;
-
-    /**
-     * @var \Users
-     *
-     * @ORM\ManyToOne(targetEntity="Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
-     * })
-     */
-    private $uid;
 
     public function getOrid(): ?int
     {

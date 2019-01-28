@@ -22,6 +22,16 @@ class Omoccuredits
     private $ocedid;
 
     /**
+     * @var \Omoccurrences
+     *
+     * @ORM\ManyToOne(targetEntity="Omoccurrences")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     * })
+     */
+    private $occid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="FieldName", type="string", length=45, nullable=false)
@@ -71,23 +81,6 @@ class Omoccuredits
     private $guid = 'NULL';
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Omoccurrences
-     *
-     * @ORM\ManyToOne(targetEntity="Omoccurrences")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
-     * })
-     */
-    private $occid;
-
-    /**
      * @var \Users
      *
      * @ORM\ManyToOne(targetEntity="Users")
@@ -96,6 +89,13 @@ class Omoccuredits
      * })
      */
     private $uid;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     */
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getOcedid(): ?int
     {

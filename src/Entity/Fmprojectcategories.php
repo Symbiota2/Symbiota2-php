@@ -22,6 +22,16 @@ class Fmprojectcategories
     private $projcatid;
 
     /**
+     * @var \Fmprojects
+     *
+     * @ORM\ManyToOne(targetEntity="Fmprojects")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="pid", referencedColumnName="pid")
+     * })
+     */
+    private $pid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="categoryname", type="string", length=150, nullable=false)
@@ -83,16 +93,6 @@ class Fmprojectcategories
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Fmprojects
-     *
-     * @ORM\ManyToOne(targetEntity="Fmprojects")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="pid", referencedColumnName="pid")
-     * })
-     */
-    private $pid;
 
     public function getProjcatid(): ?int
     {

@@ -120,6 +120,16 @@ class Institutions
     private $notes = 'NULL';
 
     /**
+     * @var \Users
+     *
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
+     * })
+     */
+    private $modifieduid;
+
+    /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true, options={"default"=NULL})
@@ -132,16 +142,6 @@ class Institutions
      * @ORM\Column(name="IntialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $intialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Users
-     *
-     * @ORM\ManyToOne(targetEntity="Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
-     * })
-     */
-    private $modifieduid;
 
     public function getIid(): ?int
     {

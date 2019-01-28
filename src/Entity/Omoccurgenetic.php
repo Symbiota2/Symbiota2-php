@@ -22,6 +22,16 @@ class Omoccurgenetic
     private $idoccurgenetic;
 
     /**
+     * @var \Omoccurrences
+     *
+     * @ORM\ManyToOne(targetEntity="Omoccurrences")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     * })
+     */
+    private $occid;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="identifier", type="string", length=150, nullable=true, options={"default"=NULL})
@@ -69,16 +79,6 @@ class Omoccurgenetic
      * @ORM\Column(name="initialtimestamp", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $initialtimestamp = 'NULL';
-
-    /**
-     * @var \Omoccurrences
-     *
-     * @ORM\ManyToOne(targetEntity="Omoccurrences")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
-     * })
-     */
-    private $occid;
 
     public function getIdoccurgenetic(): ?int
     {

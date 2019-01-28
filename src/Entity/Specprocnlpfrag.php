@@ -22,6 +22,16 @@ class Specprocnlpfrag
     private $spnlpfragid;
 
     /**
+     * @var \Specprocnlp
+     *
+     * @ORM\ManyToOne(targetEntity="Specprocnlp")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="spnlpid", referencedColumnName="spnlpid")
+     * })
+     */
+    private $spnlpid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="fieldname", type="string", length=45, nullable=false)
@@ -55,16 +65,6 @@ class Specprocnlpfrag
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Specprocnlp
-     *
-     * @ORM\ManyToOne(targetEntity="Specprocnlp")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="spnlpid", referencedColumnName="spnlpid")
-     * })
-     */
-    private $spnlpid;
 
     public function getSpnlpfragid(): ?int
     {

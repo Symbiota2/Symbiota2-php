@@ -22,6 +22,46 @@ class Taxstatus
     private $tsid;
 
     /**
+     * @var \Taxa
+     *
+     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     * })
+     */
+    private $tid;
+
+    /**
+     * @var \Taxa
+     *
+     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tidaccepted", referencedColumnName="TID")
+     * })
+     */
+    private $tidaccepted;
+
+    /**
+     * @var \Taxauthority
+     *
+     * @ORM\ManyToOne(targetEntity="Taxauthority")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="taxauthid", referencedColumnName="taxauthid")
+     * })
+     */
+    private $taxauthid;
+
+    /**
+     * @var \Taxa
+     *
+     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="parenttid", referencedColumnName="TID")
+     * })
+     */
+    private $parenttid;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="family", type="string", length=50, nullable=true, options={"default"=NULL})
@@ -55,46 +95,6 @@ class Taxstatus
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Taxa
-     *
-     * @ORM\ManyToOne(targetEntity="Taxa")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tidaccepted", referencedColumnName="TID")
-     * })
-     */
-    private $tidaccepted;
-
-    /**
-     * @var \Taxauthority
-     *
-     * @ORM\ManyToOne(targetEntity="Taxauthority")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="taxauthid", referencedColumnName="taxauthid")
-     * })
-     */
-    private $taxauthid;
-
-    /**
-     * @var \Taxa
-     *
-     * @ORM\ManyToOne(targetEntity="Taxa")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="parenttid", referencedColumnName="TID")
-     * })
-     */
-    private $parenttid;
-
-    /**
-     * @var \Taxa
-     *
-     * @ORM\ManyToOne(targetEntity="Taxa")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
-     * })
-     */
-    private $tid;
 
     public function getTsid(): ?int
     {

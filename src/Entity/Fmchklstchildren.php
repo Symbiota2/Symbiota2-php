@@ -13,6 +13,18 @@ use Doctrine\ORM\Mapping as ORM;
 class Fmchklstchildren
 {
     /**
+     * @var \Fmchecklists
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Fmchecklists")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="clid", referencedColumnName="CLID")
+     * })
+     */
+    private $clid;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="clidchild", type="integer", nullable=false, options={"unsigned"=true})
@@ -41,18 +53,6 @@ class Fmchklstchildren
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Fmchecklists
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Fmchecklists")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="clid", referencedColumnName="CLID")
-     * })
-     */
-    private $clid;
 
     public function getClidchild(): ?int
     {

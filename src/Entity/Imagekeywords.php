@@ -22,20 +22,6 @@ class Imagekeywords
     private $imgkeywordid;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="keyword", type="string", length=45, nullable=false)
-     */
-    private $keyword;
-
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
      * @var \Images
      *
      * @ORM\ManyToOne(targetEntity="Images")
@@ -46,6 +32,13 @@ class Imagekeywords
     private $imgid;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="keyword", type="string", length=45, nullable=false)
+     */
+    private $keyword;
+
+    /**
      * @var \Users
      *
      * @ORM\ManyToOne(targetEntity="Users")
@@ -54,6 +47,13 @@ class Imagekeywords
      * })
      */
     private $uidassignedby;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     */
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getImgkeywordid(): ?int
     {

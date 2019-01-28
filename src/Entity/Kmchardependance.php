@@ -13,6 +13,18 @@ use Doctrine\ORM\Mapping as ORM;
 class Kmchardependance
 {
     /**
+     * @var \Kmcharacters
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Kmcharacters")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="CID", referencedColumnName="cid")
+     * })
+     */
+    private $cid;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="CIDDependance", type="integer", nullable=false, options={"unsigned"=true})
@@ -36,18 +48,6 @@ class Kmchardependance
      * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Kmcharacters
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Kmcharacters")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="CID", referencedColumnName="cid")
-     * })
-     */
-    private $cid;
 
     public function getCiddependance(): ?int
     {

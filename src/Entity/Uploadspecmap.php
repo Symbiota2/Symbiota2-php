@@ -22,6 +22,16 @@ class Uploadspecmap
     private $usmid;
 
     /**
+     * @var \Uploadspecparameters
+     *
+     * @ORM\ManyToOne(targetEntity="Uploadspecparameters")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="uspid", referencedColumnName="uspid")
+     * })
+     */
+    private $uspid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="sourcefield", type="string", length=45, nullable=false)
@@ -48,16 +58,6 @@ class Uploadspecmap
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Uploadspecparameters
-     *
-     * @ORM\ManyToOne(targetEntity="Uploadspecparameters")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uspid", referencedColumnName="uspid")
-     * })
-     */
-    private $uspid;
 
     public function getUsmid(): ?int
     {

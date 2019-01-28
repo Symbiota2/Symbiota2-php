@@ -13,11 +13,16 @@ use Doctrine\ORM\Mapping as ORM;
 class Taxaenumtree
 {
     /**
-     * @var \DateTime
+     * @var \Taxa
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     * })
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $tid;
 
     /**
      * @var \Taxauthority
@@ -44,16 +49,11 @@ class Taxaenumtree
     private $parenttid;
 
     /**
-     * @var \Taxa
+     * @var \DateTime
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Taxa")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
-     * })
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $tid;
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getInitialtimestamp(): ?\DateTimeInterface
     {

@@ -22,6 +22,26 @@ class Specprocessorrawlabels
     private $prlid;
 
     /**
+     * @var \Images
+     *
+     * @ORM\ManyToOne(targetEntity="Images")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="imgid", referencedColumnName="imgid")
+     * })
+     */
+    private $imgid;
+
+    /**
+     * @var \Omoccurrences
+     *
+     * @ORM\ManyToOne(targetEntity="Omoccurrences")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     * })
+     */
+    private $occid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="rawstr", type="text", length=65535, nullable=false)
@@ -69,26 +89,6 @@ class Specprocessorrawlabels
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Images
-     *
-     * @ORM\ManyToOne(targetEntity="Images")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="imgid", referencedColumnName="imgid")
-     * })
-     */
-    private $imgid;
-
-    /**
-     * @var \Omoccurrences
-     *
-     * @ORM\ManyToOne(targetEntity="Omoccurrences")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
-     * })
-     */
-    private $occid;
 
     public function getPrlid(): ?int
     {

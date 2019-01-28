@@ -22,6 +22,16 @@ class Kmcs
     private $kmcsid;
 
     /**
+     * @var \Kmcharacters
+     *
+     * @ORM\ManyToOne(targetEntity="Kmcharacters")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="cid", referencedColumnName="cid")
+     * })
+     */
+    private $cid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="cs", type="string", length=16, nullable=false)
@@ -90,16 +100,6 @@ class Kmcs
      * @ORM\Column(name="EnteredBy", type="string", length=45, nullable=true, options={"default"=NULL})
      */
     private $enteredby = 'NULL';
-
-    /**
-     * @var \Kmcharacters
-     *
-     * @ORM\ManyToOne(targetEntity="Kmcharacters")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="cid", referencedColumnName="cid")
-     * })
-     */
-    private $cid;
 
     public function getKmcsid(): ?int
     {

@@ -22,13 +22,6 @@ class Imagetag
     private $imagetagid;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
      * @var \Images
      *
      * @ORM\ManyToOne(targetEntity="Images")
@@ -47,6 +40,13 @@ class Imagetag
      * })
      */
     private $keyvalue;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     */
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getImagetagid(): ?int
     {

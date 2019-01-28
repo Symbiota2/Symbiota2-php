@@ -22,6 +22,16 @@ class Taxalinks
     private $tlid;
 
     /**
+     * @var \Taxa
+     *
+     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     * })
+     */
+    private $tid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=500, nullable=false)
@@ -83,16 +93,6 @@ class Taxalinks
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Taxa
-     *
-     * @ORM\ManyToOne(targetEntity="Taxa")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
-     * })
-     */
-    private $tid;
 
     public function getTlid(): ?int
     {

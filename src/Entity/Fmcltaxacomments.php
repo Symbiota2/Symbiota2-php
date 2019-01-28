@@ -43,6 +43,16 @@ class Fmcltaxacomments
     private $comment;
 
     /**
+     * @var \Users
+     *
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+     * })
+     */
+    private $uid;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="ispublic", type="integer", nullable=false, options={"default"="1"})
@@ -62,16 +72,6 @@ class Fmcltaxacomments
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Users
-     *
-     * @ORM\ManyToOne(targetEntity="Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
-     * })
-     */
-    private $uid;
 
     public function getCltaxacommentsid(): ?int
     {

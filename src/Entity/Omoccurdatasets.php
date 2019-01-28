@@ -43,13 +43,6 @@ class Omoccurdatasets
     private $sortsequence = 'NULL';
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
      * @var \Users
      *
      * @ORM\ManyToOne(targetEntity="Users")
@@ -68,6 +61,13 @@ class Omoccurdatasets
      * })
      */
     private $collid;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     */
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getDatasetid(): ?int
     {

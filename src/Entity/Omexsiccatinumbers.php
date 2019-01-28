@@ -31,6 +31,16 @@ class Omexsiccatinumbers
     private $exsnumber;
 
     /**
+     * @var \Omexsiccatititles
+     *
+     * @ORM\ManyToOne(targetEntity="Omexsiccatititles")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ometid", referencedColumnName="ometid")
+     * })
+     */
+    private $ometid;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
@@ -43,16 +53,6 @@ class Omexsiccatinumbers
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Omexsiccatititles
-     *
-     * @ORM\ManyToOne(targetEntity="Omexsiccatititles")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ometid", referencedColumnName="ometid")
-     * })
-     */
-    private $ometid;
 
     /**
      * @var \Doctrine\Common\Collections\Collection

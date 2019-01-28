@@ -22,6 +22,16 @@ class Glossaryimages
     private $glimgid;
 
     /**
+     * @var \Glossary
+     *
+     * @ORM\ManyToOne(targetEntity="Glossary")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="glossid", referencedColumnName="glossid")
+     * })
+     */
+    private $glossid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255, nullable=false)
@@ -57,13 +67,6 @@ class Glossaryimages
     private $createdby = 'NULL';
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
      * @var \Users
      *
      * @ORM\ManyToOne(targetEntity="Users")
@@ -74,14 +77,11 @@ class Glossaryimages
     private $uid;
 
     /**
-     * @var \Glossary
+     * @var \DateTime
      *
-     * @ORM\ManyToOne(targetEntity="Glossary")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="glossid", referencedColumnName="glossid")
-     * })
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $glossid;
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getGlimgid(): ?int
     {

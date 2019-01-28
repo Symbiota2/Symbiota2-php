@@ -36,6 +36,16 @@ class Kmcharheading
     private $language = 'English';
 
     /**
+     * @var \Adminlanguages
+     *
+     * @ORM\OneToOne(targetEntity="Adminlanguages")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="langid", referencedColumnName="langid")
+     * })
+     */
+    private $langid;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="notes", type="text", length=0, nullable=true, options={"default"=NULL})
@@ -55,16 +65,6 @@ class Kmcharheading
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Adminlanguages
-     *
-     * @ORM\OneToOne(targetEntity="Adminlanguages")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="langid", referencedColumnName="langid")
-     * })
-     */
-    private $langid;
 
     public function getHid(): ?int
     {

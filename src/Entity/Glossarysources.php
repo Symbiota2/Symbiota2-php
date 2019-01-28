@@ -13,6 +13,18 @@ use Doctrine\ORM\Mapping as ORM;
 class Glossarysources
 {
     /**
+     * @var \Taxa
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     * })
+     */
+    private $tid;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="contributorTerm", type="string", length=1000, nullable=true, options={"default"=NULL})
@@ -46,18 +58,6 @@ class Glossarysources
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Taxa
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Taxa")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
-     * })
-     */
-    private $tid;
 
     public function getContributorterm(): ?string
     {

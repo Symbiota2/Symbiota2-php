@@ -22,18 +22,14 @@ class Glossarytermlink
     private $gltlinkid;
 
     /**
-     * @var string|null
+     * @var \Glossary
      *
-     * @ORM\Column(name="relationshipType", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\ManyToOne(targetEntity="Glossary")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="glossgrpid", referencedColumnName="glossid")
+     * })
      */
-    private $relationshiptype = 'NULL';
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $glossgrpid;
 
     /**
      * @var \Glossary
@@ -46,14 +42,18 @@ class Glossarytermlink
     private $glossid;
 
     /**
-     * @var \Glossary
+     * @var string|null
      *
-     * @ORM\ManyToOne(targetEntity="Glossary")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="glossgrpid", referencedColumnName="glossid")
-     * })
+     * @ORM\Column(name="relationshipType", type="string", length=45, nullable=true, options={"default"=NULL})
      */
-    private $glossgrpid;
+    private $relationshiptype = 'NULL';
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     */
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getGltlinkid(): ?int
     {

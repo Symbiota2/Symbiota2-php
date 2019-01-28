@@ -22,18 +22,14 @@ class Omoccurdatasetlink
     private $ocdatlid;
 
     /**
-     * @var string|null
+     * @var \Omoccurrences
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\ManyToOne(targetEntity="Omoccurrences")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     * })
      */
-    private $notes = 'NULL';
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $occid;
 
     /**
      * @var \Omoccurdatasets
@@ -46,14 +42,18 @@ class Omoccurdatasetlink
     private $datasetid;
 
     /**
-     * @var \Omoccurrences
+     * @var string|null
      *
-     * @ORM\ManyToOne(targetEntity="Omoccurrences")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
-     * })
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
      */
-    private $occid;
+    private $notes = 'NULL';
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     */
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getOcdatlid(): ?int
     {

@@ -13,6 +13,18 @@ use Doctrine\ORM\Mapping as ORM;
 class Kmdescr
 {
     /**
+     * @var \Taxa
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     * })
+     */
+    private $tid;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="CID", type="integer", nullable=false, options={"unsigned"=true})
@@ -99,18 +111,6 @@ class Kmdescr
      * @ORM\Column(name="DateEntered", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $dateentered = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Taxa
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Taxa")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
-     * })
-     */
-    private $tid;
 
     public function getCid(): ?int
     {

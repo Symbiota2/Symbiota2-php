@@ -101,6 +101,16 @@ class Fmprojects
     private $dynamicproperties = 'NULL';
 
     /**
+     * @var \Fmprojects
+     *
+     * @ORM\ManyToOne(targetEntity="Fmprojects")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="parentpid", referencedColumnName="pid")
+     * })
+     */
+    private $parentpid;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="SortSequence", type="integer", nullable=false, options={"default"="50","unsigned"=true})
@@ -113,16 +123,6 @@ class Fmprojects
      * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Fmprojects
-     *
-     * @ORM\ManyToOne(targetEntity="Fmprojects")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="parentpid", referencedColumnName="pid")
-     * })
-     */
-    private $parentpid;
 
     /**
      * @var \Doctrine\Common\Collections\Collection

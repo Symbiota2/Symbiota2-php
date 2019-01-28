@@ -22,13 +22,6 @@ class Tmtraitdependencies
     private $traitid;
 
     /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
      * @var \Tmstates
      *
      * @ORM\Id
@@ -39,6 +32,13 @@ class Tmtraitdependencies
      * })
      */
     private $parentstateid;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     */
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getTraitid(): ?int
     {

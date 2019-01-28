@@ -29,11 +29,31 @@ class Omcrowdsourcequeue
     private $omcsid;
 
     /**
+     * @var \Omoccurrences
+     *
+     * @ORM\ManyToOne(targetEntity="Omoccurrences")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     * })
+     */
+    private $occid;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="reviewstatus", type="integer", nullable=false, options={"comment"="0=open,5=pending review, 10=closed"})
      */
     private $reviewstatus;
+
+    /**
+     * @var \Users
+     *
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="uidprocessor", referencedColumnName="uid")
+     * })
+     */
+    private $uidprocessor;
 
     /**
      * @var int|null
@@ -62,26 +82,6 @@ class Omcrowdsourcequeue
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Omoccurrences
-     *
-     * @ORM\ManyToOne(targetEntity="Omoccurrences")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
-     * })
-     */
-    private $occid;
-
-    /**
-     * @var \Users
-     *
-     * @ORM\ManyToOne(targetEntity="Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uidprocessor", referencedColumnName="uid")
-     * })
-     */
-    private $uidprocessor;
 
     public function getIdomcrowdsourcequeue(): ?int
     {

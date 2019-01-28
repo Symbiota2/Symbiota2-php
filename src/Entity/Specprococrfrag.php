@@ -22,6 +22,16 @@ class Specprococrfrag
     private $ocrfragid;
 
     /**
+     * @var \Specprocessorrawlabels
+     *
+     * @ORM\ManyToOne(targetEntity="Specprocessorrawlabels")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="prlid", referencedColumnName="prlid")
+     * })
+     */
+    private $prlid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="firstword", type="string", length=45, nullable=false)
@@ -55,16 +65,6 @@ class Specprococrfrag
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Specprocessorrawlabels
-     *
-     * @ORM\ManyToOne(targetEntity="Specprocessorrawlabels")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="prlid", referencedColumnName="prlid")
-     * })
-     */
-    private $prlid;
 
     public function getOcrfragid(): ?int
     {

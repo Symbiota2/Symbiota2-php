@@ -22,6 +22,16 @@ class Taxadescrstmts
     private $tdsid;
 
     /**
+     * @var \Taxadescrblock
+     *
+     * @ORM\ManyToOne(targetEntity="Taxadescrblock")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tdbid", referencedColumnName="tdbid")
+     * })
+     */
+    private $tdbid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="heading", type="string", length=75, nullable=false)
@@ -62,16 +72,6 @@ class Taxadescrstmts
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Taxadescrblock
-     *
-     * @ORM\ManyToOne(targetEntity="Taxadescrblock")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tdbid", referencedColumnName="tdbid")
-     * })
-     */
-    private $tdbid;
 
     public function getTdsid(): ?int
     {

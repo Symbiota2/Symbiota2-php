@@ -22,6 +22,16 @@ class Uploadspecparameters
     private $uspid;
 
     /**
+     * @var \Omcollections
+     *
+     * @ORM\ManyToOne(targetEntity="Omcollections")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="CollID", referencedColumnName="CollID")
+     * })
+     */
+    private $collid;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="UploadType", type="integer", nullable=false, options={"default"="1","unsigned"=true,"comment"="1 = Direct; 2 = DiGIR; 3 = File"})
@@ -132,16 +142,6 @@ class Uploadspecparameters
      * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Omcollections
-     *
-     * @ORM\ManyToOne(targetEntity="Omcollections")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="CollID", referencedColumnName="CollID")
-     * })
-     */
-    private $collid;
 
     public function getUspid(): ?int
     {

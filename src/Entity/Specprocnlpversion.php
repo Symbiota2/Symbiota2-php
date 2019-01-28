@@ -22,6 +22,16 @@ class Specprocnlpversion
     private $nlpverid;
 
     /**
+     * @var \Specprocessorrawlabels
+     *
+     * @ORM\ManyToOne(targetEntity="Specprocessorrawlabels")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="prlid", referencedColumnName="prlid")
+     * })
+     */
+    private $prlid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="archivestr", type="text", length=65535, nullable=false)
@@ -62,16 +72,6 @@ class Specprocnlpversion
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Specprocessorrawlabels
-     *
-     * @ORM\ManyToOne(targetEntity="Specprocessorrawlabels")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="prlid", referencedColumnName="prlid")
-     * })
-     */
-    private $prlid;
 
     public function getNlpverid(): ?int
     {

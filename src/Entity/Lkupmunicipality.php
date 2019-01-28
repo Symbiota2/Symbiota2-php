@@ -22,6 +22,16 @@ class Lkupmunicipality
     private $municipalityid;
 
     /**
+     * @var \Lkupstateprovince
+     *
+     * @ORM\ManyToOne(targetEntity="Lkupstateprovince")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="stateId", referencedColumnName="stateId")
+     * })
+     */
+    private $stateid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="municipalityName", type="string", length=100, nullable=false)
@@ -34,16 +44,6 @@ class Lkupmunicipality
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Lkupstateprovince
-     *
-     * @ORM\ManyToOne(targetEntity="Lkupstateprovince")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="stateId", referencedColumnName="stateId")
-     * })
-     */
-    private $stateid;
 
     public function getMunicipalityid(): ?int
     {

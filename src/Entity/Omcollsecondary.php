@@ -22,6 +22,16 @@ class Omcollsecondary
     private $ocsid;
 
     /**
+     * @var \Omcollections
+     *
+     * @ORM\ManyToOne(targetEntity="Omcollections")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
+     * })
+     */
+    private $collid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="InstitutionCode", type="string", length=45, nullable=false)
@@ -125,16 +135,6 @@ class Omcollsecondary
      * @ORM\Column(name="InitialTimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Omcollections
-     *
-     * @ORM\ManyToOne(targetEntity="Omcollections")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
-     * })
-     */
-    private $collid;
 
     public function getOcsid(): ?int
     {

@@ -135,6 +135,16 @@ class Taxa
     private $securitystatus = '0';
 
     /**
+     * @var \Users
+     *
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="modifiedUid", referencedColumnName="uid")
+     * })
+     */
+    private $modifieduid;
+
+    /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true, options={"default"=NULL})
@@ -147,16 +157,6 @@ class Taxa
      * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Users
-     *
-     * @ORM\ManyToOne(targetEntity="Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="modifiedUid", referencedColumnName="uid")
-     * })
-     */
-    private $modifieduid;
 
     /**
      * @var \Doctrine\Common\Collections\Collection

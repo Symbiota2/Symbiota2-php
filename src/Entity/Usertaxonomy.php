@@ -22,6 +22,36 @@ class Usertaxonomy
     private $idusertaxonomy;
 
     /**
+     * @var \Users
+     *
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+     * })
+     */
+    private $uid;
+
+    /**
+     * @var \Taxa
+     *
+     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     * })
+     */
+    private $tid;
+
+    /**
+     * @var \Taxauthority
+     *
+     * @ORM\ManyToOne(targetEntity="Taxauthority")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="taxauthid", referencedColumnName="taxauthid")
+     * })
+     */
+    private $taxauthid;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="editorstatus", type="string", length=45, nullable=true, options={"default"=NULL})
@@ -62,36 +92,6 @@ class Usertaxonomy
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Taxauthority
-     *
-     * @ORM\ManyToOne(targetEntity="Taxauthority")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="taxauthid", referencedColumnName="taxauthid")
-     * })
-     */
-    private $taxauthid;
-
-    /**
-     * @var \Taxa
-     *
-     * @ORM\ManyToOne(targetEntity="Taxa")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
-     * })
-     */
-    private $tid;
-
-    /**
-     * @var \Users
-     *
-     * @ORM\ManyToOne(targetEntity="Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
-     * })
-     */
-    private $uid;
 
     public function getIdusertaxonomy(): ?int
     {

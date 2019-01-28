@@ -50,13 +50,6 @@ class Specprocnlp
     private $notes = 'NULL';
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
      * @var \Omcollections
      *
      * @ORM\ManyToOne(targetEntity="Omcollections")
@@ -65,6 +58,13 @@ class Specprocnlp
      * })
      */
     private $collid;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     */
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getSpnlpid(): ?int
     {

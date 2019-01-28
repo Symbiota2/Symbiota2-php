@@ -73,18 +73,21 @@ class Tmtraits
     private $dynamicproperties = 'NULL';
 
     /**
+     * @var \Users
+     *
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
+     * })
+     */
+    private $modifieduid;
+
+    /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="datelastmodified", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $datelastmodified = 'NULL';
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Users
@@ -97,14 +100,11 @@ class Tmtraits
     private $createduid;
 
     /**
-     * @var \Users
+     * @var \DateTime
      *
-     * @ORM\ManyToOne(targetEntity="Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
-     * })
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $modifieduid;
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Doctrine\Common\Collections\Collection

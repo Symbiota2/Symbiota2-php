@@ -24,6 +24,16 @@ class Taxadescrblock
     private $tdbid;
 
     /**
+     * @var \Taxa
+     *
+     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     * })
+     */
+    private $tid;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="caption", type="string", length=40, nullable=true, options={"default"=NULL})
@@ -52,6 +62,16 @@ class Taxadescrblock
     private $language = 'English';
 
     /**
+     * @var \Adminlanguages
+     *
+     * @ORM\ManyToOne(targetEntity="Adminlanguages")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="langid", referencedColumnName="langid")
+     * })
+     */
+    private $langid;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="displaylevel", type="integer", nullable=false, options={"default"="1","unsigned"=true,"comment"="1 = short descr, 2 = intermediate descr"})
@@ -78,26 +98,6 @@ class Taxadescrblock
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Adminlanguages
-     *
-     * @ORM\ManyToOne(targetEntity="Adminlanguages")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="langid", referencedColumnName="langid")
-     * })
-     */
-    private $langid;
-
-    /**
-     * @var \Taxa
-     *
-     * @ORM\ManyToOne(targetEntity="Taxa")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
-     * })
-     */
-    private $tid;
 
     /**
      * Constructor

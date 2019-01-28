@@ -22,6 +22,16 @@ class Lkupstateprovince
     private $stateid;
 
     /**
+     * @var \Lkupcountry
+     *
+     * @ORM\ManyToOne(targetEntity="Lkupcountry")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="countryId", referencedColumnName="countryId")
+     * })
+     */
+    private $countryid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="stateName", type="string", length=100, nullable=false)
@@ -41,16 +51,6 @@ class Lkupstateprovince
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Lkupcountry
-     *
-     * @ORM\ManyToOne(targetEntity="Lkupcountry")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="countryId", referencedColumnName="countryId")
-     * })
-     */
-    private $countryid;
 
     public function getStateid(): ?int
     {

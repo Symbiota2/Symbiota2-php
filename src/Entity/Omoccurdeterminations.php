@@ -22,6 +22,16 @@ class Omoccurdeterminations
     private $detid;
 
     /**
+     * @var \Omoccurrences
+     *
+     * @ORM\ManyToOne(targetEntity="Omoccurrences")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     * })
+     */
+    private $occid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="identifiedBy", type="string", length=60, nullable=false)
@@ -48,6 +58,16 @@ class Omoccurdeterminations
      * @ORM\Column(name="sciname", type="string", length=100, nullable=false)
      */
     private $sciname;
+
+    /**
+     * @var \Taxa
+     *
+     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tidinterpreted", referencedColumnName="TID")
+     * })
+     */
+    private $tidinterpreted;
 
     /**
      * @var string|null
@@ -125,26 +145,6 @@ class Omoccurdeterminations
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Omoccurrences
-     *
-     * @ORM\ManyToOne(targetEntity="Omoccurrences")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
-     * })
-     */
-    private $occid;
-
-    /**
-     * @var \Taxa
-     *
-     * @ORM\ManyToOne(targetEntity="Taxa")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tidinterpreted", referencedColumnName="TID")
-     * })
-     */
-    private $tidinterpreted;
 
     public function getDetid(): ?int
     {

@@ -13,6 +13,16 @@ use Doctrine\ORM\Mapping as ORM;
 class Taxavernaculars
 {
     /**
+     * @var \Taxa
+     *
+     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     * })
+     */
+    private $tid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="VernacularName", type="string", length=80, nullable=false)
@@ -25,6 +35,16 @@ class Taxavernaculars
      * @ORM\Column(name="Language", type="string", length=15, nullable=false, options={"default"="English"})
      */
     private $language = 'English';
+
+    /**
+     * @var \Adminlanguages
+     *
+     * @ORM\ManyToOne(targetEntity="Adminlanguages")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="langid", referencedColumnName="langid")
+     * })
+     */
+    private $langid;
 
     /**
      * @var string|null
@@ -76,26 +96,6 @@ class Taxavernaculars
      * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Adminlanguages
-     *
-     * @ORM\ManyToOne(targetEntity="Adminlanguages")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="langid", referencedColumnName="langid")
-     * })
-     */
-    private $langid;
-
-    /**
-     * @var \Taxa
-     *
-     * @ORM\ManyToOne(targetEntity="Taxa")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
-     * })
-     */
-    private $tid;
 
     public function getVernacularname(): ?string
     {

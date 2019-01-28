@@ -24,6 +24,26 @@ class Referenceobject
     private $refid;
 
     /**
+     * @var \Referenceobject
+     *
+     * @ORM\ManyToOne(targetEntity="Referenceobject")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="parentRefId", referencedColumnName="refid")
+     * })
+     */
+    private $parentrefid;
+
+    /**
+     * @var \Referencetype
+     *
+     * @ORM\ManyToOne(targetEntity="Referencetype")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ReferenceTypeId", referencedColumnName="ReferenceTypeId")
+     * })
+     */
+    private $referencetypeid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=150, nullable=false)
@@ -204,26 +224,6 @@ class Referenceobject
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Referencetype
-     *
-     * @ORM\ManyToOne(targetEntity="Referencetype")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ReferenceTypeId", referencedColumnName="ReferenceTypeId")
-     * })
-     */
-    private $referencetypeid;
-
-    /**
-     * @var \Referenceobject
-     *
-     * @ORM\ManyToOne(targetEntity="Referenceobject")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="parentRefId", referencedColumnName="refid")
-     * })
-     */
-    private $parentrefid;
 
     /**
      * @var \Doctrine\Common\Collections\Collection

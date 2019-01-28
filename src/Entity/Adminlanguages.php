@@ -59,18 +59,11 @@ class Adminlanguages
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="Kmcharacters", mappedBy="langid")
-     */
-    private $cid;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->cid = new \Doctrine\Common\Collections\ArrayCollection();
+
     }
 
     public function getLangid(): ?int
@@ -134,34 +127,6 @@ class Adminlanguages
     public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
     {
         $this->initialtimestamp = $initialtimestamp;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Kmcharacters[]
-     */
-    public function getCid(): Collection
-    {
-        return $this->cid;
-    }
-
-    public function addCid(Kmcharacters $cid): self
-    {
-        if (!$this->cid->contains($cid)) {
-            $this->cid[] = $cid;
-            $cid->addLangid($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCid(Kmcharacters $cid): self
-    {
-        if ($this->cid->contains($cid)) {
-            $this->cid->removeElement($cid);
-            $cid->removeLangid($this);
-        }
 
         return $this;
     }

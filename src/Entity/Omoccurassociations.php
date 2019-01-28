@@ -22,6 +22,26 @@ class Omoccurassociations
     private $associd;
 
     /**
+     * @var \Omoccurrences
+     *
+     * @ORM\ManyToOne(targetEntity="Omoccurrences")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     * })
+     */
+    private $occid;
+
+    /**
+     * @var \Omoccurrences
+     *
+     * @ORM\ManyToOne(targetEntity="Omoccurrences")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="occidassociate", referencedColumnName="occid")
+     * })
+     */
+    private $occidassociate;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="relationship", type="string", length=150, nullable=false)
@@ -55,6 +75,16 @@ class Omoccurassociations
      * @ORM\Column(name="verbatimsciname", type="string", length=250, nullable=true, options={"default"=NULL})
      */
     private $verbatimsciname = 'NULL';
+
+    /**
+     * @var \Taxa
+     *
+     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     * })
+     */
+    private $tid;
 
     /**
      * @var string|null
@@ -92,40 +122,6 @@ class Omoccurassociations
     private $notes = 'NULL';
 
     /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="datelastmodified", type="datetime", nullable=true, options={"default"=NULL})
-     */
-    private $datelastmodified = 'NULL';
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Omoccurrences
-     *
-     * @ORM\ManyToOne(targetEntity="Omoccurrences")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
-     * })
-     */
-    private $occid;
-
-    /**
-     * @var \Taxa
-     *
-     * @ORM\ManyToOne(targetEntity="Taxa")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
-     * })
-     */
-    private $tid;
-
-    /**
      * @var \Users
      *
      * @ORM\ManyToOne(targetEntity="Users")
@@ -134,6 +130,13 @@ class Omoccurassociations
      * })
      */
     private $createduid;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="datelastmodified", type="datetime", nullable=true, options={"default"=NULL})
+     */
+    private $datelastmodified = 'NULL';
 
     /**
      * @var \Users
@@ -146,14 +149,11 @@ class Omoccurassociations
     private $modifieduid;
 
     /**
-     * @var \Omoccurrences
+     * @var \DateTime
      *
-     * @ORM\ManyToOne(targetEntity="Omoccurrences")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occidassociate", referencedColumnName="occid")
-     * })
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $occidassociate;
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getAssocid(): ?int
     {

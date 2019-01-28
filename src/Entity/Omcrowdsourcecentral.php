@@ -22,6 +22,16 @@ class Omcrowdsourcecentral
     private $omcsid;
 
     /**
+     * @var \Omcollections
+     *
+     * @ORM\ManyToOne(targetEntity="Omcollections")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
+     * })
+     */
+    private $collid;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="instructions", type="text", length=65535, nullable=true, options={"default"=NULL})
@@ -55,16 +65,6 @@ class Omcrowdsourcecentral
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Omcollections
-     *
-     * @ORM\ManyToOne(targetEntity="Omcollections")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
-     * })
-     */
-    private $collid;
 
     public function getOmcsid(): ?int
     {

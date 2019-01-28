@@ -22,6 +22,16 @@ class Tmstates
     private $stateid;
 
     /**
+     * @var \Tmtraits
+     *
+     * @ORM\ManyToOne(targetEntity="Tmtraits")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="traitid", referencedColumnName="traitid")
+     * })
+     */
+    private $traitid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="statecode", type="string", length=2, nullable=false)
@@ -64,18 +74,21 @@ class Tmstates
     private $sortseq = 'NULL';
 
     /**
+     * @var \Users
+     *
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
+     * })
+     */
+    private $modifieduid;
+
+    /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="datelastmodified", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $datelastmodified = 'NULL';
-
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Users
@@ -88,24 +101,11 @@ class Tmstates
     private $createduid;
 
     /**
-     * @var \Tmtraits
+     * @var \DateTime|null
      *
-     * @ORM\ManyToOne(targetEntity="Tmtraits")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="traitid", referencedColumnName="traitid")
-     * })
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $traitid;
-
-    /**
-     * @var \Users
-     *
-     * @ORM\ManyToOne(targetEntity="Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
-     * })
-     */
-    private $modifieduid;
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getStateid(): ?int
     {

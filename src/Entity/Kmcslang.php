@@ -31,15 +31,6 @@ class Kmcslang
     private $cs;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="langid", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     */
-    private $langid;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="charstatename", type="string", length=150, nullable=false)
@@ -52,6 +43,15 @@ class Kmcslang
      * @ORM\Column(name="language", type="string", length=45, nullable=false)
      */
     private $language;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="langid", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
+    private $langid;
 
     /**
      * @var string|null

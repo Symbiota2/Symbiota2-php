@@ -38,6 +38,46 @@ class Omoccurloans
     private $loanidentifierborr = 'NULL';
 
     /**
+     * @var \Omcollections
+     *
+     * @ORM\ManyToOne(targetEntity="Omcollections")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="collidOwn", referencedColumnName="CollID")
+     * })
+     */
+    private $collidown;
+
+    /**
+     * @var \Omcollections
+     *
+     * @ORM\ManyToOne(targetEntity="Omcollections")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="collidBorr", referencedColumnName="CollID")
+     * })
+     */
+    private $collidborr;
+
+    /**
+     * @var \Institutions
+     *
+     * @ORM\ManyToOne(targetEntity="Institutions")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="iidOwner", referencedColumnName="iid")
+     * })
+     */
+    private $iidowner;
+
+    /**
+     * @var \Institutions
+     *
+     * @ORM\ManyToOne(targetEntity="Institutions")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="iidBorrower", referencedColumnName="iid")
+     * })
+     */
+    private $iidborrower;
+
+    /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="dateSent", type="date", nullable=true, options={"default"=NULL})
@@ -211,46 +251,6 @@ class Omoccurloans
      * @ORM\Column(name="initialTimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Omcollections
-     *
-     * @ORM\ManyToOne(targetEntity="Omcollections")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="collidOwn", referencedColumnName="CollID")
-     * })
-     */
-    private $collidown;
-
-    /**
-     * @var \Institutions
-     *
-     * @ORM\ManyToOne(targetEntity="Institutions")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="iidBorrower", referencedColumnName="iid")
-     * })
-     */
-    private $iidborrower;
-
-    /**
-     * @var \Omcollections
-     *
-     * @ORM\ManyToOne(targetEntity="Omcollections")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="collidBorr", referencedColumnName="CollID")
-     * })
-     */
-    private $collidborr;
-
-    /**
-     * @var \Institutions
-     *
-     * @ORM\ManyToOne(targetEntity="Institutions")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="iidOwner", referencedColumnName="iid")
-     * })
-     */
-    private $iidowner;
 
     /**
      * @var \Doctrine\Common\Collections\Collection

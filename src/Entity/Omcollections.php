@@ -59,6 +59,16 @@ class Omcollections
     private $datasetname = 'NULL';
 
     /**
+     * @var \Institutions
+     *
+     * @ORM\ManyToOne(targetEntity="Institutions")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="iid", referencedColumnName="iid")
+     * })
+     */
+    private $iid;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="fulldescription", type="string", length=2000, nullable=true, options={"default"=NULL})
@@ -232,16 +242,6 @@ class Omcollections
      * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Institutions
-     *
-     * @ORM\ManyToOne(targetEntity="Institutions")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="iid", referencedColumnName="iid")
-     * })
-     */
-    private $iid;
 
     /**
      * @var \Doctrine\Common\Collections\Collection

@@ -13,6 +13,18 @@ use Doctrine\ORM\Mapping as ORM;
 class Referencechklsttaxalink
 {
     /**
+     * @var \Referenceobject
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Referenceobject")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="refid", referencedColumnName="refid")
+     * })
+     */
+    private $refid;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="clid", type="integer", nullable=false, options={"unsigned"=true})
@@ -36,18 +48,6 @@ class Referencechklsttaxalink
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Referenceobject
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Referenceobject")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="refid", referencedColumnName="refid")
-     * })
-     */
-    private $refid;
 
     public function getClid(): ?int
     {

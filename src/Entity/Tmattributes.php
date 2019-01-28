@@ -13,6 +13,30 @@ use Doctrine\ORM\Mapping as ORM;
 class Tmattributes
 {
     /**
+     * @var \Tmstates
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Tmstates")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="stateid", referencedColumnName="stateid")
+     * })
+     */
+    private $stateid;
+
+    /**
+     * @var \Omoccurrences
+     *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\OneToOne(targetEntity="Omoccurrences")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     * })
+     */
+    private $occid;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="modifier", type="string", length=100, nullable=true, options={"default"=NULL})
@@ -25,6 +49,16 @@ class Tmattributes
      * @ORM\Column(name="xvalue", type="float", precision=15, scale=5, nullable=true, options={"default"=NULL})
      */
     private $xvalue = 'NULL';
+
+    /**
+     * @var \Images
+     *
+     * @ORM\ManyToOne(targetEntity="Images")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="imgid", referencedColumnName="imgid")
+     * })
+     */
+    private $imgid;
 
     /**
      * @var string|null
@@ -55,52 +89,21 @@ class Tmattributes
     private $statuscode = 'NULL';
 
     /**
+     * @var \Users
+     *
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
+     * })
+     */
+    private $modifieduid;
+
+    /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="datelastmodified", type="datetime", nullable=true, options={"default"=NULL})
      */
     private $datelastmodified = 'NULL';
-
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Tmstates
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Tmstates")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="stateid", referencedColumnName="stateid")
-     * })
-     */
-    private $stateid;
-
-    /**
-     * @var \Images
-     *
-     * @ORM\ManyToOne(targetEntity="Images")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="imgid", referencedColumnName="imgid")
-     * })
-     */
-    private $imgid;
-
-    /**
-     * @var \Omoccurrences
-     *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Omoccurrences")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
-     * })
-     */
-    private $occid;
 
     /**
      * @var \Users
@@ -113,14 +116,11 @@ class Tmattributes
     private $createduid;
 
     /**
-     * @var \Users
+     * @var \DateTime|null
      *
-     * @ORM\ManyToOne(targetEntity="Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
-     * })
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $modifieduid;
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getModifier(): ?string
     {

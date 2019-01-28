@@ -83,6 +83,15 @@ class Users implements UserInterface
     private $firstname = 'NULL';
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="middleinitial", type="string", length=2, nullable=true, options={"default"=NULL})
+     * @Groups({"get", "post"})
+     * @Assert\Length(max=2, groups={"post"})
+     */
+    private $middleinitial = 'NULL';
+
+    /**
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", length=45, nullable=false)
@@ -287,15 +296,6 @@ class Users implements UserInterface
      * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="middleinitial", type="string", length=2, nullable=true, options={"default"=NULL})
-     * @Groups({"get", "post"})
-     * @Assert\Length(max=2, groups={"post"})
-     */
-    private $middleinitial = 'NULL';
 
     /**
      * @var \DateTime

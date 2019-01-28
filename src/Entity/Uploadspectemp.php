@@ -22,6 +22,16 @@ class Uploadspectemp
     private $upspecid;
 
     /**
+     * @var \Omcollections
+     *
+     * @ORM\ManyToOne(targetEntity="Omcollections")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
+     * })
+     */
+    private $collid;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="dbpk", type="string", length=150, nullable=true, options={"default"=NULL})
@@ -1028,16 +1038,6 @@ class Uploadspectemp
      * @ORM\Column(name="initialTimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \Omcollections
-     *
-     * @ORM\ManyToOne(targetEntity="Omcollections")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
-     * })
-     */
-    private $collid;
 
     public function getUpspecid(): ?int
     {

@@ -22,6 +22,16 @@ class Userroles
     private $userroleid;
 
     /**
+     * @var \Users
+     *
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+     * })
+     */
+    private $uid;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="role", type="string", length=45, nullable=false)
@@ -43,13 +53,6 @@ class Userroles
     private $secondaryvariable = 'NULL';
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
-
-    /**
      * @var \Users
      *
      * @ORM\ManyToOne(targetEntity="Users")
@@ -60,14 +63,11 @@ class Userroles
     private $uidassignedby;
 
     /**
-     * @var \Users
+     * @var \DateTime
      *
-     * @ORM\ManyToOne(targetEntity="Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
-     * })
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $uid;
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getUserroleid(): ?int
     {
