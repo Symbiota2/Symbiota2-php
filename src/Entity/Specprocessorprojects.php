@@ -48,7 +48,7 @@ class Specprocessorprojects
     /**
      * @var string|null
      *
-     * @ORM\Column(name="specKeyPattern", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="specKeyPattern", type="string", length=155, nullable=true, options={"default"=NULL})
      */
     private $speckeypattern = 'NULL';
 

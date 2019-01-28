@@ -48,9 +48,9 @@ class Kmcs
     /**
      * @var bool
      *
-     * @ORM\Column(name="Implicit", type="boolean", nullable=false)
+     * @ORM\Column(name="Implicit", type="integer", nullable=false, options={"default"="0"})
      */
-    private $implicit;
+    private $implicit = '0';
 
     /**
      * @var string|null

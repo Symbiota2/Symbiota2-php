@@ -95,7 +95,7 @@ class Taxa
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="PhyloSortSequence", type="boolean", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="PhyloSortSequence", type="integer", nullable=true, options={"default"=NULL})
      */
     private $phylosortsequence = 'NULL';
 

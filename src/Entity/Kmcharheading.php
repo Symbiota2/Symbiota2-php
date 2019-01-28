@@ -38,7 +38,7 @@ class Kmcharheading
     /**
      * @var \Adminlanguages
      *
-     * @ORM\OneToOne(targetEntity="Adminlanguages")
+     * @ORM\ManyToOne(targetEntity="Adminlanguages")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="langid", referencedColumnName="langid")
      * })

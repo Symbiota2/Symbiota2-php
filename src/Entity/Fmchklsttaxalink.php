@@ -52,7 +52,7 @@ class Fmchklsttaxalink
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Habitat", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Habitat", type="string", length=450, nullable=true, options={"default"=NULL})
      */
     private $habitat = 'NULL';
 
@@ -80,7 +80,7 @@ class Fmchklsttaxalink
     /**
      * @var string|null
      *
-     * @ORM\Column(name="source", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="source", type="string", length=450, nullable=true, options={"default"=NULL})
      */
     private $source = 'NULL';
 
@@ -108,7 +108,7 @@ class Fmchklsttaxalink
     /**
      * @var string|null
      *
-     * @ORM\Column(name="internalnotes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="internalnotes", type="string", length=450, nullable=true, options={"default"=NULL})
      */
     private $internalnotes = 'NULL';
 
