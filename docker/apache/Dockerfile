@@ -46,4 +46,8 @@ RUN { \
 		echo 'opcache.enable_cli=1'; \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
+COPY openssl.sh /
+RUN chmod +x /openssl.sh
+CMD /openssl.sh
+
 WORKDIR /home/wwwroot/symbiota2
