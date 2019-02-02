@@ -21,7 +21,7 @@ services:
     command: "--default-authentication-plugin=mysql_native_password"
     volumes:
       - ./docker/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
-      - ./docker/data/mysql:/var/lib/mysql
+      - ./data/mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: symbiota2
@@ -34,7 +34,7 @@ services:
     command: "--default-authentication-plugin=mysql_native_password"
     volumes:
       - ./docker/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
-      - ./docker/data/mariadb:/var/lib/mysql
+      - ./data/mariadb:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: symbiota2
@@ -46,7 +46,7 @@ services:
     container_name: postgres
     restart: always
     volumes:
-      - ./docker/data/postgres:/var/lib/postgresql/data
+      - ./data/postgres:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: symbiota2
