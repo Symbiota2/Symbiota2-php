@@ -1,0 +1,75 @@
+version: '3'
+
+services:
+  apache:
+    build: ./docker/apache
+    container_name: apache
+    restart: always
+    volumes:
+      - ./docker/apache/vhosts:/etc/apache2/sites-enabled
+      - .:/home/wwwroot/symbiota2
+    depends_on:
+      - mysql
+      - mariadb
+      - postgres
+    ports:
+      - 80:80
+
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    command: "--default-authentication-plugin=mysql_native_password"
+    volumes:
+      - ./docker/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
+      - ./data/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: symbiota2
+    ports:
+      - 3308:3306
+
+  mariadb:
+    image: mariadb:10.4
+    container_name: mariadb
+    restart: always
+    command: "--default-authentication-plugin=mysql_native_password"
+    volumes:
+      - ./docker/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
+      - ./data/mariadb:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: symbiota2
+    ports:
+      - 3310:3306
+
+  postgres:
+    build: ./docker/postgis
+    container_name: postgres
+    restart: always
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: symbiota2
+    ports:
+      - 5434:5432
+
+  adminer:
+    image: adminer:4.7
+    container_name: adminer
+    restart: always
+    depends_on:
+      - mysql
+      - mariadb
+      - postgres
+    ports:
+      - 8080:8080
+
+  elk:
+    image: sebp/elk
+    container_name: elk
+    ports:
+      - 5601:5601
+      - 9200:9200
+      - 5044:5044
