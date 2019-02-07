@@ -7,7 +7,7 @@ services:
     restart: always
     volumes:
       - ./docker/apache/vhosts:/etc/apache2/sites-enabled
-      - .:/home/wwwroot/symbiota2
+      - ./:/home/wwwroot/symbiota2
     depends_on:
       - mysql
       - mariadb
