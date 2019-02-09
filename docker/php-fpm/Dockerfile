@@ -20,8 +20,4 @@ RUN apt-get update \
     && apt-get -y install git \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
-#COPY pem-key.sh /
-#RUN chmod +x /pem-key.sh
-#CMD /pem-key.sh
-
 WORKDIR "/symbiota2"

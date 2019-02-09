@@ -29,6 +29,13 @@ services:
       - mariadb
       - postgres
 
+  openssl:
+    build: ./docker/openssl
+    container_name: openssl
+    working_dir: /symbiota2
+    volumes:
+      - ./:/symbiota2
+
   mysql:
     image: mysql:5.7
     container_name: mysql
