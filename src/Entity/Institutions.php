@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -9,6 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="institutions", indexes={@ORM\Index(name="FK_inst_uid_idx", columns={"modifieduid"})})
  * @ORM\Entity(repositoryClass="App\Repository\InstitutionsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
 class Institutions
 {
@@ -38,86 +43,86 @@ class Institutions
     /**
      * @var string|null
      *
-     * @ORM\Column(name="InstitutionName2", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="InstitutionName2", type="string", length=150, nullable=true)
      */
-    private $institutionname2 = 'NULL';
+    private $institutionname2;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Address1", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Address1", type="string", length=150, nullable=true)
      */
-    private $address1 = 'NULL';
+    private $address1;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Address2", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Address2", type="string", length=150, nullable=true)
      */
-    private $address2 = 'NULL';
+    private $address2;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="City", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="City", type="string", length=45, nullable=true)
      */
-    private $city = 'NULL';
+    private $city;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="StateProvince", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="StateProvince", type="string", length=45, nullable=true)
      */
-    private $stateprovince = 'NULL';
+    private $stateprovince;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="PostalCode", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="PostalCode", type="string", length=45, nullable=true)
      */
-    private $postalcode = 'NULL';
+    private $postalcode;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Country", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Country", type="string", length=45, nullable=true)
      */
-    private $country = 'NULL';
+    private $country;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Phone", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Phone", type="string", length=45, nullable=true)
      */
-    private $phone = 'NULL';
+    private $phone;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Contact", type="string", length=65, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Contact", type="string", length=65, nullable=true)
      */
-    private $contact = 'NULL';
+    private $contact;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Email", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Email", type="string", length=45, nullable=true)
      */
-    private $email = 'NULL';
+    private $email;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Url", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Url", type="string", length=250, nullable=true)
      */
-    private $url = 'NULL';
+    private $url;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Notes", type="string", length=250, nullable=true)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var \Users
@@ -132,16 +137,16 @@ class Institutions
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
      */
-    private $modifiedtimestamp = 'NULL';
+    private $modifiedtimestamp;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="IntialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="IntialTimeStamp", type="datetime", nullable=false)
      */
-    private $intialtimestamp = 'CURRENT_TIMESTAMP';
+    private $intialtimestamp;
 
     public function getIid(): ?int
     {
