@@ -76,20 +76,20 @@ class Users implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="firstname", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="firstname", type="string", length=45, nullable=true)
      * @Groups({"get", "post"})
      * @Assert\Length(max=45, groups={"post"})
      */
-    private $firstname = 'NULL';
+    private $firstname;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="middleinitial", type="string", length=2, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="middleinitial", type="string", length=2, nullable=true)
      * @Groups({"get", "post"})
      * @Assert\Length(max=2, groups={"post"})
      */
-    private $middleinitial = 'NULL';
+    private $middleinitial;
 
     /**
      * @var string
@@ -118,8 +118,8 @@ class Users implements UserInterface
      * @Groups({"post"})
      * @Assert\NotBlank(groups={"post"})
      * @Assert\Regex(
-     *     pattern="/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{6,}/",
-     *     message="Password must be at least six characters long and contain at least one digit, one upper case letter and one lower case letter",
+     *     pattern="/(?=.*[A-Za-z])(?=.*[0-9]).{6,}/",
+     *     message="Password must be at least six characters long and contain at least one digit and one upper or lower case letter",
      *     groups={"post"}
      * )
      */
@@ -140,8 +140,8 @@ class Users implements UserInterface
      * @Groups({"put-reset-password"})
      * @Assert\NotBlank(groups={"put-reset-password"})
      * @Assert\Regex(
-     *     pattern="/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{6,}/",
-     *     message="Password must be at least six characters long and contain at least one digit, one upper case letter and one lower case letter",
+     *     pattern="/(?=.*[A-Za-z])(?=.*[0-9]).{6,}/",
+     *     message="Password must be at least six characters long and contain at least one digit and one upper or lower case letter",
      *     groups={"put-reset-password"}
      * )
      */
@@ -168,83 +168,83 @@ class Users implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="title", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="title", type="string", length=150, nullable=true)
      * @Groups({"get", "post"})
      * @Assert\Length(max=150, groups={"post"})
      */
-    private $title = 'NULL';
+    private $title;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="institution", type="string", length=200, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="institution", type="string", length=200, nullable=true)
      * @Groups({"get", "post"})
      * @Assert\Length(max=200, groups={"post"})
      */
-    private $institution = 'NULL';
+    private $institution;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="department", type="string", length=200, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="department", type="string", length=200, nullable=true)
      * @Groups({"get", "post"})
      * @Assert\Length(max=200, groups={"post"})
      */
-    private $department = 'NULL';
+    private $department;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="address", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
      * @Groups({"get", "post"})
      * @Assert\Length(max=255, groups={"post"})
      */
-    private $address = 'NULL';
+    private $address;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="city", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="city", type="string", length=100, nullable=true)
      * @Groups({"get", "post"})
      * @Assert\Length(max=100, groups={"post"})
      */
-    private $city = 'NULL';
+    private $city;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="state", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="state", type="string", length=50, nullable=true)
      * @Groups({"get", "post"})
      * @Assert\Length(max=50, groups={"post"})
      */
-    private $state = 'NULL';
+    private $state;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="zip", type="string", length=15, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="zip", type="string", length=15, nullable=true)
      * @Groups({"get", "post"})
      * @Assert\Length(max=15, groups={"post"})
      */
-    private $zip = 'NULL';
+    private $zip;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="country", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="country", type="string", length=50, nullable=true)
      * @Groups({"get", "post"})
      * @Assert\Length(max=50, groups={"post"})
      */
-    private $country = 'NULL';
+    private $country;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="phone", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="phone", type="string", length=45, nullable=true)
      * @Groups({"get", "post"})
      * @Assert\Length(max=45, groups={"post"})
      */
-    private $phone = 'NULL';
+    private $phone;
 
     /**
      * @var string
@@ -260,20 +260,20 @@ class Users implements UserInterface
     /**
      * @var string|null
      *
-     * @ORM\Column(name="url", type="string", length=400, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="url", type="string", length=400, nullable=true)
      * @Groups({"get", "post"})
      * @Assert\Length(max=400, groups={"post"})
      */
-    private $url = 'NULL';
+    private $url;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Biography", type="string", length=1500, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Biography", type="string", length=1500, nullable=true)
      * @Groups({"get", "post"})
      * @Assert\Length(max=1500, groups={"post"})
      */
-    private $biography = 'NULL';
+    private $biography;
 
     /**
      * @var int
@@ -281,42 +281,42 @@ class Users implements UserInterface
      * @ORM\Column(name="ispublic", type="integer", nullable=false, options={"unsigned"=true, "default"="1"})
      * @Assert\NotBlank(groups={"post"})
      */
-    private $ispublic = '1';
+    private $ispublic = 1;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="lastlogindate", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="lastlogindate", type="datetime", nullable=true)
      */
-    private $lastlogindate = 'NULL';
+    private $lastlogindate;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime")
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialtimestamp;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="updated_at", type="datetime")
      */
-    private $updatedAt = 'CURRENT_TIMESTAMP';
+    private $updatedAt;
 
     /**
      * @var int
      *
      * @ORM\Column(name="verified", type="integer", nullable=false, options={"default"="0"})
      */
-    private $verified = '0';
+    private $verified;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="verification_token", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="verification_token", type="string", length=255, nullable=true)
      */
-    private $verificationToken = 'NULL';
+    private $verificationToken;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -566,13 +566,6 @@ class Users implements UserInterface
         return $this->initialtimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
-    {
-        $this->initialtimestamp = $initialtimestamp;
-
-        return $this;
-    }
-
     public function getMiddleinitial(): ?string
     {
         return $this->middleinitial;
@@ -588,13 +581,6 @@ class Users implements UserInterface
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
     }
 
     public function getVerified(): ?int
