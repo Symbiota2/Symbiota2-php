@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -21,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  * )
  */
-class Institutions
+class Institutions implements CurrentUserInterface
 {
     /**
      * @var int
@@ -373,7 +374,7 @@ class Institutions
         return $this->modifieduid;
     }
 
-    public function setModifieduid(?Users $modifieduid): self
+    public function setModifieduid(UserInterface $modifieduid): CurrentUserInterface
     {
         $this->modifieduid = $modifieduid;
 

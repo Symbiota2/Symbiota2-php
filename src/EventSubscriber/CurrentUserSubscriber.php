@@ -3,6 +3,7 @@
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
+use App\Entity\CurrentUserInterface;
 use App\Entity\Institutions;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,7 +34,7 @@ class CurrentUserSubscriber implements EventSubscriberInterface
 
         $user = $this->tokenStorage->getToken()->getUser();
 
-        if(!$entity instanceof Institutions || Request::METHOD_POST !== $method) {
+        if(!$entity instanceof CurrentUserInterface || Request::METHOD_POST !== $method) {
             return;
         }
 
