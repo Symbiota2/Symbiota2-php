@@ -3,13 +3,14 @@
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
-use App\Entity\CurrentUserInterface;
-use App\Entity\Institutions;
+use App\Entity\ModifieduidInterface;
+use App\Entity\CreateduidInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class CurrentUserSubscriber implements EventSubscriberInterface
 {
@@ -32,12 +33,21 @@ class CurrentUserSubscriber implements EventSubscriberInterface
         $entity = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
+        /**
+         * @var UserInterface $user
+         */
         $user = $this->tokenStorage->getToken()->getUser();
 
-        if(!$entity instanceof CurrentUserInterface || Request::METHOD_POST !== $method) {
+        if((!$entity instanceof ModifieduidInterface && !$entity instanceof CreateduidInterface) || !in_array($method, [Request::METHOD_POST, Request::METHOD_PUT])) {
             return;
         }
 
-        $entity->setModifieduid($user);
+        if($entity instanceof ModifieduidInterface) {
+            $entity->setModifieduid($user);
+        }
+
+        if($entity instanceof CreateduidInterface && Request::METHOD_POST === $method) {
+            $entity->setCreateduid($user);
+        }
     }
 }

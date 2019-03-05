@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -13,16 +14,27 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="institutions", indexes={@ORM\Index(name="FK_inst_uid_idx", columns={"modifieduid"})})
  * @ORM\Entity(repositoryClass="App\Repository\InstitutionsRepository")
  * @ApiResource(
- *     itemOperations={"get"},
- *     collectionOperations={
+ *      itemOperations={
+ *          "get",
+ *          "put"={
+ *              "access_control"="is_granted('IS_AUTHENTICATED_FULLY')",
+ *              "denormalization_context"={
+ *                  "groups"={"put"}
+ *              }
+ *          }
+ *      },
+ *      collectionOperations={
  *          "get",
  *          "post"={
- *              "access_control"="is_granted('IS_AUTHENTICATED_FULLY')"
+ *              "access_control"="is_granted('IS_AUTHENTICATED_FULLY')",
+ *              "denormalization_context"={
+ *                  "groups"={"post"}
+ *              }
  *          }
- *     }
+ *      }
  * )
  */
-class Institutions implements CurrentUserInterface
+class Institutions implements ModifieduidInterface, InitialtimestampInterface, ModifiedtimestampInterface
 {
     /**
      * @var int
@@ -30,6 +42,7 @@ class Institutions implements CurrentUserInterface
      * @ORM\Column(name="iid", type="integer", nullable=false, options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups({"get"})
      */
     private $iid;
 
@@ -37,8 +50,9 @@ class Institutions implements CurrentUserInterface
      * @var string
      *
      * @ORM\Column(name="InstitutionCode", type="string", length=45, nullable=false)
-     * @Assert\NotBlank(groups={"post"})
-     * @Assert\Length(max=45, groups={"post"})
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
+     * @Groups({"get", "post", "put"})
      */
     private $institutioncode;
 
@@ -46,8 +60,9 @@ class Institutions implements CurrentUserInterface
      * @var string
      *
      * @ORM\Column(name="InstitutionName", type="string", length=150, nullable=false)
-     * @Assert\NotBlank(groups={"post"})
-     * @Assert\Length(max=150, groups={"post"})
+     * @Assert\NotBlank()
+     * @Assert\Length(max=150)
+     * @Groups({"get", "post", "put"})
      */
     private $institutionname;
 
@@ -55,7 +70,8 @@ class Institutions implements CurrentUserInterface
      * @var string|null
      *
      * @ORM\Column(name="InstitutionName2", type="string", length=150, nullable=true)
-     * @Assert\Length(max=150, groups={"post"})
+     * @Assert\Length(max=150)
+     * @Groups({"get", "post", "put"})
      */
     private $institutionname2;
 
@@ -63,7 +79,8 @@ class Institutions implements CurrentUserInterface
      * @var string|null
      *
      * @ORM\Column(name="Address1", type="string", length=150, nullable=true)
-     * @Assert\Length(max=150, groups={"post"})
+     * @Assert\Length(max=150)
+     * @Groups({"get", "post", "put"})
      */
     private $address1;
 
@@ -71,7 +88,8 @@ class Institutions implements CurrentUserInterface
      * @var string|null
      *
      * @ORM\Column(name="Address2", type="string", length=150, nullable=true)
-     * @Assert\Length(max=150, groups={"post"})
+     * @Assert\Length(max=150)
+     * @Groups({"get", "post", "put"})
      */
     private $address2;
 
@@ -79,7 +97,8 @@ class Institutions implements CurrentUserInterface
      * @var string|null
      *
      * @ORM\Column(name="City", type="string", length=45, nullable=true)
-     * @Assert\Length(max=45, groups={"post"})
+     * @Assert\Length(max=45)
+     * @Groups({"get", "post", "put"})
      */
     private $city;
 
@@ -87,7 +106,8 @@ class Institutions implements CurrentUserInterface
      * @var string|null
      *
      * @ORM\Column(name="StateProvince", type="string", length=45, nullable=true)
-     * @Assert\Length(max=45, groups={"post"})
+     * @Assert\Length(max=45)
+     * @Groups({"get", "post", "put"})
      */
     private $stateprovince;
 
@@ -95,7 +115,8 @@ class Institutions implements CurrentUserInterface
      * @var string|null
      *
      * @ORM\Column(name="PostalCode", type="string", length=45, nullable=true)
-     * @Assert\Length(max=45, groups={"post"})
+     * @Assert\Length(max=45)
+     * @Groups({"get", "post", "put"})
      */
     private $postalcode;
 
@@ -103,7 +124,8 @@ class Institutions implements CurrentUserInterface
      * @var string|null
      *
      * @ORM\Column(name="Country", type="string", length=45, nullable=true)
-     * @Assert\Length(max=45, groups={"post"})
+     * @Assert\Length(max=45)
+     * @Groups({"get", "post", "put"})
      */
     private $country;
 
@@ -111,7 +133,8 @@ class Institutions implements CurrentUserInterface
      * @var string|null
      *
      * @ORM\Column(name="Phone", type="string", length=45, nullable=true)
-     * @Assert\Length(max=45, groups={"post"})
+     * @Assert\Length(max=45)
+     * @Groups({"get", "post", "put"})
      */
     private $phone;
 
@@ -119,7 +142,8 @@ class Institutions implements CurrentUserInterface
      * @var string|null
      *
      * @ORM\Column(name="Contact", type="string", length=65, nullable=true)
-     * @Assert\Length(max=65, groups={"post"})
+     * @Assert\Length(max=65)
+     * @Groups({"get", "post", "put"})
      */
     private $contact;
 
@@ -127,8 +151,9 @@ class Institutions implements CurrentUserInterface
      * @var string|null
      *
      * @ORM\Column(name="Email", type="string", length=45, nullable=true)
-     * @Assert\Email(groups={"post", "put"})
-     * @Assert\Length(max=45, groups={"post"})
+     * @Assert\Email()
+     * @Assert\Length(max=45)
+     * @Groups({"get", "post", "put"})
      */
     private $email;
 
@@ -136,7 +161,8 @@ class Institutions implements CurrentUserInterface
      * @var string|null
      *
      * @ORM\Column(name="Url", type="string", length=250, nullable=true)
-     * @Assert\Length(max=250, groups={"post"})
+     * @Assert\Length(max=250)
+     * @Groups({"get", "post", "put"})
      */
     private $url;
 
@@ -144,7 +170,8 @@ class Institutions implements CurrentUserInterface
      * @var string|null
      *
      * @ORM\Column(name="Notes", type="string", length=250, nullable=true)
-     * @Assert\Length(max=250, groups={"post"})
+     * @Assert\Length(max=250)
+     * @Groups({"get", "post", "put"})
      */
     private $notes;
 
@@ -155,6 +182,7 @@ class Institutions implements CurrentUserInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
      * })
+     * @Groups({"get"})
      */
     private $modifieduid;
 
@@ -162,6 +190,7 @@ class Institutions implements CurrentUserInterface
      * @var \DateTime|null
      *
      * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
+     * @Groups({"get"})
      */
     private $modifiedtimestamp;
 
@@ -169,6 +198,8 @@ class Institutions implements CurrentUserInterface
      * @var \DateTime
      *
      * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false)
+     * @Assert\DateTime()
+     * @Groups({"get"})
      */
     private $initialtimestamp;
 
@@ -350,7 +381,7 @@ class Institutions implements CurrentUserInterface
         return $this->modifiedtimestamp;
     }
 
-    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): self
+    public function setModifiedtimestamp(\DateTimeInterface $modifiedtimestamp): ModifiedtimestampInterface
     {
         $this->modifiedtimestamp = $modifiedtimestamp;
 
@@ -362,7 +393,7 @@ class Institutions implements CurrentUserInterface
         return $this->initialtimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): InitialtimestampInterface
     {
         $this->initialtimestamp = $initialtimestamp;
 
@@ -374,7 +405,11 @@ class Institutions implements CurrentUserInterface
         return $this->modifieduid;
     }
 
-    public function setModifieduid(UserInterface $modifieduid): CurrentUserInterface
+    /**
+     * @param UserInterface $modifieduid
+     * @return ModifieduidInterface
+     */
+    public function setModifieduid(UserInterface $modifieduid): ModifieduidInterface
     {
         $this->modifieduid = $modifieduid;
 
