@@ -17,49 +17,39 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ApiResource(
  *     itemOperations={
- *         "get"={
- *             "access_control"="is_granted('IS_AUTHENTICATED_FULLY')",
- *             "normalization_context"={
- *                 "groups"={"get"}
- *             }
- *         },
- *         "put"={
- *             "access_control"="is_granted('IS_AUTHENTICATED_FULLY') and object == user",
- *             "denormalization_context"={
- *                 "groups"={"put"}
- *             },
- *             "normalization_context"={
- *                 "groups"={"get"}
- *             }
- *         },
- *         "put-reset-password"={
- *             "access_control"="is_granted('IS_AUTHENTICATED_FULLY') and object == user",
- *             "method"="PUT",
- *             "path"="/users/{id}/reset-password",
- *             "controller"=ResetPasswordAction::class,
- *             "denormalization_context"={
- *                 "groups"={"put-reset-password"}
- *             },
- *             "validation_groups"={"put-reset-password"}
- *         }
- *     },
- *     collectionOperations={
- *         "post"={
- *             "denormalization_context"={
- *                 "groups"={"post"}
- *             },
- *             "normalization_context"={
- *                 "groups"={"get"}
- *             },
- *             "validation_groups"={"post"}
- *         }
- *     },
+ *          "get"={
+ *              "access_control"="is_granted('IS_AUTHENTICATED_FULLY')",
+ *              "normalization_context"={
+ *                  "groups"={"get"}
+ *              }
+ *          },
+ *          "put"={
+ *              "access_control"="is_granted('IS_AUTHENTICATED_FULLY') and object == user",
+ *              "denormalization_context"={
+ *                  "groups"={"put"}
+ *              },
+ *              "normalization_context"={
+ *                  "groups"={"get"}
+ *              },
+ *              "validation_groups"={"put"}
+ *          }
+ *      },
+ *      collectionOperations={
+ *          "post"={
+ *              "denormalization_context"={
+ *                  "groups"={"post"}
+ *              },
+ *              "normalization_context"={
+ *                  "groups"={"get"}
+ *              },
+ *              "validation_groups"={"post"}
+ *          }
+ *      },
  * )
- *
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
  * @UniqueEntity("username", errorPath="username", groups={"post"})
- * @UniqueEntity("email", groups={"post"})
+ * @UniqueEntity("email", groups={"post", "put"})
  */
 class Users implements UserInterface
 {
@@ -77,8 +67,8 @@ class Users implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="firstname", type="string", length=45, nullable=true)
-     * @Groups({"get", "post"})
-     * @Assert\Length(max=45, groups={"post"})
+     * @Groups({"get", "post", "put"})
+     * @Assert\Length(max=45, groups={"post", "put"})
      */
     private $firstname;
 
@@ -86,8 +76,8 @@ class Users implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="middleinitial", type="string", length=2, nullable=true)
-     * @Groups({"get", "post"})
-     * @Assert\Length(max=2, groups={"post"})
+     * @Groups({"get", "post", "put"})
+     * @Assert\Length(max=2, groups={"post", "put"})
      */
     private $middleinitial;
 
@@ -95,9 +85,9 @@ class Users implements UserInterface
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", length=45, nullable=false)
-     * @Groups({"get", "post"})
-     * @Assert\NotBlank(groups={"post"})
-     * @Assert\Length(max=45, groups={"post"})
+     * @Groups({"get", "post", "put"})
+     * @Assert\NotBlank(groups={"post", "put"})
+     * @Assert\Length(max=45, groups={"post", "put"})
      */
     private $lastname;
 
@@ -115,53 +105,53 @@ class Users implements UserInterface
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255, nullable=false)
-     * @Groups({"post"})
-     * @Assert\NotBlank(groups={"post"})
+     * @Groups({"post", "put"})
+     * @Assert\NotBlank(groups={"post", "put"})
      * @Assert\Regex(
      *     pattern="/(?=.*[A-Za-z])(?=.*[0-9]).{6,}/",
      *     message="Password must be at least six characters long and contain at least one digit and one upper or lower case letter",
-     *     groups={"post"}
+     *     groups={"post", "put"}
      * )
      */
     private $password;
 
     /**
-     * @Groups({"post"})
-     * @Assert\NotBlank(groups={"post"})
+     * @Groups({"post", "put"})
+     * @Assert\NotBlank(groups={"post", "put"})
      * @Assert\Expression(
      *     "this.getPassword() === this.getRetypedPassword()",
      *     message="Passwords do not match",
-     *     groups={"post"}
+     *     groups={"post", "put"}
      * )
      */
     private $retypedPassword;
 
     /**
-     * @Groups({"put-reset-password"})
-     * @Assert\NotBlank(groups={"put-reset-password"})
+     * @Groups({"password_reset"})
+     * @Assert\NotBlank(groups={"password_reset"})
      * @Assert\Regex(
      *     pattern="/(?=.*[A-Za-z])(?=.*[0-9]).{6,}/",
      *     message="Password must be at least six characters long and contain at least one digit and one upper or lower case letter",
-     *     groups={"put-reset-password"}
+     *     groups={"password_reset"}
      * )
      */
     private $newPassword;
 
     /**
-     * @Groups({"put-reset-password"})
-     * @Assert\NotBlank(groups={"put-reset-password"})
+     * @Groups({"password_reset"})
+     * @Assert\NotBlank(groups={"password_reset"})
      * @Assert\Expression(
      *     "this.getNewPassword() === this.getNewRetypedPassword()",
      *     message="Passwords do not match",
-     *     groups={"put-reset-password"}
+     *     groups={"password_reset"}
      * )
      */
     private $newRetypedPassword;
 
     /**
-     * @Groups({"put-reset-password"})
-     * @Assert\NotBlank(groups={"put-reset-password"})
-     * @UserPassword(groups={"put-reset-password"})
+     * @Groups({"password_reset"})
+     * @Assert\NotBlank(groups={"password_reset"})
+     * @UserPassword(groups={"password_reset"})
      */
     private $oldPassword;
 
@@ -169,8 +159,8 @@ class Users implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="title", type="string", length=150, nullable=true)
-     * @Groups({"get", "post"})
-     * @Assert\Length(max=150, groups={"post"})
+     * @Groups({"get", "post", "put"})
+     * @Assert\Length(max=150, groups={"post", "put"})
      */
     private $title;
 
@@ -178,8 +168,8 @@ class Users implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="institution", type="string", length=200, nullable=true)
-     * @Groups({"get", "post"})
-     * @Assert\Length(max=200, groups={"post"})
+     * @Groups({"get", "post", "put"})
+     * @Assert\Length(max=200, groups={"post", "put"})
      */
     private $institution;
 
@@ -187,8 +177,8 @@ class Users implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="department", type="string", length=200, nullable=true)
-     * @Groups({"get", "post"})
-     * @Assert\Length(max=200, groups={"post"})
+     * @Groups({"get", "post", "put"})
+     * @Assert\Length(max=200, groups={"post", "put"})
      */
     private $department;
 
@@ -196,8 +186,8 @@ class Users implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="address", type="string", length=255, nullable=true)
-     * @Groups({"get", "post"})
-     * @Assert\Length(max=255, groups={"post"})
+     * @Groups({"get", "post", "put"})
+     * @Assert\Length(max=255, groups={"post", "put"})
      */
     private $address;
 
@@ -205,8 +195,8 @@ class Users implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="city", type="string", length=100, nullable=true)
-     * @Groups({"get", "post"})
-     * @Assert\Length(max=100, groups={"post"})
+     * @Groups({"get", "post", "put"})
+     * @Assert\Length(max=100, groups={"post", "put"})
      */
     private $city;
 
@@ -214,8 +204,8 @@ class Users implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="state", type="string", length=50, nullable=true)
-     * @Groups({"get", "post"})
-     * @Assert\Length(max=50, groups={"post"})
+     * @Groups({"get", "post", "put"})
+     * @Assert\Length(max=50, groups={"post", "put"})
      */
     private $state;
 
@@ -223,8 +213,8 @@ class Users implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="zip", type="string", length=15, nullable=true)
-     * @Groups({"get", "post"})
-     * @Assert\Length(max=15, groups={"post"})
+     * @Groups({"get", "post", "put"})
+     * @Assert\Length(max=15, groups={"post", "put"})
      */
     private $zip;
 
@@ -232,8 +222,8 @@ class Users implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="country", type="string", length=50, nullable=true)
-     * @Groups({"get", "post"})
-     * @Assert\Length(max=50, groups={"post"})
+     * @Groups({"get", "post", "put"})
+     * @Assert\Length(max=50, groups={"post", "put"})
      */
     private $country;
 
@@ -241,8 +231,8 @@ class Users implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="phone", type="string", length=45, nullable=true)
-     * @Groups({"get", "post"})
-     * @Assert\Length(max=45, groups={"post"})
+     * @Groups({"get", "post", "put"})
+     * @Assert\Length(max=45, groups={"post", "put"})
      */
     private $phone;
 
@@ -251,7 +241,7 @@ class Users implements UserInterface
      *
      * @ORM\Column(name="email", type="string", length=100, nullable=false)
      * @Groups({"post", "put"})
-     * @Assert\NotBlank(groups={"post"})
+     * @Assert\NotBlank(groups={"post", "put"})
      * @Assert\Email(groups={"post", "put"})
      * @Assert\Length(max=100, groups={"post", "put"})
      */
@@ -261,8 +251,8 @@ class Users implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="url", type="string", length=400, nullable=true)
-     * @Groups({"get", "post"})
-     * @Assert\Length(max=400, groups={"post"})
+     * @Groups({"get", "post", "put"})
+     * @Assert\Length(max=400, groups={"post", "put"})
      */
     private $url;
 
@@ -270,8 +260,8 @@ class Users implements UserInterface
      * @var string|null
      *
      * @ORM\Column(name="Biography", type="string", length=1500, nullable=true)
-     * @Groups({"get", "post"})
-     * @Assert\Length(max=1500, groups={"post"})
+     * @Groups({"get", "post", "put"})
+     * @Assert\Length(max=1500, groups={"post", "put"})
      */
     private $biography;
 
