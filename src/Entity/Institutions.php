@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Institutions
@@ -12,7 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\InstitutionsRepository")
  * @ApiResource(
  *     itemOperations={"get"},
- *     collectionOperations={"get"}
+ *     collectionOperations={
+ *          "get",
+ *          "post"={
+ *              "access_control"="is_granted('IS_AUTHENTICATED_FULLY')"
+ *          }
+ *     }
  * )
  */
 class Institutions
@@ -30,6 +36,8 @@ class Institutions
      * @var string
      *
      * @ORM\Column(name="InstitutionCode", type="string", length=45, nullable=false)
+     * @Assert\NotBlank(groups={"post"})
+     * @Assert\Length(max=45, groups={"post"})
      */
     private $institutioncode;
 
@@ -37,6 +45,8 @@ class Institutions
      * @var string
      *
      * @ORM\Column(name="InstitutionName", type="string", length=150, nullable=false)
+     * @Assert\NotBlank(groups={"post"})
+     * @Assert\Length(max=150, groups={"post"})
      */
     private $institutionname;
 
@@ -44,6 +54,7 @@ class Institutions
      * @var string|null
      *
      * @ORM\Column(name="InstitutionName2", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150, groups={"post"})
      */
     private $institutionname2;
 
@@ -51,6 +62,7 @@ class Institutions
      * @var string|null
      *
      * @ORM\Column(name="Address1", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150, groups={"post"})
      */
     private $address1;
 
@@ -58,6 +70,7 @@ class Institutions
      * @var string|null
      *
      * @ORM\Column(name="Address2", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150, groups={"post"})
      */
     private $address2;
 
@@ -65,6 +78,7 @@ class Institutions
      * @var string|null
      *
      * @ORM\Column(name="City", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45, groups={"post"})
      */
     private $city;
 
@@ -72,6 +86,7 @@ class Institutions
      * @var string|null
      *
      * @ORM\Column(name="StateProvince", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45, groups={"post"})
      */
     private $stateprovince;
 
@@ -79,6 +94,7 @@ class Institutions
      * @var string|null
      *
      * @ORM\Column(name="PostalCode", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45, groups={"post"})
      */
     private $postalcode;
 
@@ -86,6 +102,7 @@ class Institutions
      * @var string|null
      *
      * @ORM\Column(name="Country", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45, groups={"post"})
      */
     private $country;
 
@@ -93,6 +110,7 @@ class Institutions
      * @var string|null
      *
      * @ORM\Column(name="Phone", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45, groups={"post"})
      */
     private $phone;
 
@@ -100,6 +118,7 @@ class Institutions
      * @var string|null
      *
      * @ORM\Column(name="Contact", type="string", length=65, nullable=true)
+     * @Assert\Length(max=65, groups={"post"})
      */
     private $contact;
 
@@ -107,6 +126,8 @@ class Institutions
      * @var string|null
      *
      * @ORM\Column(name="Email", type="string", length=45, nullable=true)
+     * @Assert\Email(groups={"post", "put"})
+     * @Assert\Length(max=45, groups={"post"})
      */
     private $email;
 
@@ -114,6 +135,7 @@ class Institutions
      * @var string|null
      *
      * @ORM\Column(name="Url", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250, groups={"post"})
      */
     private $url;
 
@@ -121,6 +143,7 @@ class Institutions
      * @var string|null
      *
      * @ORM\Column(name="Notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250, groups={"post"})
      */
     private $notes;
 
