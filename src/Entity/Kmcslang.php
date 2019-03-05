@@ -70,9 +70,9 @@ class Kmcslang
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="intialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $intialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getCid(): ?int
     {
@@ -137,14 +137,14 @@ class Kmcslang
         return $this;
     }
 
-    public function getIntialtimestamp(): ?\DateTimeInterface
+    public function getInitialtimestamp(): ?\DateTimeInterface
     {
-        return $this->intialtimestamp;
+        return $this->initialtimestamp;
     }
 
-    public function setIntialtimestamp(\DateTimeInterface $intialtimestamp): self
+    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
     {
-        $this->intialtimestamp = $intialtimestamp;
+        $this->initialtimestamp = $initialtimestamp;
 
         return $this;
     }

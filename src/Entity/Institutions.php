@@ -168,9 +168,9 @@ class Institutions implements CurrentUserInterface
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="IntialTimeStamp", type="datetime", nullable=false)
+     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false)
      */
-    private $intialtimestamp;
+    private $initialtimestamp;
 
     public function getIid(): ?int
     {
@@ -357,14 +357,14 @@ class Institutions implements CurrentUserInterface
         return $this;
     }
 
-    public function getIntialtimestamp(): ?\DateTimeInterface
+    public function getInitialtimestamp(): ?\DateTimeInterface
     {
-        return $this->intialtimestamp;
+        return $this->initialtimestamp;
     }
 
-    public function setIntialtimestamp(\DateTimeInterface $intialtimestamp): self
+    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
     {
-        $this->intialtimestamp = $intialtimestamp;
+        $this->initialtimestamp = $initialtimestamp;
 
         return $this;
     }

@@ -67,6 +67,7 @@ ALTER TABLE `kmcsimages`
   DROP FOREIGN KEY `FK_kscsimages_kscs`;
 
 ALTER TABLE `kmcslang`
+  CHANGE COLUMN `intialtimestamp` `initialtimestamp` timestamp(0) NOT NULL DEFAULT current_timestamp AFTER `notes`,
   DROP FOREIGN KEY `FK_cslang_1`;
 
 ALTER TABLE `kmdescr`
@@ -504,6 +505,7 @@ ALTER TABLE `imagetag`
   DROP INDEX `FK_imagetag_imgid_idx`;
 
 ALTER TABLE `institutions`
+  CHANGE COLUMN `IntialTimeStamp` `InitialTimeStamp` timestamp(0) NOT NULL DEFAULT current_timestamp AFTER `modifiedTimeStamp`,
   DROP FOREIGN KEY `FK_inst_uid`,
   DROP INDEX `FK_inst_uid_idx`;
 
