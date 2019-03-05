@@ -49,7 +49,7 @@ class Institutions implements ModifieduidInterface, InitialtimestampInterface, M
     /**
      * @var string
      *
-     * @ORM\Column(name="InstitutionCode", type="string", length=45, nullable=false)
+     * @ORM\Column(name="InstitutionCode", type="string", length=45)
      * @Assert\NotBlank()
      * @Assert\Length(max=45)
      * @Groups({"get", "post", "put"})
@@ -59,7 +59,7 @@ class Institutions implements ModifieduidInterface, InitialtimestampInterface, M
     /**
      * @var string
      *
-     * @ORM\Column(name="InstitutionName", type="string", length=150, nullable=false)
+     * @ORM\Column(name="InstitutionName", type="string", length=150)
      * @Assert\NotBlank()
      * @Assert\Length(max=150)
      * @Groups({"get", "post", "put"})
@@ -197,7 +197,7 @@ class Institutions implements ModifieduidInterface, InitialtimestampInterface, M
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false)
+     * @ORM\Column(name="InitialTimeStamp", type="datetime")
      * @Assert\DateTime()
      * @Groups({"get"})
      */

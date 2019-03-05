@@ -51,7 +51,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("username", errorPath="username", groups={"post"})
  * @UniqueEntity("email", groups={"post", "put"})
  */
-class Users implements UserInterface
+class Users implements UserInterface, InitialtimestampInterface
 {
     /**
      * @var int
@@ -547,6 +547,13 @@ class Users implements UserInterface
     public function setLastlogindate(?\DateTimeInterface $lastlogindate): self
     {
         $this->lastlogindate = $lastlogindate;
+
+        return $this;
+    }
+
+    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): InitialtimestampInterface
+    {
+        $this->initialtimestamp = $initialtimestamp;
 
         return $this;
     }
