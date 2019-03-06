@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Omoccurrences
  *
- * @ORM\Table(name="omoccurrences", uniqueConstraints={@ORM\UniqueConstraint(name="Index_collid", columns={"collid", "dbpk"})}, indexes={@ORM\Index(name="Index_latestDateCollected", columns={"latestDateCollected"}), @ORM\Index(name="Index_county", columns={"county"}), @ORM\Index(name="Index_eventDate", columns={"eventDate"}), @ORM\Index(name="Index_occurDateEntered", columns={"dateEntered"}), @ORM\Index(name="Index_sciname", columns={"sciname"}), @ORM\Index(name="Index_ownerInst", columns={"ownerInstitutionCode"}), @ORM\Index(name="occelevmin", columns={"minimumElevationInMeters"}), @ORM\Index(name="Index_otherCatalogNumbers", columns={"otherCatalogNumbers"}), @ORM\Index(name="Index_state", columns={"stateProvince"}), @ORM\Index(name="Index_catalognumber", columns={"catalogNumber"}), @ORM\Index(name="Index_occurDateLastModifed", columns={"dateLastModified"}), @ORM\Index(name="FK_omoccurrences_uid", columns={"observeruid"}), @ORM\Index(name="Index_gui", columns={"occurrenceID"}), @ORM\Index(name="occelevmax", columns={"maximumElevationInMeters"}), @ORM\Index(name="Index_locality", columns={"locality"}, flags={"fulltext"}), @ORM\Index(name="Index_country", columns={"country"}), @ORM\Index(name="Index_collnum", columns={"recordNumber"}), @ORM\Index(name="Index_occurrences_typestatus", columns={"typeStatus"}), @ORM\Index(name="FK_omoccurrences_tid", columns={"tidinterpreted"}), @ORM\Index(name="Index_collector", columns={"recordedBy"}), @ORM\Index(name="Index_occurrences_procstatus", columns={"processingstatus"}), @ORM\Index(name="Index_occurRecordEnteredBy", columns={"recordEnteredBy"}), @ORM\Index(name="Index_family", columns={"family"}), @ORM\Index(name="Index_municipality", columns={"municipality"}), @ORM\Index(name="Index_occurrences_cult", columns={"cultivationStatus"}), @ORM\Index(name="IDX_C48904CFEA1D339B", columns={"collid"})})
+ * @ORM\Table(name="omoccurrences", uniqueConstraints={@ORM\UniqueConstraint(name="Index_collid", columns={"collid", "dbpk"})}, indexes={@ORM\Index(name="Index_latestDateCollected", columns={"latestDateCollected"}), @ORM\Index(name="Index_county", columns={"county"}), @ORM\Index(name="Index_eventDate", columns={"eventDate"}), @ORM\Index(name="Index_occurDateEntered", columns={"InitialTimeStamp"}), @ORM\Index(name="Index_sciname", columns={"sciname"}), @ORM\Index(name="Index_ownerInst", columns={"ownerInstitutionCode"}), @ORM\Index(name="occelevmin", columns={"minimumElevationInMeters"}), @ORM\Index(name="Index_otherCatalogNumbers", columns={"otherCatalogNumbers"}), @ORM\Index(name="Index_state", columns={"stateProvince"}), @ORM\Index(name="Index_catalognumber", columns={"catalogNumber"}), @ORM\Index(name="Index_occurDateLastModifed", columns={"modifiedTimeStamp"}), @ORM\Index(name="FK_omoccurrences_uid", columns={"observeruid"}), @ORM\Index(name="Index_gui", columns={"occurrenceID"}), @ORM\Index(name="occelevmax", columns={"maximumElevationInMeters"}), @ORM\Index(name="Index_locality", columns={"locality"}, flags={"fulltext"}), @ORM\Index(name="Index_country", columns={"country"}), @ORM\Index(name="Index_collnum", columns={"recordNumber"}), @ORM\Index(name="Index_occurrences_typestatus", columns={"typeStatus"}), @ORM\Index(name="FK_omoccurrences_tid", columns={"tidinterpreted"}), @ORM\Index(name="Index_collector", columns={"recordedBy"}), @ORM\Index(name="Index_occurrences_procstatus", columns={"processingstatus"}), @ORM\Index(name="Index_occurRecordEnteredBy", columns={"recordEnteredBy"}), @ORM\Index(name="Index_family", columns={"family"}), @ORM\Index(name="Index_municipality", columns={"municipality"}), @ORM\Index(name="Index_occurrences_cult", columns={"cultivationStatus"}), @ORM\Index(name="IDX_C48904CFEA1D339B", columns={"collid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OmoccurrencesRepository")
  */
 class Omoccurrences
@@ -695,13 +695,6 @@ class Omoccurrences
     private $genericcolumn2 = 'NULL';
 
     /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="modified", type="datetime", nullable=true, options={"default"=NULL,"comment"="DateLastModified"})
-     */
-    private $modified = 'NULL';
-
-    /**
      * @var string|null
      *
      * @ORM\Column(name="language", type="string", length=20, nullable=true, options={"default"=NULL})
@@ -756,16 +749,16 @@ class Omoccurrences
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateEntered", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=true, options={"default"=NULL})
      */
-    private $dateentered = 'NULL';
+    private $initialtimestamp = 'NULL';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateLastModified", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $datelastmodified = 'CURRENT_TIMESTAMP';
+    private $modifiedtimestamp = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -1951,18 +1944,6 @@ class Omoccurrences
         return $this;
     }
 
-    public function getModified(): ?\DateTimeInterface
-    {
-        return $this->modified;
-    }
-
-    public function setModified(?\DateTimeInterface $modified): self
-    {
-        $this->modified = $modified;
-
-        return $this;
-    }
-
     public function getLanguage(): ?string
     {
         return $this->language;
@@ -2035,26 +2016,26 @@ class Omoccurrences
         return $this;
     }
 
-    public function getDateentered(): ?\DateTimeInterface
+    public function getInitialtimestamp(): ?\DateTimeInterface
     {
-        return $this->dateentered;
+        return $this->initialtimestamp;
     }
 
-    public function setDateentered(?\DateTimeInterface $dateentered): self
+    public function setInitialtimestamp(?\DateTimeInterface $initialtimestamp): self
     {
-        $this->dateentered = $dateentered;
+        $this->initialtimestamp = $initialtimestamp;
 
         return $this;
     }
 
-    public function getDatelastmodified(): ?\DateTimeInterface
+    public function getModifiedtimestamp(): ?\DateTimeInterface
     {
-        return $this->datelastmodified;
+        return $this->modifiedtimestamp;
     }
 
-    public function setDatelastmodified(\DateTimeInterface $datelastmodified): self
+    public function setModifiedtimestamp(\DateTimeInterface $modifiedtimestamp): self
     {
-        $this->datelastmodified = $datelastmodified;
+        $this->modifiedtimestamp = $modifiedtimestamp;
 
         return $this;
     }

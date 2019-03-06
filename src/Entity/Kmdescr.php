@@ -108,9 +108,9 @@ class Kmdescr
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="DateEntered", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
-    private $dateentered = 'CURRENT_TIMESTAMP';
+    private $initialtimestamp = 'CURRENT_TIMESTAMP';
 
     public function getCid(): ?int
     {
@@ -230,14 +230,14 @@ class Kmdescr
         return $this;
     }
 
-    public function getDateentered(): ?\DateTimeInterface
+    public function getInitialtimestamp(): ?\DateTimeInterface
     {
-        return $this->dateentered;
+        return $this->initialtimestamp;
     }
 
-    public function setDateentered(\DateTimeInterface $dateentered): self
+    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
     {
-        $this->dateentered = $dateentered;
+        $this->initialtimestamp = $initialtimestamp;
 
         return $this;
     }

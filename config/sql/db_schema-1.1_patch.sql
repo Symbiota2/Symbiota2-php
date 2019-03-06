@@ -71,6 +71,7 @@ ALTER TABLE `kmcslang`
   DROP FOREIGN KEY `FK_cslang_1`;
 
 ALTER TABLE `kmdescr`
+  CHANGE COLUMN `DateEntered` `InitialTimeStamp` timestamp(0) NOT NULL DEFAULT current_timestamp AFTER `Notes`,
   DROP FOREIGN KEY `FK_descr_cs`;
 
 ALTER TABLE `kmcs`
@@ -102,7 +103,17 @@ ALTER TABLE `omoccurrencesfulltext`
   ADD FULLTEXT `ft_occur_locality` (`locality`(100)) comment '';
 
 ALTER TABLE `omoccurrences`
+  CHANGE COLUMN `dateEntered` `InitialTimeStamp` datetime(0) NULL DEFAULT NULL AFTER `dynamicFields`,
+  CHANGE COLUMN `dateLastModified` `modifiedTimeStamp` timestamp(0) NOT NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP AFTER `InitialTimeStamp`,
   DROP FOREIGN KEY `FK_omoccurrences_recbyid`;
+
+UPDATE `omoccurrences`
+  SET modifiedTimeStamp = modified
+  WHERE (modified IS NOT NULL AND ISNULL(modifiedTimeStamp))
+	OR (modified > modifiedTimeStamp AND modified IS NOT NULL AND modifiedTimeStamp IS NOT NULL);
+
+ALTER TABLE `omoccurrences`
+  DROP COLUMN `modified`;
 
 ALTER TABLE `omoccurrences`
   DROP INDEX `FK_recordedbyid`;
@@ -313,6 +324,7 @@ ALTER TABLE `omexsiccatiocclink`
   DROP INDEX `FKExsiccatiNumOccLink2`;
 
 ALTER TABLE `omoccurassociations`
+  CHANGE COLUMN `datelastmodified` `modifiedTimeStamp` datetime(0) NULL DEFAULT NULL AFTER `createduid`,
   DROP FOREIGN KEY `FK_occurassoc_occid`,
   DROP FOREIGN KEY `FK_occurassoc_occidassoc`,
   DROP FOREIGN KEY `FK_occurassoc_tid`,
@@ -357,6 +369,9 @@ ALTER TABLE `omoccuredits`
 ALTER TABLE `omoccurexchange`
   DROP FOREIGN KEY `FK_occexch_coll`,
   DROP INDEX `FK_occexch_coll`;
+
+ALTER TABLE `omcollectionstats`
+  CHANGE COLUMN `datelastmodified` `modifiedTimeStamp` datetime(0) NULL DEFAULT NULL AFTER `uploaddate`;
 
 ALTER TABLE `omoccurgenetic`
   DROP FOREIGN KEY `FK_omoccurgenetic`,
@@ -425,6 +440,7 @@ ALTER TABLE `configpageattributes`
   DROP INDEX `FK_configpageattributes_id_idx`;
 
 ALTER TABLE `fmchecklists`
+  CHANGE COLUMN `DateLastModified` `modifiedTimeStamp` datetime(0) NULL DEFAULT NULL AFTER `expiration`,
   DROP FOREIGN KEY `FK_checklists_uid`,
   DROP INDEX `FK_checklists_uid`;
 
@@ -582,6 +598,7 @@ ALTER TABLE `taxa`
   DROP INDEX `FK_taxa_uid_idx`;
 
 ALTER TABLE `tmattributes`
+  CHANGE COLUMN `datelastmodified` `modifiedTimeStamp` datetime(0) NULL DEFAULT NULL AFTER `modifieduid`,
   DROP FOREIGN KEY `FK_tmattr_imgid`,
   DROP FOREIGN KEY `FK_tmattr_occid`,
   DROP FOREIGN KEY `FK_tmattr_stateid`,
@@ -594,6 +611,7 @@ ALTER TABLE `tmattributes`
   DROP INDEX `FK_tmattr_uidmodified_idx`;
 
 ALTER TABLE `tmstates`
+  CHANGE COLUMN `datelastmodified` `modifiedTimeStamp` datetime(0) NULL DEFAULT NULL AFTER `modifieduid`,
   DROP FOREIGN KEY `FK_tmstates_uidcreated`,
   DROP FOREIGN KEY `FK_tmstates_uidmodified`,
   DROP INDEX `FK_tmstate_uidcreated_idx`,
@@ -604,6 +622,7 @@ ALTER TABLE `tmtraitdependencies`
   DROP INDEX `FK_tmdepend_stateid_idx`;
 
 ALTER TABLE `tmtraits`
+  CHANGE COLUMN `datelastmodified` `modifiedTimeStamp` datetime(0) NULL DEFAULT NULL AFTER `modifieduid`,
   DROP FOREIGN KEY `FK_traits_uidcreated`,
   DROP FOREIGN KEY `FK_traits_uidmodified`,
   DROP INDEX `FK_traits_uidcreated_idx`,

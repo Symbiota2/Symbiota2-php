@@ -69,9 +69,9 @@ class Omcollectionstats
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="datelastmodified", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true, options={"default"=NULL})
      */
-    private $datelastmodified = 'NULL';
+    private $modifiedtimestamp = 'NULL';
 
     /**
      * @var string|null
@@ -166,14 +166,14 @@ class Omcollectionstats
         return $this;
     }
 
-    public function getDatelastmodified(): ?\DateTimeInterface
+    public function getModifiedtimestamp(): ?\DateTimeInterface
     {
-        return $this->datelastmodified;
+        return $this->modifiedtimestamp;
     }
 
-    public function setDatelastmodified(?\DateTimeInterface $datelastmodified): self
+    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): self
     {
-        $this->datelastmodified = $datelastmodified;
+        $this->modifiedtimestamp = $modifiedtimestamp;
 
         return $this;
     }

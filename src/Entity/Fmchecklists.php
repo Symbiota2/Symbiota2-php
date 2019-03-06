@@ -259,9 +259,9 @@ class Fmchecklists
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="DateLastModified", type="datetime", nullable=true)
+     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
      */
-    private $datelastmodified;
+    private $modifiedtimestamp;
 
     /**
      * @var \DateTime
@@ -574,14 +574,14 @@ class Fmchecklists
         return $this;
     }
 
-    public function getDatelastmodified(): ?\DateTimeInterface
+    public function getModifiedtimestamp(): ?\DateTimeInterface
     {
-        return $this->datelastmodified;
+        return $this->modifiedtimestamp;
     }
 
-    public function setDatelastmodified(?\DateTimeInterface $datelastmodified): self
+    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): self
     {
-        $this->datelastmodified = $datelastmodified;
+        $this->modifiedtimestamp = $modifiedtimestamp;
 
         return $this;
     }
