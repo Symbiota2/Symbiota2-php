@@ -60,7 +60,7 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
      * @ORM\Column(name="uid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Groups({"get", "get-roles"})
+     * @Groups({"get", "get-roles", "get-checklist-info"})
      */
     private $uid;
 
@@ -68,7 +68,7 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
      * @var string|null
      *
      * @ORM\Column(name="firstname", type="string", length=45, nullable=true)
-     * @Groups({"get", "get-roles", "post", "put"})
+     * @Groups({"get", "get-roles", "get-checklist-info", "post", "put"})
      * @Assert\Length(max=45, groups={"post", "put"})
      */
     private $firstname;
@@ -77,7 +77,7 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
      * @var string|null
      *
      * @ORM\Column(name="middleinitial", type="string", length=2, nullable=true)
-     * @Groups({"get", "get-roles", "post", "put"})
+     * @Groups({"get", "get-roles", "get-checklist-info", "post", "put"})
      * @Assert\Length(max=2, groups={"post", "put"})
      */
     private $middleinitial;
@@ -86,7 +86,7 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", length=45, nullable=false)
-     * @Groups({"get", "get-roles", "post", "put"})
+     * @Groups({"get", "get-roles", "get-checklist-info", "post", "put"})
      * @Assert\NotBlank(groups={"post", "put"})
      * @Assert\Length(max=45, groups={"post", "put"})
      */
@@ -96,7 +96,7 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=45, nullable=false)
-     * @Groups({"get", "get-roles", "post"})
+     * @Groups({"get", "get-roles", "get-checklist-info", "post"})
      * @Assert\NotBlank(groups={"post"})
      * @Assert\Length(min=6, max=45, groups={"post"})
      */
