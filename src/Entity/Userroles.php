@@ -37,7 +37,7 @@ class Userroles implements UidassignedbyInterface, InitialtimestampInterface
     /**
      * @var int
      *
-     * @ORM\Column(name="userroleid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="userroleid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @Groups({"get-roles"})

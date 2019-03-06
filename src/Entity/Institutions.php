@@ -39,7 +39,7 @@ class Institutions implements ModifieduidInterface, InitialtimestampInterface, M
     /**
      * @var int
      *
-     * @ORM\Column(name="iid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="iid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @Groups({"get"})

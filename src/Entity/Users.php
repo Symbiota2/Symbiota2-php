@@ -57,7 +57,7 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
     /**
      * @var int
      *
-     * @ORM\Column(name="uid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="uid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @Groups({"get", "get-roles"})

@@ -2,173 +2,229 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Fmchecklists
  *
  * @ORM\Table(name="fmchecklists", indexes={@ORM\Index(name="FK_checklists_uid", columns={"uid"}), @ORM\Index(name="name", columns={"Name", "Type"})})
  * @ORM\Entity(repositoryClass="App\Repository\FmchecklistsRepository")
+ * @ApiResource(
+ *     itemOperations={
+ *          "get",
+ *          "put"={
+ *              "access_control"="is_granted('IS_AUTHENTICATED_FULLY')",
+ *              "denormalization_context"={
+ *                  "groups"={"put"}
+ *              }
+ *          }
+ *      },
+ *      collectionOperations={
+ *          "get",
+ *          "post"={
+ *              "access_control"="is_granted('IS_AUTHENTICATED_FULLY')",
+ *              "denormalization_context"={
+ *                  "groups"={"post"}
+ *              }
+ *          }
+ *      }
+ * )
  */
 class Fmchecklists
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="CLID", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="CLID", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups({"get"})
      */
     private $clid;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Name", type="string", length=100, nullable=false)
+     * @ORM\Column(name="Name", type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=100)
      */
     private $name;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Title", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Title", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $title = 'NULL';
+    private $title;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Locality", type="string", length=500, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Locality", type="string", length=500, nullable=true)
+     * @Assert\Length(max=500)
      */
-    private $locality = 'NULL';
+    private $locality;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Publication", type="string", length=500, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Publication", type="string", length=500, nullable=true)
+     * @Assert\Length(max=500)
      */
-    private $publication = 'NULL';
+    private $publication;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Abstract", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Abstract", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $abstract = 'NULL';
+    private $abstract;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Authors", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Authors", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $authors = 'NULL';
+    private $authors;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="Type", type="string", length=50, nullable=true, options={"default"="static"})
+     * @Assert\Length(max=50)
      */
     private $type = 'static';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="politicalDivision", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="politicalDivision", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $politicaldivision = 'NULL';
+    private $politicaldivision;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicsql", type="string", length=500, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dynamicsql", type="string", length=500, nullable=true)
+     * @Assert\Length(max=500)
      */
-    private $dynamicsql = 'NULL';
+    private $dynamicsql;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Parent", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Parent", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $parent = 'NULL';
+    private $parent;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="parentclid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="parentclid", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(
+     *      type="integer"
+     * )
      */
-    private $parentclid = 'NULL';
+    private $parentclid;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Notes", type="string", length=500, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Notes", type="string", length=500, nullable=true)
+     * @Assert\Length(max=500)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var float|null
      *
-     * @ORM\Column(name="LatCentroid", type="float", precision=9, scale=6, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="LatCentroid", type="float", precision=9, scale=6, nullable=true)
+     * @Assert\Type(
+     *      type="float"
+     * )
      */
-    private $latcentroid = 'NULL';
+    private $latcentroid;
 
     /**
      * @var float|null
      *
-     * @ORM\Column(name="LongCentroid", type="float", precision=9, scale=6, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="LongCentroid", type="float", precision=9, scale=6, nullable=true)
+     * @Assert\Type(
+     *      type="float"
+     * )
      */
-    private $longcentroid = 'NULL';
+    private $longcentroid;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="pointradiusmeters", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="pointradiusmeters", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(
+     *      type="integer"
+     * )
      */
-    private $pointradiusmeters = 'NULL';
+    private $pointradiusmeters;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="footprintWKT", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="footprintWKT", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $footprintwkt = 'NULL';
+    private $footprintwkt;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="percenteffort", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="percenteffort", type="integer", nullable=true)
+     * @Assert\Type(
+     *      type="integer"
+     * )
      */
-    private $percenteffort = 'NULL';
+    private $percenteffort;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="Access", type="string", length=45, nullable=true, options={"default"="private"})
+     * @Assert\Length(max=45)
      */
     private $access = 'private';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="defaultSettings", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="defaultSettings", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $defaultsettings = 'NULL';
+    private $defaultsettings;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="iconUrl", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="iconUrl", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $iconurl = 'NULL';
+    private $iconurl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="headerUrl", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="headerUrl", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $headerurl = 'NULL';
+    private $headerurl;
 
     /**
      * @var \Users
@@ -183,30 +239,36 @@ class Fmchecklists
     /**
      * @var int
      *
-     * @ORM\Column(name="SortSequence", type="integer", nullable=false, options={"default"="50","unsigned"=true})
+     * @ORM\Column(name="SortSequence", type="integer", options={"default"=50,"unsigned"=true})
+     * @Assert\Type(
+     *      type="integer"
+     * )
      */
-    private $sortsequence = '50';
+    private $sortsequence = 50;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="expiration", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="expiration", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(
+     *      type="integer"
+     * )
      */
-    private $expiration = 'NULL';
+    private $expiration;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="DateLastModified", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="DateLastModified", type="datetime", nullable=true)
      */
-    private $datelastmodified = 'NULL';
+    private $datelastmodified;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime")
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialtimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
