@@ -323,7 +323,8 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Userroles", mappedBy="uid")
-     * @Groups({"get-admin", "get-owner"})
+     * @ApiSubresource()
+     * @Groups({"get"})
      */
     private $roles;
 
