@@ -400,6 +400,9 @@ class Institutions implements ModifieduidInterface, InitialtimestampInterface, M
         return $this;
     }
 
+    /**
+     * @return Users|null
+     */
     public function getModifieduid(): ?Users
     {
         return $this->modifieduid;

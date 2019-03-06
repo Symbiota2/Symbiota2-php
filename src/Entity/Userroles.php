@@ -4,6 +4,9 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Userroles
@@ -11,11 +14,16 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="userroles", indexes={@ORM\Index(name="Index_userroles_table", columns={"tablepk"}), @ORM\Index(name="FK_usrroles_uid2_idx", columns={"uidassignedby"}), @ORM\Index(name="FK_userroles_uid_idx", columns={"uid"})})
  * @ORM\Entity(repositoryClass="App\Repository\UserrolesRepository")
  * @ApiResource(
- *     itemOperations={"get"},
- *     collectionOperations={"get"}
+ *     collectionOperations={
+ *          "post"={
+ *              "denormalization_context"={
+ *                  "groups"={"post"}
+ *              }
+ *          }
+ *      }
  * )
  */
-class Userroles
+class Userroles implements UidassignedbyInterface, InitialtimestampInterface
 {
     /**
      * @var int
@@ -33,32 +41,43 @@ class Userroles
      * @ORM\JoinColumns({
      *      @ORM\JoinColumn(name="uid", referencedColumnName="uid")
      * })
+     * @Assert\NotBlank()
+     * @Groups({"post"})
      */
     private $uid;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="role", type="string", length=45, nullable=false)
+     * @ORM\Column(name="role", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
+     * @Groups({"post"})
      */
     private $role;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="tablepk", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="tablepk", type="integer", nullable=true)
+     * @Assert\Type(
+     *      type="integer"
+     * )
+     * @Groups({"post"})
      */
-    private $tablepk = 'NULL';
+    private $tablepk;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="secondaryVariable", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="secondaryVariable", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
+     * @Groups({"post"})
      */
-    private $secondaryvariable = 'NULL';
+    private $secondaryvariable;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
@@ -70,9 +89,9 @@ class Userroles
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialtimestamp;
 
     public function getUserroleid(): ?int
     {
@@ -120,25 +139,35 @@ class Userroles
         return $this->initialtimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): InitialtimestampInterface
     {
         $this->initialtimestamp = $initialtimestamp;
 
         return $this;
     }
 
+    /**
+     * @return Users|null
+     */
     public function getUidassignedby(): ?Users
     {
         return $this->uidassignedby;
     }
 
-    public function setUidassignedby(?Users $uidassignedby): self
+    /**
+     * @param UserInterface $uidassignedby
+     * @return UidassignedbyInterface
+     */
+    public function setUidassignedby(UserInterface $uidassignedby): UidassignedbyInterface
     {
         $this->uidassignedby = $uidassignedby;
 
         return $this;
     }
 
+    /**
+     * @return Users|null
+     */
     public function getUid(): ?Users
     {
         return $this->uid;
