@@ -77,6 +77,9 @@ ALTER TABLE `kmdescr`
 ALTER TABLE `kmcs`
   DROP PRIMARY KEY;
 
+ALTER TABLE `omoccureditlocks`
+  CHANGE COLUMN `uid` `createduid` int(11) NOT NULL AFTER `occid`;
+
 ALTER TABLE `kmcs`
   ADD COLUMN `kmcsid` int(10) NOT NULL AUTO_INCREMENT FIRST,
   ADD PRIMARY KEY (`kmcsid`);
@@ -239,6 +242,7 @@ ALTER TABLE `fmchklstprojlink`
   DROP INDEX `FK_chklst`;
 
 ALTER TABLE `taxadescrblock`
+  CHANGE COLUMN `uid` `createduid` int(10) UNSIGNED NOT NULL AFTER `displaylevel`,
   DROP FOREIGN KEY `FK_taxadesc_lang`,
   DROP INDEX `FK_taxadesc_lang_idx`;
 
@@ -279,6 +283,7 @@ ALTER TABLE `taxavernaculars`
   DROP INDEX `FK_vern_lang_idx`;
 
 ALTER TABLE `glossaryimages`
+  CHANGE COLUMN `uid` `createduid` int(10) UNSIGNED NULL DEFAULT NULL AFTER `createdBy`,
   DROP FOREIGN KEY `FK_glossaryimages_glossid`,
   DROP FOREIGN KEY `FK_glossaryimages_uid`,
   DROP INDEX `FK_glossaryimages_gloss`,
@@ -337,6 +342,7 @@ ALTER TABLE `omoccurassociations`
   DROP INDEX `FK_occurassoc_uidcreated_idx`;
 
 ALTER TABLE `omoccurcomments`
+  CHANGE COLUMN `uid` `createduid` int(10) UNSIGNED NOT NULL AFTER `comment`,
   DROP FOREIGN KEY `fk_omoccurcomments_occid`,
   DROP FOREIGN KEY `fk_omoccurcomments_uid`,
   DROP INDEX `fk_omoccurcomments_occid`,
@@ -349,6 +355,7 @@ ALTER TABLE `omoccurdatasetlink`
   DROP INDEX `FK_omoccurdatasetlink_occid`;
 
 ALTER TABLE `omoccurdatasets`
+  CHANGE COLUMN `uid` `createduid` int(11) UNSIGNED NULL DEFAULT NULL AFTER `sortsequence`,
   DROP FOREIGN KEY `FK_omcollections_collid`,
   DROP FOREIGN KEY `FK_omoccurdatasets_uid`,
   DROP INDEX `FK_omoccurdatasets_uid_idx`,
@@ -406,12 +413,14 @@ ALTER TABLE `omoccurrencetypes`
   DROP INDEX `FK_occurtype_tid_idx`;
 
 ALTER TABLE `omoccurrevisions`
+  CHANGE COLUMN `uid` `createduid` int(10) UNSIGNED NULL DEFAULT NULL AFTER `errorMessage`,
   DROP FOREIGN KEY `fk_omrevisions_occid`,
   DROP FOREIGN KEY `fk_omrevisions_uid`,
   DROP INDEX `fk_omrevisions_occid_idx`,
   DROP INDEX `fk_omrevisions_uid_idx`;
 
 ALTER TABLE `omoccurverification`
+  CHANGE COLUMN `uid` `createduid` int(10) UNSIGNED NULL DEFAULT NULL AFTER `source`,
   DROP FOREIGN KEY `FK_omoccurverification_occid`,
   DROP FOREIGN KEY `FK_omoccurverification_uid`,
   DROP INDEX `FK_omoccurverification_occid_idx`,
@@ -435,11 +444,15 @@ ALTER TABLE `chotomouskey`
   DROP FOREIGN KEY `FK_chotomouskey_taxa`,
   DROP INDEX `FK_chotomouskey_taxa`;
 
+ALTER TABLE `referencetype`
+  CHANGE COLUMN `addedByUid` `createduid` int(11) NULL DEFAULT NULL AFTER `Figures`;
+
 ALTER TABLE `configpageattributes`
   DROP FOREIGN KEY `FK_configpageattributes_id`,
   DROP INDEX `FK_configpageattributes_id_idx`;
 
 ALTER TABLE `fmchecklists`
+  CHANGE COLUMN `uid` `createduid` int(10) UNSIGNED NULL DEFAULT NULL AFTER `headerUrl`,
   CHANGE COLUMN `DateLastModified` `modifiedTimeStamp` datetime(0) NULL DEFAULT NULL AFTER `expiration`,
   DROP FOREIGN KEY `FK_checklists_uid`,
   DROP INDEX `FK_checklists_uid`;
@@ -449,6 +462,7 @@ ALTER TABLE `fmchklstchildren`
   DROP INDEX `FK_fmchklstchild_clid_idx`;
 
 ALTER TABLE `fmcltaxacomments`
+  CHANGE COLUMN `uid` `createduid` int(10) UNSIGNED NOT NULL AFTER `comment`,
   DROP FOREIGN KEY `FK_clcomment_users`,
   DROP INDEX `FK_clcomment_users`;
 
@@ -489,6 +503,7 @@ ALTER TABLE `geothesstateprovince`
   DROP INDEX `FK_geothesstate_accepted_idx`;
 
 ALTER TABLE `glossary`
+  CHANGE COLUMN `uid` `createduid` int(10) UNSIGNED NULL DEFAULT NULL AFTER `resourceurl`,
   DROP FOREIGN KEY `FK_glossary_uid`,
   DROP INDEX `FK_glossary_uid_idx`;
 
@@ -497,6 +512,7 @@ ALTER TABLE `imageannotations`
   DROP INDEX `TID`;
 
 ALTER TABLE `imagekeywords`
+  CHANGE COLUMN `uidassignedby` `createduid` int(10) UNSIGNED NULL DEFAULT NULL AFTER `keyword`,
   DROP FOREIGN KEY `FK_imagekeyword_uid`,
   DROP FOREIGN KEY `FK_imagekeywords_imgid`,
   DROP INDEX `FK_imagekeywords_imgid_idx`,

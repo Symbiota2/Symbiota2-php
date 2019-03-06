@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Glossaryimages
  *
- * @ORM\Table(name="glossaryimages", indexes={@ORM\Index(name="FK_glossaryimages_uid_idx", columns={"uid"}), @ORM\Index(name="FK_glossaryimages_gloss", columns={"glossid"})})
+ * @ORM\Table(name="glossaryimages", indexes={@ORM\Index(name="FK_glossaryimages_uid_idx", columns={"createduid"}), @ORM\Index(name="FK_glossaryimages_gloss", columns={"glossid"})})
  * @ORM\Entity(repositoryClass="App\Repository\GlossaryimagesRepository")
  */
 class Glossaryimages
@@ -71,10 +71,10 @@ class Glossaryimages
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+     *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
      */
-    private $uid;
+    private $createduid;
 
     /**
      * @var \DateTime
@@ -160,14 +160,14 @@ class Glossaryimages
         return $this;
     }
 
-    public function getUid(): ?Users
+    public function getCreateduid(): ?Users
     {
-        return $this->uid;
+        return $this->createduid;
     }
 
-    public function setUid(?Users $uid): self
+    public function setCreateduid(?Users $createduid): self
     {
-        $this->uid = $uid;
+        $this->createduid = $createduid;
 
         return $this;
     }

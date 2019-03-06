@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Omoccurverification
  *
- * @ORM\Table(name="omoccurverification", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQUE_omoccurverification", columns={"occid", "category"})}, indexes={@ORM\Index(name="FK_omoccurverification_occid_idx", columns={"occid"}), @ORM\Index(name="FK_omoccurverification_uid_idx", columns={"uid"})})
+ * @ORM\Table(name="omoccurverification", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQUE_omoccurverification", columns={"occid", "category"})}, indexes={@ORM\Index(name="FK_omoccurverification_occid_idx", columns={"occid"}), @ORM\Index(name="FK_omoccurverification_uid_idx", columns={"createduid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OmoccurverificationRepository")
  */
 class Omoccurverification
@@ -64,10 +64,10 @@ class Omoccurverification
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+     *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
      */
-    private $uid;
+    private $createduid;
 
     /**
      * @var string|null
@@ -172,14 +172,14 @@ class Omoccurverification
         return $this;
     }
 
-    public function getUid(): ?Users
+    public function getCreateduid(): ?Users
     {
-        return $this->uid;
+        return $this->createduid;
     }
 
-    public function setUid(?Users $uid): self
+    public function setCreateduid(?Users $createduid): self
     {
-        $this->uid = $uid;
+        $this->createduid = $createduid;
 
         return $this;
     }

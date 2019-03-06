@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="userroles", indexes={@ORM\Index(name="Index_userroles_table", columns={"tablepk"}), @ORM\Index(name="FK_usrroles_uid2_idx", columns={"uidassignedby"}), @ORM\Index(name="FK_userroles_uid_idx", columns={"uid"})})
  * @ORM\Entity(repositoryClass="App\Repository\UserrolesRepository")
  * @ApiResource(
+ *      itemOperations={},
  *      collectionOperations={
  *          "post"={
  *              "access_control"="is_granted('IS_AUTHENTICATED_FULLY')",

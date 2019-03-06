@@ -81,9 +81,9 @@ class Taxadescrblock
     /**
      * @var int
      *
-     * @ORM\Column(name="uid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="createduid", type="integer", nullable=false, options={"unsigned"=true})
      */
-    private $uid;
+    private $createduid;
 
     /**
      * @var string|null
@@ -172,14 +172,14 @@ class Taxadescrblock
         return $this;
     }
 
-    public function getUid(): ?int
+    public function getCreateduid(): ?int
     {
-        return $this->uid;
+        return $this->createduid;
     }
 
-    public function setUid(int $uid): self
+    public function setCreateduid(int $createduid): self
     {
-        $this->uid = $uid;
+        $this->createduid = $createduid;
 
         return $this;
     }

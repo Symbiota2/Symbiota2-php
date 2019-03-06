@@ -38,13 +38,6 @@ class Fmdynamicchecklists
     private $details = 'NULL';
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="uid", type="string", length=45, nullable=true, options={"default"=NULL})
-     */
-    private $uid = 'NULL';
-
-    /**
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=45, nullable=false, options={"default"="DynamicList"})
@@ -120,18 +113,6 @@ class Fmdynamicchecklists
     public function setDetails(?string $details): self
     {
         $this->details = $details;
-
-        return $this;
-    }
-
-    public function getUid(): ?string
-    {
-        return $this->uid;
-    }
-
-    public function setUid(?string $uid): self
-    {
-        $this->uid = $uid;
 
         return $this;
     }

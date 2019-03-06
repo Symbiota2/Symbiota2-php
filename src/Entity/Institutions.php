@@ -176,7 +176,7 @@ class Institutions implements ModifieduidInterface, InitialtimestampInterface, M
     private $notes;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
@@ -401,7 +401,7 @@ class Institutions implements ModifieduidInterface, InitialtimestampInterface, M
     }
 
     /**
-     * @return Users|null
+     * @return \App\Entity\Users|null
      */
     public function getModifieduid(): ?Users
     {

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Omoccurcomments
  *
- * @ORM\Table(name="omoccurcomments", indexes={@ORM\Index(name="fk_omoccurcomments_uid", columns={"uid"}), @ORM\Index(name="fk_omoccurcomments_occid", columns={"occid"})})
+ * @ORM\Table(name="omoccurcomments", indexes={@ORM\Index(name="fk_omoccurcomments_uid", columns={"createduid"}), @ORM\Index(name="fk_omoccurcomments_occid", columns={"occid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OmoccurcommentsRepository")
  */
 class Omoccurcomments
@@ -43,10 +43,10 @@ class Omoccurcomments
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+     *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
      */
-    private $uid;
+    private $createduid;
 
     /**
      * @var int
@@ -134,14 +134,14 @@ class Omoccurcomments
         return $this;
     }
 
-    public function getUid(): ?Users
+    public function getCreateduid(): ?Users
     {
-        return $this->uid;
+        return $this->createduid;
     }
 
-    public function setUid(?Users $uid): self
+    public function setCreateduid(?Users $createduid): self
     {
-        $this->uid = $uid;
+        $this->createduid = $createduid;
 
         return $this;
     }

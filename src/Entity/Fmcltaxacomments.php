@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Fmcltaxacomments
  *
- * @ORM\Table(name="fmcltaxacomments", indexes={@ORM\Index(name="FK_clcomment_users", columns={"uid"}), @ORM\Index(name="FK_clcomment_cltaxa", columns={"clid", "tid"})})
+ * @ORM\Table(name="fmcltaxacomments", indexes={@ORM\Index(name="FK_clcomment_users", columns={"createduid"}), @ORM\Index(name="FK_clcomment_cltaxa", columns={"clid", "tid"})})
  * @ORM\Entity(repositoryClass="App\Repository\FmcltaxacommentsRepository")
  */
 class Fmcltaxacomments
@@ -47,10 +47,10 @@ class Fmcltaxacomments
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+     *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
      */
-    private $uid;
+    private $createduid;
 
     /**
      * @var int
@@ -150,14 +150,14 @@ class Fmcltaxacomments
         return $this;
     }
 
-    public function getUid(): ?Users
+    public function getCreateduid(): ?Users
     {
-        return $this->uid;
+        return $this->createduid;
     }
 
-    public function setUid(?Users $uid): self
+    public function setCreateduid(?Users $createduid): self
     {
-        $this->uid = $uid;
+        $this->createduid = $createduid;
 
         return $this;
     }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Imagekeywords
  *
- * @ORM\Table(name="imagekeywords", indexes={@ORM\Index(name="FK_imagekeyword_uid_idx", columns={"uidassignedby"}), @ORM\Index(name="FK_imagekeywords_imgid_idx", columns={"imgid"}), @ORM\Index(name="INDEX_imagekeyword", columns={"keyword"})})
+ * @ORM\Table(name="imagekeywords", indexes={@ORM\Index(name="FK_imagekeyword_uid_idx", columns={"createduid"}), @ORM\Index(name="FK_imagekeywords_imgid_idx", columns={"imgid"}), @ORM\Index(name="INDEX_imagekeyword", columns={"keyword"})})
  * @ORM\Entity(repositoryClass="App\Repository\ImagekeywordsRepository")
  */
 class Imagekeywords
@@ -43,10 +43,10 @@ class Imagekeywords
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uidassignedby", referencedColumnName="uid")
+     *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
      */
-    private $uidassignedby;
+    private $createduid;
 
     /**
      * @var \DateTime|null
@@ -96,14 +96,14 @@ class Imagekeywords
         return $this;
     }
 
-    public function getUidassignedby(): ?Users
+    public function getCreateduid(): ?Users
     {
-        return $this->uidassignedby;
+        return $this->createduid;
     }
 
-    public function setUidassignedby(?Users $uidassignedby): self
+    public function setCreateduid(?Users $createduid): self
     {
-        $this->uidassignedby = $uidassignedby;
+        $this->createduid = $createduid;
 
         return $this;
     }

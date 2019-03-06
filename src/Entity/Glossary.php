@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Glossary
  *
- * @ORM\Table(name="glossary", indexes={@ORM\Index(name="FK_glossary_uid_idx", columns={"uid"}), @ORM\Index(name="Index_glossary_lang", columns={"language"}), @ORM\Index(name="Index_term", columns={"term"})})
+ * @ORM\Table(name="glossary", indexes={@ORM\Index(name="FK_glossary_uid_idx", columns={"createduid"}), @ORM\Index(name="Index_glossary_lang", columns={"language"}), @ORM\Index(name="Index_term", columns={"term"})})
  * @ORM\Entity(repositoryClass="App\Repository\GlossaryRepository")
  */
 class Glossary
@@ -84,10 +84,10 @@ class Glossary
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+     *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
      */
-    private $uid;
+    private $createduid;
 
     /**
      * @var \DateTime
@@ -232,14 +232,14 @@ class Glossary
         return $this;
     }
 
-    public function getUid(): ?Users
+    public function getCreateduid(): ?Users
     {
-        return $this->uid;
+        return $this->createduid;
     }
 
-    public function setUid(?Users $uid): self
+    public function setCreateduid(?Users $createduid): self
     {
-        $this->uid = $uid;
+        $this->createduid = $createduid;
 
         return $this;
     }

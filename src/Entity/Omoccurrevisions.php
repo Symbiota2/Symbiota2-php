@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Omoccurrevisions
  *
- * @ORM\Table(name="omoccurrevisions", uniqueConstraints={@ORM\UniqueConstraint(name="guid_UNIQUE_omoccurrevisions", columns={"guid"})}, indexes={@ORM\Index(name="fk_omrevisions_uid_idx", columns={"uid"}), @ORM\Index(name="Index_omrevisions_reviewed", columns={"reviewStatus"}), @ORM\Index(name="fk_omrevisions_occid_idx", columns={"occid"}), @ORM\Index(name="Index_omrevisions_applied", columns={"appliedStatus"}), @ORM\Index(name="Index_omrevisions_editor", columns={"externalEditor"}), @ORM\Index(name="Index_omrevisions_source", columns={"externalSource"})})
+ * @ORM\Table(name="omoccurrevisions", uniqueConstraints={@ORM\UniqueConstraint(name="guid_UNIQUE_omoccurrevisions", columns={"guid"})}, indexes={@ORM\Index(name="fk_omrevisions_uid_idx", columns={"createduid"}), @ORM\Index(name="Index_omrevisions_reviewed", columns={"reviewStatus"}), @ORM\Index(name="fk_omrevisions_occid_idx", columns={"occid"}), @ORM\Index(name="Index_omrevisions_applied", columns={"appliedStatus"}), @ORM\Index(name="Index_omrevisions_editor", columns={"externalEditor"}), @ORM\Index(name="Index_omrevisions_source", columns={"externalSource"})})
  * @ORM\Entity(repositoryClass="App\Repository\OmoccurrevisionsRepository")
  */
 class Omoccurrevisions
@@ -92,10 +92,10 @@ class Omoccurrevisions
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+     *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
      */
-    private $uid;
+    private $createduid;
 
     /**
      * @var \DateTime|null
@@ -248,14 +248,14 @@ class Omoccurrevisions
         return $this;
     }
 
-    public function getUid(): ?Users
+    public function getCreateduid(): ?Users
     {
-        return $this->uid;
+        return $this->createduid;
     }
 
-    public function setUid(?Users $uid): self
+    public function setCreateduid(?Users $createduid): self
     {
-        $this->uid = $uid;
+        $this->createduid = $createduid;
 
         return $this;
     }

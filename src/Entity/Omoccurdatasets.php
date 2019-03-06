@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Omoccurdatasets
  *
- * @ORM\Table(name="omoccurdatasets", indexes={@ORM\Index(name="FK_omcollections_collid_idx", columns={"collid"}), @ORM\Index(name="FK_omoccurdatasets_uid_idx", columns={"uid"})})
+ * @ORM\Table(name="omoccurdatasets", indexes={@ORM\Index(name="FK_omcollections_collid_idx", columns={"collid"}), @ORM\Index(name="FK_omoccurdatasets_uid_idx", columns={"createduid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OmoccurdatasetsRepository")
  */
 class Omoccurdatasets
@@ -47,10 +47,10 @@ class Omoccurdatasets
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+     *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
      */
-    private $uid;
+    private $createduid;
 
     /**
      * @var \Omcollections
@@ -122,14 +122,14 @@ class Omoccurdatasets
         return $this;
     }
 
-    public function getUid(): ?Users
+    public function getCreateduid(): ?Users
     {
-        return $this->uid;
+        return $this->createduid;
     }
 
-    public function setUid(?Users $uid): self
+    public function setCreateduid(?Users $createduid): self
     {
-        $this->uid = $uid;
+        $this->createduid = $createduid;
 
         return $this;
     }

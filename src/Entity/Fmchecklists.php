@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Fmchecklists
  *
- * @ORM\Table(name="fmchecklists", indexes={@ORM\Index(name="FK_checklists_uid", columns={"uid"}), @ORM\Index(name="name", columns={"Name", "Type"})})
+ * @ORM\Table(name="fmchecklists", indexes={@ORM\Index(name="FK_checklists_uid", columns={"createduid"}), @ORM\Index(name="name", columns={"Name", "Type"})})
  * @ORM\Entity(repositoryClass="App\Repository\FmchecklistsRepository")
  * @ApiResource(
  *     itemOperations={
@@ -53,6 +53,7 @@ class Fmchecklists
      * @ORM\Column(name="Name", type="string", length=100)
      * @Assert\NotBlank()
      * @Assert\Length(max=100)
+     * @Groups({"get", "post", "put"})
      */
     private $name;
 
@@ -61,6 +62,7 @@ class Fmchecklists
      *
      * @ORM\Column(name="Title", type="string", length=150, nullable=true)
      * @Assert\Length(max=150)
+     * @Groups({"get", "post", "put"})
      */
     private $title;
 
@@ -69,6 +71,7 @@ class Fmchecklists
      *
      * @ORM\Column(name="Locality", type="string", length=500, nullable=true)
      * @Assert\Length(max=500)
+     * @Groups({"get", "post", "put"})
      */
     private $locality;
 
@@ -77,6 +80,7 @@ class Fmchecklists
      *
      * @ORM\Column(name="Publication", type="string", length=500, nullable=true)
      * @Assert\Length(max=500)
+     * @Groups({"get", "post", "put"})
      */
     private $publication;
 
@@ -85,6 +89,7 @@ class Fmchecklists
      *
      * @ORM\Column(name="Abstract", type="text", length=65535, nullable=true)
      * @Assert\Length(max=65535)
+     * @Groups({"get", "post", "put"})
      */
     private $abstract;
 
@@ -93,6 +98,7 @@ class Fmchecklists
      *
      * @ORM\Column(name="Authors", type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
+     * @Groups({"get", "post", "put"})
      */
     private $authors;
 
@@ -101,6 +107,7 @@ class Fmchecklists
      *
      * @ORM\Column(name="Type", type="string", length=50, nullable=true, options={"default"="static"})
      * @Assert\Length(max=50)
+     * @Groups({"get", "post", "put"})
      */
     private $type = 'static';
 
@@ -109,6 +116,7 @@ class Fmchecklists
      *
      * @ORM\Column(name="politicalDivision", type="string", length=45, nullable=true)
      * @Assert\Length(max=45)
+     * @Groups({"get", "post", "put"})
      */
     private $politicaldivision;
 
@@ -117,6 +125,7 @@ class Fmchecklists
      *
      * @ORM\Column(name="dynamicsql", type="string", length=500, nullable=true)
      * @Assert\Length(max=500)
+     * @Groups({"get", "post", "put"})
      */
     private $dynamicsql;
 
@@ -125,6 +134,7 @@ class Fmchecklists
      *
      * @ORM\Column(name="Parent", type="string", length=50, nullable=true)
      * @Assert\Length(max=50)
+     * @Groups({"get", "post", "put"})
      */
     private $parent;
 
@@ -135,6 +145,7 @@ class Fmchecklists
      * @Assert\Type(
      *      type="integer"
      * )
+     * @Groups({"get", "post", "put"})
      */
     private $parentclid;
 
@@ -143,6 +154,7 @@ class Fmchecklists
      *
      * @ORM\Column(name="Notes", type="string", length=500, nullable=true)
      * @Assert\Length(max=500)
+     * @Groups({"get", "post", "put"})
      */
     private $notes;
 
@@ -153,6 +165,7 @@ class Fmchecklists
      * @Assert\Type(
      *      type="float"
      * )
+     * @Groups({"get", "post", "put"})
      */
     private $latcentroid;
 
@@ -163,6 +176,7 @@ class Fmchecklists
      * @Assert\Type(
      *      type="float"
      * )
+     * @Groups({"get", "post", "put"})
      */
     private $longcentroid;
 
@@ -173,6 +187,7 @@ class Fmchecklists
      * @Assert\Type(
      *      type="integer"
      * )
+     * @Groups({"get", "post", "put"})
      */
     private $pointradiusmeters;
 
@@ -181,6 +196,7 @@ class Fmchecklists
      *
      * @ORM\Column(name="footprintWKT", type="text", length=65535, nullable=true)
      * @Assert\Length(max=65535)
+     * @Groups({"get", "post", "put"})
      */
     private $footprintwkt;
 
@@ -191,6 +207,7 @@ class Fmchecklists
      * @Assert\Type(
      *      type="integer"
      * )
+     * @Groups({"get", "post", "put"})
      */
     private $percenteffort;
 
@@ -199,6 +216,7 @@ class Fmchecklists
      *
      * @ORM\Column(name="Access", type="string", length=45, nullable=true, options={"default"="private"})
      * @Assert\Length(max=45)
+     * @Groups({"get", "post", "put"})
      */
     private $access = 'private';
 
@@ -207,6 +225,7 @@ class Fmchecklists
      *
      * @ORM\Column(name="defaultSettings", type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
+     * @Groups({"get", "post", "put"})
      */
     private $defaultsettings;
 
@@ -215,6 +234,7 @@ class Fmchecklists
      *
      * @ORM\Column(name="iconUrl", type="string", length=150, nullable=true)
      * @Assert\Length(max=150)
+     * @Groups({"get", "post", "put"})
      */
     private $iconurl;
 
@@ -223,18 +243,20 @@ class Fmchecklists
      *
      * @ORM\Column(name="headerUrl", type="string", length=150, nullable=true)
      * @Assert\Length(max=150)
+     * @Groups({"get", "post", "put"})
      */
     private $headerurl;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+     *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
+     * @Groups({"get"})
      */
-    private $uid;
+    private $createduid;
 
     /**
      * @var int
@@ -243,6 +265,7 @@ class Fmchecklists
      * @Assert\Type(
      *      type="integer"
      * )
+     * @Groups({"get", "post", "put"})
      */
     private $sortsequence = 50;
 
@@ -253,6 +276,7 @@ class Fmchecklists
      * @Assert\Type(
      *      type="integer"
      * )
+     * @Groups({"get", "post", "put"})
      */
     private $expiration;
 
@@ -260,6 +284,7 @@ class Fmchecklists
      * @var \DateTime|null
      *
      * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
+     * @Groups({"get"})
      */
     private $modifiedtimestamp;
 
@@ -267,6 +292,7 @@ class Fmchecklists
      * @var \DateTime
      *
      * @ORM\Column(name="InitialTimeStamp", type="datetime")
+     * @Groups({"get"})
      */
     private $initialtimestamp;
 
@@ -274,6 +300,7 @@ class Fmchecklists
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Fmprojects", mappedBy="clid")
+     * @Groups({"get"})
      */
     private $pid;
 
@@ -281,6 +308,7 @@ class Fmchecklists
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Referenceobject", mappedBy="clid")
+     * @Groups({"get"})
      */
     private $refid;
 
@@ -598,14 +626,14 @@ class Fmchecklists
         return $this;
     }
 
-    public function getUid(): ?Users
+    public function getCreateduid(): ?Users
     {
-        return $this->uid;
+        return $this->createduid;
     }
 
-    public function setUid(?Users $uid): self
+    public function setCreateduid(?Users $createduid): self
     {
-        $this->uid = $uid;
+        $this->createduid = $createduid;
 
         return $this;
     }

@@ -24,9 +24,9 @@ class Omoccureditlocks
     /**
      * @var int
      *
-     * @ORM\Column(name="uid", type="integer", nullable=false)
+     * @ORM\Column(name="createduid", type="integer", nullable=false)
      */
-    private $uid;
+    private $createduid;
 
     /**
      * @var int
@@ -47,14 +47,14 @@ class Omoccureditlocks
         return $this->occid;
     }
 
-    public function getUid(): ?int
+    public function getCreateduid(): ?int
     {
-        return $this->uid;
+        return $this->createduid;
     }
 
-    public function setUid(int $uid): self
+    public function setCreateduid(int $createduid): self
     {
-        $this->uid = $uid;
+        $this->createduid = $createduid;
 
         return $this;
     }

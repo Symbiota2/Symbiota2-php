@@ -157,9 +157,9 @@ class Referencetype
     /**
      * @var int|null
      *
-     * @ORM\Column(name="addedByUid", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="createduid", type="integer", nullable=true, options={"default"=NULL})
      */
-    private $addedbyuid = 'NULL';
+    private $createduid = 'NULL';
 
     /**
      * @var \DateTime|null
@@ -401,14 +401,14 @@ class Referencetype
         return $this;
     }
 
-    public function getAddedbyuid(): ?int
+    public function getCreateduid(): ?int
     {
-        return $this->addedbyuid;
+        return $this->createduid;
     }
 
-    public function setAddedbyuid(?int $addedbyuid): self
+    public function setCreateduid(?int $createduid): self
     {
-        $this->addedbyuid = $addedbyuid;
+        $this->createduid = $createduid;
 
         return $this;
     }
