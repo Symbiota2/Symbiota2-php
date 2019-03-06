@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -51,7 +52,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("username", errorPath="username", groups={"post"})
  * @UniqueEntity("email", groups={"post", "put"})
  */
-class Users implements UserInterface, InitialtimestampInterface
+class Users implements UserInterface, InitialtimestampInterface, ModifiedtimestampInterface
 {
     /**
      * @var int
@@ -269,6 +270,7 @@ class Users implements UserInterface, InitialtimestampInterface
      * @var int
      *
      * @ORM\Column(name="ispublic", type="integer", nullable=false, options={"unsigned"=true, "default"="1"})
+     * @Groups({"get", "post", "put"})
      * @Assert\NotBlank(groups={"post"})
      */
     private $ispublic = 1;
@@ -277,6 +279,7 @@ class Users implements UserInterface, InitialtimestampInterface
      * @var \DateTime|null
      *
      * @ORM\Column(name="lastlogindate", type="datetime", nullable=true)
+     * @Groups({"get"})
      */
     private $lastlogindate;
 
@@ -284,20 +287,23 @@ class Users implements UserInterface, InitialtimestampInterface
      * @var \DateTime
      *
      * @ORM\Column(name="InitialTimeStamp", type="datetime")
+     * @Groups({"get"})
      */
     private $initialtimestamp;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      *
-     * @ORM\Column(name="updated_at", type="datetime")
+     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
+     * @Groups({"get"})
      */
-    private $updatedAt;
+    private $modifiedtimestamp;
 
     /**
      * @var int
      *
      * @ORM\Column(name="verified", type="integer", nullable=false, options={"default"="0"})
+     * @Groups({"get"})
      */
     private $verified;
 
@@ -575,9 +581,16 @@ class Users implements UserInterface, InitialtimestampInterface
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getModifiedtimestamp(): ?\DateTimeInterface
     {
-        return $this->updatedAt;
+        return $this->modifiedtimestamp;
+    }
+
+    public function setModifiedtimestamp(\DateTimeInterface $modifiedtimestamp): ModifiedtimestampInterface
+    {
+        $this->modifiedtimestamp = $modifiedtimestamp;
+
+        return $this;
     }
 
     public function getVerified(): ?int
