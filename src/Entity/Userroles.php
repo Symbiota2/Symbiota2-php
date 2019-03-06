@@ -14,12 +14,21 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="userroles", indexes={@ORM\Index(name="Index_userroles_table", columns={"tablepk"}), @ORM\Index(name="FK_usrroles_uid2_idx", columns={"uidassignedby"}), @ORM\Index(name="FK_userroles_uid_idx", columns={"uid"})})
  * @ORM\Entity(repositoryClass="App\Repository\UserrolesRepository")
  * @ApiResource(
- *     collectionOperations={
+ *      collectionOperations={
  *          "post"={
- *              "denormalization_context"={
- *                  "groups"={"post"}
+ *              "access_control"="is_granted('IS_AUTHENTICATED_FULLY')",
+ *              "normalization_context"={
+ *                 "groups"={"get-roles"}
+ *              }
+ *          },
+ *          "api_users_roles_get_subresource"={
+ *              "normalization_context"={
+ *                  "groups"={"get-roles"}
  *              }
  *          }
+ *      },
+ *      denormalizationContext={
+ *          "groups"={"post"}
  *      }
  * )
  */
@@ -31,11 +40,12 @@ class Userroles implements UidassignedbyInterface, InitialtimestampInterface
      * @ORM\Column(name="userroleid", type="integer", nullable=false, options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups({"get-roles"})
      */
     private $userroleid;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Users")
      * @ORM\JoinColumns({
@@ -52,7 +62,7 @@ class Userroles implements UidassignedbyInterface, InitialtimestampInterface
      * @ORM\Column(name="role", type="string", length=45)
      * @Assert\NotBlank()
      * @Assert\Length(max=45)
-     * @Groups({"post"})
+     * @Groups({"post", "get-roles"})
      */
     private $role;
 
@@ -63,7 +73,7 @@ class Userroles implements UidassignedbyInterface, InitialtimestampInterface
      * @Assert\Type(
      *      type="integer"
      * )
-     * @Groups({"post"})
+     * @Groups({"post", "get-roles"})
      */
     private $tablepk;
 
@@ -72,7 +82,7 @@ class Userroles implements UidassignedbyInterface, InitialtimestampInterface
      *
      * @ORM\Column(name="secondaryVariable", type="string", length=45, nullable=true)
      * @Assert\Length(max=45)
-     * @Groups({"post"})
+     * @Groups({"post", "get-roles"})
      */
     private $secondaryvariable;
 
@@ -83,6 +93,7 @@ class Userroles implements UidassignedbyInterface, InitialtimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="uidassignedby", referencedColumnName="uid")
      * })
+     * @Groups({"get-roles"})
      */
     private $uidassignedby;
 
