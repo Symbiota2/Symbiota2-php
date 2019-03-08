@@ -19,13 +19,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *      itemOperations={
  *          "get"={
- *              "access_control"="is_granted('IS_AUTHENTICATED_FULLY')",
+ *              "access_control"="is_granted('SuperAdmin', object) or object == user",
  *              "normalization_context"={
  *                  "groups"={"get"}
  *              }
  *          },
  *          "put"={
- *              "access_control"="is_granted('IS_AUTHENTICATED_FULLY') and object == user",
+ *              "access_control"="is_granted('SuperAdmin', object) or object == user",
  *              "denormalization_context"={
  *                  "groups"={"put"}
  *              },
@@ -36,6 +36,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          }
  *      },
  *      collectionOperations={
+ *          "get"={
+ *              "access_control"="is_granted('SuperAdmin', object)",
+ *              "normalization_context"={
+ *                  "groups"={"get"}
+ *              }
+ *          },
  *          "post"={
  *              "denormalization_context"={
  *                  "groups"={"post"}
@@ -322,10 +328,11 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
     private $collid;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Userroles", mappedBy="uid")
+     * @ORM\OneToMany(targetEntity="App\Entity\Userroles", mappedBy="uid", fetch="EAGER")
      * @ApiSubresource()
+     * @Groups({"get"})
      */
-    private $roles;
+    private $permissions;
 
     /**
      * Constructor
@@ -645,10 +652,15 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
         return $this;
     }
 
+    public function getPermissions(): Collection
+    {
+        return $this->permissions;
+
+    }
+
     public function getRoles(): array
     {
         return ['ROLE_USER'];
-        //return [$this->roles];
     }
 
     public function getSalt()

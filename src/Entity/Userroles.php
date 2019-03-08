@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                 "groups"={"get-roles"}
  *              }
  *          },
- *          "api_users_roles_get_subresource"={
+ *          "api_users_permissions_get_subresource"={
  *              "normalization_context"={
  *                  "groups"={"get-roles"}
  *              }
@@ -78,15 +78,6 @@ class Userroles implements UidassignedbyInterface, InitialtimestampInterface
     private $tablepk;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="secondaryVariable", type="string", length=45, nullable=true)
-     * @Assert\Length(max=45)
-     * @Groups({"post", "get-roles"})
-     */
-    private $secondaryvariable;
-
-    /**
      * @var \App\Entity\Users
      *
      * @ORM\ManyToOne(targetEntity="Users")
@@ -129,18 +120,6 @@ class Userroles implements UidassignedbyInterface, InitialtimestampInterface
     public function setTablepk(?int $tablepk): self
     {
         $this->tablepk = $tablepk;
-
-        return $this;
-    }
-
-    public function getSecondaryvariable(): ?string
-    {
-        return $this->secondaryvariable;
-    }
-
-    public function setSecondaryvariable(?string $secondaryvariable): self
-    {
-        $this->secondaryvariable = $secondaryvariable;
 
         return $this;
     }

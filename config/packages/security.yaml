@@ -1,7 +1,9 @@
 security:
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    access_decision_manager:
+        strategy: affirmative
     encoders:
         App\Entity\Users: bcrypt
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
 #        in_memory: { memory: ~ }
         database:
