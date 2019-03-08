@@ -149,9 +149,9 @@ class Images
     private $locality = 'NULL';
 
     /**
-     * @var \Omoccurrences
+     * @var \Occurrences
      *
-     * @ORM\ManyToOne(targetEntity="Omoccurrences")
+     * @ORM\ManyToOne(targetEntity="Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
@@ -503,12 +503,12 @@ class Images
         return $this;
     }
 
-    public function getOccid(): ?Omoccurrences
+    public function getOccid(): ?Occurrences
     {
         return $this->occid;
     }
 
-    public function setOccid(?Omoccurrences $occid): self
+    public function setOccid(?Occurrences $occid): self
     {
         $this->occid = $occid;
 

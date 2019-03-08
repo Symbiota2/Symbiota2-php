@@ -323,12 +323,12 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Omcollections", mappedBy="uid")
+     * @ORM\ManyToMany(targetEntity="Collections", mappedBy="uid")
      */
     private $collid;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Userroles", mappedBy="uid", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\UserRoles", mappedBy="uid", fetch="EAGER")
      * @ApiSubresource()
      * @Groups({"get"})
      */
@@ -625,14 +625,14 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
     }
 
     /**
-     * @return Collection|Omcollections[]
+     * @return Collection|Collections[]
      */
     public function getCollid(): Collection
     {
         return $this->collid;
     }
 
-    public function addCollid(Omcollections $collid): self
+    public function addCollid(Collections $collid): self
     {
         if (!$this->collid->contains($collid)) {
             $this->collid[] = $collid;
@@ -642,7 +642,7 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
         return $this;
     }
 
-    public function removeCollid(Omcollections $collid): self
+    public function removeCollid(Collections $collid): self
     {
         if ($this->collid->contains($collid)) {
             $this->collid->removeElement($collid);

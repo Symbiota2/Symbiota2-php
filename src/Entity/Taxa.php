@@ -161,7 +161,7 @@ class Taxa
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Fmdynamicchecklists", mappedBy="tid")
+     * @ORM\ManyToMany(targetEntity="ChecklistsDynamic", mappedBy="tid")
      */
     private $dynclid;
 
@@ -175,7 +175,7 @@ class Taxa
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Kmcharacters", inversedBy="tid")
+     * @ORM\ManyToMany(targetEntity="KeyCharacters", inversedBy="tid")
      * @ORM\JoinTable(name="kmchartaxalink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="tid", referencedColumnName="TID")
@@ -190,14 +190,14 @@ class Taxa
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Referenceobject", mappedBy="tid")
+     * @ORM\ManyToMany(targetEntity="References", mappedBy="tid")
      */
     private $refid;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Taxauthority", inversedBy="tid")
+     * @ORM\ManyToMany(targetEntity="TaxaAuthorities", inversedBy="tid")
      * @ORM\JoinTable(name="taxanestedtree",
      *   joinColumns={
      *     @ORM\JoinColumn(name="tid", referencedColumnName="TID")
@@ -212,7 +212,7 @@ class Taxa
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Tmtraits", mappedBy="tid")
+     * @ORM\ManyToMany(targetEntity="Traits", mappedBy="tid")
      */
     private $traitid;
 
@@ -451,14 +451,14 @@ class Taxa
     }
 
     /**
-     * @return Collection|Fmdynamicchecklists[]
+     * @return Collection|ChecklistsDynamic[]
      */
     public function getDynclid(): Collection
     {
         return $this->dynclid;
     }
 
-    public function addDynclid(Fmdynamicchecklists $dynclid): self
+    public function addDynclid(ChecklistsDynamic $dynclid): self
     {
         if (!$this->dynclid->contains($dynclid)) {
             $this->dynclid[] = $dynclid;
@@ -468,7 +468,7 @@ class Taxa
         return $this;
     }
 
-    public function removeDynclid(Fmdynamicchecklists $dynclid): self
+    public function removeDynclid(ChecklistsDynamic $dynclid): self
     {
         if ($this->dynclid->contains($dynclid)) {
             $this->dynclid->removeElement($dynclid);
@@ -507,14 +507,14 @@ class Taxa
     }
 
     /**
-     * @return Collection|Kmcharacters[]
+     * @return Collection|KeyCharacters[]
      */
     public function getCid(): Collection
     {
         return $this->cid;
     }
 
-    public function addCid(Kmcharacters $cid): self
+    public function addCid(KeyCharacters $cid): self
     {
         if (!$this->cid->contains($cid)) {
             $this->cid[] = $cid;
@@ -523,7 +523,7 @@ class Taxa
         return $this;
     }
 
-    public function removeCid(Kmcharacters $cid): self
+    public function removeCid(KeyCharacters $cid): self
     {
         if ($this->cid->contains($cid)) {
             $this->cid->removeElement($cid);
@@ -533,14 +533,14 @@ class Taxa
     }
 
     /**
-     * @return Collection|Referenceobject[]
+     * @return Collection|References[]
      */
     public function getRefid(): Collection
     {
         return $this->refid;
     }
 
-    public function addRefid(Referenceobject $refid): self
+    public function addRefid(References $refid): self
     {
         if (!$this->refid->contains($refid)) {
             $this->refid[] = $refid;
@@ -550,7 +550,7 @@ class Taxa
         return $this;
     }
 
-    public function removeRefid(Referenceobject $refid): self
+    public function removeRefid(References $refid): self
     {
         if ($this->refid->contains($refid)) {
             $this->refid->removeElement($refid);
@@ -561,14 +561,14 @@ class Taxa
     }
 
     /**
-     * @return Collection|Taxauthority[]
+     * @return Collection|TaxaAuthorities[]
      */
     public function getTaxauthid(): Collection
     {
         return $this->taxauthid;
     }
 
-    public function addTaxauthid(Taxauthority $taxauthid): self
+    public function addTaxauthid(TaxaAuthorities $taxauthid): self
     {
         if (!$this->taxauthid->contains($taxauthid)) {
             $this->taxauthid[] = $taxauthid;
@@ -577,7 +577,7 @@ class Taxa
         return $this;
     }
 
-    public function removeTaxauthid(Taxauthority $taxauthid): self
+    public function removeTaxauthid(TaxaAuthorities $taxauthid): self
     {
         if ($this->taxauthid->contains($taxauthid)) {
             $this->taxauthid->removeElement($taxauthid);
@@ -587,14 +587,14 @@ class Taxa
     }
 
     /**
-     * @return Collection|Tmtraits[]
+     * @return Collection|Traits[]
      */
     public function getTraitid(): Collection
     {
         return $this->traitid;
     }
 
-    public function addTraitid(Tmtraits $traitid): self
+    public function addTraitid(Traits $traitid): self
     {
         if (!$this->traitid->contains($traitid)) {
             $this->traitid[] = $traitid;
@@ -604,7 +604,7 @@ class Taxa
         return $this;
     }
 
-    public function removeTraitid(Tmtraits $traitid): self
+    public function removeTraitid(Traits $traitid): self
     {
         if ($this->traitid->contains($traitid)) {
             $this->traitid->removeElement($traitid);
