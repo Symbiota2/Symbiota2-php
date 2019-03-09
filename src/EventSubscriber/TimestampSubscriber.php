@@ -3,8 +3,8 @@
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
-use App\Entity\InitialtimestampInterface;
-use App\Entity\ModifiedtimestampInterface;
+use App\Entity\InitialTimeStampInterface;
+use App\Entity\ModifiedTimeStampInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
@@ -24,15 +24,15 @@ class TimestampSubscriber implements EventSubscriberInterface
         $entity = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        if((!$entity instanceof InitialtimestampInterface && !$entity instanceof ModifiedtimestampInterface) || !in_array($method, [Request::METHOD_POST, Request::METHOD_PUT])) {
+        if((!$entity instanceof InitialTimeStampInterface && !$entity instanceof ModifiedTimeStampInterface) || !in_array($method, [Request::METHOD_POST, Request::METHOD_PUT])) {
             return;
         }
 
-        if($entity instanceof InitialtimestampInterface && Request::METHOD_POST === $method) {
+        if($entity instanceof InitialTimeStampInterface && Request::METHOD_POST === $method) {
             $entity->setInitialtimestamp(new \DateTime());
         }
 
-        if($entity instanceof ModifiedtimestampInterface) {
+        if($entity instanceof ModifiedTimeStampInterface) {
             $entity->setModifiedtimestamp(new \DateTime());
         }
     }

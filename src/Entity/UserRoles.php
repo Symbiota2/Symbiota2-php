@@ -32,7 +32,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  */
-class UserRoles implements UidassignedbyInterface, InitialtimestampInterface
+class UserRoles implements UserIdAssignedByInterface, InitialTimeStampInterface
 {
     /**
      * @var int
@@ -42,7 +42,7 @@ class UserRoles implements UidassignedbyInterface, InitialtimestampInterface
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @Groups({"get-roles"})
      */
-    private $userroleid;
+    private $id;
 
     /**
      * @var \App\Entity\Users
@@ -54,7 +54,7 @@ class UserRoles implements UidassignedbyInterface, InitialtimestampInterface
      * @Assert\NotBlank()
      * @Groups({"post"})
      */
-    private $uid;
+    private $userid;
 
     /**
      * @var string
@@ -86,7 +86,7 @@ class UserRoles implements UidassignedbyInterface, InitialtimestampInterface
      * })
      * @Groups({"get-roles"})
      */
-    private $uidassignedby;
+    private $useridassignedby;
 
     /**
      * @var \DateTime
@@ -95,9 +95,9 @@ class UserRoles implements UidassignedbyInterface, InitialtimestampInterface
      */
     private $initialtimestamp;
 
-    public function getUserroleid(): ?int
+    public function getId(): ?int
     {
-        return $this->userroleid;
+        return $this->id;
     }
 
     public function getRole(): ?string
@@ -129,7 +129,7 @@ class UserRoles implements UidassignedbyInterface, InitialtimestampInterface
         return $this->initialtimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): InitialtimestampInterface
+    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): InitialTimeStampInterface
     {
         $this->initialtimestamp = $initialtimestamp;
 
@@ -139,18 +139,18 @@ class UserRoles implements UidassignedbyInterface, InitialtimestampInterface
     /**
      * @return Users|null
      */
-    public function getUidassignedby(): ?Users
+    public function getUseridassignedby(): ?Users
     {
-        return $this->uidassignedby;
+        return $this->useridassignedby;
     }
 
     /**
-     * @param UserInterface $uidassignedby
-     * @return UidassignedbyInterface
+     * @param UserInterface $useridassignedby
+     * @return UserIdAssignedByInterface
      */
-    public function setUidassignedby(UserInterface $uidassignedby): UidassignedbyInterface
+    public function setUseridassignedby(UserInterface $useridassignedby): UserIdAssignedByInterface
     {
-        $this->uidassignedby = $uidassignedby;
+        $this->useridassignedby = $useridassignedby;
 
         return $this;
     }
@@ -158,14 +158,14 @@ class UserRoles implements UidassignedbyInterface, InitialtimestampInterface
     /**
      * @return Users|null
      */
-    public function getUid(): ?Users
+    public function getUserid(): ?Users
     {
-        return $this->uid;
+        return $this->userid;
     }
 
-    public function setUid(?Users $uid): self
+    public function setUserid(?Users $userid): self
     {
-        $this->uid = $uid;
+        $this->userid = $userid;
 
         return $this;
     }

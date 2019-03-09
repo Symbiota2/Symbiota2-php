@@ -58,7 +58,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("username", errorPath="username", groups={"post"})
  * @UniqueEntity("email", groups={"post", "put"})
  */
-class Users implements UserInterface, InitialtimestampInterface, ModifiedtimestampInterface
+class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeStampInterface
 {
     /**
      * @var int
@@ -68,7 +68,7 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @Groups({"get", "get-roles", "get-checklist-info"})
      */
-    private $uid;
+    private $id;
 
     /**
      * @var string|null
@@ -131,7 +131,7 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
      *     groups={"post", "put"}
      * )
      */
-    private $retypedPassword;
+    private $retypedpassword;
 
     /**
      * @Groups({"password_reset"})
@@ -142,7 +142,7 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
      *     groups={"password_reset"}
      * )
      */
-    private $newPassword;
+    private $newpassword;
 
     /**
      * @Groups({"password_reset"})
@@ -153,14 +153,14 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
      *     groups={"password_reset"}
      * )
      */
-    private $newRetypedPassword;
+    private $newretypedpassword;
 
     /**
      * @Groups({"password_reset"})
      * @Assert\NotBlank(groups={"password_reset"})
      * @UserPassword(groups={"password_reset"})
      */
-    private $oldPassword;
+    private $oldpassword;
 
     /**
      * @var string|null
@@ -325,7 +325,7 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
      *
      * @ORM\ManyToMany(targetEntity="Collections", mappedBy="uid")
      */
-    private $collid;
+    private $collectionid;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\UserRoles", mappedBy="uid", fetch="EAGER")
@@ -339,13 +339,13 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
      */
     public function __construct()
     {
-        $this->collid = new ArrayCollection();
+        $this->collectionid = new ArrayCollection();
         $this->roles = new ArrayCollection();
     }
 
-    public function getUid(): ?int
+    public function getId(): ?int
     {
-        return $this->uid;
+        return $this->id;
     }
 
     public function getFirstname(): ?string
@@ -564,7 +564,7 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
         return $this;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): InitialtimestampInterface
+    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): InitialTimeStampInterface
     {
         $this->initialtimestamp = $initialtimestamp;
 
@@ -593,7 +593,7 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
         return $this->modifiedtimestamp;
     }
 
-    public function setModifiedtimestamp(\DateTimeInterface $modifiedtimestamp): ModifiedtimestampInterface
+    public function setModifiedtimestamp(\DateTimeInterface $modifiedtimestamp): ModifiedTimeStampInterface
     {
         $this->modifiedtimestamp = $modifiedtimestamp;
 
@@ -627,15 +627,15 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
     /**
      * @return Collection|Collections[]
      */
-    public function getCollid(): Collection
+    public function getCollectionid(): Collection
     {
-        return $this->collid;
+        return $this->collectionid;
     }
 
     public function addCollid(Collections $collid): self
     {
-        if (!$this->collid->contains($collid)) {
-            $this->collid[] = $collid;
+        if (!$this->collectionid->contains($collid)) {
+            $this->collectionid[] = $collid;
             $collid->addUid($this);
         }
 
@@ -644,8 +644,8 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
 
     public function removeCollid(Collections $collid): self
     {
-        if ($this->collid->contains($collid)) {
-            $this->collid->removeElement($collid);
+        if ($this->collectionid->contains($collid)) {
+            $this->collectionid->removeElement($collid);
             $collid->removeUid($this);
         }
 
@@ -673,44 +673,44 @@ class Users implements UserInterface, InitialtimestampInterface, Modifiedtimesta
 
     }
 
-    public function getRetypedPassword()
+    public function getRetypedpassword()
     {
-        return $this->retypedPassword;
+        return $this->retypedpassword;
     }
 
-    public function setRetypedPassword($retypedPassword): void
+    public function setRetypedpassword($retypedpassword): void
     {
-        $this->retypedPassword = $retypedPassword;
+        $this->retypedpassword = $retypedpassword;
     }
 
-    public function getNewPassword(): ?string
+    public function getNewpassword(): ?string
     {
-        return $this->newPassword;
+        return $this->newpassword;
     }
 
-    public function setNewPassword($newPassword): void
+    public function setNewpassword($newpassword): void
     {
-        $this->newPassword = $newPassword;
+        $this->newpassword = $newpassword;
     }
 
-    public function getNewRetypedPassword(): ?string
+    public function getNewretypedpassword(): ?string
     {
-        return $this->newRetypedPassword;
+        return $this->newretypedpassword;
     }
 
-    public function setNewRetypedPassword($newRetypedPassword): void
+    public function setNewretypedpassword($newretypedpassword): void
     {
-        $this->newRetypedPassword = $newRetypedPassword;
+        $this->newretypedpassword = $newretypedpassword;
     }
 
-    public function getOldPassword(): ?string
+    public function getOldpassword(): ?string
     {
-        return $this->oldPassword;
+        return $this->oldpassword;
     }
 
-    public function setOldPassword($oldPassword): void
+    public function setOldpassword($oldpassword): void
     {
-        $this->oldPassword = $oldPassword;
+        $this->oldpassword = $oldpassword;
     }
 
 }

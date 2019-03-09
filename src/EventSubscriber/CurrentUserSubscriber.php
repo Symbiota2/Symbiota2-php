@@ -3,9 +3,9 @@
 namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
-use App\Entity\ModifieduidInterface;
-use App\Entity\CreateduidInterface;
-use App\Entity\UidassignedbyInterface;
+use App\Entity\ModifiedUserIdInterface;
+use App\Entity\CreatedUserIdInterface;
+use App\Entity\UserIdAssignedByInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
@@ -39,20 +39,20 @@ class CurrentUserSubscriber implements EventSubscriberInterface
          */
         $user = $this->tokenStorage->getToken()->getUser();
 
-        if((!$entity instanceof ModifieduidInterface && !$entity instanceof CreateduidInterface && !$entity instanceof UidassignedbyInterface) || !in_array($method, [Request::METHOD_POST, Request::METHOD_PUT])) {
+        if((!$entity instanceof ModifiedUserIdInterface && !$entity instanceof CreatedUserIdInterface && !$entity instanceof UserIdAssignedByInterface) || !in_array($method, [Request::METHOD_POST, Request::METHOD_PUT])) {
             return;
         }
 
-        if($entity instanceof ModifieduidInterface) {
-            $entity->setModifieduid($user);
+        if($entity instanceof ModifiedUserIdInterface) {
+            $entity->setModifieduserid($user);
         }
 
-        if($entity instanceof CreateduidInterface && Request::METHOD_POST === $method) {
+        if($entity instanceof CreatedUserIdInterface && Request::METHOD_POST === $method) {
             $entity->setCreateduid($user);
         }
 
-        if($entity instanceof UidassignedbyInterface) {
-            $entity->setUidassignedby($user);
+        if($entity instanceof UserIdAssignedByInterface) {
+            $entity->setUseridassignedby($user);
         }
     }
 }

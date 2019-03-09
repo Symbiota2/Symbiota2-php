@@ -34,7 +34,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  */
-class Institutions implements ModifieduidInterface, InitialtimestampInterface, ModifiedtimestampInterface
+class Institutions implements ModifiedUserIdInterface, InitialTimeStampInterface, ModifiedTimeStampInterface
 {
     /**
      * @var int
@@ -44,7 +44,7 @@ class Institutions implements ModifieduidInterface, InitialtimestampInterface, M
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @Groups({"get"})
      */
-    private $iid;
+    private $id;
 
     /**
      * @var string
@@ -184,7 +184,7 @@ class Institutions implements ModifieduidInterface, InitialtimestampInterface, M
      * })
      * @Groups({"get"})
      */
-    private $modifieduid;
+    private $modifieduserid;
 
     /**
      * @var \DateTime|null
@@ -203,9 +203,9 @@ class Institutions implements ModifieduidInterface, InitialtimestampInterface, M
      */
     private $initialtimestamp;
 
-    public function getIid(): ?int
+    public function getId(): ?int
     {
-        return $this->iid;
+        return $this->id;
     }
 
     public function getInstitutioncode(): ?string
@@ -381,7 +381,7 @@ class Institutions implements ModifieduidInterface, InitialtimestampInterface, M
         return $this->modifiedtimestamp;
     }
 
-    public function setModifiedtimestamp(\DateTimeInterface $modifiedtimestamp): ModifiedtimestampInterface
+    public function setModifiedtimestamp(\DateTimeInterface $modifiedtimestamp): ModifiedTimeStampInterface
     {
         $this->modifiedtimestamp = $modifiedtimestamp;
 
@@ -393,7 +393,7 @@ class Institutions implements ModifieduidInterface, InitialtimestampInterface, M
         return $this->initialtimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): InitialtimestampInterface
+    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): InitialTimeStampInterface
     {
         $this->initialtimestamp = $initialtimestamp;
 
@@ -403,18 +403,18 @@ class Institutions implements ModifieduidInterface, InitialtimestampInterface, M
     /**
      * @return \App\Entity\Users|null
      */
-    public function getModifieduid(): ?Users
+    public function getModifieduserid(): ?Users
     {
-        return $this->modifieduid;
+        return $this->modifieduserid;
     }
 
     /**
-     * @param UserInterface $modifieduid
-     * @return ModifieduidInterface
+     * @param UserInterface $modifieduserid
+     * @return ModifiedUserIdInterface
      */
-    public function setModifieduid(UserInterface $modifieduid): ModifieduidInterface
+    public function setModifieduserid(UserInterface $modifieduserid): ModifiedUserIdInterface
     {
-        $this->modifieduid = $modifieduid;
+        $this->modifieduserid = $modifieduserid;
 
         return $this;
     }

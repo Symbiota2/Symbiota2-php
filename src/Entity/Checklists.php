@@ -40,7 +40,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  */
-class Checklists implements CreateduidInterface, InitialtimestampInterface, ModifiedtimestampInterface
+class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, ModifiedTimeStampInterface
 {
     /**
      * @var int
@@ -50,7 +50,7 @@ class Checklists implements CreateduidInterface, InitialtimestampInterface, Modi
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @Groups({"get", "get-checklist-info"})
      */
-    private $clid;
+    private $id;
 
     /**
      * @var string
@@ -152,7 +152,7 @@ class Checklists implements CreateduidInterface, InitialtimestampInterface, Modi
      * )
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
-    private $parentclid;
+    private $parentchecklistid;
 
     /**
      * @var string|null
@@ -172,7 +172,7 @@ class Checklists implements CreateduidInterface, InitialtimestampInterface, Modi
      * )
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
-    private $latcentroid;
+    private $latitudecentroid;
 
     /**
      * @var float|null
@@ -183,7 +183,7 @@ class Checklists implements CreateduidInterface, InitialtimestampInterface, Modi
      * )
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
-    private $longcentroid;
+    private $longitudecentroid;
 
     /**
      * @var int|null
@@ -194,7 +194,7 @@ class Checklists implements CreateduidInterface, InitialtimestampInterface, Modi
      * )
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
-    private $pointradiusmeters;
+    private $pointradiusinmeters;
 
     /**
      * @var string|null
@@ -261,7 +261,7 @@ class Checklists implements CreateduidInterface, InitialtimestampInterface, Modi
      * })
      * @Groups({"get", "get-checklist-info"})
      */
-    private $createduid;
+    private $createduserid;
 
     /**
      * @var int
@@ -307,7 +307,7 @@ class Checklists implements CreateduidInterface, InitialtimestampInterface, Modi
      * @ORM\ManyToMany(targetEntity="ChecklistProjects", mappedBy="clid")
      * @Groups({"get", "get-checklist-info"})
      */
-    private $pid;
+    private $projectid;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -315,20 +315,20 @@ class Checklists implements CreateduidInterface, InitialtimestampInterface, Modi
      * @ORM\ManyToMany(targetEntity="References", mappedBy="clid")
      * @Groups({"get", "get-checklist-info"})
      */
-    private $refid;
+    private $referenceid;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->pid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->refid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->projectid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->referenceid = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getClid(): ?int
+    public function getId(): ?int
     {
-        return $this->clid;
+        return $this->id;
     }
 
     public function getName(): ?string
@@ -451,14 +451,14 @@ class Checklists implements CreateduidInterface, InitialtimestampInterface, Modi
         return $this;
     }
 
-    public function getParentclid(): ?int
+    public function getParentchecklistid(): ?int
     {
-        return $this->parentclid;
+        return $this->parentchecklistid;
     }
 
-    public function setParentclid(?int $parentclid): self
+    public function setParentchecklistid(?int $parentchecklistid): self
     {
-        $this->parentclid = $parentclid;
+        $this->parentchecklistid = $parentchecklistid;
 
         return $this;
     }
@@ -475,38 +475,38 @@ class Checklists implements CreateduidInterface, InitialtimestampInterface, Modi
         return $this;
     }
 
-    public function getLatcentroid(): ?float
+    public function getLatitudecentroid(): ?float
     {
-        return $this->latcentroid;
+        return $this->latitudecentroid;
     }
 
-    public function setLatcentroid(?float $latcentroid): self
+    public function setLatitudecentroid(?float $latitudecentroid): self
     {
-        $this->latcentroid = $latcentroid;
+        $this->latitudecentroid = $latitudecentroid;
 
         return $this;
     }
 
-    public function getLongcentroid(): ?float
+    public function getLongitudecentroid(): ?float
     {
-        return $this->longcentroid;
+        return $this->longitudecentroid;
     }
 
-    public function setLongcentroid(?float $longcentroid): self
+    public function setLongitudecentroid(?float $longitudecentroid): self
     {
-        $this->longcentroid = $longcentroid;
+        $this->longitudecentroid = $longitudecentroid;
 
         return $this;
     }
 
-    public function getPointradiusmeters(): ?int
+    public function getPointradiusinmeters(): ?int
     {
-        return $this->pointradiusmeters;
+        return $this->pointradiusinmeters;
     }
 
-    public function setPointradiusmeters(?int $pointradiusmeters): self
+    public function setPointradiusinmeters(?int $pointradiusinmeters): self
     {
-        $this->pointradiusmeters = $pointradiusmeters;
+        $this->pointradiusinmeters = $pointradiusinmeters;
 
         return $this;
     }
@@ -612,7 +612,7 @@ class Checklists implements CreateduidInterface, InitialtimestampInterface, Modi
         return $this->modifiedtimestamp;
     }
 
-    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): ModifiedtimestampInterface
+    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): ModifiedTimeStampInterface
     {
         $this->modifiedtimestamp = $modifiedtimestamp;
 
@@ -624,7 +624,7 @@ class Checklists implements CreateduidInterface, InitialtimestampInterface, Modi
         return $this->initialtimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): InitialtimestampInterface
+    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): InitialTimeStampInterface
     {
         $this->initialtimestamp = $initialtimestamp;
 
@@ -634,18 +634,18 @@ class Checklists implements CreateduidInterface, InitialtimestampInterface, Modi
     /**
      * @return \App\Entity\Users|null
      */
-    public function getCreateduid(): ?Users
+    public function getCreateduserid(): ?Users
     {
-        return $this->createduid;
+        return $this->createduserid;
     }
 
     /**
-     * @param UserInterface $createduid
-     * @return CreateduidInterface
+     * @param UserInterface $createduserid
+     * @return CreatedUserIdInterface
      */
-    public function setCreateduid(UserInterface $createduid): CreateduidInterface
+    public function setCreateduserid(UserInterface $createduserid): CreatedUserIdInterface
     {
-        $this->createduid = $createduid;
+        $this->createduserid = $createduserid;
 
         return $this;
     }
@@ -653,26 +653,26 @@ class Checklists implements CreateduidInterface, InitialtimestampInterface, Modi
     /**
      * @return Collection|ChecklistProjects[]
      */
-    public function getPid(): Collection
+    public function getProjectid(): Collection
     {
-        return $this->pid;
+        return $this->projectid;
     }
 
-    public function addPid(ChecklistProjects $pid): self
+    public function addProjectid(ChecklistProjects $projectid): self
     {
-        if (!$this->pid->contains($pid)) {
-            $this->pid[] = $pid;
-            $pid->addClid($this);
+        if (!$this->projectid->contains($projectid)) {
+            $this->projectid[] = $projectid;
+            $projectid->addClid($this);
         }
 
         return $this;
     }
 
-    public function removePid(ChecklistProjects $pid): self
+    public function removeProjectid(ChecklistProjects $projectid): self
     {
-        if ($this->pid->contains($pid)) {
-            $this->pid->removeElement($pid);
-            $pid->removeClid($this);
+        if ($this->projectid->contains($projectid)) {
+            $this->projectid->removeElement($projectid);
+            $projectid->removeClid($this);
         }
 
         return $this;
@@ -681,26 +681,26 @@ class Checklists implements CreateduidInterface, InitialtimestampInterface, Modi
     /**
      * @return Collection|References[]
      */
-    public function getRefid(): Collection
+    public function getReferenceid(): Collection
     {
-        return $this->refid;
+        return $this->referenceid;
     }
 
-    public function addRefid(References $refid): self
+    public function addReferenceid(References $referenceid): self
     {
-        if (!$this->refid->contains($refid)) {
-            $this->refid[] = $refid;
-            $refid->addClid($this);
+        if (!$this->referenceid->contains($referenceid)) {
+            $this->referenceid[] = $referenceid;
+            $referenceid->addClid($this);
         }
 
         return $this;
     }
 
-    public function removeRefid(References $refid): self
+    public function removeReferenceid(References $referenceid): self
     {
-        if ($this->refid->contains($refid)) {
-            $this->refid->removeElement($refid);
-            $refid->removeClid($this);
+        if ($this->referenceid->contains($referenceid)) {
+            $this->referenceid->removeElement($referenceid);
+            $referenceid->removeClid($this);
         }
 
         return $this;

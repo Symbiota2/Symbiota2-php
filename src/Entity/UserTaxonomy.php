@@ -2,100 +2,116 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * UserTaxonomy
  *
  * @ORM\Table(name="usertaxonomy", uniqueConstraints={@ORM\UniqueConstraint(name="usertaxonomy_UNIQUE", columns={"uid", "tid", "taxauthid", "editorstatus"})}, indexes={@ORM\Index(name="FK_usertaxonomy_taxauthid_idx", columns={"taxauthid"}), @ORM\Index(name="FK_usertaxonomy_tid_idx", columns={"tid"}), @ORM\Index(name="FK_usertaxonomy_uid_idx", columns={"uid"})})
  * @ORM\Entity(repositoryClass="App\Repository\UserTaxonomyRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class UserTaxonomy
+class UserTaxonomy implements InitialTimeStampInterface, ModifiedTimeStampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="idusertaxonomy", type="integer", nullable=false)
+     * @ORM\Column(name="idusertaxonomy", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idusertaxonomy;
+    private $id;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
      * })
+     * @Assert\NotBlank()
      */
-    private $uid;
+    private $userid;
 
     /**
-     * @var \Taxa
+     * @var \App\Entity\Taxa
      *
      * @ORM\ManyToOne(targetEntity="Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
+     * @Assert\NotBlank()
      */
-    private $tid;
+    private $taxaid;
 
     /**
-     * @var \TaxaAuthorities
+     * @var \App\Entity\TaxaAuthorities
      *
      * @ORM\ManyToOne(targetEntity="TaxaAuthorities")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="taxauthid", referencedColumnName="taxauthid")
      * })
+     * @Assert\NotBlank()
      */
-    private $taxauthid;
+    private $taxaauthorityid;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="editorstatus", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="editorstatus", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $editorstatus = 'NULL';
+    private $editorstatus;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="geographicScope", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="geographicScope", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $geographicscope = 'NULL';
+    private $geographicscope;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="modifiedUid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="modifiedUid", type="integer", options={"unsigned"=true})
+     * @Assert\Type(
+     *      type="integer"
+     * )
      */
-    private $modifieduid;
+    private $modifieduserid;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true)
      */
-    private $modifiedtimestamp = 'NULL';
+    private $modifiedtimestamp;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialtimestamp;
 
-    public function getIdusertaxonomy(): ?int
+    public function getId(): ?int
     {
-        return $this->idusertaxonomy;
+        return $this->id;
     }
 
     public function getEditorstatus(): ?string
@@ -134,14 +150,14 @@ class UserTaxonomy
         return $this;
     }
 
-    public function getModifieduid(): ?int
+    public function getModifieduserid(): ?int
     {
-        return $this->modifieduid;
+        return $this->modifieduserid;
     }
 
-    public function setModifieduid(int $modifieduid): self
+    public function setModifieduserid(int $modifieduserid): self
     {
-        $this->modifieduid = $modifieduid;
+        $this->modifieduserid = $modifieduserid;
 
         return $this;
     }
@@ -151,7 +167,7 @@ class UserTaxonomy
         return $this->modifiedtimestamp;
     }
 
-    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): self
+    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): ModifiedTimeStampInterface
     {
         $this->modifiedtimestamp = $modifiedtimestamp;
 
@@ -163,48 +179,47 @@ class UserTaxonomy
         return $this->initialtimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): InitialTimeStampInterface
     {
         $this->initialtimestamp = $initialtimestamp;
 
         return $this;
     }
 
-    public function getTaxauthid(): ?TaxaAuthorities
+    public function getTaxaauthorityid(): ?TaxaAuthorities
     {
-        return $this->taxauthid;
+        return $this->taxaauthorityid;
     }
 
-    public function setTaxauthid(?TaxaAuthorities $taxauthid): self
+    public function setTaxaauthorityid(?TaxaAuthorities $taxaauthorityid): self
     {
-        $this->taxauthid = $taxauthid;
+        $this->taxaauthorityid = $taxaauthorityid;
 
         return $this;
     }
 
-    public function getTid(): ?Taxa
+    public function getTaxaid(): ?Taxa
     {
-        return $this->tid;
+        return $this->taxaid;
     }
 
-    public function setTid(?Taxa $tid): self
+    public function setTaxaid(?Taxa $taxaid): self
     {
-        $this->tid = $tid;
+        $this->taxaid = $taxaid;
 
         return $this;
     }
 
-    public function getUid(): ?Users
+    public function getUserid(): ?Users
     {
-        return $this->uid;
+        return $this->userid;
     }
 
-    public function setUid(?Users $uid): self
+    public function setUserid(?Users $userid): self
     {
-        $this->uid = $uid;
+        $this->userid = $userid;
 
         return $this;
     }
-
 
 }
