@@ -328,7 +328,7 @@ class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeSta
     private $collectionid;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserRoles", mappedBy="uid", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\UserRoles", mappedBy="userid")
      * @ApiSubresource()
      * @Groups({"get"})
      */
@@ -340,7 +340,7 @@ class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeSta
     public function __construct()
     {
         $this->collectionid = new ArrayCollection();
-        $this->roles = new ArrayCollection();
+        $this->permissions = new ArrayCollection();
     }
 
     public function getId(): ?int

@@ -27,7 +27,7 @@ class SuperAdminVoter extends Voter
             return false;
         }
 
-        $authenticatedUserId = $token->getUser()->getUid();
+        $authenticatedUserId = $token->getUser()->getId();
         $q = $this->em->createQuery('SELECT ur FROM App\Entity\UserRoles ur WHERE ur.userid = '.$authenticatedUserId);
         $resultArr = $q->iterate();
         foreach ($resultArr as $row) {

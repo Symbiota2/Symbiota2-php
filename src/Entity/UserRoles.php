@@ -80,7 +80,7 @@ class UserRoles implements UserIdAssignedByInterface, InitialTimeStampInterface
     /**
      * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="uidassignedby", referencedColumnName="uid")
      * })
@@ -163,6 +163,10 @@ class UserRoles implements UserIdAssignedByInterface, InitialTimeStampInterface
         return $this->userid;
     }
 
+    /**
+     * @param Users|null $userid
+     * @return UserRoles
+     */
     public function setUserid(?Users $userid): self
     {
         $this->userid = $userid;
