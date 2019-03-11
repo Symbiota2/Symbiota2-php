@@ -2,109 +2,123 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ChecklistVouchers
  *
  * @ORM\Table(name="fmvouchers", indexes={@ORM\Index(name="chklst_taxavouchers", columns={"TID", "CLID"}), @ORM\Index(name="IDX_6468A29340A24FBA", columns={"occid"})})
  * @ORM\Entity(repositoryClass="App\Repository\ChecklistVouchersRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ChecklistVouchers
+class ChecklistVouchers implements InitialTimestampInterface
 {
     /**
      * @var int|null
      *
-     * @ORM\Column(name="TID", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="TID", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $tid = 'NULL';
+    private $taxaId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="CLID", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="CLID", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $clid;
+    private $checklistId;
 
     /**
-     * @var \Occurrences
+     * @var \App\Entity\Occurrences
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Occurrences")
+     * @ORM\OneToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="editornotes", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="editornotes", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $editornotes = 'NULL';
+    private $editorNotes;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="preferredImage", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="preferredImage", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $preferredimage = 'NULL';
+    private $preferredImage;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getTid(): ?int
+    public function getTaxaId(): ?int
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(?int $tid): self
+    public function setTaxaId(?int $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }
 
-    public function getClid(): ?int
+    public function getChecklistId(): ?int
     {
-        return $this->clid;
+        return $this->checklistId;
     }
 
-    public function getEditornotes(): ?string
+    public function getEditorNotes(): ?string
     {
-        return $this->editornotes;
+        return $this->editorNotes;
     }
 
-    public function setEditornotes(?string $editornotes): self
+    public function setEditorNotes(?string $editorNotes): self
     {
-        $this->editornotes = $editornotes;
+        $this->editorNotes = $editorNotes;
 
         return $this;
     }
 
-    public function getPreferredimage(): ?int
+    public function getPreferredImage(): ?int
     {
-        return $this->preferredimage;
+        return $this->preferredImage;
     }
 
-    public function setPreferredimage(?int $preferredimage): self
+    public function setPreferredImage(?int $preferredImage): self
     {
-        $this->preferredimage = $preferredimage;
+        $this->preferredImage = $preferredImage;
 
         return $this;
     }
@@ -121,26 +135,26 @@ class ChecklistVouchers
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getOccid(): ?Occurrences
+    public function getOccurrenceId(): ?Occurrences
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function setOccid(?Occurrences $occid): self
+    public function setOccurrenceId(?Occurrences $occurrenceId): self
     {
-        $this->occid = $occid;
+        $this->occurrenceId = $occurrenceId;
 
         return $this;
     }

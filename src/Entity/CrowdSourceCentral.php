@@ -2,73 +2,87 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CrowdSourceCentral
  *
  * @ORM\Table(name="omcrowdsourcecentral", uniqueConstraints={@ORM\UniqueConstraint(name="Index_omcrowdsourcecentral_collid", columns={"collid"})})
  * @ORM\Entity(repositoryClass="App\Repository\CrowdSourceCentralRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class CrowdSourceCentral
+class CrowdSourceCentral implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="omcsid", type="integer", nullable=false)
+     * @ORM\Column(name="omcsid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $omcsid;
+    private $id;
 
     /**
-     * @var \Collections
+     * @var \App\Entity\Collections
      *
-     * @ORM\ManyToOne(targetEntity="Collections")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Collections")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
      * })
+     * @Assert\NotBlank()
      */
-    private $collid;
+    private $collectionId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="instructions", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="instructions", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $instructions = 'NULL';
+    private $instructions;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="trainingurl", type="string", length=500, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="trainingurl", type="string", length=500, nullable=true)
+     * @Assert\Length(max=500)
      */
-    private $trainingurl = 'NULL';
+    private $trainingUrl;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="editorlevel", type="integer", nullable=false, options={"comment"="0=public, 1=public limited, 2=private"})
+     * @ORM\Column(name="editorlevel", type="integer", options={"comment"="0=public, 1=public limited, 2=private"})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $editorlevel;
+    private $editorLevel;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getOmcsid(): ?int
+    public function getId(): ?int
     {
-        return $this->omcsid;
+        return $this->id;
     }
 
     public function getInstructions(): ?string
@@ -83,26 +97,26 @@ class CrowdSourceCentral
         return $this;
     }
 
-    public function getTrainingurl(): ?string
+    public function getTrainingUrl(): ?string
     {
-        return $this->trainingurl;
+        return $this->trainingUrl;
     }
 
-    public function setTrainingurl(?string $trainingurl): self
+    public function setTrainingUrl(?string $trainingUrl): self
     {
-        $this->trainingurl = $trainingurl;
+        $this->trainingUrl = $trainingUrl;
 
         return $this;
     }
 
-    public function getEditorlevel(): ?int
+    public function getEditorLevel(): ?int
     {
-        return $this->editorlevel;
+        return $this->editorLevel;
     }
 
-    public function setEditorlevel(int $editorlevel): self
+    public function setEditorLevel(int $editorLevel): self
     {
-        $this->editorlevel = $editorlevel;
+        $this->editorLevel = $editorLevel;
 
         return $this;
     }
@@ -119,26 +133,26 @@ class CrowdSourceCentral
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getCollid(): ?Collections
+    public function getCollectionId(): ?Collections
     {
-        return $this->collid;
+        return $this->collectionId;
     }
 
-    public function setCollid(?Collections $collid): self
+    public function setCollectionId(?Collections $collectionId): self
     {
-        $this->collid = $collid;
+        $this->collectionId = $collectionId;
 
         return $this;
     }

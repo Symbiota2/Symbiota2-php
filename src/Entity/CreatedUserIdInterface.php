@@ -6,5 +6,5 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 interface CreatedUserIdInterface
 {
-    public function setCreateduserid(UserInterface $user): CreatedUserIdInterface;
+    public function setCreatedUserId(UserInterface $user): CreatedUserIdInterface;
 }

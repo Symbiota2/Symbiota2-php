@@ -34,7 +34,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  */
-class Institutions implements ModifiedUserIdInterface, InitialTimeStampInterface, ModifiedTimeStampInterface
+class Institutions implements ModifiedUserIdInterface, InitialTimestampInterface, ModifiedTimestampInterface
 {
     /**
      * @var int
@@ -54,7 +54,7 @@ class Institutions implements ModifiedUserIdInterface, InitialTimeStampInterface
      * @Assert\Length(max=45)
      * @Groups({"get", "post", "put"})
      */
-    private $institutioncode;
+    private $institutionCode;
 
     /**
      * @var string
@@ -64,7 +64,7 @@ class Institutions implements ModifiedUserIdInterface, InitialTimeStampInterface
      * @Assert\Length(max=150)
      * @Groups({"get", "post", "put"})
      */
-    private $institutionname;
+    private $institutionName;
 
     /**
      * @var string|null
@@ -73,7 +73,7 @@ class Institutions implements ModifiedUserIdInterface, InitialTimeStampInterface
      * @Assert\Length(max=150)
      * @Groups({"get", "post", "put"})
      */
-    private $institutionname2;
+    private $institutionNameSecondary;
 
     /**
      * @var string|null
@@ -82,7 +82,7 @@ class Institutions implements ModifiedUserIdInterface, InitialTimeStampInterface
      * @Assert\Length(max=150)
      * @Groups({"get", "post", "put"})
      */
-    private $address1;
+    private $addressLineOne;
 
     /**
      * @var string|null
@@ -91,7 +91,7 @@ class Institutions implements ModifiedUserIdInterface, InitialTimeStampInterface
      * @Assert\Length(max=150)
      * @Groups({"get", "post", "put"})
      */
-    private $address2;
+    private $addressLineTwo;
 
     /**
      * @var string|null
@@ -109,7 +109,7 @@ class Institutions implements ModifiedUserIdInterface, InitialTimeStampInterface
      * @Assert\Length(max=45)
      * @Groups({"get", "post", "put"})
      */
-    private $stateprovince;
+    private $stateProvince;
 
     /**
      * @var string|null
@@ -118,7 +118,7 @@ class Institutions implements ModifiedUserIdInterface, InitialTimeStampInterface
      * @Assert\Length(max=45)
      * @Groups({"get", "post", "put"})
      */
-    private $postalcode;
+    private $postalCode;
 
     /**
      * @var string|null
@@ -184,7 +184,7 @@ class Institutions implements ModifiedUserIdInterface, InitialTimeStampInterface
      * })
      * @Groups({"get"})
      */
-    private $modifieduserid;
+    private $modifiedUserId;
 
     /**
      * @var \DateTime|null
@@ -192,7 +192,7 @@ class Institutions implements ModifiedUserIdInterface, InitialTimeStampInterface
      * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
      * @Groups({"get"})
      */
-    private $modifiedtimestamp;
+    private $modifiedTimestamp;
 
     /**
      * @var \DateTime
@@ -201,69 +201,69 @@ class Institutions implements ModifiedUserIdInterface, InitialTimeStampInterface
      * @Assert\DateTime()
      * @Groups({"get"})
      */
-    private $initialtimestamp;
+    private $initialTimestamp;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getInstitutioncode(): ?string
+    public function getInstitutionCode(): ?string
     {
-        return $this->institutioncode;
+        return $this->institutionCode;
     }
 
-    public function setInstitutioncode(string $institutioncode): self
+    public function setInstitutionCode(string $institutionCode): self
     {
-        $this->institutioncode = $institutioncode;
+        $this->institutionCode = $institutionCode;
 
         return $this;
     }
 
-    public function getInstitutionname(): ?string
+    public function getInstitutionName(): ?string
     {
-        return $this->institutionname;
+        return $this->institutionName;
     }
 
-    public function setInstitutionname(string $institutionname): self
+    public function setInstitutionName(string $institutionName): self
     {
-        $this->institutionname = $institutionname;
+        $this->institutionName = $institutionName;
 
         return $this;
     }
 
-    public function getInstitutionname2(): ?string
+    public function getInstitutionNameSecondary(): ?string
     {
-        return $this->institutionname2;
+        return $this->institutionNameSecondary;
     }
 
-    public function setInstitutionname2(?string $institutionname2): self
+    public function setInstitutionNameSecondary(?string $institutionNameSecondary): self
     {
-        $this->institutionname2 = $institutionname2;
+        $this->institutionNameSecondary = $institutionNameSecondary;
 
         return $this;
     }
 
-    public function getAddress1(): ?string
+    public function getAddressLineOne(): ?string
     {
-        return $this->address1;
+        return $this->addressLineOne;
     }
 
-    public function setAddress1(?string $address1): self
+    public function setAddressLineOne(?string $addressLineOne): self
     {
-        $this->address1 = $address1;
+        $this->addressLineOne = $addressLineOne;
 
         return $this;
     }
 
-    public function getAddress2(): ?string
+    public function getAddressLineTwo(): ?string
     {
-        return $this->address2;
+        return $this->addressLineTwo;
     }
 
-    public function setAddress2(?string $address2): self
+    public function setAddressLineTwo(?string $addressLineTwo): self
     {
-        $this->address2 = $address2;
+        $this->addressLineTwo = $addressLineTwo;
 
         return $this;
     }
@@ -280,26 +280,26 @@ class Institutions implements ModifiedUserIdInterface, InitialTimeStampInterface
         return $this;
     }
 
-    public function getStateprovince(): ?string
+    public function getStateProvince(): ?string
     {
-        return $this->stateprovince;
+        return $this->stateProvince;
     }
 
-    public function setStateprovince(?string $stateprovince): self
+    public function setStateProvince(?string $stateProvince): self
     {
-        $this->stateprovince = $stateprovince;
+        $this->stateProvince = $stateProvince;
 
         return $this;
     }
 
-    public function getPostalcode(): ?string
+    public function getPostalCode(): ?string
     {
-        return $this->postalcode;
+        return $this->postalCode;
     }
 
-    public function setPostalcode(?string $postalcode): self
+    public function setPostalCode(?string $postalCode): self
     {
-        $this->postalcode = $postalcode;
+        $this->postalCode = $postalCode;
 
         return $this;
     }
@@ -376,26 +376,26 @@ class Institutions implements ModifiedUserIdInterface, InitialTimeStampInterface
         return $this;
     }
 
-    public function getModifiedtimestamp(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?\DateTimeInterface
     {
-        return $this->modifiedtimestamp;
+        return $this->modifiedTimestamp;
     }
 
-    public function setModifiedtimestamp(\DateTimeInterface $modifiedtimestamp): ModifiedTimeStampInterface
+    public function setModifiedTimestamp(\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
-        $this->modifiedtimestamp = $modifiedtimestamp;
+        $this->modifiedTimestamp = $modifiedTimestamp;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): InitialTimeStampInterface
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
@@ -403,18 +403,18 @@ class Institutions implements ModifiedUserIdInterface, InitialTimeStampInterface
     /**
      * @return \App\Entity\Users|null
      */
-    public function getModifieduserid(): ?Users
+    public function getModifiedUserId(): ?Users
     {
-        return $this->modifieduserid;
+        return $this->modifiedUserId;
     }
 
     /**
-     * @param UserInterface $modifieduserid
+     * @param UserInterface $modifiedUserId
      * @return ModifiedUserIdInterface
      */
-    public function setModifieduserid(UserInterface $modifieduserid): ModifiedUserIdInterface
+    public function setModifiedUserId(UserInterface $modifiedUserId): ModifiedUserIdInterface
     {
-        $this->modifieduserid = $modifieduserid;
+        $this->modifiedUserId = $modifiedUserId;
 
         return $this;
     }

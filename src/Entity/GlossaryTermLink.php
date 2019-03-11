@@ -2,108 +2,119 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * GlossaryTermLink
  *
  * @ORM\Table(name="glossarytermlink", uniqueConstraints={@ORM\UniqueConstraint(name="Unique_termkeys", columns={"glossgrpid", "glossid"})}, indexes={@ORM\Index(name="glossarytermlink_ibfk_1", columns={"glossid"}), @ORM\Index(name="IDX_5FB96611732EDCB4", columns={"glossgrpid"})})
  * @ORM\Entity(repositoryClass="App\Repository\GlossaryTermLinkRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class GlossaryTermLink
+class GlossaryTermLink implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="gltlinkid", type="integer", nullable=false)
+     * @ORM\Column(name="gltlinkid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $gltlinkid;
+    private $id;
 
     /**
-     * @var \Glossary
+     * @var \App\Entity\Glossary
      *
-     * @ORM\ManyToOne(targetEntity="Glossary")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Glossary")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="glossgrpid", referencedColumnName="glossid")
      * })
+     * @Assert\NotBlank()
      */
-    private $glossgrpid;
+    private $glossaryGroupId;
 
     /**
-     * @var \Glossary
+     * @var \App\Entity\Glossary
      *
-     * @ORM\ManyToOne(targetEntity="Glossary")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Glossary")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="glossid", referencedColumnName="glossid")
      * })
+     * @Assert\NotBlank()
      */
-    private $glossid;
+    private $glossaryId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="relationshipType", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="relationshipType", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $relationshiptype = 'NULL';
+    private $relationshipType;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getGltlinkid(): ?int
+    public function getId(): ?int
     {
-        return $this->gltlinkid;
+        return $this->id;
     }
 
-    public function getRelationshiptype(): ?string
+    public function getRelationshipType(): ?string
     {
-        return $this->relationshiptype;
+        return $this->relationshipType;
     }
 
-    public function setRelationshiptype(?string $relationshiptype): self
+    public function setRelationshipType(?string $relationshipType): self
     {
-        $this->relationshiptype = $relationshiptype;
+        $this->relationshipType = $relationshipType;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getGlossid(): ?Glossary
+    public function getGlossaryId(): ?Glossary
     {
-        return $this->glossid;
+        return $this->glossaryId;
     }
 
-    public function setGlossid(?Glossary $glossid): self
+    public function setGlossaryId(?Glossary $glossaryId): self
     {
-        $this->glossid = $glossid;
+        $this->glossaryId = $glossaryId;
 
         return $this;
     }
 
-    public function getGlossgrpid(): ?Glossary
+    public function getGlossaryGroupId(): ?Glossary
     {
-        return $this->glossgrpid;
+        return $this->glossaryGroupId;
     }
 
-    public function setGlossgrpid(?Glossary $glossgrpid): self
+    public function setGlossaryGroupId(?Glossary $glossaryGroupId): self
     {
-        $this->glossgrpid = $glossgrpid;
+        $this->glossaryGroupId = $glossaryGroupId;
 
         return $this;
     }

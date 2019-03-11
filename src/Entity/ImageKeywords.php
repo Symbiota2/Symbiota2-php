@@ -2,62 +2,75 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ImageKeywords
  *
  * @ORM\Table(name="imagekeywords", indexes={@ORM\Index(name="FK_imagekeyword_uid_idx", columns={"createduid"}), @ORM\Index(name="FK_imagekeywords_imgid_idx", columns={"imgid"}), @ORM\Index(name="INDEX_imagekeyword", columns={"keyword"})})
  * @ORM\Entity(repositoryClass="App\Repository\ImageKeywordsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ImageKeywords
+class ImageKeywords implements CreatedUserIdInterface, InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="imgkeywordid", type="integer", nullable=false)
+     * @ORM\Column(name="imgkeywordid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $imgkeywordid;
+    private $id;
 
     /**
-     * @var \Images
+     * @var \App\Entity\Images
      *
-     * @ORM\ManyToOne(targetEntity="Images")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Images")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="imgid", referencedColumnName="imgid")
      * })
+     * @Assert\NotBlank()
      */
-    private $imgid;
+    private $imageId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="keyword", type="string", length=45, nullable=false)
+     * @ORM\Column(name="keyword", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
     private $keyword;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
+     * @Assert\NotBlank()
      */
-    private $createduid;
+    private $createdUserId;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getImgkeywordid(): ?int
+    public function getId(): ?int
     {
-        return $this->imgkeywordid;
+        return $this->id;
     }
 
     public function getKeyword(): ?string
@@ -72,38 +85,45 @@ class ImageKeywords
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(?\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(?\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getImgid(): ?Images
+    public function getImageId(): ?Images
     {
-        return $this->imgid;
+        return $this->imageId;
     }
 
-    public function setImgid(?Images $imgid): self
+    public function setImageId(?Images $imageId): self
     {
-        $this->imgid = $imgid;
+        $this->imageId = $imageId;
 
         return $this;
     }
 
-    public function getCreateduid(): ?Users
+    /**
+     * @return Users|null
+     */
+    public function getCreatedUserId(): ?Users
     {
-        return $this->createduid;
+        return $this->createdUserId;
     }
 
-    public function setCreateduid(?Users $createduid): self
+    /**
+     * @param UserInterface $createdUserId
+     * @return CreatedUserIdInterface
+     */
+    public function setCreatedUserId(UserInterface $createdUserId): CreatedUserIdInterface
     {
-        $this->createduid = $createduid;
+        $this->createdUserId = $createdUserId;
 
         return $this;
     }

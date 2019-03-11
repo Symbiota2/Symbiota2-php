@@ -2,132 +2,157 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ChecklistProjects
  *
  * @ORM\Table(name="fmprojects", indexes={@ORM\Index(name="FK_parentpid_proj", columns={"parentpid"})})
  * @ORM\Entity(repositoryClass="App\Repository\ChecklistProjectsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ChecklistProjects
+class ChecklistProjects implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="pid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="pid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $pid;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="projname", type="string", length=60, nullable=false)
+     * @ORM\Column(name="projname", type="string", length=60)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=60)
      */
-    private $projname;
+    private $projectName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="displayname", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="displayname", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $displayname = 'NULL';
+    private $displayName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="managers", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="managers", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $managers = 'NULL';
+    private $managers;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="briefdescription", type="string", length=300, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="briefdescription", type="string", length=300, nullable=true)
+     * @Assert\Length(max=300)
      */
-    private $briefdescription = 'NULL';
+    private $briefDescription;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="fulldescription", type="string", length=2000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="fulldescription", type="string", length=2000, nullable=true)
+     * @Assert\Length(max=2000)
      */
-    private $fulldescription = 'NULL';
+    private $fullDescription;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="iconUrl", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="iconUrl", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $iconurl = 'NULL';
+    private $iconUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="headerUrl", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="headerUrl", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $headerurl = 'NULL';
+    private $headerUrl;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="occurrencesearch", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="occurrencesearch", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $occurrencesearch;
+    private $occurrenceSearch;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="ispublic", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="ispublic", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $ispublic;
+    private $isPublic;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $dynamicproperties = 'NULL';
+    private $dynamicProperties;
 
     /**
-     * @var \ChecklistProjects
+     * @var \App\Entity\ChecklistProjects
      *
-     * @ORM\ManyToOne(targetEntity="ChecklistProjects")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\ChecklistProjects")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parentpid", referencedColumnName="pid")
      * })
+     * @Assert\NotBlank()
      */
-    private $parentpid;
+    private $parentProjectId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="SortSequence", type="integer", nullable=false, options={"default"="50","unsigned"=true})
+     * @ORM\Column(name="SortSequence", type="integer", options={"default"="50","unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $sortsequence = '50';
+    private $sortSequence = 50;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Checklists", inversedBy="pid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Checklists", inversedBy="pid")
      * @ORM\JoinTable(name="fmchklstprojlink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="pid", referencedColumnName="pid")
@@ -137,41 +162,41 @@ class ChecklistProjects
      *   }
      * )
      */
-    private $clid;
+    private $checklistId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->clid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->checklistId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getPid(): ?int
+    public function getId(): ?int
     {
-        return $this->pid;
+        return $this->id;
     }
 
-    public function getProjname(): ?string
+    public function getProjectName(): ?string
     {
-        return $this->projname;
+        return $this->projectName;
     }
 
-    public function setProjname(string $projname): self
+    public function setProjectName(string $projectName): self
     {
-        $this->projname = $projname;
+        $this->projectName = $projectName;
 
         return $this;
     }
 
-    public function getDisplayname(): ?string
+    public function getDisplayName(): ?string
     {
-        return $this->displayname;
+        return $this->displayName;
     }
 
-    public function setDisplayname(?string $displayname): self
+    public function setDisplayName(?string $displayName): self
     {
-        $this->displayname = $displayname;
+        $this->displayName = $displayName;
 
         return $this;
     }
@@ -188,26 +213,26 @@ class ChecklistProjects
         return $this;
     }
 
-    public function getBriefdescription(): ?string
+    public function getBriefDescription(): ?string
     {
-        return $this->briefdescription;
+        return $this->briefDescription;
     }
 
-    public function setBriefdescription(?string $briefdescription): self
+    public function setBriefDescription(?string $briefDescription): self
     {
-        $this->briefdescription = $briefdescription;
+        $this->briefDescription = $briefDescription;
 
         return $this;
     }
 
-    public function getFulldescription(): ?string
+    public function getFullDescription(): ?string
     {
-        return $this->fulldescription;
+        return $this->fullDescription;
     }
 
-    public function setFulldescription(?string $fulldescription): self
+    public function setFullDescription(?string $fullDescription): self
     {
-        $this->fulldescription = $fulldescription;
+        $this->fullDescription = $fullDescription;
 
         return $this;
     }
@@ -224,98 +249,98 @@ class ChecklistProjects
         return $this;
     }
 
-    public function getIconurl(): ?string
+    public function getIconUrl(): ?string
     {
-        return $this->iconurl;
+        return $this->iconUrl;
     }
 
-    public function setIconurl(?string $iconurl): self
+    public function setIconUrl(?string $iconUrl): self
     {
-        $this->iconurl = $iconurl;
+        $this->iconUrl = $iconUrl;
 
         return $this;
     }
 
-    public function getHeaderurl(): ?string
+    public function getHeaderUrl(): ?string
     {
-        return $this->headerurl;
+        return $this->headerUrl;
     }
 
-    public function setHeaderurl(?string $headerurl): self
+    public function setHeaderUrl(?string $headerUrl): self
     {
-        $this->headerurl = $headerurl;
+        $this->headerUrl = $headerUrl;
 
         return $this;
     }
 
-    public function getOccurrencesearch(): ?int
+    public function getOccurrenceSearch(): ?int
     {
-        return $this->occurrencesearch;
+        return $this->occurrenceSearch;
     }
 
-    public function setOccurrencesearch(int $occurrencesearch): self
+    public function setOccurrenceSearch(int $occurrenceSearch): self
     {
-        $this->occurrencesearch = $occurrencesearch;
+        $this->occurrenceSearch = $occurrenceSearch;
 
         return $this;
     }
 
-    public function getIspublic(): ?int
+    public function getIsPublic(): ?int
     {
-        return $this->ispublic;
+        return $this->isPublic;
     }
 
-    public function setIspublic(int $ispublic): self
+    public function setIsPublic(int $isPublic): self
     {
-        $this->ispublic = $ispublic;
+        $this->isPublic = $isPublic;
 
         return $this;
     }
 
-    public function getDynamicproperties(): ?string
+    public function getDynamicProperties(): ?string
     {
-        return $this->dynamicproperties;
+        return $this->dynamicProperties;
     }
 
-    public function setDynamicproperties(?string $dynamicproperties): self
+    public function setDynamicProperties(?string $dynamicProperties): self
     {
-        $this->dynamicproperties = $dynamicproperties;
+        $this->dynamicProperties = $dynamicProperties;
 
         return $this;
     }
 
-    public function getSortsequence(): ?int
+    public function getSortSequence(): ?int
     {
-        return $this->sortsequence;
+        return $this->sortSequence;
     }
 
-    public function setSortsequence(int $sortsequence): self
+    public function setSortSequence(int $sortSequence): self
     {
-        $this->sortsequence = $sortsequence;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getParentpid(): ?self
+    public function getParentProjectId(): ?self
     {
-        return $this->parentpid;
+        return $this->parentProjectId;
     }
 
-    public function setParentpid(?self $parentpid): self
+    public function setParentProjectId(?self $parentProjectId): self
     {
-        $this->parentpid = $parentpid;
+        $this->parentProjectId = $parentProjectId;
 
         return $this;
     }
@@ -323,24 +348,24 @@ class ChecklistProjects
     /**
      * @return Collection|Checklists[]
      */
-    public function getClid(): Collection
+    public function getChecklistId(): Collection
     {
-        return $this->clid;
+        return $this->checklistId;
     }
 
-    public function addClid(Checklists $clid): self
+    public function addChecklistId(Checklists $checklistId): self
     {
-        if (!$this->clid->contains($clid)) {
-            $this->clid[] = $clid;
+        if (!$this->checklistId->contains($checklistId)) {
+            $this->checklistId[] = $checklistId;
         }
 
         return $this;
     }
 
-    public function removeClid(Checklists $clid): self
+    public function removeChecklistId(Checklists $checklistId): self
     {
-        if ($this->clid->contains($clid)) {
-            $this->clid->removeElement($clid);
+        if ($this->checklistId->contains($checklistId)) {
+            $this->checklistId->removeElement($checklistId);
         }
 
         return $this;

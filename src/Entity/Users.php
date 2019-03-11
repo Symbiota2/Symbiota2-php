@@ -58,7 +58,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @UniqueEntity("username", errorPath="username", groups={"post"})
  * @UniqueEntity("email", groups={"post", "put"})
  */
-class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeStampInterface
+class Users implements UserInterface, InitialTimestampInterface, ModifiedTimestampInterface
 {
     /**
      * @var int
@@ -77,7 +77,7 @@ class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeSta
      * @Groups({"get", "get-roles", "get-checklist-info", "post", "put"})
      * @Assert\Length(max=45, groups={"post", "put"})
      */
-    private $firstname;
+    private $firstName;
 
     /**
      * @var string|null
@@ -86,7 +86,7 @@ class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeSta
      * @Groups({"get", "get-roles", "get-checklist-info", "post", "put"})
      * @Assert\Length(max=2, groups={"post", "put"})
      */
-    private $middleinitial;
+    private $middleInitial;
 
     /**
      * @var string
@@ -96,7 +96,7 @@ class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeSta
      * @Assert\NotBlank(groups={"post", "put"})
      * @Assert\Length(max=45, groups={"post", "put"})
      */
-    private $lastname;
+    private $lastName;
 
     /**
      * @var string
@@ -131,7 +131,7 @@ class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeSta
      *     groups={"post", "put"}
      * )
      */
-    private $retypedpassword;
+    private $retypedPassword;
 
     /**
      * @Groups({"password_reset"})
@@ -142,7 +142,7 @@ class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeSta
      *     groups={"password_reset"}
      * )
      */
-    private $newpassword;
+    private $newPassword;
 
     /**
      * @Groups({"password_reset"})
@@ -153,14 +153,14 @@ class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeSta
      *     groups={"password_reset"}
      * )
      */
-    private $newretypedpassword;
+    private $newRetypedPassword;
 
     /**
      * @Groups({"password_reset"})
      * @Assert\NotBlank(groups={"password_reset"})
      * @UserPassword(groups={"password_reset"})
      */
-    private $oldpassword;
+    private $oldPassword;
 
     /**
      * @var string|null
@@ -279,7 +279,7 @@ class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeSta
      * @Groups({"get", "post", "put"})
      * @Assert\NotBlank(groups={"post"})
      */
-    private $ispublic = 1;
+    private $isPublic = 1;
 
     /**
      * @var \DateTime|null
@@ -287,7 +287,7 @@ class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeSta
      * @ORM\Column(name="lastlogindate", type="datetime", nullable=true)
      * @Groups({"get"})
      */
-    private $lastlogindate;
+    private $lastLoginDate;
 
     /**
      * @var \DateTime
@@ -295,7 +295,7 @@ class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeSta
      * @ORM\Column(name="InitialTimeStamp", type="datetime")
      * @Groups({"get"})
      */
-    private $initialtimestamp;
+    private $initialTimestamp;
 
     /**
      * @var \DateTime|null
@@ -303,7 +303,7 @@ class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeSta
      * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
      * @Groups({"get"})
      */
-    private $modifiedtimestamp;
+    private $modifiedTimestamp;
 
     /**
      * @var int
@@ -323,12 +323,12 @@ class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeSta
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Collections", mappedBy="uid")
+     * @ORM\ManyToMany(targetEntity="Collections", mappedBy="userId")
      */
-    private $collectionid;
+    private $collectionId;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserRoles", mappedBy="userid")
+     * @ORM\OneToMany(targetEntity="App\Entity\UserRoles", mappedBy="userId")
      * @ApiSubresource()
      * @Groups({"get"})
      */
@@ -339,7 +339,7 @@ class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeSta
      */
     public function __construct()
     {
-        $this->collectionid = new ArrayCollection();
+        $this->collectionId = new ArrayCollection();
         $this->permissions = new ArrayCollection();
     }
 
@@ -348,26 +348,26 @@ class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeSta
         return $this->id;
     }
 
-    public function getFirstname(): ?string
+    public function getFirstName(): ?string
     {
-        return $this->firstname;
+        return $this->firstName;
     }
 
-    public function setFirstname(?string $firstname): self
+    public function setFirstName(?string $firstName): self
     {
-        $this->firstname = $firstname;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
-    public function getLastname(): ?string
+    public function getLastName(): ?string
     {
-        return $this->lastname;
+        return $this->lastName;
     }
 
-    public function setLastname(string $lastname): self
+    public function setLastName(string $lastName): self
     {
-        $this->lastname = $lastname;
+        $this->lastName = $lastName;
 
         return $this;
     }
@@ -540,62 +540,62 @@ class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeSta
         return $this;
     }
 
-    public function getIspublic(): ?int
+    public function getIsPublic(): ?int
     {
-        return $this->ispublic;
+        return $this->isPublic;
     }
 
-    public function setIspublic(int $ispublic): self
+    public function setIsPublic(int $isPublic): self
     {
-        $this->ispublic = $ispublic;
+        $this->isPublic = $isPublic;
 
         return $this;
     }
 
-    public function getLastlogindate(): ?\DateTimeInterface
+    public function getLastLoginDate(): ?\DateTimeInterface
     {
-        return $this->lastlogindate;
+        return $this->lastLoginDate;
     }
 
-    public function setLastlogindate(?\DateTimeInterface $lastlogindate): self
+    public function setLastLoginDate(?\DateTimeInterface $lastLoginDate): self
     {
-        $this->lastlogindate = $lastlogindate;
+        $this->lastLoginDate = $lastLoginDate;
 
         return $this;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): InitialTimeStampInterface
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function getMiddleinitial(): ?string
+    public function getMiddleInitial(): ?string
     {
-        return $this->middleinitial;
+        return $this->middleInitial;
     }
 
-    public function setMiddleinitial(?string $middleinitial): self
+    public function setMiddleInitial(?string $middleInitial): self
     {
-        $this->middleinitial = $middleinitial;
+        $this->middleInitial = $middleInitial;
 
         return $this;
     }
 
-    public function getModifiedtimestamp(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?\DateTimeInterface
     {
-        return $this->modifiedtimestamp;
+        return $this->modifiedTimestamp;
     }
 
-    public function setModifiedtimestamp(\DateTimeInterface $modifiedtimestamp): ModifiedTimeStampInterface
+    public function setModifiedTimestamp(\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
-        $this->modifiedtimestamp = $modifiedtimestamp;
+        $this->modifiedTimestamp = $modifiedTimestamp;
 
         return $this;
     }
@@ -627,26 +627,26 @@ class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeSta
     /**
      * @return Collection|Collections[]
      */
-    public function getCollectionid(): Collection
+    public function getCollectionId(): Collection
     {
-        return $this->collectionid;
+        return $this->collectionId;
     }
 
-    public function addCollid(Collections $collid): self
+    public function addCollectionId(Collections $collectionId): self
     {
-        if (!$this->collectionid->contains($collid)) {
-            $this->collectionid[] = $collid;
-            $collid->addUid($this);
+        if (!$this->collectionId->contains($collectionId)) {
+            $this->collectionId[] = $collectionId;
+            $collectionId->addUserId($this);
         }
 
         return $this;
     }
 
-    public function removeCollid(Collections $collid): self
+    public function removeCollectionId(Collections $collectionId): self
     {
-        if ($this->collectionid->contains($collid)) {
-            $this->collectionid->removeElement($collid);
-            $collid->removeUid($this);
+        if ($this->collectionId->contains($collectionId)) {
+            $this->collectionId->removeElement($collectionId);
+            $collectionId->removeUserId($this);
         }
 
         return $this;
@@ -673,44 +673,44 @@ class Users implements UserInterface, InitialTimeStampInterface, ModifiedTimeSta
 
     }
 
-    public function getRetypedpassword()
+    public function getRetypedPassword()
     {
-        return $this->retypedpassword;
+        return $this->retypedPassword;
     }
 
-    public function setRetypedpassword($retypedpassword): void
+    public function setRetypedPassword($retypedPassword): void
     {
-        $this->retypedpassword = $retypedpassword;
+        $this->retypedPassword = $retypedPassword;
     }
 
-    public function getNewpassword(): ?string
+    public function getNewPassword(): ?string
     {
-        return $this->newpassword;
+        return $this->newPassword;
     }
 
-    public function setNewpassword($newpassword): void
+    public function setNewPassword($newPassword): void
     {
-        $this->newpassword = $newpassword;
+        $this->newPassword = $newPassword;
     }
 
-    public function getNewretypedpassword(): ?string
+    public function getNewRetypedPassword(): ?string
     {
-        return $this->newretypedpassword;
+        return $this->newRetypedPassword;
     }
 
-    public function setNewretypedpassword($newretypedpassword): void
+    public function setNewRetypedPassword($newRetypedPassword): void
     {
-        $this->newretypedpassword = $newretypedpassword;
+        $this->newRetypedPassword = $newRetypedPassword;
     }
 
-    public function getOldpassword(): ?string
+    public function getOldPassword(): ?string
     {
-        return $this->oldpassword;
+        return $this->oldPassword;
     }
 
-    public function setOldpassword($oldpassword): void
+    public function setOldPassword($oldPassword): void
     {
-        $this->oldpassword = $oldpassword;
+        $this->oldPassword = $oldPassword;
     }
 
 }

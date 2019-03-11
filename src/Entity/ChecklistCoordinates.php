@@ -2,116 +2,136 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ChecklistCoordinates
  *
  * @ORM\Table(name="fmchklstcoordinates", uniqueConstraints={@ORM\UniqueConstraint(name="IndexUnique", columns={"clid", "tid", "decimallatitude", "decimallongitude"})}, indexes={@ORM\Index(name="FKchklsttaxalink", columns={"clid", "tid"})})
  * @ORM\Entity(repositoryClass="App\Repository\ChecklistCoordinatesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ChecklistCoordinates
+class ChecklistCoordinates implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="chklstcoordid", type="integer", nullable=false)
+     * @ORM\Column(name="chklstcoordid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $chklstcoordid;
+    private $id;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="clid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="clid", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $clid;
+    private $checklistId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="tid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="tid", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="decimallatitude", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\Column(name="decimallatitude", type="float", precision=10, scale=0)
+     * @Assert\NotBlank()
+     * @Assert\Type(
+     *      type="float"
+     * )
      */
-    private $decimallatitude;
+    private $decimalLatitude;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="decimallongitude", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\Column(name="decimallongitude", type="float", precision=10, scale=0)
+     * @Assert\NotBlank()
+     * @Assert\Type(
+     *      type="float"
+     * )
      */
-    private $decimallongitude;
+    private $decimalLongitude;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getChklstcoordid(): ?int
+    public function getId(): ?int
     {
-        return $this->chklstcoordid;
+        return $this->id;
     }
 
-    public function getClid(): ?int
+    public function getChecklistId(): ?int
     {
-        return $this->clid;
+        return $this->checklistId;
     }
 
-    public function setClid(int $clid): self
+    public function setChecklistId(int $checklistId): self
     {
-        $this->clid = $clid;
+        $this->checklistId = $checklistId;
 
         return $this;
     }
 
-    public function getTid(): ?int
+    public function getTaxaId(): ?int
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(int $tid): self
+    public function setTaxaId(int $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }
 
-    public function getDecimallatitude(): ?float
+    public function getDecimalLatitude(): ?float
     {
-        return $this->decimallatitude;
+        return $this->decimalLatitude;
     }
 
-    public function setDecimallatitude(float $decimallatitude): self
+    public function setDecimalLatitude(float $decimalLatitude): self
     {
-        $this->decimallatitude = $decimallatitude;
+        $this->decimalLatitude = $decimalLatitude;
 
         return $this;
     }
 
-    public function getDecimallongitude(): ?float
+    public function getDecimalLongitude(): ?float
     {
-        return $this->decimallongitude;
+        return $this->decimalLongitude;
     }
 
-    public function setDecimallongitude(float $decimallongitude): self
+    public function setDecimalLongitude(float $decimalLongitude): self
     {
-        $this->decimallongitude = $decimallongitude;
+        $this->decimalLongitude = $decimalLongitude;
 
         return $this;
     }
@@ -128,14 +148,14 @@ class ChecklistCoordinates
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }

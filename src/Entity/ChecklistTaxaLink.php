@@ -2,179 +2,203 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ChecklistTaxaLink
  *
  * @ORM\Table(name="fmchklsttaxalink", uniqueConstraints={@ORM\UniqueConstraint(name="FK_clidtidmorph_id", columns={"tid", "CLID", "morphospecies"})}, indexes={@ORM\Index(name="FK_chklsttaxalink_cid", columns={"CLID"})})
  * @ORM\Entity(repositoryClass="App\Repository\ChecklistTaxaLinkRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ChecklistTaxaLink
+class ChecklistTaxaLink implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="cltlid", type="integer", nullable=false)
+     * @ORM\Column(name="cltlid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $cltlid;
+    private $id;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="tid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="tid", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="CLID", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="CLID", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $clid;
+    private $checklistId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="morphospecies", type="string", length=45, nullable=false)
+     * @ORM\Column(name="morphospecies", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $morphospecies;
+    private $morphoSpecies;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="familyoverride", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="familyoverride", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $familyoverride = 'NULL';
+    private $familyOverride;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Habitat", type="string", length=450, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Habitat", type="string", length=450, nullable=true)
+     * @Assert\Length(max=450)
      */
-    private $habitat = 'NULL';
+    private $habitat;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Abundance", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Abundance", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $abundance = 'NULL';
+    private $abundance;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Notes", type="string", length=2000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Notes", type="string", length=2000, nullable=true)
+     * @Assert\Length(max=2000)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="explicitExclude", type="smallint", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="explicitExclude", type="smallint", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $explicitexclude = 'NULL';
+    private $explicitExclude;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="source", type="string", length=450, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="source", type="string", length=450, nullable=true)
+     * @Assert\Length(max=450)
      */
-    private $source = 'NULL';
+    private $source;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Nativity", type="string", length=50, nullable=true, options={"default"=NULL,"comment"="native, introducted"})
+     * @ORM\Column(name="Nativity", type="string", length=50, nullable=true, options={"comment"="native, introducted"})
+     * @Assert\Length(max=50)
      */
-    private $nativity = 'NULL';
+    private $nativity;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Endemic", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Endemic", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $endemic = 'NULL';
+    private $endemic;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="invasive", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="invasive", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $invasive = 'NULL';
+    private $invasive;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="internalnotes", type="string", length=450, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="internalnotes", type="string", length=450, nullable=true)
+     * @Assert\Length(max=450)
      */
-    private $internalnotes = 'NULL';
+    private $internalNotes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $dynamicproperties = 'NULL';
+    private $dynamicProperties;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getCltlid(): ?int
+    public function getId(): ?int
     {
-        return $this->cltlid;
+        return $this->id;
     }
 
-    public function getTid(): ?int
+    public function getTaxaId(): ?int
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(int $tid): self
+    public function setTaxaId(int $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }
 
-    public function getClid(): ?int
+    public function getChecklistId(): ?int
     {
-        return $this->clid;
+        return $this->checklistId;
     }
 
-    public function setClid(int $clid): self
+    public function setChecklistId(int $checklistId): self
     {
-        $this->clid = $clid;
+        $this->checklistId = $checklistId;
 
         return $this;
     }
 
-    public function getMorphospecies(): ?string
+    public function getMorphoSpecies(): ?string
     {
-        return $this->morphospecies;
+        return $this->morphoSpecies;
     }
 
-    public function setMorphospecies(string $morphospecies): self
+    public function setMorphoSpecies(string $morphoSpecies): self
     {
-        $this->morphospecies = $morphospecies;
+        $this->morphoSpecies = $morphoSpecies;
 
         return $this;
     }
 
-    public function getFamilyoverride(): ?string
+    public function getFamilyOverride(): ?string
     {
-        return $this->familyoverride;
+        return $this->familyOverride;
     }
 
-    public function setFamilyoverride(?string $familyoverride): self
+    public function setFamilyOverride(?string $familyOverride): self
     {
-        $this->familyoverride = $familyoverride;
+        $this->familyOverride = $familyOverride;
 
         return $this;
     }
@@ -215,14 +239,14 @@ class ChecklistTaxaLink
         return $this;
     }
 
-    public function getExplicitexclude(): ?int
+    public function getExplicitExclude(): ?int
     {
-        return $this->explicitexclude;
+        return $this->explicitExclude;
     }
 
-    public function setExplicitexclude(?int $explicitexclude): self
+    public function setExplicitExclude(?int $explicitExclude): self
     {
-        $this->explicitexclude = $explicitexclude;
+        $this->explicitExclude = $explicitExclude;
 
         return $this;
     }
@@ -275,38 +299,38 @@ class ChecklistTaxaLink
         return $this;
     }
 
-    public function getInternalnotes(): ?string
+    public function getInternalNotes(): ?string
     {
-        return $this->internalnotes;
+        return $this->internalNotes;
     }
 
-    public function setInternalnotes(?string $internalnotes): self
+    public function setInternalNotes(?string $internalNotes): self
     {
-        $this->internalnotes = $internalnotes;
+        $this->internalNotes = $internalNotes;
 
         return $this;
     }
 
-    public function getDynamicproperties(): ?string
+    public function getDynamicProperties(): ?string
     {
-        return $this->dynamicproperties;
+        return $this->dynamicProperties;
     }
 
-    public function setDynamicproperties(?string $dynamicproperties): self
+    public function setDynamicProperties(?string $dynamicProperties): self
     {
-        $this->dynamicproperties = $dynamicproperties;
+        $this->dynamicProperties = $dynamicProperties;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }

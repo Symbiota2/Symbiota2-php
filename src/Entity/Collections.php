@@ -2,258 +2,303 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Collections
  *
  * @ORM\Table(name="omcollections", uniqueConstraints={@ORM\UniqueConstraint(name="Index_inst", columns={"InstitutionCode", "CollectionCode"})}, indexes={@ORM\Index(name="FK_collid_iid_idx", columns={"iid"})})
  * @ORM\Entity(repositoryClass="App\Repository\CollectionsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class Collections
+class Collections implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="CollID", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="CollID", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $collid;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="InstitutionCode", type="string", length=45, nullable=false)
+     * @ORM\Column(name="InstitutionCode", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
-    private $institutioncode;
+    private $institutionCode;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="CollectionCode", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="CollectionCode", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $collectioncode = 'NULL';
+    private $collectionCode;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="CollectionName", type="string", length=150, nullable=false)
+     * @ORM\Column(name="CollectionName", type="string", length=150)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=150)
      */
-    private $collectionname;
+    private $collectionName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="collectionId", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="collectionId", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $collectionid = 'NULL';
+    private $collectionId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="datasetName", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="datasetName", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $datasetname = 'NULL';
+    private $datasetName;
 
     /**
-     * @var \Institutions
+     * @var \App\Entity\Institutions
      *
-     * @ORM\ManyToOne(targetEntity="Institutions")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Institutions")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="iid", referencedColumnName="iid")
      * })
      */
-    private $iid;
+    private $institutionId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="fulldescription", type="string", length=2000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="fulldescription", type="string", length=2000, nullable=true)
+     * @Assert\Length(max=2000)
      */
-    private $fulldescription = 'NULL';
+    private $fullDescription;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Homepage", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Homepage", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $homepage = 'NULL';
+    private $homepage;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="IndividualUrl", type="string", length=500, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="IndividualUrl", type="string", length=500, nullable=true)
+     * @Assert\Length(max=500)
      */
-    private $individualurl = 'NULL';
+    private $individualUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Contact", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Contact", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $contact = 'NULL';
+    private $contact;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="email", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="email", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
+     * @Assert\Email()
      */
-    private $email = 'NULL';
+    private $email;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="latitudedecimal", type="decimal", precision=8, scale=6, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="latitudedecimal", type="float", precision=8, scale=6, nullable=true)
+     * @Assert\Type(
+     *      type="float"
+     * )
      */
-    private $latitudedecimal = 'NULL';
+    private $latitudeDecimal;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="longitudedecimal", type="decimal", precision=9, scale=6, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="longitudedecimal", type="float", precision=9, scale=6, nullable=true)
+     * @Assert\Type(
+     *      type="float"
+     * )
      */
-    private $longitudedecimal = 'NULL';
+    private $longitudeDecimal;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="icon", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="icon", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $icon = 'NULL';
+    private $icon;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="CollType", type="string", length=45, nullable=false, options={"default"="Preserved Specimens","comment"="Preserved Specimens, General Observations, Observations"})
+     * @ORM\Column(name="CollType", type="string", length=45, options={"default"="Preserved Specimens","comment"="Preserved Specimens, General Observations, Observations"})
+     * @Assert\Length(max=45)
      */
-    private $colltype = 'Preserved Specimens';
+    private $collectionType = 'Preserved Specimens';
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="ManagementType", type="string", length=45, nullable=true, options={"default"="Snapshot","comment"="Snapshot, Live Data"})
+     * @Assert\Length(max=45)
      */
-    private $managementtype = 'Snapshot';
+    private $managementType = 'Snapshot';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="PublicEdits", type="integer", nullable=false, options={"default"="1","unsigned"=true})
+     * @ORM\Column(name="PublicEdits", type="integer", options={"default"="1","unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $publicedits = '1';
+    private $publicEdits = 1;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="collectionguid", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="collectionguid", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $collectionguid = 'NULL';
+    private $collectionGuid;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="securitykey", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="securitykey", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $securitykey = 'NULL';
+    private $securityKey;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="guidtarget", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="guidtarget", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $guidtarget = 'NULL';
+    private $guidTarget;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="rightsHolder", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="rightsHolder", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $rightsholder = 'NULL';
+    private $rightsHolder;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="rights", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="rights", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $rights = 'NULL';
+    private $rights;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="usageTerm", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="usageTerm", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $usageterm = 'NULL';
+    private $usageTerm;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="publishToGbif", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="publishToGbif", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $publishtogbif = 'NULL';
+    private $publishToGbif;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="publishToIdigbio", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="publishToIdigbio", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $publishtoidigbio = 'NULL';
+    private $publishToIdigbio;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="aggKeysStr", type="string", length=1000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="aggKeysStr", type="string", length=1000, nullable=true)
+     * @Assert\Length(max=1000)
      */
-    private $aggkeysstr = 'NULL';
+    private $aggregatorKeyJson;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dwcaUrl", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dwcaUrl", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $dwcaurl = 'NULL';
+    private $dwcaUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="bibliographicCitation", type="string", length=1000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="bibliographicCitation", type="string", length=1000, nullable=true)
+     * @Assert\Length(max=1000)
      */
-    private $bibliographiccitation = 'NULL';
+    private $bibliographicCitation;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="accessrights", type="string", length=1000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="accessrights", type="string", length=1000, nullable=true)
+     * @Assert\Length(max=1000)
      */
-    private $accessrights = 'NULL';
+    private $accessRights;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="SortSeq", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="SortSeq", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $sortseq = 'NULL';
+    private $sortSequence;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="CollectionCategories", mappedBy="collid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\CollectionCategories", mappedBy="collectionId")
      */
-    private $ccpk;
+    private $collectionCategoryId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Users", inversedBy="collid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Users", inversedBy="collid")
      * @ORM\JoinTable(name="omcollectioncontacts",
      *   joinColumns={
      *     @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
@@ -263,98 +308,98 @@ class Collections
      *   }
      * )
      */
-    private $uid;
+    private $userId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="References", mappedBy="collid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\References", mappedBy="collectionid")
      */
-    private $refid;
+    private $referenceId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->ccpk = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->uid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->refid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->collectionCategoryId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->userId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->referenceId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getCollid(): ?int
+    public function getId(): ?int
     {
-        return $this->collid;
+        return $this->id;
     }
 
-    public function getInstitutioncode(): ?string
+    public function getInstitutionCode(): ?string
     {
-        return $this->institutioncode;
+        return $this->institutionCode;
     }
 
-    public function setInstitutioncode(string $institutioncode): self
+    public function setInstitutionCode(string $institutionCode): self
     {
-        $this->institutioncode = $institutioncode;
+        $this->institutionCode = $institutionCode;
 
         return $this;
     }
 
-    public function getCollectioncode(): ?string
+    public function getCollectionCode(): ?string
     {
-        return $this->collectioncode;
+        return $this->collectionCode;
     }
 
-    public function setCollectioncode(?string $collectioncode): self
+    public function setCollectionCode(?string $collectionCode): self
     {
-        $this->collectioncode = $collectioncode;
+        $this->collectionCode = $collectionCode;
 
         return $this;
     }
 
-    public function getCollectionname(): ?string
+    public function getCollectionName(): ?string
     {
-        return $this->collectionname;
+        return $this->collectionName;
     }
 
-    public function setCollectionname(string $collectionname): self
+    public function setCollectionName(string $collectionName): self
     {
-        $this->collectionname = $collectionname;
+        $this->collectionName = $collectionName;
 
         return $this;
     }
 
-    public function getCollectionid(): ?string
+    public function getCollectionId(): ?string
     {
-        return $this->collectionid;
+        return $this->collectionId;
     }
 
-    public function setCollectionid(?string $collectionid): self
+    public function setCollectionId(?string $collectionId): self
     {
-        $this->collectionid = $collectionid;
+        $this->collectionId = $collectionId;
 
         return $this;
     }
 
-    public function getDatasetname(): ?string
+    public function getDatasetName(): ?string
     {
-        return $this->datasetname;
+        return $this->datasetName;
     }
 
-    public function setDatasetname(?string $datasetname): self
+    public function setDatasetName(?string $datasetName): self
     {
-        $this->datasetname = $datasetname;
+        $this->datasetName = $datasetName;
 
         return $this;
     }
 
-    public function getFulldescription(): ?string
+    public function getFullDescription(): ?string
     {
-        return $this->fulldescription;
+        return $this->fullDescription;
     }
 
-    public function setFulldescription(?string $fulldescription): self
+    public function setFullDescription(?string $fullDescription): self
     {
-        $this->fulldescription = $fulldescription;
+        $this->fullDescription = $fullDescription;
 
         return $this;
     }
@@ -371,14 +416,14 @@ class Collections
         return $this;
     }
 
-    public function getIndividualurl(): ?string
+    public function getIndividualUrl(): ?string
     {
-        return $this->individualurl;
+        return $this->individualUrl;
     }
 
-    public function setIndividualurl(?string $individualurl): self
+    public function setIndividualUrl(?string $individualUrl): self
     {
-        $this->individualurl = $individualurl;
+        $this->individualUrl = $individualUrl;
 
         return $this;
     }
@@ -407,26 +452,26 @@ class Collections
         return $this;
     }
 
-    public function getLatitudedecimal()
+    public function getLatitudeDecimal()
     {
-        return $this->latitudedecimal;
+        return $this->latitudeDecimal;
     }
 
-    public function setLatitudedecimal($latitudedecimal): self
+    public function setLatitudeDecimal($latitudeDecimal): self
     {
-        $this->latitudedecimal = $latitudedecimal;
+        $this->latitudeDecimal = $latitudeDecimal;
 
         return $this;
     }
 
-    public function getLongitudedecimal()
+    public function getLongitudeDecimal()
     {
-        return $this->longitudedecimal;
+        return $this->longitudeDecimal;
     }
 
-    public function setLongitudedecimal($longitudedecimal): self
+    public function setLongitudeDecimal($longitudeDecimal): self
     {
-        $this->longitudedecimal = $longitudedecimal;
+        $this->longitudeDecimal = $longitudeDecimal;
 
         return $this;
     }
@@ -443,86 +488,86 @@ class Collections
         return $this;
     }
 
-    public function getColltype(): ?string
+    public function getCollectionType(): ?string
     {
-        return $this->colltype;
+        return $this->collectionType;
     }
 
-    public function setColltype(string $colltype): self
+    public function setCollectionType(string $collectionType): self
     {
-        $this->colltype = $colltype;
+        $this->collectionType = $collectionType;
 
         return $this;
     }
 
-    public function getManagementtype(): ?string
+    public function getManagementType(): ?string
     {
-        return $this->managementtype;
+        return $this->managementType;
     }
 
-    public function setManagementtype(?string $managementtype): self
+    public function setManagementType(?string $managementType): self
     {
-        $this->managementtype = $managementtype;
+        $this->managementType = $managementType;
 
         return $this;
     }
 
-    public function getPublicedits(): ?int
+    public function getPublicEdits(): ?int
     {
-        return $this->publicedits;
+        return $this->publicEdits;
     }
 
-    public function setPublicedits(int $publicedits): self
+    public function setPublicEdits(int $publicEdits): self
     {
-        $this->publicedits = $publicedits;
+        $this->publicEdits = $publicEdits;
 
         return $this;
     }
 
-    public function getCollectionguid(): ?string
+    public function getCollectionGuid(): ?string
     {
-        return $this->collectionguid;
+        return $this->collectionGuid;
     }
 
-    public function setCollectionguid(?string $collectionguid): self
+    public function setCollectionGuid(?string $collectionGuid): self
     {
-        $this->collectionguid = $collectionguid;
+        $this->collectionGuid = $collectionGuid;
 
         return $this;
     }
 
-    public function getSecuritykey(): ?string
+    public function getSecurityKey(): ?string
     {
-        return $this->securitykey;
+        return $this->securityKey;
     }
 
-    public function setSecuritykey(?string $securitykey): self
+    public function setSecurityKey(?string $securityKey): self
     {
-        $this->securitykey = $securitykey;
+        $this->securityKey = $securityKey;
 
         return $this;
     }
 
-    public function getGuidtarget(): ?string
+    public function getGuidTarget(): ?string
     {
-        return $this->guidtarget;
+        return $this->guidTarget;
     }
 
-    public function setGuidtarget(?string $guidtarget): self
+    public function setGuidTarget(?string $guidTarget): self
     {
-        $this->guidtarget = $guidtarget;
+        $this->guidTarget = $guidTarget;
 
         return $this;
     }
 
-    public function getRightsholder(): ?string
+    public function getRightsHolder(): ?string
     {
-        return $this->rightsholder;
+        return $this->rightsHolder;
     }
 
-    public function setRightsholder(?string $rightsholder): self
+    public function setRightsHolder(?string $rightsHolder): self
     {
-        $this->rightsholder = $rightsholder;
+        $this->rightsHolder = $rightsHolder;
 
         return $this;
     }
@@ -539,122 +584,122 @@ class Collections
         return $this;
     }
 
-    public function getUsageterm(): ?string
+    public function getUsageTerm(): ?string
     {
-        return $this->usageterm;
+        return $this->usageTerm;
     }
 
-    public function setUsageterm(?string $usageterm): self
+    public function setUsageTerm(?string $usageTerm): self
     {
-        $this->usageterm = $usageterm;
+        $this->usageTerm = $usageTerm;
 
         return $this;
     }
 
-    public function getPublishtogbif(): ?int
+    public function getPublishToGbif(): ?int
     {
-        return $this->publishtogbif;
+        return $this->publishToGbif;
     }
 
-    public function setPublishtogbif(?int $publishtogbif): self
+    public function setPublishToGbif(?int $publishToGbif): self
     {
-        $this->publishtogbif = $publishtogbif;
+        $this->publishToGbif = $publishToGbif;
 
         return $this;
     }
 
-    public function getPublishtoidigbio(): ?int
+    public function getPublishToIdigbio(): ?int
     {
-        return $this->publishtoidigbio;
+        return $this->publishToIdigbio;
     }
 
-    public function setPublishtoidigbio(?int $publishtoidigbio): self
+    public function setPublishToIdigbio(?int $publishToIdigbio): self
     {
-        $this->publishtoidigbio = $publishtoidigbio;
+        $this->publishToIdigbio = $publishToIdigbio;
 
         return $this;
     }
 
-    public function getAggkeysstr(): ?string
+    public function getAggregatorKeyJson(): ?string
     {
-        return $this->aggkeysstr;
+        return $this->aggregatorKeyJson;
     }
 
-    public function setAggkeysstr(?string $aggkeysstr): self
+    public function setAggregatorKeyJson(?string $aggregatorKeyJson): self
     {
-        $this->aggkeysstr = $aggkeysstr;
+        $this->aggregatorKeyJson = $aggregatorKeyJson;
 
         return $this;
     }
 
-    public function getDwcaurl(): ?string
+    public function getDwcaUrl(): ?string
     {
-        return $this->dwcaurl;
+        return $this->dwcaUrl;
     }
 
-    public function setDwcaurl(?string $dwcaurl): self
+    public function setDwcaUrl(?string $dwcaUrl): self
     {
-        $this->dwcaurl = $dwcaurl;
+        $this->dwcaUrl = $dwcaUrl;
 
         return $this;
     }
 
-    public function getBibliographiccitation(): ?string
+    public function getBibliographicCitation(): ?string
     {
-        return $this->bibliographiccitation;
+        return $this->bibliographicCitation;
     }
 
-    public function setBibliographiccitation(?string $bibliographiccitation): self
+    public function setBibliographicCitation(?string $bibliographicCitation): self
     {
-        $this->bibliographiccitation = $bibliographiccitation;
+        $this->bibliographicCitation = $bibliographicCitation;
 
         return $this;
     }
 
-    public function getAccessrights(): ?string
+    public function getAccessRights(): ?string
     {
-        return $this->accessrights;
+        return $this->accessRights;
     }
 
-    public function setAccessrights(?string $accessrights): self
+    public function setAccessRights(?string $accessRights): self
     {
-        $this->accessrights = $accessrights;
+        $this->accessRights = $accessRights;
 
         return $this;
     }
 
-    public function getSortseq(): ?int
+    public function getSortSequence(): ?int
     {
-        return $this->sortseq;
+        return $this->sortSequence;
     }
 
-    public function setSortseq(?int $sortseq): self
+    public function setSortSequence(?int $sortSequence): self
     {
-        $this->sortseq = $sortseq;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getIid(): ?Institutions
+    public function getInstitutionId(): ?Institutions
     {
-        return $this->iid;
+        return $this->institutionId;
     }
 
-    public function setIid(?Institutions $iid): self
+    public function setInstitutionId(?Institutions $institutionId): self
     {
-        $this->iid = $iid;
+        $this->institutionId = $institutionId;
 
         return $this;
     }
@@ -662,26 +707,26 @@ class Collections
     /**
      * @return Collection|CollectionCategories[]
      */
-    public function getCcpk(): Collection
+    public function getCollectionCategoryId(): Collection
     {
-        return $this->ccpk;
+        return $this->collectionCategoryId;
     }
 
-    public function addCcpk(CollectionCategories $ccpk): self
+    public function addCollectionCategoryId(CollectionCategories $collectionCategoryId): self
     {
-        if (!$this->ccpk->contains($ccpk)) {
-            $this->ccpk[] = $ccpk;
-            $ccpk->addCollid($this);
+        if (!$this->collectionCategoryId->contains($collectionCategoryId)) {
+            $this->collectionCategoryId[] = $collectionCategoryId;
+            $collectionCategoryId->addCollectionId($this);
         }
 
         return $this;
     }
 
-    public function removeCcpk(CollectionCategories $ccpk): self
+    public function removeCollectionCategoryId(CollectionCategories $collectionCategoryId): self
     {
-        if ($this->ccpk->contains($ccpk)) {
-            $this->ccpk->removeElement($ccpk);
-            $ccpk->removeCollid($this);
+        if ($this->collectionCategoryId->contains($collectionCategoryId)) {
+            $this->collectionCategoryId->removeElement($collectionCategoryId);
+            $collectionCategoryId->removeCollectionId($this);
         }
 
         return $this;
@@ -690,24 +735,24 @@ class Collections
     /**
      * @return Collection|Users[]
      */
-    public function getUid(): Collection
+    public function getUserId(): Collection
     {
-        return $this->uid;
+        return $this->userId;
     }
 
-    public function addUid(Users $uid): self
+    public function addUserId(Users $userId): self
     {
-        if (!$this->uid->contains($uid)) {
-            $this->uid[] = $uid;
+        if (!$this->userId->contains($userId)) {
+            $this->userId[] = $userId;
         }
 
         return $this;
     }
 
-    public function removeUid(Users $uid): self
+    public function removeUserId(Users $userId): self
     {
-        if ($this->uid->contains($uid)) {
-            $this->uid->removeElement($uid);
+        if ($this->userId->contains($userId)) {
+            $this->userId->removeElement($userId);
         }
 
         return $this;
@@ -716,26 +761,26 @@ class Collections
     /**
      * @return Collection|References[]
      */
-    public function getRefid(): Collection
+    public function getReferenceId(): Collection
     {
-        return $this->refid;
+        return $this->referenceId;
     }
 
-    public function addRefid(References $refid): self
+    public function addReferenceId(References $referenceId): self
     {
-        if (!$this->refid->contains($refid)) {
-            $this->refid[] = $refid;
-            $refid->addCollid($this);
+        if (!$this->referenceId->contains($referenceId)) {
+            $this->referenceId[] = $referenceId;
+            $referenceId->addCollectionId($this);
         }
 
         return $this;
     }
 
-    public function removeRefid(References $refid): self
+    public function removeReferenceId(References $referenceId): self
     {
-        if ($this->refid->contains($refid)) {
-            $this->refid->removeElement($refid);
-            $refid->removeCollid($this);
+        if ($this->referenceId->contains($referenceId)) {
+            $this->referenceId->removeElement($referenceId);
+            $referenceId->removeCollectionId($this);
         }
 
         return $this;

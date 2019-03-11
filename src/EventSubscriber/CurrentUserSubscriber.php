@@ -44,7 +44,7 @@ class CurrentUserSubscriber implements EventSubscriberInterface
         }
 
         if($entity instanceof ModifiedUserIdInterface) {
-            $entity->setModifieduserid($user);
+            $entity->setModifiedUserId($user);
         }
 
         if($entity instanceof CreatedUserIdInterface && Request::METHOD_POST === $method) {
@@ -52,7 +52,7 @@ class CurrentUserSubscriber implements EventSubscriberInterface
         }
 
         if($entity instanceof UserIdAssignedByInterface) {
-            $entity->setUseridassignedby($user);
+            $entity->setUserIdAssignedBy($user);
         }
     }
 }

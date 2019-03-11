@@ -6,5 +6,5 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 interface ModifiedUserIdInterface
 {
-    public function setModifieduserid(UserInterface $user): ModifiedUserIdInterface;
+    public function setModifiedUserId(UserInterface $user): ModifiedUserIdInterface;
 }

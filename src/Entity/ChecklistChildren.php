@@ -2,18 +2,26 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ChecklistChildren
  *
  * @ORM\Table(name="fmchklstchildren", indexes={@ORM\Index(name="FK_fmchklstchild_clid_idx", columns={"clid"}), @ORM\Index(name="FK_fmchklstchild_child_idx", columns={"clidchild"})})
  * @ORM\Entity(repositoryClass="App\Repository\ChecklistChildrenRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ChecklistChildren
+class ChecklistChildren implements InitialTimestampInterface, ModifiedTimestampInterface, ModifiedUserIdInterface
 {
     /**
-     * @var \Checklists
+     * @var \App\Entity\Checklists
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -22,87 +30,96 @@ class ChecklistChildren
      *   @ORM\JoinColumn(name="clid", referencedColumnName="CLID")
      * })
      */
-    private $clid;
+    private $checklistId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="clidchild", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="clidchild", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
-    private $clidchild;
+    private $id;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="modifiedUid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="modifiedUid", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $modifieduid;
+    private $modifiedUserId;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true)
      */
-    private $modifiedtimestamp = 'NULL';
+    private $modifiedTimestamp;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getClidchild(): ?int
+    public function getId(): ?int
     {
-        return $this->clidchild;
+        return $this->id;
     }
 
-    public function getModifieduid(): ?int
+    /**
+     * @return int|null
+     */
+    public function getModifiedUserId(): ?int
     {
-        return $this->modifieduid;
+        return $this->modifiedUserId;
     }
 
-    public function setModifieduid(int $modifieduid): self
+    /**
+     * @param UserInterface $modifiedUserId
+     * @return ModifiedUserIdInterface
+     */
+    public function setModifiedUserId(UserInterface $modifiedUserId): ModifiedUserIdInterface
     {
-        $this->modifieduid = $modifieduid;
+        $this->modifiedUserId = $modifiedUserId;
 
         return $this;
     }
 
-    public function getModifiedtimestamp(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?\DateTimeInterface
     {
-        return $this->modifiedtimestamp;
+        return $this->modifiedTimestamp;
     }
 
-    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): self
+    public function setModifiedTimestamp(?\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
-        $this->modifiedtimestamp = $modifiedtimestamp;
+        $this->modifiedTimestamp = $modifiedTimestamp;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getClid(): ?Checklists
+    public function getChecklistId(): ?Checklists
     {
-        return $this->clid;
+        return $this->checklistId;
     }
 
-    public function setClid(?Checklists $clid): self
+    public function setChecklistId(?Checklists $checklistId): self
     {
-        $this->clid = $clid;
+        $this->checklistId = $checklistId;
 
         return $this;
     }

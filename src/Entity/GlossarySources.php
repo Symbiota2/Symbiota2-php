@@ -2,83 +2,96 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * GlossarySources
  *
  * @ORM\Table(name="glossarysources")
  * @ORM\Entity(repositoryClass="App\Repository\GlossarySourcesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class GlossarySources
+class GlossarySources implements InitialTimestampInterface
 {
     /**
-     * @var \Taxa
+     * @var \App\Entity\Taxa
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Taxa")
+     * @ORM\OneToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
+     * @Assert\NotBlank()
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="contributorTerm", type="string", length=1000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="contributorTerm", type="string", length=1000, nullable=true)
+     * @Assert\Length(max=1000)
      */
-    private $contributorterm = 'NULL';
+    private $contributorTerm;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="contributorImage", type="string", length=1000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="contributorImage", type="string", length=1000, nullable=true)
+     * @Assert\Length(max=1000)
      */
-    private $contributorimage = 'NULL';
+    private $contributorImage;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="translator", type="string", length=1000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="translator", type="string", length=1000, nullable=true)
+     * @Assert\Length(max=1000)
      */
-    private $translator = 'NULL';
+    private $translator;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="additionalSources", type="string", length=1000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="additionalSources", type="string", length=1000, nullable=true)
+     * @Assert\Length(max=1000)
      */
-    private $additionalsources = 'NULL';
+    private $additionalSources;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getContributorterm(): ?string
+    public function getContributorTerm(): ?string
     {
-        return $this->contributorterm;
+        return $this->contributorTerm;
     }
 
-    public function setContributorterm(?string $contributorterm): self
+    public function setContributorTerm(?string $contributorTerm): self
     {
-        $this->contributorterm = $contributorterm;
+        $this->contributorTerm = $contributorTerm;
 
         return $this;
     }
 
-    public function getContributorimage(): ?string
+    public function getContributorImage(): ?string
     {
-        return $this->contributorimage;
+        return $this->contributorImage;
     }
 
-    public function setContributorimage(?string $contributorimage): self
+    public function setContributorImage(?string $contributorImage): self
     {
-        $this->contributorimage = $contributorimage;
+        $this->contributorImage = $contributorImage;
 
         return $this;
     }
@@ -95,38 +108,38 @@ class GlossarySources
         return $this;
     }
 
-    public function getAdditionalsources(): ?string
+    public function getAdditionalSources(): ?string
     {
-        return $this->additionalsources;
+        return $this->additionalSources;
     }
 
-    public function setAdditionalsources(?string $additionalsources): self
+    public function setAdditionalSources(?string $additionalSources): self
     {
-        $this->additionalsources = $additionalsources;
+        $this->additionalSources = $additionalSources;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getTid(): ?Taxa
+    public function getTaxaId(): ?Taxa
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(?Taxa $tid): self
+    public function setTaxaId(?Taxa $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }

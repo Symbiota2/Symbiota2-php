@@ -2,102 +2,117 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ImageProcessorNlpVersion
  *
  * @ORM\Table(name="specprocnlpversion", indexes={@ORM\Index(name="FK_specprocnlpver_rawtext_idx", columns={"prlid"})})
  * @ORM\Entity(repositoryClass="App\Repository\ImageProcessorNlpVersionRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ImageProcessorNlpVersion
+class ImageProcessorNlpVersion implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="nlpverid", type="integer", nullable=false)
+     * @ORM\Column(name="nlpverid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $nlpverid;
+    private $id;
 
     /**
-     * @var \ImageProcessorRawLabels
+     * @var \App\Entity\ImageProcessorRawLabels
      *
-     * @ORM\ManyToOne(targetEntity="ImageProcessorRawLabels")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\ImageProcessorRawLabels")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="prlid", referencedColumnName="prlid")
      * })
+     * @Assert\NotBlank()
      */
-    private $prlid;
+    private $imageProcessorRawLabelId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="archivestr", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="archivestr", type="text", length=65535)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=65535)
      */
-    private $archivestr;
+    private $archiveString;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="processingvariables", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="processingvariables", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $processingvariables = 'NULL';
+    private $processingVariables;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="score", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="score", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $score = 'NULL';
+    private $score;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="source", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="source", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $source = 'NULL';
+    private $source;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getNlpverid(): ?int
+    public function getId(): ?int
     {
-        return $this->nlpverid;
+        return $this->id;
     }
 
-    public function getArchivestr(): ?string
+    public function getArchiveString(): ?string
     {
-        return $this->archivestr;
+        return $this->archiveString;
     }
 
-    public function setArchivestr(string $archivestr): self
+    public function setArchiveString(string $archiveString): self
     {
-        $this->archivestr = $archivestr;
+        $this->archiveString = $archiveString;
 
         return $this;
     }
 
-    public function getProcessingvariables(): ?string
+    public function getProcessingVariables(): ?string
     {
-        return $this->processingvariables;
+        return $this->processingVariables;
     }
 
-    public function setProcessingvariables(?string $processingvariables): self
+    public function setProcessingVariables(?string $processingVariables): self
     {
-        $this->processingvariables = $processingvariables;
+        $this->processingVariables = $processingVariables;
 
         return $this;
     }
@@ -138,26 +153,26 @@ class ImageProcessorNlpVersion
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(?\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(?\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getPrlid(): ?ImageProcessorRawLabels
+    public function getImageProcessorRawLabelId(): ?ImageProcessorRawLabels
     {
-        return $this->prlid;
+        return $this->imageProcessorRawLabelId;
     }
 
-    public function setPrlid(?ImageProcessorRawLabels $prlid): self
+    public function setImageProcessorRawLabelId(?ImageProcessorRawLabels $imageProcessorRawLabelId): self
     {
-        $this->prlid = $prlid;
+        $this->imageProcessorRawLabelId = $imageProcessorRawLabelId;
 
         return $this;
     }

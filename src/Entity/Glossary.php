@@ -2,104 +2,123 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Glossary
  *
  * @ORM\Table(name="glossary", indexes={@ORM\Index(name="FK_glossary_uid_idx", columns={"createduid"}), @ORM\Index(name="Index_glossary_lang", columns={"language"}), @ORM\Index(name="Index_term", columns={"term"})})
  * @ORM\Entity(repositoryClass="App\Repository\GlossaryRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class Glossary
+class Glossary implements CreatedUserIdInterface, InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="glossid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="glossid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $glossid;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="term", type="string", length=150, nullable=false)
+     * @ORM\Column(name="term", type="string", length=150)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=150)
      */
     private $term;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="definition", type="string", length=2000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="definition", type="string", length=2000, nullable=true)
+     * @Assert\Length(max=2000)
      */
-    private $definition = 'NULL';
+    private $definition;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="language", type="string", length=45, nullable=false, options={"default"="English"})
+     * @ORM\Column(name="language", type="string", length=45, options={"default"="English"})
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
     private $language = 'English';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="source", type="string", length=1000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="source", type="string", length=1000, nullable=true)
+     * @Assert\Length(max=1000)
      */
-    private $source = 'NULL';
+    private $source;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="translator", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="translator", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $translator = 'NULL';
+    private $translator;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="author", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="author", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $author = 'NULL';
+    private $author;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="resourceurl", type="string", length=600, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="resourceurl", type="string", length=600, nullable=true)
+     * @Assert\Length(max=600)
      */
-    private $resourceurl = 'NULL';
+    private $resourceUrl;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
      */
-    private $createduid;
+    private $createdUserId;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Taxa", inversedBy="glossid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Taxa", inversedBy="glossid")
      * @ORM\JoinTable(name="glossarytaxalink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="glossid", referencedColumnName="glossid")
@@ -109,19 +128,19 @@ class Glossary
      *   }
      * )
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->tid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->taxaId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getGlossid(): ?int
+    public function getId(): ?int
     {
-        return $this->glossid;
+        return $this->id;
     }
 
     public function getTerm(): ?string
@@ -208,38 +227,45 @@ class Glossary
         return $this;
     }
 
-    public function getResourceurl(): ?string
+    public function getResourceUrl(): ?string
     {
-        return $this->resourceurl;
+        return $this->resourceUrl;
     }
 
-    public function setResourceurl(?string $resourceurl): self
+    public function setResourceUrl(?string $resourceUrl): self
     {
-        $this->resourceurl = $resourceurl;
+        $this->resourceUrl = $resourceUrl;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getCreateduid(): ?Users
+    /**
+     * @return Users|null
+     */
+    public function getCreatedUserId(): ?Users
     {
-        return $this->createduid;
+        return $this->createdUserId;
     }
 
-    public function setCreateduid(?Users $createduid): self
+    /**
+     * @param UserInterface $createdUserId
+     * @return CreatedUserIdInterface
+     */
+    public function setCreatedUserId(UserInterface $createdUserId): CreatedUserIdInterface
     {
-        $this->createduid = $createduid;
+        $this->createdUserId = $createdUserId;
 
         return $this;
     }
@@ -247,24 +273,24 @@ class Glossary
     /**
      * @return Collection|Taxa[]
      */
-    public function getTid(): Collection
+    public function getTaxaId(): Collection
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function addTid(Taxa $tid): self
+    public function addTaxaId(Taxa $taxaId): self
     {
-        if (!$this->tid->contains($tid)) {
-            $this->tid[] = $tid;
+        if (!$this->taxaId->contains($taxaId)) {
+            $this->taxaId[] = $taxaId;
         }
 
         return $this;
     }
 
-    public function removeTid(Taxa $tid): self
+    public function removeTaxaId(Taxa $taxaId): self
     {
-        if ($this->tid->contains($tid)) {
-            $this->tid->removeElement($tid);
+        if ($this->taxaId->contains($taxaId)) {
+            $this->taxaId->removeElement($taxaId);
         }
 
         return $this;

@@ -2,226 +2,243 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CollectionStats
  *
  * @ORM\Table(name="omcollectionstats")
  * @ORM\Entity(repositoryClass="App\Repository\CollectionStatsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class CollectionStats
+class CollectionStats implements InitialTimestampInterface, ModifiedTimestampInterface
 {
     /**
-     * @var \Collections
+     * @var \App\Entity\Collections
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Collections")
+     * @ORM\OneToOne(targetEntity="\App\Entity\Collections")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
      * })
+     * @Assert\NotBlank()
      */
-    private $collid;
+    private $collectionId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="recordcnt", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="recordcnt", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $recordcnt;
+    private $recordCount;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="georefcnt", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="georefcnt", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $georefcnt = 'NULL';
+    private $georeferencedCount;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="familycnt", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="familycnt", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $familycnt = 'NULL';
+    private $familyCount;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="genuscnt", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="genuscnt", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $genuscnt = 'NULL';
+    private $genusCount;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="speciescnt", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="speciescnt", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $speciescnt = 'NULL';
+    private $speciesCount;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="uploaddate", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="uploaddate", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $uploaddate = 'NULL';
+    private $uploadDate;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
      */
-    private $modifiedtimestamp = 'NULL';
+    private $modifiedTimestamp;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="uploadedby", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="uploadedby", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $uploadedby = 'NULL';
+    private $uploadedBy;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicProperties", type="text", length=0, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dynamicProperties", type="text", length=0, nullable=true)
      */
-    private $dynamicproperties = 'NULL';
+    private $dynamicProperties;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getRecordcnt(): ?int
+    public function getRecordCount(): ?int
     {
-        return $this->recordcnt;
+        return $this->recordCount;
     }
 
-    public function setRecordcnt(int $recordcnt): self
+    public function setRecordCount(int $recordCount): self
     {
-        $this->recordcnt = $recordcnt;
+        $this->recordCount = $recordCount;
 
         return $this;
     }
 
-    public function getGeorefcnt(): ?int
+    public function getGeoreferencedCount(): ?int
     {
-        return $this->georefcnt;
+        return $this->georeferencedCount;
     }
 
-    public function setGeorefcnt(?int $georefcnt): self
+    public function setGeoreferencedCount(?int $georeferencedCount): self
     {
-        $this->georefcnt = $georefcnt;
+        $this->georeferencedCount = $georeferencedCount;
 
         return $this;
     }
 
-    public function getFamilycnt(): ?int
+    public function getFamilyCount(): ?int
     {
-        return $this->familycnt;
+        return $this->familyCount;
     }
 
-    public function setFamilycnt(?int $familycnt): self
+    public function setFamilyCount(?int $familyCount): self
     {
-        $this->familycnt = $familycnt;
+        $this->familyCount = $familyCount;
 
         return $this;
     }
 
-    public function getGenuscnt(): ?int
+    public function getGenusCount(): ?int
     {
-        return $this->genuscnt;
+        return $this->genusCount;
     }
 
-    public function setGenuscnt(?int $genuscnt): self
+    public function setGenusCount(?int $genusCount): self
     {
-        $this->genuscnt = $genuscnt;
+        $this->genusCount = $genusCount;
 
         return $this;
     }
 
-    public function getSpeciescnt(): ?int
+    public function getSpeciesCount(): ?int
     {
-        return $this->speciescnt;
+        return $this->speciesCount;
     }
 
-    public function setSpeciescnt(?int $speciescnt): self
+    public function setSpeciesCount(?int $speciesCount): self
     {
-        $this->speciescnt = $speciescnt;
+        $this->speciesCount = $speciesCount;
 
         return $this;
     }
 
-    public function getUploaddate(): ?\DateTimeInterface
+    public function getUploadDate(): ?\DateTimeInterface
     {
-        return $this->uploaddate;
+        return $this->uploadDate;
     }
 
-    public function setUploaddate(?\DateTimeInterface $uploaddate): self
+    public function setUploadDate(?\DateTimeInterface $uploadDate): self
     {
-        $this->uploaddate = $uploaddate;
+        $this->uploadDate = $uploadDate;
 
         return $this;
     }
 
-    public function getModifiedtimestamp(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?\DateTimeInterface
     {
-        return $this->modifiedtimestamp;
+        return $this->modifiedTimestamp;
     }
 
-    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): self
+    public function setModifiedTimestamp(?\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
-        $this->modifiedtimestamp = $modifiedtimestamp;
+        $this->modifiedTimestamp = $modifiedTimestamp;
 
         return $this;
     }
 
-    public function getUploadedby(): ?string
+    public function getUploadedBy(): ?string
     {
-        return $this->uploadedby;
+        return $this->uploadedBy;
     }
 
-    public function setUploadedby(?string $uploadedby): self
+    public function setUploadedBy(?string $uploadedBy): self
     {
-        $this->uploadedby = $uploadedby;
+        $this->uploadedBy = $uploadedBy;
 
         return $this;
     }
 
-    public function getDynamicproperties(): ?string
+    public function getDynamicProperties(): ?string
     {
-        return $this->dynamicproperties;
+        return $this->dynamicProperties;
     }
 
-    public function setDynamicproperties(?string $dynamicproperties): self
+    public function setDynamicProperties(?string $dynamicProperties): self
     {
-        $this->dynamicproperties = $dynamicproperties;
+        $this->dynamicProperties = $dynamicProperties;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getCollid(): ?Collections
+    public function getCollectionId(): ?Collections
     {
-        return $this->collid;
+        return $this->collectionId;
     }
 
-    public function setCollid(?Collections $collid): self
+    public function setCollectionId(?Collections $collectionId): self
     {
-        $this->collid = $collid;
+        $this->collectionId = $collectionId;
 
         return $this;
     }

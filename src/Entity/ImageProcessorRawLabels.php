@@ -2,119 +2,136 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ImageProcessorRawLabels
  *
  * @ORM\Table(name="specprocessorrawlabels", indexes={@ORM\Index(name="FK_specproc_occid", columns={"occid"}), @ORM\Index(name="FK_specproc_images", columns={"imgid"})})
  * @ORM\Entity(repositoryClass="App\Repository\ImageProcessorRawLabelsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ImageProcessorRawLabels
+class ImageProcessorRawLabels implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="prlid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="prlid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $prlid;
+    private $id;
 
     /**
-     * @var \Images
+     * @var \App\Entity\Images
      *
-     * @ORM\ManyToOne(targetEntity="Images")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Images")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="imgid", referencedColumnName="imgid")
      * })
+     * @Assert\NotBlank()
      */
-    private $imgid;
+    private $imageId;
 
     /**
-     * @var \Occurrences
+     * @var \App\Entity\Occurrences
      *
-     * @ORM\ManyToOne(targetEntity="Occurrences")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
+     * @Assert\NotBlank()
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="rawstr", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="rawstr", type="text", length=65535)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=65535)
      */
-    private $rawstr;
+    private $rawString;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="processingvariables", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="processingvariables", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $processingvariables = 'NULL';
+    private $processingVariables;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="score", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="score", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $score = 'NULL';
+    private $score;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="source", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="source", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $source = 'NULL';
+    private $source;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="sortsequence", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="sortsequence", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $sortsequence = 'NULL';
+    private $sortSequence;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getPrlid(): ?int
+    public function getId(): ?int
     {
-        return $this->prlid;
+        return $this->id;
     }
 
-    public function getRawstr(): ?string
+    public function getRawString(): ?string
     {
-        return $this->rawstr;
+        return $this->rawString;
     }
 
-    public function setRawstr(string $rawstr): self
+    public function setRawString(string $rawString): self
     {
-        $this->rawstr = $rawstr;
+        $this->rawString = $rawString;
 
         return $this;
     }
 
-    public function getProcessingvariables(): ?string
+    public function getProcessingVariables(): ?string
     {
-        return $this->processingvariables;
+        return $this->processingVariables;
     }
 
-    public function setProcessingvariables(?string $processingvariables): self
+    public function setProcessingVariables(?string $processingVariables): self
     {
-        $this->processingvariables = $processingvariables;
+        $this->processingVariables = $processingVariables;
 
         return $this;
     }
@@ -155,50 +172,50 @@ class ImageProcessorRawLabels
         return $this;
     }
 
-    public function getSortsequence(): ?int
+    public function getSortSequence(): ?int
     {
-        return $this->sortsequence;
+        return $this->sortSequence;
     }
 
-    public function setSortsequence(?int $sortsequence): self
+    public function setSortSequence(?int $sortSequence): self
     {
-        $this->sortsequence = $sortsequence;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getImgid(): ?Images
+    public function getImageId(): ?Images
     {
-        return $this->imgid;
+        return $this->imageId;
     }
 
-    public function setImgid(?Images $imgid): self
+    public function setImageId(?Images $imageId): self
     {
-        $this->imgid = $imgid;
+        $this->imageId = $imageId;
 
         return $this;
     }
 
-    public function getOccid(): ?Occurrences
+    public function getOccurrenceId(): ?Occurrences
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function setOccid(?Occurrences $occid): self
+    public function setOccurrenceId(?Occurrences $occurrenceId): self
     {
-        $this->occid = $occid;
+        $this->occurrenceId = $occurrenceId;
 
         return $this;
     }

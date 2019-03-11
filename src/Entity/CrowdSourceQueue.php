@@ -2,112 +2,130 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CrowdSourceQueue
  *
  * @ORM\Table(name="omcrowdsourcequeue", uniqueConstraints={@ORM\UniqueConstraint(name="Index_omcrowdsource_occid", columns={"occid"})}, indexes={@ORM\Index(name="FK_omcrowdsourcequeue_uid", columns={"uidprocessor"})})
  * @ORM\Entity(repositoryClass="App\Repository\CrowdSourceQueueRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class CrowdSourceQueue
+class CrowdSourceQueue implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="idomcrowdsourcequeue", type="integer", nullable=false)
+     * @ORM\Column(name="idomcrowdsourcequeue", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idomcrowdsourcequeue;
+    private $id;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="omcsid", type="integer", nullable=false)
+     * @ORM\Column(name="omcsid", type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $omcsid;
+    private $crowdSourceCentralId;
 
     /**
-     * @var \Occurrences
+     * @var \App\Entity\Occurrences
      *
-     * @ORM\ManyToOne(targetEntity="Occurrences")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
+     * @Assert\NotBlank()
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="reviewstatus", type="integer", nullable=false, options={"comment"="0=open,5=pending review, 10=closed"})
+     * @ORM\Column(name="reviewstatus", type="integer", options={"comment"="0=open,5=pending review, 10=closed"})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $reviewstatus;
+    private $reviewStatus;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="uidprocessor", referencedColumnName="uid")
      * })
+     * @Assert\NotBlank()
      */
-    private $uidprocessor;
+    private $userIdProcessor;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="points", type="integer", nullable=true, options={"default"=NULL,"comment"="0=fail, 1=minor edits, 2=no edits <default>, 3=excelled"})
+     * @ORM\Column(name="points", type="integer", nullable=true, options={"comment"="0=fail, 1=minor edits, 2=no edits <default>, 3=excelled"})
+     * @Assert\Type(type="integer")
      */
-    private $points = 'NULL';
+    private $points;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="isvolunteer", type="integer", nullable=false, options={"default"="1"})
+     * @ORM\Column(name="isvolunteer", type="integer", options={"default"="1"})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $isvolunteer = '1';
+    private $isVolunteer = 1;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getIdomcrowdsourcequeue(): ?int
+    public function getId(): ?int
     {
-        return $this->idomcrowdsourcequeue;
+        return $this->id;
     }
 
-    public function getOmcsid(): ?int
+    public function getCrowdSourceCentralId(): ?int
     {
-        return $this->omcsid;
+        return $this->crowdSourceCentralId;
     }
 
-    public function setOmcsid(int $omcsid): self
+    public function setCrowdSourceCentralId(int $crowdSourceCentralId): self
     {
-        $this->omcsid = $omcsid;
+        $this->crowdSourceCentralId = $crowdSourceCentralId;
 
         return $this;
     }
 
-    public function getReviewstatus(): ?int
+    public function getReviewStatus(): ?int
     {
-        return $this->reviewstatus;
+        return $this->reviewStatus;
     }
 
-    public function setReviewstatus(int $reviewstatus): self
+    public function setReviewStatus(int $reviewStatus): self
     {
-        $this->reviewstatus = $reviewstatus;
+        $this->reviewStatus = $reviewStatus;
 
         return $this;
     }
@@ -124,14 +142,14 @@ class CrowdSourceQueue
         return $this;
     }
 
-    public function getIsvolunteer(): ?int
+    public function getIsVolunteer(): ?int
     {
-        return $this->isvolunteer;
+        return $this->isVolunteer;
     }
 
-    public function setIsvolunteer(int $isvolunteer): self
+    public function setIsVolunteer(int $isVolunteer): self
     {
-        $this->isvolunteer = $isvolunteer;
+        $this->isVolunteer = $isVolunteer;
 
         return $this;
     }
@@ -148,38 +166,38 @@ class CrowdSourceQueue
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getOccid(): ?Occurrences
+    public function getOccurrenceId(): ?Occurrences
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function setOccid(?Occurrences $occid): self
+    public function setOccurrenceId(?Occurrences $occurrenceId): self
     {
-        $this->occid = $occid;
+        $this->occurrenceId = $occurrenceId;
 
         return $this;
     }
 
-    public function getUidprocessor(): ?Users
+    public function getUserIdProcessor(): ?Users
     {
-        return $this->uidprocessor;
+        return $this->userIdProcessor;
     }
 
-    public function setUidprocessor(?Users $uidprocessor): self
+    public function setUserIdProcessor(?Users $userIdProcessor): self
     {
-        $this->uidprocessor = $uidprocessor;
+        $this->userIdProcessor = $userIdProcessor;
 
         return $this;
     }

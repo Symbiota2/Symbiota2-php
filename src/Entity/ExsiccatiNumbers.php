@@ -2,62 +2,73 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ExsiccatiNumbers
  *
  * @ORM\Table(name="omexsiccatinumbers", uniqueConstraints={@ORM\UniqueConstraint(name="Index_omexsiccatinumbers_unique", columns={"exsnumber", "ometid"})}, indexes={@ORM\Index(name="FK_exsiccatiTitleNumber", columns={"ometid"})})
  * @ORM\Entity(repositoryClass="App\Repository\ExsiccatiNumbersRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ExsiccatiNumbers
+class ExsiccatiNumbers implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="omenid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="omenid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $omenid;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="exsnumber", type="string", length=45, nullable=false)
+     * @ORM\Column(name="exsnumber", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
-    private $exsnumber;
+    private $exsiccatiNumber;
 
     /**
-     * @var \ExsiccatiTitles
+     * @var \App\Entity\ExsiccatiTitles
      *
-     * @ORM\ManyToOne(targetEntity="ExsiccatiTitles")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\ExsiccatiTitles")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ometid", referencedColumnName="ometid")
      * })
      */
-    private $ometid;
+    private $exsiccatiTitleId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Occurrences", inversedBy="omenid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Occurrences", inversedBy="omenid")
      * @ORM\JoinTable(name="omexsiccatiocclink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="omenid", referencedColumnName="omenid")
@@ -67,29 +78,29 @@ class ExsiccatiNumbers
      *   }
      * )
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->occid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->occurrenceId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getOmenid(): ?int
+    public function getId(): ?int
     {
-        return $this->omenid;
+        return $this->id;
     }
 
-    public function getExsnumber(): ?string
+    public function getExsiccatiNumber(): ?string
     {
-        return $this->exsnumber;
+        return $this->exsiccatiNumber;
     }
 
-    public function setExsnumber(string $exsnumber): self
+    public function setExsiccatiNumber(string $exsiccatiNumber): self
     {
-        $this->exsnumber = $exsnumber;
+        $this->exsiccatiNumber = $exsiccatiNumber;
 
         return $this;
     }
@@ -106,26 +117,26 @@ class ExsiccatiNumbers
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getOmetid(): ?ExsiccatiTitles
+    public function getExsiccatiTitleId(): ?ExsiccatiTitles
     {
-        return $this->ometid;
+        return $this->exsiccatiTitleId;
     }
 
-    public function setOmetid(?ExsiccatiTitles $ometid): self
+    public function setExsiccatiTitleId(?ExsiccatiTitles $exsiccatiTitleId): self
     {
-        $this->ometid = $ometid;
+        $this->exsiccatiTitleId = $exsiccatiTitleId;
 
         return $this;
     }
@@ -133,24 +144,24 @@ class ExsiccatiNumbers
     /**
      * @return Collection|Occurrences[]
      */
-    public function getOccid(): Collection
+    public function getOccurrenceId(): Collection
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function addOccid(Occurrences $occid): self
+    public function addOccurrenceId(Occurrences $occurrenceId): self
     {
-        if (!$this->occid->contains($occid)) {
-            $this->occid[] = $occid;
+        if (!$this->occurrenceId->contains($occurrenceId)) {
+            $this->occurrenceId[] = $occurrenceId;
         }
 
         return $this;
     }
 
-    public function removeOccid(Occurrences $occid): self
+    public function removeOccurrenceId(Occurrences $occurrenceId): self
     {
-        if ($this->occid->contains($occid)) {
-            $this->occid->removeElement($occid);
+        if ($this->occurrenceId->contains($occurrenceId)) {
+            $this->occurrenceId->removeElement($occurrenceId);
         }
 
         return $this;

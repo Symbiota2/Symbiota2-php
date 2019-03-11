@@ -2,143 +2,159 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ImageProcessorOcrFragment
  *
  * @ORM\Table(name="specprococrfrag", indexes={@ORM\Index(name="FK_specprococrfrag_prlid_idx", columns={"prlid"}), @ORM\Index(name="Index_keyterm", columns={"keyterm"})})
  * @ORM\Entity(repositoryClass="App\Repository\ImageProcessorOcrFragmentRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ImageProcessorOcrFragment
+class ImageProcessorOcrFragment implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="ocrfragid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="ocrfragid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $ocrfragid;
+    private $id;
 
     /**
-     * @var \ImageProcessorRawLabels
+     * @var \App\Entity\ImageProcessorRawLabels
      *
-     * @ORM\ManyToOne(targetEntity="ImageProcessorRawLabels")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\ImageProcessorRawLabels")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="prlid", referencedColumnName="prlid")
      * })
+     * @Assert\NotBlank()
      */
-    private $prlid;
+    private $imageProcessorRawLabelId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="firstword", type="string", length=45, nullable=false)
+     * @ORM\Column(name="firstword", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
-    private $firstword;
+    private $firstWord;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="secondword", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="secondword", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $secondword = 'NULL';
+    private $secondWord;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="keyterm", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="keyterm", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $keyterm = 'NULL';
+    private $keyTerm;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="wordorder", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="wordorder", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $wordorder = 'NULL';
+    private $wordOrder;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getOcrfragid(): ?int
+    public function getId(): ?int
     {
-        return $this->ocrfragid;
+        return $this->id;
     }
 
-    public function getFirstword(): ?string
+    public function getFirstWord(): ?string
     {
-        return $this->firstword;
+        return $this->firstWord;
     }
 
-    public function setFirstword(string $firstword): self
+    public function setFirstWord(string $firstWord): self
     {
-        $this->firstword = $firstword;
+        $this->firstWord = $firstWord;
 
         return $this;
     }
 
-    public function getSecondword(): ?string
+    public function getSecondWord(): ?string
     {
-        return $this->secondword;
+        return $this->secondWord;
     }
 
-    public function setSecondword(?string $secondword): self
+    public function setSecondWord(?string $secondWord): self
     {
-        $this->secondword = $secondword;
+        $this->secondWord = $secondWord;
 
         return $this;
     }
 
-    public function getKeyterm(): ?string
+    public function getKeyTerm(): ?string
     {
-        return $this->keyterm;
+        return $this->keyTerm;
     }
 
-    public function setKeyterm(?string $keyterm): self
+    public function setKeyTerm(?string $keyTerm): self
     {
-        $this->keyterm = $keyterm;
+        $this->keyTerm = $keyTerm;
 
         return $this;
     }
 
-    public function getWordorder(): ?int
+    public function getWordOrder(): ?int
     {
-        return $this->wordorder;
+        return $this->wordOrder;
     }
 
-    public function setWordorder(?int $wordorder): self
+    public function setWordOrder(?int $wordOrder): self
     {
-        $this->wordorder = $wordorder;
+        $this->wordOrder = $wordOrder;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(?\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(?\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getPrlid(): ?ImageProcessorRawLabels
+    public function getImageProcessorRawLabelId(): ?ImageProcessorRawLabels
     {
-        return $this->prlid;
+        return $this->imageProcessorRawLabelId;
     }
 
-    public function setPrlid(?ImageProcessorRawLabels $prlid): self
+    public function setImageProcessorRawLabelId(?ImageProcessorRawLabels $imageProcessorRawLabelId): self
     {
-        $this->prlid = $prlid;
+        $this->imageProcessorRawLabelId = $imageProcessorRawLabelId;
 
         return $this;
     }

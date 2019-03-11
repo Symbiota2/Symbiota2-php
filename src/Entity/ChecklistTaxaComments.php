@@ -2,102 +2,134 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ChecklistTaxaComments
  *
  * @ORM\Table(name="fmcltaxacomments", indexes={@ORM\Index(name="FK_clcomment_users", columns={"createduid"}), @ORM\Index(name="FK_clcomment_cltaxa", columns={"clid", "tid"})})
  * @ORM\Entity(repositoryClass="App\Repository\ChecklistTaxaCommentsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ChecklistTaxaComments
+class ChecklistTaxaComments implements CreatedUserIdInterface, InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="cltaxacommentsid", type="integer", nullable=false)
+     * @ORM\Column(name="cltaxacommentsid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $cltaxacommentsid;
+    private $id;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="clid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="clid", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $clid;
+    private $checklistId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="tid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="tid", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="comment", type="text", length=65535)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=65535)
      */
     private $comment;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
+     * @Assert\NotBlank()
      */
-    private $createduid;
+    private $createdUserId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="ispublic", type="integer", nullable=false, options={"default"="1"})
+     * @ORM\Column(name="ispublic", type="integer", options={"default"="1"})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $ispublic = '1';
+    private $isPublic = 1;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="parentid", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="parentid", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $parentid = 'NULL';
+    private $parentCommentId;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getCltaxacommentsid(): ?int
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
     {
-        return $this->cltaxacommentsid;
+        return $this->id;
     }
 
-    public function getClid(): ?int
+    /**
+     * @return int|null
+     */
+    public function getChecklistId(): ?int
     {
-        return $this->clid;
+        return $this->checklistId;
     }
 
-    public function setClid(int $clid): self
+    /**
+     * @param int $checklistId
+     * @return ChecklistTaxaComments
+     */
+    public function setChecklistId(int $checklistId): self
     {
-        $this->clid = $clid;
+        $this->checklistId = $checklistId;
 
         return $this;
     }
 
-    public function getTid(): ?int
+    /**
+     * @return int|null
+     */
+    public function getTaxaId(): ?int
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(int $tid): self
+    public function setTaxaId(int $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }
@@ -114,50 +146,57 @@ class ChecklistTaxaComments
         return $this;
     }
 
-    public function getIspublic(): ?int
+    public function getIsPublic(): ?int
     {
-        return $this->ispublic;
+        return $this->isPublic;
     }
 
-    public function setIspublic(int $ispublic): self
+    public function setIsPublic(int $isPublic): self
     {
-        $this->ispublic = $ispublic;
+        $this->isPublic = $isPublic;
 
         return $this;
     }
 
-    public function getParentid(): ?int
+    public function getParentCommentId(): ?int
     {
-        return $this->parentid;
+        return $this->parentCommentId;
     }
 
-    public function setParentid(?int $parentid): self
+    public function setParentCommentId(?int $parentCommentId): self
     {
-        $this->parentid = $parentid;
+        $this->parentCommentId = $parentCommentId;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getCreateduid(): ?Users
+    /**
+     * @return Users|null
+     */
+    public function getCreatedUserId(): ?Users
     {
-        return $this->createduid;
+        return $this->createdUserId;
     }
 
-    public function setCreateduid(?Users $createduid): self
+    /**
+     * @param UserInterface $createdUserId
+     * @return CreatedUserIdInterface
+     */
+    public function setCreatedUserId(UserInterface $createdUserId): CreatedUserIdInterface
     {
-        $this->createduid = $createduid;
+        $this->createdUserId = $createdUserId;
 
         return $this;
     }

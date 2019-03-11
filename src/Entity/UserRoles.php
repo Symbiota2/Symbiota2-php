@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *      collectionOperations={
  *          "post"={
- *              "access_control"="is_granted('IS_AUTHENTICATED_FULLY')",
+ *              "access_control"="is_granted('SuperAdmin', object)",
  *              "normalization_context"={
  *                 "groups"={"get-roles"}
  *              }
@@ -32,7 +32,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  */
-class UserRoles implements UserIdAssignedByInterface, InitialTimeStampInterface
+class UserRoles implements UserIdAssignedByInterface, InitialTimestampInterface
 {
     /**
      * @var int
@@ -54,7 +54,7 @@ class UserRoles implements UserIdAssignedByInterface, InitialTimeStampInterface
      * @Assert\NotBlank()
      * @Groups({"post"})
      */
-    private $userid;
+    private $userId;
 
     /**
      * @var string
@@ -70,12 +70,10 @@ class UserRoles implements UserIdAssignedByInterface, InitialTimeStampInterface
      * @var int|null
      *
      * @ORM\Column(name="tablepk", type="integer", nullable=true)
-     * @Assert\Type(
-     *      type="integer"
-     * )
+     * @Assert\Type(type="integer")
      * @Groups({"post", "get-roles"})
      */
-    private $tablepk;
+    private $tableId;
 
     /**
      * @var \App\Entity\Users
@@ -86,14 +84,14 @@ class UserRoles implements UserIdAssignedByInterface, InitialTimeStampInterface
      * })
      * @Groups({"get-roles"})
      */
-    private $useridassignedby;
+    private $userIdAssignedBy;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
      */
-    private $initialtimestamp;
+    private $initialTimestamp;
 
     public function getId(): ?int
     {
@@ -112,26 +110,26 @@ class UserRoles implements UserIdAssignedByInterface, InitialTimeStampInterface
         return $this;
     }
 
-    public function getTablepk(): ?int
+    public function getTableId(): ?int
     {
-        return $this->tablepk;
+        return $this->tableId;
     }
 
-    public function setTablepk(?int $tablepk): self
+    public function setTableId(?int $tableId): self
     {
-        $this->tablepk = $tablepk;
+        $this->tableId = $tableId;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): InitialTimeStampInterface
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
@@ -139,18 +137,18 @@ class UserRoles implements UserIdAssignedByInterface, InitialTimeStampInterface
     /**
      * @return Users|null
      */
-    public function getUseridassignedby(): ?Users
+    public function getUserIdAssignedBy(): ?Users
     {
-        return $this->useridassignedby;
+        return $this->userIdAssignedBy;
     }
 
     /**
-     * @param UserInterface $useridassignedby
+     * @param UserInterface $userIdAssignedBy
      * @return UserIdAssignedByInterface
      */
-    public function setUseridassignedby(UserInterface $useridassignedby): UserIdAssignedByInterface
+    public function setUserIdAssignedBy(UserInterface $userIdAssignedBy): UserIdAssignedByInterface
     {
-        $this->useridassignedby = $useridassignedby;
+        $this->userIdAssignedBy = $userIdAssignedBy;
 
         return $this;
     }
@@ -158,18 +156,18 @@ class UserRoles implements UserIdAssignedByInterface, InitialTimeStampInterface
     /**
      * @return Users|null
      */
-    public function getUserid(): ?Users
+    public function getUserId(): ?Users
     {
-        return $this->userid;
+        return $this->userId;
     }
 
     /**
-     * @param Users|null $userid
+     * @param Users|null $userId
      * @return UserRoles
      */
-    public function setUserid(?Users $userid): self
+    public function setUserId(?Users $userId): self
     {
-        $this->userid = $userid;
+        $this->userId = $userId;
 
         return $this;
     }

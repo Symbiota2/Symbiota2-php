@@ -40,7 +40,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      }
  * )
  */
-class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, ModifiedTimeStampInterface
+class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, ModifiedTimestampInterface
 {
     /**
      * @var int
@@ -123,7 +123,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
      * @Assert\Length(max=45)
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
-    private $politicaldivision;
+    private $politicalDivision;
 
     /**
      * @var string|null
@@ -132,7 +132,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
      * @Assert\Length(max=500)
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
-    private $dynamicsql;
+    private $dynamicSql;
 
     /**
      * @var string|null
@@ -147,12 +147,10 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
      * @var int|null
      *
      * @ORM\Column(name="parentclid", type="integer", nullable=true, options={"unsigned"=true})
-     * @Assert\Type(
-     *      type="integer"
-     * )
+     * @Assert\Type(type="integer")
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
-    private $parentchecklistid;
+    private $parentChecklistId;
 
     /**
      * @var string|null
@@ -172,7 +170,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
      * )
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
-    private $latitudecentroid;
+    private $latitudeCentroid;
 
     /**
      * @var float|null
@@ -183,18 +181,16 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
      * )
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
-    private $longitudecentroid;
+    private $longitudeCentroid;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="pointradiusmeters", type="integer", nullable=true, options={"unsigned"=true})
-     * @Assert\Type(
-     *      type="integer"
-     * )
+     * @Assert\Type(type="integer")
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
-    private $pointradiusinmeters;
+    private $pointRadiusInMeters;
 
     /**
      * @var string|null
@@ -203,18 +199,16 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
      * @Assert\Length(max=65535)
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
-    private $footprintwkt;
+    private $footprintWkt;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="percenteffort", type="integer", nullable=true)
-     * @Assert\Type(
-     *      type="integer"
-     * )
+     * @Assert\Type(type="integer")
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
-    private $percenteffort;
+    private $percentEffort;
 
     /**
      * @var string|null
@@ -232,7 +226,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
      * @Assert\Length(max=250)
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
-    private $defaultsettings;
+    private $defaultSettings;
 
     /**
      * @var string|null
@@ -241,7 +235,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
      * @Assert\Length(max=150)
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
-    private $iconurl;
+    private $iconUrl;
 
     /**
      * @var string|null
@@ -250,7 +244,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
      * @Assert\Length(max=150)
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
-    private $headerurl;
+    private $headerUrl;
 
     /**
      * @var \App\Entity\Users
@@ -261,26 +255,22 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
      * })
      * @Groups({"get", "get-checklist-info"})
      */
-    private $createduserid;
+    private $createdUserId;
 
     /**
      * @var int
      *
      * @ORM\Column(name="SortSequence", type="integer", options={"default"=50,"unsigned"=true})
-     * @Assert\Type(
-     *      type="integer"
-     * )
+     * @Assert\Type(type="integer")
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
-    private $sortsequence = 50;
+    private $sortSequence = 50;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="expiration", type="integer", nullable=true, options={"unsigned"=true})
-     * @Assert\Type(
-     *      type="integer"
-     * )
+     * @Assert\Type(type="integer")
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
     private $expiration;
@@ -291,7 +281,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
      * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
      * @Groups({"get", "get-checklist-info"})
      */
-    private $modifiedtimestamp;
+    private $modifiedTimestamp;
 
     /**
      * @var \DateTime
@@ -299,31 +289,31 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
      * @ORM\Column(name="InitialTimeStamp", type="datetime")
      * @Groups({"get", "get-checklist-info"})
      */
-    private $initialtimestamp;
+    private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="ChecklistProjects", mappedBy="clid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\ChecklistProjects", mappedBy="clid")
      * @Groups({"get", "get-checklist-info"})
      */
-    private $projectid;
+    private $projectId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="References", mappedBy="clid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\References", mappedBy="clid")
      * @Groups({"get", "get-checklist-info"})
      */
-    private $referenceid;
+    private $referenceId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->projectid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->referenceid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->projectId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->referenceId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getId(): ?int
@@ -415,26 +405,26 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
         return $this;
     }
 
-    public function getPoliticaldivision(): ?string
+    public function getPoliticalDivision(): ?string
     {
-        return $this->politicaldivision;
+        return $this->politicalDivision;
     }
 
-    public function setPoliticaldivision(?string $politicaldivision): self
+    public function setPoliticalDivision(?string $politicalDivision): self
     {
-        $this->politicaldivision = $politicaldivision;
+        $this->politicalDivision = $politicalDivision;
 
         return $this;
     }
 
-    public function getDynamicsql(): ?string
+    public function getDynamicSql(): ?string
     {
-        return $this->dynamicsql;
+        return $this->dynamicSql;
     }
 
-    public function setDynamicsql(?string $dynamicsql): self
+    public function setDynamicSql(?string $dynamicSql): self
     {
-        $this->dynamicsql = $dynamicsql;
+        $this->dynamicSql = $dynamicSql;
 
         return $this;
     }
@@ -451,14 +441,14 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
         return $this;
     }
 
-    public function getParentchecklistid(): ?int
+    public function getParentChecklistId(): ?int
     {
-        return $this->parentchecklistid;
+        return $this->parentChecklistId;
     }
 
-    public function setParentchecklistid(?int $parentchecklistid): self
+    public function setParentChecklistId(?int $parentChecklistId): self
     {
-        $this->parentchecklistid = $parentchecklistid;
+        $this->parentChecklistId = $parentChecklistId;
 
         return $this;
     }
@@ -475,62 +465,62 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
         return $this;
     }
 
-    public function getLatitudecentroid(): ?float
+    public function getLatitudeCentroid(): ?float
     {
-        return $this->latitudecentroid;
+        return $this->latitudeCentroid;
     }
 
-    public function setLatitudecentroid(?float $latitudecentroid): self
+    public function setLatitudeCentroid(?float $latitudeCentroid): self
     {
-        $this->latitudecentroid = $latitudecentroid;
+        $this->latitudeCentroid = $latitudeCentroid;
 
         return $this;
     }
 
-    public function getLongitudecentroid(): ?float
+    public function getLongitudeCentroid(): ?float
     {
-        return $this->longitudecentroid;
+        return $this->longitudeCentroid;
     }
 
-    public function setLongitudecentroid(?float $longitudecentroid): self
+    public function setLongitudeCentroid(?float $longitudeCentroid): self
     {
-        $this->longitudecentroid = $longitudecentroid;
+        $this->longitudeCentroid = $longitudeCentroid;
 
         return $this;
     }
 
-    public function getPointradiusinmeters(): ?int
+    public function getPointRadiusInMeters(): ?int
     {
-        return $this->pointradiusinmeters;
+        return $this->pointRadiusInMeters;
     }
 
-    public function setPointradiusinmeters(?int $pointradiusinmeters): self
+    public function setPointRadiusInMeters(?int $pointRadiusInMeters): self
     {
-        $this->pointradiusinmeters = $pointradiusinmeters;
+        $this->pointRadiusInMeters = $pointRadiusInMeters;
 
         return $this;
     }
 
-    public function getFootprintwkt(): ?string
+    public function getFootprintWkt(): ?string
     {
-        return $this->footprintwkt;
+        return $this->footprintWkt;
     }
 
-    public function setFootprintwkt(?string $footprintwkt): self
+    public function setFootprintWkt(?string $footprintWkt): self
     {
-        $this->footprintwkt = $footprintwkt;
+        $this->footprintWkt = $footprintWkt;
 
         return $this;
     }
 
-    public function getPercenteffort(): ?int
+    public function getPercentEffort(): ?int
     {
-        return $this->percenteffort;
+        return $this->percentEffort;
     }
 
-    public function setPercenteffort(?int $percenteffort): self
+    public function setPercentEffort(?int $percentEffort): self
     {
-        $this->percenteffort = $percenteffort;
+        $this->percentEffort = $percentEffort;
 
         return $this;
     }
@@ -547,50 +537,50 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
         return $this;
     }
 
-    public function getDefaultsettings(): ?string
+    public function getDefaultSettings(): ?string
     {
-        return $this->defaultsettings;
+        return $this->defaultSettings;
     }
 
-    public function setDefaultsettings(?string $defaultsettings): self
+    public function setDefaultSettings(?string $defaultSettings): self
     {
-        $this->defaultsettings = $defaultsettings;
+        $this->defaultSettings = $defaultSettings;
 
         return $this;
     }
 
-    public function getIconurl(): ?string
+    public function getIconUrl(): ?string
     {
-        return $this->iconurl;
+        return $this->iconUrl;
     }
 
-    public function setIconurl(?string $iconurl): self
+    public function setIconUrl(?string $iconUrl): self
     {
-        $this->iconurl = $iconurl;
+        $this->iconUrl = $iconUrl;
 
         return $this;
     }
 
-    public function getHeaderurl(): ?string
+    public function getHeaderUrl(): ?string
     {
-        return $this->headerurl;
+        return $this->headerUrl;
     }
 
-    public function setHeaderurl(?string $headerurl): self
+    public function setHeaderUrl(?string $headerUrl): self
     {
-        $this->headerurl = $headerurl;
+        $this->headerUrl = $headerUrl;
 
         return $this;
     }
 
-    public function getSortsequence(): ?int
+    public function getSortSequence(): ?int
     {
-        return $this->sortsequence;
+        return $this->sortSequence;
     }
 
-    public function setSortsequence(int $sortsequence): self
+    public function setSortSequence(int $sortSequence): self
     {
-        $this->sortsequence = $sortsequence;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
@@ -607,26 +597,26 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
         return $this;
     }
 
-    public function getModifiedtimestamp(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?\DateTimeInterface
     {
-        return $this->modifiedtimestamp;
+        return $this->modifiedTimestamp;
     }
 
-    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): ModifiedTimeStampInterface
+    public function setModifiedTimestamp(?\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
-        $this->modifiedtimestamp = $modifiedtimestamp;
+        $this->modifiedTimestamp = $modifiedTimestamp;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): InitialTimeStampInterface
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
@@ -634,18 +624,18 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
     /**
      * @return \App\Entity\Users|null
      */
-    public function getCreateduserid(): ?Users
+    public function getCreatedUserId(): ?Users
     {
-        return $this->createduserid;
+        return $this->createdUserId;
     }
 
     /**
-     * @param UserInterface $createduserid
+     * @param UserInterface $createdUserId
      * @return CreatedUserIdInterface
      */
-    public function setCreateduserid(UserInterface $createduserid): CreatedUserIdInterface
+    public function setCreatedUserId(UserInterface $createdUserId): CreatedUserIdInterface
     {
-        $this->createduserid = $createduserid;
+        $this->createdUserId = $createdUserId;
 
         return $this;
     }
@@ -653,26 +643,26 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
     /**
      * @return Collection|ChecklistProjects[]
      */
-    public function getProjectid(): Collection
+    public function getProjectId(): Collection
     {
-        return $this->projectid;
+        return $this->projectId;
     }
 
-    public function addProjectid(ChecklistProjects $projectid): self
+    public function addProjectId(ChecklistProjects $projectId): self
     {
-        if (!$this->projectid->contains($projectid)) {
-            $this->projectid[] = $projectid;
-            $projectid->addClid($this);
+        if (!$this->projectId->contains($projectId)) {
+            $this->projectId[] = $projectId;
+            $projectId->addChecklistId($this);
         }
 
         return $this;
     }
 
-    public function removeProjectid(ChecklistProjects $projectid): self
+    public function removeProjectId(ChecklistProjects $projectId): self
     {
-        if ($this->projectid->contains($projectid)) {
-            $this->projectid->removeElement($projectid);
-            $projectid->removeClid($this);
+        if ($this->projectId->contains($projectId)) {
+            $this->projectId->removeElement($projectId);
+            $projectId->removeChecklistId($this);
         }
 
         return $this;
@@ -681,26 +671,26 @@ class Checklists implements CreatedUserIdInterface, InitialTimeStampInterface, M
     /**
      * @return Collection|References[]
      */
-    public function getReferenceid(): Collection
+    public function getReferenceId(): Collection
     {
-        return $this->referenceid;
+        return $this->referenceId;
     }
 
-    public function addReferenceid(References $referenceid): self
+    public function addReferenceId(References $referenceId): self
     {
-        if (!$this->referenceid->contains($referenceid)) {
-            $this->referenceid[] = $referenceid;
-            $referenceid->addClid($this);
+        if (!$this->referenceId->contains($referenceId)) {
+            $this->referenceId[] = $referenceId;
+            $referenceId->addClid($this);
         }
 
         return $this;
     }
 
-    public function removeReferenceid(References $referenceid): self
+    public function removeReferenceId(References $referenceId): self
     {
-        if ($this->referenceid->contains($referenceid)) {
-            $this->referenceid->removeElement($referenceid);
-            $referenceid->removeClid($this);
+        if ($this->referenceId->contains($referenceId)) {
+            $this->referenceId->removeElement($referenceId);
+            $referenceId->removeClid($this);
         }
 
         return $this;

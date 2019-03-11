@@ -2,97 +2,112 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * GuidDeterminations
  *
  * @ORM\Table(name="guidoccurdeterminations", uniqueConstraints={@ORM\UniqueConstraint(name="guidoccurdet_detid_unique", columns={"detid"})})
  * @ORM\Entity(repositoryClass="App\Repository\GuidDeterminationsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class GuidDeterminations
+class GuidDeterminations implements InitialTimestampInterface
 {
     /**
      * @var string
      *
-     * @ORM\Column(name="guid", type="string", length=45, nullable=false)
+     * @ORM\Column(name="guid", type="string", length=45)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Assert\NotBlank()
      */
     private $guid;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="detid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="detid", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $detid = 'NULL';
+    private $determinationId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="archivestatus", type="integer", nullable=false)
+     * @ORM\Column(name="archivestatus", type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $archivestatus;
+    private $archiveStatus;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="archiveobj", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="archiveobj", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $archiveobj = 'NULL';
+    private $archiveObject;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     public function getGuid(): ?string
     {
         return $this->guid;
     }
 
-    public function getDetid(): ?int
+    public function getDeterminationId(): ?int
     {
-        return $this->detid;
+        return $this->determinationId;
     }
 
-    public function setDetid(?int $detid): self
+    public function setDeterminationId(?int $determinationId): self
     {
-        $this->detid = $detid;
+        $this->determinationId = $determinationId;
 
         return $this;
     }
 
-    public function getArchivestatus(): ?int
+    public function getArchiveStatus(): ?int
     {
-        return $this->archivestatus;
+        return $this->archiveStatus;
     }
 
-    public function setArchivestatus(int $archivestatus): self
+    public function setArchiveStatus(int $archiveStatus): self
     {
-        $this->archivestatus = $archivestatus;
+        $this->archiveStatus = $archiveStatus;
 
         return $this;
     }
 
-    public function getArchiveobj(): ?string
+    public function getArchiveObject(): ?string
     {
-        return $this->archiveobj;
+        return $this->archiveObject;
     }
 
-    public function setArchiveobj(?string $archiveobj): self
+    public function setArchiveObject(?string $archiveObject): self
     {
-        $this->archiveobj = $archiveobj;
+        $this->archiveObject = $archiveObject;
 
         return $this;
     }
@@ -109,14 +124,14 @@ class GuidDeterminations
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }

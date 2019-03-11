@@ -2,95 +2,110 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ImageProcessorNlpFragment
  *
  * @ORM\Table(name="specprocnlpfrag", indexes={@ORM\Index(name="FK_specprocnlpfrag_spnlpid", columns={"spnlpid"})})
  * @ORM\Entity(repositoryClass="App\Repository\ImageProcessorNlpFragmentRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ImageProcessorNlpFragment
+class ImageProcessorNlpFragment implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="spnlpfragid", type="integer", nullable=false)
+     * @ORM\Column(name="spnlpfragid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $spnlpfragid;
+    private $id;
 
     /**
-     * @var \ImageProcessorNlp
+     * @var \App\Entity\ImageProcessorNlp
      *
-     * @ORM\ManyToOne(targetEntity="ImageProcessorNlp")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\ImageProcessorNlp")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="spnlpid", referencedColumnName="spnlpid")
      * })
+     * @Assert\NotBlank()
      */
-    private $spnlpid;
+    private $imageProcessorNlpId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="fieldname", type="string", length=45, nullable=false)
+     * @ORM\Column(name="fieldname", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
-    private $fieldname;
+    private $fieldName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="patternmatch", type="string", length=250, nullable=false)
+     * @ORM\Column(name="patternmatch", type="string", length=250)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=250)
      */
-    private $patternmatch;
+    private $patternMatch;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="sortseq", type="integer", nullable=true, options={"default"="50"})
+     * @Assert\Type(type="integer")
      */
-    private $sortseq = '50';
+    private $sortSequence = 50;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getSpnlpfragid(): ?int
+    public function getId(): ?int
     {
-        return $this->spnlpfragid;
+        return $this->id;
     }
 
-    public function getFieldname(): ?string
+    public function getFieldName(): ?string
     {
-        return $this->fieldname;
+        return $this->fieldName;
     }
 
-    public function setFieldname(string $fieldname): self
+    public function setFieldName(string $fieldName): self
     {
-        $this->fieldname = $fieldname;
+        $this->fieldName = $fieldName;
 
         return $this;
     }
 
-    public function getPatternmatch(): ?string
+    public function getPatternMatch(): ?string
     {
-        return $this->patternmatch;
+        return $this->patternMatch;
     }
 
-    public function setPatternmatch(string $patternmatch): self
+    public function setPatternMatch(string $patternMatch): self
     {
-        $this->patternmatch = $patternmatch;
+        $this->patternMatch = $patternMatch;
 
         return $this;
     }
@@ -107,38 +122,38 @@ class ImageProcessorNlpFragment
         return $this;
     }
 
-    public function getSortseq(): ?int
+    public function getSortSequence(): ?int
     {
-        return $this->sortseq;
+        return $this->sortSequence;
     }
 
-    public function setSortseq(?int $sortseq): self
+    public function setSortSequence(?int $sortSequence): self
     {
-        $this->sortseq = $sortseq;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(?\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(?\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getSpnlpid(): ?ImageProcessorNlp
+    public function getImageProcessorNlpId(): ?ImageProcessorNlp
     {
-        return $this->spnlpid;
+        return $this->imageProcessorNlpId;
     }
 
-    public function setSpnlpid(?ImageProcessorNlp $spnlpid): self
+    public function setImageProcessorNlpId(?ImageProcessorNlp $imageProcessorNlpId): self
     {
-        $this->spnlpid = $spnlpid;
+        $this->imageProcessorNlpId = $imageProcessorNlpId;
 
         return $this;
     }

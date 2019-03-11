@@ -2,98 +2,116 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ExsiccatiTitles
  *
  * @ORM\Table(name="omexsiccatititles", indexes={@ORM\Index(name="index_exsiccatiTitle", columns={"title"})})
  * @ORM\Entity(repositoryClass="App\Repository\ExsiccatiTitlesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ExsiccatiTitles
+class ExsiccatiTitles implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="ometid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="ometid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $ometid;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=150, nullable=false)
+     * @ORM\Column(name="title", type="string", length=150)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=150)
      */
     private $title;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="abbreviation", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="abbreviation", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $abbreviation = 'NULL';
+    private $abbreviation;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="editor", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="editor", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $editor = 'NULL';
+    private $editor;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="exsrange", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="exsrange", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $exsrange = 'NULL';
+    private $exsiccatiRange;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="startdate", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="startdate", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $startdate = 'NULL';
+    private $startDate;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="enddate", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="enddate", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $enddate = 'NULL';
+    private $endDate;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="source", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="source", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $source = 'NULL';
+    private $source;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=2000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=2000, nullable=true)
+     * @Assert\Length(max=2000)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="lasteditedby", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="lasteditedby", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $lasteditedby = 'NULL';
+    private $lastEditedBy;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getOmetid(): ?int
+    public function getId(): ?int
     {
-        return $this->ometid;
+        return $this->id;
     }
 
     public function getTitle(): ?string
@@ -132,38 +150,38 @@ class ExsiccatiTitles
         return $this;
     }
 
-    public function getExsrange(): ?string
+    public function getExsiccatiRange(): ?string
     {
-        return $this->exsrange;
+        return $this->exsiccatiRange;
     }
 
-    public function setExsrange(?string $exsrange): self
+    public function setExsiccatiRange(?string $exsiccatiRange): self
     {
-        $this->exsrange = $exsrange;
+        $this->exsiccatiRange = $exsiccatiRange;
 
         return $this;
     }
 
-    public function getStartdate(): ?string
+    public function getStartDate(): ?string
     {
-        return $this->startdate;
+        return $this->startDate;
     }
 
-    public function setStartdate(?string $startdate): self
+    public function setStartDate(?string $startDate): self
     {
-        $this->startdate = $startdate;
+        $this->startDate = $startDate;
 
         return $this;
     }
 
-    public function getEnddate(): ?string
+    public function getEndDate(): ?string
     {
-        return $this->enddate;
+        return $this->endDate;
     }
 
-    public function setEnddate(?string $enddate): self
+    public function setEndDate(?string $endDate): self
     {
-        $this->enddate = $enddate;
+        $this->endDate = $endDate;
 
         return $this;
     }
@@ -192,26 +210,26 @@ class ExsiccatiTitles
         return $this;
     }
 
-    public function getLasteditedby(): ?string
+    public function getLastEditedBy(): ?string
     {
-        return $this->lasteditedby;
+        return $this->lastEditedBy;
     }
 
-    public function setLasteditedby(?string $lasteditedby): self
+    public function setLastEditedBy(?string $lastEditedBy): self
     {
-        $this->lasteditedby = $lasteditedby;
+        $this->lastEditedBy = $lastEditedBy;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }

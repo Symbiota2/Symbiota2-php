@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     collectionOperations={"get"}
  * )
  */
-class UserTaxonomy implements InitialTimeStampInterface, ModifiedTimeStampInterface
+class UserTaxonomy implements InitialTimestampInterface, ModifiedTimestampInterface
 {
     /**
      * @var int
@@ -37,7 +37,7 @@ class UserTaxonomy implements InitialTimeStampInterface, ModifiedTimeStampInterf
      * })
      * @Assert\NotBlank()
      */
-    private $userid;
+    private $userId;
 
     /**
      * @var \App\Entity\Taxa
@@ -48,7 +48,7 @@ class UserTaxonomy implements InitialTimeStampInterface, ModifiedTimeStampInterf
      * })
      * @Assert\NotBlank()
      */
-    private $taxaid;
+    private $taxaId;
 
     /**
      * @var \App\Entity\TaxaAuthorities
@@ -59,7 +59,7 @@ class UserTaxonomy implements InitialTimeStampInterface, ModifiedTimeStampInterf
      * })
      * @Assert\NotBlank()
      */
-    private $taxaauthorityid;
+    private $taxaAuthorityId;
 
     /**
      * @var string|null
@@ -67,7 +67,7 @@ class UserTaxonomy implements InitialTimeStampInterface, ModifiedTimeStampInterf
      * @ORM\Column(name="editorstatus", type="string", length=45, nullable=true)
      * @Assert\Length(max=45)
      */
-    private $editorstatus;
+    private $editorStatus;
 
     /**
      * @var string|null
@@ -75,7 +75,7 @@ class UserTaxonomy implements InitialTimeStampInterface, ModifiedTimeStampInterf
      * @ORM\Column(name="geographicScope", type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
      */
-    private $geographicscope;
+    private $geographicScope;
 
     /**
      * @var string|null
@@ -89,51 +89,49 @@ class UserTaxonomy implements InitialTimeStampInterface, ModifiedTimeStampInterf
      * @var int
      *
      * @ORM\Column(name="modifiedUid", type="integer", options={"unsigned"=true})
-     * @Assert\Type(
-     *      type="integer"
-     * )
+     * @Assert\Type(type="integer")
      */
-    private $modifieduserid;
+    private $modifiedUserId;
 
     /**
      * @var \DateTime|null
      *
      * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true)
      */
-    private $modifiedtimestamp;
+    private $modifiedTimestamp;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
      */
-    private $initialtimestamp;
+    private $initialTimestamp;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEditorstatus(): ?string
+    public function getEditorStatus(): ?string
     {
-        return $this->editorstatus;
+        return $this->editorStatus;
     }
 
-    public function setEditorstatus(?string $editorstatus): self
+    public function setEditorStatus(?string $editorStatus): self
     {
-        $this->editorstatus = $editorstatus;
+        $this->editorStatus = $editorStatus;
 
         return $this;
     }
 
-    public function getGeographicscope(): ?string
+    public function getGeographicScope(): ?string
     {
-        return $this->geographicscope;
+        return $this->geographicScope;
     }
 
-    public function setGeographicscope(?string $geographicscope): self
+    public function setGeographicScope(?string $geographicScope): self
     {
-        $this->geographicscope = $geographicscope;
+        $this->geographicScope = $geographicScope;
 
         return $this;
     }
@@ -150,74 +148,74 @@ class UserTaxonomy implements InitialTimeStampInterface, ModifiedTimeStampInterf
         return $this;
     }
 
-    public function getModifieduserid(): ?int
+    public function getModifiedUserId(): ?int
     {
-        return $this->modifieduserid;
+        return $this->modifiedUserId;
     }
 
-    public function setModifieduserid(int $modifieduserid): self
+    public function setModifiedUserId(int $modifiedUserId): self
     {
-        $this->modifieduserid = $modifieduserid;
+        $this->modifiedUserId = $modifiedUserId;
 
         return $this;
     }
 
-    public function getModifiedtimestamp(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?\DateTimeInterface
     {
-        return $this->modifiedtimestamp;
+        return $this->modifiedTimestamp;
     }
 
-    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): ModifiedTimeStampInterface
+    public function setModifiedTimestamp(?\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
-        $this->modifiedtimestamp = $modifiedtimestamp;
+        $this->modifiedTimestamp = $modifiedTimestamp;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): InitialTimeStampInterface
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getTaxaauthorityid(): ?TaxaAuthorities
+    public function getTaxaAuthorityId(): ?TaxaAuthorities
     {
-        return $this->taxaauthorityid;
+        return $this->taxaAuthorityId;
     }
 
-    public function setTaxaauthorityid(?TaxaAuthorities $taxaauthorityid): self
+    public function setTaxaAuthorityId(?TaxaAuthorities $taxaAuthorityId): self
     {
-        $this->taxaauthorityid = $taxaauthorityid;
+        $this->taxaAuthorityId = $taxaAuthorityId;
 
         return $this;
     }
 
-    public function getTaxaid(): ?Taxa
+    public function getTaxaId(): ?Taxa
     {
-        return $this->taxaid;
+        return $this->taxaId;
     }
 
-    public function setTaxaid(?Taxa $taxaid): self
+    public function setTaxaId(?Taxa $taxaId): self
     {
-        $this->taxaid = $taxaid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }
 
-    public function getUserid(): ?Users
+    public function getUserId(): ?Users
     {
-        return $this->userid;
+        return $this->userId;
     }
 
-    public function setUserid(?Users $userid): self
+    public function setUserId(?Users $userId): self
     {
-        $this->userid = $userid;
+        $this->userId = $userId;
 
         return $this;
     }

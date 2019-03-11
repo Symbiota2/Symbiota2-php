@@ -2,73 +2,88 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ChecklistsDynamic
  *
  * @ORM\Table(name="fmdynamicchecklists")
  * @ORM\Entity(repositoryClass="App\Repository\ChecklistsDynamicRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ChecklistsDynamic
+class ChecklistsDynamic implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="dynclid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="dynclid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $dynclid;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="name", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="name", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $name = 'NULL';
+    private $name;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="details", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="details", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $details = 'NULL';
+    private $details;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=45, nullable=false, options={"default"="DynamicList"})
+     * @ORM\Column(name="type", type="string", length=45, options={"default"="DynamicList"})
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
     private $type = 'DynamicList';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="expiration", type="datetime", nullable=false)
+     * @ORM\Column(name="expiration", type="datetime")
+     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $expiration;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Taxa", inversedBy="dynclid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Taxa", inversedBy="dynclid")
      * @ORM\JoinTable(name="fmdyncltaxalink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="dynclid", referencedColumnName="dynclid")
@@ -78,19 +93,19 @@ class ChecklistsDynamic
      *   }
      * )
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->tid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->taxaId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getDynclid(): ?int
+    public function getId(): ?int
     {
-        return $this->dynclid;
+        return $this->id;
     }
 
     public function getName(): ?string
@@ -153,14 +168,14 @@ class ChecklistsDynamic
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
@@ -168,24 +183,24 @@ class ChecklistsDynamic
     /**
      * @return Collection|Taxa[]
      */
-    public function getTid(): Collection
+    public function getTaxaId(): Collection
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function addTid(Taxa $tid): self
+    public function addTaxaId(Taxa $taxaId): self
     {
-        if (!$this->tid->contains($tid)) {
-            $this->tid[] = $tid;
+        if (!$this->taxaId->contains($taxaId)) {
+            $this->taxaId[] = $taxaId;
         }
 
         return $this;
     }
 
-    public function removeTid(Taxa $tid): self
+    public function removeTaxaId(Taxa $taxaId): self
     {
-        if ($this->tid->contains($tid)) {
-            $this->tid->removeElement($tid);
+        if ($this->taxaId->contains($taxaId)) {
+            $this->taxaId->removeElement($taxaId);
         }
 
         return $this;

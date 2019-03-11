@@ -2,90 +2,107 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * GlossaryImages
  *
  * @ORM\Table(name="glossaryimages", indexes={@ORM\Index(name="FK_glossaryimages_uid_idx", columns={"createduid"}), @ORM\Index(name="FK_glossaryimages_gloss", columns={"glossid"})})
  * @ORM\Entity(repositoryClass="App\Repository\GlossaryImagesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class GlossaryImages
+class GlossaryImages implements CreatedUserIdInterface, InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="glimgid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="glimgid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $glimgid;
+    private $id;
 
     /**
-     * @var \Glossary
+     * @var \App\Entity\Glossary
      *
-     * @ORM\ManyToOne(targetEntity="Glossary")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Glossary")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="glossid", referencedColumnName="glossid")
      * })
+     * @Assert\NotBlank()
      */
-    private $glossid;
+    private $glossaryId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=255, nullable=false)
+     * @ORM\Column(name="url", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $url;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="thumbnailurl", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="thumbnailurl", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $thumbnailurl = 'NULL';
+    private $thumbnailUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="structures", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="structures", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $structures = 'NULL';
+    private $structures;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="createdBy", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="createdBy", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $createdby = 'NULL';
+    private $createdBy;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
+     * @Assert\NotBlank()
      */
-    private $createduid;
+    private $createdUserId;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getGlimgid(): ?int
+    public function getId(): ?int
     {
-        return $this->glimgid;
+        return $this->id;
     }
 
     public function getUrl(): ?string
@@ -100,14 +117,14 @@ class GlossaryImages
         return $this;
     }
 
-    public function getThumbnailurl(): ?string
+    public function getThumbnailUrl(): ?string
     {
-        return $this->thumbnailurl;
+        return $this->thumbnailUrl;
     }
 
-    public function setThumbnailurl(?string $thumbnailurl): self
+    public function setThumbnailUrl(?string $thumbnailUrl): self
     {
-        $this->thumbnailurl = $thumbnailurl;
+        $this->thumbnailUrl = $thumbnailUrl;
 
         return $this;
     }
@@ -136,50 +153,57 @@ class GlossaryImages
         return $this;
     }
 
-    public function getCreatedby(): ?string
+    public function getCreatedBy(): ?string
     {
-        return $this->createdby;
+        return $this->createdBy;
     }
 
-    public function setCreatedby(?string $createdby): self
+    public function setCreatedBy(?string $createdBy): self
     {
-        $this->createdby = $createdby;
+        $this->createdBy = $createdBy;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getCreateduid(): ?Users
+    /**
+     * @return Users|null
+     */
+    public function getCreatedUserId(): ?Users
     {
-        return $this->createduid;
+        return $this->createdUserId;
     }
 
-    public function setCreateduid(?Users $createduid): self
+    /**
+     * @param UserInterface $createdUserId
+     * @return CreatedUserIdInterface
+     */
+    public function setCreatedUserId(UserInterface $createdUserId): CreatedUserIdInterface
     {
-        $this->createduid = $createduid;
+        $this->createdUserId = $createdUserId;
 
         return $this;
     }
 
-    public function getGlossid(): ?Glossary
+    public function getGlossaryId(): ?Glossary
     {
-        return $this->glossid;
+        return $this->glossaryId;
     }
 
-    public function setGlossid(?Glossary $glossid): self
+    public function setGlossaryId(?Glossary $glossaryId): self
     {
-        $this->glossid = $glossid;
+        $this->glossaryId = $glossaryId;
 
         return $this;
     }

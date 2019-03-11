@@ -258,7 +258,7 @@ class References
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Collections", inversedBy="refid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Collections", inversedBy="refid")
      * @ORM\JoinTable(name="referencecollectionlink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="refid", referencedColumnName="refid")
@@ -268,7 +268,7 @@ class References
      *   }
      * )
      */
-    private $collid;
+    private $collectionId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -307,7 +307,7 @@ class References
     {
         $this->refauthid = new \Doctrine\Common\Collections\ArrayCollection();
         $this->clid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->collid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->collectionId = new \Doctrine\Common\Collections\ArrayCollection();
         $this->occid = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tid = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -708,24 +708,24 @@ class References
     /**
      * @return Collection|Collections[]
      */
-    public function getCollid(): Collection
+    public function getCollectionId(): Collection
     {
-        return $this->collid;
+        return $this->collectionId;
     }
 
-    public function addCollid(Collections $collid): self
+    public function addCollectionId(Collections $collectionId): self
     {
-        if (!$this->collid->contains($collid)) {
-            $this->collid[] = $collid;
+        if (!$this->collectionId->contains($collectionId)) {
+            $this->collectionId[] = $collectionId;
         }
 
         return $this;
     }
 
-    public function removeCollid(Collections $collid): self
+    public function removeCollectionId(Collections $collectionId): self
     {
-        if ($this->collid->contains($collid)) {
-            $this->collid->removeElement($collid);
+        if ($this->collectionId->contains($collectionId)) {
+            $this->collectionId->removeElement($collectionId);
         }
 
         return $this;

@@ -2,80 +2,94 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CollectionCategories
  *
  * @ORM\Table(name="omcollcategories")
  * @ORM\Entity(repositoryClass="App\Repository\CollectionCategoriesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class CollectionCategories
+class CollectionCategories implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="ccpk", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="ccpk", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $ccpk;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="category", type="string", length=75, nullable=false)
+     * @ORM\Column(name="category", type="string", length=75)
+     * @Assert\Length(max=75)
      */
     private $category;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="icon", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="icon", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $icon = 'NULL';
+    private $icon;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="acronym", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="acronym", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $acronym = 'NULL';
+    private $acronym;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="url", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="url", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $url = 'NULL';
+    private $url;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="inclusive", type="integer", nullable=true, options={"default"="1"})
+     * @Assert\Type(type="integer")
      */
-    private $inclusive = '1';
+    private $inclusive = 1;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Collections", inversedBy="ccpk")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Collections", inversedBy="ccpk")
      * @ORM\JoinTable(name="omcollcatlink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="ccpk", referencedColumnName="ccpk")
@@ -85,19 +99,19 @@ class CollectionCategories
      *   }
      * )
      */
-    private $collid;
+    private $collectionId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->collid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->collectionId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getCcpk(): ?int
+    public function getId(): ?int
     {
-        return $this->ccpk;
+        return $this->id;
     }
 
     public function getCategory(): ?string
@@ -172,14 +186,14 @@ class CollectionCategories
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
@@ -187,24 +201,24 @@ class CollectionCategories
     /**
      * @return Collection|Collections[]
      */
-    public function getCollid(): Collection
+    public function getCollectionId(): Collection
     {
-        return $this->collid;
+        return $this->collectionId;
     }
 
-    public function addCollid(Collections $collid): self
+    public function addCollectionId(Collections $collectionId): self
     {
-        if (!$this->collid->contains($collid)) {
-            $this->collid[] = $collid;
+        if (!$this->collectionId->contains($collectionId)) {
+            $this->collectionId[] = $collectionId;
         }
 
         return $this;
     }
 
-    public function removeCollid(Collections $collid): self
+    public function removeCollectionId(Collections $collectionId): self
     {
-        if ($this->collid->contains($collid)) {
-            $this->collid->removeElement($collid);
+        if ($this->collectionId->contains($collectionId)) {
+            $this->collectionId->removeElement($collectionId);
         }
 
         return $this;

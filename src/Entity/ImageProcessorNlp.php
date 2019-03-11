@@ -2,73 +2,88 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ImageProcessorNlp
  *
  * @ORM\Table(name="specprocnlp", indexes={@ORM\Index(name="FK_specprocnlp_collid", columns={"collid"})})
  * @ORM\Entity(repositoryClass="App\Repository\ImageProcessorNlpRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ImageProcessorNlp
+class ImageProcessorNlp implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="spnlpid", type="integer", nullable=false)
+     * @ORM\Column(name="spnlpid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $spnlpid;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=45, nullable=false)
+     * @ORM\Column(name="title", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
     private $title;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="sqlfrag", type="string", length=250, nullable=false)
+     * @ORM\Column(name="sqlfrag", type="string", length=250)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=250)
      */
-    private $sqlfrag;
+    private $sqlFragment;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="patternmatch", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="patternmatch", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $patternmatch = 'NULL';
+    private $patternMatch;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
-     * @var \Collections
+     * @var \App\Entity\Collections
      *
-     * @ORM\ManyToOne(targetEntity="Collections")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Collections")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
      * })
+     * @Assert\NotBlank()
      */
-    private $collid;
+    private $collectionId;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getSpnlpid(): ?int
+    public function getId(): ?int
     {
-        return $this->spnlpid;
+        return $this->id;
     }
 
     public function getTitle(): ?string
@@ -83,26 +98,26 @@ class ImageProcessorNlp
         return $this;
     }
 
-    public function getSqlfrag(): ?string
+    public function getSqlFragment(): ?string
     {
-        return $this->sqlfrag;
+        return $this->sqlFragment;
     }
 
-    public function setSqlfrag(string $sqlfrag): self
+    public function setSqlFragment(string $sqlFragment): self
     {
-        $this->sqlfrag = $sqlfrag;
+        $this->sqlFragment = $sqlFragment;
 
         return $this;
     }
 
-    public function getPatternmatch(): ?string
+    public function getPatternMatch(): ?string
     {
-        return $this->patternmatch;
+        return $this->patternMatch;
     }
 
-    public function setPatternmatch(?string $patternmatch): self
+    public function setPatternMatch(?string $patternMatch): self
     {
-        $this->patternmatch = $patternmatch;
+        $this->patternMatch = $patternMatch;
 
         return $this;
     }
@@ -119,26 +134,26 @@ class ImageProcessorNlp
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getCollid(): ?Collections
+    public function getCollectionId(): ?Collections
     {
-        return $this->collid;
+        return $this->collectionId;
     }
 
-    public function setCollid(?Collections $collid): self
+    public function setCollectionId(?Collections $collectionId): self
     {
-        $this->collid = $collid;
+        $this->collectionId = $collectionId;
 
         return $this;
     }

@@ -2,192 +2,223 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ImageProcessorProjects
  *
  * @ORM\Table(name="specprocessorprojects", indexes={@ORM\Index(name="FK_specprocessorprojects_coll", columns={"collid"})})
  * @ORM\Entity(repositoryClass="App\Repository\ImageProcessorProjectsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ImageProcessorProjects
+class ImageProcessorProjects implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="spprid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="spprid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $spprid;
+    private $id;
 
     /**
-     * @var \Collections
+     * @var \App\Entity\Collections
      *
-     * @ORM\ManyToOne(targetEntity="Collections")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Collections")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
      * })
+     * @Assert\NotBlank()
      */
-    private $collid;
+    private $collectionId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=100, nullable=false)
+     * @ORM\Column(name="title", type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=100)
      */
     private $title;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="projecttype", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="projecttype", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $projecttype = 'NULL';
+    private $projectType;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="specKeyPattern", type="string", length=155, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="specKeyPattern", type="string", length=155, nullable=true)
+     * @Assert\Length(max=155)
      */
-    private $speckeypattern = 'NULL';
+    private $patternMatchString;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="patternReplace", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="patternReplace", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $patternreplace = 'NULL';
+    private $patternReplace;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="replaceStr", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="replaceStr", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $replacestr = 'NULL';
+    private $replaceString;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="speckeyretrieval", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="speckeyretrieval", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $speckeyretrieval = 'NULL';
+    private $occurrenceKeyRetrieval;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="coordX1", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="coordX1", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $coordx1 = 'NULL';
+    private $coordinateX1;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="coordX2", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="coordX2", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $coordx2 = 'NULL';
+    private $coordinateX2;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="coordY1", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="coordY1", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $coordy1 = 'NULL';
+    private $coordinateY1;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="coordY2", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="coordY2", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $coordy2 = 'NULL';
+    private $coordinateY2;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourcePath", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="sourcePath", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $sourcepath = 'NULL';
+    private $sourcePath;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="targetPath", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="targetPath", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $targetpath = 'NULL';
+    private $targetPath;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="imgUrl", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="imgUrl", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $imgurl = 'NULL';
+    private $imageUrl;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="webPixWidth", type="integer", nullable=true, options={"default"="1200","unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $webpixwidth = '1200';
+    private $webPixelWidth = 1200;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="tnPixWidth", type="integer", nullable=true, options={"default"="130","unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $tnpixwidth = '130';
+    private $thumbnailPixelWidth = 130;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="lgPixWidth", type="integer", nullable=true, options={"default"="2400","unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $lgpixwidth = '2400';
+    private $largePixelWidth = 2400;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="jpgcompression", type="integer", nullable=true, options={"default"="70"})
+     * @Assert\Type(type="integer")
      */
-    private $jpgcompression = '70';
+    private $jpgCompression = 70;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="createTnImg", type="integer", nullable=true, options={"default"="1","unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $createtnimg = '1';
+    private $createThumbnailImage = 1;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="createLgImg", type="integer", nullable=true, options={"default"="1","unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $createlgimg = '1';
+    private $createLargeImage = 1;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="source", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="source", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $source = 'NULL';
+    private $source;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="lastrundate", type="date", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="lastrundate", type="date", nullable=true)
+     * @Assert\Date
      */
-    private $lastrundate = 'NULL';
+    private $lastRunDate;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialTimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialTimestamp", type="datetime")
+     * @Assert\NotBlank()
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getSpprid(): ?int
+    public function getId(): ?int
     {
-        return $this->spprid;
+        return $this->id;
     }
 
     public function getTitle(): ?string
@@ -202,218 +233,218 @@ class ImageProcessorProjects
         return $this;
     }
 
-    public function getProjecttype(): ?string
+    public function getProjectType(): ?string
     {
-        return $this->projecttype;
+        return $this->projectType;
     }
 
-    public function setProjecttype(?string $projecttype): self
+    public function setProjectType(?string $projectType): self
     {
-        $this->projecttype = $projecttype;
+        $this->projectType = $projectType;
 
         return $this;
     }
 
-    public function getSpeckeypattern(): ?string
+    public function getPatternMatchString(): ?string
     {
-        return $this->speckeypattern;
+        return $this->patternMatchString;
     }
 
-    public function setSpeckeypattern(?string $speckeypattern): self
+    public function setPatternMatchString(?string $patternMatchString): self
     {
-        $this->speckeypattern = $speckeypattern;
+        $this->patternMatchString = $patternMatchString;
 
         return $this;
     }
 
-    public function getPatternreplace(): ?string
+    public function getPatternReplace(): ?string
     {
-        return $this->patternreplace;
+        return $this->patternReplace;
     }
 
-    public function setPatternreplace(?string $patternreplace): self
+    public function setPatternReplace(?string $patternReplace): self
     {
-        $this->patternreplace = $patternreplace;
+        $this->patternReplace = $patternReplace;
 
         return $this;
     }
 
-    public function getReplacestr(): ?string
+    public function getReplaceString(): ?string
     {
-        return $this->replacestr;
+        return $this->replaceString;
     }
 
-    public function setReplacestr(?string $replacestr): self
+    public function setReplaceString(?string $replaceString): self
     {
-        $this->replacestr = $replacestr;
+        $this->replaceString = $replaceString;
 
         return $this;
     }
 
-    public function getSpeckeyretrieval(): ?string
+    public function getOccurrenceKeyRetrieval(): ?string
     {
-        return $this->speckeyretrieval;
+        return $this->occurrenceKeyRetrieval;
     }
 
-    public function setSpeckeyretrieval(?string $speckeyretrieval): self
+    public function setOccurrenceKeyRetrieval(?string $occurrenceKeyRetrieval): self
     {
-        $this->speckeyretrieval = $speckeyretrieval;
+        $this->occurrenceKeyRetrieval = $occurrenceKeyRetrieval;
 
         return $this;
     }
 
-    public function getCoordx1(): ?int
+    public function getCoordinateX1(): ?int
     {
-        return $this->coordx1;
+        return $this->coordinateX1;
     }
 
-    public function setCoordx1(?int $coordx1): self
+    public function setCoordinateX1(?int $coordinateX1): self
     {
-        $this->coordx1 = $coordx1;
+        $this->coordinateX1 = $coordinateX1;
 
         return $this;
     }
 
-    public function getCoordx2(): ?int
+    public function getCoordinateX2(): ?int
     {
-        return $this->coordx2;
+        return $this->coordinateX2;
     }
 
-    public function setCoordx2(?int $coordx2): self
+    public function setCoordinateX2(?int $coordinateX2): self
     {
-        $this->coordx2 = $coordx2;
+        $this->coordinateX2 = $coordinateX2;
 
         return $this;
     }
 
-    public function getCoordy1(): ?int
+    public function getCoordinateY1(): ?int
     {
-        return $this->coordy1;
+        return $this->coordinateY1;
     }
 
-    public function setCoordy1(?int $coordy1): self
+    public function setCoordinateY1(?int $coordinateY1): self
     {
-        $this->coordy1 = $coordy1;
+        $this->coordinateY1 = $coordinateY1;
 
         return $this;
     }
 
-    public function getCoordy2(): ?int
+    public function getCoordinateY2(): ?int
     {
-        return $this->coordy2;
+        return $this->coordinateY2;
     }
 
-    public function setCoordy2(?int $coordy2): self
+    public function setCoordinateY2(?int $coordinateY2): self
     {
-        $this->coordy2 = $coordy2;
+        $this->coordinateY2 = $coordinateY2;
 
         return $this;
     }
 
-    public function getSourcepath(): ?string
+    public function getSourcePath(): ?string
     {
-        return $this->sourcepath;
+        return $this->sourcePath;
     }
 
-    public function setSourcepath(?string $sourcepath): self
+    public function setSourcePath(?string $sourcePath): self
     {
-        $this->sourcepath = $sourcepath;
+        $this->sourcePath = $sourcePath;
 
         return $this;
     }
 
-    public function getTargetpath(): ?string
+    public function getTargetPath(): ?string
     {
-        return $this->targetpath;
+        return $this->targetPath;
     }
 
-    public function setTargetpath(?string $targetpath): self
+    public function setTargetPath(?string $targetPath): self
     {
-        $this->targetpath = $targetpath;
+        $this->targetPath = $targetPath;
 
         return $this;
     }
 
-    public function getImgurl(): ?string
+    public function getImageUrl(): ?string
     {
-        return $this->imgurl;
+        return $this->imageUrl;
     }
 
-    public function setImgurl(?string $imgurl): self
+    public function setImageUrl(?string $imageUrl): self
     {
-        $this->imgurl = $imgurl;
+        $this->imageUrl = $imageUrl;
 
         return $this;
     }
 
-    public function getWebpixwidth(): ?int
+    public function getWebPixelWidth(): ?int
     {
-        return $this->webpixwidth;
+        return $this->webPixelWidth;
     }
 
-    public function setWebpixwidth(?int $webpixwidth): self
+    public function setWebPixelWidth(?int $webPixelWidth): self
     {
-        $this->webpixwidth = $webpixwidth;
+        $this->webPixelWidth = $webPixelWidth;
 
         return $this;
     }
 
-    public function getTnpixwidth(): ?int
+    public function getThumbnailPixelWidth(): ?int
     {
-        return $this->tnpixwidth;
+        return $this->thumbnailPixelWidth;
     }
 
-    public function setTnpixwidth(?int $tnpixwidth): self
+    public function setThumbnailPixelWidth(?int $thumbnailPixelWidth): self
     {
-        $this->tnpixwidth = $tnpixwidth;
+        $this->thumbnailPixelWidth = $thumbnailPixelWidth;
 
         return $this;
     }
 
-    public function getLgpixwidth(): ?int
+    public function getLargePixelWidth(): ?int
     {
-        return $this->lgpixwidth;
+        return $this->largePixelWidth;
     }
 
-    public function setLgpixwidth(?int $lgpixwidth): self
+    public function setLargePixelWidth(?int $largePixelWidth): self
     {
-        $this->lgpixwidth = $lgpixwidth;
+        $this->largePixelWidth = $largePixelWidth;
 
         return $this;
     }
 
-    public function getJpgcompression(): ?int
+    public function getJpgCompression(): ?int
     {
-        return $this->jpgcompression;
+        return $this->jpgCompression;
     }
 
-    public function setJpgcompression(?int $jpgcompression): self
+    public function setJpgCompression(?int $jpgCompression): self
     {
-        $this->jpgcompression = $jpgcompression;
+        $this->jpgCompression = $jpgCompression;
 
         return $this;
     }
 
-    public function getCreatetnimg(): ?int
+    public function getCreateThumbnailImage(): ?int
     {
-        return $this->createtnimg;
+        return $this->createThumbnailImage;
     }
 
-    public function setCreatetnimg(?int $createtnimg): self
+    public function setCreateThumbnailImage(?int $createThumbnailImage): self
     {
-        $this->createtnimg = $createtnimg;
+        $this->createThumbnailImage = $createThumbnailImage;
 
         return $this;
     }
 
-    public function getCreatelgimg(): ?int
+    public function getCreateLargeImage(): ?int
     {
-        return $this->createlgimg;
+        return $this->createLargeImage;
     }
 
-    public function setCreatelgimg(?int $createlgimg): self
+    public function setCreateLargeImage(?int $createLargeImage): self
     {
-        $this->createlgimg = $createlgimg;
+        $this->createLargeImage = $createLargeImage;
 
         return $this;
     }
@@ -430,38 +461,38 @@ class ImageProcessorProjects
         return $this;
     }
 
-    public function getLastrundate(): ?\DateTimeInterface
+    public function getLastRunDate(): ?\DateTimeInterface
     {
-        return $this->lastrundate;
+        return $this->lastRunDate;
     }
 
-    public function setLastrundate(?\DateTimeInterface $lastrundate): self
+    public function setLastRunDate(?\DateTimeInterface $lastRunDate): self
     {
-        $this->lastrundate = $lastrundate;
+        $this->lastRunDate = $lastRunDate;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getCollid(): ?Collections
+    public function getCollectionId(): ?Collections
     {
-        return $this->collid;
+        return $this->collectionId;
     }
 
-    public function setCollid(?Collections $collid): self
+    public function setCollectionId(?Collections $collectionId): self
     {
-        $this->collid = $collid;
+        $this->collectionId = $collectionId;
 
         return $this;
     }
