@@ -2,124 +2,140 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * UploadMappings
  *
  * @ORM\Table(name="uploadspecmap", uniqueConstraints={@ORM\UniqueConstraint(name="Index_unique_uploadspecmap", columns={"uspid", "symbspecfield", "sourcefield"})}, indexes={@ORM\Index(name="IDX_2B717C4B248B8A2F", columns={"uspid"})})
  * @ORM\Entity(repositoryClass="App\Repository\UploadMappingsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class UploadMappings
+class UploadMappings implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="usmid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="usmid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $usmid;
+    private $id;
 
     /**
-     * @var \UploadParameters
+     * @var \App\Entity\UploadParameters
      *
-     * @ORM\ManyToOne(targetEntity="UploadParameters")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\UploadParameters")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="uspid", referencedColumnName="uspid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $uspid;
+    private $uploadParameterId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="sourcefield", type="string", length=45, nullable=false)
+     * @ORM\Column(name="sourcefield", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
-    private $sourcefield;
+    private $sourceField;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="symbdatatype", type="string", length=45, nullable=false, options={"default"="string","comment"="string, numeric, datetime"})
+     * @ORM\Column(name="symbdatatype", type="string", length=45, options={"default"="string","comment"="string, numeric, datetime"})
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
-    private $symbdatatype = 'string';
+    private $mappedDataType = 'string';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="symbspecfield", type="string", length=45, nullable=false)
+     * @ORM\Column(name="symbspecfield", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
-    private $symbspecfield;
+    private $mappedField;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getUsmid(): ?int
+    public function getId(): ?int
     {
-        return $this->usmid;
+        return $this->id;
     }
 
-    public function getSourcefield(): ?string
+    public function getSourceField(): ?string
     {
-        return $this->sourcefield;
+        return $this->sourceField;
     }
 
-    public function setSourcefield(string $sourcefield): self
+    public function setSourceField(string $sourceField): self
     {
-        $this->sourcefield = $sourcefield;
+        $this->sourceField = $sourceField;
 
         return $this;
     }
 
-    public function getSymbdatatype(): ?string
+    public function getMappedDataType(): ?string
     {
-        return $this->symbdatatype;
+        return $this->mappedDataType;
     }
 
-    public function setSymbdatatype(string $symbdatatype): self
+    public function setMappedDataType(string $mappedDataType): self
     {
-        $this->symbdatatype = $symbdatatype;
+        $this->mappedDataType = $mappedDataType;
 
         return $this;
     }
 
-    public function getSymbspecfield(): ?string
+    public function getMappedField(): ?string
     {
-        return $this->symbspecfield;
+        return $this->mappedField;
     }
 
-    public function setSymbspecfield(string $symbspecfield): self
+    public function setMappedField(string $mappedField): self
     {
-        $this->symbspecfield = $symbspecfield;
+        $this->mappedField = $mappedField;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getUspid(): ?UploadParameters
+    public function getUploadParameterId(): ?UploadParameters
     {
-        return $this->uspid;
+        return $this->uploadParameterId;
     }
 
-    public function setUspid(?UploadParameters $uspid): self
+    public function setUploadParameterId(?UploadParameters $uploadParameterId): self
     {
-        $this->uspid = $uspid;
+        $this->uploadParameterId = $uploadParameterId;
 
         return $this;
     }

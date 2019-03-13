@@ -2,260 +2,298 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OccurrenceLoans
  *
  * @ORM\Table(name="omoccurloans", indexes={@ORM\Index(name="FK_occurloans_owncoll", columns={"collidOwn"}), @ORM\Index(name="FK_occurloans_borrinst", columns={"iidBorrower"}), @ORM\Index(name="FK_occurloans_owninst", columns={"iidOwner"}), @ORM\Index(name="FK_occurloans_borrcoll", columns={"collidBorr"})})
  * @ORM\Entity(repositoryClass="App\Repository\OccurrenceLoansRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class OccurrenceLoans
+class OccurrenceLoans implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="loanid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="loanid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $loanid;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="loanIdentifierOwn", type="string", length=30, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="loanIdentifierOwn", type="string", length=30, nullable=true)
+     * @Assert\Length(max=30)
      */
-    private $loanidentifierown = 'NULL';
+    private $loanIdentifierOwner;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="loanIdentifierBorr", type="string", length=30, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="loanIdentifierBorr", type="string", length=30, nullable=true)
+     * @Assert\Length(max=30)
      */
-    private $loanidentifierborr = 'NULL';
+    private $loanIdentifierBorrower;
 
     /**
-     * @var \Collections
+     * @var \App\Entity\Collections
      *
-     * @ORM\ManyToOne(targetEntity="Collections")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Collections")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="collidOwn", referencedColumnName="CollID")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $collidown;
+    private $collectionIdOwner;
 
     /**
-     * @var \Collections
+     * @var \App\Entity\Collections
      *
-     * @ORM\ManyToOne(targetEntity="Collections")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Collections")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="collidBorr", referencedColumnName="CollID")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $collidborr;
+    private $collectionIdBorrower;
 
     /**
-     * @var \Institutions
+     * @var \App\Entity\Institutions
      *
-     * @ORM\ManyToOne(targetEntity="Institutions")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Institutions")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="iidOwner", referencedColumnName="iid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $iidowner;
+    private $institutionIdOwner;
 
     /**
-     * @var \Institutions
+     * @var \App\Entity\Institutions
      *
-     * @ORM\ManyToOne(targetEntity="Institutions")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Institutions")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="iidBorrower", referencedColumnName="iid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $iidborrower;
+    private $institutionIdBorrower;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateSent", type="date", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dateSent", type="date", nullable=true)
+     * @Assert\Date
      */
-    private $datesent = 'NULL';
+    private $dateSent;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateSentReturn", type="date", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dateSentReturn", type="date", nullable=true)
+     * @Assert\Date
      */
-    private $datesentreturn = 'NULL';
+    private $dateSentReturn;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="receivedStatus", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="receivedStatus", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $receivedstatus = 'NULL';
+    private $receivedStatus;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="totalBoxes", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="totalBoxes", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $totalboxes = 'NULL';
+    private $totalBoxes;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="totalBoxesReturned", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="totalBoxesReturned", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $totalboxesreturned = 'NULL';
+    private $totalBoxesReturned;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="numSpecimens", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="numSpecimens", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $numspecimens = 'NULL';
+    private $numberOfSpecimens;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="shippingMethod", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="shippingMethod", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $shippingmethod = 'NULL';
+    private $shippingMethod;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="shippingMethodReturn", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="shippingMethodReturn", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $shippingmethodreturn = 'NULL';
+    private $shippingMethodReturn;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateDue", type="date", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dateDue", type="date", nullable=true)
+     * @Assert\Date
      */
-    private $datedue = 'NULL';
+    private $dateDue;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateReceivedOwn", type="date", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dateReceivedOwn", type="date", nullable=true)
+     * @Assert\Date
      */
-    private $datereceivedown = 'NULL';
+    private $dateReceivedOwner;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateReceivedBorr", type="date", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dateReceivedBorr", type="date", nullable=true)
+     * @Assert\Date
      */
-    private $datereceivedborr = 'NULL';
+    private $dateReceivedBorrower;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateClosed", type="date", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dateClosed", type="date", nullable=true)
+     * @Assert\Date
      */
-    private $dateclosed = 'NULL';
+    private $dateClosed;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="forWhom", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="forWhom", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $forwhom = 'NULL';
+    private $forWhom;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=1000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="description", type="string", length=1000, nullable=true)
+     * @Assert\Length(max=1000)
      */
-    private $description = 'NULL';
+    private $description;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="invoiceMessageOwn", type="string", length=500, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="invoiceMessageOwn", type="string", length=500, nullable=true)
+     * @Assert\Length(max=500)
      */
-    private $invoicemessageown = 'NULL';
+    private $invoiceMessageOwner;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="invoiceMessageBorr", type="string", length=500, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="invoiceMessageBorr", type="string", length=500, nullable=true)
+     * @Assert\Length(max=500)
      */
-    private $invoicemessageborr = 'NULL';
+    private $invoiceMessageBorrower;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=500, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=500, nullable=true)
+     * @Assert\Length(max=500)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="createdByOwn", type="string", length=30, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="createdByOwn", type="string", length=30, nullable=true)
+     * @Assert\Length(max=30)
      */
-    private $createdbyown = 'NULL';
+    private $createdByOwner;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="createdByBorr", type="string", length=30, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="createdByBorr", type="string", length=30, nullable=true)
+     * @Assert\Length(max=30)
      */
-    private $createdbyborr = 'NULL';
+    private $createdByBorrower;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="processingStatus", type="integer", nullable=true, options={"default"="1","unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $processingstatus = '1';
+    private $processingStatus = 1;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="processedByOwn", type="string", length=30, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="processedByOwn", type="string", length=30, nullable=true)
+     * @Assert\Length(max=30)
      */
-    private $processedbyown = 'NULL';
+    private $processedByOwner;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="processedByBorr", type="string", length=30, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="processedByBorr", type="string", length=30, nullable=true)
+     * @Assert\Length(max=30)
      */
-    private $processedbyborr = 'NULL';
+    private $processedByBorrower;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="processedByReturnOwn", type="string", length=30, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="processedByReturnOwn", type="string", length=30, nullable=true)
+     * @Assert\Length(max=30)
      */
-    private $processedbyreturnown = 'NULL';
+    private $returnProcessedByOwner;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="processedByReturnBorr", type="string", length=30, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="processedByReturnBorr", type="string", length=30, nullable=true)
+     * @Assert\Length(max=30)
      */
-    private $processedbyreturnborr = 'NULL';
+    private $returnProcessedByBorrower;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialTimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialTimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Occurrences", inversedBy="loanid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Occurrences", inversedBy="loanId")
      * @ORM\JoinTable(name="omoccurloanslink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="loanid", referencedColumnName="loanid")
@@ -265,197 +303,197 @@ class OccurrenceLoans
      *   }
      * )
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->occid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->occurrenceId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getLoanid(): ?int
+    public function getId(): ?int
     {
-        return $this->loanid;
+        return $this->id;
     }
 
-    public function getLoanidentifierown(): ?string
+    public function getLoanIdentifierOwner(): ?string
     {
-        return $this->loanidentifierown;
+        return $this->loanIdentifierOwner;
     }
 
-    public function setLoanidentifierown(?string $loanidentifierown): self
+    public function setLoanIdentifierOwner(?string $loanIdentifierOwner): self
     {
-        $this->loanidentifierown = $loanidentifierown;
+        $this->loanIdentifierOwner = $loanIdentifierOwner;
 
         return $this;
     }
 
-    public function getLoanidentifierborr(): ?string
+    public function getLoanIdentifierBorrower(): ?string
     {
-        return $this->loanidentifierborr;
+        return $this->loanIdentifierBorrower;
     }
 
-    public function setLoanidentifierborr(?string $loanidentifierborr): self
+    public function setLoanIdentifierBorrower(?string $loanIdentifierBorrower): self
     {
-        $this->loanidentifierborr = $loanidentifierborr;
+        $this->loanIdentifierBorrower = $loanIdentifierBorrower;
 
         return $this;
     }
 
-    public function getDatesent(): ?\DateTimeInterface
+    public function getDateSent(): ?\DateTimeInterface
     {
-        return $this->datesent;
+        return $this->dateSent;
     }
 
-    public function setDatesent(?\DateTimeInterface $datesent): self
+    public function setDateSent(?\DateTimeInterface $dateSent): self
     {
-        $this->datesent = $datesent;
+        $this->dateSent = $dateSent;
 
         return $this;
     }
 
-    public function getDatesentreturn(): ?\DateTimeInterface
+    public function getDateSentReturn(): ?\DateTimeInterface
     {
-        return $this->datesentreturn;
+        return $this->dateSentReturn;
     }
 
-    public function setDatesentreturn(?\DateTimeInterface $datesentreturn): self
+    public function setDateSentReturn(?\DateTimeInterface $dateSentReturn): self
     {
-        $this->datesentreturn = $datesentreturn;
+        $this->dateSentReturn = $dateSentReturn;
 
         return $this;
     }
 
-    public function getReceivedstatus(): ?string
+    public function getReceivedStatus(): ?string
     {
-        return $this->receivedstatus;
+        return $this->receivedStatus;
     }
 
-    public function setReceivedstatus(?string $receivedstatus): self
+    public function setReceivedStatus(?string $receivedStatus): self
     {
-        $this->receivedstatus = $receivedstatus;
+        $this->receivedStatus = $receivedStatus;
 
         return $this;
     }
 
-    public function getTotalboxes(): ?int
+    public function getTotalBoxes(): ?int
     {
-        return $this->totalboxes;
+        return $this->totalBoxes;
     }
 
-    public function setTotalboxes(?int $totalboxes): self
+    public function setTotalBoxes(?int $totalBoxes): self
     {
-        $this->totalboxes = $totalboxes;
+        $this->totalBoxes = $totalBoxes;
 
         return $this;
     }
 
-    public function getTotalboxesreturned(): ?int
+    public function getTotalBoxesReturned(): ?int
     {
-        return $this->totalboxesreturned;
+        return $this->totalBoxesReturned;
     }
 
-    public function setTotalboxesreturned(?int $totalboxesreturned): self
+    public function setTotalBoxesReturned(?int $totalBoxesReturned): self
     {
-        $this->totalboxesreturned = $totalboxesreturned;
+        $this->totalBoxesReturned = $totalBoxesReturned;
 
         return $this;
     }
 
-    public function getNumspecimens(): ?int
+    public function getNumberOfSpecimens(): ?int
     {
-        return $this->numspecimens;
+        return $this->numberOfSpecimens;
     }
 
-    public function setNumspecimens(?int $numspecimens): self
+    public function setNumberOfSpecimens(?int $numberOfSpecimens): self
     {
-        $this->numspecimens = $numspecimens;
+        $this->numberOfSpecimens = $numberOfSpecimens;
 
         return $this;
     }
 
-    public function getShippingmethod(): ?string
+    public function getShippingMethod(): ?string
     {
-        return $this->shippingmethod;
+        return $this->shippingMethod;
     }
 
-    public function setShippingmethod(?string $shippingmethod): self
+    public function setShippingMethod(?string $shippingMethod): self
     {
-        $this->shippingmethod = $shippingmethod;
+        $this->shippingMethod = $shippingMethod;
 
         return $this;
     }
 
-    public function getShippingmethodreturn(): ?string
+    public function getShippingMethodReturn(): ?string
     {
-        return $this->shippingmethodreturn;
+        return $this->shippingMethodReturn;
     }
 
-    public function setShippingmethodreturn(?string $shippingmethodreturn): self
+    public function setShippingMethodReturn(?string $shippingMethodReturn): self
     {
-        $this->shippingmethodreturn = $shippingmethodreturn;
+        $this->shippingMethodReturn = $shippingMethodReturn;
 
         return $this;
     }
 
-    public function getDatedue(): ?\DateTimeInterface
+    public function getDateDue(): ?\DateTimeInterface
     {
-        return $this->datedue;
+        return $this->dateDue;
     }
 
-    public function setDatedue(?\DateTimeInterface $datedue): self
+    public function setDateDue(?\DateTimeInterface $dateDue): self
     {
-        $this->datedue = $datedue;
+        $this->dateDue = $dateDue;
 
         return $this;
     }
 
-    public function getDatereceivedown(): ?\DateTimeInterface
+    public function getDateReceivedOwner(): ?\DateTimeInterface
     {
-        return $this->datereceivedown;
+        return $this->dateReceivedOwner;
     }
 
-    public function setDatereceivedown(?\DateTimeInterface $datereceivedown): self
+    public function setDateReceivedOwner(?\DateTimeInterface $dateReceivedOwner): self
     {
-        $this->datereceivedown = $datereceivedown;
+        $this->dateReceivedOwner = $dateReceivedOwner;
 
         return $this;
     }
 
-    public function getDatereceivedborr(): ?\DateTimeInterface
+    public function getDateReceivedBorrower(): ?\DateTimeInterface
     {
-        return $this->datereceivedborr;
+        return $this->dateReceivedBorrower;
     }
 
-    public function setDatereceivedborr(?\DateTimeInterface $datereceivedborr): self
+    public function setDateReceivedBorrower(?\DateTimeInterface $dateReceivedBorrower): self
     {
-        $this->datereceivedborr = $datereceivedborr;
+        $this->dateReceivedBorrower = $dateReceivedBorrower;
 
         return $this;
     }
 
-    public function getDateclosed(): ?\DateTimeInterface
+    public function getDateClosed(): ?\DateTimeInterface
     {
-        return $this->dateclosed;
+        return $this->dateClosed;
     }
 
-    public function setDateclosed(?\DateTimeInterface $dateclosed): self
+    public function setDateClosed(?\DateTimeInterface $dateClosed): self
     {
-        $this->dateclosed = $dateclosed;
+        $this->dateClosed = $dateClosed;
 
         return $this;
     }
 
-    public function getForwhom(): ?string
+    public function getForWhom(): ?string
     {
-        return $this->forwhom;
+        return $this->forWhom;
     }
 
-    public function setForwhom(?string $forwhom): self
+    public function setForWhom(?string $forWhom): self
     {
-        $this->forwhom = $forwhom;
+        $this->forWhom = $forWhom;
 
         return $this;
     }
@@ -472,26 +510,26 @@ class OccurrenceLoans
         return $this;
     }
 
-    public function getInvoicemessageown(): ?string
+    public function getInvoiceMessageOwner(): ?string
     {
-        return $this->invoicemessageown;
+        return $this->invoiceMessageOwner;
     }
 
-    public function setInvoicemessageown(?string $invoicemessageown): self
+    public function setInvoiceMessageOwner(?string $invoiceMessageOwner): self
     {
-        $this->invoicemessageown = $invoicemessageown;
+        $this->invoiceMessageOwner = $invoiceMessageOwner;
 
         return $this;
     }
 
-    public function getInvoicemessageborr(): ?string
+    public function getInvoiceMessageBorrower(): ?string
     {
-        return $this->invoicemessageborr;
+        return $this->invoiceMessageBorrower;
     }
 
-    public function setInvoicemessageborr(?string $invoicemessageborr): self
+    public function setInvoiceMessageBorrower(?string $invoiceMessageBorrower): self
     {
-        $this->invoicemessageborr = $invoicemessageborr;
+        $this->invoiceMessageBorrower = $invoiceMessageBorrower;
 
         return $this;
     }
@@ -508,146 +546,146 @@ class OccurrenceLoans
         return $this;
     }
 
-    public function getCreatedbyown(): ?string
+    public function getCreatedByOwner(): ?string
     {
-        return $this->createdbyown;
+        return $this->createdByOwner;
     }
 
-    public function setCreatedbyown(?string $createdbyown): self
+    public function setCreatedByOwner(?string $createdByOwner): self
     {
-        $this->createdbyown = $createdbyown;
+        $this->createdByOwner = $createdByOwner;
 
         return $this;
     }
 
-    public function getCreatedbyborr(): ?string
+    public function getCreatedByBorrower(): ?string
     {
-        return $this->createdbyborr;
+        return $this->createdByBorrower;
     }
 
-    public function setCreatedbyborr(?string $createdbyborr): self
+    public function setCreatedByBorrower(?string $createdByBorrower): self
     {
-        $this->createdbyborr = $createdbyborr;
+        $this->createdByBorrower = $createdByBorrower;
 
         return $this;
     }
 
-    public function getProcessingstatus(): ?int
+    public function getProcessingStatus(): ?int
     {
-        return $this->processingstatus;
+        return $this->processingStatus;
     }
 
-    public function setProcessingstatus(?int $processingstatus): self
+    public function setProcessingStatus(?int $processingStatus): self
     {
-        $this->processingstatus = $processingstatus;
+        $this->processingStatus = $processingStatus;
 
         return $this;
     }
 
-    public function getProcessedbyown(): ?string
+    public function getProcessedByOwner(): ?string
     {
-        return $this->processedbyown;
+        return $this->processedByOwner;
     }
 
-    public function setProcessedbyown(?string $processedbyown): self
+    public function setProcessedByOwner(?string $processedByOwner): self
     {
-        $this->processedbyown = $processedbyown;
+        $this->processedByOwner = $processedByOwner;
 
         return $this;
     }
 
-    public function getProcessedbyborr(): ?string
+    public function getProcessedByBorrower(): ?string
     {
-        return $this->processedbyborr;
+        return $this->processedByBorrower;
     }
 
-    public function setProcessedbyborr(?string $processedbyborr): self
+    public function setProcessedByBorrower(?string $processedByBorrower): self
     {
-        $this->processedbyborr = $processedbyborr;
+        $this->processedByBorrower = $processedByBorrower;
 
         return $this;
     }
 
-    public function getProcessedbyreturnown(): ?string
+    public function getReturnProcessedByOwner(): ?string
     {
-        return $this->processedbyreturnown;
+        return $this->returnProcessedByOwner;
     }
 
-    public function setProcessedbyreturnown(?string $processedbyreturnown): self
+    public function setReturnProcessedByOwner(?string $returnProcessedByOwner): self
     {
-        $this->processedbyreturnown = $processedbyreturnown;
+        $this->returnProcessedByOwner = $returnProcessedByOwner;
 
         return $this;
     }
 
-    public function getProcessedbyreturnborr(): ?string
+    public function getReturnProcessedByBorrower(): ?string
     {
-        return $this->processedbyreturnborr;
+        return $this->returnProcessedByBorrower;
     }
 
-    public function setProcessedbyreturnborr(?string $processedbyreturnborr): self
+    public function setReturnProcessedByBorrower(?string $returnProcessedByBorrower): self
     {
-        $this->processedbyreturnborr = $processedbyreturnborr;
+        $this->returnProcessedByBorrower = $returnProcessedByBorrower;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getCollidown(): ?Collections
+    public function getCollectionIdOwner(): ?Collections
     {
-        return $this->collidown;
+        return $this->collectionIdOwner;
     }
 
-    public function setCollidown(?Collections $collidown): self
+    public function setCollectionIdOwner(?Collections $collectionIdOwner): self
     {
-        $this->collidown = $collidown;
+        $this->collectionIdOwner = $collectionIdOwner;
 
         return $this;
     }
 
-    public function getIidborrower(): ?Institutions
+    public function getInstitutionIdBorrower(): ?Institutions
     {
-        return $this->iidborrower;
+        return $this->institutionIdBorrower;
     }
 
-    public function setIidborrower(?Institutions $iidborrower): self
+    public function setInstitutionIdBorrower(?Institutions $institutionIdBorrower): self
     {
-        $this->iidborrower = $iidborrower;
+        $this->institutionIdBorrower = $institutionIdBorrower;
 
         return $this;
     }
 
-    public function getCollidborr(): ?Collections
+    public function getCollectionIdBorrower(): ?Collections
     {
-        return $this->collidborr;
+        return $this->collectionIdBorrower;
     }
 
-    public function setCollidborr(?Collections $collidborr): self
+    public function setCollectionIdBorrower(?Collections $collectionIdBorrower): self
     {
-        $this->collidborr = $collidborr;
+        $this->collectionIdBorrower = $collectionIdBorrower;
 
         return $this;
     }
 
-    public function getIidowner(): ?Institutions
+    public function getInstitutionIdOwner(): ?Institutions
     {
-        return $this->iidowner;
+        return $this->institutionIdOwner;
     }
 
-    public function setIidowner(?Institutions $iidowner): self
+    public function setInstitutionIdOwner(?Institutions $institutionIdOwner): self
     {
-        $this->iidowner = $iidowner;
+        $this->institutionIdOwner = $institutionIdOwner;
 
         return $this;
     }
@@ -655,24 +693,24 @@ class OccurrenceLoans
     /**
      * @return Collection|Occurrences[]
      */
-    public function getOccid(): Collection
+    public function getOccurrenceId(): Collection
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function addOccid(Occurrences $occid): self
+    public function addOccurrenceId(Occurrences $occurrenceId): self
     {
-        if (!$this->occid->contains($occid)) {
-            $this->occid[] = $occid;
+        if (!$this->occurrenceId->contains($occurrenceId)) {
+            $this->occurrenceId[] = $occurrenceId;
         }
 
         return $this;
     }
 
-    public function removeOccid(Occurrences $occid): self
+    public function removeOccurrenceId(Occurrences $occurrenceId): self
     {
-        if ($this->occid->contains($occid)) {
-            $this->occid->removeElement($occid);
+        if ($this->occurrenceId->contains($occurrenceId)) {
+            $this->occurrenceId->removeElement($occurrenceId);
         }
 
         return $this;

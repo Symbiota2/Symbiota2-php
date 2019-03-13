@@ -2,76 +2,94 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OccurrenceComments
  *
  * @ORM\Table(name="omoccurcomments", indexes={@ORM\Index(name="fk_omoccurcomments_uid", columns={"createduid"}), @ORM\Index(name="fk_omoccurcomments_occid", columns={"occid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OccurrenceCommentsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class OccurrenceComments
+class OccurrenceComments implements CreatedUserIdInterface, InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="comid", type="integer", nullable=false)
+     * @ORM\Column(name="comid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $comid;
+    private $id;
 
     /**
-     * @var \Occurrences
+     * @var \App\Entity\Occurrences
      *
-     * @ORM\ManyToOne(targetEntity="Occurrences")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="comment", type="text", length=65535)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=65535)
      */
     private $comment;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $createduid;
+    private $createdUserId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="reviewstatus", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="reviewstatus", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $reviewstatus;
+    private $reviewStatus;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="parentcomid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="parentcomid", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $parentcomid = 'NULL';
+    private $parentCommentId;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getComid(): ?int
+    public function getId(): ?int
     {
-        return $this->comid;
+        return $this->id;
     }
 
     public function getComment(): ?string
@@ -86,62 +104,69 @@ class OccurrenceComments
         return $this;
     }
 
-    public function getReviewstatus(): ?int
+    public function getReviewStatus(): ?int
     {
-        return $this->reviewstatus;
+        return $this->reviewStatus;
     }
 
-    public function setReviewstatus(int $reviewstatus): self
+    public function setReviewStatus(int $reviewStatus): self
     {
-        $this->reviewstatus = $reviewstatus;
+        $this->reviewStatus = $reviewStatus;
 
         return $this;
     }
 
-    public function getParentcomid(): ?int
+    public function getParentCommentId(): ?int
     {
-        return $this->parentcomid;
+        return $this->parentCommentId;
     }
 
-    public function setParentcomid(?int $parentcomid): self
+    public function setParentCommentId(?int $parentCommentId): self
     {
-        $this->parentcomid = $parentcomid;
+        $this->parentCommentId = $parentCommentId;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getOccid(): ?Occurrences
+    public function getOccurrenceId(): ?Occurrences
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function setOccid(?Occurrences $occid): self
+    public function setOccurrenceId(?Occurrences $occurrenceId): self
     {
-        $this->occid = $occid;
+        $this->occurrenceId = $occurrenceId;
 
         return $this;
     }
 
-    public function getCreateduid(): ?Users
+    /**
+     * @return Users|null
+     */
+    public function getCreatedUserId(): ?Users
     {
-        return $this->createduid;
+        return $this->createdUserId;
     }
 
-    public function setCreateduid(?Users $createduid): self
+    /**
+     * @param UserInterface $createdUserId
+     * @return CreatedUserIdInterface
+     */
+    public function setCreatedUserId(UserInterface $createdUserId): CreatedUserIdInterface
     {
-        $this->createduid = $createduid;
+        $this->createdUserId = $createdUserId;
 
         return $this;
     }

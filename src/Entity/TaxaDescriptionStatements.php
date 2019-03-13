@@ -2,80 +2,99 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TaxaDescriptionStatements
  *
  * @ORM\Table(name="taxadescrstmts", indexes={@ORM\Index(name="FK_taxadescrstmts_tblock", columns={"tdbid"})})
  * @ORM\Entity(repositoryClass="App\Repository\TaxaDescriptionStatementsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class TaxaDescriptionStatements
+class TaxaDescriptionStatements implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="tdsid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="tdsid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $tdsid;
+    private $id;
 
     /**
-     * @var \TaxaDescriptionBlock
+     * @var \App\Entity\TaxaDescriptionBlock
      *
-     * @ORM\ManyToOne(targetEntity="TaxaDescriptionBlock")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\TaxaDescriptionBlock")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tdbid", referencedColumnName="tdbid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $tdbid;
+    private $descriptionBlockId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="heading", type="string", length=75, nullable=false)
+     * @ORM\Column(name="heading", type="string", length=75)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=75)
      */
     private $heading;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="statement", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="statement", type="text", length=65535)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=65535)
      */
     private $statement;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="displayheader", type="integer", nullable=false, options={"default"="1","unsigned"=true})
+     * @ORM\Column(name="displayheader", type="integer", options={"default"="1","unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $displayheader = '1';
+    private $displayHeader = 1;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="sortsequence", type="integer", nullable=false, options={"default"="89","unsigned"=true})
+     * @ORM\Column(name="sortsequence", type="integer", options={"default"="89","unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $sortsequence = '89';
+    private $sortSequence = 89;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getTdsid(): ?int
+    public function getId(): ?int
     {
-        return $this->tdsid;
+        return $this->id;
     }
 
     public function getHeading(): ?string
@@ -102,14 +121,14 @@ class TaxaDescriptionStatements
         return $this;
     }
 
-    public function getDisplayheader(): ?int
+    public function getDisplayHeader(): ?int
     {
-        return $this->displayheader;
+        return $this->displayHeader;
     }
 
-    public function setDisplayheader(int $displayheader): self
+    public function setDisplayHeader(int $displayHeader): self
     {
-        $this->displayheader = $displayheader;
+        $this->displayHeader = $displayHeader;
 
         return $this;
     }
@@ -126,38 +145,38 @@ class TaxaDescriptionStatements
         return $this;
     }
 
-    public function getSortsequence(): ?int
+    public function getSortSequence(): ?int
     {
-        return $this->sortsequence;
+        return $this->sortSequence;
     }
 
-    public function setSortsequence(int $sortsequence): self
+    public function setSortSequence(int $sortSequence): self
     {
-        $this->sortsequence = $sortsequence;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getTdbid(): ?TaxaDescriptionBlock
+    public function getDescriptionBlockId(): ?TaxaDescriptionBlock
     {
-        return $this->tdbid;
+        return $this->descriptionBlockId;
     }
 
-    public function setTdbid(?TaxaDescriptionBlock $tdbid): self
+    public function setDescriptionBlockId(?TaxaDescriptionBlock $descriptionBlockId): self
     {
-        $this->tdbid = $tdbid;
+        $this->descriptionBlockId = $descriptionBlockId;
 
         return $this;
     }

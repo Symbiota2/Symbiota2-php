@@ -129,6 +129,7 @@ class ChecklistProjects implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="parentpid", referencedColumnName="pid")
      * })
      * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $parentProjectId;
 
@@ -145,14 +146,14 @@ class ChecklistProjects implements InitialTimestampInterface
      * @var \DateTime
      *
      * @ORM\Column(name="InitialTimeStamp", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Checklists", inversedBy="pid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Checklists", inversedBy="projectId")
      * @ORM\JoinTable(name="fmchklstprojlink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="pid", referencedColumnName="pid")

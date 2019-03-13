@@ -36,6 +36,7 @@ class ImageProcessorNlpFragment implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="spnlpid", referencedColumnName="spnlpid")
      * })
      * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $imageProcessorNlpId;
 
@@ -77,7 +78,7 @@ class ImageProcessorNlpFragment implements InitialTimestampInterface
      * @var \DateTime|null
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 

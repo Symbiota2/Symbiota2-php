@@ -2,20 +2,27 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * SchemaVersion
  *
  * @ORM\Table(name="schemaversion", uniqueConstraints={@ORM\UniqueConstraint(name="versionnumber_UNIQUE", columns={"versionnumber"})})
  * @ORM\Entity(repositoryClass="App\Repository\SchemaVersionRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class SchemaVersion
+class SchemaVersion implements ModifiedTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -24,42 +31,45 @@ class SchemaVersion
     /**
      * @var string
      *
-     * @ORM\Column(name="versionnumber", type="string", length=20, nullable=false)
+     * @ORM\Column(name="versionnumber", type="string", length=20)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=20)
      */
-    private $versionnumber;
+    private $versionNumber;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateapplied", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="modifiedtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $dateapplied = 'CURRENT_TIMESTAMP';
+    private $modifiedTimestamp;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getVersionnumber(): ?string
+    public function getVersionNumber(): ?string
     {
-        return $this->versionnumber;
+        return $this->versionNumber;
     }
 
-    public function setVersionnumber(string $versionnumber): self
+    public function setVersionNumber(string $versionNumber): self
     {
-        $this->versionnumber = $versionnumber;
+        $this->versionNumber = $versionNumber;
 
         return $this;
     }
 
-    public function getDateapplied(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?\DateTimeInterface
     {
-        return $this->dateapplied;
+        return $this->modifiedTimestamp;
     }
 
-    public function setDateapplied(\DateTimeInterface $dateapplied): self
+    public function setModifiedTimestamp(\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
-        $this->dateapplied = $dateapplied;
+        $this->modifiedTimestamp = $modifiedTimestamp;
 
         return $this;
     }

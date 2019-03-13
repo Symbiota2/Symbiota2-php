@@ -2,171 +2,199 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * UploadTempImages
  *
  * @ORM\Table(name="uploadimagetemp", indexes={@ORM\Index(name="Index_uploadimg_dbpk", columns={"dbpk"}), @ORM\Index(name="Index_uploadimg_collid", columns={"collid"}), @ORM\Index(name="Index_uploadimg_occid", columns={"occid"}), @ORM\Index(name="Index_uploadimg_ts", columns={"initialtimestamp"})})
  * @ORM\Entity(repositoryClass="App\Repository\UploadTempImagesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class UploadTempImages
+class UploadTempImages implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="upimgid", type="integer", nullable=false)
+     * @ORM\Column(name="upimgid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $upimgid;
+    private $id;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="tid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="tid", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $tid = 'NULL';
+    private $taxaId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=255, nullable=false)
+     * @ORM\Column(name="url", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $url;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="thumbnailurl", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="thumbnailurl", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $thumbnailurl = 'NULL';
+    private $thumbnailUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="originalurl", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="originalurl", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $originalurl = 'NULL';
+    private $originalUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="archiveurl", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="archiveurl", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $archiveurl = 'NULL';
+    private $archiveUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="photographer", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="photographer", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $photographer = 'NULL';
+    private $photographer;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="photographeruid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="photographeruid", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $photographeruid = 'NULL';
+    private $photographerUserId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="imagetype", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="imagetype", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $imagetype = 'NULL';
+    private $imageType;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="format", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="format", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $format = 'NULL';
+    private $format;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="caption", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="caption", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $caption = 'NULL';
+    private $caption;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="owner", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="owner", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $owner = 'NULL';
+    private $owner;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="occid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="occid", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $occid = 'NULL';
+    private $occurrenceId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="collid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="collid", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $collid = 'NULL';
+    private $collectionId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dbpk", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dbpk", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $dbpk = 'NULL';
+    private $sourcePrimaryKey;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="specimengui", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="specimengui", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $specimengui = 'NULL';
+    private $occurrenceGuid;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="username", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="username", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $username = 'NULL';
+    private $username;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="sortsequence", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="sortsequence", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $sortsequence = 'NULL';
+    private $sortSequence;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getUpimgid(): ?int
+    public function getId(): ?int
     {
-        return $this->upimgid;
+        return $this->id;
     }
 
-    public function getTid(): ?int
+    public function getTaxaId(): ?int
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(?int $tid): self
+    public function setTaxaId(?int $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }
@@ -183,38 +211,38 @@ class UploadTempImages
         return $this;
     }
 
-    public function getThumbnailurl(): ?string
+    public function getThumbnailUrl(): ?string
     {
-        return $this->thumbnailurl;
+        return $this->thumbnailUrl;
     }
 
-    public function setThumbnailurl(?string $thumbnailurl): self
+    public function setThumbnailUrl(?string $thumbnailUrl): self
     {
-        $this->thumbnailurl = $thumbnailurl;
+        $this->thumbnailUrl = $thumbnailUrl;
 
         return $this;
     }
 
-    public function getOriginalurl(): ?string
+    public function getOriginalUrl(): ?string
     {
-        return $this->originalurl;
+        return $this->originalUrl;
     }
 
-    public function setOriginalurl(?string $originalurl): self
+    public function setOriginalUrl(?string $originalUrl): self
     {
-        $this->originalurl = $originalurl;
+        $this->originalUrl = $originalUrl;
 
         return $this;
     }
 
-    public function getArchiveurl(): ?string
+    public function getArchiveUrl(): ?string
     {
-        return $this->archiveurl;
+        return $this->archiveUrl;
     }
 
-    public function setArchiveurl(?string $archiveurl): self
+    public function setArchiveUrl(?string $archiveUrl): self
     {
-        $this->archiveurl = $archiveurl;
+        $this->archiveUrl = $archiveUrl;
 
         return $this;
     }
@@ -231,26 +259,26 @@ class UploadTempImages
         return $this;
     }
 
-    public function getPhotographeruid(): ?int
+    public function getPhotographerUserId(): ?int
     {
-        return $this->photographeruid;
+        return $this->photographerUserId;
     }
 
-    public function setPhotographeruid(?int $photographeruid): self
+    public function setPhotographerUserId(?int $photographerUserId): self
     {
-        $this->photographeruid = $photographeruid;
+        $this->photographerUserId = $photographerUserId;
 
         return $this;
     }
 
-    public function getImagetype(): ?string
+    public function getImageType(): ?string
     {
-        return $this->imagetype;
+        return $this->imageType;
     }
 
-    public function setImagetype(?string $imagetype): self
+    public function setImageType(?string $imageType): self
     {
-        $this->imagetype = $imagetype;
+        $this->imageType = $imageType;
 
         return $this;
     }
@@ -291,50 +319,50 @@ class UploadTempImages
         return $this;
     }
 
-    public function getOccid(): ?int
+    public function getOccurrenceId(): ?int
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function setOccid(?int $occid): self
+    public function setOccurrenceId(?int $occurrenceId): self
     {
-        $this->occid = $occid;
+        $this->occurrenceId = $occurrenceId;
 
         return $this;
     }
 
-    public function getCollid(): ?int
+    public function getCollectionId(): ?int
     {
-        return $this->collid;
+        return $this->collectionId;
     }
 
-    public function setCollid(?int $collid): self
+    public function setCollectionId(?int $collectionId): self
     {
-        $this->collid = $collid;
+        $this->collectionId = $collectionId;
 
         return $this;
     }
 
-    public function getDbpk(): ?string
+    public function getSourcePrimaryKey(): ?string
     {
-        return $this->dbpk;
+        return $this->sourcePrimaryKey;
     }
 
-    public function setDbpk(?string $dbpk): self
+    public function setSourcePrimaryKey(?string $sourcePrimaryKey): self
     {
-        $this->dbpk = $dbpk;
+        $this->sourcePrimaryKey = $sourcePrimaryKey;
 
         return $this;
     }
 
-    public function getSpecimengui(): ?string
+    public function getOccurrenceGuid(): ?string
     {
-        return $this->specimengui;
+        return $this->occurrenceGuid;
     }
 
-    public function setSpecimengui(?string $specimengui): self
+    public function setOccurrenceGuid(?string $occurrenceGuid): self
     {
-        $this->specimengui = $specimengui;
+        $this->occurrenceGuid = $occurrenceGuid;
 
         return $this;
     }
@@ -363,26 +391,26 @@ class UploadTempImages
         return $this;
     }
 
-    public function getSortsequence(): ?int
+    public function getSortSequence(): ?int
     {
-        return $this->sortsequence;
+        return $this->sortSequence;
     }
 
-    public function setSortsequence(?int $sortsequence): self
+    public function setSortSequence(?int $sortSequence): self
     {
-        $this->sortsequence = $sortsequence;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }

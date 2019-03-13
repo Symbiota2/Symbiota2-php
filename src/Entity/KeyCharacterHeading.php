@@ -2,83 +2,98 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * KeyCharacterHeading
  *
  * @ORM\Table(name="kmcharheading", uniqueConstraints={@ORM\UniqueConstraint(name="unique_kmcharheading", columns={"headingname", "langid"})}, indexes={@ORM\Index(name="FK_kmcharheading_lang_idx", columns={"langid"}), @ORM\Index(name="HeadingName", columns={"headingname"})})
  * @ORM\Entity(repositoryClass="App\Repository\KeyCharacterHeadingRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class KeyCharacterHeading
+class KeyCharacterHeading implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="hid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="hid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $hid;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="headingname", type="string", length=255, nullable=false)
+     * @ORM\Column(name="headingname", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
-    private $headingname;
+    private $headingName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="language", type="string", length=45, nullable=false, options={"default"="English"})
+     * @ORM\Column(name="language", type="string", length=45, options={"default"="English"})
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
     private $language = 'English';
 
     /**
-     * @var \LookupLanguages
+     * @var \App\Entity\LookupLanguages
      *
-     * @ORM\ManyToOne(targetEntity="LookupLanguages")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\LookupLanguages")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="langid", referencedColumnName="langid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $langid;
+    private $languageId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="text", length=0, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="text", length=0, nullable=true)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="sortsequence", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="sortsequence", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $sortsequence = 'NULL';
+    private $sortSequence;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getHid(): ?int
+    public function getId(): ?int
     {
-        return $this->hid;
+        return $this->id;
     }
 
-    public function getHeadingname(): ?string
+    public function getHeadingName(): ?string
     {
-        return $this->headingname;
+        return $this->headingName;
     }
 
-    public function setHeadingname(string $headingname): self
+    public function setHeadingName(string $headingName): self
     {
-        $this->headingname = $headingname;
+        $this->headingName = $headingName;
 
         return $this;
     }
@@ -107,38 +122,38 @@ class KeyCharacterHeading
         return $this;
     }
 
-    public function getSortsequence(): ?int
+    public function getSortSequence(): ?int
     {
-        return $this->sortsequence;
+        return $this->sortSequence;
     }
 
-    public function setSortsequence(?int $sortsequence): self
+    public function setSortSequence(?int $sortSequence): self
     {
-        $this->sortsequence = $sortsequence;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getLangid(): ?LookupLanguages
+    public function getLanguageId(): ?LookupLanguages
     {
-        return $this->langid;
+        return $this->languageId;
     }
 
-    public function setLangid(?LookupLanguages $langid): self
+    public function setLanguageId(?LookupLanguages $languageId): self
     {
-        $this->langid = $langid;
+        $this->languageId = $languageId;
 
         return $this;
     }

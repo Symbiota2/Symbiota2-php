@@ -2,160 +2,187 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * UploadParameters
  *
  * @ORM\Table(name="uploadspecparameters", indexes={@ORM\Index(name="FK_uploadspecparameters_coll", columns={"CollID"})})
  * @ORM\Entity(repositoryClass="App\Repository\UploadParametersRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class UploadParameters
+class UploadParameters implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="uspid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="uspid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $uspid;
+    private $id;
 
     /**
-     * @var \Collections
+     * @var \App\Entity\Collections
      *
-     * @ORM\ManyToOne(targetEntity="Collections")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Collections")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="CollID", referencedColumnName="CollID")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $collid;
+    private $collectionId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="UploadType", type="integer", nullable=false, options={"default"="1","unsigned"=true,"comment"="1 = Direct; 2 = DiGIR; 3 = File"})
+     * @ORM\Column(name="UploadType", type="integer", options={"default"="1","unsigned"=true,"comment"="1 = Direct; 2 = DiGIR; 3 = File"})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $uploadtype = '1';
+    private $uploadType = 1;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=45, nullable=false)
+     * @ORM\Column(name="title", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
     private $title;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Platform", type="string", length=45, nullable=true, options={"default"="1","comment"="1 = MySQL; 2 = MSSQL; 3 = ORACLE; 11 = MS Access; 12 = FileMaker"})
+     * @ORM\Column(name="Platform", type="string", length=45, nullable=true, options={"comment"="1 = MySQL; 2 = MSSQL; 3 = ORACLE; 11 = MS Access; 12 = FileMaker"})
+     * @Assert\Length(max=45)
      */
-    private $platform = '1';
+    private $platform;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="server", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="server", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $server = 'NULL';
+    private $server;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="port", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="port", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $port = 'NULL';
+    private $port;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="driver", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="driver", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $driver = 'NULL';
+    private $driver;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Code", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Code", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $code = 'NULL';
+    private $code;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Path", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Path", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $path = 'NULL';
+    private $path;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="PkField", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="PkField", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $pkfield = 'NULL';
+    private $primaryKeyField;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Username", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Username", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $username = 'NULL';
+    private $username;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Password", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Password", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $password = 'NULL';
+    private $password;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="SchemaName", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="SchemaName", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $schemaname = 'NULL';
+    private $schemaName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="QueryStr", type="string", length=2000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="QueryStr", type="string", length=2000, nullable=true)
+     * @Assert\Length(max=2000)
      */
-    private $querystr = 'NULL';
+    private $queryString;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="cleanupsp", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="cleanupsp", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $cleanupsp = 'NULL';
+    private $postUploadProcedure;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="dlmisvalid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="dlmisvalid", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $dlmisvalid = 'NULL';
+    private $isValid;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getUspid(): ?int
+    public function getId(): ?int
     {
-        return $this->uspid;
+        return $this->id;
     }
 
-    public function getUploadtype(): ?int
+    public function getUploadType(): ?int
     {
-        return $this->uploadtype;
+        return $this->uploadType;
     }
 
-    public function setUploadtype(int $uploadtype): self
+    public function setUploadType(int $uploadType): self
     {
-        $this->uploadtype = $uploadtype;
+        $this->uploadType = $uploadType;
 
         return $this;
     }
@@ -244,14 +271,14 @@ class UploadParameters
         return $this;
     }
 
-    public function getPkfield(): ?string
+    public function getPrimaryKeyField(): ?string
     {
-        return $this->pkfield;
+        return $this->primaryKeyField;
     }
 
-    public function setPkfield(?string $pkfield): self
+    public function setPrimaryKeyField(?string $primaryKeyField): self
     {
-        $this->pkfield = $pkfield;
+        $this->primaryKeyField = $primaryKeyField;
 
         return $this;
     }
@@ -280,74 +307,74 @@ class UploadParameters
         return $this;
     }
 
-    public function getSchemaname(): ?string
+    public function getSchemaName(): ?string
     {
-        return $this->schemaname;
+        return $this->schemaName;
     }
 
-    public function setSchemaname(?string $schemaname): self
+    public function setSchemaName(?string $schemaName): self
     {
-        $this->schemaname = $schemaname;
+        $this->schemaName = $schemaName;
 
         return $this;
     }
 
-    public function getQuerystr(): ?string
+    public function getQueryString(): ?string
     {
-        return $this->querystr;
+        return $this->queryString;
     }
 
-    public function setQuerystr(?string $querystr): self
+    public function setQueryString(?string $queryString): self
     {
-        $this->querystr = $querystr;
+        $this->queryString = $queryString;
 
         return $this;
     }
 
-    public function getCleanupsp(): ?string
+    public function getPostUploadProcedure(): ?string
     {
-        return $this->cleanupsp;
+        return $this->postUploadProcedure;
     }
 
-    public function setCleanupsp(?string $cleanupsp): self
+    public function setPostUploadProcedure(?string $postUploadProcedure): self
     {
-        $this->cleanupsp = $cleanupsp;
+        $this->postUploadProcedure = $postUploadProcedure;
 
         return $this;
     }
 
-    public function getDlmisvalid(): ?int
+    public function getIsValid(): ?int
     {
-        return $this->dlmisvalid;
+        return $this->isValid;
     }
 
-    public function setDlmisvalid(?int $dlmisvalid): self
+    public function setIsValid(?int $isValid): self
     {
-        $this->dlmisvalid = $dlmisvalid;
+        $this->isValid = $isValid;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getCollid(): ?Collections
+    public function getCollectionId(): ?Collections
     {
-        return $this->collid;
+        return $this->collectionId;
     }
 
-    public function setCollid(?Collections $collid): self
+    public function setCollectionId(?Collections $collectionId): self
     {
-        $this->collid = $collid;
+        $this->collectionId = $collectionId;
 
         return $this;
     }

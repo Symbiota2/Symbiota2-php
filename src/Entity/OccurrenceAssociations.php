@@ -2,162 +2,189 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OccurrenceAssociations
  *
  * @ORM\Table(name="omoccurassociations", indexes={@ORM\Index(name="omossococcur_occidassoc_idx", columns={"occidassociate"}), @ORM\Index(name="FK_occurassoc_uidcreated_idx", columns={"createduid"}), @ORM\Index(name="omossococcur_occid_idx", columns={"occid"}), @ORM\Index(name="FK_occurassoc_uidmodified_idx", columns={"modifieduid"}), @ORM\Index(name="INDEX_verbatimSciname", columns={"verbatimsciname"}), @ORM\Index(name="FK_occurassoc_tid_idx", columns={"tid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OccurrenceAssociationsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class OccurrenceAssociations
+class OccurrenceAssociations implements ModifiedUserIdInterface, CreatedUserIdInterface, InitialTimestampInterface, ModifiedTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="associd", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="associd", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $associd;
+    private $id;
 
     /**
-     * @var \Occurrences
+     * @var \App\Entity\Occurrences
      *
-     * @ORM\ManyToOne(targetEntity="Occurrences")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
-     * @var \Occurrences
+     * @var \App\Entity\Occurrences
      *
-     * @ORM\ManyToOne(targetEntity="Occurrences")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occidassociate", referencedColumnName="occid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $occidassociate;
+    private $associatedOccurrenceId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="relationship", type="string", length=150, nullable=false)
+     * @ORM\Column(name="relationship", type="string", length=150)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=150)
      */
     private $relationship;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identifier", type="string", length=250, nullable=true, options={"default"=NULL,"comment"="e.g. GUID"})
+     * @ORM\Column(name="identifier", type="string", length=250, nullable=true, options={"comment"="e.g. GUID"})
+     * @Assert\Length(max=250)
      */
-    private $identifier = 'NULL';
+    private $identifier;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="basisOfRecord", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="basisOfRecord", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $basisofrecord = 'NULL';
+    private $basisOfRecord;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="resourceurl", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="resourceurl", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $resourceurl = 'NULL';
+    private $resourceUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="verbatimsciname", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="verbatimsciname", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $verbatimsciname = 'NULL';
+    private $verbatimScientificName;
 
     /**
-     * @var \Taxa
+     * @var \App\Entity\Taxa
      *
-     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="locationOnHost", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="locationOnHost", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $locationonhost = 'NULL';
+    private $locationOnHost;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="condition", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="condition", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $condition = 'NULL';
+    private $condition;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateEmerged", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dateEmerged", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $dateemerged = 'NULL';
+    private $dateEmerged;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $dynamicproperties = 'NULL';
+    private $dynamicProperties;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $createduid;
+    private $createdUserId;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $modifiedtimestamp = 'NULL';
+    private $modifiedTimestamp;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $modifieduid;
+    private $modifiedUserId;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getAssocid(): ?int
+    public function getId(): ?int
     {
-        return $this->associd;
+        return $this->id;
     }
 
     public function getRelationship(): ?string
@@ -184,50 +211,50 @@ class OccurrenceAssociations
         return $this;
     }
 
-    public function getBasisofrecord(): ?string
+    public function getBasisOfRecord(): ?string
     {
-        return $this->basisofrecord;
+        return $this->basisOfRecord;
     }
 
-    public function setBasisofrecord(?string $basisofrecord): self
+    public function setBasisOfRecord(?string $basisOfRecord): self
     {
-        $this->basisofrecord = $basisofrecord;
+        $this->basisOfRecord = $basisOfRecord;
 
         return $this;
     }
 
-    public function getResourceurl(): ?string
+    public function getResourceUrl(): ?string
     {
-        return $this->resourceurl;
+        return $this->resourceUrl;
     }
 
-    public function setResourceurl(?string $resourceurl): self
+    public function setResourceUrl(?string $resourceUrl): self
     {
-        $this->resourceurl = $resourceurl;
+        $this->resourceUrl = $resourceUrl;
 
         return $this;
     }
 
-    public function getVerbatimsciname(): ?string
+    public function getVerbatimScientificName(): ?string
     {
-        return $this->verbatimsciname;
+        return $this->verbatimScientificName;
     }
 
-    public function setVerbatimsciname(?string $verbatimsciname): self
+    public function setVerbatimScientificName(?string $verbatimScientificName): self
     {
-        $this->verbatimsciname = $verbatimsciname;
+        $this->verbatimScientificName = $verbatimScientificName;
 
         return $this;
     }
 
-    public function getLocationonhost(): ?string
+    public function getLocationOnHost(): ?string
     {
-        return $this->locationonhost;
+        return $this->locationOnHost;
     }
 
-    public function setLocationonhost(?string $locationonhost): self
+    public function setLocationOnHost(?string $locationOnHost): self
     {
-        $this->locationonhost = $locationonhost;
+        $this->locationOnHost = $locationOnHost;
 
         return $this;
     }
@@ -244,26 +271,26 @@ class OccurrenceAssociations
         return $this;
     }
 
-    public function getDateemerged(): ?\DateTimeInterface
+    public function getDateEmerged(): ?\DateTimeInterface
     {
-        return $this->dateemerged;
+        return $this->dateEmerged;
     }
 
-    public function setDateemerged(?\DateTimeInterface $dateemerged): self
+    public function setDateEmerged(?\DateTimeInterface $dateEmerged): self
     {
-        $this->dateemerged = $dateemerged;
+        $this->dateEmerged = $dateEmerged;
 
         return $this;
     }
 
-    public function getDynamicproperties(): ?string
+    public function getDynamicProperties(): ?string
     {
-        return $this->dynamicproperties;
+        return $this->dynamicProperties;
     }
 
-    public function setDynamicproperties(?string $dynamicproperties): self
+    public function setDynamicProperties(?string $dynamicProperties): self
     {
-        $this->dynamicproperties = $dynamicproperties;
+        $this->dynamicProperties = $dynamicProperties;
 
         return $this;
     }
@@ -280,86 +307,100 @@ class OccurrenceAssociations
         return $this;
     }
 
-    public function getModifiedtimestamp(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?\DateTimeInterface
     {
-        return $this->modifiedtimestamp;
+        return $this->modifiedTimestamp;
     }
 
-    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): self
+    public function setModifiedTimestamp(?\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
-        $this->modifiedtimestamp = $modifiedtimestamp;
+        $this->modifiedTimestamp = $modifiedTimestamp;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getOccid(): ?Occurrences
+    public function getOccurrenceId(): ?Occurrences
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function setOccid(?Occurrences $occid): self
+    public function setOccurrenceId(?Occurrences $occurrenceId): self
     {
-        $this->occid = $occid;
+        $this->occurrenceId = $occurrenceId;
 
         return $this;
     }
 
-    public function getTid(): ?Taxa
+    public function getTaxaId(): ?Taxa
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(?Taxa $tid): self
+    public function setTaxaId(?Taxa $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }
 
-    public function getCreateduid(): ?Users
+    /**
+     * @return Users|null
+     */
+    public function getCreatedUserId(): ?Users
     {
-        return $this->createduid;
+        return $this->createdUserId;
     }
 
-    public function setCreateduid(?Users $createduid): self
+    /**
+     * @param UserInterface $createdUserId
+     * @return CreatedUserIdInterface
+     */
+    public function setCreatedUserId(UserInterface $createdUserId): CreatedUserIdInterface
     {
-        $this->createduid = $createduid;
+        $this->createdUserId = $createdUserId;
 
         return $this;
     }
 
-    public function getModifieduid(): ?Users
+    /**
+     * @return Users|null
+     */
+    public function getModifiedUserId(): ?Users
     {
-        return $this->modifieduid;
+        return $this->modifiedUserId;
     }
 
-    public function setModifieduid(?Users $modifieduid): self
+    /**
+     * @param UserInterface $modifiedUserId
+     * @return ModifiedUserIdInterface
+     */
+    public function setModifiedUserId(UserInterface $modifiedUserId): ModifiedUserIdInterface
     {
-        $this->modifieduid = $modifieduid;
+        $this->modifiedUserId = $modifiedUserId;
 
         return $this;
     }
 
-    public function getOccidassociate(): ?Occurrences
+    public function getAssociatedOccurrenceId(): ?Occurrences
     {
-        return $this->occidassociate;
+        return $this->associatedOccurrenceId;
     }
 
-    public function setOccidassociate(?Occurrences $occidassociate): self
+    public function setAssociatedOccurrenceId(?Occurrences $associatedOccurrenceId): self
     {
-        $this->occidassociate = $occidassociate;
+        $this->associatedOccurrenceId = $associatedOccurrenceId;
 
         return $this;
     }

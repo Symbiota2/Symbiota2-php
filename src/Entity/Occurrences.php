@@ -2,775 +2,871 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Occurrences
  *
  * @ORM\Table(name="omoccurrences", uniqueConstraints={@ORM\UniqueConstraint(name="Index_collid", columns={"collid", "dbpk"})}, indexes={@ORM\Index(name="Index_latestDateCollected", columns={"latestDateCollected"}), @ORM\Index(name="Index_county", columns={"county"}), @ORM\Index(name="Index_eventDate", columns={"eventDate"}), @ORM\Index(name="Index_occurDateEntered", columns={"InitialTimeStamp"}), @ORM\Index(name="Index_sciname", columns={"sciname"}), @ORM\Index(name="Index_ownerInst", columns={"ownerInstitutionCode"}), @ORM\Index(name="occelevmin", columns={"minimumElevationInMeters"}), @ORM\Index(name="Index_otherCatalogNumbers", columns={"otherCatalogNumbers"}), @ORM\Index(name="Index_state", columns={"stateProvince"}), @ORM\Index(name="Index_catalognumber", columns={"catalogNumber"}), @ORM\Index(name="Index_occurDateLastModifed", columns={"modifiedTimeStamp"}), @ORM\Index(name="FK_omoccurrences_uid", columns={"observeruid"}), @ORM\Index(name="Index_gui", columns={"occurrenceID"}), @ORM\Index(name="occelevmax", columns={"maximumElevationInMeters"}), @ORM\Index(name="Index_locality", columns={"locality"}, flags={"fulltext"}), @ORM\Index(name="Index_country", columns={"country"}), @ORM\Index(name="Index_collnum", columns={"recordNumber"}), @ORM\Index(name="Index_occurrences_typestatus", columns={"typeStatus"}), @ORM\Index(name="FK_omoccurrences_tid", columns={"tidinterpreted"}), @ORM\Index(name="Index_collector", columns={"recordedBy"}), @ORM\Index(name="Index_occurrences_procstatus", columns={"processingstatus"}), @ORM\Index(name="Index_occurRecordEnteredBy", columns={"recordEnteredBy"}), @ORM\Index(name="Index_family", columns={"family"}), @ORM\Index(name="Index_municipality", columns={"municipality"}), @ORM\Index(name="Index_occurrences_cult", columns={"cultivationStatus"}), @ORM\Index(name="IDX_C48904CFEA1D339B", columns={"collid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OccurrencesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class Occurrences
+class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="occid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="occid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $occid;
+    private $id;
 
     /**
-     * @var \Collections
+     * @var \App\Entity\Collections
      *
-     * @ORM\ManyToOne(targetEntity="Collections")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Collections")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $collid;
+    private $collectionId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dbpk", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dbpk", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $dbpk = 'NULL';
+    private $sourcePrimaryKey;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="basisOfRecord", type="string", length=32, nullable=true, options={"default"="PreservedSpecimen","comment"="PreservedSpecimen, LivingSpecimen, HumanObservation"})
+     * @Assert\Length(max=32)
      */
-    private $basisofrecord = 'PreservedSpecimen';
+    private $basisOfRecord = 'PreservedSpecimen';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="occurrenceID", type="string", length=255, nullable=true, options={"default"=NULL,"comment"="UniqueGlobalIdentifier"})
+     * @ORM\Column(name="occurrenceID", type="string", length=255, nullable=true, options={"comment"="UniqueGlobalIdentifier"})
+     * @Assert\Length(max=255)
      */
-    private $occurrenceid = 'NULL';
+    private $occurrenceIdentifier;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="catalogNumber", type="string", length=32, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="catalogNumber", type="string", length=32, nullable=true)
+     * @Assert\Length(max=32)
      */
-    private $catalognumber = 'NULL';
+    private $catalogNumber;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="otherCatalogNumbers", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="otherCatalogNumbers", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $othercatalognumbers = 'NULL';
+    private $otherCatalogNumbers;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="ownerInstitutionCode", type="string", length=32, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="ownerInstitutionCode", type="string", length=32, nullable=true)
+     * @Assert\Length(max=32)
      */
-    private $ownerinstitutioncode = 'NULL';
+    private $ownerInstitutionCode;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="institutionID", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="institutionID", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $institutionid = 'NULL';
+    private $institutionIdentifier;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="collectionID", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="collectionID", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $collectionid = 'NULL';
+    private $collectionIdentifier;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="datasetID", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="datasetID", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $datasetid = 'NULL';
+    private $datasetIdentifier;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="institutionCode", type="string", length=64, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="institutionCode", type="string", length=64, nullable=true)
+     * @Assert\Length(max=64)
      */
-    private $institutioncode = 'NULL';
+    private $institutionCode;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="collectionCode", type="string", length=64, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="collectionCode", type="string", length=64, nullable=true)
+     * @Assert\Length(max=64)
      */
-    private $collectioncode = 'NULL';
+    private $collectionCode;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="family", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="family", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $family = 'NULL';
+    private $family;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="scientificName", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="scientificName", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $scientificname = 'NULL';
+    private $scientificNameFull;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sciname", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="sciname", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $sciname = 'NULL';
+    private $scientificName;
 
     /**
-     * @var \Taxa
+     * @var \App\Entity\Taxa
      *
-     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tidinterpreted", referencedColumnName="TID")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $tidinterpreted;
+    private $taxaIdInterpreted;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="genus", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="genus", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $genus = 'NULL';
+    private $genus;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="specificEpithet", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="specificEpithet", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $specificepithet = 'NULL';
+    private $specificEpithet;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="taxonRank", type="string", length=32, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="taxonRank", type="string", length=32, nullable=true)
+     * @Assert\Length(max=32)
      */
-    private $taxonrank = 'NULL';
+    private $taxonRank;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="infraspecificEpithet", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="infraspecificEpithet", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $infraspecificepithet = 'NULL';
+    private $infraspecificEpithet;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="scientificNameAuthorship", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="scientificNameAuthorship", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $scientificnameauthorship = 'NULL';
+    private $scientificNameAuthorship;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="taxonRemarks", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="taxonRemarks", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $taxonremarks = 'NULL';
+    private $taxonRemarks;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identifiedBy", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="identifiedBy", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $identifiedby = 'NULL';
+    private $identifiedBy;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dateIdentified", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dateIdentified", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $dateidentified = 'NULL';
+    private $dateIdentified;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identificationReferences", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="identificationReferences", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $identificationreferences = 'NULL';
+    private $identificationReferences;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identificationRemarks", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="identificationRemarks", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $identificationremarks = 'NULL';
+    private $identificationRemarks;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identificationQualifier", type="string", length=255, nullable=true, options={"default"=NULL,"comment"="cf, aff, etc"})
+     * @ORM\Column(name="identificationQualifier", type="string", length=255, nullable=true, options={"comment"="cf, aff, etc"})
+     * @Assert\Length(max=255)
      */
-    private $identificationqualifier = 'NULL';
+    private $identificationQualifier;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="typeStatus", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="typeStatus", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $typestatus = 'NULL';
+    private $typeStatus;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="recordedBy", type="string", length=255, nullable=true, options={"default"=NULL,"comment"="Collector(s)"})
+     * @ORM\Column(name="recordedBy", type="string", length=255, nullable=true, options={"comment"="Collector(s)"})
+     * @Assert\Length(max=255)
      */
-    private $recordedby = 'NULL';
+    private $recordedBy;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="recordNumber", type="string", length=45, nullable=true, options={"default"=NULL,"comment"="Collector Number"})
+     * @ORM\Column(name="recordNumber", type="string", length=45, nullable=true, options={"comment"="Collector Number"})
+     * @Assert\Length(max=45)
      */
-    private $recordnumber = 'NULL';
+    private $recordNumber;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="associatedCollectors", type="string", length=255, nullable=true, options={"default"=NULL,"comment"="not DwC"})
+     * @ORM\Column(name="associatedCollectors", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $associatedcollectors = 'NULL';
+    private $associatedCollectors;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="eventDate", type="date", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="eventDate", type="date", nullable=true)
+     * @Assert\Date
      */
-    private $eventdate = 'NULL';
+    private $eventDate;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="latestDateCollected", type="date", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="latestDateCollected", type="date", nullable=true)
+     * @Assert\Date
      */
-    private $latestdatecollected = 'NULL';
+    private $latestDateCollected;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="year", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="year", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $year = 'NULL';
+    private $year;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="month", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="month", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $month = 'NULL';
+    private $month;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="day", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="day", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $day = 'NULL';
+    private $day;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="startDayOfYear", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="startDayOfYear", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $startdayofyear = 'NULL';
+    private $startDayOfYear;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="endDayOfYear", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="endDayOfYear", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $enddayofyear = 'NULL';
+    private $endDayOfYear;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="verbatimEventDate", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="verbatimEventDate", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $verbatimeventdate = 'NULL';
+    private $verbatimEventDate;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="habitat", type="text", length=65535, nullable=true, options={"default"=NULL,"comment"="Habitat, substrait, etc"})
+     * @ORM\Column(name="habitat", type="text", length=65535, nullable=true, options={"comment"="Habitat, substrait, etc"})
+     * @Assert\Length(max=65535)
      */
-    private $habitat = 'NULL';
+    private $habitat;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="substrate", type="string", length=500, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="substrate", type="string", length=500, nullable=true)
+     * @Assert\Length(max=500)
      */
-    private $substrate = 'NULL';
+    private $substrate;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="fieldNotes", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="fieldNotes", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $fieldnotes = 'NULL';
+    private $fieldNotes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="fieldnumber", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="fieldnumber", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $fieldnumber = 'NULL';
+    private $fieldNumber;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="eventID", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="eventID", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $eventid = 'NULL';
+    private $eventIdentifier;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="occurrenceRemarks", type="text", length=65535, nullable=true, options={"default"=NULL,"comment"="General Notes"})
+     * @ORM\Column(name="occurrenceRemarks", type="text", length=65535, nullable=true, options={"comment"="General Notes"})
+     * @Assert\Length(max=65535)
      */
-    private $occurrenceremarks = 'NULL';
+    private $occurrenceRemarks;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="informationWithheld", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="informationWithheld", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $informationwithheld = 'NULL';
+    private $informationWithheld;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dataGeneralizations", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dataGeneralizations", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $datageneralizations = 'NULL';
+    private $dataGeneralizations;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="associatedOccurrences", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="associatedOccurrences", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $associatedoccurrences = 'NULL';
+    private $associatedOccurrences;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="associatedTaxa", type="text", length=65535, nullable=true, options={"default"=NULL,"comment"="Associated Species"})
+     * @ORM\Column(name="associatedTaxa", type="text", length=65535, nullable=true, options={"comment"="Associated Species"})
+     * @Assert\Length(max=65535)
      */
-    private $associatedtaxa = 'NULL';
+    private $associatedTaxa;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $dynamicproperties = 'NULL';
+    private $dynamicProperties;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="verbatimAttributes", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="verbatimAttributes", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $verbatimattributes = 'NULL';
+    private $verbatimAttributes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="behavior", type="string", length=500, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="behavior", type="string", length=500, nullable=true)
+     * @Assert\Length(max=500)
      */
-    private $behavior = 'NULL';
+    private $behavior;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="reproductiveCondition", type="string", length=255, nullable=true, options={"default"=NULL,"comment"="Phenology: flowers, fruit, sterile"})
+     * @ORM\Column(name="reproductiveCondition", type="string", length=255, nullable=true, options={"comment"="Phenology: flowers, fruit, sterile"})
+     * @Assert\Length(max=255)
      */
-    private $reproductivecondition = 'NULL';
+    private $reproductiveCondition;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="cultivationStatus", type="integer", nullable=true, options={"default"=NULL,"comment"="0 = wild, 1 = cultivated"})
+     * @ORM\Column(name="cultivationStatus", type="integer", nullable=true, options={"comment"="0 = wild, 1 = cultivated"})
+     * @Assert\Type(type="integer")
      */
-    private $cultivationstatus = 'NULL';
+    private $cultivationStatus;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="establishmentMeans", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="establishmentMeans", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $establishmentmeans = 'NULL';
+    private $establishmentMeans;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="lifeStage", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="lifeStage", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $lifestage = 'NULL';
+    private $lifeStage;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sex", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="sex", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $sex = 'NULL';
+    private $sex;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="individualCount", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="individualCount", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $individualcount = 'NULL';
+    private $individualCount;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="samplingProtocol", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="samplingProtocol", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $samplingprotocol = 'NULL';
+    private $samplingProtocol;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="samplingEffort", type="string", length=200, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="samplingEffort", type="string", length=200, nullable=true)
+     * @Assert\Length(max=200)
      */
-    private $samplingeffort = 'NULL';
+    private $samplingEffort;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="preparations", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="preparations", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $preparations = 'NULL';
+    private $preparations;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="locationID", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="locationID", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $locationid = 'NULL';
+    private $locationIdentifier;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="waterBody", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="waterBody", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $waterbody = 'NULL';
+    private $waterbody;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="country", type="string", length=64, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="country", type="string", length=64, nullable=true)
+     * @Assert\Length(max=64)
      */
-    private $country = 'NULL';
+    private $country;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="stateProvince", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="stateProvince", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $stateprovince = 'NULL';
+    private $stateProvince;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="county", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="county", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $county = 'NULL';
+    private $county;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="municipality", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="municipality", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $municipality = 'NULL';
+    private $municipality;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="locality", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="locality", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $locality = 'NULL';
+    private $locality;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="localitySecurity", type="integer", nullable=true, options={"default"=NULL,"comment"="0 = no security; 1 = hidden locality"})
+     * @ORM\Column(name="localitySecurity", type="integer", nullable=true, options={"comment"="0 = no security; 1 = hidden locality"})
+     * @Assert\Type(type="integer")
      */
-    private $localitysecurity = 'NULL';
+    private $localitySecurity;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="localitySecurityReason", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="localitySecurityReason", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $localitysecurityreason = 'NULL';
+    private $localitySecurityReason;
 
     /**
      * @var float|null
      *
-     * @ORM\Column(name="decimalLatitude", type="float", precision=10, scale=0, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="decimalLatitude", type="float", precision=10, scale=0, nullable=true)
+     * @Assert\Type(type="float")
      */
-    private $decimallatitude = 'NULL';
+    private $decimalLatitude;
 
     /**
      * @var float|null
      *
-     * @ORM\Column(name="decimalLongitude", type="float", precision=10, scale=0, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="decimalLongitude", type="float", precision=10, scale=0, nullable=true)
+     * @Assert\Type(type="float")
      */
-    private $decimallongitude = 'NULL';
+    private $decimalLongitude;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="geodeticDatum", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="geodeticDatum", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $geodeticdatum = 'NULL';
+    private $geodeticDatum;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="coordinateUncertaintyInMeters", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="coordinateUncertaintyInMeters", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $coordinateuncertaintyinmeters = 'NULL';
+    private $coordinateUncertaintyInMeters;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="footprintWKT", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="footprintWKT", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $footprintwkt = 'NULL';
+    private $footprintWkt;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="coordinatePrecision", type="decimal", precision=9, scale=7, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="coordinatePrecision", type="decimal", precision=9, scale=7, nullable=true)
+     * @Assert\Type(type="float")
      */
-    private $coordinateprecision = 'NULL';
+    private $coordinatePrecision;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="locationRemarks", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="locationRemarks", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $locationremarks = 'NULL';
+    private $locationRemarks;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="verbatimCoordinates", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="verbatimCoordinates", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $verbatimcoordinates = 'NULL';
+    private $verbatimCoordinates;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="verbatimCoordinateSystem", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="verbatimCoordinateSystem", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $verbatimcoordinatesystem = 'NULL';
+    private $verbatimCoordinateSystem;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="georeferencedBy", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="georeferencedBy", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $georeferencedby = 'NULL';
+    private $georeferencedBy;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="georeferenceProtocol", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="georeferenceProtocol", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $georeferenceprotocol = 'NULL';
+    private $georeferenceProtocol;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="georeferenceSources", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="georeferenceSources", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $georeferencesources = 'NULL';
+    private $georeferenceSources;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="georeferenceVerificationStatus", type="string", length=32, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="georeferenceVerificationStatus", type="string", length=32, nullable=true)
+     * @Assert\Length(max=32)
      */
-    private $georeferenceverificationstatus = 'NULL';
+    private $georeferenceVerificationStatus;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="georeferenceRemarks", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="georeferenceRemarks", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $georeferenceremarks = 'NULL';
+    private $georeferenceRemarks;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="minimumElevationInMeters", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="minimumElevationInMeters", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $minimumelevationinmeters = 'NULL';
+    private $minimumElevationInMeters;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="maximumElevationInMeters", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="maximumElevationInMeters", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $maximumelevationinmeters = 'NULL';
+    private $maximumElevationInMeters;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="verbatimElevation", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="verbatimElevation", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $verbatimelevation = 'NULL';
+    private $verbatimElevation;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="minimumDepthInMeters", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="minimumDepthInMeters", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $minimumdepthinmeters = 'NULL';
+    private $minimumDepthInMeters;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="maximumDepthInMeters", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="maximumDepthInMeters", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $maximumdepthinmeters = 'NULL';
+    private $maximumDepthInMeters;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="verbatimDepth", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="verbatimDepth", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $verbatimdepth = 'NULL';
+    private $verbatimDepth;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="previousIdentifications", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="previousIdentifications", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $previousidentifications = 'NULL';
+    private $previousIdentifications;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="disposition", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="disposition", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $disposition = 'NULL';
+    private $disposition;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="storageLocation", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="storageLocation", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $storagelocation = 'NULL';
+    private $storageLocation;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="genericcolumn1", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="language", type="string", length=20, nullable=true)
+     * @Assert\Length(max=20)
      */
-    private $genericcolumn1 = 'NULL';
+    private $language;
 
     /**
-     * @var string|null
+     * @var \App\Entity\Users
      *
-     * @ORM\Column(name="genericcolumn2", type="string", length=100, nullable=true, options={"default"=NULL})
-     */
-    private $genericcolumn2 = 'NULL';
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="language", type="string", length=20, nullable=true, options={"default"=NULL})
-     */
-    private $language = 'NULL';
-
-    /**
-     * @var \Users
-     *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="observeruid", referencedColumnName="uid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $observeruid;
+    private $observerUserId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="processingstatus", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="processingstatus", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $processingstatus = 'NULL';
+    private $processingStatus;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="recordEnteredBy", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="recordEnteredBy", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $recordenteredby = 'NULL';
+    private $recordEnteredBy;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="duplicateQuantity", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="duplicateQuantity", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $duplicatequantity = 'NULL';
+    private $duplicateQuantity;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="labelProject", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="labelProject", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $labelproject = 'NULL';
+    private $labelProject;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicFields", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dynamicFields", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $dynamicfields = 'NULL';
+    private $dynamicFields;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'NULL';
+    private $initialTimestamp;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $modifiedtimestamp = 'CURRENT_TIMESTAMP';
+    private $modifiedTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="ExsiccatiNumbers", mappedBy="occid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\ExsiccatiNumbers", mappedBy="occurrenceId")
      */
-    private $omenid;
+    private $exsiccatiNumberId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="OccurrenceDuplicates", inversedBy="occid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\OccurrenceDuplicates", inversedBy="occurrenceId")
      * @ORM\JoinTable(name="omoccurduplicatelink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="occid", referencedColumnName="occid")
@@ -780,12 +876,12 @@ class Occurrences
      *   }
      * )
      */
-    private $duplicateid;
+    private $duplicateId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="LookupChronostratigraphy", inversedBy="occid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\LookupChronostratigraphy", inversedBy="occurrenceId")
      * @ORM\JoinTable(name="omoccurlithostratigraphy",
      *   joinColumns={
      *     @ORM\JoinColumn(name="occid", referencedColumnName="occid")
@@ -795,167 +891,167 @@ class Occurrences
      *   }
      * )
      */
-    private $chronoid;
+    private $chronostratigraphyId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="OccurrenceLoans", mappedBy="occid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\OccurrenceLoans", mappedBy="occurrenceId")
      */
-    private $loanid;
+    private $loanId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="References", mappedBy="occid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\References", mappedBy="occurrenceId")
      */
-    private $refid;
+    private $referenceId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->omenid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->duplicateid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->chronoid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->loanid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->refid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->exsiccatiNumberId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->duplicateId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->chronostratigraphyId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->loanId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->referenceId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getOccid(): ?int
+    public function getId(): ?int
     {
-        return $this->occid;
+        return $this->id;
     }
 
-    public function getDbpk(): ?string
+    public function getSourcePrimaryKey(): ?string
     {
-        return $this->dbpk;
+        return $this->sourcePrimaryKey;
     }
 
-    public function setDbpk(?string $dbpk): self
+    public function setSourcePrimaryKey(?string $sourcePrimaryKey): self
     {
-        $this->dbpk = $dbpk;
+        $this->sourcePrimaryKey = $sourcePrimaryKey;
 
         return $this;
     }
 
-    public function getBasisofrecord(): ?string
+    public function getBasisOfRecord(): ?string
     {
-        return $this->basisofrecord;
+        return $this->basisOfRecord;
     }
 
-    public function setBasisofrecord(?string $basisofrecord): self
+    public function setBasisOfRecord(?string $basisOfRecord): self
     {
-        $this->basisofrecord = $basisofrecord;
+        $this->basisOfRecord = $basisOfRecord;
 
         return $this;
     }
 
-    public function getOccurrenceid(): ?string
+    public function getOccurrenceIdentifier(): ?string
     {
-        return $this->occurrenceid;
+        return $this->occurrenceIdentifier;
     }
 
-    public function setOccurrenceid(?string $occurrenceid): self
+    public function setOccurrenceIdentifier(?string $occurrenceIdentifier): self
     {
-        $this->occurrenceid = $occurrenceid;
+        $this->occurrenceIdentifier = $occurrenceIdentifier;
 
         return $this;
     }
 
-    public function getCatalognumber(): ?string
+    public function getCatalogNumber(): ?string
     {
-        return $this->catalognumber;
+        return $this->catalogNumber;
     }
 
-    public function setCatalognumber(?string $catalognumber): self
+    public function setCatalogNumber(?string $catalogNumber): self
     {
-        $this->catalognumber = $catalognumber;
+        $this->catalogNumber = $catalogNumber;
 
         return $this;
     }
 
-    public function getOthercatalognumbers(): ?string
+    public function getOtherCatalogNumbers(): ?string
     {
-        return $this->othercatalognumbers;
+        return $this->otherCatalogNumbers;
     }
 
-    public function setOthercatalognumbers(?string $othercatalognumbers): self
+    public function setOtherCatalogNumbers(?string $otherCatalogNumbers): self
     {
-        $this->othercatalognumbers = $othercatalognumbers;
+        $this->otherCatalogNumbers = $otherCatalogNumbers;
 
         return $this;
     }
 
-    public function getOwnerinstitutioncode(): ?string
+    public function getOwnerInstitutionCode(): ?string
     {
-        return $this->ownerinstitutioncode;
+        return $this->ownerInstitutionCode;
     }
 
-    public function setOwnerinstitutioncode(?string $ownerinstitutioncode): self
+    public function setOwnerInstitutionCode(?string $ownerInstitutionCode): self
     {
-        $this->ownerinstitutioncode = $ownerinstitutioncode;
+        $this->ownerInstitutionCode = $ownerInstitutionCode;
 
         return $this;
     }
 
-    public function getInstitutionid(): ?string
+    public function getInstitutionIdentifier(): ?string
     {
-        return $this->institutionid;
+        return $this->institutionIdentifier;
     }
 
-    public function setInstitutionid(?string $institutionid): self
+    public function setInstitutionIdentifier(?string $institutionIdentifier): self
     {
-        $this->institutionid = $institutionid;
+        $this->institutionIdentifier = $institutionIdentifier;
 
         return $this;
     }
 
-    public function getCollectionid(): ?string
+    public function getCollectionIdentifier(): ?string
     {
-        return $this->collectionid;
+        return $this->collectionIdentifier;
     }
 
-    public function setCollectionid(?string $collectionid): self
+    public function setCollectionIdentifier(?string $collectionIdentifier): self
     {
-        $this->collectionid = $collectionid;
+        $this->collectionIdentifier = $collectionIdentifier;
 
         return $this;
     }
 
-    public function getDatasetid(): ?string
+    public function getDatasetIdentifier(): ?string
     {
-        return $this->datasetid;
+        return $this->datasetIdentifier;
     }
 
-    public function setDatasetid(?string $datasetid): self
+    public function setDatasetIdentifier(?string $datasetIdentifier): self
     {
-        $this->datasetid = $datasetid;
+        $this->datasetIdentifier = $datasetIdentifier;
 
         return $this;
     }
 
-    public function getInstitutioncode(): ?string
+    public function getInstitutionCode(): ?string
     {
-        return $this->institutioncode;
+        return $this->institutionCode;
     }
 
-    public function setInstitutioncode(?string $institutioncode): self
+    public function setInstitutionCode(?string $institutionCode): self
     {
-        $this->institutioncode = $institutioncode;
+        $this->institutionCode = $institutionCode;
 
         return $this;
     }
 
-    public function getCollectioncode(): ?string
+    public function getCollectionCode(): ?string
     {
-        return $this->collectioncode;
+        return $this->collectionCode;
     }
 
-    public function setCollectioncode(?string $collectioncode): self
+    public function setCollectionCode(?string $collectionCode): self
     {
-        $this->collectioncode = $collectioncode;
+        $this->collectionCode = $collectionCode;
 
         return $this;
     }
@@ -972,26 +1068,26 @@ class Occurrences
         return $this;
     }
 
-    public function getScientificname(): ?string
+    public function getScientificNameFull(): ?string
     {
-        return $this->scientificname;
+        return $this->scientificNameFull;
     }
 
-    public function setScientificname(?string $scientificname): self
+    public function setScientificNameFull(?string $scientificNameFull): self
     {
-        $this->scientificname = $scientificname;
+        $this->scientificNameFull = $scientificNameFull;
 
         return $this;
     }
 
-    public function getSciname(): ?string
+    public function getScientificName(): ?string
     {
-        return $this->sciname;
+        return $this->scientificName;
     }
 
-    public function setSciname(?string $sciname): self
+    public function setScientificName(?string $scientificName): self
     {
-        $this->sciname = $sciname;
+        $this->scientificName = $scientificName;
 
         return $this;
     }
@@ -1008,194 +1104,194 @@ class Occurrences
         return $this;
     }
 
-    public function getSpecificepithet(): ?string
+    public function getSpecificEpithet(): ?string
     {
-        return $this->specificepithet;
+        return $this->specificEpithet;
     }
 
-    public function setSpecificepithet(?string $specificepithet): self
+    public function setSpecificEpithet(?string $specificEpithet): self
     {
-        $this->specificepithet = $specificepithet;
+        $this->specificEpithet = $specificEpithet;
 
         return $this;
     }
 
-    public function getTaxonrank(): ?string
+    public function getTaxonRank(): ?string
     {
-        return $this->taxonrank;
+        return $this->taxonRank;
     }
 
-    public function setTaxonrank(?string $taxonrank): self
+    public function setTaxonRank(?string $taxonRank): self
     {
-        $this->taxonrank = $taxonrank;
+        $this->taxonRank = $taxonRank;
 
         return $this;
     }
 
-    public function getInfraspecificepithet(): ?string
+    public function getInfraspecificEpithet(): ?string
     {
-        return $this->infraspecificepithet;
+        return $this->infraspecificEpithet;
     }
 
-    public function setInfraspecificepithet(?string $infraspecificepithet): self
+    public function setInfraspecificEpithet(?string $infraspecificEpithet): self
     {
-        $this->infraspecificepithet = $infraspecificepithet;
+        $this->infraspecificEpithet = $infraspecificEpithet;
 
         return $this;
     }
 
-    public function getScientificnameauthorship(): ?string
+    public function getScientificNameAuthorship(): ?string
     {
-        return $this->scientificnameauthorship;
+        return $this->scientificNameAuthorship;
     }
 
-    public function setScientificnameauthorship(?string $scientificnameauthorship): self
+    public function setScientificNameAuthorship(?string $scientificNameAuthorship): self
     {
-        $this->scientificnameauthorship = $scientificnameauthorship;
+        $this->scientificNameAuthorship = $scientificNameAuthorship;
 
         return $this;
     }
 
-    public function getTaxonremarks(): ?string
+    public function getTaxonRemarks(): ?string
     {
-        return $this->taxonremarks;
+        return $this->taxonRemarks;
     }
 
-    public function setTaxonremarks(?string $taxonremarks): self
+    public function setTaxonRemarks(?string $taxonRemarks): self
     {
-        $this->taxonremarks = $taxonremarks;
+        $this->taxonRemarks = $taxonRemarks;
 
         return $this;
     }
 
-    public function getIdentifiedby(): ?string
+    public function getIdentifiedBy(): ?string
     {
-        return $this->identifiedby;
+        return $this->identifiedBy;
     }
 
-    public function setIdentifiedby(?string $identifiedby): self
+    public function setIdentifiedBy(?string $identifiedBy): self
     {
-        $this->identifiedby = $identifiedby;
+        $this->identifiedBy = $identifiedBy;
 
         return $this;
     }
 
-    public function getDateidentified(): ?string
+    public function getDateIdentified(): ?string
     {
-        return $this->dateidentified;
+        return $this->dateIdentified;
     }
 
-    public function setDateidentified(?string $dateidentified): self
+    public function setDateIdentified(?string $dateIdentified): self
     {
-        $this->dateidentified = $dateidentified;
+        $this->dateIdentified = $dateIdentified;
 
         return $this;
     }
 
-    public function getIdentificationreferences(): ?string
+    public function getIdentificationReferences(): ?string
     {
-        return $this->identificationreferences;
+        return $this->identificationReferences;
     }
 
-    public function setIdentificationreferences(?string $identificationreferences): self
+    public function setIdentificationReferences(?string $identificationReferences): self
     {
-        $this->identificationreferences = $identificationreferences;
+        $this->identificationReferences = $identificationReferences;
 
         return $this;
     }
 
-    public function getIdentificationremarks(): ?string
+    public function getIdentificationRemarks(): ?string
     {
-        return $this->identificationremarks;
+        return $this->identificationRemarks;
     }
 
-    public function setIdentificationremarks(?string $identificationremarks): self
+    public function setIdentificationRemarks(?string $identificationRemarks): self
     {
-        $this->identificationremarks = $identificationremarks;
+        $this->identificationRemarks = $identificationRemarks;
 
         return $this;
     }
 
-    public function getIdentificationqualifier(): ?string
+    public function getIdentificationQualifier(): ?string
     {
-        return $this->identificationqualifier;
+        return $this->identificationQualifier;
     }
 
-    public function setIdentificationqualifier(?string $identificationqualifier): self
+    public function setIdentificationQualifier(?string $identificationQualifier): self
     {
-        $this->identificationqualifier = $identificationqualifier;
+        $this->identificationQualifier = $identificationQualifier;
 
         return $this;
     }
 
-    public function getTypestatus(): ?string
+    public function getTypeStatus(): ?string
     {
-        return $this->typestatus;
+        return $this->typeStatus;
     }
 
-    public function setTypestatus(?string $typestatus): self
+    public function setTypeStatus(?string $typeStatus): self
     {
-        $this->typestatus = $typestatus;
+        $this->typeStatus = $typeStatus;
 
         return $this;
     }
 
-    public function getRecordedby(): ?string
+    public function getRecordedBy(): ?string
     {
-        return $this->recordedby;
+        return $this->recordedBy;
     }
 
-    public function setRecordedby(?string $recordedby): self
+    public function setRecordedBy(?string $recordedBy): self
     {
-        $this->recordedby = $recordedby;
+        $this->recordedBy = $recordedBy;
 
         return $this;
     }
 
-    public function getRecordnumber(): ?string
+    public function getRecordNumber(): ?string
     {
-        return $this->recordnumber;
+        return $this->recordNumber;
     }
 
-    public function setRecordnumber(?string $recordnumber): self
+    public function setRecordNumber(?string $recordNumber): self
     {
-        $this->recordnumber = $recordnumber;
+        $this->recordNumber = $recordNumber;
 
         return $this;
     }
 
-    public function getAssociatedcollectors(): ?string
+    public function getAssociatedCollectors(): ?string
     {
-        return $this->associatedcollectors;
+        return $this->associatedCollectors;
     }
 
-    public function setAssociatedcollectors(?string $associatedcollectors): self
+    public function setAssociatedCollectors(?string $associatedCollectors): self
     {
-        $this->associatedcollectors = $associatedcollectors;
+        $this->associatedCollectors = $associatedCollectors;
 
         return $this;
     }
 
-    public function getEventdate(): ?\DateTimeInterface
+    public function getEventDate(): ?\DateTimeInterface
     {
-        return $this->eventdate;
+        return $this->eventDate;
     }
 
-    public function setEventdate(?\DateTimeInterface $eventdate): self
+    public function setEventDate(?\DateTimeInterface $eventDate): self
     {
-        $this->eventdate = $eventdate;
+        $this->eventDate = $eventDate;
 
         return $this;
     }
 
-    public function getLatestdatecollected(): ?\DateTimeInterface
+    public function getLatestDateCollected(): ?\DateTimeInterface
     {
-        return $this->latestdatecollected;
+        return $this->latestDateCollected;
     }
 
-    public function setLatestdatecollected(?\DateTimeInterface $latestdatecollected): self
+    public function setLatestDateCollected(?\DateTimeInterface $latestDateCollected): self
     {
-        $this->latestdatecollected = $latestdatecollected;
+        $this->latestDateCollected = $latestDateCollected;
 
         return $this;
     }
@@ -1236,38 +1332,38 @@ class Occurrences
         return $this;
     }
 
-    public function getStartdayofyear(): ?int
+    public function getStartDayOfYear(): ?int
     {
-        return $this->startdayofyear;
+        return $this->startDayOfYear;
     }
 
-    public function setStartdayofyear(?int $startdayofyear): self
+    public function setStartDayOfYear(?int $startDayOfYear): self
     {
-        $this->startdayofyear = $startdayofyear;
+        $this->startDayOfYear = $startDayOfYear;
 
         return $this;
     }
 
-    public function getEnddayofyear(): ?int
+    public function getEndDayOfYear(): ?int
     {
-        return $this->enddayofyear;
+        return $this->endDayOfYear;
     }
 
-    public function setEnddayofyear(?int $enddayofyear): self
+    public function setEndDayOfYear(?int $endDayOfYear): self
     {
-        $this->enddayofyear = $enddayofyear;
+        $this->endDayOfYear = $endDayOfYear;
 
         return $this;
     }
 
-    public function getVerbatimeventdate(): ?string
+    public function getVerbatimEventDate(): ?string
     {
-        return $this->verbatimeventdate;
+        return $this->verbatimEventDate;
     }
 
-    public function setVerbatimeventdate(?string $verbatimeventdate): self
+    public function setVerbatimEventDate(?string $verbatimEventDate): self
     {
-        $this->verbatimeventdate = $verbatimeventdate;
+        $this->verbatimEventDate = $verbatimEventDate;
 
         return $this;
     }
@@ -1296,122 +1392,122 @@ class Occurrences
         return $this;
     }
 
-    public function getFieldnotes(): ?string
+    public function getFieldNotes(): ?string
     {
-        return $this->fieldnotes;
+        return $this->fieldNotes;
     }
 
-    public function setFieldnotes(?string $fieldnotes): self
+    public function setFieldNotes(?string $fieldNotes): self
     {
-        $this->fieldnotes = $fieldnotes;
+        $this->fieldNotes = $fieldNotes;
 
         return $this;
     }
 
-    public function getFieldnumber(): ?string
+    public function getFieldNumber(): ?string
     {
-        return $this->fieldnumber;
+        return $this->fieldNumber;
     }
 
-    public function setFieldnumber(?string $fieldnumber): self
+    public function setFieldNumber(?string $fieldNumber): self
     {
-        $this->fieldnumber = $fieldnumber;
+        $this->fieldNumber = $fieldNumber;
 
         return $this;
     }
 
-    public function getEventid(): ?string
+    public function getEventIdentifier(): ?string
     {
-        return $this->eventid;
+        return $this->eventIdentifier;
     }
 
-    public function setEventid(?string $eventid): self
+    public function setEventIdentifier(?string $eventIdentifier): self
     {
-        $this->eventid = $eventid;
+        $this->eventIdentifier = $eventIdentifier;
 
         return $this;
     }
 
-    public function getOccurrenceremarks(): ?string
+    public function getOccurrenceRemarks(): ?string
     {
-        return $this->occurrenceremarks;
+        return $this->occurrenceRemarks;
     }
 
-    public function setOccurrenceremarks(?string $occurrenceremarks): self
+    public function setOccurrenceRemarks(?string $occurrenceRemarks): self
     {
-        $this->occurrenceremarks = $occurrenceremarks;
+        $this->occurrenceRemarks = $occurrenceRemarks;
 
         return $this;
     }
 
-    public function getInformationwithheld(): ?string
+    public function getInformationWithheld(): ?string
     {
-        return $this->informationwithheld;
+        return $this->informationWithheld;
     }
 
-    public function setInformationwithheld(?string $informationwithheld): self
+    public function setInformationWithheld(?string $informationWithheld): self
     {
-        $this->informationwithheld = $informationwithheld;
+        $this->informationWithheld = $informationWithheld;
 
         return $this;
     }
 
-    public function getDatageneralizations(): ?string
+    public function getDataGeneralizations(): ?string
     {
-        return $this->datageneralizations;
+        return $this->dataGeneralizations;
     }
 
-    public function setDatageneralizations(?string $datageneralizations): self
+    public function setDataGeneralizations(?string $dataGeneralizations): self
     {
-        $this->datageneralizations = $datageneralizations;
+        $this->dataGeneralizations = $dataGeneralizations;
 
         return $this;
     }
 
-    public function getAssociatedoccurrences(): ?string
+    public function getAssociatedOccurrences(): ?string
     {
-        return $this->associatedoccurrences;
+        return $this->associatedOccurrences;
     }
 
-    public function setAssociatedoccurrences(?string $associatedoccurrences): self
+    public function setAssociatedOccurrences(?string $associatedOccurrences): self
     {
-        $this->associatedoccurrences = $associatedoccurrences;
+        $this->associatedOccurrences = $associatedOccurrences;
 
         return $this;
     }
 
-    public function getAssociatedtaxa(): ?string
+    public function getAssociatedTaxa(): ?string
     {
-        return $this->associatedtaxa;
+        return $this->associatedTaxa;
     }
 
-    public function setAssociatedtaxa(?string $associatedtaxa): self
+    public function setAssociatedTaxa(?string $associatedTaxa): self
     {
-        $this->associatedtaxa = $associatedtaxa;
+        $this->associatedTaxa = $associatedTaxa;
 
         return $this;
     }
 
-    public function getDynamicproperties(): ?string
+    public function getDynamicProperties(): ?string
     {
-        return $this->dynamicproperties;
+        return $this->dynamicProperties;
     }
 
-    public function setDynamicproperties(?string $dynamicproperties): self
+    public function setDynamicProperties(?string $dynamicProperties): self
     {
-        $this->dynamicproperties = $dynamicproperties;
+        $this->dynamicProperties = $dynamicProperties;
 
         return $this;
     }
 
-    public function getVerbatimattributes(): ?string
+    public function getVerbatimAttributes(): ?string
     {
-        return $this->verbatimattributes;
+        return $this->verbatimAttributes;
     }
 
-    public function setVerbatimattributes(?string $verbatimattributes): self
+    public function setVerbatimAttributes(?string $verbatimAttributes): self
     {
-        $this->verbatimattributes = $verbatimattributes;
+        $this->verbatimAttributes = $verbatimAttributes;
 
         return $this;
     }
@@ -1428,50 +1524,50 @@ class Occurrences
         return $this;
     }
 
-    public function getReproductivecondition(): ?string
+    public function getReproductiveCondition(): ?string
     {
-        return $this->reproductivecondition;
+        return $this->reproductiveCondition;
     }
 
-    public function setReproductivecondition(?string $reproductivecondition): self
+    public function setReproductiveCondition(?string $reproductiveCondition): self
     {
-        $this->reproductivecondition = $reproductivecondition;
+        $this->reproductiveCondition = $reproductiveCondition;
 
         return $this;
     }
 
-    public function getCultivationstatus(): ?int
+    public function getCultivationStatus(): ?int
     {
-        return $this->cultivationstatus;
+        return $this->cultivationStatus;
     }
 
-    public function setCultivationstatus(?int $cultivationstatus): self
+    public function setCultivationStatus(?int $cultivationStatus): self
     {
-        $this->cultivationstatus = $cultivationstatus;
+        $this->cultivationStatus = $cultivationStatus;
 
         return $this;
     }
 
-    public function getEstablishmentmeans(): ?string
+    public function getEstablishmentMeans(): ?string
     {
-        return $this->establishmentmeans;
+        return $this->establishmentMeans;
     }
 
-    public function setEstablishmentmeans(?string $establishmentmeans): self
+    public function setEstablishmentMeans(?string $establishmentMeans): self
     {
-        $this->establishmentmeans = $establishmentmeans;
+        $this->establishmentMeans = $establishmentMeans;
 
         return $this;
     }
 
-    public function getLifestage(): ?string
+    public function getLifeStage(): ?string
     {
-        return $this->lifestage;
+        return $this->lifeStage;
     }
 
-    public function setLifestage(?string $lifestage): self
+    public function setLifeStage(?string $lifeStage): self
     {
-        $this->lifestage = $lifestage;
+        $this->lifeStage = $lifeStage;
 
         return $this;
     }
@@ -1488,38 +1584,38 @@ class Occurrences
         return $this;
     }
 
-    public function getIndividualcount(): ?string
+    public function getIndividualCount(): ?string
     {
-        return $this->individualcount;
+        return $this->individualCount;
     }
 
-    public function setIndividualcount(?string $individualcount): self
+    public function setIndividualCount(?string $individualCount): self
     {
-        $this->individualcount = $individualcount;
+        $this->individualCount = $individualCount;
 
         return $this;
     }
 
-    public function getSamplingprotocol(): ?string
+    public function getSamplingProtocol(): ?string
     {
-        return $this->samplingprotocol;
+        return $this->samplingProtocol;
     }
 
-    public function setSamplingprotocol(?string $samplingprotocol): self
+    public function setSamplingProtocol(?string $samplingProtocol): self
     {
-        $this->samplingprotocol = $samplingprotocol;
+        $this->samplingProtocol = $samplingProtocol;
 
         return $this;
     }
 
-    public function getSamplingeffort(): ?string
+    public function getSamplingEffort(): ?string
     {
-        return $this->samplingeffort;
+        return $this->samplingEffort;
     }
 
-    public function setSamplingeffort(?string $samplingeffort): self
+    public function setSamplingEffort(?string $samplingEffort): self
     {
-        $this->samplingeffort = $samplingeffort;
+        $this->samplingEffort = $samplingEffort;
 
         return $this;
     }
@@ -1536,14 +1632,14 @@ class Occurrences
         return $this;
     }
 
-    public function getLocationid(): ?string
+    public function getLocationIdentifier(): ?string
     {
-        return $this->locationid;
+        return $this->locationIdentifier;
     }
 
-    public function setLocationid(?string $locationid): self
+    public function setLocationIdentifier(?string $locationIdentifier): self
     {
-        $this->locationid = $locationid;
+        $this->locationIdentifier = $locationIdentifier;
 
         return $this;
     }
@@ -1572,14 +1668,14 @@ class Occurrences
         return $this;
     }
 
-    public function getStateprovince(): ?string
+    public function getStateProvince(): ?string
     {
-        return $this->stateprovince;
+        return $this->stateProvince;
     }
 
-    public function setStateprovince(?string $stateprovince): self
+    public function setStateProvince(?string $stateProvince): self
     {
-        $this->stateprovince = $stateprovince;
+        $this->stateProvince = $stateProvince;
 
         return $this;
     }
@@ -1620,278 +1716,278 @@ class Occurrences
         return $this;
     }
 
-    public function getLocalitysecurity(): ?int
+    public function getLocalitySecurity(): ?int
     {
-        return $this->localitysecurity;
+        return $this->localitySecurity;
     }
 
-    public function setLocalitysecurity(?int $localitysecurity): self
+    public function setLocalitySecurity(?int $localitySecurity): self
     {
-        $this->localitysecurity = $localitysecurity;
+        $this->localitySecurity = $localitySecurity;
 
         return $this;
     }
 
-    public function getLocalitysecurityreason(): ?string
+    public function getLocalitySecurityReason(): ?string
     {
-        return $this->localitysecurityreason;
+        return $this->localitySecurityReason;
     }
 
-    public function setLocalitysecurityreason(?string $localitysecurityreason): self
+    public function setLocalitySecurityReason(?string $localitySecurityReason): self
     {
-        $this->localitysecurityreason = $localitysecurityreason;
+        $this->localitySecurityReason = $localitySecurityReason;
 
         return $this;
     }
 
-    public function getDecimallatitude(): ?float
+    public function getDecimalLatitude(): ?float
     {
-        return $this->decimallatitude;
+        return $this->decimalLatitude;
     }
 
-    public function setDecimallatitude(?float $decimallatitude): self
+    public function setDecimalLatitude(?float $decimalLatitude): self
     {
-        $this->decimallatitude = $decimallatitude;
+        $this->decimalLatitude = $decimalLatitude;
 
         return $this;
     }
 
-    public function getDecimallongitude(): ?float
+    public function getDecimalLongitude(): ?float
     {
-        return $this->decimallongitude;
+        return $this->decimalLongitude;
     }
 
-    public function setDecimallongitude(?float $decimallongitude): self
+    public function setDecimalLongitude(?float $decimalLongitude): self
     {
-        $this->decimallongitude = $decimallongitude;
+        $this->decimalLongitude = $decimalLongitude;
 
         return $this;
     }
 
-    public function getGeodeticdatum(): ?string
+    public function getGeodeticDatum(): ?string
     {
-        return $this->geodeticdatum;
+        return $this->geodeticDatum;
     }
 
-    public function setGeodeticdatum(?string $geodeticdatum): self
+    public function setGeodeticDatum(?string $geodeticDatum): self
     {
-        $this->geodeticdatum = $geodeticdatum;
+        $this->geodeticDatum = $geodeticDatum;
 
         return $this;
     }
 
-    public function getCoordinateuncertaintyinmeters(): ?int
+    public function getCoordinateUncertaintyInMeters(): ?int
     {
-        return $this->coordinateuncertaintyinmeters;
+        return $this->coordinateUncertaintyInMeters;
     }
 
-    public function setCoordinateuncertaintyinmeters(?int $coordinateuncertaintyinmeters): self
+    public function setCoordinateUncertaintyInMeters(?int $coordinateUncertaintyInMeters): self
     {
-        $this->coordinateuncertaintyinmeters = $coordinateuncertaintyinmeters;
+        $this->coordinateUncertaintyInMeters = $coordinateUncertaintyInMeters;
 
         return $this;
     }
 
-    public function getFootprintwkt(): ?string
+    public function getFootprintWkt(): ?string
     {
-        return $this->footprintwkt;
+        return $this->footprintWkt;
     }
 
-    public function setFootprintwkt(?string $footprintwkt): self
+    public function setFootprintWkt(?string $footprintWkt): self
     {
-        $this->footprintwkt = $footprintwkt;
+        $this->footprintWkt = $footprintWkt;
 
         return $this;
     }
 
-    public function getCoordinateprecision()
+    public function getCoordinatePrecision()
     {
-        return $this->coordinateprecision;
+        return $this->coordinatePrecision;
     }
 
-    public function setCoordinateprecision($coordinateprecision): self
+    public function setCoordinatePrecision($coordinatePrecision): self
     {
-        $this->coordinateprecision = $coordinateprecision;
+        $this->coordinatePrecision = $coordinatePrecision;
 
         return $this;
     }
 
-    public function getLocationremarks(): ?string
+    public function getLocationRemarks(): ?string
     {
-        return $this->locationremarks;
+        return $this->locationRemarks;
     }
 
-    public function setLocationremarks(?string $locationremarks): self
+    public function setLocationRemarks(?string $locationRemarks): self
     {
-        $this->locationremarks = $locationremarks;
+        $this->locationRemarks = $locationRemarks;
 
         return $this;
     }
 
-    public function getVerbatimcoordinates(): ?string
+    public function getVerbatimCoordinates(): ?string
     {
-        return $this->verbatimcoordinates;
+        return $this->verbatimCoordinates;
     }
 
-    public function setVerbatimcoordinates(?string $verbatimcoordinates): self
+    public function setVerbatimCoordinates(?string $verbatimCoordinates): self
     {
-        $this->verbatimcoordinates = $verbatimcoordinates;
+        $this->verbatimCoordinates = $verbatimCoordinates;
 
         return $this;
     }
 
-    public function getVerbatimcoordinatesystem(): ?string
+    public function getVerbatimCoordinateSystem(): ?string
     {
-        return $this->verbatimcoordinatesystem;
+        return $this->verbatimCoordinateSystem;
     }
 
-    public function setVerbatimcoordinatesystem(?string $verbatimcoordinatesystem): self
+    public function setVerbatimCoordinateSystem(?string $verbatimCoordinateSystem): self
     {
-        $this->verbatimcoordinatesystem = $verbatimcoordinatesystem;
+        $this->verbatimCoordinateSystem = $verbatimCoordinateSystem;
 
         return $this;
     }
 
-    public function getGeoreferencedby(): ?string
+    public function getGeoreferencedBy(): ?string
     {
-        return $this->georeferencedby;
+        return $this->georeferencedBy;
     }
 
-    public function setGeoreferencedby(?string $georeferencedby): self
+    public function setGeoreferencedBy(?string $georeferencedBy): self
     {
-        $this->georeferencedby = $georeferencedby;
+        $this->georeferencedBy = $georeferencedBy;
 
         return $this;
     }
 
-    public function getGeoreferenceprotocol(): ?string
+    public function getGeoreferenceProtocol(): ?string
     {
-        return $this->georeferenceprotocol;
+        return $this->georeferenceProtocol;
     }
 
-    public function setGeoreferenceprotocol(?string $georeferenceprotocol): self
+    public function setGeoreferenceProtocol(?string $georeferenceProtocol): self
     {
-        $this->georeferenceprotocol = $georeferenceprotocol;
+        $this->georeferenceProtocol = $georeferenceProtocol;
 
         return $this;
     }
 
-    public function getGeoreferencesources(): ?string
+    public function getGeoreferenceSources(): ?string
     {
-        return $this->georeferencesources;
+        return $this->georeferenceSources;
     }
 
-    public function setGeoreferencesources(?string $georeferencesources): self
+    public function setGeoreferenceSources(?string $georeferenceSources): self
     {
-        $this->georeferencesources = $georeferencesources;
+        $this->georeferenceSources = $georeferenceSources;
 
         return $this;
     }
 
-    public function getGeoreferenceverificationstatus(): ?string
+    public function getGeoreferenceVerificationStatus(): ?string
     {
-        return $this->georeferenceverificationstatus;
+        return $this->georeferenceVerificationStatus;
     }
 
-    public function setGeoreferenceverificationstatus(?string $georeferenceverificationstatus): self
+    public function setGeoreferenceVerificationStatus(?string $georeferenceVerificationStatus): self
     {
-        $this->georeferenceverificationstatus = $georeferenceverificationstatus;
+        $this->georeferenceVerificationStatus = $georeferenceVerificationStatus;
 
         return $this;
     }
 
-    public function getGeoreferenceremarks(): ?string
+    public function getGeoreferenceRemarks(): ?string
     {
-        return $this->georeferenceremarks;
+        return $this->georeferenceRemarks;
     }
 
-    public function setGeoreferenceremarks(?string $georeferenceremarks): self
+    public function setGeoreferenceRemarks(?string $georeferenceRemarks): self
     {
-        $this->georeferenceremarks = $georeferenceremarks;
+        $this->georeferenceRemarks = $georeferenceRemarks;
 
         return $this;
     }
 
-    public function getMinimumelevationinmeters(): ?int
+    public function getMinimumElevationInMeters(): ?int
     {
-        return $this->minimumelevationinmeters;
+        return $this->minimumElevationInMeters;
     }
 
-    public function setMinimumelevationinmeters(?int $minimumelevationinmeters): self
+    public function setMinimumElevationInMeters(?int $minimumElevationInMeters): self
     {
-        $this->minimumelevationinmeters = $minimumelevationinmeters;
+        $this->minimumElevationInMeters = $minimumElevationInMeters;
 
         return $this;
     }
 
-    public function getMaximumelevationinmeters(): ?int
+    public function getMaximumElevationInMeters(): ?int
     {
-        return $this->maximumelevationinmeters;
+        return $this->maximumElevationInMeters;
     }
 
-    public function setMaximumelevationinmeters(?int $maximumelevationinmeters): self
+    public function setMaximumElevationInMeters(?int $maximumElevationInMeters): self
     {
-        $this->maximumelevationinmeters = $maximumelevationinmeters;
+        $this->maximumElevationInMeters = $maximumElevationInMeters;
 
         return $this;
     }
 
-    public function getVerbatimelevation(): ?string
+    public function getVerbatimElevation(): ?string
     {
-        return $this->verbatimelevation;
+        return $this->verbatimElevation;
     }
 
-    public function setVerbatimelevation(?string $verbatimelevation): self
+    public function setVerbatimElevation(?string $verbatimElevation): self
     {
-        $this->verbatimelevation = $verbatimelevation;
+        $this->verbatimElevation = $verbatimElevation;
 
         return $this;
     }
 
-    public function getMinimumdepthinmeters(): ?int
+    public function getMinimumDepthInMeters(): ?int
     {
-        return $this->minimumdepthinmeters;
+        return $this->minimumDepthInMeters;
     }
 
-    public function setMinimumdepthinmeters(?int $minimumdepthinmeters): self
+    public function setMinimumDepthInMeters(?int $minimumDepthInMeters): self
     {
-        $this->minimumdepthinmeters = $minimumdepthinmeters;
+        $this->minimumDepthInMeters = $minimumDepthInMeters;
 
         return $this;
     }
 
-    public function getMaximumdepthinmeters(): ?int
+    public function getMaximumDepthInMeters(): ?int
     {
-        return $this->maximumdepthinmeters;
+        return $this->maximumDepthInMeters;
     }
 
-    public function setMaximumdepthinmeters(?int $maximumdepthinmeters): self
+    public function setMaximumDepthInMeters(?int $maximumDepthInMeters): self
     {
-        $this->maximumdepthinmeters = $maximumdepthinmeters;
+        $this->maximumDepthInMeters = $maximumDepthInMeters;
 
         return $this;
     }
 
-    public function getVerbatimdepth(): ?string
+    public function getVerbatimDepth(): ?string
     {
-        return $this->verbatimdepth;
+        return $this->verbatimDepth;
     }
 
-    public function setVerbatimdepth(?string $verbatimdepth): self
+    public function setVerbatimDepth(?string $verbatimDepth): self
     {
-        $this->verbatimdepth = $verbatimdepth;
+        $this->verbatimDepth = $verbatimDepth;
 
         return $this;
     }
 
-    public function getPreviousidentifications(): ?string
+    public function getPreviousIdentifications(): ?string
     {
-        return $this->previousidentifications;
+        return $this->previousIdentifications;
     }
 
-    public function setPreviousidentifications(?string $previousidentifications): self
+    public function setPreviousIdentifications(?string $previousIdentifications): self
     {
-        $this->previousidentifications = $previousidentifications;
+        $this->previousIdentifications = $previousIdentifications;
 
         return $this;
     }
@@ -1908,38 +2004,14 @@ class Occurrences
         return $this;
     }
 
-    public function getStoragelocation(): ?string
+    public function getStorageLocation(): ?string
     {
-        return $this->storagelocation;
+        return $this->storageLocation;
     }
 
-    public function setStoragelocation(?string $storagelocation): self
+    public function setStorageLocation(?string $storageLocation): self
     {
-        $this->storagelocation = $storagelocation;
-
-        return $this;
-    }
-
-    public function getGenericcolumn1(): ?string
-    {
-        return $this->genericcolumn1;
-    }
-
-    public function setGenericcolumn1(?string $genericcolumn1): self
-    {
-        $this->genericcolumn1 = $genericcolumn1;
-
-        return $this;
-    }
-
-    public function getGenericcolumn2(): ?string
-    {
-        return $this->genericcolumn2;
-    }
-
-    public function setGenericcolumn2(?string $genericcolumn2): self
-    {
-        $this->genericcolumn2 = $genericcolumn2;
+        $this->storageLocation = $storageLocation;
 
         return $this;
     }
@@ -1956,122 +2028,122 @@ class Occurrences
         return $this;
     }
 
-    public function getProcessingstatus(): ?string
+    public function getProcessingStatus(): ?string
     {
-        return $this->processingstatus;
+        return $this->processingStatus;
     }
 
-    public function setProcessingstatus(?string $processingstatus): self
+    public function setProcessingStatus(?string $processingStatus): self
     {
-        $this->processingstatus = $processingstatus;
+        $this->processingStatus = $processingStatus;
 
         return $this;
     }
 
-    public function getRecordenteredby(): ?string
+    public function getRecordEnteredBy(): ?string
     {
-        return $this->recordenteredby;
+        return $this->recordEnteredBy;
     }
 
-    public function setRecordenteredby(?string $recordenteredby): self
+    public function setRecordEnteredBy(?string $recordEnteredBy): self
     {
-        $this->recordenteredby = $recordenteredby;
+        $this->recordEnteredBy = $recordEnteredBy;
 
         return $this;
     }
 
-    public function getDuplicatequantity(): ?int
+    public function getDuplicateQuantity(): ?int
     {
-        return $this->duplicatequantity;
+        return $this->duplicateQuantity;
     }
 
-    public function setDuplicatequantity(?int $duplicatequantity): self
+    public function setDuplicateQuantity(?int $duplicateQuantity): self
     {
-        $this->duplicatequantity = $duplicatequantity;
+        $this->duplicateQuantity = $duplicateQuantity;
 
         return $this;
     }
 
-    public function getLabelproject(): ?string
+    public function getLabelProject(): ?string
     {
-        return $this->labelproject;
+        return $this->labelProject;
     }
 
-    public function setLabelproject(?string $labelproject): self
+    public function setLabelProject(?string $labelProject): self
     {
-        $this->labelproject = $labelproject;
+        $this->labelProject = $labelProject;
 
         return $this;
     }
 
-    public function getDynamicfields(): ?string
+    public function getDynamicFields(): ?string
     {
-        return $this->dynamicfields;
+        return $this->dynamicFields;
     }
 
-    public function setDynamicfields(?string $dynamicfields): self
+    public function setDynamicFields(?string $dynamicFields): self
     {
-        $this->dynamicfields = $dynamicfields;
+        $this->dynamicFields = $dynamicFields;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(?\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(?\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getModifiedtimestamp(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?\DateTimeInterface
     {
-        return $this->modifiedtimestamp;
+        return $this->modifiedTimestamp;
     }
 
-    public function setModifiedtimestamp(\DateTimeInterface $modifiedtimestamp): self
+    public function setModifiedTimestamp(\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
-        $this->modifiedtimestamp = $modifiedtimestamp;
+        $this->modifiedTimestamp = $modifiedTimestamp;
 
         return $this;
     }
 
-    public function getTidinterpreted(): ?Taxa
+    public function getTaxaIdInterpreted(): ?Taxa
     {
-        return $this->tidinterpreted;
+        return $this->taxaIdInterpreted;
     }
 
-    public function setTidinterpreted(?Taxa $tidinterpreted): self
+    public function setTaxaIdInterpreted(?Taxa $taxaIdInterpreted): self
     {
-        $this->tidinterpreted = $tidinterpreted;
+        $this->taxaIdInterpreted = $taxaIdInterpreted;
 
         return $this;
     }
 
-    public function getObserveruid(): ?Users
+    public function getObserverUserId(): ?Users
     {
-        return $this->observeruid;
+        return $this->observerUserId;
     }
 
-    public function setObserveruid(?Users $observeruid): self
+    public function setObserverUserId(?Users $observerUserId): self
     {
-        $this->observeruid = $observeruid;
+        $this->observerUserId = $observerUserId;
 
         return $this;
     }
 
-    public function getCollid(): ?Collections
+    public function getCollectionId(): ?Collections
     {
-        return $this->collid;
+        return $this->collectionId;
     }
 
-    public function setCollid(?Collections $collid): self
+    public function setCollectionId(?Collections $collectionId): self
     {
-        $this->collid = $collid;
+        $this->collectionId = $collectionId;
 
         return $this;
     }
@@ -2079,26 +2151,26 @@ class Occurrences
     /**
      * @return Collection|ExsiccatiNumbers[]
      */
-    public function getOmenid(): Collection
+    public function getExsiccatiNumberId(): Collection
     {
-        return $this->omenid;
+        return $this->exsiccatiNumberId;
     }
 
-    public function addOmenid(ExsiccatiNumbers $omenid): self
+    public function addExsiccatiNumberId(ExsiccatiNumbers $exsiccatiNumberId): self
     {
-        if (!$this->omenid->contains($omenid)) {
-            $this->omenid[] = $omenid;
-            $omenid->addOccid($this);
+        if (!$this->exsiccatiNumberId->contains($exsiccatiNumberId)) {
+            $this->exsiccatiNumberId[] = $exsiccatiNumberId;
+            $exsiccatiNumberId->addOccurrenceId($this);
         }
 
         return $this;
     }
 
-    public function removeOmenid(ExsiccatiNumbers $omenid): self
+    public function removeExsiccatiNumberId(ExsiccatiNumbers $exsiccatiNumberId): self
     {
-        if ($this->omenid->contains($omenid)) {
-            $this->omenid->removeElement($omenid);
-            $omenid->removeOccid($this);
+        if ($this->exsiccatiNumberId->contains($exsiccatiNumberId)) {
+            $this->exsiccatiNumberId->removeElement($exsiccatiNumberId);
+            $exsiccatiNumberId->removeOccurrenceId($this);
         }
 
         return $this;
@@ -2107,24 +2179,24 @@ class Occurrences
     /**
      * @return Collection|OccurrenceDuplicates[]
      */
-    public function getDuplicateid(): Collection
+    public function getDuplicateId(): Collection
     {
-        return $this->duplicateid;
+        return $this->duplicateId;
     }
 
-    public function addDuplicateid(OccurrenceDuplicates $duplicateid): self
+    public function addDuplicateId(OccurrenceDuplicates $duplicateId): self
     {
-        if (!$this->duplicateid->contains($duplicateid)) {
-            $this->duplicateid[] = $duplicateid;
+        if (!$this->duplicateId->contains($duplicateId)) {
+            $this->duplicateId[] = $duplicateId;
         }
 
         return $this;
     }
 
-    public function removeDuplicateid(OccurrenceDuplicates $duplicateid): self
+    public function removeDuplicateId(OccurrenceDuplicates $duplicateId): self
     {
-        if ($this->duplicateid->contains($duplicateid)) {
-            $this->duplicateid->removeElement($duplicateid);
+        if ($this->duplicateId->contains($duplicateId)) {
+            $this->duplicateId->removeElement($duplicateId);
         }
 
         return $this;
@@ -2133,24 +2205,24 @@ class Occurrences
     /**
      * @return Collection|LookupChronostratigraphy[]
      */
-    public function getChronoid(): Collection
+    public function getChronostratigraphyId(): Collection
     {
-        return $this->chronoid;
+        return $this->chronostratigraphyId;
     }
 
-    public function addChronoid(LookupChronostratigraphy $chronoid): self
+    public function addChronostratigraphyId(LookupChronostratigraphy $chronostratigraphyId): self
     {
-        if (!$this->chronoid->contains($chronoid)) {
-            $this->chronoid[] = $chronoid;
+        if (!$this->chronostratigraphyId->contains($chronostratigraphyId)) {
+            $this->chronostratigraphyId[] = $chronostratigraphyId;
         }
 
         return $this;
     }
 
-    public function removeChronoid(LookupChronostratigraphy $chronoid): self
+    public function removeChronostratigraphyId(LookupChronostratigraphy $chronostratigraphyId): self
     {
-        if ($this->chronoid->contains($chronoid)) {
-            $this->chronoid->removeElement($chronoid);
+        if ($this->chronostratigraphyId->contains($chronostratigraphyId)) {
+            $this->chronostratigraphyId->removeElement($chronostratigraphyId);
         }
 
         return $this;
@@ -2159,26 +2231,26 @@ class Occurrences
     /**
      * @return Collection|OccurrenceLoans[]
      */
-    public function getLoanid(): Collection
+    public function getLoanId(): Collection
     {
-        return $this->loanid;
+        return $this->loanId;
     }
 
-    public function addLoanid(OccurrenceLoans $loanid): self
+    public function addLoanId(OccurrenceLoans $loanId): self
     {
-        if (!$this->loanid->contains($loanid)) {
-            $this->loanid[] = $loanid;
-            $loanid->addOccid($this);
+        if (!$this->loanId->contains($loanId)) {
+            $this->loanId[] = $loanId;
+            $loanId->addOccurrenceId($this);
         }
 
         return $this;
     }
 
-    public function removeLoanid(OccurrenceLoans $loanid): self
+    public function removeLoanId(OccurrenceLoans $loanId): self
     {
-        if ($this->loanid->contains($loanid)) {
-            $this->loanid->removeElement($loanid);
-            $loanid->removeOccid($this);
+        if ($this->loanId->contains($loanId)) {
+            $this->loanId->removeElement($loanId);
+            $loanId->removeOccurrenceId($this);
         }
 
         return $this;
@@ -2187,16 +2259,16 @@ class Occurrences
     /**
      * @return Collection|References[]
      */
-    public function getRefid(): Collection
+    public function getReferenceId(): Collection
     {
-        return $this->refid;
+        return $this->referenceId;
     }
 
     public function addRefid(References $refid): self
     {
-        if (!$this->refid->contains($refid)) {
-            $this->refid[] = $refid;
-            $refid->addOccid($this);
+        if (!$this->referenceId->contains($refid)) {
+            $this->referenceId[] = $refid;
+            $refid->addOccurrenceId($this);
         }
 
         return $this;
@@ -2204,9 +2276,9 @@ class Occurrences
 
     public function removeRefid(References $refid): self
     {
-        if ($this->refid->contains($refid)) {
-            $this->refid->removeElement($refid);
-            $refid->removeOccid($this);
+        if ($this->referenceId->contains($refid)) {
+            $this->referenceId->removeElement($refid);
+            $refid->removeOccurrenceId($this);
         }
 
         return $this;

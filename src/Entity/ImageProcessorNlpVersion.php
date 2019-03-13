@@ -36,6 +36,7 @@ class ImageProcessorNlpVersion implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="prlid", referencedColumnName="prlid")
      * })
      * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $imageProcessorRawLabelId;
 
@@ -84,7 +85,7 @@ class ImageProcessorNlpVersion implements InitialTimestampInterface
      * @var \DateTime|null
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 

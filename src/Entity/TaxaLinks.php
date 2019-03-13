@@ -2,101 +2,122 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TaxaLinks
  *
  * @ORM\Table(name="taxalinks", indexes={@ORM\Index(name="Index_unique_taxalinks", columns={"tid", "url"})})
  * @ORM\Entity(repositoryClass="App\Repository\TaxaLinksRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class TaxaLinks
+class TaxaLinks implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="tlid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="tlid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $tlid;
+    private $id;
 
     /**
-     * @var \Taxa
+     * @var \App\Entity\Taxa
      *
-     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=500, nullable=false)
+     * @ORM\Column(name="url", type="string", length=500)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=500)
      */
     private $url;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=100, nullable=false)
+     * @ORM\Column(name="title", type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=100)
      */
     private $title;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourceIdentifier", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="sourceIdentifier", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $sourceidentifier = 'NULL';
+    private $sourceIdentifier;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="owner", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="owner", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $owner = 'NULL';
+    private $owner;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="icon", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="icon", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $icon = 'NULL';
+    private $icon;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="inherit", type="integer", nullable=true, options={"default"="1"})
+     * @Assert\Type(type="integer")
      */
-    private $inherit = '1';
+    private $inherit = 1;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="sortsequence", type="integer", nullable=false, options={"default"="50","unsigned"=true})
+     * @ORM\Column(name="sortsequence", type="integer", options={"default"="50","unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $sortsequence = '50';
+    private $sortSequence = 50;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getTlid(): ?int
+    public function getId(): ?int
     {
-        return $this->tlid;
+        return $this->id;
     }
 
     public function getUrl(): ?string
@@ -123,14 +144,14 @@ class TaxaLinks
         return $this;
     }
 
-    public function getSourceidentifier(): ?string
+    public function getSourceIdentifier(): ?string
     {
-        return $this->sourceidentifier;
+        return $this->sourceIdentifier;
     }
 
-    public function setSourceidentifier(?string $sourceidentifier): self
+    public function setSourceIdentifier(?string $sourceIdentifier): self
     {
-        $this->sourceidentifier = $sourceidentifier;
+        $this->sourceIdentifier = $sourceIdentifier;
 
         return $this;
     }
@@ -183,38 +204,38 @@ class TaxaLinks
         return $this;
     }
 
-    public function getSortsequence(): ?int
+    public function getSortSequence(): ?int
     {
-        return $this->sortsequence;
+        return $this->sortSequence;
     }
 
-    public function setSortsequence(int $sortsequence): self
+    public function setSortSequence(int $sortSequence): self
     {
-        $this->sortsequence = $sortsequence;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getTid(): ?Taxa
+    public function getTaxaId(): ?Taxa
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(?Taxa $tid): self
+    public function setTaxaId(?Taxa $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }

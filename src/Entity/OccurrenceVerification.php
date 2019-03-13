@@ -2,90 +2,109 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OccurrenceVerification
  *
  * @ORM\Table(name="omoccurverification", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQUE_omoccurverification", columns={"occid", "category"})}, indexes={@ORM\Index(name="FK_omoccurverification_occid_idx", columns={"occid"}), @ORM\Index(name="FK_omoccurverification_uid_idx", columns={"createduid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OccurrenceVerificationRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class OccurrenceVerification
+class OccurrenceVerification implements CreatedUserIdInterface, InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="ovsid", type="integer", nullable=false)
+     * @ORM\Column(name="ovsid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $ovsid;
+    private $id;
 
     /**
-     * @var \Occurrences
+     * @var \App\Entity\Occurrences
      *
-     * @ORM\ManyToOne(targetEntity="Occurrences")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="category", type="string", length=45, nullable=false)
+     * @ORM\Column(name="category", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
     private $category;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="ranking", type="integer", nullable=false)
+     * @ORM\Column(name="ranking", type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $ranking;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="protocol", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="protocol", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $protocol = 'NULL';
+    private $protocol;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="source", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="source", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $source = 'NULL';
+    private $source;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $createduid;
+    private $createdUserId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getOvsid(): ?int
+    public function getId(): ?int
     {
-        return $this->ovsid;
+        return $this->id;
     }
 
     public function getCategory(): ?string
@@ -148,38 +167,45 @@ class OccurrenceVerification
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(?\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(?\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getOccid(): ?Occurrences
+    public function getOccurrenceId(): ?Occurrences
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function setOccid(?Occurrences $occid): self
+    public function setOccurrenceId(?Occurrences $occurrenceId): self
     {
-        $this->occid = $occid;
+        $this->occurrenceId = $occurrenceId;
 
         return $this;
     }
 
-    public function getCreateduid(): ?Users
+    /**
+     * @return Users|null
+     */
+    public function getCreatedUserId(): ?Users
     {
-        return $this->createduid;
+        return $this->createdUserId;
     }
 
-    public function setCreateduid(?Users $createduid): self
+    /**
+     * @param UserInterface $createdUserId
+     * @return CreatedUserIdInterface
+     */
+    public function setCreatedUserId(UserInterface $createdUserId): CreatedUserIdInterface
     {
-        $this->createduid = $createduid;
+        $this->createdUserId = $createdUserId;
 
         return $this;
     }

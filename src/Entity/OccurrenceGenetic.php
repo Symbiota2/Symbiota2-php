@@ -2,87 +2,104 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OccurrenceGenetic
  *
  * @ORM\Table(name="omoccurgenetic", indexes={@ORM\Index(name="FK_omoccurgenetic", columns={"occid"}), @ORM\Index(name="INDEX_omoccurgenetic_name", columns={"resourcename"})})
  * @ORM\Entity(repositoryClass="App\Repository\OccurrenceGeneticRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class OccurrenceGenetic
+class OccurrenceGenetic implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="idoccurgenetic", type="integer", nullable=false)
+     * @ORM\Column(name="idoccurgenetic", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idoccurgenetic;
+    private $id;
 
     /**
-     * @var \Occurrences
+     * @var \App\Entity\Occurrences
      *
-     * @ORM\ManyToOne(targetEntity="Occurrences")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identifier", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="identifier", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $identifier = 'NULL';
+    private $identifier;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="resourcename", type="string", length=150, nullable=false)
+     * @ORM\Column(name="resourcename", type="string", length=150)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=150)
      */
-    private $resourcename;
+    private $resourceName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="title", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="title", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $title = 'NULL';
+    private $title;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="locus", type="string", length=500, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="locus", type="string", length=500, nullable=true)
+     * @Assert\Length(max=500)
      */
-    private $locus = 'NULL';
+    private $locus;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="resourceurl", type="string", length=500, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="resourceurl", type="string", length=500, nullable=true)
+     * @Assert\Length(max=500)
      */
-    private $resourceurl = 'NULL';
+    private $resourceUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
-     * @var string|null
+     * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'NULL';
+    private $initialTimestamp;
 
-    public function getIdoccurgenetic(): ?int
+    public function getId(): ?int
     {
-        return $this->idoccurgenetic;
+        return $this->id;
     }
 
     public function getIdentifier(): ?string
@@ -97,14 +114,14 @@ class OccurrenceGenetic
         return $this;
     }
 
-    public function getResourcename(): ?string
+    public function getResourceName(): ?string
     {
-        return $this->resourcename;
+        return $this->resourceName;
     }
 
-    public function setResourcename(string $resourcename): self
+    public function setResourceName(string $resourceName): self
     {
-        $this->resourcename = $resourcename;
+        $this->resourceName = $resourceName;
 
         return $this;
     }
@@ -133,14 +150,14 @@ class OccurrenceGenetic
         return $this;
     }
 
-    public function getResourceurl(): ?string
+    public function getResourceUrl(): ?string
     {
-        return $this->resourceurl;
+        return $this->resourceUrl;
     }
 
-    public function setResourceurl(?string $resourceurl): self
+    public function setResourceUrl(?string $resourceUrl): self
     {
-        $this->resourceurl = $resourceurl;
+        $this->resourceUrl = $resourceUrl;
 
         return $this;
     }
@@ -157,26 +174,26 @@ class OccurrenceGenetic
         return $this;
     }
 
-    public function getInitialtimestamp(): ?string
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(?string $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getOccid(): ?Occurrences
+    public function getOccurrenceId(): ?Occurrences
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function setOccid(?Occurrences $occid): self
+    public function setOccurrenceId(?Occurrences $occurrenceId): self
     {
-        $this->occid = $occid;
+        $this->occurrenceId = $occurrenceId;
 
         return $this;
     }

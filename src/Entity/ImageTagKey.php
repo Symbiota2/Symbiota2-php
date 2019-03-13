@@ -2,102 +2,118 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ImageTagKey
  *
  * @ORM\Table(name="imagetagkey", indexes={@ORM\Index(name="sortorder", columns={"sortorder"})})
  * @ORM\Entity(repositoryClass="App\Repository\ImageTagKeyRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ImageTagKey
+class ImageTagKey implements InitialTimestampInterface
 {
     /**
      * @var string
      *
-     * @ORM\Column(name="tagkey", type="string", length=30, nullable=false)
+     * @ORM\Column(name="tagkey", type="string", length=30)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Assert\NotBlank()
+     * @Assert\Length(max=30)
      */
-    private $tagkey;
+    private $tagKey;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="shortlabel", type="string", length=30, nullable=false)
+     * @ORM\Column(name="shortlabel", type="string", length=30)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=30)
      */
-    private $shortlabel;
+    private $shortLabel;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description_en", type="string", length=255, nullable=false)
+     * @ORM\Column(name="description_en", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
-    private $descriptionEn;
+    private $description;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="sortorder", type="integer", nullable=false)
+     * @ORM\Column(name="sortorder", type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $sortorder;
+    private $sortOrder;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getTagkey(): ?string
+    public function getTagKey(): ?string
     {
-        return $this->tagkey;
+        return $this->tagKey;
     }
 
-    public function getShortlabel(): ?string
+    public function getShortLabel(): ?string
     {
-        return $this->shortlabel;
+        return $this->shortLabel;
     }
 
-    public function setShortlabel(string $shortlabel): self
+    public function setShortLabel(string $shortLabel): self
     {
-        $this->shortlabel = $shortlabel;
+        $this->shortLabel = $shortLabel;
 
         return $this;
     }
 
-    public function getDescriptionEn(): ?string
+    public function getDescription(): ?string
     {
-        return $this->descriptionEn;
+        return $this->description;
     }
 
-    public function setDescriptionEn(string $descriptionEn): self
+    public function setDescription(string $description): self
     {
-        $this->descriptionEn = $descriptionEn;
+        $this->description = $description;
 
         return $this;
     }
 
-    public function getSortorder(): ?int
+    public function getSortOrder(): ?int
     {
-        return $this->sortorder;
+        return $this->sortOrder;
     }
 
-    public function setSortorder(int $sortorder): self
+    public function setSortOrder(int $sortOrder): self
     {
-        $this->sortorder = $sortorder;
+        $this->sortOrder = $sortOrder;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }

@@ -182,6 +182,7 @@ class Institutions implements ModifiedUserIdInterface, InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
      * })
+     * @Assert\Type(type="integer")
      * @Groups({"get"})
      */
     private $modifiedUserId;
@@ -190,6 +191,7 @@ class Institutions implements ModifiedUserIdInterface, InitialTimestampInterface
      * @var \DateTime|null
      *
      * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      * @Groups({"get"})
      */
     private $modifiedTimestamp;
@@ -198,7 +200,7 @@ class Institutions implements ModifiedUserIdInterface, InitialTimestampInterface
      * @var \DateTime
      *
      * @ORM\Column(name="InitialTimeStamp", type="datetime")
-     * @Assert\DateTime()
+     * @Assert\DateTime
      * @Groups({"get"})
      */
     private $initialTimestamp;

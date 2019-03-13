@@ -2,83 +2,97 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ReferenceChecklistTaxaLink
  *
  * @ORM\Table(name="referencechklsttaxalink", indexes={@ORM\Index(name="FK_refchktaxalink_clidtid_idx", columns={"clid", "tid"}), @ORM\Index(name="IDX_1B708068FB7281BE", columns={"refid"})})
  * @ORM\Entity(repositoryClass="App\Repository\ReferenceChecklistTaxaLinkRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ReferenceChecklistTaxaLink
+class ReferenceChecklistTaxaLink implements InitialTimestampInterface
 {
     /**
-     * @var \References
+     * @var \App\Entity\References
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="References")
+     * @ORM\OneToOne(targetEntity="\App\Entity\References")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="refid", referencedColumnName="refid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $refid;
+    private $referenceId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="clid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="clid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $clid;
+    private $checklistId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="tid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="tid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getClid(): ?int
+    public function getChecklistId(): ?int
     {
-        return $this->clid;
+        return $this->checklistId;
     }
 
-    public function getTid(): ?int
+    public function getTaxaId(): ?int
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getRefid(): ?References
+    public function getReferenceId(): ?References
     {
-        return $this->refid;
+        return $this->referenceId;
     }
 
-    public function setRefid(?References $refid): self
+    public function setReferenceId(?References $referenceId): self
     {
-        $this->refid = $refid;
+        $this->referenceId = $referenceId;
 
         return $this;
     }

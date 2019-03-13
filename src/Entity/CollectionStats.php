@@ -29,6 +29,7 @@ class CollectionStats implements InitialTimestampInterface, ModifiedTimestampInt
      *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
      * })
      * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $collectionId;
 
@@ -85,6 +86,7 @@ class CollectionStats implements InitialTimestampInterface, ModifiedTimestampInt
      * @var \DateTime|null
      *
      * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
     private $modifiedTimestamp;
 
@@ -107,7 +109,7 @@ class CollectionStats implements InitialTimestampInterface, ModifiedTimestampInt
      * @var \DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 

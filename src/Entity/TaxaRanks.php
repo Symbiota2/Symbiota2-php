@@ -2,106 +2,124 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TaxaRanks
  *
  * @ORM\Table(name="taxonunits", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQUE_taxonunits", columns={"rankid", "rankname"})})
  * @ORM\Entity(repositoryClass="App\Repository\TaxaRanksRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class TaxaRanks
+class TaxaRanks implements InitialTimestampInterface, ModifiedTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="taxonunitid", type="integer", nullable=false)
+     * @ORM\Column(name="taxonunitid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $taxonunitid;
+    private $id;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="rankid", type="smallint", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="rankid", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $rankid;
+    private $rankId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="rankname", type="string", length=15, nullable=false)
+     * @ORM\Column(name="rankname", type="string", length=15)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=15)
      */
-    private $rankname;
+    private $rankName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="suffix", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="suffix", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $suffix = 'NULL';
+    private $suffix;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="dirparentrankid", type="smallint", nullable=false)
+     * @ORM\Column(name="dirparentrankid", type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $dirparentrankid;
+    private $directParentRankId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="reqparentrankid", type="smallint", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="reqparentrankid", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $reqparentrankid = 'NULL';
+    private $requiredParentRankId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="modifiedby", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="modifiedby", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $modifiedby = 'NULL';
+    private $modifiedBy;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $modifiedtimestamp = 'NULL';
+    private $modifiedTimestamp;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getTaxonunitid(): ?int
+    public function getId(): ?int
     {
-        return $this->taxonunitid;
+        return $this->id;
     }
 
-    public function getRankid(): ?int
+    public function getRankId(): ?int
     {
-        return $this->rankid;
+        return $this->rankId;
     }
 
-    public function setRankid(int $rankid): self
+    public function setRankId(int $rankId): self
     {
-        $this->rankid = $rankid;
+        $this->rankId = $rankId;
 
         return $this;
     }
 
-    public function getRankname(): ?string
+    public function getRankName(): ?string
     {
-        return $this->rankname;
+        return $this->rankName;
     }
 
-    public function setRankname(string $rankname): self
+    public function setRankName(string $rankName): self
     {
-        $this->rankname = $rankname;
+        $this->rankName = $rankName;
 
         return $this;
     }
@@ -118,62 +136,62 @@ class TaxaRanks
         return $this;
     }
 
-    public function getDirparentrankid(): ?int
+    public function getDirectParentRankId(): ?int
     {
-        return $this->dirparentrankid;
+        return $this->directParentRankId;
     }
 
-    public function setDirparentrankid(int $dirparentrankid): self
+    public function setDirectParentRankId(int $directParentRankId): self
     {
-        $this->dirparentrankid = $dirparentrankid;
+        $this->directParentRankId = $directParentRankId;
 
         return $this;
     }
 
-    public function getReqparentrankid(): ?int
+    public function getRequiredParentRankId(): ?int
     {
-        return $this->reqparentrankid;
+        return $this->requiredParentRankId;
     }
 
-    public function setReqparentrankid(?int $reqparentrankid): self
+    public function setRequiredParentRankId(?int $requiredParentRankId): self
     {
-        $this->reqparentrankid = $reqparentrankid;
+        $this->requiredParentRankId = $requiredParentRankId;
 
         return $this;
     }
 
-    public function getModifiedby(): ?string
+    public function getModifiedBy(): ?string
     {
-        return $this->modifiedby;
+        return $this->modifiedBy;
     }
 
-    public function setModifiedby(?string $modifiedby): self
+    public function setModifiedBy(?string $modifiedBy): self
     {
-        $this->modifiedby = $modifiedby;
+        $this->modifiedBy = $modifiedBy;
 
         return $this;
     }
 
-    public function getModifiedtimestamp(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?\DateTimeInterface
     {
-        return $this->modifiedtimestamp;
+        return $this->modifiedTimestamp;
     }
 
-    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): self
+    public function setModifiedTimestamp(?\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
-        $this->modifiedtimestamp = $modifiedtimestamp;
+        $this->modifiedTimestamp = $modifiedTimestamp;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }

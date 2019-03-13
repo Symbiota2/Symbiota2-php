@@ -2,80 +2,92 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * LookupChronostratigraphy
  *
  * @ORM\Table(name="paleochronostratigraphy", indexes={@ORM\Index(name="Period", columns={"Period"}), @ORM\Index(name="Era", columns={"Era"}), @ORM\Index(name="Stage", columns={"Stage"}), @ORM\Index(name="Eon", columns={"Eon"}), @ORM\Index(name="Epoch", columns={"Epoch"})})
  * @ORM\Entity(repositoryClass="App\Repository\LookupChronostratigraphyRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
 class LookupChronostratigraphy
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="chronoId", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="chronoId", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $chronoid;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Eon", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Eon", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $eon = 'NULL';
+    private $eon;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Era", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Era", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $era = 'NULL';
+    private $era;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Period", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Period", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $period = 'NULL';
+    private $period;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Epoch", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Epoch", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $epoch = 'NULL';
+    private $epoch;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Stage", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Stage", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $stage = 'NULL';
+    private $stage;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Occurrences", mappedBy="chronoid")
+     * @ORM\ManyToMany(targetEntity="Occurrences", mappedBy="chronostratigraphyId")
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->occid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->occurrenceId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getChronoid(): ?int
+    public function getId(): ?int
     {
-        return $this->chronoid;
+        return $this->id;
     }
 
     public function getEon(): ?string
@@ -141,26 +153,26 @@ class LookupChronostratigraphy
     /**
      * @return Collection|Occurrences[]
      */
-    public function getOccid(): Collection
+    public function getOccurrenceId(): Collection
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function addOccid(Occurrences $occid): self
+    public function addOccurrenceId(Occurrences $occurrenceId): self
     {
-        if (!$this->occid->contains($occid)) {
-            $this->occid[] = $occid;
-            $occid->addChronoid($this);
+        if (!$this->occurrenceId->contains($occurrenceId)) {
+            $this->occurrenceId[] = $occurrenceId;
+            $occurrenceId->addChronostratigraphyId($this);
         }
 
         return $this;
     }
 
-    public function removeOccid(Occurrences $occid): self
+    public function removeOccurrenceId(Occurrences $occurrenceId): self
     {
-        if ($this->occid->contains($occid)) {
-            $this->occid->removeElement($occid);
-            $occid->removeChronoid($this);
+        if ($this->occurrenceId->contains($occurrenceId)) {
+            $this->occurrenceId->removeElement($occurrenceId);
+            $occurrenceId->removeChronostratigraphyId($this);
         }
 
         return $this;

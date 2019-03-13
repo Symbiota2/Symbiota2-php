@@ -46,6 +46,7 @@ class ExsiccatiNumbers implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ometid", referencedColumnName="ometid")
      * })
+     * @Assert\Type(type="integer")
      */
     private $exsiccatiTitleId;
 
@@ -61,14 +62,14 @@ class ExsiccatiNumbers implements InitialTimestampInterface
      * @var \DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Occurrences", inversedBy="omenid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Occurrences", inversedBy="exsiccatiNumberId")
      * @ORM\JoinTable(name="omexsiccatiocclink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="omenid", referencedColumnName="omenid")

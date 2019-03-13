@@ -6,6 +6,9 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Taxa
@@ -16,166 +19,186 @@ use Doctrine\ORM\Mapping as ORM;
  *     itemOperations={"get"},
  *     collectionOperations={"get"}
  * )
- *
  */
-class Taxa
+class Taxa implements ModifiedUserIdInterface, InitialTimestampInterface, ModifiedTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="TID", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="TID", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $tid;
+    private $id;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="RankId", type="smallint", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="RankId", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $rankid = 'NULL';
+    private $rankId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="SciName", type="string", length=250, nullable=false)
+     * @ORM\Column(name="SciName", type="string", length=250)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=250)
      */
-    private $sciname;
+    private $scientificName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitInd1", type="string", length=1, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="UnitInd1", type="string", length=1, nullable=true)
+     * @Assert\Length(max=1)
      */
-    private $unitind1 = 'NULL';
+    private $unitIndicator1;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="UnitName1", type="string", length=50, nullable=false)
+     * @ORM\Column(name="UnitName1", type="string", length=50)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=50)
      */
-    private $unitname1;
+    private $unitName1;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitInd2", type="string", length=1, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="UnitInd2", type="string", length=1, nullable=true)
+     * @Assert\Length(max=1)
      */
-    private $unitind2 = 'NULL';
+    private $unitIndicator2;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitName2", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="UnitName2", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $unitname2 = 'NULL';
+    private $unitName2;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitInd3", type="string", length=7, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="UnitInd3", type="string", length=7, nullable=true)
+     * @Assert\Length(max=7)
      */
-    private $unitind3 = 'NULL';
+    private $unitIndicator3;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitName3", type="string", length=35, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="UnitName3", type="string", length=35, nullable=true)
+     * @Assert\Length(max=35)
      */
-    private $unitname3 = 'NULL';
+    private $unitName3;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Author", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Author", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $author = 'NULL';
+    private $author;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="PhyloSortSequence", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="PhyloSortSequence", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $phylosortsequence = 'NULL';
+    private $phylogenySortSequence;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Status", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Status", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $status = 'NULL';
+    private $status;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Source", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Source", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $source = 'NULL';
+    private $source;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Hybrid", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Hybrid", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $hybrid = 'NULL';
+    private $hybrid;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="SecurityStatus", type="integer", nullable=false, options={"unsigned"=true,"default"="0","comment"="0 = no security; 1 = hidden locality"})
+     * @ORM\Column(name="SecurityStatus", type="integer", options={"unsigned"=true,"default"="0","comment"="0 = no security; 1 = hidden locality"})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $securitystatus = '0';
+    private $securityStatus = 0;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="modifiedUid", referencedColumnName="uid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $modifieduid;
+    private $modifiedUserId;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $modifiedtimestamp = 'NULL';
+    private $modifiedTimestamp;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="ChecklistsDynamic", mappedBy="tid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\ChecklistsDynamic", mappedBy="taxaId")
      */
-    private $dynclid;
+    private $checklistsDynamicId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Glossary", mappedBy="tid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Glossary", mappedBy="taxaId")
      */
-    private $glossid;
+    private $glossaryId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="KeyCharacters", inversedBy="tid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\KeyCharacters", inversedBy="taxaId")
      * @ORM\JoinTable(name="kmchartaxalink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="tid", referencedColumnName="TID")
@@ -185,19 +208,19 @@ class Taxa
      *   }
      * )
      */
-    private $cid;
+    private $characterId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="References", mappedBy="tid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\References", mappedBy="taxaId")
      */
-    private $refid;
+    private $referenceId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="TaxaAuthorities", inversedBy="tid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\TaxaAuthorities", inversedBy="taxaId")
      * @ORM\JoinTable(name="taxanestedtree",
      *   joinColumns={
      *     @ORM\JoinColumn(name="tid", referencedColumnName="TID")
@@ -207,125 +230,125 @@ class Taxa
      *   }
      * )
      */
-    private $taxauthid;
+    private $taxaAuthorityId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Traits", mappedBy="tid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Traits", mappedBy="taxaId")
      */
-    private $traitid;
+    private $traitId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->dynclid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->glossid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->cid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->refid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->taxauthid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->traitid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->checklistsDynamicId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->glossaryId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->characterId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->referenceId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->taxaAuthorityId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->traitId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getTid(): ?int
+    public function getId(): ?int
     {
-        return $this->tid;
+        return $this->id;
     }
 
-    public function getRankid(): ?int
+    public function getRankId(): ?int
     {
-        return $this->rankid;
+        return $this->rankId;
     }
 
-    public function setRankid(?int $rankid): self
+    public function setRankId(?int $rankId): self
     {
-        $this->rankid = $rankid;
+        $this->rankId = $rankId;
 
         return $this;
     }
 
-    public function getSciname(): ?string
+    public function getScientificName(): ?string
     {
-        return $this->sciname;
+        return $this->scientificName;
     }
 
-    public function setSciname(string $sciname): self
+    public function setScientificName(string $scientificName): self
     {
-        $this->sciname = $sciname;
+        $this->scientificName = $scientificName;
 
         return $this;
     }
 
-    public function getUnitind1(): ?string
+    public function getUnitIndicator1(): ?string
     {
-        return $this->unitind1;
+        return $this->unitIndicator1;
     }
 
-    public function setUnitind1(?string $unitind1): self
+    public function setUnitIndicator1(?string $unitIndicator1): self
     {
-        $this->unitind1 = $unitind1;
+        $this->unitIndicator1 = $unitIndicator1;
 
         return $this;
     }
 
-    public function getUnitname1(): ?string
+    public function getUnitName1(): ?string
     {
-        return $this->unitname1;
+        return $this->unitName1;
     }
 
-    public function setUnitname1(string $unitname1): self
+    public function setUnitName1(string $unitName1): self
     {
-        $this->unitname1 = $unitname1;
+        $this->unitName1 = $unitName1;
 
         return $this;
     }
 
-    public function getUnitind2(): ?string
+    public function getUnitIndicator2(): ?string
     {
-        return $this->unitind2;
+        return $this->unitIndicator2;
     }
 
-    public function setUnitind2(?string $unitind2): self
+    public function setUnitIndicator2(?string $unitIndicator2): self
     {
-        $this->unitind2 = $unitind2;
+        $this->unitIndicator2 = $unitIndicator2;
 
         return $this;
     }
 
-    public function getUnitname2(): ?string
+    public function getUnitName2(): ?string
     {
-        return $this->unitname2;
+        return $this->unitName2;
     }
 
-    public function setUnitname2(?string $unitname2): self
+    public function setUnitName2(?string $unitName2): self
     {
-        $this->unitname2 = $unitname2;
+        $this->unitName2 = $unitName2;
 
         return $this;
     }
 
-    public function getUnitind3(): ?string
+    public function getUnitIndicator3(): ?string
     {
-        return $this->unitind3;
+        return $this->unitIndicator3;
     }
 
-    public function setUnitind3(?string $unitind3): self
+    public function setUnitIndicator3(?string $unitIndicator3): self
     {
-        $this->unitind3 = $unitind3;
+        $this->unitIndicator3 = $unitIndicator3;
 
         return $this;
     }
 
-    public function getUnitname3(): ?string
+    public function getUnitName3(): ?string
     {
-        return $this->unitname3;
+        return $this->unitName3;
     }
 
-    public function setUnitname3(?string $unitname3): self
+    public function setUnitName3(?string $unitName3): self
     {
-        $this->unitname3 = $unitname3;
+        $this->unitName3 = $unitName3;
 
         return $this;
     }
@@ -342,14 +365,14 @@ class Taxa
         return $this;
     }
 
-    public function getPhylosortsequence(): ?bool
+    public function getPhylogenySortSequence(): ?bool
     {
-        return $this->phylosortsequence;
+        return $this->phylogenySortSequence;
     }
 
-    public function setPhylosortsequence(?bool $phylosortsequence): self
+    public function setPhylogenySortSequence(?bool $phylogenySortSequence): self
     {
-        $this->phylosortsequence = $phylosortsequence;
+        $this->phylogenySortSequence = $phylogenySortSequence;
 
         return $this;
     }
@@ -402,50 +425,57 @@ class Taxa
         return $this;
     }
 
-    public function getSecuritystatus(): ?int
+    public function getSecurityStatus(): ?int
     {
-        return $this->securitystatus;
+        return $this->securityStatus;
     }
 
-    public function setSecuritystatus(int $securitystatus): self
+    public function setSecurityStatus(int $securityStatus): self
     {
-        $this->securitystatus = $securitystatus;
+        $this->securityStatus = $securityStatus;
 
         return $this;
     }
 
-    public function getModifiedtimestamp(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?\DateTimeInterface
     {
-        return $this->modifiedtimestamp;
+        return $this->modifiedTimestamp;
     }
 
-    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): self
+    public function setModifiedTimestamp(?\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
-        $this->modifiedtimestamp = $modifiedtimestamp;
+        $this->modifiedTimestamp = $modifiedTimestamp;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getModifieduid(): ?Users
+    /**
+     * @return Users|null
+     */
+    public function getModifiedUserId(): ?Users
     {
-        return $this->modifieduid;
+        return $this->modifiedUserId;
     }
 
-    public function setModifieduid(?Users $modifieduid): self
+    /**
+     * @param UserInterface $modifiedUserId
+     * @return ModifiedUserIdInterface
+     */
+    public function setModifiedUserId(UserInterface $modifiedUserId): ModifiedUserIdInterface
     {
-        $this->modifieduid = $modifieduid;
+        $this->modifiedUserId = $modifiedUserId;
 
         return $this;
     }
@@ -453,26 +483,26 @@ class Taxa
     /**
      * @return Collection|ChecklistsDynamic[]
      */
-    public function getDynclid(): Collection
+    public function getChecklistsDynamicId(): Collection
     {
-        return $this->dynclid;
+        return $this->checklistsDynamicId;
     }
 
-    public function addDynclid(ChecklistsDynamic $dynclid): self
+    public function addChecklistsDynamicId(ChecklistsDynamic $checklistsDynamicId): self
     {
-        if (!$this->dynclid->contains($dynclid)) {
-            $this->dynclid[] = $dynclid;
-            $dynclid->addTid($this);
+        if (!$this->checklistsDynamicId->contains($checklistsDynamicId)) {
+            $this->checklistsDynamicId[] = $checklistsDynamicId;
+            $checklistsDynamicId->addTaxaId($this);
         }
 
         return $this;
     }
 
-    public function removeDynclid(ChecklistsDynamic $dynclid): self
+    public function removeChecklistsDynamicId(ChecklistsDynamic $checklistsDynamicId): self
     {
-        if ($this->dynclid->contains($dynclid)) {
-            $this->dynclid->removeElement($dynclid);
-            $dynclid->removeTid($this);
+        if ($this->checklistsDynamicId->contains($checklistsDynamicId)) {
+            $this->checklistsDynamicId->removeElement($checklistsDynamicId);
+            $checklistsDynamicId->removeTaxaId($this);
         }
 
         return $this;
@@ -481,26 +511,26 @@ class Taxa
     /**
      * @return Collection|Glossary[]
      */
-    public function getGlossid(): Collection
+    public function getGlossaryId(): Collection
     {
-        return $this->glossid;
+        return $this->glossaryId;
     }
 
-    public function addGlossid(Glossary $glossid): self
+    public function addGlossaryId(Glossary $glossaryId): self
     {
-        if (!$this->glossid->contains($glossid)) {
-            $this->glossid[] = $glossid;
-            $glossid->addTid($this);
+        if (!$this->glossaryId->contains($glossaryId)) {
+            $this->glossaryId[] = $glossaryId;
+            $glossaryId->addTaxaId($this);
         }
 
         return $this;
     }
 
-    public function removeGlossid(Glossary $glossid): self
+    public function removeGlossaryId(Glossary $glossaryId): self
     {
-        if ($this->glossid->contains($glossid)) {
-            $this->glossid->removeElement($glossid);
-            $glossid->removeTid($this);
+        if ($this->glossaryId->contains($glossaryId)) {
+            $this->glossaryId->removeElement($glossaryId);
+            $glossaryId->removeTaxaId($this);
         }
 
         return $this;
@@ -509,24 +539,24 @@ class Taxa
     /**
      * @return Collection|KeyCharacters[]
      */
-    public function getCid(): Collection
+    public function getCharacterId(): Collection
     {
-        return $this->cid;
+        return $this->characterId;
     }
 
-    public function addCid(KeyCharacters $cid): self
+    public function addCharacterId(KeyCharacters $characterId): self
     {
-        if (!$this->cid->contains($cid)) {
-            $this->cid[] = $cid;
+        if (!$this->characterId->contains($characterId)) {
+            $this->characterId[] = $characterId;
         }
 
         return $this;
     }
 
-    public function removeCid(KeyCharacters $cid): self
+    public function removeCharacterId(KeyCharacters $characterId): self
     {
-        if ($this->cid->contains($cid)) {
-            $this->cid->removeElement($cid);
+        if ($this->characterId->contains($characterId)) {
+            $this->characterId->removeElement($characterId);
         }
 
         return $this;
@@ -535,26 +565,26 @@ class Taxa
     /**
      * @return Collection|References[]
      */
-    public function getRefid(): Collection
+    public function getReferenceId(): Collection
     {
-        return $this->refid;
+        return $this->referenceId;
     }
 
-    public function addRefid(References $refid): self
+    public function addReferenceId(References $referenceId): self
     {
-        if (!$this->refid->contains($refid)) {
-            $this->refid[] = $refid;
-            $refid->addTid($this);
+        if (!$this->referenceId->contains($referenceId)) {
+            $this->referenceId[] = $referenceId;
+            $referenceId->addTaxaId($this);
         }
 
         return $this;
     }
 
-    public function removeRefid(References $refid): self
+    public function removeReferenceId(References $referenceId): self
     {
-        if ($this->refid->contains($refid)) {
-            $this->refid->removeElement($refid);
-            $refid->removeTid($this);
+        if ($this->referenceId->contains($referenceId)) {
+            $this->referenceId->removeElement($referenceId);
+            $referenceId->removeTaxaId($this);
         }
 
         return $this;
@@ -563,24 +593,24 @@ class Taxa
     /**
      * @return Collection|TaxaAuthorities[]
      */
-    public function getTaxauthid(): Collection
+    public function getTaxaAuthorityId(): Collection
     {
-        return $this->taxauthid;
+        return $this->taxaAuthorityId;
     }
 
-    public function addTaxauthid(TaxaAuthorities $taxauthid): self
+    public function addTaxaAuthorityId(TaxaAuthorities $taxaAuthorityId): self
     {
-        if (!$this->taxauthid->contains($taxauthid)) {
-            $this->taxauthid[] = $taxauthid;
+        if (!$this->taxaAuthorityId->contains($taxaAuthorityId)) {
+            $this->taxaAuthorityId[] = $taxaAuthorityId;
         }
 
         return $this;
     }
 
-    public function removeTaxauthid(TaxaAuthorities $taxauthid): self
+    public function removeTaxaAuthorityId(TaxaAuthorities $taxaAuthorityId): self
     {
-        if ($this->taxauthid->contains($taxauthid)) {
-            $this->taxauthid->removeElement($taxauthid);
+        if ($this->taxaAuthorityId->contains($taxaAuthorityId)) {
+            $this->taxaAuthorityId->removeElement($taxaAuthorityId);
         }
 
         return $this;
@@ -589,26 +619,26 @@ class Taxa
     /**
      * @return Collection|Traits[]
      */
-    public function getTraitid(): Collection
+    public function getTraitId(): Collection
     {
-        return $this->traitid;
+        return $this->traitId;
     }
 
-    public function addTraitid(Traits $traitid): self
+    public function addTraitId(Traits $traitId): self
     {
-        if (!$this->traitid->contains($traitid)) {
-            $this->traitid[] = $traitid;
-            $traitid->addTid($this);
+        if (!$this->traitId->contains($traitId)) {
+            $this->traitId[] = $traitId;
+            $traitId->addTaxaId($this);
         }
 
         return $this;
     }
 
-    public function removeTraitid(Traits $traitid): self
+    public function removeTraitId(Traits $traitId): self
     {
-        if ($this->traitid->contains($traitid)) {
-            $this->traitid->removeElement($traitid);
-            $traitid->removeTid($this);
+        if ($this->traitId->contains($traitId)) {
+            $this->traitId->removeElement($traitId);
+            $traitId->removeTaxaId($this);
         }
 
         return $this;

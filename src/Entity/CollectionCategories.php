@@ -82,14 +82,14 @@ class CollectionCategories implements InitialTimestampInterface
      * @var \DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Collections", inversedBy="ccpk")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Collections", inversedBy="collectionCategoryId")
      * @ORM\JoinTable(name="omcollcatlink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="ccpk", referencedColumnName="ccpk")

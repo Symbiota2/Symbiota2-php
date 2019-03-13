@@ -36,6 +36,7 @@ class ImageProcessorRawLabels implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="imgid", referencedColumnName="imgid")
      * })
      * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $imageId;
 
@@ -47,6 +48,7 @@ class ImageProcessorRawLabels implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
      * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $occurrenceId;
 
@@ -103,7 +105,7 @@ class ImageProcessorRawLabels implements InitialTimestampInterface
      * @var \DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 

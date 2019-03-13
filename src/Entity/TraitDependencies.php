@@ -2,69 +2,81 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TraitDependencies
  *
  * @ORM\Table(name="tmtraitdependencies", indexes={@ORM\Index(name="FK_tmdepend_stateid_idx", columns={"parentstateid"}), @ORM\Index(name="FK_tmdepend_traitid_idx", columns={"traitid"})})
  * @ORM\Entity(repositoryClass="App\Repository\TraitDependenciesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class TraitDependencies
+class TraitDependencies implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="traitid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="traitid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $traitid;
+    private $traitId;
 
     /**
-     * @var \TraitStates
+     * @var \App\Entity\TraitStates
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="TraitStates")
+     * @ORM\OneToOne(targetEntity="\App\Entity\TraitStates")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parentstateid", referencedColumnName="stateid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $parentstateid;
+    private $parentStateId;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getTraitid(): ?int
+    public function getTraitId(): ?int
     {
-        return $this->traitid;
+        return $this->traitId;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(?\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(?\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getParentstateid(): ?TraitStates
+    public function getParentStateId(): ?TraitStates
     {
-        return $this->parentstateid;
+        return $this->parentStateId;
     }
 
-    public function setParentstateid(?TraitStates $parentstateid): self
+    public function setParentStateId(?TraitStates $parentStateId): self
     {
-        $this->parentstateid = $parentstateid;
+        $this->parentStateId = $parentStateId;
 
         return $this;
     }

@@ -2,136 +2,158 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TraitStates
  *
  * @ORM\Table(name="tmstates", uniqueConstraints={@ORM\UniqueConstraint(name="traitid_code_UNIQUE", columns={"traitid", "statecode"})}, indexes={@ORM\Index(name="FK_tmstate_uidcreated_idx", columns={"createduid"}), @ORM\Index(name="FK_tmstate_uidmodified_idx", columns={"modifieduid"}), @ORM\Index(name="IDX_2759BBC88CC5D4DB", columns={"traitid"})})
  * @ORM\Entity(repositoryClass="App\Repository\TraitStatesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class TraitStates
+class TraitStates implements ModifiedUserIdInterface, CreatedUserIdInterface, InitialTimestampInterface, ModifiedTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="stateid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="stateid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $stateid;
+    private $id;
 
     /**
-     * @var \Traits
+     * @var \App\Entity\Traits
      *
-     * @ORM\ManyToOne(targetEntity="Traits")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Traits")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="traitid", referencedColumnName="traitid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $traitid;
+    private $traitId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="statecode", type="string", length=2, nullable=false)
+     * @ORM\Column(name="statecode", type="string", length=2)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=2)
      */
-    private $statecode;
+    private $stateCode;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="statename", type="string", length=75, nullable=false)
+     * @ORM\Column(name="statename", type="string", length=75)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=75)
      */
-    private $statename;
+    private $stateName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="description", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $description = 'NULL';
+    private $description;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="refurl", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="refurl", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $refurl = 'NULL';
+    private $referenceUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="sortseq", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="sortseq", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $sortseq = 'NULL';
+    private $sortSequence;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $modifieduid;
+    private $modifiedUserId;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $modifiedtimestamp = 'NULL';
+    private $modifiedTimestamp;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $createduid;
+    private $createdUserId;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getStateid(): ?int
+    public function getId(): ?int
     {
-        return $this->stateid;
+        return $this->id;
     }
 
-    public function getStatecode(): ?string
+    public function getStateCode(): ?string
     {
-        return $this->statecode;
+        return $this->stateCode;
     }
 
-    public function setStatecode(string $statecode): self
+    public function setStateCode(string $stateCode): self
     {
-        $this->statecode = $statecode;
+        $this->stateCode = $stateCode;
 
         return $this;
     }
 
-    public function getStatename(): ?string
+    public function getStateName(): ?string
     {
-        return $this->statename;
+        return $this->stateName;
     }
 
-    public function setStatename(string $statename): self
+    public function setStateName(string $stateName): self
     {
-        $this->statename = $statename;
+        $this->stateName = $stateName;
 
         return $this;
     }
@@ -148,14 +170,14 @@ class TraitStates
         return $this;
     }
 
-    public function getRefurl(): ?string
+    public function getReferenceUrl(): ?string
     {
-        return $this->refurl;
+        return $this->referenceUrl;
     }
 
-    public function setRefurl(?string $refurl): self
+    public function setReferenceUrl(?string $referenceUrl): self
     {
-        $this->refurl = $refurl;
+        $this->referenceUrl = $referenceUrl;
 
         return $this;
     }
@@ -172,74 +194,88 @@ class TraitStates
         return $this;
     }
 
-    public function getSortseq(): ?int
+    public function getSortSequence(): ?int
     {
-        return $this->sortseq;
+        return $this->sortSequence;
     }
 
-    public function setSortseq(?int $sortseq): self
+    public function setSortSequence(?int $sortSequence): self
     {
-        $this->sortseq = $sortseq;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
 
-    public function getModifiedtimestamp(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?\DateTimeInterface
     {
-        return $this->modifiedtimestamp;
+        return $this->modifiedTimestamp;
     }
 
-    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): self
+    public function setModifiedTimestamp(?\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
-        $this->modifiedtimestamp = $modifiedtimestamp;
+        $this->modifiedTimestamp = $modifiedTimestamp;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(?\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(?\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getCreateduid(): ?Users
+    /**
+     * @return Users|null
+     */
+    public function getCreatedUserId(): ?Users
     {
-        return $this->createduid;
+        return $this->createdUserId;
     }
 
-    public function setCreateduid(?Users $createduid): self
+    /**
+     * @param UserInterface $createdUserId
+     * @return CreatedUserIdInterface
+     */
+    public function setCreatedUserId(UserInterface $createdUserId): CreatedUserIdInterface
     {
-        $this->createduid = $createduid;
+        $this->createdUserId = $createdUserId;
 
         return $this;
     }
 
-    public function getTraitid(): ?Traits
+    public function getTraitId(): ?Traits
     {
-        return $this->traitid;
+        return $this->traitId;
     }
 
-    public function setTraitid(?Traits $traitid): self
+    public function setTraitId(?Traits $traitId): self
     {
-        $this->traitid = $traitid;
+        $this->traitId = $traitId;
 
         return $this;
     }
 
-    public function getModifieduid(): ?Users
+    /**
+     * @return Users|null
+     */
+    public function getModifiedUserId(): ?Users
     {
-        return $this->modifieduid;
+        return $this->modifiedUserId;
     }
 
-    public function setModifieduid(?Users $modifieduid): self
+    /**
+     * @param UserInterface $modifiedUserId
+     * @return ModifiedUserIdInterface
+     */
+    public function setModifiedUserId(UserInterface $modifiedUserId): ModifiedUserIdInterface
     {
-        $this->modifieduid = $modifieduid;
+        $this->modifiedUserId = $modifiedUserId;
 
         return $this;
     }

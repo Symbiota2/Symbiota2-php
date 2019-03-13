@@ -2,83 +2,105 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * LookupLanguages
  *
  * @ORM\Table(name="adminlanguages", uniqueConstraints={@ORM\UniqueConstraint(name="index_langname_unique", columns={"langname"})})
  * @ORM\Entity(repositoryClass="App\Repository\LookupLanguagesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class LookupLanguages
+class LookupLanguages implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="langid", type="integer", nullable=false)
+     * @ORM\Column(name="langid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $langid;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="langname", type="string", length=45, nullable=false)
+     * @ORM\Column(name="langname", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
-    private $langname;
+    private $languageName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="iso639_1", type="string", length=10, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="iso639_1", type="string", length=10, nullable=true)
+     * @Assert\Length(max=10)
      */
-    private $iso6391 = 'NULL';
+    private $iso6391;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="iso639_2", type="string", length=10, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="iso639_2", type="string", length=10, nullable=true)
+     * @Assert\Length(max=10)
      */
-    private $iso6392 = 'NULL';
+    private $iso6392;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="\App\Entity\KeyCharacters", mappedBy="languageId")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
+     */
+    private $characterId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-
+        $this->characterId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getLangid(): ?int
+    public function getId(): ?int
     {
-        return $this->langid;
+        return $this->id;
     }
 
-    public function getLangname(): ?string
+    public function getLanguageName(): ?string
     {
-        return $this->langname;
+        return $this->languageName;
     }
 
-    public function setLangname(string $langname): self
+    public function setLanguageName(string $languageName): self
     {
-        $this->langname = $langname;
+        $this->languageName = $languageName;
 
         return $this;
     }
@@ -119,14 +141,42 @@ class LookupLanguages
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|KeyCharacters[]
+     */
+    public function getCharacterId(): Collection
+    {
+        return $this->characterId;
+    }
+
+    public function addCharacterId(KeyCharacters $characterId): self
+    {
+        if (!$this->characterId->contains($characterId)) {
+            $this->characterId[] = $characterId;
+            $characterId->addLanguageId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterId(KeyCharacters $characterId): self
+    {
+        if ($this->characterId->contains($characterId)) {
+            $this->characterId->removeElement($characterId);
+            $characterId->removeLanguageId($this);
+        }
 
         return $this;
     }

@@ -2,106 +2,129 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * KeyDescriptionDeletions
  *
  * @ORM\Table(name="kmdescrdeletions")
  * @ORM\Entity(repositoryClass="App\Repository\KeyDescriptionDeletionsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
 class KeyDescriptionDeletions
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="TID", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="TID", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="CID", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="CID", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $cid;
+    private $characterId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="CS", type="string", length=16, nullable=false)
+     * @ORM\Column(name="CS", type="string", length=16)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=16)
      */
-    private $cs;
+    private $characterState;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Modifier", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Modifier", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $modifier = 'NULL';
+    private $modifier;
 
     /**
      * @var float|null
      *
-     * @ORM\Column(name="X", type="float", precision=15, scale=5, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="X", type="float", precision=15, scale=5, nullable=true)
+     * @Assert\Type(type="float")
      */
-    private $x = 'NULL';
+    private $x;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="TXT", type="text", length=0, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="TXT", type="text", length=0, nullable=true)
      */
-    private $txt = 'NULL';
+    private $text;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Inherited", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Inherited", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $inherited = 'NULL';
+    private $inherited;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Source", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Source", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $source = 'NULL';
+    private $source;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="Seq", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="Seq", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $seq = 'NULL';
+    private $sequence;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Notes", type="text", length=0, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Notes", type="text", length=0, nullable=true)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'NULL';
+    private $initialTimestamp;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="DeletedBy", type="string", length=100, nullable=false)
+     * @ORM\Column(name="DeletedBy", type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=100)
      */
-    private $deletedby;
+    private $deletedBy;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="DeletedTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="DeletedTimeStamp", type="datetime")
+     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
-    private $deletedtimestamp = 'CURRENT_TIMESTAMP';
+    private $deletedTimestamp;
 
     /**
      * @var int
@@ -110,40 +133,40 @@ class KeyDescriptionDeletions
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $pk;
+    private $id;
 
-    public function getTid(): ?int
+    public function getTaxaId(): ?int
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(int $tid): self
+    public function setTaxaId(int $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }
 
-    public function getCid(): ?int
+    public function getCharacterId(): ?int
     {
-        return $this->cid;
+        return $this->characterId;
     }
 
-    public function setCid(int $cid): self
+    public function setCharacterId(int $characterId): self
     {
-        $this->cid = $cid;
+        $this->characterId = $characterId;
 
         return $this;
     }
 
-    public function getCs(): ?string
+    public function getCharacterState(): ?string
     {
-        return $this->cs;
+        return $this->characterState;
     }
 
-    public function setCs(string $cs): self
+    public function setCharacterState(string $characterState): self
     {
-        $this->cs = $cs;
+        $this->characterState = $characterState;
 
         return $this;
     }
@@ -172,14 +195,14 @@ class KeyDescriptionDeletions
         return $this;
     }
 
-    public function getTxt(): ?string
+    public function getText(): ?string
     {
-        return $this->txt;
+        return $this->text;
     }
 
-    public function setTxt(?string $txt): self
+    public function setText(?string $text): self
     {
-        $this->txt = $txt;
+        $this->text = $text;
 
         return $this;
     }
@@ -208,14 +231,14 @@ class KeyDescriptionDeletions
         return $this;
     }
 
-    public function getSeq(): ?int
+    public function getSequence(): ?int
     {
-        return $this->seq;
+        return $this->sequence;
     }
 
-    public function setSeq(?int $seq): self
+    public function setSequence(?int $sequence): self
     {
-        $this->seq = $seq;
+        $this->sequence = $sequence;
 
         return $this;
     }
@@ -232,45 +255,45 @@ class KeyDescriptionDeletions
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(?\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(?\DateTimeInterface $initialTimestamp): self
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getDeletedby(): ?string
+    public function getDeletedBy(): ?string
     {
-        return $this->deletedby;
+        return $this->deletedBy;
     }
 
-    public function setDeletedby(string $deletedby): self
+    public function setDeletedBy(string $deletedBy): self
     {
-        $this->deletedby = $deletedby;
+        $this->deletedBy = $deletedBy;
 
         return $this;
     }
 
-    public function getDeletedtimestamp(): ?\DateTimeInterface
+    public function getDeletedTimestamp(): ?\DateTimeInterface
     {
-        return $this->deletedtimestamp;
+        return $this->deletedTimestamp;
     }
 
-    public function setDeletedtimestamp(\DateTimeInterface $deletedtimestamp): self
+    public function setDeletedTimestamp(\DateTimeInterface $deletedTimestamp): self
     {
-        $this->deletedtimestamp = $deletedtimestamp;
+        $this->deletedTimestamp = $deletedTimestamp;
 
         return $this;
     }
 
-    public function getPk(): ?int
+    public function getId(): ?int
     {
-        return $this->pk;
+        return $this->id;
     }
 
 

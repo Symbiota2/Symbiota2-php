@@ -2,125 +2,148 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TraitAttributes
  *
  * @ORM\Table(name="tmattributes", indexes={@ORM\Index(name="FK_tmattr_occid_idx", columns={"occid"}), @ORM\Index(name="FK_tmattr_uidmodified_idx", columns={"modifieduid"}), @ORM\Index(name="FK_tmattr_stateid_idx", columns={"stateid"}), @ORM\Index(name="FK_attr_uidcreate_idx", columns={"createduid"}), @ORM\Index(name="FK_tmattr_imgid_idx", columns={"imgid"})})
  * @ORM\Entity(repositoryClass="App\Repository\TraitAttributesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class TraitAttributes
+class TraitAttributes implements ModifiedUserIdInterface, CreatedUserIdInterface, InitialTimestampInterface, ModifiedTimestampInterface
 {
     /**
-     * @var \TraitStates
+     * @var \App\Entity\TraitStates
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="TraitStates")
+     * @ORM\OneToOne(targetEntity="\App\Entity\TraitStates")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="stateid", referencedColumnName="stateid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $stateid;
+    private $stateId;
 
     /**
-     * @var \Occurrences
+     * @var \App\Entity\Occurrences
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Occurrences")
+     * @ORM\OneToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="modifier", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="modifier", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $modifier = 'NULL';
+    private $modifier;
 
     /**
      * @var float|null
      *
-     * @ORM\Column(name="xvalue", type="float", precision=15, scale=5, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="xvalue", type="float", precision=15, scale=5, nullable=true)
+     * @Assert\Type(type="float")
      */
-    private $xvalue = 'NULL';
+    private $xValue;
 
     /**
-     * @var \Images
+     * @var \App\Entity\Images
      *
-     * @ORM\ManyToOne(targetEntity="Images")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Images")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="imgid", referencedColumnName="imgid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $imgid;
+    private $imageId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="imagecoordinates", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="imagecoordinates", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $imagecoordinates = 'NULL';
+    private $imageCoordinates;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="source", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="source", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $source = 'NULL';
+    private $source;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="statuscode", type="boolean", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="statuscode", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $statuscode = 'NULL';
+    private $statusCode;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $modifieduid;
+    private $modifiedUserId;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $modifiedtimestamp = 'NULL';
+    private $modifiedTimestamp;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $createduid;
+    private $createdUserId;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     public function getModifier(): ?string
     {
@@ -134,26 +157,26 @@ class TraitAttributes
         return $this;
     }
 
-    public function getXvalue(): ?float
+    public function getXValue(): ?float
     {
-        return $this->xvalue;
+        return $this->xValue;
     }
 
-    public function setXvalue(?float $xvalue): self
+    public function setXValue(?float $xValue): self
     {
-        $this->xvalue = $xvalue;
+        $this->xValue = $xValue;
 
         return $this;
     }
 
-    public function getImagecoordinates(): ?string
+    public function getImageCoordinates(): ?string
     {
-        return $this->imagecoordinates;
+        return $this->imageCoordinates;
     }
 
-    public function setImagecoordinates(?string $imagecoordinates): self
+    public function setImageCoordinates(?string $imageCoordinates): self
     {
-        $this->imagecoordinates = $imagecoordinates;
+        $this->imageCoordinates = $imageCoordinates;
 
         return $this;
     }
@@ -182,98 +205,112 @@ class TraitAttributes
         return $this;
     }
 
-    public function getStatuscode(): ?bool
+    public function getStatusCode(): ?bool
     {
-        return $this->statuscode;
+        return $this->statusCode;
     }
 
-    public function setStatuscode(?bool $statuscode): self
+    public function setStatusCode(?bool $statusCode): self
     {
-        $this->statuscode = $statuscode;
+        $this->statusCode = $statusCode;
 
         return $this;
     }
 
-    public function getModifiedtimestamp(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?\DateTimeInterface
     {
-        return $this->modifiedtimestamp;
+        return $this->modifiedTimestamp;
     }
 
-    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): self
+    public function setModifiedTimestamp(?\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
-        $this->modifiedtimestamp = $modifiedtimestamp;
+        $this->modifiedTimestamp = $modifiedTimestamp;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(?\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(?\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getStateid(): ?TraitStates
+    public function getStateId(): ?TraitStates
     {
-        return $this->stateid;
+        return $this->stateId;
     }
 
-    public function setStateid(?TraitStates $stateid): self
+    public function setStateId(?TraitStates $stateId): self
     {
-        $this->stateid = $stateid;
+        $this->stateId = $stateId;
 
         return $this;
     }
 
-    public function getImgid(): ?Images
+    public function getImageId(): ?Images
     {
-        return $this->imgid;
+        return $this->imageId;
     }
 
-    public function setImgid(?Images $imgid): self
+    public function setImageId(?Images $imageId): self
     {
-        $this->imgid = $imgid;
+        $this->imageId = $imageId;
 
         return $this;
     }
 
-    public function getOccid(): ?Occurrences
+    public function getOccurrenceId(): ?Occurrences
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function setOccid(?Occurrences $occid): self
+    public function setOccurrenceId(?Occurrences $occurrenceId): self
     {
-        $this->occid = $occid;
+        $this->occurrenceId = $occurrenceId;
 
         return $this;
     }
 
-    public function getCreateduid(): ?Users
+    /**
+     * @return Users|null
+     */
+    public function getCreatedUserId(): ?Users
     {
-        return $this->createduid;
+        return $this->createdUserId;
     }
 
-    public function setCreateduid(?Users $createduid): self
+    /**
+     * @param UserInterface $createdUserId
+     * @return CreatedUserIdInterface
+     */
+    public function setCreatedUserId(UserInterface $createdUserId): CreatedUserIdInterface
     {
-        $this->createduid = $createduid;
+        $this->createdUserId = $createdUserId;
 
         return $this;
     }
 
-    public function getModifieduid(): ?Users
+    /**
+     * @return Users|null
+     */
+    public function getModifiedUserId(): ?Users
     {
-        return $this->modifieduid;
+        return $this->modifiedUserId;
     }
 
-    public function setModifieduid(?Users $modifieduid): self
+    /**
+     * @param UserInterface $modifiedUserId
+     * @return ModifiedUserIdInterface
+     */
+    public function setModifiedUserId(UserInterface $modifiedUserId): ModifiedUserIdInterface
     {
-        $this->modifieduid = $modifieduid;
+        $this->modifiedUserId = $modifiedUserId;
 
         return $this;
     }

@@ -2,103 +2,122 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TaxaConcepts
  *
  * @ORM\Table(name="taxstatus", indexes={@ORM\Index(name="Index_ts_taid", columns={"taxauthid"}), @ORM\Index(name="Index_ts_tidacc", columns={"tidaccepted"}), @ORM\Index(name="Index_ts_tid", columns={"tid"}), @ORM\Index(name="Index_ts_family", columns={"family"}), @ORM\Index(name="Index_ts_parenttid", columns={"parenttid"})})
  * @ORM\Entity(repositoryClass="App\Repository\TaxaConceptsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class TaxaConcepts
+class TaxaConcepts implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="tsid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="tsid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $tsid;
+    private $id;
 
     /**
-     * @var \Taxa
+     * @var \App\Entity\Taxa
      *
-     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $tid;
+    private $taxaId;
 
     /**
-     * @var \Taxa
+     * @var \App\Entity\Taxa
      *
-     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tidaccepted", referencedColumnName="TID")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $tidaccepted;
+    private $taxaIdAccepted;
 
     /**
-     * @var \TaxaAuthorities
+     * @var \App\Entity\TaxaAuthorities
      *
-     * @ORM\ManyToOne(targetEntity="TaxaAuthorities")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\TaxaAuthorities")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="taxauthid", referencedColumnName="taxauthid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $taxauthid;
+    private $taxaAuthorityId;
 
     /**
-     * @var \Taxa
+     * @var \App\Entity\Taxa
      *
-     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parenttid", referencedColumnName="TID")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $parenttid;
+    private $parentTaxaId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="family", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="family", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $family = 'NULL';
+    private $family;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnacceptabilityReason", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="UnacceptabilityReason", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $unacceptabilityreason = 'NULL';
+    private $unacceptabilityReason;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="SortSequence", type="integer", nullable=true, options={"default"="50","unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $sortsequence = '50';
+    private $sortSequence = 50;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getTsid(): ?int
+    public function getId(): ?int
     {
-        return $this->tsid;
+        return $this->id;
     }
 
     public function getFamily(): ?string
@@ -113,14 +132,14 @@ class TaxaConcepts
         return $this;
     }
 
-    public function getUnacceptabilityreason(): ?string
+    public function getUnacceptabilityReason(): ?string
     {
-        return $this->unacceptabilityreason;
+        return $this->unacceptabilityReason;
     }
 
-    public function setUnacceptabilityreason(?string $unacceptabilityreason): self
+    public function setUnacceptabilityReason(?string $unacceptabilityReason): self
     {
-        $this->unacceptabilityreason = $unacceptabilityreason;
+        $this->unacceptabilityReason = $unacceptabilityReason;
 
         return $this;
     }
@@ -137,74 +156,74 @@ class TaxaConcepts
         return $this;
     }
 
-    public function getSortsequence(): ?int
+    public function getSortSequence(): ?int
     {
-        return $this->sortsequence;
+        return $this->sortSequence;
     }
 
-    public function setSortsequence(?int $sortsequence): self
+    public function setSortSequence(?int $sortSequence): self
     {
-        $this->sortsequence = $sortsequence;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getTidaccepted(): ?Taxa
+    public function getTaxaIdAccepted(): ?Taxa
     {
-        return $this->tidaccepted;
+        return $this->taxaIdAccepted;
     }
 
-    public function setTidaccepted(?Taxa $tidaccepted): self
+    public function setTaxaIdAccepted(?Taxa $taxaIdAccepted): self
     {
-        $this->tidaccepted = $tidaccepted;
+        $this->taxaIdAccepted = $taxaIdAccepted;
 
         return $this;
     }
 
-    public function getTaxauthid(): ?TaxaAuthorities
+    public function getTaxaAuthorityId(): ?TaxaAuthorities
     {
-        return $this->taxauthid;
+        return $this->taxaAuthorityId;
     }
 
-    public function setTaxauthid(?TaxaAuthorities $taxauthid): self
+    public function setTaxaAuthorityId(?TaxaAuthorities $taxaAuthorityId): self
     {
-        $this->taxauthid = $taxauthid;
+        $this->taxaAuthorityId = $taxaAuthorityId;
 
         return $this;
     }
 
-    public function getParenttid(): ?Taxa
+    public function getParentTaxaId(): ?Taxa
     {
-        return $this->parenttid;
+        return $this->parentTaxaId;
     }
 
-    public function setParenttid(?Taxa $parenttid): self
+    public function setParentTaxaId(?Taxa $parentTaxaId): self
     {
-        $this->parenttid = $parenttid;
+        $this->parentTaxaId = $parentTaxaId;
 
         return $this;
     }
 
-    public function getTid(): ?Taxa
+    public function getTaxaId(): ?Taxa
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(?Taxa $tid): self
+    public function setTaxaId(?Taxa $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }

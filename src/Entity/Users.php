@@ -323,12 +323,12 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Collections", mappedBy="userId")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Collections", mappedBy="userId")
      */
     private $collectionId;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\UserRoles", mappedBy="userId")
+     * @ORM\OneToMany(targetEntity="\App\Entity\UserRoles", mappedBy="userId")
      * @ApiSubresource()
      * @Groups({"get"})
      */

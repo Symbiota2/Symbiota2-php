@@ -2,197 +2,227 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * LookupReferenceTypes
  *
  * @ORM\Table(name="referencetype", uniqueConstraints={@ORM\UniqueConstraint(name="ReferenceType_UNIQUE", columns={"ReferenceType"})})
  * @ORM\Entity(repositoryClass="App\Repository\LookupReferenceTypesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class LookupReferenceTypes
+class LookupReferenceTypes implements CreatedUserIdInterface, InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="ReferenceTypeId", type="integer", nullable=false)
+     * @ORM\Column(name="ReferenceTypeId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $referencetypeid;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ReferenceType", type="string", length=45, nullable=false)
+     * @ORM\Column(name="ReferenceType", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
-    private $referencetype;
+    private $referenceType;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="IsParent", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="IsParent", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $isparent = 'NULL';
+    private $isParent;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Title", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Title", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $title = 'NULL';
+    private $title;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="SecondaryTitle", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="SecondaryTitle", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $secondarytitle = 'NULL';
+    private $secondaryTitle;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="PlacePublished", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="PlacePublished", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $placepublished = 'NULL';
+    private $placePublished;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Publisher", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Publisher", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $publisher = 'NULL';
+    private $publisher;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Volume", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Volume", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $volume = 'NULL';
+    private $volume;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="NumberVolumes", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="NumberVolumes", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $numbervolumes = 'NULL';
+    private $numberOfVolumes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Number", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Number", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $number = 'NULL';
+    private $number;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Pages", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Pages", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $pages = 'NULL';
+    private $pages;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Section", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Section", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $section = 'NULL';
+    private $section;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="TertiaryTitle", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="TertiaryTitle", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $tertiarytitle = 'NULL';
+    private $tertiaryTitle;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Edition", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Edition", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $edition = 'NULL';
+    private $edition;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Date", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Date", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $date = 'NULL';
+    private $date;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="TypeWork", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="TypeWork", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $typework = 'NULL';
+    private $typeOfWork;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="ShortTitle", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="ShortTitle", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $shorttitle = 'NULL';
+    private $shortTitle;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="AlternativeTitle", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="AlternativeTitle", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $alternativetitle = 'NULL';
+    private $alternativeTitle;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="ISBN_ISSN", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="ISBN_ISSN", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $isbnIssn = 'NULL';
+    private $isbnIssn;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Figures", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Figures", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $figures = 'NULL';
+    private $figures;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="createduid", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="createduid", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $createduid = 'NULL';
+    private $createdUserId;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialTimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialTimestamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getReferencetypeid(): ?int
+    public function getId(): ?int
     {
-        return $this->referencetypeid;
+        return $this->id;
     }
 
-    public function getReferencetype(): ?string
+    public function getReferenceType(): ?string
     {
-        return $this->referencetype;
+        return $this->referenceType;
     }
 
-    public function setReferencetype(string $referencetype): self
+    public function setReferenceType(string $referenceType): self
     {
-        $this->referencetype = $referencetype;
+        $this->referenceType = $referenceType;
 
         return $this;
     }
 
-    public function getIsparent(): ?int
+    public function getIsParent(): ?int
     {
-        return $this->isparent;
+        return $this->isParent;
     }
 
-    public function setIsparent(?int $isparent): self
+    public function setIsParent(?int $isParent): self
     {
-        $this->isparent = $isparent;
+        $this->isParent = $isParent;
 
         return $this;
     }
@@ -209,26 +239,26 @@ class LookupReferenceTypes
         return $this;
     }
 
-    public function getSecondarytitle(): ?string
+    public function getSecondaryTitle(): ?string
     {
-        return $this->secondarytitle;
+        return $this->secondaryTitle;
     }
 
-    public function setSecondarytitle(?string $secondarytitle): self
+    public function setSecondaryTitle(?string $secondaryTitle): self
     {
-        $this->secondarytitle = $secondarytitle;
+        $this->secondaryTitle = $secondaryTitle;
 
         return $this;
     }
 
-    public function getPlacepublished(): ?string
+    public function getPlacePublished(): ?string
     {
-        return $this->placepublished;
+        return $this->placePublished;
     }
 
-    public function setPlacepublished(?string $placepublished): self
+    public function setPlacePublished(?string $placePublished): self
     {
-        $this->placepublished = $placepublished;
+        $this->placePublished = $placePublished;
 
         return $this;
     }
@@ -257,14 +287,14 @@ class LookupReferenceTypes
         return $this;
     }
 
-    public function getNumbervolumes(): ?string
+    public function getNumberOfVolumes(): ?string
     {
-        return $this->numbervolumes;
+        return $this->numberOfVolumes;
     }
 
-    public function setNumbervolumes(?string $numbervolumes): self
+    public function setNumberOfVolumes(?string $numberOfVolumes): self
     {
-        $this->numbervolumes = $numbervolumes;
+        $this->numberOfVolumes = $numberOfVolumes;
 
         return $this;
     }
@@ -305,14 +335,14 @@ class LookupReferenceTypes
         return $this;
     }
 
-    public function getTertiarytitle(): ?string
+    public function getTertiaryTitle(): ?string
     {
-        return $this->tertiarytitle;
+        return $this->tertiaryTitle;
     }
 
-    public function setTertiarytitle(?string $tertiarytitle): self
+    public function setTertiaryTitle(?string $tertiaryTitle): self
     {
-        $this->tertiarytitle = $tertiarytitle;
+        $this->tertiaryTitle = $tertiaryTitle;
 
         return $this;
     }
@@ -341,38 +371,38 @@ class LookupReferenceTypes
         return $this;
     }
 
-    public function getTypework(): ?string
+    public function getTypeOfWork(): ?string
     {
-        return $this->typework;
+        return $this->typeOfWork;
     }
 
-    public function setTypework(?string $typework): self
+    public function setTypeOfWork(?string $typeOfWork): self
     {
-        $this->typework = $typework;
+        $this->typeOfWork = $typeOfWork;
 
         return $this;
     }
 
-    public function getShorttitle(): ?string
+    public function getShortTitle(): ?string
     {
-        return $this->shorttitle;
+        return $this->shortTitle;
     }
 
-    public function setShorttitle(?string $shorttitle): self
+    public function setShortTitle(?string $shortTitle): self
     {
-        $this->shorttitle = $shorttitle;
+        $this->shortTitle = $shortTitle;
 
         return $this;
     }
 
-    public function getAlternativetitle(): ?string
+    public function getAlternativeTitle(): ?string
     {
-        return $this->alternativetitle;
+        return $this->alternativeTitle;
     }
 
-    public function setAlternativetitle(?string $alternativetitle): self
+    public function setAlternativeTitle(?string $alternativeTitle): self
     {
-        $this->alternativetitle = $alternativetitle;
+        $this->alternativeTitle = $alternativeTitle;
 
         return $this;
     }
@@ -401,26 +431,33 @@ class LookupReferenceTypes
         return $this;
     }
 
-    public function getCreateduid(): ?int
+    /**
+     * @return int|null
+     */
+    public function getCreatedUserId(): ?int
     {
-        return $this->createduid;
+        return $this->createdUserId;
     }
 
-    public function setCreateduid(?int $createduid): self
+    /**
+     * @param UserInterface $createdUserId
+     * @return CreatedUserIdInterface
+     */
+    public function setCreatedUserId(UserInterface $createdUserId): CreatedUserIdInterface
     {
-        $this->createduid = $createduid;
+        $this->createdUserId = $createdUserId;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(?\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(?\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }

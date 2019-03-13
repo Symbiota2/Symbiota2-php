@@ -64,6 +64,7 @@ class ChecklistTaxaComments implements CreatedUserIdInterface, InitialTimestampI
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
      * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $createdUserId;
 
@@ -88,7 +89,7 @@ class ChecklistTaxaComments implements CreatedUserIdInterface, InitialTimestampI
      * @var \DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 

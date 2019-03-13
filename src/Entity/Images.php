@@ -2,217 +2,251 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Images
  *
  * @ORM\Table(name="images", indexes={@ORM\Index(name="FK_images_occ", columns={"occid"}), @ORM\Index(name="Index_tid", columns={"tid"}), @ORM\Index(name="Index_images_datelastmod", columns={"InitialTimeStamp"}), @ORM\Index(name="FK_photographeruid", columns={"photographeruid"})})
  * @ORM\Entity(repositoryClass="App\Repository\ImagesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class Images
+class Images implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="imgid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="imgid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $imgid;
+    private $id;
 
     /**
-     * @var \Taxa
+     * @var \App\Entity\Taxa
      *
-     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=255, nullable=false)
+     * @ORM\Column(name="url", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $url;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="thumbnailurl", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="thumbnailurl", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $thumbnailurl = 'NULL';
+    private $thumbnailUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="originalurl", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="originalurl", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $originalurl = 'NULL';
+    private $originalUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="archiveurl", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="archiveurl", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $archiveurl = 'NULL';
+    private $archiveUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="photographer", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="photographer", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $photographer = 'NULL';
+    private $photographer;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="photographeruid", referencedColumnName="uid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $photographeruid;
+    private $photographerUserId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="imagetype", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="imagetype", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $imagetype = 'NULL';
+    private $imageType;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="format", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="format", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $format = 'NULL';
+    private $format;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="caption", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="caption", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $caption = 'NULL';
+    private $caption;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="owner", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="owner", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $owner = 'NULL';
+    private $owner;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourceurl", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="sourceurl", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $sourceurl = 'NULL';
+    private $sourceUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="referenceUrl", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="referenceUrl", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $referenceurl = 'NULL';
+    private $referenceUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="copyright", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="copyright", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $copyright = 'NULL';
+    private $copyright;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="rights", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="rights", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $rights = 'NULL';
+    private $rights;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="accessrights", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="accessrights", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $accessrights = 'NULL';
+    private $accessRights;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="locality", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="locality", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $locality = 'NULL';
+    private $locality;
 
     /**
-     * @var \Occurrences
+     * @var \App\Entity\Occurrences
      *
-     * @ORM\ManyToOne(targetEntity="Occurrences")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=350, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=350, nullable=true)
+     * @Assert\Length(max=350)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="anatomy", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="anatomy", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $anatomy = 'NULL';
+    private $anatomy;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="username", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="username", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $username = 'NULL';
+    private $username;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourceIdentifier", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="sourceIdentifier", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $sourceidentifier = 'NULL';
+    private $sourceIdentifier;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="mediaMD5", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="mediaMD5", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $mediamd5 = 'NULL';
+    private $mediaMd5;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $dynamicproperties = 'NULL';
+    private $dynamicProperties;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="sortsequence", type="integer", nullable=false, options={"default"="50","unsigned"=true})
+     * @ORM\Column(name="sortsequence", type="integer", options={"default"="50","unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $sortsequence = '50';
+    private $sortSequence = 50;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     /**
      * Constructor
@@ -222,9 +256,9 @@ class Images
 
     }
 
-    public function getImgid(): ?int
+    public function getId(): ?int
     {
-        return $this->imgid;
+        return $this->id;
     }
 
     public function getUrl(): ?string
@@ -239,38 +273,38 @@ class Images
         return $this;
     }
 
-    public function getThumbnailurl(): ?string
+    public function getThumbnailUrl(): ?string
     {
-        return $this->thumbnailurl;
+        return $this->thumbnailUrl;
     }
 
-    public function setThumbnailurl(?string $thumbnailurl): self
+    public function setThumbnailUrl(?string $thumbnailUrl): self
     {
-        $this->thumbnailurl = $thumbnailurl;
+        $this->thumbnailUrl = $thumbnailUrl;
 
         return $this;
     }
 
-    public function getOriginalurl(): ?string
+    public function getOriginalUrl(): ?string
     {
-        return $this->originalurl;
+        return $this->originalUrl;
     }
 
-    public function setOriginalurl(?string $originalurl): self
+    public function setOriginalUrl(?string $originalUrl): self
     {
-        $this->originalurl = $originalurl;
+        $this->originalUrl = $originalUrl;
 
         return $this;
     }
 
-    public function getArchiveurl(): ?string
+    public function getArchiveUrl(): ?string
     {
-        return $this->archiveurl;
+        return $this->archiveUrl;
     }
 
-    public function setArchiveurl(?string $archiveurl): self
+    public function setArchiveUrl(?string $archiveUrl): self
     {
-        $this->archiveurl = $archiveurl;
+        $this->archiveUrl = $archiveUrl;
 
         return $this;
     }
@@ -287,14 +321,14 @@ class Images
         return $this;
     }
 
-    public function getImagetype(): ?string
+    public function getImageType(): ?string
     {
-        return $this->imagetype;
+        return $this->imageType;
     }
 
-    public function setImagetype(?string $imagetype): self
+    public function setImageType(?string $imageType): self
     {
-        $this->imagetype = $imagetype;
+        $this->imageType = $imageType;
 
         return $this;
     }
@@ -335,26 +369,26 @@ class Images
         return $this;
     }
 
-    public function getSourceurl(): ?string
+    public function getSourceUrl(): ?string
     {
-        return $this->sourceurl;
+        return $this->sourceUrl;
     }
 
-    public function setSourceurl(?string $sourceurl): self
+    public function setSourceUrl(?string $sourceUrl): self
     {
-        $this->sourceurl = $sourceurl;
+        $this->sourceUrl = $sourceUrl;
 
         return $this;
     }
 
-    public function getReferenceurl(): ?string
+    public function getReferenceUrl(): ?string
     {
-        return $this->referenceurl;
+        return $this->referenceUrl;
     }
 
-    public function setReferenceurl(?string $referenceurl): self
+    public function setReferenceUrl(?string $referenceUrl): self
     {
-        $this->referenceurl = $referenceurl;
+        $this->referenceUrl = $referenceUrl;
 
         return $this;
     }
@@ -383,14 +417,14 @@ class Images
         return $this;
     }
 
-    public function getAccessrights(): ?string
+    public function getAccessRights(): ?string
     {
-        return $this->accessrights;
+        return $this->accessRights;
     }
 
-    public function setAccessrights(?string $accessrights): self
+    public function setAccessRights(?string $accessRights): self
     {
-        $this->accessrights = $accessrights;
+        $this->accessRights = $accessRights;
 
         return $this;
     }
@@ -443,98 +477,98 @@ class Images
         return $this;
     }
 
-    public function getSourceidentifier(): ?string
+    public function getSourceIdentifier(): ?string
     {
-        return $this->sourceidentifier;
+        return $this->sourceIdentifier;
     }
 
-    public function setSourceidentifier(?string $sourceidentifier): self
+    public function setSourceIdentifier(?string $sourceIdentifier): self
     {
-        $this->sourceidentifier = $sourceidentifier;
+        $this->sourceIdentifier = $sourceIdentifier;
 
         return $this;
     }
 
-    public function getMediamd5(): ?string
+    public function getMediaMd5(): ?string
     {
-        return $this->mediamd5;
+        return $this->mediaMd5;
     }
 
-    public function setMediamd5(?string $mediamd5): self
+    public function setMediaMd5(?string $mediaMd5): self
     {
-        $this->mediamd5 = $mediamd5;
+        $this->mediaMd5 = $mediaMd5;
 
         return $this;
     }
 
-    public function getDynamicproperties(): ?string
+    public function getDynamicProperties(): ?string
     {
-        return $this->dynamicproperties;
+        return $this->dynamicProperties;
     }
 
-    public function setDynamicproperties(?string $dynamicproperties): self
+    public function setDynamicProperties(?string $dynamicProperties): self
     {
-        $this->dynamicproperties = $dynamicproperties;
+        $this->dynamicProperties = $dynamicProperties;
 
         return $this;
     }
 
-    public function getSortsequence(): ?int
+    public function getSortSequence(): ?int
     {
-        return $this->sortsequence;
+        return $this->sortSequence;
     }
 
-    public function setSortsequence(int $sortsequence): self
+    public function setSortSequence(int $sortSequence): self
     {
-        $this->sortsequence = $sortsequence;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getOccid(): ?Occurrences
+    public function getOccurrenceId(): ?Occurrences
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function setOccid(?Occurrences $occid): self
+    public function setOccurrenceId(?Occurrences $occurrenceId): self
     {
-        $this->occid = $occid;
+        $this->occurrenceId = $occurrenceId;
 
         return $this;
     }
 
-    public function getTid(): ?Taxa
+    public function getTaxaId(): ?Taxa
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(?Taxa $tid): self
+    public function setTaxaId(?Taxa $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }
 
-    public function getPhotographeruid(): ?Users
+    public function getPhotographerUserId(): ?Users
     {
-        return $this->photographeruid;
+        return $this->photographerUserId;
     }
 
-    public function setPhotographeruid(?Users $photographeruid): self
+    public function setPhotographerUserId(?Users $photographerUserId): self
     {
-        $this->photographeruid = $photographeruid;
+        $this->photographerUserId = $photographerUserId;
 
         return $this;
     }

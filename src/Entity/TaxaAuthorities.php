@@ -2,125 +2,146 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TaxaAuthorities
  *
  * @ORM\Table(name="taxauthority")
  * @ORM\Entity(repositoryClass="App\Repository\TaxaAuthoritiesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class TaxaAuthorities
+class TaxaAuthorities implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="taxauthid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="taxauthid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $taxauthid;
+    private $id;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="isprimary", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="isprimary", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $isprimary;
+    private $isPrimary;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=45, nullable=false)
+     * @ORM\Column(name="name", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
     private $name;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="description", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $description = 'NULL';
+    private $description;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="editors", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="editors", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $editors = 'NULL';
+    private $editors;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="contact", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="contact", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $contact = 'NULL';
+    private $contact;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="email", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="email", type="string", length=100, nullable=true)
+     * @Assert\Email()
+     * @Assert\Length(max=100)
      */
-    private $email = 'NULL';
+    private $email;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="url", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="url", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $url = 'NULL';
+    private $url;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="isactive", type="integer", nullable=false, options={"default"="1","unsigned"=true})
+     * @ORM\Column(name="isactive", type="integer", options={"default"="1","unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $isactive = '1';
+    private $isActive = 1;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Taxa", mappedBy="taxauthid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Taxa", mappedBy="taxaAuthorityId")
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->tid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->taxaId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getTaxauthid(): ?int
+    public function getId(): ?int
     {
-        return $this->taxauthid;
+        return $this->id;
     }
 
-    public function getIsprimary(): ?int
+    public function getIsPrimary(): ?int
     {
-        return $this->isprimary;
+        return $this->isPrimary;
     }
 
-    public function setIsprimary(int $isprimary): self
+    public function setIsPrimary(int $isPrimary): self
     {
-        $this->isprimary = $isprimary;
+        $this->isPrimary = $isPrimary;
 
         return $this;
     }
@@ -209,26 +230,26 @@ class TaxaAuthorities
         return $this;
     }
 
-    public function getIsactive(): ?int
+    public function getIsActive(): ?int
     {
-        return $this->isactive;
+        return $this->isActive;
     }
 
-    public function setIsactive(int $isactive): self
+    public function setIsActive(int $isActive): self
     {
-        $this->isactive = $isactive;
+        $this->isActive = $isActive;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
@@ -236,26 +257,26 @@ class TaxaAuthorities
     /**
      * @return Collection|Taxa[]
      */
-    public function getTid(): Collection
+    public function getTaxaId(): Collection
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function addTid(Taxa $tid): self
+    public function addTaxaId(Taxa $taxaId): self
     {
-        if (!$this->tid->contains($tid)) {
-            $this->tid[] = $tid;
-            $tid->addTaxauthid($this);
+        if (!$this->taxaId->contains($taxaId)) {
+            $this->taxaId[] = $taxaId;
+            $taxaId->addTaxaAuthorityId($this);
         }
 
         return $this;
     }
 
-    public function removeTid(Taxa $tid): self
+    public function removeTaxaId(Taxa $taxaId): self
     {
-        if ($this->tid->contains($tid)) {
-            $this->tid->removeElement($tid);
-            $tid->removeTaxauthid($this);
+        if ($this->taxaId->contains($taxaId)) {
+            $this->taxaId->removeElement($taxaId);
+            $taxaId->removeTaxaAuthorityId($this);
         }
 
         return $this;

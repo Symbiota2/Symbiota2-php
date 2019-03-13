@@ -2,157 +2,179 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ReferenceAuthors
  *
  * @ORM\Table(name="referenceauthors", indexes={@ORM\Index(name="INDEX_refauthlastname", columns={"lastname"})})
  * @ORM\Entity(repositoryClass="App\Repository\ReferenceAuthorsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ReferenceAuthors
+class ReferenceAuthors implements ModifiedUserIdInterface, InitialTimestampInterface, ModifiedTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="refauthorid", type="integer", nullable=false)
+     * @ORM\Column(name="refauthorid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $refauthorid;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lastname", type="string", length=100, nullable=false)
+     * @ORM\Column(name="lastname", type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=100)
      */
-    private $lastname;
+    private $lastName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="firstname", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="firstname", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $firstname = 'NULL';
+    private $firstName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="middlename", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="middlename", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $middlename = 'NULL';
+    private $middleName;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="modifieduid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="modifieduid", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $modifieduid = 'NULL';
+    private $modifiedUserId;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $modifiedtimestamp = 'NULL';
+    private $modifiedTimestamp;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="References", mappedBy="refauthid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\References", mappedBy="referenceAuthorId")
      */
-    private $refid;
+    private $referenceId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->refid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->referenceId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getRefauthorid(): ?int
+    public function getId(): ?int
     {
-        return $this->refauthorid;
+        return $this->id;
     }
 
-    public function getLastname(): ?string
+    public function getLastName(): ?string
     {
-        return $this->lastname;
+        return $this->lastName;
     }
 
-    public function setLastname(string $lastname): self
+    public function setLastName(string $lastName): self
     {
-        $this->lastname = $lastname;
+        $this->lastName = $lastName;
 
         return $this;
     }
 
-    public function getFirstname(): ?string
+    public function getFirstName(): ?string
     {
-        return $this->firstname;
+        return $this->firstName;
     }
 
-    public function setFirstname(?string $firstname): self
+    public function setFirstName(?string $firstName): self
     {
-        $this->firstname = $firstname;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
-    public function getMiddlename(): ?string
+    public function getMiddleName(): ?string
     {
-        return $this->middlename;
+        return $this->middleName;
     }
 
-    public function setMiddlename(?string $middlename): self
+    public function setMiddleName(?string $middleName): self
     {
-        $this->middlename = $middlename;
+        $this->middleName = $middleName;
 
         return $this;
     }
 
-    public function getModifieduid(): ?int
+    /**
+     * @return int|null
+     */
+    public function getModifiedUserId(): ?int
     {
-        return $this->modifieduid;
+        return $this->modifiedUserId;
     }
 
-    public function setModifieduid(?int $modifieduid): self
+    /**
+     * @param UserInterface $modifiedUserId
+     * @return ModifiedUserIdInterface
+     */
+    public function setModifiedUserId(UserInterface $modifiedUserId): ModifiedUserIdInterface
     {
-        $this->modifieduid = $modifieduid;
+        $this->modifiedUserId = $modifiedUserId;
 
         return $this;
     }
 
-    public function getModifiedtimestamp(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?\DateTimeInterface
     {
-        return $this->modifiedtimestamp;
+        return $this->modifiedTimestamp;
     }
 
-    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): self
+    public function setModifiedTimestamp(?\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
-        $this->modifiedtimestamp = $modifiedtimestamp;
+        $this->modifiedTimestamp = $modifiedTimestamp;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
@@ -160,26 +182,26 @@ class ReferenceAuthors
     /**
      * @return Collection|References[]
      */
-    public function getRefid(): Collection
+    public function getReferenceId(): Collection
     {
-        return $this->refid;
+        return $this->referenceId;
     }
 
-    public function addRefid(References $refid): self
+    public function addReferenceId(References $referenceId): self
     {
-        if (!$this->refid->contains($refid)) {
-            $this->refid[] = $refid;
-            $refid->addRefauthid($this);
+        if (!$this->referenceId->contains($referenceId)) {
+            $this->referenceId[] = $referenceId;
+            $referenceId->addReferenceAuthorId($this);
         }
 
         return $this;
     }
 
-    public function removeRefid(References $refid): self
+    public function removeReferenceId(References $referenceId): self
     {
-        if ($this->refid->contains($refid)) {
-            $this->refid->removeElement($refid);
-            $refid->removeRefauthid($this);
+        if ($this->referenceId->contains($referenceId)) {
+            $this->referenceId->removeElement($referenceId);
+            $referenceId->removeReferenceAuthorId($this);
         }
 
         return $this;

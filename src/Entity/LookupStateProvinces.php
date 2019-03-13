@@ -2,105 +2,118 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * LookupStateProvinces
  *
  * @ORM\Table(name="lkupstateprovince", uniqueConstraints={@ORM\UniqueConstraint(name="state_index", columns={"stateName", "countryId"})}, indexes={@ORM\Index(name="index_statename", columns={"stateName"}), @ORM\Index(name="fk_country", columns={"countryId"}), @ORM\Index(name="Index_lkupstate_abbr", columns={"abbrev"})})
  * @ORM\Entity(repositoryClass="App\Repository\LookupStateProvincesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class LookupStateProvinces
+class LookupStateProvinces implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="stateId", type="integer", nullable=false)
+     * @ORM\Column(name="stateId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $stateid;
+    private $id;
 
     /**
-     * @var \LookupCountries
+     * @var \App\Entity\LookupCountries
      *
-     * @ORM\ManyToOne(targetEntity="LookupCountries")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\LookupCountries")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="countryId", referencedColumnName="countryId")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $countryid;
+    private $countryId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="stateName", type="string", length=100, nullable=false)
+     * @ORM\Column(name="stateName", type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=100)
      */
-    private $statename;
+    private $stateName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="abbrev", type="string", length=2, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="abbrev", type="string", length=2, nullable=true)
+     * @Assert\Length(max=2)
      */
-    private $abbrev = 'NULL';
+    private $abbreviation;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getStateid(): ?int
+    public function getId(): ?int
     {
-        return $this->stateid;
+        return $this->id;
     }
 
-    public function getStatename(): ?string
+    public function getStateName(): ?string
     {
-        return $this->statename;
+        return $this->stateName;
     }
 
-    public function setStatename(string $statename): self
+    public function setStateName(string $stateName): self
     {
-        $this->statename = $statename;
+        $this->stateName = $stateName;
 
         return $this;
     }
 
-    public function getAbbrev(): ?string
+    public function getAbbreviation(): ?string
     {
-        return $this->abbrev;
+        return $this->abbreviation;
     }
 
-    public function setAbbrev(?string $abbrev): self
+    public function setAbbreviation(?string $abbreviation): self
     {
-        $this->abbrev = $abbrev;
+        $this->abbreviation = $abbreviation;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getCountryid(): ?LookupCountries
+    public function getCountryId(): ?LookupCountries
     {
-        return $this->countryid;
+        return $this->countryId;
     }
 
-    public function setCountryid(?LookupCountries $countryid): self
+    public function setCountryId(?LookupCountries $countryId): self
     {
-        $this->countryid = $countryid;
+        $this->countryId = $countryId;
 
         return $this;
     }

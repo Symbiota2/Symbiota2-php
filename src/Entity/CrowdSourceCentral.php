@@ -36,6 +36,7 @@ class CrowdSourceCentral implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
      * })
      * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $collectionId;
 
@@ -76,7 +77,7 @@ class CrowdSourceCentral implements InitialTimestampInterface
      * @var \DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 

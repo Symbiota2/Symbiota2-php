@@ -2,267 +2,306 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * UploadTempTaxa
  *
  * @ORM\Table(name="uploadtaxa", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQUE_sciname", columns={"SciName", "RankId", "Author", "AcceptedStr"})}, indexes={@ORM\Index(name="sciname_index_uploadtaxa", columns={"SciName"}), @ORM\Index(name="acceptedStr_index", columns={"AcceptedStr"}), @ORM\Index(name="sourceAcceptedId_index", columns={"SourceAcceptedId"}), @ORM\Index(name="acceptance_index", columns={"Acceptance"}), @ORM\Index(name="parentStr_index", columns={"ParentStr"}), @ORM\Index(name="sourceID_index", columns={"SourceId"}), @ORM\Index(name="sourceParentId_index", columns={"SourceParentId"}), @ORM\Index(name="scinameinput_index", columns={"scinameinput"}), @ORM\Index(name="unitname1_index_uploadtaxa", columns={"UnitName1"})})
  * @ORM\Entity(repositoryClass="App\Repository\UploadTempTaxaRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class UploadTempTaxa
+class UploadTempTaxa implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="uptid", type="integer", nullable=false)
+     * @ORM\Column(name="uptid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $uptid;
+    private $id;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="TID", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="TID", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $tid = 'NULL';
+    private $taxaId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="SourceId", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="SourceId", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $sourceid = 'NULL';
+    private $sourceId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Family", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Family", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $family = 'NULL';
+    private $family;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="RankId", type="smallint", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="RankId", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $rankid = 'NULL';
+    private $rankId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="RankName", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="RankName", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $rankname = 'NULL';
+    private $rankName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="scinameinput", type="string", length=250, nullable=false)
+     * @ORM\Column(name="scinameinput", type="string", length=250)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=250)
      */
-    private $scinameinput;
+    private $scientificNameInput;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="SciName", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="SciName", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $sciname = 'NULL';
+    private $scientificName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitInd1", type="string", length=1, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="UnitInd1", type="string", length=1, nullable=true)
+     * @Assert\Length(max=1)
      */
-    private $unitind1 = 'NULL';
+    private $unitIndicator1;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitName1", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="UnitName1", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $unitname1 = 'NULL';
+    private $unitName1;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitInd2", type="string", length=1, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="UnitInd2", type="string", length=1, nullable=true)
+     * @Assert\Length(max=1)
      */
-    private $unitind2 = 'NULL';
+    private $unitIndicator2;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitName2", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="UnitName2", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $unitname2 = 'NULL';
+    private $unitName2;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitInd3", type="string", length=7, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="UnitInd3", type="string", length=7, nullable=true)
+     * @Assert\Length(max=7)
      */
-    private $unitind3 = 'NULL';
+    private $unitIndicator3;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnitName3", type="string", length=35, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="UnitName3", type="string", length=35, nullable=true)
+     * @Assert\Length(max=35)
      */
-    private $unitname3 = 'NULL';
+    private $unitName3;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Author", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Author", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $author = 'NULL';
+    private $author;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="InfraAuthor", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="InfraAuthor", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $infraauthor = 'NULL';
+    private $infraspecificAuthor;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="Acceptance", type="integer", nullable=true, options={"default"="1","unsigned"=true,"comment"="0 = not accepted; 1 = accepted"})
+     * @Assert\Type(type="integer")
      */
-    private $acceptance = '1';
+    private $acceptance = 1;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="TidAccepted", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="TidAccepted", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $tidaccepted = 'NULL';
+    private $taxaIdAccepted;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="AcceptedStr", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="AcceptedStr", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $acceptedstr = 'NULL';
+    private $acceptedScientificName;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="SourceAcceptedId", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $sourceacceptedid = 'NULL';
+    private $sourceAcceptedId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="UnacceptabilityReason", type="string", length=24, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="UnacceptabilityReason", type="string", length=24, nullable=true)
+     * @Assert\Length(max=24)
      */
-    private $unacceptabilityreason = 'NULL';
+    private $unacceptabilityReason;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="ParentTid", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="ParentTid", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $parenttid = 'NULL';
+    private $parentTaxaId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="ParentStr", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="ParentStr", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $parentstr = 'NULL';
+    private $parentScientificName;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="SourceParentId", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="SourceParentId", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $sourceparentid = 'NULL';
+    private $sourceParentId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="SecurityStatus", type="integer", nullable=false, options={"unsigned"=true,"comment"="0 = no security; 1 = hidden locality"})
+     * @ORM\Column(name="SecurityStatus", type="integer", options={"unsigned"=true,"comment"="0 = no security; 1 = hidden locality"})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $securitystatus;
+    private $securityStatus = 0;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Source", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Source", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $source = 'NULL';
+    private $source;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="vernacular", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="vernacular", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $vernacular = 'NULL';
+    private $vernacularName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="vernlang", type="string", length=15, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="vernlang", type="string", length=15, nullable=true)
+     * @Assert\Length(max=15)
      */
-    private $vernlang = 'NULL';
+    private $vernacularNameLanguage;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Hybrid", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Hybrid", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $hybrid = 'NULL';
+    private $hybrid;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="ErrorStatus", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="ErrorStatus", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $errorstatus = 'NULL';
+    private $errorStatus;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime")
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getUptid(): ?int
+    public function getId(): ?int
     {
-        return $this->uptid;
+        return $this->id;
     }
 
-    public function getTid(): ?int
+    public function getTaxaId(): ?int
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(?int $tid): self
+    public function setTaxaId(?int $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }
 
-    public function getSourceid(): ?int
+    public function getSourceId(): ?int
     {
-        return $this->sourceid;
+        return $this->sourceId;
     }
 
-    public function setSourceid(?int $sourceid): self
+    public function setSourceId(?int $sourceId): self
     {
-        $this->sourceid = $sourceid;
+        $this->sourceId = $sourceId;
 
         return $this;
     }
@@ -279,122 +318,122 @@ class UploadTempTaxa
         return $this;
     }
 
-    public function getRankid(): ?int
+    public function getRankId(): ?int
     {
-        return $this->rankid;
+        return $this->rankId;
     }
 
-    public function setRankid(?int $rankid): self
+    public function setRankId(?int $rankId): self
     {
-        $this->rankid = $rankid;
+        $this->rankId = $rankId;
 
         return $this;
     }
 
-    public function getRankname(): ?string
+    public function getRankName(): ?string
     {
-        return $this->rankname;
+        return $this->rankName;
     }
 
-    public function setRankname(?string $rankname): self
+    public function setRankName(?string $rankName): self
     {
-        $this->rankname = $rankname;
+        $this->rankName = $rankName;
 
         return $this;
     }
 
-    public function getScinameinput(): ?string
+    public function getScientificNameInput(): ?string
     {
-        return $this->scinameinput;
+        return $this->scientificNameInput;
     }
 
-    public function setScinameinput(string $scinameinput): self
+    public function setScientificNameInput(string $scientificNameInput): self
     {
-        $this->scinameinput = $scinameinput;
+        $this->scientificNameInput = $scientificNameInput;
 
         return $this;
     }
 
-    public function getSciname(): ?string
+    public function getScientificName(): ?string
     {
-        return $this->sciname;
+        return $this->scientificName;
     }
 
-    public function setSciname(?string $sciname): self
+    public function setScientificName(?string $scientificName): self
     {
-        $this->sciname = $sciname;
+        $this->scientificName = $scientificName;
 
         return $this;
     }
 
-    public function getUnitind1(): ?string
+    public function getUnitIndicator1(): ?string
     {
-        return $this->unitind1;
+        return $this->unitIndicator1;
     }
 
-    public function setUnitind1(?string $unitind1): self
+    public function setUnitIndicator1(?string $unitIndicator1): self
     {
-        $this->unitind1 = $unitind1;
+        $this->unitIndicator1 = $unitIndicator1;
 
         return $this;
     }
 
-    public function getUnitname1(): ?string
+    public function getUnitName1(): ?string
     {
-        return $this->unitname1;
+        return $this->unitName1;
     }
 
-    public function setUnitname1(?string $unitname1): self
+    public function setUnitName1(?string $unitName1): self
     {
-        $this->unitname1 = $unitname1;
+        $this->unitName1 = $unitName1;
 
         return $this;
     }
 
-    public function getUnitind2(): ?string
+    public function getUnitIndicator2(): ?string
     {
-        return $this->unitind2;
+        return $this->unitIndicator2;
     }
 
-    public function setUnitind2(?string $unitind2): self
+    public function setUnitIndicator2(?string $unitIndicator2): self
     {
-        $this->unitind2 = $unitind2;
+        $this->unitIndicator2 = $unitIndicator2;
 
         return $this;
     }
 
-    public function getUnitname2(): ?string
+    public function getUnitName2(): ?string
     {
-        return $this->unitname2;
+        return $this->unitName2;
     }
 
-    public function setUnitname2(?string $unitname2): self
+    public function setUnitName2(?string $unitName2): self
     {
-        $this->unitname2 = $unitname2;
+        $this->unitName2 = $unitName2;
 
         return $this;
     }
 
-    public function getUnitind3(): ?string
+    public function getUnitIndicator3(): ?string
     {
-        return $this->unitind3;
+        return $this->unitIndicator3;
     }
 
-    public function setUnitind3(?string $unitind3): self
+    public function setUnitIndicator3(?string $unitIndicator3): self
     {
-        $this->unitind3 = $unitind3;
+        $this->unitIndicator3 = $unitIndicator3;
 
         return $this;
     }
 
-    public function getUnitname3(): ?string
+    public function getUnitName3(): ?string
     {
-        return $this->unitname3;
+        return $this->unitName3;
     }
 
-    public function setUnitname3(?string $unitname3): self
+    public function setUnitName3(?string $unitName3): self
     {
-        $this->unitname3 = $unitname3;
+        $this->unitName3 = $unitName3;
 
         return $this;
     }
@@ -411,14 +450,14 @@ class UploadTempTaxa
         return $this;
     }
 
-    public function getInfraauthor(): ?string
+    public function getInfraspecificAuthor(): ?string
     {
-        return $this->infraauthor;
+        return $this->infraspecificAuthor;
     }
 
-    public function setInfraauthor(?string $infraauthor): self
+    public function setInfraspecificAuthor(?string $infraspecificAuthor): self
     {
-        $this->infraauthor = $infraauthor;
+        $this->infraspecificAuthor = $infraspecificAuthor;
 
         return $this;
     }
@@ -435,98 +474,98 @@ class UploadTempTaxa
         return $this;
     }
 
-    public function getTidaccepted(): ?int
+    public function getTaxaIdAccepted(): ?int
     {
-        return $this->tidaccepted;
+        return $this->taxaIdAccepted;
     }
 
-    public function setTidaccepted(?int $tidaccepted): self
+    public function setTaxaIdAccepted(?int $taxaIdAccepted): self
     {
-        $this->tidaccepted = $tidaccepted;
+        $this->taxaIdAccepted = $taxaIdAccepted;
 
         return $this;
     }
 
-    public function getAcceptedstr(): ?string
+    public function getAcceptedScientificName(): ?string
     {
-        return $this->acceptedstr;
+        return $this->acceptedScientificName;
     }
 
-    public function setAcceptedstr(?string $acceptedstr): self
+    public function setAcceptedScientificName(?string $acceptedScientificName): self
     {
-        $this->acceptedstr = $acceptedstr;
+        $this->acceptedScientificName = $acceptedScientificName;
 
         return $this;
     }
 
-    public function getSourceacceptedid(): ?int
+    public function getSourceAcceptedId(): ?int
     {
-        return $this->sourceacceptedid;
+        return $this->sourceAcceptedId;
     }
 
-    public function setSourceacceptedid(?int $sourceacceptedid): self
+    public function setSourceAcceptedId(?int $sourceAcceptedId): self
     {
-        $this->sourceacceptedid = $sourceacceptedid;
+        $this->sourceAcceptedId = $sourceAcceptedId;
 
         return $this;
     }
 
-    public function getUnacceptabilityreason(): ?string
+    public function getUnacceptabilityReason(): ?string
     {
-        return $this->unacceptabilityreason;
+        return $this->unacceptabilityReason;
     }
 
-    public function setUnacceptabilityreason(?string $unacceptabilityreason): self
+    public function setUnacceptabilityReason(?string $unacceptabilityReason): self
     {
-        $this->unacceptabilityreason = $unacceptabilityreason;
+        $this->unacceptabilityReason = $unacceptabilityReason;
 
         return $this;
     }
 
-    public function getParenttid(): ?int
+    public function getParentTaxaId(): ?int
     {
-        return $this->parenttid;
+        return $this->parentTaxaId;
     }
 
-    public function setParenttid(?int $parenttid): self
+    public function setParentTaxaId(?int $parentTaxaId): self
     {
-        $this->parenttid = $parenttid;
+        $this->parentTaxaId = $parentTaxaId;
 
         return $this;
     }
 
-    public function getParentstr(): ?string
+    public function getParentScientificName(): ?string
     {
-        return $this->parentstr;
+        return $this->parentScientificName;
     }
 
-    public function setParentstr(?string $parentstr): self
+    public function setParentScientificName(?string $parentScientificName): self
     {
-        $this->parentstr = $parentstr;
+        $this->parentScientificName = $parentScientificName;
 
         return $this;
     }
 
-    public function getSourceparentid(): ?int
+    public function getSourceParentId(): ?int
     {
-        return $this->sourceparentid;
+        return $this->sourceParentId;
     }
 
-    public function setSourceparentid(?int $sourceparentid): self
+    public function setSourceParentId(?int $sourceParentId): self
     {
-        $this->sourceparentid = $sourceparentid;
+        $this->sourceParentId = $sourceParentId;
 
         return $this;
     }
 
-    public function getSecuritystatus(): ?int
+    public function getSecurityStatus(): ?int
     {
-        return $this->securitystatus;
+        return $this->securityStatus;
     }
 
-    public function setSecuritystatus(int $securitystatus): self
+    public function setSecurityStatus(int $securityStatus): self
     {
-        $this->securitystatus = $securitystatus;
+        $this->securityStatus = $securityStatus;
 
         return $this;
     }
@@ -555,26 +594,26 @@ class UploadTempTaxa
         return $this;
     }
 
-    public function getVernacular(): ?string
+    public function getVernacularName(): ?string
     {
-        return $this->vernacular;
+        return $this->vernacularName;
     }
 
-    public function setVernacular(?string $vernacular): self
+    public function setVernacularName(?string $vernacularName): self
     {
-        $this->vernacular = $vernacular;
+        $this->vernacularName = $vernacularName;
 
         return $this;
     }
 
-    public function getVernlang(): ?string
+    public function getVernacularNameLanguage(): ?string
     {
-        return $this->vernlang;
+        return $this->vernacularNameLanguage;
     }
 
-    public function setVernlang(?string $vernlang): self
+    public function setVernacularNameLanguage(?string $vernacularNameLanguage): self
     {
-        $this->vernlang = $vernlang;
+        $this->vernacularNameLanguage = $vernacularNameLanguage;
 
         return $this;
     }
@@ -591,26 +630,26 @@ class UploadTempTaxa
         return $this;
     }
 
-    public function getErrorstatus(): ?string
+    public function getErrorStatus(): ?string
     {
-        return $this->errorstatus;
+        return $this->errorStatus;
     }
 
-    public function setErrorstatus(?string $errorstatus): self
+    public function setErrorStatus(?string $errorStatus): self
     {
-        $this->errorstatus = $errorstatus;
+        $this->errorStatus = $errorStatus;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }

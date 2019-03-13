@@ -2,119 +2,140 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * UploadTempGlossary
  *
  * @ORM\Table(name="uploadglossary", indexes={@ORM\Index(name="relatedterm_index", columns={"newGroupId"}), @ORM\Index(name="term_index", columns={"term"})})
  * @ORM\Entity(repositoryClass="App\Repository\UploadTempGlossaryRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class UploadTempGlossary
+class UploadTempGlossary implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="upgid", type="integer", nullable=false)
+     * @ORM\Column(name="upgid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $upgid;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="term", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="term", type="string", length=150)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=150)
      */
-    private $term = 'NULL';
+    private $term;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="definition", type="string", length=1000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="definition", type="string", length=1000, nullable=true)
+     * @Assert\Length(max=1000)
      */
-    private $definition = 'NULL';
+    private $definition;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="language", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="language", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $language = 'NULL';
+    private $language;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="source", type="string", length=1000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="source", type="string", length=1000, nullable=true)
+     * @Assert\Length(max=1000)
      */
-    private $source = 'NULL';
+    private $source;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="author", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="author", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $author = 'NULL';
+    private $author;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="translator", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="translator", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $translator = 'NULL';
+    private $translator;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="resourceurl", type="string", length=600, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="resourceurl", type="string", length=600, nullable=true)
+     * @Assert\Length(max=600)
      */
-    private $resourceurl = 'NULL';
+    private $resourceUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="tidStr", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="tidStr", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $tidstr = 'NULL';
+    private $taxaIdString;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="synonym", type="boolean", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="synonym", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $synonym = 'NULL';
+    private $synonym;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="newGroupId", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="newGroupId", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $newgroupid = 'NULL';
+    private $newGroupId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="currentGroupId", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="currentGroupId", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $currentgroupid = 'NULL';
+    private $currentGroupId;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getUpgid(): ?int
+    public function getId(): ?int
     {
-        return $this->upgid;
+        return $this->id;
     }
 
     public function getTerm(): ?string
@@ -201,26 +222,26 @@ class UploadTempGlossary
         return $this;
     }
 
-    public function getResourceurl(): ?string
+    public function getResourceUrl(): ?string
     {
-        return $this->resourceurl;
+        return $this->resourceUrl;
     }
 
-    public function setResourceurl(?string $resourceurl): self
+    public function setResourceUrl(?string $resourceUrl): self
     {
-        $this->resourceurl = $resourceurl;
+        $this->resourceUrl = $resourceUrl;
 
         return $this;
     }
 
-    public function getTidstr(): ?string
+    public function getTaxaIdString(): ?string
     {
-        return $this->tidstr;
+        return $this->taxaIdString;
     }
 
-    public function setTidstr(?string $tidstr): self
+    public function setTaxaIdString(?string $taxaIdString): self
     {
-        $this->tidstr = $tidstr;
+        $this->taxaIdString = $taxaIdString;
 
         return $this;
     }
@@ -237,38 +258,38 @@ class UploadTempGlossary
         return $this;
     }
 
-    public function getNewgroupid(): ?int
+    public function getNewGroupId(): ?int
     {
-        return $this->newgroupid;
+        return $this->newGroupId;
     }
 
-    public function setNewgroupid(?int $newgroupid): self
+    public function setNewGroupId(?int $newGroupId): self
     {
-        $this->newgroupid = $newgroupid;
+        $this->newGroupId = $newGroupId;
 
         return $this;
     }
 
-    public function getCurrentgroupid(): ?int
+    public function getCurrentGroupId(): ?int
     {
-        return $this->currentgroupid;
+        return $this->currentGroupId;
     }
 
-    public function setCurrentgroupid(?int $currentgroupid): self
+    public function setCurrentGroupId(?int $currentGroupId): self
     {
-        $this->currentgroupid = $currentgroupid;
+        $this->currentGroupId = $currentGroupId;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }

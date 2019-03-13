@@ -2,114 +2,135 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Traits
  *
  * @ORM\Table(name="tmtraits", indexes={@ORM\Index(name="FK_traits_uidmodified_idx", columns={"modifieduid"}), @ORM\Index(name="FK_traits_uidcreated_idx", columns={"createduid"}), @ORM\Index(name="traitsname", columns={"traitname"})})
  * @ORM\Entity(repositoryClass="App\Repository\TraitsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class Traits
+class Traits implements ModifiedUserIdInterface, CreatedUserIdInterface, InitialTimestampInterface, ModifiedTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="traitid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="traitid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $traitid;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="traitname", type="string", length=100, nullable=false)
+     * @ORM\Column(name="traitname", type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=100)
      */
-    private $traitname;
+    private $traitName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="traittype", type="string", length=2, nullable=false, options={"default"="UM"})
+     * @ORM\Column(name="traittype", type="string", length=2, options={"default"="UM"})
+     * @Assert\NotBlank()
+     * @Assert\Length(max=2)
      */
-    private $traittype = 'UM';
+    private $traitType = 'UM';
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="units", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="units", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $units = 'NULL';
+    private $units;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="description", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $description = 'NULL';
+    private $description;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="refurl", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="refurl", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $refurl = 'NULL';
+    private $referenceUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true)
+     * @Assert\Length(max=65535)
      */
-    private $dynamicproperties = 'NULL';
+    private $dynamicProperties;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $modifieduid;
+    private $modifiedUserId;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $modifiedtimestamp = 'NULL';
+    private $modifiedTimestamp;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $createduid;
+    private $createdUserId;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Taxa", inversedBy="traitid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Taxa", inversedBy="traitId")
      * @ORM\JoinTable(name="tmtraittaxalink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="traitid", referencedColumnName="traitid")
@@ -119,41 +140,41 @@ class Traits
      *   }
      * )
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->tid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->taxaId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getTraitid(): ?int
+    public function getId(): ?int
     {
-        return $this->traitid;
+        return $this->id;
     }
 
-    public function getTraitname(): ?string
+    public function getTraitName(): ?string
     {
-        return $this->traitname;
+        return $this->traitName;
     }
 
-    public function setTraitname(string $traitname): self
+    public function setTraitName(string $traitName): self
     {
-        $this->traitname = $traitname;
+        $this->traitName = $traitName;
 
         return $this;
     }
 
-    public function getTraittype(): ?string
+    public function getTraitType(): ?string
     {
-        return $this->traittype;
+        return $this->traitType;
     }
 
-    public function setTraittype(string $traittype): self
+    public function setTraitType(string $traitType): self
     {
-        $this->traittype = $traittype;
+        $this->traitType = $traitType;
 
         return $this;
     }
@@ -182,14 +203,14 @@ class Traits
         return $this;
     }
 
-    public function getRefurl(): ?string
+    public function getReferenceUrl(): ?string
     {
-        return $this->refurl;
+        return $this->referenceUrl;
     }
 
-    public function setRefurl(?string $refurl): self
+    public function setReferenceUrl(?string $referenceUrl): self
     {
-        $this->refurl = $refurl;
+        $this->referenceUrl = $referenceUrl;
 
         return $this;
     }
@@ -206,62 +227,76 @@ class Traits
         return $this;
     }
 
-    public function getDynamicproperties(): ?string
+    public function getDynamicProperties(): ?string
     {
-        return $this->dynamicproperties;
+        return $this->dynamicProperties;
     }
 
-    public function setDynamicproperties(?string $dynamicproperties): self
+    public function setDynamicProperties(?string $dynamicProperties): self
     {
-        $this->dynamicproperties = $dynamicproperties;
+        $this->dynamicProperties = $dynamicProperties;
 
         return $this;
     }
 
-    public function getModifiedtimestamp(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?\DateTimeInterface
     {
-        return $this->modifiedtimestamp;
+        return $this->modifiedTimestamp;
     }
 
-    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): self
+    public function setModifiedTimestamp(?\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
-        $this->modifiedtimestamp = $modifiedtimestamp;
+        $this->modifiedTimestamp = $modifiedTimestamp;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getCreateduid(): ?Users
+    /**
+     * @return Users|null
+     */
+    public function getCreatedUserId(): ?Users
     {
-        return $this->createduid;
+        return $this->createdUserId;
     }
 
-    public function setCreateduid(?Users $createduid): self
+    /**
+     * @param UserInterface $createdUserId
+     * @return CreatedUserIdInterface
+     */
+    public function setCreatedUserId(UserInterface $createdUserId): CreatedUserIdInterface
     {
-        $this->createduid = $createduid;
+        $this->createdUserId = $createdUserId;
 
         return $this;
     }
 
-    public function getModifieduid(): ?Users
+    /**
+     * @return Users|null
+     */
+    public function getModifiedUserId(): ?Users
     {
-        return $this->modifieduid;
+        return $this->modifiedUserId;
     }
 
-    public function setModifieduid(?Users $modifieduid): self
+    /**
+     * @param UserInterface $modifiedUserId
+     * @return ModifiedUserIdInterface
+     */
+    public function setModifiedUserId(UserInterface $modifiedUserId): ModifiedUserIdInterface
     {
-        $this->modifieduid = $modifieduid;
+        $this->modifiedUserId = $modifiedUserId;
 
         return $this;
     }
@@ -269,24 +304,24 @@ class Traits
     /**
      * @return Collection|Taxa[]
      */
-    public function getTid(): Collection
+    public function getTaxaId(): Collection
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function addTid(Taxa $tid): self
+    public function addTaxaId(Taxa $taxaId): self
     {
-        if (!$this->tid->contains($tid)) {
-            $this->tid[] = $tid;
+        if (!$this->taxaId->contains($taxaId)) {
+            $this->taxaId[] = $taxaId;
         }
 
         return $this;
     }
 
-    public function removeTid(Taxa $tid): self
+    public function removeTaxaId(Taxa $taxaId): self
     {
-        if ($this->tid->contains($tid)) {
-            $this->tid->removeElement($tid);
+        if ($this->taxaId->contains($taxaId)) {
+            $this->taxaId->removeElement($taxaId);
         }
 
         return $this;

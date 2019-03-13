@@ -76,14 +76,14 @@ class ChecklistsDynamic implements InitialTimestampInterface
      * @var \DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Taxa", inversedBy="dynclid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Taxa", inversedBy="checklistsDynamicId")
      * @ORM\JoinTable(name="fmdyncltaxalink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="dynclid", referencedColumnName="dynclid")

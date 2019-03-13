@@ -25,10 +25,11 @@ class ChecklistChildren implements InitialTimestampInterface, ModifiedTimestampI
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Checklists")
+     * @ORM\OneToOne(targetEntity="\App\Entity\Checklists")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="clid", referencedColumnName="CLID")
      * })
+     * @Assert\Type(type="integer")
      */
     private $checklistId;
 
@@ -61,6 +62,7 @@ class ChecklistChildren implements InitialTimestampInterface, ModifiedTimestampI
      * @var \DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 

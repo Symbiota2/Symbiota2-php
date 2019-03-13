@@ -2,84 +2,103 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TaxaVernaculars
  *
  * @ORM\Table(name="taxavernaculars", uniqueConstraints={@ORM\UniqueConstraint(name="unique_key", columns={"Language", "VernacularName", "tid"})}, indexes={@ORM\Index(name="FK_vern_lang_idx", columns={"langid"}), @ORM\Index(name="tid1", columns={"tid"}), @ORM\Index(name="vernacularsnames", columns={"VernacularName"})})
  * @ORM\Entity(repositoryClass="App\Repository\TaxaVernacularsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class TaxaVernaculars
+class TaxaVernaculars implements InitialTimestampInterface
 {
     /**
-     * @var \Taxa
+     * @var \App\Entity\Taxa
      *
-     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="VernacularName", type="string", length=80, nullable=false)
+     * @ORM\Column(name="VernacularName", type="string", length=80)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=80)
      */
-    private $vernacularname;
+    private $vernacularName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Language", type="string", length=15, nullable=false, options={"default"="English"})
+     * @ORM\Column(name="Language", type="string", length=15, options={"default"="English"})
+     * @Assert\NotBlank()
+     * @Assert\Length(max=15)
      */
     private $language = 'English';
 
     /**
-     * @var \LookupLanguages
+     * @var \App\Entity\LookupLanguages
      *
-     * @ORM\ManyToOne(targetEntity="LookupLanguages")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\LookupLanguages")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="langid", referencedColumnName="langid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $langid;
+    private $languageId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Source", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Source", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $source = 'NULL';
+    private $source;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="username", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="username", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $username = 'NULL';
+    private $username;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="isupperterm", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="isupperterm", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $isupperterm = 'NULL';
+    private $isUpperTerm;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="SortSequence", type="integer", nullable=true, options={"default"="50"})
+     * @Assert\Type(type="integer")
      */
-    private $sortsequence = '50';
+    private $sortSequence = 50;
 
     /**
      * @var int
@@ -88,23 +107,24 @@ class TaxaVernaculars
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $vid;
+    private $id;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getVernacularname(): ?string
+    public function getVernacularName(): ?string
     {
-        return $this->vernacularname;
+        return $this->vernacularName;
     }
 
-    public function setVernacularname(string $vernacularname): self
+    public function setVernacularName(string $vernacularName): self
     {
-        $this->vernacularname = $vernacularname;
+        $this->vernacularName = $vernacularName;
 
         return $this;
     }
@@ -157,67 +177,67 @@ class TaxaVernaculars
         return $this;
     }
 
-    public function getIsupperterm(): ?int
+    public function getIsUpperTerm(): ?int
     {
-        return $this->isupperterm;
+        return $this->isUpperTerm;
     }
 
-    public function setIsupperterm(?int $isupperterm): self
+    public function setIsUpperTerm(?int $isUpperTerm): self
     {
-        $this->isupperterm = $isupperterm;
+        $this->isUpperTerm = $isUpperTerm;
 
         return $this;
     }
 
-    public function getSortsequence(): ?int
+    public function getSortSequence(): ?int
     {
-        return $this->sortsequence;
+        return $this->sortSequence;
     }
 
-    public function setSortsequence(?int $sortsequence): self
+    public function setSortSequence(?int $sortSequence): self
     {
-        $this->sortsequence = $sortsequence;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
 
-    public function getVid(): ?int
+    public function getId(): ?int
     {
-        return $this->vid;
+        return $this->id;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getLangid(): ?LookupLanguages
+    public function getLanguageId(): ?LookupLanguages
     {
-        return $this->langid;
+        return $this->languageId;
     }
 
-    public function setLangid(?LookupLanguages $langid): self
+    public function setLanguageId(?LookupLanguages $languageId): self
     {
-        $this->langid = $langid;
+        $this->languageId = $languageId;
 
         return $this;
     }
 
-    public function getTid(): ?Taxa
+    public function getTaxaId(): ?Taxa
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(?Taxa $tid): self
+    public function setTaxaId(?Taxa $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }

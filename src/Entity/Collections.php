@@ -127,9 +127,7 @@ class Collections implements InitialTimestampInterface
      * @var string|null
      *
      * @ORM\Column(name="latitudedecimal", type="float", precision=8, scale=6, nullable=true)
-     * @Assert\Type(
-     *      type="float"
-     * )
+     * @Assert\Type(type="float")
      */
     private $latitudeDecimal;
 
@@ -137,9 +135,7 @@ class Collections implements InitialTimestampInterface
      * @var string|null
      *
      * @ORM\Column(name="longitudedecimal", type="float", precision=9, scale=6, nullable=true)
-     * @Assert\Type(
-     *      type="float"
-     * )
+     * @Assert\Type(type="float")
      */
     private $longitudeDecimal;
 
@@ -284,7 +280,7 @@ class Collections implements InitialTimestampInterface
      * @var \DateTime
      *
      * @ORM\Column(name="InitialTimeStamp", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 
@@ -298,7 +294,7 @@ class Collections implements InitialTimestampInterface
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Users", inversedBy="collid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Users", inversedBy="collectionId")
      * @ORM\JoinTable(name="omcollectioncontacts",
      *   joinColumns={
      *     @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
@@ -313,7 +309,7 @@ class Collections implements InitialTimestampInterface
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\References", mappedBy="collectionid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\References", mappedBy="collectionId")
      */
     private $referenceId;
 

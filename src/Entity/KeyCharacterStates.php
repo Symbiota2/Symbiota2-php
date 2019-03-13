@@ -2,130 +2,150 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * KeyCharacterStates
  *
  * @ORM\Table(name="kmcs", uniqueConstraints={@ORM\UniqueConstraint(name="FK_cidclid_id", columns={"cid", "cs"})}, indexes={@ORM\Index(name="FK_cs_chars", columns={"cid"})})
  * @ORM\Entity(repositoryClass="App\Repository\KeyCharacterStatesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class KeyCharacterStates
+class KeyCharacterStates implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="kmcsid", type="integer", nullable=false)
+     * @ORM\Column(name="kmcsid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $kmcsid;
+    private $id;
 
     /**
-     * @var \KeyCharacters
+     * @var \App\Entity\KeyCharacters
      *
-     * @ORM\ManyToOne(targetEntity="KeyCharacters")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\KeyCharacters")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="cid", referencedColumnName="cid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $cid;
+    private $characterId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cs", type="string", length=16, nullable=false)
+     * @ORM\Column(name="cs", type="string", length=16)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=16)
      */
-    private $cs;
+    private $characterState;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="CharStateName", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="CharStateName", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $charstatename = 'NULL';
+    private $characterStateName;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="Implicit", type="integer", nullable=false, options={"default"="0"})
+     * @ORM\Column(name="Implicit", type="integer", options={"default"="0"})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $implicit = '0';
+    private $implicit = 0;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Notes", type="text", length=0, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Notes", type="text", length=0, nullable=true)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Description", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Description", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $description = 'NULL';
+    private $description;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="IllustrationUrl", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="IllustrationUrl", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $illustrationurl = 'NULL';
+    private $illustrationUrl;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="StateID", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="StateID", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $stateid = 'NULL';
+    private $stateId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="SortSequence", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="SortSequence", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $sortsequence = 'NULL';
+    private $sortSequence;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="EnteredBy", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="EnteredBy", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $enteredby = 'NULL';
+    private $enteredBy;
 
-    public function getKmcsid(): ?int
+    public function getId(): ?int
     {
-        return $this->kmcsid;
+        return $this->id;
     }
 
-    public function getCs(): ?string
+    public function getCharacterState(): ?string
     {
-        return $this->cs;
+        return $this->characterState;
     }
 
-    public function setCs(string $cs): self
+    public function setCharacterState(string $characterState): self
     {
-        $this->cs = $cs;
+        $this->characterState = $characterState;
 
         return $this;
     }
 
-    public function getCharstatename(): ?string
+    public function getCharacterStateName(): ?string
     {
-        return $this->charstatename;
+        return $this->characterStateName;
     }
 
-    public function setCharstatename(?string $charstatename): self
+    public function setCharacterStateName(?string $characterStateName): self
     {
-        $this->charstatename = $charstatename;
+        $this->characterStateName = $characterStateName;
 
         return $this;
     }
@@ -166,74 +186,74 @@ class KeyCharacterStates
         return $this;
     }
 
-    public function getIllustrationurl(): ?string
+    public function getIllustrationUrl(): ?string
     {
-        return $this->illustrationurl;
+        return $this->illustrationUrl;
     }
 
-    public function setIllustrationurl(?string $illustrationurl): self
+    public function setIllustrationUrl(?string $illustrationUrl): self
     {
-        $this->illustrationurl = $illustrationurl;
+        $this->illustrationUrl = $illustrationUrl;
 
         return $this;
     }
 
-    public function getStateid(): ?int
+    public function getStateId(): ?int
     {
-        return $this->stateid;
+        return $this->stateId;
     }
 
-    public function setStateid(?int $stateid): self
+    public function setStateId(?int $stateId): self
     {
-        $this->stateid = $stateid;
+        $this->stateId = $stateId;
 
         return $this;
     }
 
-    public function getSortsequence(): ?int
+    public function getSortSequence(): ?int
     {
-        return $this->sortsequence;
+        return $this->sortSequence;
     }
 
-    public function setSortsequence(?int $sortsequence): self
+    public function setSortSequence(?int $sortSequence): self
     {
-        $this->sortsequence = $sortsequence;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getEnteredby(): ?string
+    public function getEnteredBy(): ?string
     {
-        return $this->enteredby;
+        return $this->enteredBy;
     }
 
-    public function setEnteredby(?string $enteredby): self
+    public function setEnteredBy(?string $enteredBy): self
     {
-        $this->enteredby = $enteredby;
+        $this->enteredBy = $enteredBy;
 
         return $this;
     }
 
-    public function getCid(): ?KeyCharacters
+    public function getCharacterId(): ?KeyCharacters
     {
-        return $this->cid;
+        return $this->characterId;
     }
 
-    public function setCid(?KeyCharacters $cid): self
+    public function setCharacterId(?KeyCharacters $characterId): self
     {
-        $this->cid = $cid;
+        $this->characterId = $characterId;
 
         return $this;
     }

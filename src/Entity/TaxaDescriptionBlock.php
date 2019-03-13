@@ -2,102 +2,123 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TaxaDescriptionBlock
  *
  * @ORM\Table(name="taxadescrblock", uniqueConstraints={@ORM\UniqueConstraint(name="Index_unique_taxadescrblock", columns={"tid", "displaylevel", "language"})}, indexes={@ORM\Index(name="FK_taxadesc_lang_idx", columns={"langid"}), @ORM\Index(name="IDX_17AB94AF52596C31", columns={"tid"})})
  * @ORM\Entity(repositoryClass="App\Repository\TaxaDescriptionBlockRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class TaxaDescriptionBlock
+class TaxaDescriptionBlock implements CreatedUserIdInterface, InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="tdbid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="tdbid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $tdbid;
+    private $id;
 
     /**
-     * @var \Taxa
+     * @var \App\Entity\Taxa
      *
-     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="caption", type="string", length=40, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="caption", type="string", length=40, nullable=true)
+     * @Assert\Length(max=40)
      */
-    private $caption = 'NULL';
+    private $caption;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="source", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="source", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $source = 'NULL';
+    private $source;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourceurl", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="sourceurl", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $sourceurl = 'NULL';
+    private $sourceUrl;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="language", type="string", length=45, nullable=true, options={"default"="English"})
+     * @Assert\Length(max=45)
      */
     private $language = 'English';
 
     /**
-     * @var \LookupLanguages
+     * @var \App\Entity\LookupLanguages
      *
-     * @ORM\ManyToOne(targetEntity="LookupLanguages")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\LookupLanguages")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="langid", referencedColumnName="langid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $langid;
+    private $languageId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="displaylevel", type="integer", nullable=false, options={"default"="1","unsigned"=true,"comment"="1 = short descr, 2 = intermediate descr"})
+     * @ORM\Column(name="displaylevel", type="integer", options={"default"="1","unsigned"=true,"comment"="1 = short descr, 2 = intermediate descr"})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $displaylevel = '1';
+    private $displayLevel = 1;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="createduid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="createduid", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $createduid;
+    private $createdUserId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     /**
      * Constructor
@@ -107,9 +128,9 @@ class TaxaDescriptionBlock
 
     }
 
-    public function getTdbid(): ?int
+    public function getId(): ?int
     {
-        return $this->tdbid;
+        return $this->id;
     }
 
     public function getCaption(): ?string
@@ -136,14 +157,14 @@ class TaxaDescriptionBlock
         return $this;
     }
 
-    public function getSourceurl(): ?string
+    public function getSourceUrl(): ?string
     {
-        return $this->sourceurl;
+        return $this->sourceUrl;
     }
 
-    public function setSourceurl(?string $sourceurl): self
+    public function setSourceUrl(?string $sourceUrl): self
     {
-        $this->sourceurl = $sourceurl;
+        $this->sourceUrl = $sourceUrl;
 
         return $this;
     }
@@ -160,26 +181,33 @@ class TaxaDescriptionBlock
         return $this;
     }
 
-    public function getDisplaylevel(): ?int
+    public function getDisplayLevel(): ?int
     {
-        return $this->displaylevel;
+        return $this->displayLevel;
     }
 
-    public function setDisplaylevel(int $displaylevel): self
+    public function setDisplayLevel(int $displayLevel): self
     {
-        $this->displaylevel = $displaylevel;
+        $this->displayLevel = $displayLevel;
 
         return $this;
     }
 
-    public function getCreateduid(): ?int
+    /**
+     * @return int|null
+     */
+    public function getCreatedUserId(): ?int
     {
-        return $this->createduid;
+        return $this->createdUserId;
     }
 
-    public function setCreateduid(int $createduid): self
+    /**
+     * @param UserInterface $createdUserId
+     * @return CreatedUserIdInterface
+     */
+    public function setCreatedUserId(UserInterface $createdUserId): CreatedUserIdInterface
     {
-        $this->createduid = $createduid;
+        $this->createdUserId = $createdUserId;
 
         return $this;
     }
@@ -196,38 +224,38 @@ class TaxaDescriptionBlock
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getLangid(): ?LookupLanguages
+    public function getLanguageId(): ?LookupLanguages
     {
-        return $this->langid;
+        return $this->languageId;
     }
 
-    public function setLangid(?LookupLanguages $langid): self
+    public function setLanguageId(?LookupLanguages $languageId): self
     {
-        $this->langid = $langid;
+        $this->languageId = $languageId;
 
         return $this;
     }
 
-    public function getTid(): ?Taxa
+    public function getTaxaId(): ?Taxa
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(?Taxa $tid): self
+    public function setTaxaId(?Taxa $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }

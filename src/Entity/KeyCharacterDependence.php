@@ -2,83 +2,97 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * KeyCharacterDependence
  *
  * @ORM\Table(name="kmchardependance", indexes={@ORM\Index(name="FK_chardependance_cs_idx", columns={"CIDDependance", "CSDependance"}), @ORM\Index(name="FK_chardependance_cid_idx", columns={"CID"})})
  * @ORM\Entity(repositoryClass="App\Repository\KeyCharacterDependenceRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class KeyCharacterDependence
+class KeyCharacterDependence implements InitialTimestampInterface
 {
     /**
-     * @var \KeyCharacters
+     * @var \App\Entity\KeyCharacters
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="KeyCharacters")
+     * @ORM\OneToOne(targetEntity="\App\Entity\KeyCharacters")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="CID", referencedColumnName="cid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $cid;
+    private $characterId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="CIDDependance", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="CIDDependance", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $ciddependance;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="CSDependance", type="string", length=16, nullable=false)
+     * @ORM\Column(name="CSDependance", type="string", length=16)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
+     * @Assert\NotBlank()
+     * @Assert\Length(max=16)
      */
-    private $csdependance;
+    private $characterStateDependance;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getCiddependance(): ?int
+    public function getId(): ?int
     {
-        return $this->ciddependance;
+        return $this->id;
     }
 
-    public function getCsdependance(): ?string
+    public function getCharacterStateDependance(): ?string
     {
-        return $this->csdependance;
+        return $this->characterStateDependance;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getCid(): ?KeyCharacters
+    public function getCharacterId(): ?KeyCharacters
     {
-        return $this->cid;
+        return $this->characterId;
     }
 
-    public function setCid(?KeyCharacters $cid): self
+    public function setCharacterId(?KeyCharacters $characterId): self
     {
-        $this->cid = $cid;
+        $this->characterId = $characterId;
 
         return $this;
     }

@@ -2,99 +2,117 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * KeyCharacterStateImages
  *
  * @ORM\Table(name="kmcsimages", indexes={@ORM\Index(name="FK_kscsimages_kscs_idx", columns={"cid", "cs"})})
  * @ORM\Entity(repositoryClass="App\Repository\KeyCharacterStateImagesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class KeyCharacterStateImages
+class KeyCharacterStateImages implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="csimgid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="csimgid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $csimgid;
+    private $id;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="cid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="cid", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $cid;
+    private $characterId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cs", type="string", length=16, nullable=false)
+     * @ORM\Column(name="cs", type="string", length=16)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=16)
      */
-    private $cs;
+    private $characterState;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=255, nullable=false)
+     * @ORM\Column(name="url", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $url;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="sortsequence", type="string", length=45, nullable=false, options={"default"="50"})
+     * @ORM\Column(name="sortsequence", type="integer", options={"default"="50","unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $sortsequence = '50';
+    private $sortSequence = 50;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="username", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="username", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $username = 'NULL';
+    private $username;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getCsimgid(): ?int
+    public function getId(): ?int
     {
-        return $this->csimgid;
+        return $this->id;
     }
 
-    public function getCid(): ?int
+    public function getCharacterId(): ?int
     {
-        return $this->cid;
+        return $this->characterId;
     }
 
-    public function setCid(int $cid): self
+    public function setCharacterId(int $characterId): self
     {
-        $this->cid = $cid;
+        $this->characterId = $characterId;
 
         return $this;
     }
 
-    public function getCs(): ?string
+    public function getCharacterState(): ?string
     {
-        return $this->cs;
+        return $this->characterState;
     }
 
-    public function setCs(string $cs): self
+    public function setCharacterState(string $characterState): self
     {
-        $this->cs = $cs;
+        $this->characterState = $characterState;
 
         return $this;
     }
@@ -123,14 +141,14 @@ class KeyCharacterStateImages
         return $this;
     }
 
-    public function getSortsequence(): ?string
+    public function getSortSequence(): ?string
     {
-        return $this->sortsequence;
+        return $this->sortSequence;
     }
 
-    public function setSortsequence(string $sortsequence): self
+    public function setSortSequence(string $sortSequence): self
     {
-        $this->sortsequence = $sortsequence;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
@@ -147,14 +165,14 @@ class KeyCharacterStateImages
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }

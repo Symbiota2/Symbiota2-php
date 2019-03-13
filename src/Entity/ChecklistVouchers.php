@@ -47,6 +47,8 @@ class ChecklistVouchers implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $occurrenceId;
 
@@ -78,7 +80,7 @@ class ChecklistVouchers implements InitialTimestampInterface
      * @var \DateTime
      *
      * @ORM\Column(name="InitialTimeStamp", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 

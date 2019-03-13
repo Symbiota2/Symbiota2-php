@@ -2,121 +2,138 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TaxaResourceLinks
  *
  * @ORM\Table(name="taxaresourcelinks", indexes={@ORM\Index(name="FK_taxaresource_tid_idx", columns={"tid"}), @ORM\Index(name="taxaresource_name", columns={"sourcename"})})
  * @ORM\Entity(repositoryClass="App\Repository\TaxaResourceLinksRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class TaxaResourceLinks
+class TaxaResourceLinks implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="taxaresourceid", type="integer", nullable=false)
+     * @ORM\Column(name="taxaresourceid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $taxaresourceid;
+    private $id;
 
     /**
-     * @var \Taxa
+     * @var \App\Entity\Taxa
      *
-     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="sourcename", type="string", length=150, nullable=false)
+     * @ORM\Column(name="sourcename", type="string", length=150)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=150)
      */
-    private $sourcename;
+    private $sourceName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourceidentifier", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="sourceidentifier", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $sourceidentifier = 'NULL';
+    private $sourceIdentifier;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourceguid", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="sourceguid", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $sourceguid = 'NULL';
+    private $sourceGuid;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="url", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="url", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $url = 'NULL';
+    private $url;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="ranking", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="ranking", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $ranking = 'NULL';
+    private $ranking;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getTaxaresourceid(): ?int
+    public function getId(): ?int
     {
-        return $this->taxaresourceid;
+        return $this->id;
     }
 
-    public function getSourcename(): ?string
+    public function getSourceName(): ?string
     {
-        return $this->sourcename;
+        return $this->sourceName;
     }
 
-    public function setSourcename(string $sourcename): self
+    public function setSourceName(string $sourceName): self
     {
-        $this->sourcename = $sourcename;
+        $this->sourceName = $sourceName;
 
         return $this;
     }
 
-    public function getSourceidentifier(): ?string
+    public function getSourceIdentifier(): ?string
     {
-        return $this->sourceidentifier;
+        return $this->sourceIdentifier;
     }
 
-    public function setSourceidentifier(?string $sourceidentifier): self
+    public function setSourceIdentifier(?string $sourceIdentifier): self
     {
-        $this->sourceidentifier = $sourceidentifier;
+        $this->sourceIdentifier = $sourceIdentifier;
 
         return $this;
     }
 
-    public function getSourceguid(): ?string
+    public function getSourceGuid(): ?string
     {
-        return $this->sourceguid;
+        return $this->sourceGuid;
     }
 
-    public function setSourceguid(?string $sourceguid): self
+    public function setSourceGuid(?string $sourceGuid): self
     {
-        $this->sourceguid = $sourceguid;
+        $this->sourceGuid = $sourceGuid;
 
         return $this;
     }
@@ -157,26 +174,26 @@ class TaxaResourceLinks
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getTid(): ?Taxa
+    public function getTaxaId(): ?Taxa
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(?Taxa $tid): self
+    public function setTaxaId(?Taxa $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }

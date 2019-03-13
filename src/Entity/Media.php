@@ -2,142 +2,165 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Media
  *
  * @ORM\Table(name="media", indexes={@ORM\Index(name="FK_media_uid_idx", columns={"authoruid"}), @ORM\Index(name="FK_media_occid_idx", columns={"occid"}), @ORM\Index(name="FK_media_taxa_idx", columns={"tid"})})
  * @ORM\Entity(repositoryClass="App\Repository\MediaRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class Media
+class Media implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="mediaid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="mediaid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $mediaid;
+    private $id;
 
     /**
-     * @var \Taxa
+     * @var \App\Entity\Taxa
      *
-     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $tid;
+    private $taxaId;
 
     /**
-     * @var \Occurrences
+     * @var \App\Entity\Occurrences
      *
-     * @ORM\ManyToOne(targetEntity="Occurrences")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=250, nullable=false)
+     * @ORM\Column(name="url", type="string", length=250)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=250)
      */
     private $url;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="caption", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="caption", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $caption = 'NULL';
+    private $caption;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="authoruid", referencedColumnName="uid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $authoruid;
+    private $authoruId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="author", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="author", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $author = 'NULL';
+    private $author;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="mediatype", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="mediatype", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $mediatype = 'NULL';
+    private $mediaType;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="owner", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="owner", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $owner = 'NULL';
+    private $owner;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourceurl", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="sourceurl", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $sourceurl = 'NULL';
+    private $sourceUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="locality", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="locality", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $locality = 'NULL';
+    private $locality;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=1000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="description", type="string", length=1000, nullable=true)
+     * @Assert\Length(max=1000)
      */
-    private $description = 'NULL';
+    private $description;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="mediaMD5", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="mediaMD5", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $mediamd5 = 'NULL';
+    private $mediaMd5;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="sortsequence", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="sortsequence", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $sortsequence = 'NULL';
+    private $sortSequence;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getMediaid(): ?int
+    public function getId(): ?int
     {
-        return $this->mediaid;
+        return $this->id;
     }
 
     public function getUrl(): ?string
@@ -176,14 +199,14 @@ class Media
         return $this;
     }
 
-    public function getMediatype(): ?string
+    public function getMediaType(): ?string
     {
-        return $this->mediatype;
+        return $this->mediaType;
     }
 
-    public function setMediatype(?string $mediatype): self
+    public function setMediaType(?string $mediaType): self
     {
-        $this->mediatype = $mediatype;
+        $this->mediaType = $mediaType;
 
         return $this;
     }
@@ -200,14 +223,14 @@ class Media
         return $this;
     }
 
-    public function getSourceurl(): ?string
+    public function getSourceUrl(): ?string
     {
-        return $this->sourceurl;
+        return $this->sourceUrl;
     }
 
-    public function setSourceurl(?string $sourceurl): self
+    public function setSourceUrl(?string $sourceUrl): self
     {
-        $this->sourceurl = $sourceurl;
+        $this->sourceUrl = $sourceUrl;
 
         return $this;
     }
@@ -248,74 +271,74 @@ class Media
         return $this;
     }
 
-    public function getMediamd5(): ?string
+    public function getMediaMd5(): ?string
     {
-        return $this->mediamd5;
+        return $this->mediaMd5;
     }
 
-    public function setMediamd5(?string $mediamd5): self
+    public function setMediaMd5(?string $mediaMd5): self
     {
-        $this->mediamd5 = $mediamd5;
+        $this->mediaMd5 = $mediaMd5;
 
         return $this;
     }
 
-    public function getSortsequence(): ?int
+    public function getSortSequence(): ?int
     {
-        return $this->sortsequence;
+        return $this->sortSequence;
     }
 
-    public function setSortsequence(?int $sortsequence): self
+    public function setSortSequence(?int $sortSequence): self
     {
-        $this->sortsequence = $sortsequence;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(?\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(?\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getOccid(): ?Occurrences
+    public function getOccurrenceId(): ?Occurrences
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function setOccid(?Occurrences $occid): self
+    public function setOccurrenceId(?Occurrences $occurrenceId): self
     {
-        $this->occid = $occid;
+        $this->occurrenceId = $occurrenceId;
 
         return $this;
     }
 
-    public function getTid(): ?Taxa
+    public function getTaxaId(): ?Taxa
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(?Taxa $tid): self
+    public function setTaxaId(?Taxa $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }
 
-    public function getAuthoruid(): ?Users
+    public function getAuthoruId(): ?Users
     {
-        return $this->authoruid;
+        return $this->authoruId;
     }
 
-    public function setAuthoruid(?Users $authoruid): self
+    public function setAuthoruId(?Users $authoruId): self
     {
-        $this->authoruid = $authoruid;
+        $this->authoruId = $authoruId;
 
         return $this;
     }

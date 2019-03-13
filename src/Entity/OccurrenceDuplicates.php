@@ -2,80 +2,94 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OccurrenceDuplicates
  *
  * @ORM\Table(name="omoccurduplicates")
  * @ORM\Entity(repositoryClass="App\Repository\OccurrenceDuplicatesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class OccurrenceDuplicates
+class OccurrenceDuplicates implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="duplicateid", type="integer", nullable=false)
+     * @ORM\Column(name="duplicateid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $duplicateid;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=50, nullable=false)
+     * @ORM\Column(name="title", type="string", length=50)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=50)
      */
     private $title;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $description = 'NULL';
+    private $description;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="dupeType", type="string", length=45, nullable=false, options={"default"="Exact Duplicate"})
+     * @ORM\Column(name="dupeType", type="string", length=45, options={"default"="Exact Duplicate"})
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
-    private $dupetype = 'Exact Duplicate';
+    private $duplicateType = 'Exact Duplicate';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialTimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialTimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Occurrences", mappedBy="duplicateid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Occurrences", mappedBy="duplicateId")
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->occid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->occurrenceId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getDuplicateid(): ?int
+    public function getId(): ?int
     {
-        return $this->duplicateid;
+        return $this->id;
     }
 
     public function getTitle(): ?string
@@ -114,26 +128,26 @@ class OccurrenceDuplicates
         return $this;
     }
 
-    public function getDupetype(): ?string
+    public function getDuplicateType(): ?string
     {
-        return $this->dupetype;
+        return $this->duplicateType;
     }
 
-    public function setDupetype(string $dupetype): self
+    public function setDuplicateType(string $duplicateType): self
     {
-        $this->dupetype = $dupetype;
+        $this->duplicateType = $duplicateType;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
@@ -141,26 +155,26 @@ class OccurrenceDuplicates
     /**
      * @return Collection|Occurrences[]
      */
-    public function getOccid(): Collection
+    public function getOccurrenceId(): Collection
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function addOccid(Occurrences $occid): self
+    public function addOccurrenceId(Occurrences $occurrenceId): self
     {
-        if (!$this->occid->contains($occid)) {
-            $this->occid[] = $occid;
-            $occid->addDuplicateid($this);
+        if (!$this->occurrenceId->contains($occurrenceId)) {
+            $this->occurrenceId[] = $occurrenceId;
+            $occurrenceId->addDuplicateId($this);
         }
 
         return $this;
     }
 
-    public function removeOccid(Occurrences $occid): self
+    public function removeOccurrenceId(Occurrences $occurrenceId): self
     {
-        if ($this->occid->contains($occid)) {
-            $this->occid->removeElement($occid);
-            $occid->removeDuplicateid($this);
+        if ($this->occurrenceId->contains($occurrenceId)) {
+            $this->occurrenceId->removeElement($occurrenceId);
+            $occurrenceId->removeDuplicateId($this);
         }
 
         return $this;

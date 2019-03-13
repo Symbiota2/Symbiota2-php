@@ -51,9 +51,7 @@ class ChecklistCoordinates implements InitialTimestampInterface
      *
      * @ORM\Column(name="decimallatitude", type="float", precision=10, scale=0)
      * @Assert\NotBlank()
-     * @Assert\Type(
-     *      type="float"
-     * )
+     * @Assert\Type(type="float")
      */
     private $decimalLatitude;
 
@@ -62,9 +60,7 @@ class ChecklistCoordinates implements InitialTimestampInterface
      *
      * @ORM\Column(name="decimallongitude", type="float", precision=10, scale=0)
      * @Assert\NotBlank()
-     * @Assert\Type(
-     *      type="float"
-     * )
+     * @Assert\Type(type="float")
      */
     private $decimalLongitude;
 
@@ -80,6 +76,7 @@ class ChecklistCoordinates implements InitialTimestampInterface
      * @var \DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 

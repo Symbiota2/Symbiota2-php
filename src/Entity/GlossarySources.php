@@ -29,6 +29,7 @@ class GlossarySources implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
      * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $taxaId;
 
@@ -68,7 +69,7 @@ class GlossarySources implements InitialTimestampInterface
      * @var \DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 

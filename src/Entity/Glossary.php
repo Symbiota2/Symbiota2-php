@@ -104,6 +104,7 @@ class Glossary implements CreatedUserIdInterface, InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
+     * @Assert\Type(type="integer")
      */
     private $createdUserId;
 
@@ -111,14 +112,14 @@ class Glossary implements CreatedUserIdInterface, InitialTimestampInterface
      * @var \DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Taxa", inversedBy="glossid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Taxa", inversedBy="glossaryId")
      * @ORM\JoinTable(name="glossarytaxalink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="glossid", referencedColumnName="glossid")

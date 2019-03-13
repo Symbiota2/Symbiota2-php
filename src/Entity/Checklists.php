@@ -165,9 +165,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @var float|null
      *
      * @ORM\Column(name="LatCentroid", type="float", precision=9, scale=6, nullable=true)
-     * @Assert\Type(
-     *      type="float"
-     * )
+     * @Assert\Type(type="float")
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
     private $latitudeCentroid;
@@ -176,9 +174,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @var float|null
      *
      * @ORM\Column(name="LongCentroid", type="float", precision=9, scale=6, nullable=true)
-     * @Assert\Type(
-     *      type="float"
-     * )
+     * @Assert\Type(type="float")
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
     private $longitudeCentroid;
@@ -249,10 +245,11 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
     /**
      * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
+     * @Assert\Type(type="integer")
      * @Groups({"get", "get-checklist-info"})
      */
     private $createdUserId;
@@ -279,6 +276,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @var \DateTime|null
      *
      * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      * @Groups({"get", "get-checklist-info"})
      */
     private $modifiedTimestamp;
@@ -287,6 +285,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @var \DateTime
      *
      * @ORM\Column(name="InitialTimeStamp", type="datetime")
+     * @Assert\DateTime
      * @Groups({"get", "get-checklist-info"})
      */
     private $initialTimestamp;
@@ -294,7 +293,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\ChecklistProjects", mappedBy="clid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\ChecklistProjects", mappedBy="checklistId")
      * @Groups({"get", "get-checklist-info"})
      */
     private $projectId;
@@ -302,7 +301,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\References", mappedBy="clid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\References", mappedBy="checklistId")
      * @Groups({"get", "get-checklist-info"})
      */
     private $referenceId;
@@ -680,7 +679,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
     {
         if (!$this->referenceId->contains($referenceId)) {
             $this->referenceId[] = $referenceId;
-            $referenceId->addClid($this);
+            $referenceId->addChecklistId($this);
         }
 
         return $this;
@@ -690,7 +689,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
     {
         if ($this->referenceId->contains($referenceId)) {
             $this->referenceId->removeElement($referenceId);
-            $referenceId->removeClid($this);
+            $referenceId->removeChecklistId($this);
         }
 
         return $this;

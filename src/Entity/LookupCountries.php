@@ -2,73 +2,86 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * LookupCountries
  *
  * @ORM\Table(name="lkupcountry", uniqueConstraints={@ORM\UniqueConstraint(name="country_unique", columns={"countryName"})}, indexes={@ORM\Index(name="Index_lkupcountry_iso3", columns={"iso3"}), @ORM\Index(name="Index_lkupcountry_iso", columns={"iso"})})
  * @ORM\Entity(repositoryClass="App\Repository\LookupCountriesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class LookupCountries
+class LookupCountries implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="countryId", type="integer", nullable=false)
+     * @ORM\Column(name="countryId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $countryid;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="countryName", type="string", length=100, nullable=false)
+     * @ORM\Column(name="countryName", type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=100)
      */
-    private $countryname;
+    private $countryName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="iso", type="string", length=2, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="iso", type="string", length=2, nullable=true)
+     * @Assert\Length(max=2)
      */
-    private $iso = 'NULL';
+    private $iso;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="iso3", type="string", length=3, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="iso3", type="string", length=3, nullable=true)
+     * @Assert\Length(max=3)
      */
-    private $iso3 = 'NULL';
+    private $iso3;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="numcode", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="numcode", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $numcode = 'NULL';
+    private $numericCode;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getCountryid(): ?int
+    public function getId(): ?int
     {
-        return $this->countryid;
+        return $this->id;
     }
 
-    public function getCountryname(): ?string
+    public function getCountryName(): ?string
     {
-        return $this->countryname;
+        return $this->countryName;
     }
 
-    public function setCountryname(string $countryname): self
+    public function setCountryName(string $countryName): self
     {
-        $this->countryname = $countryname;
+        $this->countryName = $countryName;
 
         return $this;
     }
@@ -97,26 +110,26 @@ class LookupCountries
         return $this;
     }
 
-    public function getNumcode(): ?int
+    public function getNumericCode(): ?int
     {
-        return $this->numcode;
+        return $this->numericCode;
     }
 
-    public function setNumcode(?int $numcode): self
+    public function setNumericCode(?int $numericCode): self
     {
-        $this->numcode = $numcode;
+        $this->numericCode = $numericCode;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }

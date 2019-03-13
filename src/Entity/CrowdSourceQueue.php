@@ -45,6 +45,7 @@ class CrowdSourceQueue implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
      * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $occurrenceId;
 
@@ -65,6 +66,7 @@ class CrowdSourceQueue implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="uidprocessor", referencedColumnName="uid")
      * })
      * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $userIdProcessor;
 
@@ -97,7 +99,7 @@ class CrowdSourceQueue implements InitialTimestampInterface
      * @var \DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 

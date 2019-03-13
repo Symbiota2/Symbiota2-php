@@ -2,83 +2,97 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OccurrenceGeoIndex
  *
  * @ORM\Table(name="omoccurgeoindex", indexes={@ORM\Index(name="IDX_375D79BD52596C31", columns={"tid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OccurrenceGeoIndexRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class OccurrenceGeoIndex
+class OccurrenceGeoIndex implements InitialTimestampInterface
 {
     /**
-     * @var \Taxa
+     * @var \App\Entity\Taxa
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Taxa")
+     * @ORM\OneToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="decimallatitude", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\Column(name="decimallatitude", type="float", precision=10, scale=0)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="float")
      */
-    private $decimallatitude;
+    private $decimalLatitude;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="decimallongitude", type="float", precision=10, scale=0, nullable=false)
+     * @ORM\Column(name="decimallongitude", type="float", precision=10, scale=0)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="float")
      */
-    private $decimallongitude;
+    private $decimalLongitude;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getDecimallatitude(): ?float
+    public function getDecimalLatitude(): ?float
     {
-        return $this->decimallatitude;
+        return $this->decimalLatitude;
     }
 
-    public function getDecimallongitude(): ?float
+    public function getDecimalLongitude(): ?float
     {
-        return $this->decimallongitude;
+        return $this->decimalLongitude;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getTid(): ?Taxa
+    public function getTaxaId(): ?Taxa
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(?Taxa $tid): self
+    public function setTaxaId(?Taxa $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }

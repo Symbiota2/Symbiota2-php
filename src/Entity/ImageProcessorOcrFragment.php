@@ -38,6 +38,7 @@ class ImageProcessorOcrFragment implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="prlid", referencedColumnName="prlid")
      * })
      * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $imageProcessorRawLabelId;
 
@@ -78,7 +79,7 @@ class ImageProcessorOcrFragment implements InitialTimestampInterface
      * @var \DateTime|null
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 

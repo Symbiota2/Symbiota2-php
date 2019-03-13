@@ -146,7 +146,7 @@ class ChecklistTaxaLink implements InitialTimestampInterface
      * @var \DateTime
      *
      * @ORM\Column(name="InitialTimeStamp", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 

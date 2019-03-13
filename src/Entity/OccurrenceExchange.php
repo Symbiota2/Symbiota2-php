@@ -2,171 +2,199 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OccurrenceExchange
  *
  * @ORM\Table(name="omoccurexchange", indexes={@ORM\Index(name="FK_occexch_coll", columns={"collid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OccurrenceExchangeRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class OccurrenceExchange
+class OccurrenceExchange implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="exchangeid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="exchangeid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $exchangeid;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identifier", type="string", length=30, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="identifier", type="string", length=30, nullable=true)
+     * @Assert\Length(max=30)
      */
-    private $identifier = 'NULL';
+    private $identifier;
 
     /**
-     * @var \Collections
+     * @var \App\Entity\Collections
      *
-     * @ORM\ManyToOne(targetEntity="Collections")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Collections")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $collid;
+    private $collectionId;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="iid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="iid", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $iid = 'NULL';
+    private $institutionId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="transactionType", type="string", length=10, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="transactionType", type="string", length=10, nullable=true)
+     * @Assert\Length(max=10)
      */
-    private $transactiontype = 'NULL';
+    private $transactionType;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="in_out", type="string", length=3, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="in_out", type="string", length=3, nullable=true)
+     * @Assert\Length(max=3)
      */
-    private $inOut = 'NULL';
+    private $inOut;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateSent", type="date", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dateSent", type="date", nullable=true)
+     * @Assert\Date
      */
-    private $datesent = 'NULL';
+    private $dateSent;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateReceived", type="date", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dateReceived", type="date", nullable=true)
+     * @Assert\Date
      */
-    private $datereceived = 'NULL';
+    private $dateReceived;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="totalBoxes", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="totalBoxes", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $totalboxes = 'NULL';
+    private $totalBoxes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="shippingMethod", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="shippingMethod", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $shippingmethod = 'NULL';
+    private $shippingMethod;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="totalExMounted", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="totalExMounted", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $totalexmounted = 'NULL';
+    private $totalExchangeMounted;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="totalExUnmounted", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="totalExUnmounted", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $totalexunmounted = 'NULL';
+    private $totalExchangeUnmounted;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="totalGift", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="totalGift", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $totalgift = 'NULL';
+    private $totalGift;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="totalGiftDet", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="totalGiftDet", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $totalgiftdet = 'NULL';
+    private $totalGiftForDetermination;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="adjustment", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="adjustment", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $adjustment = 'NULL';
+    private $adjustment;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="invoiceBalance", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="invoiceBalance", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $invoicebalance = 'NULL';
+    private $invoiceBalance;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="invoiceMessage", type="string", length=500, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="invoiceMessage", type="string", length=500, nullable=true)
+     * @Assert\Length(max=500)
      */
-    private $invoicemessage = 'NULL';
+    private $invoiceMessage;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=1000, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="description", type="string", length=1000, nullable=true)
+     * @Assert\Length(max=1000)
      */
-    private $description = 'NULL';
+    private $description;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=500, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=500, nullable=true)
+     * @Assert\Length(max=500)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="createdBy", type="string", length=20, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="createdBy", type="string", length=20, nullable=true)
+     * @Assert\Length(max=20)
      */
-    private $createdby = 'NULL';
+    private $createdBy;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialTimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialTimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getExchangeid(): ?int
+    public function getId(): ?int
     {
-        return $this->exchangeid;
+        return $this->id;
     }
 
     public function getIdentifier(): ?string
@@ -181,26 +209,26 @@ class OccurrenceExchange
         return $this;
     }
 
-    public function getIid(): ?int
+    public function getInstitutionId(): ?int
     {
-        return $this->iid;
+        return $this->institutionId;
     }
 
-    public function setIid(?int $iid): self
+    public function setInstitutionId(?int $institutionId): self
     {
-        $this->iid = $iid;
+        $this->institutionId = $institutionId;
 
         return $this;
     }
 
-    public function getTransactiontype(): ?string
+    public function getTransactionType(): ?string
     {
-        return $this->transactiontype;
+        return $this->transactionType;
     }
 
-    public function setTransactiontype(?string $transactiontype): self
+    public function setTransactionType(?string $transactionType): self
     {
-        $this->transactiontype = $transactiontype;
+        $this->transactionType = $transactionType;
 
         return $this;
     }
@@ -217,98 +245,98 @@ class OccurrenceExchange
         return $this;
     }
 
-    public function getDatesent(): ?\DateTimeInterface
+    public function getDateSent(): ?\DateTimeInterface
     {
-        return $this->datesent;
+        return $this->dateSent;
     }
 
-    public function setDatesent(?\DateTimeInterface $datesent): self
+    public function setDateSent(?\DateTimeInterface $dateSent): self
     {
-        $this->datesent = $datesent;
+        $this->dateSent = $dateSent;
 
         return $this;
     }
 
-    public function getDatereceived(): ?\DateTimeInterface
+    public function getDateReceived(): ?\DateTimeInterface
     {
-        return $this->datereceived;
+        return $this->dateReceived;
     }
 
-    public function setDatereceived(?\DateTimeInterface $datereceived): self
+    public function setDateReceived(?\DateTimeInterface $dateReceived): self
     {
-        $this->datereceived = $datereceived;
+        $this->dateReceived = $dateReceived;
 
         return $this;
     }
 
-    public function getTotalboxes(): ?int
+    public function getTotalBoxes(): ?int
     {
-        return $this->totalboxes;
+        return $this->totalBoxes;
     }
 
-    public function setTotalboxes(?int $totalboxes): self
+    public function setTotalBoxes(?int $totalBoxes): self
     {
-        $this->totalboxes = $totalboxes;
+        $this->totalBoxes = $totalBoxes;
 
         return $this;
     }
 
-    public function getShippingmethod(): ?string
+    public function getShippingMethod(): ?string
     {
-        return $this->shippingmethod;
+        return $this->shippingMethod;
     }
 
-    public function setShippingmethod(?string $shippingmethod): self
+    public function setShippingMethod(?string $shippingMethod): self
     {
-        $this->shippingmethod = $shippingmethod;
+        $this->shippingMethod = $shippingMethod;
 
         return $this;
     }
 
-    public function getTotalexmounted(): ?int
+    public function getTotalExchangeMounted(): ?int
     {
-        return $this->totalexmounted;
+        return $this->totalExchangeMounted;
     }
 
-    public function setTotalexmounted(?int $totalexmounted): self
+    public function setTotalExchangeMounted(?int $totalExchangeMounted): self
     {
-        $this->totalexmounted = $totalexmounted;
+        $this->totalExchangeMounted = $totalExchangeMounted;
 
         return $this;
     }
 
-    public function getTotalexunmounted(): ?int
+    public function getTotalExchangeUnmounted(): ?int
     {
-        return $this->totalexunmounted;
+        return $this->totalExchangeUnmounted;
     }
 
-    public function setTotalexunmounted(?int $totalexunmounted): self
+    public function setTotalExchangeUnmounted(?int $totalExchangeUnmounted): self
     {
-        $this->totalexunmounted = $totalexunmounted;
+        $this->totalExchangeUnmounted = $totalExchangeUnmounted;
 
         return $this;
     }
 
-    public function getTotalgift(): ?int
+    public function getTotalGift(): ?int
     {
-        return $this->totalgift;
+        return $this->totalGift;
     }
 
-    public function setTotalgift(?int $totalgift): self
+    public function setTotalGift(?int $totalGift): self
     {
-        $this->totalgift = $totalgift;
+        $this->totalGift = $totalGift;
 
         return $this;
     }
 
-    public function getTotalgiftdet(): ?int
+    public function getTotalGiftForDetermination(): ?int
     {
-        return $this->totalgiftdet;
+        return $this->totalGiftForDetermination;
     }
 
-    public function setTotalgiftdet(?int $totalgiftdet): self
+    public function setTotalGiftForDetermination(?int $totalGiftForDetermination): self
     {
-        $this->totalgiftdet = $totalgiftdet;
+        $this->totalGiftForDetermination = $totalGiftForDetermination;
 
         return $this;
     }
@@ -325,26 +353,26 @@ class OccurrenceExchange
         return $this;
     }
 
-    public function getInvoicebalance(): ?int
+    public function getInvoiceBalance(): ?int
     {
-        return $this->invoicebalance;
+        return $this->invoiceBalance;
     }
 
-    public function setInvoicebalance(?int $invoicebalance): self
+    public function setInvoiceBalance(?int $invoiceBalance): self
     {
-        $this->invoicebalance = $invoicebalance;
+        $this->invoiceBalance = $invoiceBalance;
 
         return $this;
     }
 
-    public function getInvoicemessage(): ?string
+    public function getInvoiceMessage(): ?string
     {
-        return $this->invoicemessage;
+        return $this->invoiceMessage;
     }
 
-    public function setInvoicemessage(?string $invoicemessage): self
+    public function setInvoiceMessage(?string $invoiceMessage): self
     {
-        $this->invoicemessage = $invoicemessage;
+        $this->invoiceMessage = $invoiceMessage;
 
         return $this;
     }
@@ -373,38 +401,38 @@ class OccurrenceExchange
         return $this;
     }
 
-    public function getCreatedby(): ?string
+    public function getCreatedBy(): ?string
     {
-        return $this->createdby;
+        return $this->createdBy;
     }
 
-    public function setCreatedby(?string $createdby): self
+    public function setCreatedBy(?string $createdBy): self
     {
-        $this->createdby = $createdby;
+        $this->createdBy = $createdBy;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getCollid(): ?Collections
+    public function getCollectionId(): ?Collections
     {
-        return $this->collid;
+        return $this->collectionId;
     }
 
-    public function setCollid(?Collections $collid): self
+    public function setCollectionId(?Collections $collectionId): self
     {
-        $this->collid = $collid;
+        $this->collectionId = $collectionId;
 
         return $this;
     }

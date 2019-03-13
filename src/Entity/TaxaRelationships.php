@@ -2,103 +2,117 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * TaxaRelationships
  *
  * @ORM\Table(name="taxaenumtree", indexes={@ORM\Index(name="FK_tet_taxa", columns={"tid"}), @ORM\Index(name="FK_tet_taxa2", columns={"parenttid"}), @ORM\Index(name="FK_tet_taxauth", columns={"taxauthid"})})
  * @ORM\Entity(repositoryClass="App\Repository\TaxaRelationshipsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class TaxaRelationships
+class TaxaRelationships implements InitialTimestampInterface
 {
     /**
-     * @var \Taxa
+     * @var \App\Entity\Taxa
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Taxa")
+     * @ORM\OneToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $tid;
+    private $taxaId;
 
     /**
-     * @var \TaxaAuthorities
+     * @var \App\Entity\TaxaAuthorities
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="TaxaAuthorities")
+     * @ORM\OneToOne(targetEntity="\App\Entity\TaxaAuthorities")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="taxauthid", referencedColumnName="taxauthid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $taxauthid;
+    private $taxaAuthorityId;
 
     /**
-     * @var \Taxa
+     * @var \App\Entity\Taxa
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Taxa")
+     * @ORM\OneToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parenttid", referencedColumnName="TID")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $parenttid;
+    private $parentTaxaId;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getTaxauthid(): ?TaxaAuthorities
+    public function getTaxaAuthorityId(): ?TaxaAuthorities
     {
-        return $this->taxauthid;
+        return $this->taxaAuthorityId;
     }
 
-    public function setTaxauthid(?TaxaAuthorities $taxauthid): self
+    public function setTaxaAuthorityId(?TaxaAuthorities $taxaAuthorityId): self
     {
-        $this->taxauthid = $taxauthid;
+        $this->taxaAuthorityId = $taxaAuthorityId;
 
         return $this;
     }
 
-    public function getParenttid(): ?Taxa
+    public function getParentTaxaId(): ?Taxa
     {
-        return $this->parenttid;
+        return $this->parentTaxaId;
     }
 
-    public function setParenttid(?Taxa $parenttid): self
+    public function setParentTaxaId(?Taxa $parentTaxaId): self
     {
-        $this->parenttid = $parenttid;
+        $this->parentTaxaId = $parentTaxaId;
 
         return $this;
     }
 
-    public function getTid(): ?Taxa
+    public function getTaxaId(): ?Taxa
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(?Taxa $tid): self
+    public function setTaxaId(?Taxa $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }

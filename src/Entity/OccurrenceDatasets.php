@@ -2,76 +2,91 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OccurrenceDatasets
  *
  * @ORM\Table(name="omoccurdatasets", indexes={@ORM\Index(name="FK_omcollections_collid_idx", columns={"collid"}), @ORM\Index(name="FK_omoccurdatasets_uid_idx", columns={"createduid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OccurrenceDatasetsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class OccurrenceDatasets
+class OccurrenceDatasets implements CreatedUserIdInterface, InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="datasetid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="datasetid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $datasetid;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=100, nullable=false)
+     * @ORM\Column(name="name", type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=100)
      */
     private $name;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="sortsequence", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="sortsequence", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $sortsequence = 'NULL';
+    private $sortSequence;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $createduid;
+    private $createdUserId;
 
     /**
-     * @var \Collections
+     * @var \App\Entity\Collections
      *
-     * @ORM\ManyToOne(targetEntity="Collections")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Collections")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $collid;
+    private $collectionId;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getDatasetid(): ?int
+    public function getId(): ?int
     {
-        return $this->datasetid;
+        return $this->id;
     }
 
     public function getName(): ?string
@@ -98,50 +113,57 @@ class OccurrenceDatasets
         return $this;
     }
 
-    public function getSortsequence(): ?int
+    public function getSortSequence(): ?int
     {
-        return $this->sortsequence;
+        return $this->sortSequence;
     }
 
-    public function setSortsequence(?int $sortsequence): self
+    public function setSortSequence(?int $sortSequence): self
     {
-        $this->sortsequence = $sortsequence;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getCreateduid(): ?Users
+    /**
+     * @return Users|null
+     */
+    public function getCreatedUserId(): ?Users
     {
-        return $this->createduid;
+        return $this->createdUserId;
     }
 
-    public function setCreateduid(?Users $createduid): self
+    /**
+     * @param UserInterface $createdUserId
+     * @return CreatedUserIdInterface
+     */
+    public function setCreatedUserId(UserInterface $createdUserId): CreatedUserIdInterface
     {
-        $this->createduid = $createduid;
+        $this->createdUserId = $createdUserId;
 
         return $this;
     }
 
-    public function getCollid(): ?Collections
+    public function getCollectionId(): ?Collections
     {
-        return $this->collid;
+        return $this->collectionId;
     }
 
-    public function setCollid(?Collections $collid): self
+    public function setCollectionId(?Collections $collectionId): self
     {
-        $this->collid = $collid;
+        $this->collectionId = $collectionId;
 
         return $this;
     }

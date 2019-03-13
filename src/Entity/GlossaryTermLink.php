@@ -36,6 +36,7 @@ class GlossaryTermLink implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="glossgrpid", referencedColumnName="glossid")
      * })
      * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $glossaryGroupId;
 
@@ -47,6 +48,7 @@ class GlossaryTermLink implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="glossid", referencedColumnName="glossid")
      * })
      * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $glossaryId;
 
@@ -62,7 +64,7 @@ class GlossaryTermLink implements InitialTimestampInterface
      * @var \DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
-     * @Assert\NotBlank()
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 

@@ -2,145 +2,165 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OccurrenceAccessStats
  *
  * @ORM\Table(name="omoccuraccessstats", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQUE_occuraccess", columns={"occid", "accessdate", "ipaddress", "accesstype"})}, indexes={@ORM\Index(name="IDX_FB36281B40A24FBA", columns={"occid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OccurrenceAccessStatsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class OccurrenceAccessStats
+class OccurrenceAccessStats implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="oasid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="oasid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $oasid;
+    private $id;
 
     /**
-     * @var \Occurrences
+     * @var \App\Entity\Occurrences
      *
-     * @ORM\ManyToOne(targetEntity="Occurrences")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="accessdate", type="date", nullable=false)
+     * @ORM\Column(name="accessdate", type="date")
+     * @Assert\NotBlank()
+     * @Assert\Date
      */
-    private $accessdate;
+    private $accessDate;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ipaddress", type="string", length=45, nullable=false)
+     * @ORM\Column(name="ipaddress", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
-    private $ipaddress;
+    private $ipAddress;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="cnt", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="cnt", type="integer", options={"unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $cnt;
+    private $count;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="accesstype", type="string", length=45, nullable=false)
+     * @ORM\Column(name="accesstype", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
-    private $accesstype;
+    private $accessType;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="dynamicProperties", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dynamicProperties", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $dynamicproperties = 'NULL';
+    private $dynamicProperties;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getOasid(): ?int
+    public function getId(): ?int
     {
-        return $this->oasid;
+        return $this->id;
     }
 
-    public function getAccessdate(): ?\DateTimeInterface
+    public function getAccessDate(): ?\DateTimeInterface
     {
-        return $this->accessdate;
+        return $this->accessDate;
     }
 
-    public function setAccessdate(\DateTimeInterface $accessdate): self
+    public function setAccessDate(\DateTimeInterface $accessDate): self
     {
-        $this->accessdate = $accessdate;
+        $this->accessDate = $accessDate;
 
         return $this;
     }
 
-    public function getIpaddress(): ?string
+    public function getIpAddress(): ?string
     {
-        return $this->ipaddress;
+        return $this->ipAddress;
     }
 
-    public function setIpaddress(string $ipaddress): self
+    public function setIpAddress(string $ipAddress): self
     {
-        $this->ipaddress = $ipaddress;
+        $this->ipAddress = $ipAddress;
 
         return $this;
     }
 
-    public function getCnt(): ?int
+    public function getCount(): ?int
     {
-        return $this->cnt;
+        return $this->count;
     }
 
-    public function setCnt(int $cnt): self
+    public function setCount(int $count): self
     {
-        $this->cnt = $cnt;
+        $this->count = $count;
 
         return $this;
     }
 
-    public function getAccesstype(): ?string
+    public function getAccessType(): ?string
     {
-        return $this->accesstype;
+        return $this->accessType;
     }
 
-    public function setAccesstype(string $accesstype): self
+    public function setAccessType(string $accessType): self
     {
-        $this->accesstype = $accesstype;
+        $this->accessType = $accessType;
 
         return $this;
     }
 
-    public function getDynamicproperties(): ?string
+    public function getDynamicProperties(): ?string
     {
-        return $this->dynamicproperties;
+        return $this->dynamicProperties;
     }
 
-    public function setDynamicproperties(?string $dynamicproperties): self
+    public function setDynamicProperties(?string $dynamicProperties): self
     {
-        $this->dynamicproperties = $dynamicproperties;
+        $this->dynamicProperties = $dynamicProperties;
 
         return $this;
     }
@@ -157,26 +177,26 @@ class OccurrenceAccessStats
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(?\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(?\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getOccid(): ?Occurrences
+    public function getOccurrenceId(): ?Occurrences
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function setOccid(?Occurrences $occid): self
+    public function setOccurrenceId(?Occurrences $occurrenceId): self
     {
-        $this->occid = $occid;
+        $this->occurrenceId = $occurrenceId;
 
         return $this;
     }

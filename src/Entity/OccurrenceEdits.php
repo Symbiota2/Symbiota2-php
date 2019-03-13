@@ -2,174 +2,199 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OccurrenceEdits
  *
  * @ORM\Table(name="omoccuredits", uniqueConstraints={@ORM\UniqueConstraint(name="guid_UNIQUE_omoccuredits", columns={"guid"})}, indexes={@ORM\Index(name="fk_omoccuredits_occid", columns={"occid"}), @ORM\Index(name="fk_omoccuredits_uid", columns={"uid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OccurrenceEditsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class OccurrenceEdits
+class OccurrenceEdits implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="ocedid", type="integer", nullable=false)
+     * @ORM\Column(name="ocedid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $ocedid;
+    private $id;
 
     /**
-     * @var \Occurrences
+     * @var \App\Entity\Occurrences
      *
-     * @ORM\ManyToOne(targetEntity="Occurrences")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="FieldName", type="string", length=45, nullable=false)
+     * @ORM\Column(name="FieldName", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
-    private $fieldname;
+    private $fieldName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="FieldValueNew", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="FieldValueNew", type="text", length=65535)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=65535)
      */
-    private $fieldvaluenew;
+    private $fieldValueNew;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="FieldValueOld", type="text", length=65535, nullable=false)
+     * @ORM\Column(name="FieldValueOld", type="text", length=65535)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=65535)
      */
-    private $fieldvalueold;
+    private $fieldValueOld;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="ReviewStatus", type="integer", nullable=false, options={"default"="1","comment"="1=Open;2=Pending;3=Closed"})
+     * @ORM\Column(name="ReviewStatus", type="integer", options={"default"="1","comment"="1=Open;2=Pending;3=Closed"})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $reviewstatus = '1';
+    private $reviewStatus = 1;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="AppliedStatus", type="integer", nullable=false, options={"comment"="0=Not Applied;1=Applied"})
+     * @ORM\Column(name="AppliedStatus", type="integer", options={"comment"="0=Not Applied;1=Applied"})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $appliedstatus;
+    private $appliedStatus;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="editType", type="integer", nullable=false, options={"comment"="0=general edit;1=batch edit"})
+     * @ORM\Column(name="editType", type="integer", options={"comment"="0=general edit;1=batch edit"})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $edittype = '0';
+    private $editType = 0;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="guid", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="guid", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $guid = 'NULL';
+    private $guid;
 
     /**
-     * @var \Users
+     * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $uid;
+    private $userId;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getOcedid(): ?int
+    public function getId(): ?int
     {
-        return $this->ocedid;
+        return $this->id;
     }
 
-    public function getFieldname(): ?string
+    public function getFieldName(): ?string
     {
-        return $this->fieldname;
+        return $this->fieldName;
     }
 
-    public function setFieldname(string $fieldname): self
+    public function setFieldName(string $fieldName): self
     {
-        $this->fieldname = $fieldname;
+        $this->fieldName = $fieldName;
 
         return $this;
     }
 
-    public function getFieldvaluenew(): ?string
+    public function getFieldValueNew(): ?string
     {
-        return $this->fieldvaluenew;
+        return $this->fieldValueNew;
     }
 
-    public function setFieldvaluenew(string $fieldvaluenew): self
+    public function setFieldValueNew(string $fieldValueNew): self
     {
-        $this->fieldvaluenew = $fieldvaluenew;
+        $this->fieldValueNew = $fieldValueNew;
 
         return $this;
     }
 
-    public function getFieldvalueold(): ?string
+    public function getFieldValueOld(): ?string
     {
-        return $this->fieldvalueold;
+        return $this->fieldValueOld;
     }
 
-    public function setFieldvalueold(string $fieldvalueold): self
+    public function setFieldValueOld(string $fieldValueOld): self
     {
-        $this->fieldvalueold = $fieldvalueold;
+        $this->fieldValueOld = $fieldValueOld;
 
         return $this;
     }
 
-    public function getReviewstatus(): ?int
+    public function getReviewStatus(): ?int
     {
-        return $this->reviewstatus;
+        return $this->reviewStatus;
     }
 
-    public function setReviewstatus(int $reviewstatus): self
+    public function setReviewStatus(int $reviewStatus): self
     {
-        $this->reviewstatus = $reviewstatus;
+        $this->reviewStatus = $reviewStatus;
 
         return $this;
     }
 
-    public function getAppliedstatus(): ?int
+    public function getAppliedStatus(): ?int
     {
-        return $this->appliedstatus;
+        return $this->appliedStatus;
     }
 
-    public function setAppliedstatus(int $appliedstatus): self
+    public function setAppliedStatus(int $appliedStatus): self
     {
-        $this->appliedstatus = $appliedstatus;
+        $this->appliedStatus = $appliedStatus;
 
         return $this;
     }
 
-    public function getEdittype(): ?int
+    public function getEditType(): ?int
     {
-        return $this->edittype;
+        return $this->editType;
     }
 
-    public function setEdittype(int $edittype): self
+    public function setEditType(int $editType): self
     {
-        $this->edittype = $edittype;
+        $this->editType = $editType;
 
         return $this;
     }
@@ -186,38 +211,38 @@ class OccurrenceEdits
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getOccid(): ?Occurrences
+    public function getOccurrenceId(): ?Occurrences
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function setOccid(?Occurrences $occid): self
+    public function setOccurrenceId(?Occurrences $occurrenceId): self
     {
-        $this->occid = $occid;
+        $this->occurrenceId = $occurrenceId;
 
         return $this;
     }
 
-    public function getUid(): ?Users
+    public function getUserId(): ?Users
     {
-        return $this->uid;
+        return $this->userId;
     }
 
-    public function setUid(?Users $uid): self
+    public function setUserId(?Users $userId): self
     {
-        $this->uid = $uid;
+        $this->userId = $userId;
 
         return $this;
     }

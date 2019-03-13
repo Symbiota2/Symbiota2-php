@@ -2,62 +2,75 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OccurrenceDatasetLink
  *
  * @ORM\Table(name="omoccurdatasetlink", indexes={@ORM\Index(name="FK_omoccurdatasetlink_occid", columns={"occid"}), @ORM\Index(name="FK_omoccurdatasetlink_datasetid", columns={"datasetid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OccurrenceDatasetLinkRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class OccurrenceDatasetLink
+class OccurrenceDatasetLink implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="ocdatlid", type="integer", nullable=false)
+     * @ORM\Column(name="ocdatlid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $ocdatlid;
+    private $id;
 
     /**
-     * @var \Occurrences
+     * @var \App\Entity\Occurrences
      *
-     * @ORM\ManyToOne(targetEntity="Occurrences")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
-     * @var \OccurrenceDatasets
+     * @var \App\Entity\OccurrenceDatasets
      *
-     * @ORM\ManyToOne(targetEntity="OccurrenceDatasets")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\OccurrenceDatasets")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="datasetid", referencedColumnName="datasetid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $datasetid;
+    private $datasetId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getOcdatlid(): ?int
+    public function getId(): ?int
     {
-        return $this->ocdatlid;
+        return $this->id;
     }
 
     public function getNotes(): ?string
@@ -72,38 +85,38 @@ class OccurrenceDatasetLink
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getDatasetid(): ?OccurrenceDatasets
+    public function getDatasetId(): ?OccurrenceDatasets
     {
-        return $this->datasetid;
+        return $this->datasetId;
     }
 
-    public function setDatasetid(?OccurrenceDatasets $datasetid): self
+    public function setDatasetId(?OccurrenceDatasets $datasetId): self
     {
-        $this->datasetid = $datasetid;
+        $this->datasetId = $datasetId;
 
         return $this;
     }
 
-    public function getOccid(): ?Occurrences
+    public function getOccurrenceId(): ?Occurrences
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function setOccid(?Occurrences $occid): self
+    public function setOccurrenceId(?Occurrences $occurrenceId): self
     {
-        $this->occid = $occid;
+        $this->occurrenceId = $occurrenceId;
 
         return $this;
     }

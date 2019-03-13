@@ -2,119 +2,141 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * KeyDescriptions
  *
  * @ORM\Table(name="kmdescr", indexes={@ORM\Index(name="CSDescr", columns={"CID", "CS"}), @ORM\Index(name="IDX_6691F324C4FE2EBB", columns={"tid"})})
  * @ORM\Entity(repositoryClass="App\Repository\KeyDescriptionsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class KeyDescriptions
+class KeyDescriptions implements InitialTimestampInterface
 {
     /**
-     * @var \Taxa
+     * @var \App\Entity\Taxa
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Taxa")
+     * @ORM\OneToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="CID", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="CID", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $cid;
+    private $characterId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Modifier", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Modifier", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $modifier = 'NULL';
+    private $modifier;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="CS", type="string", length=16, nullable=false)
+     * @ORM\Column(name="CS", type="string", length=16)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
+     * @Assert\NotBlank()
+     * @Assert\Length(max=16)
      */
-    private $cs;
+    private $characterState;
 
     /**
      * @var float|null
      *
-     * @ORM\Column(name="X", type="float", precision=15, scale=5, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="X", type="float", precision=15, scale=5, nullable=true)
+     * @Assert\Type(type="float")
      */
-    private $x = 'NULL';
+    private $x;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="TXT", type="text", length=0, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="TXT", type="text", length=0, nullable=true)
      */
-    private $txt = 'NULL';
+    private $text;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="PseudoTrait", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="PseudoTrait", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $pseudotrait = 'NULL';
+    private $pseudotrait;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="Frequency", type="integer", nullable=false, options={"default"="5","unsigned"=true,"comment"="Frequency of occurrence; 1 = rare... 5 = common"})
+     * @ORM\Column(name="Frequency", type="integer", options={"default"="5","unsigned"=true,"comment"="Frequency of occurrence; 1 = rare... 5 = common"})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $frequency = '5';
+    private $frequency = 5;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Inherited", type="string", length=50, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Inherited", type="string", length=50, nullable=true)
+     * @Assert\Length(max=50)
      */
-    private $inherited = 'NULL';
+    private $inherited;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Source", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Source", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $source = 'NULL';
+    private $source;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="Seq", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Seq", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $seq = 'NULL';
+    private $sequence;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="Notes", type="text", length=0, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="Notes", type="text", length=0, nullable=true)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="InitialTimeStamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getCid(): ?int
+    public function getCharacterId(): ?int
     {
-        return $this->cid;
+        return $this->characterId;
     }
 
     public function getModifier(): ?string
@@ -129,9 +151,9 @@ class KeyDescriptions
         return $this;
     }
 
-    public function getCs(): ?string
+    public function getCharacterState(): ?string
     {
-        return $this->cs;
+        return $this->characterState;
     }
 
     public function getX(): ?float
@@ -146,14 +168,14 @@ class KeyDescriptions
         return $this;
     }
 
-    public function getTxt(): ?string
+    public function getText(): ?string
     {
-        return $this->txt;
+        return $this->text;
     }
 
-    public function setTxt(?string $txt): self
+    public function setText(?string $text): self
     {
-        $this->txt = $txt;
+        $this->text = $text;
 
         return $this;
     }
@@ -206,14 +228,14 @@ class KeyDescriptions
         return $this;
     }
 
-    public function getSeq(): ?int
+    public function getSequence(): ?int
     {
-        return $this->seq;
+        return $this->sequence;
     }
 
-    public function setSeq(?int $seq): self
+    public function setSequence(?int $sequence): self
     {
-        $this->seq = $seq;
+        $this->sequence = $sequence;
 
         return $this;
     }
@@ -230,26 +252,26 @@ class KeyDescriptions
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getTid(): ?Taxa
+    public function getTaxaId(): ?Taxa
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function setTid(?Taxa $tid): self
+    public function setTaxaId(?Taxa $taxaId): self
     {
-        $this->tid = $tid;
+        $this->taxaId = $taxaId;
 
         return $this;
     }

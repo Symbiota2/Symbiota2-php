@@ -2,89 +2,101 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * ImageTag
  *
  * @ORM\Table(name="imagetag", uniqueConstraints={@ORM\UniqueConstraint(name="imgid", columns={"imgid", "keyvalue"})}, indexes={@ORM\Index(name="keyvalue", columns={"keyvalue"}), @ORM\Index(name="FK_imagetag_imgid_idx", columns={"imgid"})})
  * @ORM\Entity(repositoryClass="App\Repository\ImageTagRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class ImageTag
+class ImageTag implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="imagetagid", type="bigint", nullable=false)
+     * @ORM\Column(name="imagetagid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $imagetagid;
+    private $id;
 
     /**
-     * @var \Images
+     * @var \App\Entity\Images
      *
-     * @ORM\ManyToOne(targetEntity="Images")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Images")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="imgid", referencedColumnName="imgid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $imgid;
+    private $imageId;
 
     /**
-     * @var \ImageTagKey
+     * @var \App\Entity\ImageTagKey
      *
-     * @ORM\ManyToOne(targetEntity="ImageTagKey")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\ImageTagKey")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="keyvalue", referencedColumnName="tagkey")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Length(max=30)
      */
-    private $keyvalue;
+    private $keyValue;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getImagetagid(): ?int
+    public function getId(): ?int
     {
-        return $this->imagetagid;
+        return $this->id;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getImgid(): ?Images
+    public function getImageId(): ?Images
     {
-        return $this->imgid;
+        return $this->imageId;
     }
 
-    public function setImgid(?Images $imgid): self
+    public function setImageId(?Images $imageId): self
     {
-        $this->imgid = $imgid;
+        $this->imageId = $imageId;
 
         return $this;
     }
 
-    public function getKeyvalue(): ?ImageTagKey
+    public function getKeyValue(): ?ImageTagKey
     {
-        return $this->keyvalue;
+        return $this->keyValue;
     }
 
-    public function setKeyvalue(?ImageTagKey $keyvalue): self
+    public function setKeyValue(?ImageTagKey $keyValue): self
     {
-        $this->keyvalue = $keyvalue;
+        $this->keyValue = $keyValue;
 
         return $this;
     }

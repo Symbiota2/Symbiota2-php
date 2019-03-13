@@ -2,125 +2,150 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * KeyCharacters
  *
  * @ORM\Table(name="kmcharacters", indexes={@ORM\Index(name="FK_charheading_idx", columns={"hid"}), @ORM\Index(name="Index_sort", columns={"sortsequence"}), @ORM\Index(name="Index_charname", columns={"charname"})})
  * @ORM\Entity(repositoryClass="App\Repository\KeyCharactersRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class KeyCharacters
+class KeyCharacters implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="cid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="cid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $cid;
+    private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="charname", type="string", length=150, nullable=false)
+     * @ORM\Column(name="charname", type="string", length=150)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=150)
      */
-    private $charname;
+    private $characterName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="chartype", type="string", length=2, nullable=false, options={"default"="UM"})
+     * @ORM\Column(name="chartype", type="string", length=2, options={"default"="UM"})
+     * @Assert\NotBlank()
+     * @Assert\Length(max=2)
      */
-    private $chartype = 'UM';
+    private $characterType = 'UM';
 
     /**
      * @var string
      *
-     * @ORM\Column(name="defaultlang", type="string", length=45, nullable=false, options={"default"="English"})
+     * @ORM\Column(name="defaultlang", type="string", length=45, options={"default"="English"})
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
-    private $defaultlang = 'English';
+    private $defaultLanguage = 'English';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="difficultyrank", type="smallint", nullable=false, options={"default"="1","unsigned"=true})
+     * @ORM\Column(name="difficultyrank", type="smallint", options={"default"="1","unsigned"=true})
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $difficultyrank = '1';
+    private $difficultyRank = 1;
 
     /**
-     * @var \KeyCharacterHeading
+     * @var \App\Entity\KeyCharacterHeading
      *
-     * @ORM\ManyToOne(targetEntity="KeyCharacterHeading")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\KeyCharacterHeading")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="hid", referencedColumnName="hid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $hid;
+    private $characterHeadingId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="units", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="units", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $units = 'NULL';
+    private $units;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $description = 'NULL';
+    private $description;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="helpurl", type="string", length=500, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="helpurl", type="string", length=500, nullable=true)
+     * @Assert\Length(max=500)
      */
-    private $helpurl = 'NULL';
+    private $helpUrl;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="enteredby", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="enteredby", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $enteredby = 'NULL';
+    private $enteredBy;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="sortsequence", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="sortsequence", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $sortsequence = 'NULL';
+    private $sortSequence;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="display", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="display", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $display = 'NULL';
+    private $display;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="LookupLanguages", inversedBy="cid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\LookupLanguages", inversedBy="characterId")
      * @ORM\JoinTable(name="kmcharacterlang",
      *   joinColumns={
      *     @ORM\JoinColumn(name="cid", referencedColumnName="cid")
@@ -130,73 +155,75 @@ class KeyCharacters
      *   }
      * )
      */
-    private $langid;
+    private $languageId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Taxa", mappedBy="cid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Taxa", mappedBy="characterId")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->langid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->tid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->languageId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->taxaId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getCid(): ?int
+    public function getId(): ?int
     {
-        return $this->cid;
+        return $this->id;
     }
 
-    public function getCharname(): ?string
+    public function getCharacterName(): ?string
     {
-        return $this->charname;
+        return $this->characterName;
     }
 
-    public function setCharname(string $charname): self
+    public function setCharacterName(string $characterName): self
     {
-        $this->charname = $charname;
+        $this->characterName = $characterName;
 
         return $this;
     }
 
-    public function getChartype(): ?string
+    public function getCharacterType(): ?string
     {
-        return $this->chartype;
+        return $this->characterType;
     }
 
-    public function setChartype(string $chartype): self
+    public function setCharacterType(string $characterType): self
     {
-        $this->chartype = $chartype;
+        $this->characterType = $characterType;
 
         return $this;
     }
 
-    public function getDefaultlang(): ?string
+    public function getDefaultLanguage(): ?string
     {
-        return $this->defaultlang;
+        return $this->defaultLanguage;
     }
 
-    public function setDefaultlang(string $defaultlang): self
+    public function setDefaultLanguage(string $defaultLanguage): self
     {
-        $this->defaultlang = $defaultlang;
+        $this->defaultLanguage = $defaultLanguage;
 
         return $this;
     }
 
-    public function getDifficultyrank(): ?int
+    public function getDifficultyRank(): ?int
     {
-        return $this->difficultyrank;
+        return $this->difficultyRank;
     }
 
-    public function setDifficultyrank(int $difficultyrank): self
+    public function setDifficultyRank(int $difficultyRank): self
     {
-        $this->difficultyrank = $difficultyrank;
+        $this->difficultyRank = $difficultyRank;
 
         return $this;
     }
@@ -237,50 +264,50 @@ class KeyCharacters
         return $this;
     }
 
-    public function getHelpurl(): ?string
+    public function getHelpUrl(): ?string
     {
-        return $this->helpurl;
+        return $this->helpUrl;
     }
 
-    public function setHelpurl(?string $helpurl): self
+    public function setHelpUrl(?string $helpUrl): self
     {
-        $this->helpurl = $helpurl;
+        $this->helpUrl = $helpUrl;
 
         return $this;
     }
 
-    public function getEnteredby(): ?string
+    public function getEnteredBy(): ?string
     {
-        return $this->enteredby;
+        return $this->enteredBy;
     }
 
-    public function setEnteredby(?string $enteredby): self
+    public function setEnteredBy(?string $enteredBy): self
     {
-        $this->enteredby = $enteredby;
+        $this->enteredBy = $enteredBy;
 
         return $this;
     }
 
-    public function getSortsequence(): ?int
+    public function getSortSequence(): ?int
     {
-        return $this->sortsequence;
+        return $this->sortSequence;
     }
 
-    public function setSortsequence(?int $sortsequence): self
+    public function setSortSequence(?int $sortSequence): self
     {
-        $this->sortsequence = $sortsequence;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
@@ -297,14 +324,14 @@ class KeyCharacters
         return $this;
     }
 
-    public function getHid(): ?KeyCharacterHeading
+    public function getCharacterHeadingId(): ?KeyCharacterHeading
     {
-        return $this->hid;
+        return $this->characterHeadingId;
     }
 
-    public function setHid(?KeyCharacterHeading $hid): self
+    public function setCharacterHeadingId(?KeyCharacterHeading $characterHeadingId): self
     {
-        $this->hid = $hid;
+        $this->characterHeadingId = $characterHeadingId;
 
         return $this;
     }
@@ -312,24 +339,24 @@ class KeyCharacters
     /**
      * @return Collection|LookupLanguages[]
      */
-    public function getLangid(): Collection
+    public function getLanguageId(): Collection
     {
-        return $this->langid;
+        return $this->languageId;
     }
 
-    public function addLangid(LookupLanguages $langid): self
+    public function addLanguageId(LookupLanguages $languageId): self
     {
-        if (!$this->langid->contains($langid)) {
-            $this->langid[] = $langid;
+        if (!$this->languageId->contains($languageId)) {
+            $this->languageId[] = $languageId;
         }
 
         return $this;
     }
 
-    public function removeLangid(LookupLanguages $langid): self
+    public function removeLanguageId(LookupLanguages $languageId): self
     {
-        if ($this->langid->contains($langid)) {
-            $this->langid->removeElement($langid);
+        if ($this->languageId->contains($languageId)) {
+            $this->languageId->removeElement($languageId);
         }
 
         return $this;
@@ -338,26 +365,26 @@ class KeyCharacters
     /**
      * @return Collection|Taxa[]
      */
-    public function getTid(): Collection
+    public function getTaxaId(): Collection
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function addTid(Taxa $tid): self
+    public function addTaxaId(Taxa $taxaId): self
     {
-        if (!$this->tid->contains($tid)) {
-            $this->tid[] = $tid;
-            $tid->addCid($this);
+        if (!$this->taxaId->contains($taxaId)) {
+            $this->taxaId[] = $taxaId;
+            $taxaId->addCharacterId($this);
         }
 
         return $this;
     }
 
-    public function removeTid(Taxa $tid): self
+    public function removeTaxaId(Taxa $taxaId): self
     {
-        if ($this->tid->contains($tid)) {
-            $this->tid->removeElement($tid);
-            $tid->removeCid($this);
+        if ($this->taxaId->contains($taxaId)) {
+            $this->taxaId->removeElement($taxaId);
+            $taxaId->removeCharacterId($this);
         }
 
         return $this;

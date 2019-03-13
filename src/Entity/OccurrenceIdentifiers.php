@@ -2,102 +2,119 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OccurrenceIdentifiers
  *
  * @ORM\Table(name="omoccuridentifiers", indexes={@ORM\Index(name="FK_omoccuridentifiers_occid_idx", columns={"occid"}), @ORM\Index(name="Index_value", columns={"identifiervalue"})})
  * @ORM\Entity(repositoryClass="App\Repository\OccurrenceIdentifiersRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class OccurrenceIdentifiers
+class OccurrenceIdentifiers implements ModifiedUserIdInterface, InitialTimestampInterface, ModifiedTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="idomoccuridentifiers", type="integer", nullable=false)
+     * @ORM\Column(name="idomoccuridentifiers", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $idomoccuridentifiers;
+    private $id;
 
     /**
-     * @var \Occurrences
+     * @var \App\Entity\Occurrences
      *
-     * @ORM\ManyToOne(targetEntity="Occurrences")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="identifiervalue", type="string", length=45, nullable=false)
+     * @ORM\Column(name="identifiervalue", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
-    private $identifiervalue;
+    private $identifierValue;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identifiername", type="string", length=45, nullable=true, options={"default"=NULL,"comment"="barcode, accession number, old catalog number, NPS, etc"})
+     * @ORM\Column(name="identifiername", type="string", length=45, nullable=true, options={"comment"="barcode, accession number, old catalog number, NPS, etc"})
+     * @Assert\Length(max=45)
      */
-    private $identifiername = 'NULL';
+    private $identifierName;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="modifiedUid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="modifiedUid", type="integer", options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $modifieduid;
+    private $modifiedUserId;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $modifiedtimestamp = 'NULL';
+    private $modifiedTimestamp;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getIdomoccuridentifiers(): ?int
+    public function getId(): ?int
     {
-        return $this->idomoccuridentifiers;
+        return $this->id;
     }
 
-    public function getIdentifiervalue(): ?string
+    public function getIdentifierValue(): ?string
     {
-        return $this->identifiervalue;
+        return $this->identifierValue;
     }
 
-    public function setIdentifiervalue(string $identifiervalue): self
+    public function setIdentifierValue(string $identifierValue): self
     {
-        $this->identifiervalue = $identifiervalue;
+        $this->identifierValue = $identifierValue;
 
         return $this;
     }
 
-    public function getIdentifiername(): ?string
+    public function getIdentifierName(): ?string
     {
-        return $this->identifiername;
+        return $this->identifierName;
     }
 
-    public function setIdentifiername(?string $identifiername): self
+    public function setIdentifierName(?string $identifierName): self
     {
-        $this->identifiername = $identifiername;
+        $this->identifierName = $identifierName;
 
         return $this;
     }
@@ -114,50 +131,57 @@ class OccurrenceIdentifiers
         return $this;
     }
 
-    public function getModifieduid(): ?int
+    /**
+     * @return int|null
+     */
+    public function getModifiedUserId(): ?int
     {
-        return $this->modifieduid;
+        return $this->modifiedUserId;
     }
 
-    public function setModifieduid(int $modifieduid): self
+    /**
+     * @param UserInterface $modifiedUserId
+     * @return ModifiedUserIdInterface
+     */
+    public function setModifiedUserId(UserInterface $modifiedUserId): ModifiedUserIdInterface
     {
-        $this->modifieduid = $modifieduid;
+        $this->modifiedUserId = $modifiedUserId;
 
         return $this;
     }
 
-    public function getModifiedtimestamp(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?\DateTimeInterface
     {
-        return $this->modifiedtimestamp;
+        return $this->modifiedTimestamp;
     }
 
-    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): self
+    public function setModifiedTimestamp(?\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
-        $this->modifiedtimestamp = $modifiedtimestamp;
+        $this->modifiedTimestamp = $modifiedTimestamp;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getOccid(): ?Occurrences
+    public function getOccurrenceId(): ?Occurrences
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function setOccid(?Occurrences $occid): self
+    public function setOccurrenceId(?Occurrences $occurrenceId): self
     {
-        $this->occid = $occid;
+        $this->occurrenceId = $occurrenceId;
 
         return $this;
     }

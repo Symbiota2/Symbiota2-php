@@ -31,11 +31,12 @@ class ChecklistProjectCategories implements InitialTimestampInterface
     /**
      * @var \App\Entity\ChecklistProjects
      *
-     * @ORM\ManyToOne(targetEntity="ChecklistProjects")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\ChecklistProjects")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="pid", referencedColumnName="pid")
      * })
      * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
     private $projectId;
 
@@ -108,6 +109,7 @@ class ChecklistProjectCategories implements InitialTimestampInterface
      * @var \DateTime|null
      *
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 

@@ -578,6 +578,7 @@ ALTER TABLE `media`
   DROP INDEX `FK_media_uid_idx`;
 
 ALTER TABLE `referenceobject`
+  CHANGE COLUMN `numbervolumnes` `numbervolumes` varchar(45) NULL DEFAULT NULL AFTER `volume`,
   DROP FOREIGN KEY `FK_refobj_parentrefid`,
   DROP FOREIGN KEY `FK_refobj_reftypeid`,
   DROP INDEX `FK_refobj_parentrefid_idx`,
@@ -728,5 +729,8 @@ UPDATE omcrowdsourcecentral c INNER JOIN omcrowdsourcequeue q ON c.omcsid = q.om
   INNER JOIN userroles r ON c.collid = r.tablepk AND q.uidprocessor = r.uid
   SET q.isvolunteer = 0
   WHERE r.role IN("CollAdmin","CollEditor") AND q.isvolunteer = 1;
+
+ALTER TABLE `schemaversion`
+  CHANGE COLUMN `dateapplied` `modifiedtimestamp` timestamp(0) NOT NULL DEFAULT current_timestamp AFTER `versionnumber`;
 
 INSERT INTO `schemaversion`(`versionnumber`) VALUES ('2.0');

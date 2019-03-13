@@ -2,101 +2,121 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * KeyCharacterStateLanguages
  *
  * @ORM\Table(name="kmcslang", indexes={@ORM\Index(name="FK_cslang_lang_idx", columns={"langid"})})
  * @ORM\Entity(repositoryClass="App\Repository\KeyCharacterStateLanguagesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class KeyCharacterStateLanguages
+class KeyCharacterStateLanguages implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="cid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="cid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $cid;
+    private $characterId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cs", type="string", length=16, nullable=false)
+     * @ORM\Column(name="cs", type="string", length=16)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
+     * @Assert\NotBlank()
+     * @Assert\Length(max=16)
      */
-    private $cs;
+    private $characterState;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="charstatename", type="string", length=150, nullable=false)
+     * @ORM\Column(name="charstatename", type="string", length=150)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=150)
      */
-    private $charstatename;
+    private $characterStateName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="language", type="string", length=45, nullable=false)
+     * @ORM\Column(name="language", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
     private $language;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="langid", type="integer", nullable=false)
+     * @ORM\Column(name="langid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $langid;
+    private $languageId;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="description", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $description = 'NULL';
+    private $description;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getCid(): ?int
+    public function getCharacterId(): ?int
     {
-        return $this->cid;
+        return $this->characterId;
     }
 
-    public function getCs(): ?string
+    public function getCharacterState(): ?string
     {
-        return $this->cs;
+        return $this->characterState;
     }
 
-    public function getLangid(): ?int
+    public function getLanguageId(): ?int
     {
-        return $this->langid;
+        return $this->languageId;
     }
 
-    public function getCharstatename(): ?string
+    public function getCharacterStateName(): ?string
     {
-        return $this->charstatename;
+        return $this->characterStateName;
     }
 
-    public function setCharstatename(string $charstatename): self
+    public function setCharacterStateName(string $characterStateName): self
     {
-        $this->charstatename = $charstatename;
+        $this->characterStateName = $characterStateName;
 
         return $this;
     }
@@ -137,14 +157,14 @@ class KeyCharacterStateLanguages
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }

@@ -2,86 +2,98 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * LookupCounties
  *
  * @ORM\Table(name="lkupcounty", uniqueConstraints={@ORM\UniqueConstraint(name="unique_county", columns={"stateId", "countyName"})}, indexes={@ORM\Index(name="index_countyname", columns={"countyName"}), @ORM\Index(name="fk_stateprovince_lkupcounty", columns={"stateId"})})
  * @ORM\Entity(repositoryClass="App\Repository\LookupCountiesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class LookupCounties
+class LookupCounties implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="countyId", type="integer", nullable=false)
+     * @ORM\Column(name="countyId", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $countyid;
+    private $id;
 
     /**
-     * @var \LookupStateProvinces
+     * @var \App\Entity\LookupStateProvinces
      *
-     * @ORM\ManyToOne(targetEntity="LookupStateProvinces")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\LookupStateProvinces")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="stateId", referencedColumnName="stateId")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $stateid;
+    private $stateProvinceId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="countyName", type="string", length=100, nullable=false)
+     * @ORM\Column(name="countyName", type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=100)
      */
-    private $countyname;
+    private $countyName;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getCountyid(): ?int
+    public function getId(): ?int
     {
-        return $this->countyid;
+        return $this->id;
     }
 
-    public function getCountyname(): ?string
+    public function getCountyName(): ?string
     {
-        return $this->countyname;
+        return $this->countyName;
     }
 
-    public function setCountyname(string $countyname): self
+    public function setCountyName(string $countyName): self
     {
-        $this->countyname = $countyname;
+        $this->countyName = $countyName;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getStateid(): ?LookupStateProvinces
+    public function getStateProvinceId(): ?LookupStateProvinces
     {
-        return $this->stateid;
+        return $this->stateProvinceId;
     }
 
-    public function setStateid(?LookupStateProvinces $stateid): self
+    public function setStateProvinceId(?LookupStateProvinces $stateProvinceId): self
     {
-        $this->stateid = $stateid;
+        $this->stateProvinceId = $stateProvinceId;
 
         return $this;
     }

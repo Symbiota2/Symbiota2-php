@@ -2,355 +2,383 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * OccurrenceDeterminations
  *
  * @ORM\Table(name="omoccurdeterminations", uniqueConstraints={@ORM\UniqueConstraint(name="Index_unique_omoccurdeterminations", columns={"occid", "dateIdentified", "identifiedBy", "sciname"})}, indexes={@ORM\Index(name="FK_omoccurdets_tid", columns={"tidinterpreted"}), @ORM\Index(name="Index_dateIdentInterpreted", columns={"dateIdentifiedInterpreted"}), @ORM\Index(name="IDX_CA5B5A7F40A24FBA", columns={"occid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OccurrenceDeterminationsRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class OccurrenceDeterminations
+class OccurrenceDeterminations implements InitialTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="detid", type="integer", nullable=false, options={"unsigned"=true})
+     * @ORM\Column(name="detid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $detid;
+    private $id;
 
     /**
-     * @var \Occurrences
+     * @var \App\Entity\Occurrences
      *
-     * @ORM\ManyToOne(targetEntity="Occurrences")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
+     * @Assert\NotBlank()
+     * @Assert\Type(type="integer")
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="identifiedBy", type="string", length=60, nullable=false)
+     * @ORM\Column(name="identifiedBy", type="string", length=60)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=60)
      */
-    private $identifiedby;
+    private $identifiedBy;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="dateIdentified", type="string", length=45, nullable=false)
+     * @ORM\Column(name="dateIdentified", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=45)
      */
-    private $dateidentified;
+    private $dateIdentified;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="dateIdentifiedInterpreted", type="date", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="dateIdentifiedInterpreted", type="date", nullable=true)
+     * @Assert\Date
      */
-    private $dateidentifiedinterpreted = 'NULL';
+    private $dateIdentifiedInterpreted;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="sciname", type="string", length=100, nullable=false)
+     * @ORM\Column(name="sciname", type="string", length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=100)
      */
-    private $sciname;
+    private $scientificName;
 
     /**
-     * @var \Taxa
+     * @var \App\Entity\Taxa
      *
-     * @ORM\ManyToOne(targetEntity="Taxa")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tidinterpreted", referencedColumnName="TID")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $tidinterpreted;
+    private $taxaIdInterpreted;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="scientificNameAuthorship", type="string", length=100, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="scientificNameAuthorship", type="string", length=100, nullable=true)
+     * @Assert\Length(max=100)
      */
-    private $scientificnameauthorship = 'NULL';
+    private $scientificNameAuthorship;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identificationQualifier", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="identificationQualifier", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $identificationqualifier = 'NULL';
+    private $identificationQualifier;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="iscurrent", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="iscurrent", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $iscurrent = 'NULL';
+    private $isCurrent;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="printqueue", type="integer", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="printqueue", type="integer", nullable=true)
+     * @Assert\Type(type="integer")
      */
-    private $printqueue = 'NULL';
+    private $printQueue;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="appliedStatus", type="integer", nullable=true, options={"default"="1"})
+     * @Assert\Type(type="integer")
      */
-    private $appliedstatus = '1';
+    private $appliedStatus = 1;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="detType", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="detType", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $dettype = 'NULL';
+    private $determinationType;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identificationReferences", type="string", length=255, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="identificationReferences", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
-    private $identificationreferences = 'NULL';
+    private $identificationReferences;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="identificationRemarks", type="string", length=500, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="identificationRemarks", type="string", length=500, nullable=true)
+     * @Assert\Length(max=500)
      */
-    private $identificationremarks = 'NULL';
+    private $identificationRemarks;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="sourceIdentifier", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="sourceIdentifier", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $sourceidentifier = 'NULL';
+    private $sourceIdentifier;
 
     /**
      * @var int|null
      *
      * @ORM\Column(name="sortsequence", type="integer", nullable=true, options={"default"="10","unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $sortsequence = '10';
+    private $sortSequence = 10;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
-    public function getDetid(): ?int
+    public function getId(): ?int
     {
-        return $this->detid;
+        return $this->id;
     }
 
-    public function getIdentifiedby(): ?string
+    public function getIdentifiedBy(): ?string
     {
-        return $this->identifiedby;
+        return $this->identifiedBy;
     }
 
-    public function setIdentifiedby(string $identifiedby): self
+    public function setIdentifiedBy(string $identifiedBy): self
     {
-        $this->identifiedby = $identifiedby;
+        $this->identifiedBy = $identifiedBy;
 
         return $this;
     }
 
-    public function getDateidentified(): ?string
+    public function getDateIdentified(): ?string
     {
-        return $this->dateidentified;
+        return $this->dateIdentified;
     }
 
-    public function setDateidentified(string $dateidentified): self
+    public function setDateIdentified(string $dateIdentified): self
     {
-        $this->dateidentified = $dateidentified;
+        $this->dateIdentified = $dateIdentified;
 
         return $this;
     }
 
-    public function getDateidentifiedinterpreted(): ?\DateTimeInterface
+    public function getDateIdentifiedInterpreted(): ?\DateTimeInterface
     {
-        return $this->dateidentifiedinterpreted;
+        return $this->dateIdentifiedInterpreted;
     }
 
-    public function setDateidentifiedinterpreted(?\DateTimeInterface $dateidentifiedinterpreted): self
+    public function setDateIdentifiedInterpreted(?\DateTimeInterface $dateIdentifiedInterpreted): self
     {
-        $this->dateidentifiedinterpreted = $dateidentifiedinterpreted;
+        $this->dateIdentifiedInterpreted = $dateIdentifiedInterpreted;
 
         return $this;
     }
 
-    public function getSciname(): ?string
+    public function getScientificName(): ?string
     {
-        return $this->sciname;
+        return $this->scientificName;
     }
 
-    public function setSciname(string $sciname): self
+    public function setScientificName(string $scientificName): self
     {
-        $this->sciname = $sciname;
+        $this->scientificName = $scientificName;
 
         return $this;
     }
 
-    public function getScientificnameauthorship(): ?string
+    public function getScientificNameAuthorship(): ?string
     {
-        return $this->scientificnameauthorship;
+        return $this->scientificNameAuthorship;
     }
 
-    public function setScientificnameauthorship(?string $scientificnameauthorship): self
+    public function setScientificNameAuthorship(?string $scientificNameAuthorship): self
     {
-        $this->scientificnameauthorship = $scientificnameauthorship;
+        $this->scientificNameAuthorship = $scientificNameAuthorship;
 
         return $this;
     }
 
-    public function getIdentificationqualifier(): ?string
+    public function getIdentificationQualifier(): ?string
     {
-        return $this->identificationqualifier;
+        return $this->identificationQualifier;
     }
 
-    public function setIdentificationqualifier(?string $identificationqualifier): self
+    public function setIdentificationQualifier(?string $identificationQualifier): self
     {
-        $this->identificationqualifier = $identificationqualifier;
+        $this->identificationQualifier = $identificationQualifier;
 
         return $this;
     }
 
-    public function getIscurrent(): ?int
+    public function getIsCurrent(): ?int
     {
-        return $this->iscurrent;
+        return $this->isCurrent;
     }
 
-    public function setIscurrent(?int $iscurrent): self
+    public function setIsCurrent(?int $isCurrent): self
     {
-        $this->iscurrent = $iscurrent;
+        $this->isCurrent = $isCurrent;
 
         return $this;
     }
 
-    public function getPrintqueue(): ?int
+    public function getPrintQueue(): ?int
     {
-        return $this->printqueue;
+        return $this->printQueue;
     }
 
-    public function setPrintqueue(?int $printqueue): self
+    public function setPrintQueue(?int $printQueue): self
     {
-        $this->printqueue = $printqueue;
+        $this->printQueue = $printQueue;
 
         return $this;
     }
 
-    public function getAppliedstatus(): ?int
+    public function getAppliedStatus(): ?int
     {
-        return $this->appliedstatus;
+        return $this->appliedStatus;
     }
 
-    public function setAppliedstatus(?int $appliedstatus): self
+    public function setAppliedStatus(?int $appliedStatus): self
     {
-        $this->appliedstatus = $appliedstatus;
+        $this->appliedStatus = $appliedStatus;
 
         return $this;
     }
 
-    public function getDettype(): ?string
+    public function getDeterminationType(): ?string
     {
-        return $this->dettype;
+        return $this->determinationType;
     }
 
-    public function setDettype(?string $dettype): self
+    public function setDeterminationType(?string $determinationType): self
     {
-        $this->dettype = $dettype;
+        $this->determinationType = $determinationType;
 
         return $this;
     }
 
-    public function getIdentificationreferences(): ?string
+    public function getIdentificationReferences(): ?string
     {
-        return $this->identificationreferences;
+        return $this->identificationReferences;
     }
 
-    public function setIdentificationreferences(?string $identificationreferences): self
+    public function setIdentificationReferences(?string $identificationReferences): self
     {
-        $this->identificationreferences = $identificationreferences;
+        $this->identificationReferences = $identificationReferences;
 
         return $this;
     }
 
-    public function getIdentificationremarks(): ?string
+    public function getIdentificationRemarks(): ?string
     {
-        return $this->identificationremarks;
+        return $this->identificationRemarks;
     }
 
-    public function setIdentificationremarks(?string $identificationremarks): self
+    public function setIdentificationRemarks(?string $identificationRemarks): self
     {
-        $this->identificationremarks = $identificationremarks;
+        $this->identificationRemarks = $identificationRemarks;
 
         return $this;
     }
 
-    public function getSourceidentifier(): ?string
+    public function getSourceIdentifier(): ?string
     {
-        return $this->sourceidentifier;
+        return $this->sourceIdentifier;
     }
 
-    public function setSourceidentifier(?string $sourceidentifier): self
+    public function setSourceIdentifier(?string $sourceIdentifier): self
     {
-        $this->sourceidentifier = $sourceidentifier;
+        $this->sourceIdentifier = $sourceIdentifier;
 
         return $this;
     }
 
-    public function getSortsequence(): ?int
+    public function getSortSequence(): ?int
     {
-        return $this->sortsequence;
+        return $this->sortSequence;
     }
 
-    public function setSortsequence(?int $sortsequence): self
+    public function setSortSequence(?int $sortSequence): self
     {
-        $this->sortsequence = $sortsequence;
+        $this->sortSequence = $sortSequence;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getOccid(): ?Occurrences
+    public function getOccurrenceId(): ?Occurrences
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function setOccid(?Occurrences $occid): self
+    public function setOccurrenceId(?Occurrences $occurrenceId): self
     {
-        $this->occid = $occid;
+        $this->occurrenceId = $occurrenceId;
 
         return $this;
     }
 
-    public function getTidinterpreted(): ?Taxa
+    public function getTaxaIdInterpreted(): ?Taxa
     {
-        return $this->tidinterpreted;
+        return $this->taxaIdInterpreted;
     }
 
-    public function setTidinterpreted(?Taxa $tidinterpreted): self
+    public function setTaxaIdInterpreted(?Taxa $taxaIdInterpreted): self
     {
-        $this->tidinterpreted = $tidinterpreted;
+        $this->taxaIdInterpreted = $taxaIdInterpreted;
 
         return $this;
     }

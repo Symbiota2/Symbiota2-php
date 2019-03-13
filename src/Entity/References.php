@@ -2,233 +2,270 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * References
  *
  * @ORM\Table(name="referenceobject", indexes={@ORM\Index(name="FK_refobj_typeid_idx", columns={"ReferenceTypeId"}), @ORM\Index(name="FK_refobj_parentrefid_idx", columns={"parentRefId"}), @ORM\Index(name="INDEX_refobj_title", columns={"title"})})
  * @ORM\Entity(repositoryClass="App\Repository\ReferencesRepository")
+ * @ApiResource(
+ *     itemOperations={"get"},
+ *     collectionOperations={"get"}
+ * )
  */
-class References
+class References implements ModifiedUserIdInterface, InitialTimestampInterface, ModifiedTimestampInterface
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="refid", type="integer", nullable=false)
+     * @ORM\Column(name="refid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $refid;
+    private $id;
 
     /**
-     * @var \References
+     * @var \App\Entity\References
      *
-     * @ORM\ManyToOne(targetEntity="References")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\References")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parentRefId", referencedColumnName="refid")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $parentrefid;
+    private $parentReferenceId;
 
     /**
-     * @var \LookupReferenceTypes
+     * @var \App\Entity\LookupReferenceTypes
      *
-     * @ORM\ManyToOne(targetEntity="LookupReferenceTypes")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\LookupReferenceTypes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ReferenceTypeId", referencedColumnName="ReferenceTypeId")
      * })
+     * @Assert\Type(type="integer")
      */
-    private $referencetypeid;
+    private $referenceTypeId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=150, nullable=false)
+     * @ORM\Column(name="title", type="string", length=150)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=150)
      */
     private $title;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="secondarytitle", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="secondarytitle", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $secondarytitle = 'NULL';
+    private $secondaryTitle;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="shorttitle", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="shorttitle", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $shorttitle = 'NULL';
+    private $shortTitle;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="tertiarytitle", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="tertiarytitle", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $tertiarytitle = 'NULL';
+    private $tertiaryTitle;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="alternativetitle", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="alternativetitle", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $alternativetitle = 'NULL';
+    private $alternativeTitle;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="typework", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="typework", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $typework = 'NULL';
+    private $typeWork;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="figures", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="figures", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $figures = 'NULL';
+    private $figures;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="pubdate", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="pubdate", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $pubdate = 'NULL';
+    private $datePublished;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="edition", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="edition", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $edition = 'NULL';
+    private $edition;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="volume", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="volume", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $volume = 'NULL';
+    private $volume;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="numbervolumnes", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="numbervolumes", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $numbervolumnes = 'NULL';
+    private $numberOfVolumes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="number", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="number", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $number = 'NULL';
+    private $number;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="pages", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="pages", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $pages = 'NULL';
+    private $pages;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="section", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="section", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $section = 'NULL';
+    private $section;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="placeofpublication", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="placeofpublication", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $placeofpublication = 'NULL';
+    private $placeOfPublication;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="publisher", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="publisher", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $publisher = 'NULL';
+    private $publisher;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="isbn_issn", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="isbn_issn", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $isbnIssn = 'NULL';
+    private $isbnIssn;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="url", type="string", length=150, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="url", type="string", length=150, nullable=true)
+     * @Assert\Length(max=150)
      */
-    private $url = 'NULL';
+    private $url;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="guid", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="guid", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $guid = 'NULL';
+    private $guid;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="ispublished", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="ispublished", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $ispublished = 'NULL';
+    private $isPublished;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="notes", type="string", length=45, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="notes", type="string", length=45, nullable=true)
+     * @Assert\Length(max=45)
      */
-    private $notes = 'NULL';
+    private $notes;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="cheatauthors", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="cheatauthors", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $cheatauthors = 'NULL';
+    private $cheatAuthors;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="cheatcitation", type="string", length=250, nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="cheatcitation", type="string", length=250, nullable=true)
+     * @Assert\Length(max=250)
      */
-    private $cheatcitation = 'NULL';
+    private $cheatCitation;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="modifieduid", type="integer", nullable=true, options={"default"=NULL,"unsigned"=true})
+     * @ORM\Column(name="modifieduid", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
      */
-    private $modifieduid = 'NULL';
+    private $modifiedUserId;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true, options={"default"=NULL})
+     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true)
+     * @Assert\DateTime
      */
-    private $modifiedtimestamp = 'NULL';
+    private $modifiedTimestamp;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @Assert\DateTime
      */
-    private $initialtimestamp = 'CURRENT_TIMESTAMP';
+    private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="ReferenceAuthors", inversedBy="refid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\ReferenceAuthors", inversedBy="referenceId")
      * @ORM\JoinTable(name="referenceauthorlink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="refid", referencedColumnName="refid")
@@ -238,12 +275,12 @@ class References
      *   }
      * )
      */
-    private $refauthid;
+    private $referenceAuthorId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Checklists", inversedBy="refid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Checklists", inversedBy="referenceId")
      * @ORM\JoinTable(name="referencechecklistlink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="refid", referencedColumnName="refid")
@@ -253,12 +290,12 @@ class References
      *   }
      * )
      */
-    private $clid;
+    private $checklistId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Collections", inversedBy="refid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Collections", inversedBy="referenceId")
      * @ORM\JoinTable(name="referencecollectionlink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="refid", referencedColumnName="refid")
@@ -273,7 +310,7 @@ class References
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Occurrences", inversedBy="refid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Occurrences", inversedBy="referenceId")
      * @ORM\JoinTable(name="referenceoccurlink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="refid", referencedColumnName="refid")
@@ -283,12 +320,12 @@ class References
      *   }
      * )
      */
-    private $occid;
+    private $occurrenceId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Taxa", inversedBy="refid")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Taxa", inversedBy="referenceId")
      * @ORM\JoinTable(name="referencetaxalink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="refid", referencedColumnName="refid")
@@ -298,23 +335,23 @@ class References
      *   }
      * )
      */
-    private $tid;
+    private $taxaId;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->refauthid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->clid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->referenceAuthorId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->checklistId = new \Doctrine\Common\Collections\ArrayCollection();
         $this->collectionId = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->occid = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->tid = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->occurrenceId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->taxaId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    public function getRefid(): ?int
+    public function getId(): ?int
     {
-        return $this->refid;
+        return $this->id;
     }
 
     public function getTitle(): ?string
@@ -329,62 +366,62 @@ class References
         return $this;
     }
 
-    public function getSecondarytitle(): ?string
+    public function getSecondaryTitle(): ?string
     {
-        return $this->secondarytitle;
+        return $this->secondaryTitle;
     }
 
-    public function setSecondarytitle(?string $secondarytitle): self
+    public function setSecondaryTitle(?string $secondaryTitle): self
     {
-        $this->secondarytitle = $secondarytitle;
+        $this->secondaryTitle = $secondaryTitle;
 
         return $this;
     }
 
-    public function getShorttitle(): ?string
+    public function getShortTitle(): ?string
     {
-        return $this->shorttitle;
+        return $this->shortTitle;
     }
 
-    public function setShorttitle(?string $shorttitle): self
+    public function setShortTitle(?string $shortTitle): self
     {
-        $this->shorttitle = $shorttitle;
+        $this->shortTitle = $shortTitle;
 
         return $this;
     }
 
-    public function getTertiarytitle(): ?string
+    public function getTertiaryTitle(): ?string
     {
-        return $this->tertiarytitle;
+        return $this->tertiaryTitle;
     }
 
-    public function setTertiarytitle(?string $tertiarytitle): self
+    public function setTertiaryTitle(?string $tertiaryTitle): self
     {
-        $this->tertiarytitle = $tertiarytitle;
+        $this->tertiaryTitle = $tertiaryTitle;
 
         return $this;
     }
 
-    public function getAlternativetitle(): ?string
+    public function getAlternativeTitle(): ?string
     {
-        return $this->alternativetitle;
+        return $this->alternativeTitle;
     }
 
-    public function setAlternativetitle(?string $alternativetitle): self
+    public function setAlternativeTitle(?string $alternativeTitle): self
     {
-        $this->alternativetitle = $alternativetitle;
+        $this->alternativeTitle = $alternativeTitle;
 
         return $this;
     }
 
-    public function getTypework(): ?string
+    public function getTypeWork(): ?string
     {
-        return $this->typework;
+        return $this->typeWork;
     }
 
-    public function setTypework(?string $typework): self
+    public function setTypeWork(?string $typeWork): self
     {
-        $this->typework = $typework;
+        $this->typeWork = $typeWork;
 
         return $this;
     }
@@ -401,14 +438,14 @@ class References
         return $this;
     }
 
-    public function getPubdate(): ?string
+    public function getDatePublished(): ?string
     {
-        return $this->pubdate;
+        return $this->datePublished;
     }
 
-    public function setPubdate(?string $pubdate): self
+    public function setDatePublished(?string $datePublished): self
     {
-        $this->pubdate = $pubdate;
+        $this->datePublished = $datePublished;
 
         return $this;
     }
@@ -437,14 +474,14 @@ class References
         return $this;
     }
 
-    public function getNumbervolumnes(): ?string
+    public function getNumberOfVolumes(): ?string
     {
-        return $this->numbervolumnes;
+        return $this->numberOfVolumes;
     }
 
-    public function setNumbervolumnes(?string $numbervolumnes): self
+    public function setNumberOfVolumes(?string $numberOfVolumes): self
     {
-        $this->numbervolumnes = $numbervolumnes;
+        $this->numberOfVolumes = $numberOfVolumes;
 
         return $this;
     }
@@ -485,14 +522,14 @@ class References
         return $this;
     }
 
-    public function getPlaceofpublication(): ?string
+    public function getPlaceOfPublication(): ?string
     {
-        return $this->placeofpublication;
+        return $this->placeOfPublication;
     }
 
-    public function setPlaceofpublication(?string $placeofpublication): self
+    public function setPlaceOfPublication(?string $placeOfPublication): self
     {
-        $this->placeofpublication = $placeofpublication;
+        $this->placeOfPublication = $placeOfPublication;
 
         return $this;
     }
@@ -545,14 +582,14 @@ class References
         return $this;
     }
 
-    public function getIspublished(): ?string
+    public function getIsPublished(): ?string
     {
-        return $this->ispublished;
+        return $this->isPublished;
     }
 
-    public function setIspublished(?string $ispublished): self
+    public function setIsPublished(?string $isPublished): self
     {
-        $this->ispublished = $ispublished;
+        $this->isPublished = $isPublished;
 
         return $this;
     }
@@ -569,86 +606,93 @@ class References
         return $this;
     }
 
-    public function getCheatauthors(): ?string
+    public function getCheatAuthors(): ?string
     {
-        return $this->cheatauthors;
+        return $this->cheatAuthors;
     }
 
-    public function setCheatauthors(?string $cheatauthors): self
+    public function setCheatAuthors(?string $cheatAuthors): self
     {
-        $this->cheatauthors = $cheatauthors;
+        $this->cheatAuthors = $cheatAuthors;
 
         return $this;
     }
 
-    public function getCheatcitation(): ?string
+    public function getCheatCitation(): ?string
     {
-        return $this->cheatcitation;
+        return $this->cheatCitation;
     }
 
-    public function setCheatcitation(?string $cheatcitation): self
+    public function setCheatCitation(?string $cheatCitation): self
     {
-        $this->cheatcitation = $cheatcitation;
+        $this->cheatCitation = $cheatCitation;
 
         return $this;
     }
 
-    public function getModifieduid(): ?int
+    /**
+     * @return int|null
+     */
+    public function getModifiedUserId(): ?int
     {
-        return $this->modifieduid;
+        return $this->modifiedUserId;
     }
 
-    public function setModifieduid(?int $modifieduid): self
+    /**
+     * @param UserInterface $modifiedUserId
+     * @return ModifiedUserIdInterface
+     */
+    public function setModifiedUserId(UserInterface $modifiedUserId): ModifiedUserIdInterface
     {
-        $this->modifieduid = $modifieduid;
+        $this->modifiedUserId = $modifiedUserId;
 
         return $this;
     }
 
-    public function getModifiedtimestamp(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?\DateTimeInterface
     {
-        return $this->modifiedtimestamp;
+        return $this->modifiedTimestamp;
     }
 
-    public function setModifiedtimestamp(?\DateTimeInterface $modifiedtimestamp): self
+    public function setModifiedTimestamp(?\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
-        $this->modifiedtimestamp = $modifiedtimestamp;
+        $this->modifiedTimestamp = $modifiedTimestamp;
 
         return $this;
     }
 
-    public function getInitialtimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?\DateTimeInterface
     {
-        return $this->initialtimestamp;
+        return $this->initialTimestamp;
     }
 
-    public function setInitialtimestamp(\DateTimeInterface $initialtimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
-        $this->initialtimestamp = $initialtimestamp;
+        $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getReferencetypeid(): ?LookupReferenceTypes
+    public function getReferenceTypeId(): ?LookupReferenceTypes
     {
-        return $this->referencetypeid;
+        return $this->referenceTypeId;
     }
 
-    public function setReferencetypeid(?LookupReferenceTypes $referencetypeid): self
+    public function setReferenceTypeId(?LookupReferenceTypes $referenceTypeId): self
     {
-        $this->referencetypeid = $referencetypeid;
+        $this->referenceTypeId = $referenceTypeId;
 
         return $this;
     }
 
-    public function getParentrefid(): ?self
+    public function getParentReferenceId(): ?self
     {
-        return $this->parentrefid;
+        return $this->parentReferenceId;
     }
 
-    public function setParentrefid(?self $parentrefid): self
+    public function setParentReferenceId(?self $parentReferenceId): self
     {
-        $this->parentrefid = $parentrefid;
+        $this->parentReferenceId = $parentReferenceId;
 
         return $this;
     }
@@ -656,24 +700,24 @@ class References
     /**
      * @return Collection|ReferenceAuthors[]
      */
-    public function getRefauthid(): Collection
+    public function getReferenceAuthorId(): Collection
     {
-        return $this->refauthid;
+        return $this->referenceAuthorId;
     }
 
-    public function addRefauthid(ReferenceAuthors $refauthid): self
+    public function addReferenceAuthorId(ReferenceAuthors $referenceAuthorId): self
     {
-        if (!$this->refauthid->contains($refauthid)) {
-            $this->refauthid[] = $refauthid;
+        if (!$this->referenceAuthorId->contains($referenceAuthorId)) {
+            $this->referenceAuthorId[] = $referenceAuthorId;
         }
 
         return $this;
     }
 
-    public function removeRefauthid(ReferenceAuthors $refauthid): self
+    public function removeReferenceAuthorId(ReferenceAuthors $referenceAuthorId): self
     {
-        if ($this->refauthid->contains($refauthid)) {
-            $this->refauthid->removeElement($refauthid);
+        if ($this->referenceAuthorId->contains($referenceAuthorId)) {
+            $this->referenceAuthorId->removeElement($referenceAuthorId);
         }
 
         return $this;
@@ -682,24 +726,24 @@ class References
     /**
      * @return Collection|Checklists[]
      */
-    public function getClid(): Collection
+    public function getChecklistId(): Collection
     {
-        return $this->clid;
+        return $this->checklistId;
     }
 
-    public function addClid(Checklists $clid): self
+    public function addChecklistId(Checklists $checklistId): self
     {
-        if (!$this->clid->contains($clid)) {
-            $this->clid[] = $clid;
+        if (!$this->checklistId->contains($checklistId)) {
+            $this->checklistId[] = $checklistId;
         }
 
         return $this;
     }
 
-    public function removeClid(Checklists $clid): self
+    public function removeChecklistId(Checklists $checklistId): self
     {
-        if ($this->clid->contains($clid)) {
-            $this->clid->removeElement($clid);
+        if ($this->checklistId->contains($checklistId)) {
+            $this->checklistId->removeElement($checklistId);
         }
 
         return $this;
@@ -734,24 +778,24 @@ class References
     /**
      * @return Collection|Occurrences[]
      */
-    public function getOccid(): Collection
+    public function getOccurrenceId(): Collection
     {
-        return $this->occid;
+        return $this->occurrenceId;
     }
 
-    public function addOccid(Occurrences $occid): self
+    public function addOccurrenceId(Occurrences $occurrenceId): self
     {
-        if (!$this->occid->contains($occid)) {
-            $this->occid[] = $occid;
+        if (!$this->occurrenceId->contains($occurrenceId)) {
+            $this->occurrenceId[] = $occurrenceId;
         }
 
         return $this;
     }
 
-    public function removeOccid(Occurrences $occid): self
+    public function removeOccurrenceId(Occurrences $occurrenceId): self
     {
-        if ($this->occid->contains($occid)) {
-            $this->occid->removeElement($occid);
+        if ($this->occurrenceId->contains($occurrenceId)) {
+            $this->occurrenceId->removeElement($occurrenceId);
         }
 
         return $this;
@@ -760,24 +804,24 @@ class References
     /**
      * @return Collection|Taxa[]
      */
-    public function getTid(): Collection
+    public function getTaxaId(): Collection
     {
-        return $this->tid;
+        return $this->taxaId;
     }
 
-    public function addTid(Taxa $tid): self
+    public function addTaxaId(Taxa $taxaId): self
     {
-        if (!$this->tid->contains($tid)) {
-            $this->tid[] = $tid;
+        if (!$this->taxaId->contains($taxaId)) {
+            $this->taxaId[] = $taxaId;
         }
 
         return $this;
     }
 
-    public function removeTid(Taxa $tid): self
+    public function removeTaxaId(Taxa $taxaId): self
     {
-        if ($this->tid->contains($tid)) {
-            $this->tid->removeElement($tid);
+        if ($this->taxaId->contains($taxaId)) {
+            $this->taxaId->removeElement($taxaId);
         }
 
         return $this;
