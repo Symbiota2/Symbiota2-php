@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -49,6 +50,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @Groups({"get", "get-checklist-info"})
+     * @ApiProperty(iri="http://schema.org/identifier")
      */
     private $id;
 
@@ -59,6 +61,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @Assert\NotBlank()
      * @Assert\Length(max=100)
      * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @ApiProperty(iri="http://schema.org/name")
      */
     private $name;
 
@@ -68,6 +71,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @ORM\Column(name="Title", type="string", length=150, nullable=true)
      * @Assert\Length(max=150)
      * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @ApiProperty(iri="http://purl.org/dc/terms/title")
      */
     private $title;
 
@@ -77,6 +81,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @ORM\Column(name="Locality", type="string", length=500, nullable=true)
      * @Assert\Length(max=500)
      * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @ApiProperty(iri="http://dbpedia.org/ontology/Locality")
      */
     private $locality;
 
@@ -86,6 +91,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @ORM\Column(name="Publication", type="string", length=500, nullable=true)
      * @Assert\Length(max=500)
      * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @ApiProperty(iri="http://schema.org/publication")
      */
     private $publication;
 
@@ -95,6 +101,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @ORM\Column(name="Abstract", type="text", length=65535, nullable=true)
      * @Assert\Length(max=65535)
      * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @ApiProperty(iri="http://purl.org/dc/terms/description")
      */
     private $abstract;
 
@@ -104,6 +111,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @ORM\Column(name="Authors", type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
      * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @ApiProperty(iri="http://www.aktors.org/ontology/portal#has-author")
      */
     private $authors;
 
