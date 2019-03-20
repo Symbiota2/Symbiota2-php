@@ -48,7 +48,7 @@ class CurrentUserSubscriber implements EventSubscriberInterface
         }
 
         if($entity instanceof CreatedUserIdInterface && Request::METHOD_POST === $method) {
-            $entity->setCreateduid($user);
+            $entity->setCreatedUserId($user);
         }
 
         if($entity instanceof UserIdAssignedByInterface) {
