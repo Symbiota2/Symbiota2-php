@@ -20,7 +20,8 @@ final class EntityPathSegmentNameGenerator implements PathSegmentNameGeneratorIn
     {
         //$name = $this->dashize($name);
 
-        return $collection ? $name : $name;
+        //return $collection ? $name : $name;
+        return strtolower($name);
     }
 
     /* Left this in to easily customize with existing example */
