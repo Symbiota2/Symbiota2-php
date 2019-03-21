@@ -20,21 +20,23 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ChecklistVouchers implements InitialTimestampInterface
 {
     /**
-     * @var int|null
+     * @var \App\Entity\Taxa
      *
-     * @ORM\Column(name="TID", type="integer", nullable=true, options={"unsigned"=true})
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="TID", referencedColumnName="TID")
+     * })
      */
     private $taxaId;
 
     /**
-     * @var int
+     * @var \App\Entity\Checklists
      *
-     * @ORM\Column(name="CLID", type="integer", options={"unsigned"=true})
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Checklists")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="CLID", referencedColumnName="CLID")
+     * })
      */
     private $checklistId;
 
@@ -42,13 +44,10 @@ class ChecklistVouchers implements InitialTimestampInterface
      * @var \App\Entity\Occurrences
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="\App\Entity\Occurrences")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $occurrenceId;
 
@@ -84,7 +83,7 @@ class ChecklistVouchers implements InitialTimestampInterface
      */
     private $initialTimestamp;
 
-    public function getTaxaId(): ?int
+    public function getTaxaId(): ?Taxa
     {
         return $this->taxaId;
     }
@@ -96,7 +95,7 @@ class ChecklistVouchers implements InitialTimestampInterface
         return $this;
     }
 
-    public function getChecklistId(): ?int
+    public function getChecklistId(): ?Checklists
     {
         return $this->checklistId;
     }

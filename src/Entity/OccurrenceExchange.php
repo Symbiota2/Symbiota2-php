@@ -44,15 +44,16 @@ class OccurrenceExchange implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $collectionId;
 
     /**
-     * @var int|null
+     * @var \App\Entity\Institutions
      *
-     * @ORM\Column(name="iid", type="integer", nullable=true, options={"unsigned"=true})
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Institutions")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="iid", referencedColumnName="iid")
+     * })
      */
     private $institutionId;
 
@@ -209,12 +210,12 @@ class OccurrenceExchange implements InitialTimestampInterface
         return $this;
     }
 
-    public function getInstitutionId(): ?int
+    public function getInstitutionId(): ?Institutions
     {
         return $this->institutionId;
     }
 
-    public function setInstitutionId(?int $institutionId): self
+    public function setInstitutionId(?Institutions $institutionId): self
     {
         $this->institutionId = $institutionId;
 

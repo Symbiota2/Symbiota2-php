@@ -36,7 +36,6 @@ class TaxaConcepts implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $taxaId;
 
@@ -48,7 +47,6 @@ class TaxaConcepts implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="tidaccepted", referencedColumnName="TID")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $taxaIdAccepted;
 
@@ -60,7 +58,6 @@ class TaxaConcepts implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="taxauthid", referencedColumnName="taxauthid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $taxaAuthorityId;
 
@@ -71,7 +68,6 @@ class TaxaConcepts implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parenttid", referencedColumnName="TID")
      * })
-     * @Assert\Type(type="integer")
      */
     private $parentTaxaId;
 

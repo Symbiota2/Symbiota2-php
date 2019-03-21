@@ -152,10 +152,12 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
     private $parent;
 
     /**
-     * @var int|null
+     * @var \App\Entity\Checklists
      *
-     * @ORM\Column(name="parentclid", type="integer", nullable=true, options={"unsigned"=true})
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Checklists")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="parentclid", referencedColumnName="CLID")
+     * })
      * @Groups({"get", "get-checklist-info", "post", "put"})
      */
     private $parentChecklistId;
@@ -447,12 +449,12 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
         return $this;
     }
 
-    public function getParentChecklistId(): ?int
+    public function getParentChecklistId(): ?Checklists
     {
         return $this->parentChecklistId;
     }
 
-    public function setParentChecklistId(?int $parentChecklistId): self
+    public function setParentChecklistId(?Checklists $parentChecklistId): self
     {
         $this->parentChecklistId = $parentChecklistId;
 

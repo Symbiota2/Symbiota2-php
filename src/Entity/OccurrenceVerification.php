@@ -37,7 +37,6 @@ class OccurrenceVerification implements CreatedUserIdInterface, InitialTimestamp
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $occurrenceId;
 
@@ -82,7 +81,6 @@ class OccurrenceVerification implements CreatedUserIdInterface, InitialTimestamp
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $createdUserId;
 

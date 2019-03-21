@@ -36,7 +36,6 @@ class KeyCharacterStates implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="cid", referencedColumnName="cid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $characterId;
 

@@ -38,7 +38,6 @@ class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterfa
      *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $collectionId;
 
@@ -161,7 +160,6 @@ class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterfa
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
-     * @Assert\Type(type="integer")
      */
     private $taxaId;
 
@@ -796,7 +794,6 @@ class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterfa
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="observeruid", referencedColumnName="uid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $observerUserId;
 

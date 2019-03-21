@@ -37,7 +37,6 @@ class OccurrenceIdentifiers implements ModifiedUserIdInterface, InitialTimestamp
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $occurrenceId;
 
@@ -67,10 +66,12 @@ class OccurrenceIdentifiers implements ModifiedUserIdInterface, InitialTimestamp
     private $notes;
 
     /**
-     * @var int
+     * @var \App\Entity\Users
      *
-     * @ORM\Column(name="modifiedUid", type="integer", options={"unsigned"=true})
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="modifiedUid", referencedColumnName="uid")
+     * })
      */
     private $modifiedUserId;
 
@@ -131,10 +132,7 @@ class OccurrenceIdentifiers implements ModifiedUserIdInterface, InitialTimestamp
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getModifiedUserId(): ?int
+    public function getModifiedUserId(): ?Users
     {
         return $this->modifiedUserId;
     }

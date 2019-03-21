@@ -21,22 +21,24 @@ use Symfony\Component\Validator\Constraints as Assert;
 class OccurrenceEditLocks implements CreatedUserIdInterface, InitialTimestampInterface
 {
     /**
-     * @var int
+     * @var \App\Entity\Occurrences
      *
-     * @ORM\Column(name="occid", type="integer", options={"unsigned"=true})
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @ORM\OneToOne(targetEntity="\App\Entity\Occurrences")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     * })
      */
     private $occurrenceId;
 
     /**
-     * @var int
+     * @var \App\Entity\Users
      *
-     * @ORM\Column(name="createduid", type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
+     * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $createdUserId;
 
@@ -57,15 +59,19 @@ class OccurrenceEditLocks implements CreatedUserIdInterface, InitialTimestampInt
      */
     private $initialTimestamp;
 
-    public function getOccurrenceId(): ?int
+    public function getOccurrenceId(): ?Occurrences
     {
         return $this->occurrenceId;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getCreatedUserId(): ?int
+    public function setOccurrenceId(?Occurrences $occurrenceId): self
+    {
+        $this->occurrenceId = $occurrenceId;
+
+        return $this;
+    }
+
+    public function getCreatedUserId(): ?Users
     {
         return $this->createdUserId;
     }

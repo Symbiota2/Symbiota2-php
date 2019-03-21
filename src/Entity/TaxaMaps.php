@@ -38,7 +38,6 @@ class TaxaMaps implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $taxaId;
 

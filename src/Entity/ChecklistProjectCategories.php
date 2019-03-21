@@ -35,8 +35,6 @@ class ChecklistProjectCategories implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="pid", referencedColumnName="pid")
      * })
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $projectId;
 
@@ -66,10 +64,12 @@ class ChecklistProjectCategories implements InitialTimestampInterface
     private $description;
 
     /**
-     * @var int|null
+     * @var \App\Entity\ChecklistProjects
      *
-     * @ORM\Column(name="parentpid", type="integer", nullable=true)
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\ChecklistProjects")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="parentpid", referencedColumnName="pid")
+     * })
      */
     private $parentProjectId;
 
@@ -154,12 +154,12 @@ class ChecklistProjectCategories implements InitialTimestampInterface
         return $this;
     }
 
-    public function getParentProjectId(): ?int
+    public function getParentProjectId(): ?ChecklistProjects
     {
         return $this->parentProjectId;
     }
 
-    public function setParentProjectId(?int $parentProjectId): self
+    public function setParentProjectId(?ChecklistProjects $parentProjectId): self
     {
         $this->parentProjectId = $parentProjectId;
 

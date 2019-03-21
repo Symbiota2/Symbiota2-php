@@ -23,13 +23,10 @@ class OccurrenceGeoIndex implements InitialTimestampInterface
      * @var \App\Entity\Taxa
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $taxaId;
 
@@ -38,7 +35,6 @@ class OccurrenceGeoIndex implements InitialTimestampInterface
      *
      * @ORM\Column(name="decimallatitude", type="float", precision=10, scale=0)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @Assert\NotBlank()
      * @Assert\Type(type="float")
      */
@@ -49,7 +45,6 @@ class OccurrenceGeoIndex implements InitialTimestampInterface
      *
      * @ORM\Column(name="decimallongitude", type="float", precision=10, scale=0)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @Assert\NotBlank()
      * @Assert\Type(type="float")
      */

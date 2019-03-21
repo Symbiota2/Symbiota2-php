@@ -182,7 +182,6 @@ class Institutions implements ModifiedUserIdInterface, InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
      * })
-     * @Assert\Type(type="integer")
      * @Groups({"get"})
      */
     private $modifiedUserId;

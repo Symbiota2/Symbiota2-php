@@ -23,13 +23,10 @@ class CollectionStats implements InitialTimestampInterface, ModifiedTimestampInt
      * @var \App\Entity\Collections
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="\App\Entity\Collections")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
      * })
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $collectionId;
 

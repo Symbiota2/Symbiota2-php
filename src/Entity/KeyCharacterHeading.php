@@ -54,7 +54,6 @@ class KeyCharacterHeading implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="langid", referencedColumnName="langid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $languageId;
 

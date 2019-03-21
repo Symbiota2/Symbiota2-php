@@ -39,7 +39,6 @@ class TaxaDescriptionBlock implements CreatedUserIdInterface, InitialTimestampIn
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $taxaId;
 
@@ -82,7 +81,6 @@ class TaxaDescriptionBlock implements CreatedUserIdInterface, InitialTimestampIn
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="langid", referencedColumnName="langid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $languageId;
 
@@ -96,11 +94,12 @@ class TaxaDescriptionBlock implements CreatedUserIdInterface, InitialTimestampIn
     private $displayLevel = 1;
 
     /**
-     * @var int
+     * @var \App\Entity\Users
      *
-     * @ORM\Column(name="createduid", type="integer", options={"unsigned"=true})
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
+     * })
      */
     private $createdUserId;
 
@@ -193,10 +192,7 @@ class TaxaDescriptionBlock implements CreatedUserIdInterface, InitialTimestampIn
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getCreatedUserId(): ?int
+    public function getCreatedUserId(): ?Users
     {
         return $this->createdUserId;
     }

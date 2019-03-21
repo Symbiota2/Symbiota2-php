@@ -57,10 +57,12 @@ class ReferenceAuthors implements ModifiedUserIdInterface, InitialTimestampInter
     private $middleName;
 
     /**
-     * @var int|null
+     * @var \App\Entity\Users
      *
-     * @ORM\Column(name="modifieduid", type="integer", nullable=true, options={"unsigned"=true})
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
+     * })
      */
     private $modifiedUserId;
 
@@ -136,10 +138,7 @@ class ReferenceAuthors implements ModifiedUserIdInterface, InitialTimestampInter
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getModifiedUserId(): ?int
+    public function getModifiedUserId(): ?Users
     {
         return $this->modifiedUserId;
     }

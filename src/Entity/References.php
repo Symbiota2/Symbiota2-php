@@ -38,7 +38,6 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parentRefId", referencedColumnName="refid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $parentReferenceId;
 
@@ -49,7 +48,6 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ReferenceTypeId", referencedColumnName="ReferenceTypeId")
      * })
-     * @Assert\Type(type="integer")
      */
     private $referenceTypeId;
 
@@ -239,10 +237,12 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
     private $cheatCitation;
 
     /**
-     * @var int|null
+     * @var \App\Entity\Users
      *
-     * @ORM\Column(name="modifieduid", type="integer", nullable=true, options={"unsigned"=true})
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
+     * })
      */
     private $modifiedUserId;
 
@@ -630,10 +630,7 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getModifiedUserId(): ?int
+    public function getModifiedUserId(): ?Users
     {
         return $this->modifiedUserId;
     }

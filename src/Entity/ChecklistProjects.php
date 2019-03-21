@@ -128,8 +128,6 @@ class ChecklistProjects implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parentpid", referencedColumnName="pid")
      * })
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $parentProjectId;
 

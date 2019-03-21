@@ -96,7 +96,6 @@ class Traits implements ModifiedUserIdInterface, CreatedUserIdInterface, Initial
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $modifiedUserId;
 
@@ -115,7 +114,6 @@ class Traits implements ModifiedUserIdInterface, CreatedUserIdInterface, Initial
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $createdUserId;
 

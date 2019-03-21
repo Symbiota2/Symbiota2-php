@@ -23,13 +23,11 @@ class KeyCharacterDependence implements InitialTimestampInterface
      * @var \App\Entity\KeyCharacters
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="\App\Entity\KeyCharacters")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="CID", referencedColumnName="cid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $characterId;
 
@@ -38,7 +36,6 @@ class KeyCharacterDependence implements InitialTimestampInterface
      *
      * @ORM\Column(name="CIDDependance", type="integer", options={"unsigned"=true})
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @Assert\NotBlank()
      * @Assert\Type(type="integer")
      */
@@ -49,7 +46,6 @@ class KeyCharacterDependence implements InitialTimestampInterface
      *
      * @ORM\Column(name="CSDependance", type="string", length=16)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @Assert\NotBlank()
      * @Assert\Length(max=16)
      */

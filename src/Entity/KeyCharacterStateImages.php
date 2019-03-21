@@ -29,11 +29,13 @@ class KeyCharacterStateImages implements InitialTimestampInterface
     private $id;
 
     /**
-     * @var int
+     * @var \App\Entity\KeyCharacters
      *
-     * @ORM\Column(name="cid", type="integer", options={"unsigned"=true})
+     * @ORM\ManyToOne(targetEntity="\App\Entity\KeyCharacters")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="cid", referencedColumnName="cid")
+     * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $characterId;
 
@@ -93,12 +95,12 @@ class KeyCharacterStateImages implements InitialTimestampInterface
         return $this->id;
     }
 
-    public function getCharacterId(): ?int
+    public function getCharacterId(): ?KeyCharacters
     {
         return $this->characterId;
     }
 
-    public function setCharacterId(int $characterId): self
+    public function setCharacterId(?KeyCharacters $characterId): self
     {
         $this->characterId = $characterId;
 

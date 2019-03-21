@@ -20,13 +20,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 class KeyCharacterStateLanguages implements InitialTimestampInterface
 {
     /**
-     * @var int
+     * @var \App\Entity\KeyCharacters
      *
-     * @ORM\Column(name="cid", type="integer", options={"unsigned"=true})
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\KeyCharacters")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="cid", referencedColumnName="cid")
+     * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $characterId;
 
@@ -35,7 +36,6 @@ class KeyCharacterStateLanguages implements InitialTimestampInterface
      *
      * @ORM\Column(name="cs", type="string", length=16)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @Assert\NotBlank()
      * @Assert\Length(max=16)
      */
@@ -60,13 +60,14 @@ class KeyCharacterStateLanguages implements InitialTimestampInterface
     private $language;
 
     /**
-     * @var int
+     * @var \App\Entity\LookupLanguages
      *
-     * @ORM\Column(name="langid", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\LookupLanguages")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="langid", referencedColumnName="langid")
+     * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $languageId;
 
@@ -94,9 +95,16 @@ class KeyCharacterStateLanguages implements InitialTimestampInterface
      */
     private $initialTimestamp;
 
-    public function getCharacterId(): ?int
+    public function getCharacterId(): ?KeyCharacters
     {
         return $this->characterId;
+    }
+
+    public function setCharacterId(?KeyCharacters $characterId): self
+    {
+        $this->characterId = $characterId;
+
+        return $this;
     }
 
     public function getCharacterState(): ?string
@@ -104,9 +112,16 @@ class KeyCharacterStateLanguages implements InitialTimestampInterface
         return $this->characterState;
     }
 
-    public function getLanguageId(): ?int
+    public function getLanguageId(): ?LookupLanguages
     {
         return $this->languageId;
+    }
+
+    public function setLanguageId(?LookupLanguages $languageId): self
+    {
+        $this->languageId = $languageId;
+
+        return $this;
     }
 
     public function getCharacterStateName(): ?string

@@ -36,7 +36,6 @@ class TaxaDescriptionStatements implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="tdbid", referencedColumnName="tdbid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $descriptionBlockId;
 

@@ -25,8 +25,6 @@ class ImageProcessorOcrFragment implements InitialTimestampInterface
      * @ORM\Column(name="ocrfragid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $id;
 

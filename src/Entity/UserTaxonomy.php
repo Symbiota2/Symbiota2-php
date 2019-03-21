@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -17,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     collectionOperations={"get"}
  * )
  */
-class UserTaxonomy implements InitialTimestampInterface, ModifiedTimestampInterface
+class UserTaxonomy implements InitialTimestampInterface, ModifiedTimestampInterface, ModifiedUserIdInterface
 {
     /**
      * @var int
@@ -86,10 +87,12 @@ class UserTaxonomy implements InitialTimestampInterface, ModifiedTimestampInterf
     private $notes;
 
     /**
-     * @var int
+     * @var \App\Entity\Users
      *
-     * @ORM\Column(name="modifiedUid", type="integer", options={"unsigned"=true})
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="modifiedUid", referencedColumnName="uid")
+     * })
      */
     private $modifiedUserId;
 
@@ -148,12 +151,12 @@ class UserTaxonomy implements InitialTimestampInterface, ModifiedTimestampInterf
         return $this;
     }
 
-    public function getModifiedUserId(): ?int
+    public function getModifiedUserId(): ?Users
     {
         return $this->modifiedUserId;
     }
 
-    public function setModifiedUserId(int $modifiedUserId): self
+    public function setModifiedUserId(UserInterface $modifiedUserId): ModifiedUserIdInterface
     {
         $this->modifiedUserId = $modifiedUserId;
 

@@ -36,7 +36,6 @@ class OccurrenceDatasetLink implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $occurrenceId;
 
@@ -48,7 +47,6 @@ class OccurrenceDatasetLink implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="datasetid", referencedColumnName="datasetid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $datasetId;
 

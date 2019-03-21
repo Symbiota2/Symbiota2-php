@@ -36,7 +36,6 @@ class OccurrenceAccessStats implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $occurrenceId;
 

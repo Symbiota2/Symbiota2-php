@@ -55,19 +55,23 @@ class TaxaRanks implements InitialTimestampInterface, ModifiedTimestampInterface
     private $suffix;
 
     /**
-     * @var int
+     * @var \App\Entity\TaxaRanks
      *
-     * @ORM\Column(name="dirparentrankid", type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\TaxaRanks")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="dirparentrankid", referencedColumnName="rankid")
+     * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $directParentRankId;
 
     /**
-     * @var int|null
+     * @var \App\Entity\TaxaRanks
      *
-     * @ORM\Column(name="reqparentrankid", type="integer", nullable=true)
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\TaxaRanks")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="reqparentrankid", referencedColumnName="rankid")
+     * })
      */
     private $requiredParentRankId;
 
@@ -136,24 +140,24 @@ class TaxaRanks implements InitialTimestampInterface, ModifiedTimestampInterface
         return $this;
     }
 
-    public function getDirectParentRankId(): ?int
+    public function getDirectParentRankId(): ?TaxaRanks
     {
         return $this->directParentRankId;
     }
 
-    public function setDirectParentRankId(int $directParentRankId): self
+    public function setDirectParentRankId(?TaxaRanks $directParentRankId): self
     {
         $this->directParentRankId = $directParentRankId;
 
         return $this;
     }
 
-    public function getRequiredParentRankId(): ?int
+    public function getRequiredParentRankId(): ?TaxaRanks
     {
         return $this->requiredParentRankId;
     }
 
-    public function setRequiredParentRankId(?int $requiredParentRankId): self
+    public function setRequiredParentRankId(?TaxaRanks $requiredParentRankId): self
     {
         $this->requiredParentRankId = $requiredParentRankId;
 

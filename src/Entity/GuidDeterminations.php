@@ -24,17 +24,17 @@ class GuidDeterminations implements InitialTimestampInterface
      *
      * @ORM\Column(name="guid", type="string", length=45)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Assert\NotBlank()
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     private $guid;
 
     /**
-     * @var int|null
+     * @var \App\Entity\OccurrenceDeterminations
      *
-     * @ORM\Column(name="detid", type="integer", options={"unsigned"=true})
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\OccurrenceDeterminations")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="detid", referencedColumnName="detid")
+     * })
      */
     private $determinationId;
 
@@ -76,12 +76,12 @@ class GuidDeterminations implements InitialTimestampInterface
         return $this->guid;
     }
 
-    public function getDeterminationId(): ?int
+    public function getDeterminationId(): ?OccurrenceDeterminations
     {
         return $this->determinationId;
     }
 
-    public function setDeterminationId(?int $determinationId): self
+    public function setDeterminationId(?OccurrenceDeterminations $determinationId): self
     {
         $this->determinationId = $determinationId;
 

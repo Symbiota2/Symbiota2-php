@@ -36,7 +36,6 @@ class OccurrenceDeterminations implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $occurrenceId;
 
@@ -82,7 +81,6 @@ class OccurrenceDeterminations implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
-     * @Assert\Type(type="integer")
      */
     private $taxaId;
 

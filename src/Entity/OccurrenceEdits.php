@@ -36,7 +36,6 @@ class OccurrenceEdits implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $occurrenceId;
 
@@ -110,7 +109,6 @@ class OccurrenceEdits implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $userId;
 

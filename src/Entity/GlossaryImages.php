@@ -37,7 +37,6 @@ class GlossaryImages implements CreatedUserIdInterface, InitialTimestampInterfac
      *   @ORM\JoinColumn(name="glossid", referencedColumnName="glossid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $glossaryId;
 
@@ -89,8 +88,6 @@ class GlossaryImages implements CreatedUserIdInterface, InitialTimestampInterfac
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $createdUserId;
 

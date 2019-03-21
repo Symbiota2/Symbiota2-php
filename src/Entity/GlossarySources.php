@@ -23,13 +23,11 @@ class GlossarySources implements InitialTimestampInterface
      * @var \App\Entity\Taxa
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $taxaId;
 

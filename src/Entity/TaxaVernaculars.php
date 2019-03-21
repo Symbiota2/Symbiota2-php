@@ -27,7 +27,6 @@ class TaxaVernaculars implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $taxaId;
 
@@ -56,7 +55,6 @@ class TaxaVernaculars implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="langid", referencedColumnName="langid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $languageId;
 

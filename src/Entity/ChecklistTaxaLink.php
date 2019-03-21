@@ -29,20 +29,22 @@ class ChecklistTaxaLink implements InitialTimestampInterface
     private $id;
 
     /**
-     * @var int
+     * @var \App\Entity\Taxa
      *
-     * @ORM\Column(name="tid", type="integer", options={"unsigned"=true})
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     * })
      */
     private $taxaId;
 
     /**
-     * @var int
+     * @var \App\Entity\Checklists
      *
-     * @ORM\Column(name="CLID", type="integer", options={"unsigned"=true})
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Checklists")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="CLID", referencedColumnName="CLID")
+     * })
      */
     private $checklistId;
 
@@ -155,24 +157,24 @@ class ChecklistTaxaLink implements InitialTimestampInterface
         return $this->id;
     }
 
-    public function getTaxaId(): ?int
+    public function getTaxaId(): ?Taxa
     {
         return $this->taxaId;
     }
 
-    public function setTaxaId(int $taxaId): self
+    public function setTaxaId(?Taxa $taxaId): self
     {
         $this->taxaId = $taxaId;
 
         return $this;
     }
 
-    public function getChecklistId(): ?int
+    public function getChecklistId(): ?Checklists
     {
         return $this->checklistId;
     }
 
-    public function setChecklistId(int $checklistId): self
+    public function setChecklistId(?Checklists $checklistId): self
     {
         $this->checklistId = $checklistId;
 

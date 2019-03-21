@@ -53,7 +53,6 @@ class OccurrenceLoans implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="collidOwn", referencedColumnName="CollID")
      * })
-     * @Assert\Type(type="integer")
      */
     private $collectionIdOwner;
 
@@ -64,7 +63,6 @@ class OccurrenceLoans implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="collidBorr", referencedColumnName="CollID")
      * })
-     * @Assert\Type(type="integer")
      */
     private $collectionIdBorrower;
 
@@ -75,7 +73,6 @@ class OccurrenceLoans implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="iidOwner", referencedColumnName="iid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $institutionIdOwner;
 
@@ -86,7 +83,6 @@ class OccurrenceLoans implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="iidBorrower", referencedColumnName="iid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $institutionIdBorrower;
 

@@ -37,7 +37,6 @@ class OccurrenceAssociations implements ModifiedUserIdInterface, CreatedUserIdIn
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $occurrenceId;
 
@@ -48,7 +47,6 @@ class OccurrenceAssociations implements ModifiedUserIdInterface, CreatedUserIdIn
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occidassociate", referencedColumnName="occid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $associatedOccurrenceId;
 
@@ -100,7 +98,6 @@ class OccurrenceAssociations implements ModifiedUserIdInterface, CreatedUserIdIn
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
-     * @Assert\Type(type="integer")
      */
     private $taxaId;
 
@@ -151,7 +148,6 @@ class OccurrenceAssociations implements ModifiedUserIdInterface, CreatedUserIdIn
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $createdUserId;
 
@@ -170,7 +166,6 @@ class OccurrenceAssociations implements ModifiedUserIdInterface, CreatedUserIdIn
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $modifiedUserId;
 

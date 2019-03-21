@@ -20,13 +20,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class TraitDependencies implements InitialTimestampInterface
 {
     /**
-     * @var int
+     * @var \App\Entity\Traits
      *
-     * @ORM\Column(name="traitid", type="integer", options={"unsigned"=true})
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @ORM\OneToOne(targetEntity="\App\Entity\Traits")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="traitid", referencedColumnName="traitid")
+     * })
      */
     private $traitId;
 
@@ -34,13 +34,10 @@ class TraitDependencies implements InitialTimestampInterface
      * @var \App\Entity\TraitStates
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="\App\Entity\TraitStates")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parentstateid", referencedColumnName="stateid")
      * })
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $parentStateId;
 
@@ -52,9 +49,16 @@ class TraitDependencies implements InitialTimestampInterface
      */
     private $initialTimestamp;
 
-    public function getTraitId(): ?int
+    public function getTraitId(): ?Traits
     {
         return $this->traitId;
+    }
+
+    public function setTraitId(?Traits $traitId): self
+    {
+        $this->traitId = $traitId;
+
+        return $this;
     }
 
     public function getInitialTimestamp(): ?\DateTimeInterface

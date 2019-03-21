@@ -36,7 +36,6 @@ class UploadTempOccurrences implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $collectionId;
 
@@ -1360,7 +1359,7 @@ class UploadTempOccurrences implements InitialTimestampInterface
         return $this;
     }
 
-    public function getTaxaId(): ?int
+    public function getTaxaId(): ?Taxa
     {
         return $this->taxaId;
     }

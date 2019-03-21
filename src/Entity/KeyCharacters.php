@@ -74,7 +74,6 @@ class KeyCharacters implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="hid", referencedColumnName="hid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $characterHeadingId;
 
@@ -162,7 +161,6 @@ class KeyCharacters implements InitialTimestampInterface
      *
      * @ORM\ManyToMany(targetEntity="\App\Entity\Taxa", mappedBy="characterId")
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $taxaId;
 

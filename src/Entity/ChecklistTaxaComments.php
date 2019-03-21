@@ -30,20 +30,22 @@ class ChecklistTaxaComments implements CreatedUserIdInterface, InitialTimestampI
     private $id;
 
     /**
-     * @var int
+     * @var \App\Entity\Checklists
      *
-     * @ORM\Column(name="clid", type="integer", options={"unsigned"=true})
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Checklists")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="clid", referencedColumnName="CLID")
+     * })
      */
     private $checklistId;
 
     /**
-     * @var int
+     * @var \App\Entity\Taxa
      *
-     * @ORM\Column(name="tid", type="integer", options={"unsigned"=true})
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     * })
      */
     private $taxaId;
 
@@ -63,8 +65,6 @@ class ChecklistTaxaComments implements CreatedUserIdInterface, InitialTimestampI
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $createdUserId;
 
@@ -78,10 +78,12 @@ class ChecklistTaxaComments implements CreatedUserIdInterface, InitialTimestampI
     private $isPublic = 1;
 
     /**
-     * @var int|null
+     * @var \App\Entity\ChecklistTaxaComments
      *
-     * @ORM\Column(name="parentid", type="integer", nullable=true)
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\ChecklistTaxaComments")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="parentid", referencedColumnName="cltaxacommentsid")
+     * })
      */
     private $parentCommentId;
 
@@ -101,34 +103,24 @@ class ChecklistTaxaComments implements CreatedUserIdInterface, InitialTimestampI
         return $this->id;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getChecklistId(): ?int
+    public function getChecklistId(): ?Checklists
     {
         return $this->checklistId;
     }
 
-    /**
-     * @param int $checklistId
-     * @return ChecklistTaxaComments
-     */
-    public function setChecklistId(int $checklistId): self
+    public function setChecklistId(?Checklists $checklistId): self
     {
         $this->checklistId = $checklistId;
 
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getTaxaId(): ?int
+    public function getTaxaId(): ?Taxa
     {
         return $this->taxaId;
     }
 
-    public function setTaxaId(int $taxaId): self
+    public function setTaxaId(?Taxa $taxaId): self
     {
         $this->taxaId = $taxaId;
 
@@ -159,12 +151,12 @@ class ChecklistTaxaComments implements CreatedUserIdInterface, InitialTimestampI
         return $this;
     }
 
-    public function getParentCommentId(): ?int
+    public function getParentCommentId(): ?ChecklistTaxaComments
     {
         return $this->parentCommentId;
     }
 
-    public function setParentCommentId(?int $parentCommentId): self
+    public function setParentCommentId(?ChecklistTaxaComments $parentCommentId): self
     {
         $this->parentCommentId = $parentCommentId;
 

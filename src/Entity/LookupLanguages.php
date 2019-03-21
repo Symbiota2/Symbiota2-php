@@ -75,8 +75,6 @@ class LookupLanguages implements InitialTimestampInterface
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="\App\Entity\KeyCharacters", mappedBy="languageId")
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $characterId;
 

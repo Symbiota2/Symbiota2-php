@@ -37,7 +37,6 @@ class TraitStates implements ModifiedUserIdInterface, CreatedUserIdInterface, In
      *   @ORM\JoinColumn(name="traitid", referencedColumnName="traitid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $traitId;
 
@@ -98,7 +97,6 @@ class TraitStates implements ModifiedUserIdInterface, CreatedUserIdInterface, In
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $modifiedUserId;
 
@@ -117,7 +115,6 @@ class TraitStates implements ModifiedUserIdInterface, CreatedUserIdInterface, In
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $createdUserId;
 

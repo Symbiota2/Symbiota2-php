@@ -24,13 +24,10 @@ class TraitAttributes implements ModifiedUserIdInterface, CreatedUserIdInterface
      * @var \App\Entity\TraitStates
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="\App\Entity\TraitStates")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="stateid", referencedColumnName="stateid")
      * })
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $stateId;
 
@@ -38,13 +35,10 @@ class TraitAttributes implements ModifiedUserIdInterface, CreatedUserIdInterface
      * @var \App\Entity\Occurrences
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $occurrenceId;
 
@@ -71,7 +65,6 @@ class TraitAttributes implements ModifiedUserIdInterface, CreatedUserIdInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="imgid", referencedColumnName="imgid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $imageId;
 
@@ -114,7 +107,6 @@ class TraitAttributes implements ModifiedUserIdInterface, CreatedUserIdInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $modifiedUserId;
 
@@ -133,7 +125,6 @@ class TraitAttributes implements ModifiedUserIdInterface, CreatedUserIdInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $createdUserId;
 

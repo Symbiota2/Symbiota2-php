@@ -37,7 +37,6 @@ class OccurrenceComments implements CreatedUserIdInterface, InitialTimestampInte
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $occurrenceId;
 
@@ -58,7 +57,6 @@ class OccurrenceComments implements CreatedUserIdInterface, InitialTimestampInte
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $createdUserId;
 
@@ -72,10 +70,12 @@ class OccurrenceComments implements CreatedUserIdInterface, InitialTimestampInte
     private $reviewStatus;
 
     /**
-     * @var int|null
+     * @var \App\Entity\OccurrenceComments
      *
-     * @ORM\Column(name="parentcomid", type="integer", nullable=true, options={"unsigned"=true})
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\OccurrenceComments")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="parentcomid", referencedColumnName="comid")
+     * })
      */
     private $parentCommentId;
 
@@ -116,12 +116,12 @@ class OccurrenceComments implements CreatedUserIdInterface, InitialTimestampInte
         return $this;
     }
 
-    public function getParentCommentId(): ?int
+    public function getParentCommentId(): ?OccurrenceComments
     {
         return $this->parentCommentId;
     }
 
-    public function setParentCommentId(?int $parentCommentId): self
+    public function setParentCommentId(?OccurrenceComments $parentCommentId): self
     {
         $this->parentCommentId = $parentCommentId;
 

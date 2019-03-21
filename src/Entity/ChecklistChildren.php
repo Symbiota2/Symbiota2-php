@@ -24,30 +24,31 @@ class ChecklistChildren implements InitialTimestampInterface, ModifiedTimestampI
      * @var \App\Entity\Checklists
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="\App\Entity\Checklists")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Checklists")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="clid", referencedColumnName="CLID")
      * })
-     * @Assert\Type(type="integer")
      */
     private $checklistId;
 
     /**
-     * @var int
+     * @var \App\Entity\Checklists
      *
-     * @ORM\Column(name="clidchild", type="integer", options={"unsigned"=true})
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Checklists")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="clidchild", referencedColumnName="CLID")
+     * })
      */
-    private $id;
+    private $checklistIdChild;
 
     /**
-     * @var int
+     * @var \App\Entity\Users
      *
-     * @ORM\Column(name="modifiedUid", type="integer", options={"unsigned"=true})
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="modifiedUid", referencedColumnName="uid")
+     * })
      */
     private $modifiedUserId;
 
@@ -62,19 +63,25 @@ class ChecklistChildren implements InitialTimestampInterface, ModifiedTimestampI
      * @var \DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
-     * @Assert\DateTime
      */
     private $initialTimestamp;
 
-    public function getId(): ?int
+    public function getChecklistIdChild(): ?Checklists
     {
-        return $this->id;
+        return $this->checklistIdChild;
+    }
+
+    public function setChecklistIdChild(?Checklists $checklistIdChild): self
+    {
+        $this->checklistIdChild = $checklistIdChild;
+
+        return $this;
     }
 
     /**
-     * @return int|null
+     * @return Users|null
      */
-    public function getModifiedUserId(): ?int
+    public function getModifiedUserId(): ?Users
     {
         return $this->modifiedUserId;
     }

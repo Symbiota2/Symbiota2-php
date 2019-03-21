@@ -37,7 +37,6 @@ class Images implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
-     * @Assert\Type(type="integer")
      */
     private $taxaId;
 
@@ -89,7 +88,6 @@ class Images implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="photographeruid", referencedColumnName="uid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $photographerUserId;
 
@@ -180,7 +178,6 @@ class Images implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $occurrenceId;
 

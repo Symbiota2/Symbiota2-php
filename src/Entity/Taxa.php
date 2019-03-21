@@ -32,10 +32,12 @@ class Taxa implements ModifiedUserIdInterface, InitialTimestampInterface, Modifi
     private $id;
 
     /**
-     * @var int|null
+     * @var \App\Entity\TaxaRanks
      *
-     * @ORM\Column(name="RankId", type="integer", nullable=true, options={"unsigned"=true})
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\TaxaRanks")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="RankId", referencedColumnName="rankid")
+     * })
      */
     private $rankId;
 
@@ -161,7 +163,6 @@ class Taxa implements ModifiedUserIdInterface, InitialTimestampInterface, Modifi
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="modifiedUid", referencedColumnName="uid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $modifiedUserId;
 
@@ -257,12 +258,12 @@ class Taxa implements ModifiedUserIdInterface, InitialTimestampInterface, Modifi
         return $this->id;
     }
 
-    public function getRankId(): ?int
+    public function getRankId(): ?TaxaRanks
     {
         return $this->rankId;
     }
 
-    public function setRankId(?int $rankId): self
+    public function setRankId(?TaxaRanks $rankId): self
     {
         $this->rankId = $rankId;
 
@@ -365,12 +366,12 @@ class Taxa implements ModifiedUserIdInterface, InitialTimestampInterface, Modifi
         return $this;
     }
 
-    public function getPhylogenySortSequence(): ?bool
+    public function getPhylogenySortSequence(): ?int
     {
         return $this->phylogenySortSequence;
     }
 
-    public function setPhylogenySortSequence(?bool $phylogenySortSequence): self
+    public function setPhylogenySortSequence(?int $phylogenySortSequence): self
     {
         $this->phylogenySortSequence = $phylogenySortSequence;
 

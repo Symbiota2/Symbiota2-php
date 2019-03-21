@@ -24,17 +24,17 @@ class GuidOccurrences implements InitialTimestampInterface
      *
      * @ORM\Column(name="guid", type="string", length=45)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Assert\NotBlank()
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     private $guid;
 
     /**
-     * @var int|null
+     * @var \App\Entity\Occurrences
      *
-     * @ORM\Column(name="occid", type="integer", options={"unsigned"=true})
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     * })
      */
     private $occurrenceId;
 
@@ -76,12 +76,12 @@ class GuidOccurrences implements InitialTimestampInterface
         return $this->guid;
     }
 
-    public function getOccurrenceId(): ?int
+    public function getOccurrenceId(): ?Occurrences
     {
         return $this->occurrenceId;
     }
 
-    public function setOccurrenceId(?int $occurrenceId): self
+    public function setOccurrenceId(?Occurrences $occurrenceId): self
     {
         $this->occurrenceId = $occurrenceId;
 

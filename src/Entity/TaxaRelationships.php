@@ -23,13 +23,10 @@ class TaxaRelationships implements InitialTimestampInterface
      * @var \App\Entity\Taxa
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $taxaId;
 
@@ -37,13 +34,10 @@ class TaxaRelationships implements InitialTimestampInterface
      * @var \App\Entity\TaxaAuthorities
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="\App\Entity\TaxaAuthorities")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="taxauthid", referencedColumnName="taxauthid")
      * })
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $taxaAuthorityId;
 
@@ -51,13 +45,10 @@ class TaxaRelationships implements InitialTimestampInterface
      * @var \App\Entity\Taxa
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parenttid", referencedColumnName="TID")
      * })
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $parentTaxaId;
 

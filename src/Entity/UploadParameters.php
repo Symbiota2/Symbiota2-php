@@ -36,7 +36,6 @@ class UploadParameters implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="CollID", referencedColumnName="CollID")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $collectionId;
 

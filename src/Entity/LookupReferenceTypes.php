@@ -183,10 +183,12 @@ class LookupReferenceTypes implements CreatedUserIdInterface, InitialTimestampIn
     private $figures;
 
     /**
-     * @var int|null
+     * @var \App\Entity\Users
      *
-     * @ORM\Column(name="createduid", type="integer", nullable=true)
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
+     * })
      */
     private $createdUserId;
 
@@ -431,10 +433,7 @@ class LookupReferenceTypes implements CreatedUserIdInterface, InitialTimestampIn
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getCreatedUserId(): ?int
+    public function getCreatedUserId(): ?Users
     {
         return $this->createdUserId;
     }

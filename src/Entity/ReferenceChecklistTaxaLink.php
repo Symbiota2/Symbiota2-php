@@ -23,35 +23,32 @@ class ReferenceChecklistTaxaLink implements InitialTimestampInterface
      * @var \App\Entity\References
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="\App\Entity\References")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\References")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="refid", referencedColumnName="refid")
      * })
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $referenceId;
 
     /**
-     * @var int
+     * @var \App\Entity\Checklists
      *
-     * @ORM\Column(name="clid", type="integer", options={"unsigned"=true})
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Checklists")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="clid", referencedColumnName="CLID")
+     * })
      */
     private $checklistId;
 
     /**
-     * @var int
+     * @var \App\Entity\Taxa
      *
-     * @ORM\Column(name="tid", type="integer", options={"unsigned"=true})
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     * })
      */
     private $taxaId;
 
@@ -63,14 +60,28 @@ class ReferenceChecklistTaxaLink implements InitialTimestampInterface
      */
     private $initialTimestamp;
 
-    public function getChecklistId(): ?int
+    public function getChecklistId(): ?Checklists
     {
         return $this->checklistId;
     }
 
-    public function getTaxaId(): ?int
+    public function setChecklistId(?Checklists $checklistId): self
+    {
+        $this->checklistId = $checklistId;
+
+        return $this;
+    }
+
+    public function getTaxaId(): ?Taxa
     {
         return $this->taxaId;
+    }
+
+    public function setTaxaId(?Taxa $taxaId): self
+    {
+        $this->taxaId = $taxaId;
+
+        return $this;
     }
 
     public function getInitialTimestamp(): ?\DateTimeInterface

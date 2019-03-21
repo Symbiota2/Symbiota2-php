@@ -46,7 +46,6 @@ class ExsiccatiNumbers implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ometid", referencedColumnName="ometid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $exsiccatiTitleId;
 

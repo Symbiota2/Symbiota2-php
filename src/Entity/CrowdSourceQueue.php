@@ -29,11 +29,12 @@ class CrowdSourceQueue implements InitialTimestampInterface
     private $id;
 
     /**
-     * @var int
+     * @var \App\Entity\CrowdSourceCentral
      *
-     * @ORM\Column(name="omcsid", type="integer")
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\CrowdSourceCentral")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="omcsid", referencedColumnName="omcsid")
+     * })
      */
     private $crowdSourceCentralId;
 
@@ -45,7 +46,6 @@ class CrowdSourceQueue implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $occurrenceId;
 
@@ -66,7 +66,6 @@ class CrowdSourceQueue implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="uidprocessor", referencedColumnName="uid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $userIdProcessor;
 
@@ -108,12 +107,12 @@ class CrowdSourceQueue implements InitialTimestampInterface
         return $this->id;
     }
 
-    public function getCrowdSourceCentralId(): ?int
+    public function getCrowdSourceCentralId(): ?CrowdSourceCentral
     {
         return $this->crowdSourceCentralId;
     }
 
-    public function setCrowdSourceCentralId(int $crowdSourceCentralId): self
+    public function setCrowdSourceCentralId(?CrowdSourceCentral $crowdSourceCentralId): self
     {
         $this->crowdSourceCentralId = $crowdSourceCentralId;
 

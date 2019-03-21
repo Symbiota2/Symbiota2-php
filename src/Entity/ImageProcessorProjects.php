@@ -36,7 +36,6 @@ class ImageProcessorProjects implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $collectionId;
 

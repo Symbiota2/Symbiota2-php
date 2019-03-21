@@ -20,20 +20,23 @@ use Symfony\Component\Validator\Constraints as Assert;
 class KeyDescriptionDeletions
 {
     /**
-     * @var int
+     * @var \App\Entity\Taxa
      *
-     * @ORM\Column(name="TID", type="integer", options={"unsigned"=true})
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     * })
      */
     private $taxaId;
 
     /**
-     * @var int
+     * @var \App\Entity\KeyCharacters
      *
-     * @ORM\Column(name="CID", type="integer", options={"unsigned"=true})
+     * @ORM\ManyToOne(targetEntity="\App\Entity\KeyCharacters")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="CID", referencedColumnName="cid")
+     * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $characterId;
 
@@ -135,24 +138,24 @@ class KeyDescriptionDeletions
      */
     private $id;
 
-    public function getTaxaId(): ?int
+    public function getTaxaId(): ?Taxa
     {
         return $this->taxaId;
     }
 
-    public function setTaxaId(int $taxaId): self
+    public function setTaxaId(?Taxa $taxaId): self
     {
         $this->taxaId = $taxaId;
 
         return $this;
     }
 
-    public function getCharacterId(): ?int
+    public function getCharacterId(): ?KeyCharacters
     {
         return $this->characterId;
     }
 
-    public function setCharacterId(int $characterId): self
+    public function setCharacterId(?KeyCharacters $characterId): self
     {
         $this->characterId = $characterId;
 

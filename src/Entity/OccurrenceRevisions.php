@@ -37,7 +37,6 @@ class OccurrenceRevisions implements CreatedUserIdInterface, InitialTimestampInt
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $occurrenceId;
 
@@ -112,7 +111,6 @@ class OccurrenceRevisions implements CreatedUserIdInterface, InitialTimestampInt
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $createdUserId;
 

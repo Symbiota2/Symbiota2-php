@@ -20,12 +20,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class OccurrenceFullText
 {
     /**
-     * @var int
+     * @var \App\Entity\Occurrences
      *
-     * @ORM\Column(name="occid", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Assert\Type(type="integer")
+     * @ORM\OneToOne(targetEntity="\App\Entity\Occurrences")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     * })
      */
     private $occurrenceId;
 
@@ -45,9 +46,16 @@ class OccurrenceFullText
      */
     private $recordedBy;
 
-    public function getOccurrenceId(): ?int
+    public function getOccurrenceId(): ?Occurrences
     {
         return $this->occurrenceId;
+    }
+
+    public function setOccurrenceId(?Occurrences $occurrenceId): self
+    {
+        $this->occurrenceId = $occurrenceId;
+
+        return $this;
     }
 
     public function getLocality(): ?string

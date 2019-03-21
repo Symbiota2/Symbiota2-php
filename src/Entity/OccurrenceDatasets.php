@@ -61,7 +61,6 @@ class OccurrenceDatasets implements CreatedUserIdInterface, InitialTimestampInte
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $createdUserId;
 
@@ -72,7 +71,6 @@ class OccurrenceDatasets implements CreatedUserIdInterface, InitialTimestampInte
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
      * })
-     * @Assert\Type(type="integer")
      */
     private $collectionId;
 

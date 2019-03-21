@@ -104,7 +104,6 @@ class Glossary implements CreatedUserIdInterface, InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $createdUserId;
 

@@ -23,24 +23,23 @@ class KeyDescriptions implements InitialTimestampInterface
      * @var \App\Entity\Taxa
      *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="\App\Entity\Taxa")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $taxaId;
 
     /**
-     * @var int
+     * @var \App\Entity\KeyCharacters
      *
-     * @ORM\Column(name="CID", type="integer", options={"unsigned"=true})
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\KeyCharacters")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="CID", referencedColumnName="cid")
+     * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $characterId;
 
@@ -134,9 +133,16 @@ class KeyDescriptions implements InitialTimestampInterface
      */
     private $initialTimestamp;
 
-    public function getCharacterId(): ?int
+    public function getCharacterId(): ?KeyCharacters
     {
         return $this->characterId;
+    }
+
+    public function setCharacterId(?KeyCharacters $characterId): self
+    {
+        $this->characterId = $characterId;
+
+        return $this;
     }
 
     public function getModifier(): ?string

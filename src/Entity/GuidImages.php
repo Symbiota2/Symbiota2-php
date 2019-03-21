@@ -24,17 +24,17 @@ class GuidImages implements InitialTimestampInterface
      *
      * @ORM\Column(name="guid", type="string", length=45)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Assert\NotBlank()
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     private $guid;
 
     /**
-     * @var int|null
+     * @var \App\Entity\Images
      *
-     * @ORM\Column(name="imgid", type="integer", options={"unsigned"=true})
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Images")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="imgid", referencedColumnName="imgid")
+     * })
      */
     private $imageId;
 
@@ -76,12 +76,12 @@ class GuidImages implements InitialTimestampInterface
         return $this->guid;
     }
 
-    public function getImageId(): ?int
+    public function getImageId(): ?Images
     {
         return $this->imageId;
     }
 
-    public function setImageId(?int $imageId): self
+    public function setImageId(?Images $imageId): self
     {
         $this->imageId = $imageId;
 

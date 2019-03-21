@@ -35,7 +35,6 @@ class Media implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
-     * @Assert\Type(type="integer")
      */
     private $taxaId;
 
@@ -46,7 +45,6 @@ class Media implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $occurrenceId;
 
@@ -74,7 +72,6 @@ class Media implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="authoruid", referencedColumnName="uid")
      * })
-     * @Assert\Type(type="integer")
      */
     private $authoruId;
 

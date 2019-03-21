@@ -36,7 +36,6 @@ class UploadMappings implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="uspid", referencedColumnName="uspid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $uploadParameterId;
 

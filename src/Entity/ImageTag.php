@@ -36,7 +36,6 @@ class ImageTag implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="imgid", referencedColumnName="imgid")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $imageId;
 

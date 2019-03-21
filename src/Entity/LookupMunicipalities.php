@@ -36,7 +36,6 @@ class LookupMunicipalities implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="stateId", referencedColumnName="stateId")
      * })
      * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $stateProvinceId;
 

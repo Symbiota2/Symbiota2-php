@@ -187,7 +187,7 @@ class UploadTempImages implements InitialTimestampInterface
         return $this->id;
     }
 
-    public function getTaxaId(): ?int
+    public function getTaxaId(): ?Taxa
     {
         return $this->taxaId;
     }
