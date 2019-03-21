@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *             }
  *          },
  *          "put"={
- *              "access_control"="is_granted('IS_AUTHENTICATED_FULLY')",
+ *              "access_control"="is_granted('ClAdmin', object)",
  *              "denormalization_context"={
  *                  "groups"={"put"}
  *              }
@@ -257,7 +257,6 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
-     * @Assert\Type(type="integer")
      * @Groups({"get", "get-checklist-info"})
      */
     private $createdUserId;
