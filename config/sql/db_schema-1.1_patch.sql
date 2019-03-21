@@ -362,10 +362,21 @@ ALTER TABLE `omoccurdatasets`
   DROP INDEX `FK_omcollections_collid_idx`;
 
 ALTER TABLE `omoccurdeterminations`
+  CHANGE COLUMN `tidinterpreted` `tid` int(10) UNSIGNED NULL DEFAULT NULL AFTER `sciname`,
   DROP FOREIGN KEY `FK_omoccurdets_idby`,
   DROP FOREIGN KEY `FK_omoccurdets_tid`,
   DROP INDEX `FK_omoccurdets_tid`,
   DROP INDEX `FK_omoccurdets_idby_idx`;
+
+UPDATE omoccurdeterminations SET tid = NULL;
+
+UPDATE `omoccurdeterminations` AS d LEFT JOIN taxa AS t ON d.sciname = t.SciName AND d.scientificNameAuthorship = t.Author
+  SET d.tid = t.TID
+  WHERE t.TID IS NOT NULL;
+
+UPDATE omoccurdeterminations AS d LEFT JOIN taxa AS t ON d.sciname = t.SciName
+  SET d.tid = t.TID
+  WHERE t.TID IS NOT NULL AND ISNULL(d.tid) AND ISNULL(d.scientificNameAuthorship) AND ISNULL(t.Author);
 
 ALTER TABLE `omoccuredits`
   DROP FOREIGN KEY `fk_omoccuredits_occid`,
@@ -402,7 +413,18 @@ ALTER TABLE `omoccurrences`
   DROP FOREIGN KEY `FK_omoccurrences_tid`,
   DROP FOREIGN KEY `FK_omoccurrences_uid`,
   DROP INDEX `FK_omoccurrences_tid`,
-  DROP INDEX `FK_omoccurrences_uid`;
+  DROP INDEX `FK_omoccurrences_uid`,
+  CHANGE COLUMN `tidinterpreted` `tid` int(10) UNSIGNED NULL DEFAULT NULL AFTER `sciname`;
+
+UPDATE omoccurrences SET tid = NULL;
+
+UPDATE `omoccurrences` AS o LEFT JOIN taxa AS t ON o.sciname = t.SciName AND o.scientificNameAuthorship = t.Author
+  SET o.tid = t.TID
+  WHERE t.TID IS NOT NULL;
+
+UPDATE omoccurrences AS o LEFT JOIN taxa AS t ON o.sciname = t.SciName
+  SET o.tid = t.TID
+  WHERE t.TID IS NOT NULL AND ISNULL(o.tid) AND ISNULL(o.scientificNameAuthorship) AND ISNULL(t.Author);
 
 ALTER TABLE `omoccurrencetypes`
   DROP FOREIGN KEY `FK_occurtype_occid`,

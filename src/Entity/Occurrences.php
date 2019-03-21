@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Occurrences
  *
- * @ORM\Table(name="omoccurrences", uniqueConstraints={@ORM\UniqueConstraint(name="Index_collid", columns={"collid", "dbpk"})}, indexes={@ORM\Index(name="Index_latestDateCollected", columns={"latestDateCollected"}), @ORM\Index(name="Index_county", columns={"county"}), @ORM\Index(name="Index_eventDate", columns={"eventDate"}), @ORM\Index(name="Index_occurDateEntered", columns={"InitialTimeStamp"}), @ORM\Index(name="Index_sciname", columns={"sciname"}), @ORM\Index(name="Index_ownerInst", columns={"ownerInstitutionCode"}), @ORM\Index(name="occelevmin", columns={"minimumElevationInMeters"}), @ORM\Index(name="Index_otherCatalogNumbers", columns={"otherCatalogNumbers"}), @ORM\Index(name="Index_state", columns={"stateProvince"}), @ORM\Index(name="Index_catalognumber", columns={"catalogNumber"}), @ORM\Index(name="Index_occurDateLastModifed", columns={"modifiedTimeStamp"}), @ORM\Index(name="FK_omoccurrences_uid", columns={"observeruid"}), @ORM\Index(name="Index_gui", columns={"occurrenceID"}), @ORM\Index(name="occelevmax", columns={"maximumElevationInMeters"}), @ORM\Index(name="Index_locality", columns={"locality"}, flags={"fulltext"}), @ORM\Index(name="Index_country", columns={"country"}), @ORM\Index(name="Index_collnum", columns={"recordNumber"}), @ORM\Index(name="Index_occurrences_typestatus", columns={"typeStatus"}), @ORM\Index(name="FK_omoccurrences_tid", columns={"tidinterpreted"}), @ORM\Index(name="Index_collector", columns={"recordedBy"}), @ORM\Index(name="Index_occurrences_procstatus", columns={"processingstatus"}), @ORM\Index(name="Index_occurRecordEnteredBy", columns={"recordEnteredBy"}), @ORM\Index(name="Index_family", columns={"family"}), @ORM\Index(name="Index_municipality", columns={"municipality"}), @ORM\Index(name="Index_occurrences_cult", columns={"cultivationStatus"}), @ORM\Index(name="IDX_C48904CFEA1D339B", columns={"collid"})})
+ * @ORM\Table(name="omoccurrences", uniqueConstraints={@ORM\UniqueConstraint(name="Index_collid", columns={"collid", "dbpk"})}, indexes={@ORM\Index(name="Index_latestDateCollected", columns={"latestDateCollected"}), @ORM\Index(name="Index_county", columns={"county"}), @ORM\Index(name="Index_eventDate", columns={"eventDate"}), @ORM\Index(name="Index_occurDateEntered", columns={"InitialTimeStamp"}), @ORM\Index(name="Index_sciname", columns={"sciname"}), @ORM\Index(name="Index_ownerInst", columns={"ownerInstitutionCode"}), @ORM\Index(name="occelevmin", columns={"minimumElevationInMeters"}), @ORM\Index(name="Index_otherCatalogNumbers", columns={"otherCatalogNumbers"}), @ORM\Index(name="Index_state", columns={"stateProvince"}), @ORM\Index(name="Index_catalognumber", columns={"catalogNumber"}), @ORM\Index(name="Index_occurDateLastModifed", columns={"modifiedTimeStamp"}), @ORM\Index(name="FK_omoccurrences_uid", columns={"observeruid"}), @ORM\Index(name="Index_gui", columns={"occurrenceID"}), @ORM\Index(name="occelevmax", columns={"maximumElevationInMeters"}), @ORM\Index(name="Index_locality", columns={"locality"}, flags={"fulltext"}), @ORM\Index(name="Index_country", columns={"country"}), @ORM\Index(name="Index_collnum", columns={"recordNumber"}), @ORM\Index(name="Index_occurrences_typestatus", columns={"typeStatus"}), @ORM\Index(name="FK_omoccurrences_tid", columns={"tid"}), @ORM\Index(name="Index_collector", columns={"recordedBy"}), @ORM\Index(name="Index_occurrences_procstatus", columns={"processingstatus"}), @ORM\Index(name="Index_occurRecordEnteredBy", columns={"recordEnteredBy"}), @ORM\Index(name="Index_family", columns={"family"}), @ORM\Index(name="Index_municipality", columns={"municipality"}), @ORM\Index(name="Index_occurrences_cult", columns={"cultivationStatus"}), @ORM\Index(name="IDX_C48904CFEA1D339B", columns={"collid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OccurrencesRepository")
  * @ApiResource(
  *     itemOperations={"get"},
@@ -159,11 +159,11 @@ class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterfa
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tidinterpreted", referencedColumnName="TID")
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
      * @Assert\Type(type="integer")
      */
-    private $taxaIdInterpreted;
+    private $taxaId;
 
     /**
      * @var string|null
@@ -2112,14 +2112,14 @@ class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterfa
         return $this;
     }
 
-    public function getTaxaIdInterpreted(): ?Taxa
+    public function getTaxaId(): ?Taxa
     {
-        return $this->taxaIdInterpreted;
+        return $this->taxaId;
     }
 
-    public function setTaxaIdInterpreted(?Taxa $taxaIdInterpreted): self
+    public function setTaxaId(?Taxa $taxaId): self
     {
-        $this->taxaIdInterpreted = $taxaIdInterpreted;
+        $this->taxaId = $taxaId;
 
         return $this;
     }

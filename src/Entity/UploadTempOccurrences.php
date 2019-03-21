@@ -163,10 +163,10 @@ class UploadTempOccurrences implements InitialTimestampInterface
     /**
      * @var int|null
      *
-     * @ORM\Column(name="tidinterpreted", type="integer", nullable=true, options={"unsigned"=true})
+     * @ORM\Column(name="tid", type="integer", nullable=true, options={"unsigned"=true})
      * @Assert\Type(type="integer")
      */
-    private $taxaIdInterpreted;
+    private $taxaId;
 
     /**
      * @var string|null
@@ -1360,14 +1360,14 @@ class UploadTempOccurrences implements InitialTimestampInterface
         return $this;
     }
 
-    public function getTaxaIdInterpreted(): ?int
+    public function getTaxaId(): ?int
     {
-        return $this->taxaIdInterpreted;
+        return $this->taxaId;
     }
 
-    public function setTaxaIdInterpreted(?int $taxaIdInterpreted): self
+    public function setTaxaId(?int $taxaId): self
     {
-        $this->taxaIdInterpreted = $taxaIdInterpreted;
+        $this->taxaId = $taxaId;
 
         return $this;
     }

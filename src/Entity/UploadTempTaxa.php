@@ -158,14 +158,6 @@ class UploadTempTaxa implements InitialTimestampInterface
     private $acceptance = 1;
 
     /**
-     * @var int|null
-     *
-     * @ORM\Column(name="TidAccepted", type="integer", nullable=true, options={"unsigned"=true})
-     * @Assert\Type(type="integer")
-     */
-    private $taxaIdAccepted;
-
-    /**
      * @var string|null
      *
      * @ORM\Column(name="AcceptedStr", type="string", length=250, nullable=true)
@@ -470,18 +462,6 @@ class UploadTempTaxa implements InitialTimestampInterface
     public function setAcceptance(?int $acceptance): self
     {
         $this->acceptance = $acceptance;
-
-        return $this;
-    }
-
-    public function getTaxaIdAccepted(): ?int
-    {
-        return $this->taxaIdAccepted;
-    }
-
-    public function setTaxaIdAccepted(?int $taxaIdAccepted): self
-    {
-        $this->taxaIdAccepted = $taxaIdAccepted;
 
         return $this;
     }

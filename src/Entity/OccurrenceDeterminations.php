@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * OccurrenceDeterminations
  *
- * @ORM\Table(name="omoccurdeterminations", uniqueConstraints={@ORM\UniqueConstraint(name="Index_unique_omoccurdeterminations", columns={"occid", "dateIdentified", "identifiedBy", "sciname"})}, indexes={@ORM\Index(name="FK_omoccurdets_tid", columns={"tidinterpreted"}), @ORM\Index(name="Index_dateIdentInterpreted", columns={"dateIdentifiedInterpreted"}), @ORM\Index(name="IDX_CA5B5A7F40A24FBA", columns={"occid"})})
+ * @ORM\Table(name="omoccurdeterminations", uniqueConstraints={@ORM\UniqueConstraint(name="Index_unique_omoccurdeterminations", columns={"occid", "dateIdentified", "identifiedBy", "sciname"})}, indexes={@ORM\Index(name="FK_omoccurdets_tid", columns={"tid"}), @ORM\Index(name="Index_dateIdentInterpreted", columns={"dateIdentifiedInterpreted"}), @ORM\Index(name="IDX_CA5B5A7F40A24FBA", columns={"occid"})})
  * @ORM\Entity(repositoryClass="App\Repository\OccurrenceDeterminationsRepository")
  * @ApiResource(
  *     itemOperations={"get"},
@@ -80,11 +80,11 @@ class OccurrenceDeterminations implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tidinterpreted", referencedColumnName="TID")
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
      * @Assert\Type(type="integer")
      */
-    private $taxaIdInterpreted;
+    private $taxaId;
 
     /**
      * @var string|null
@@ -371,14 +371,14 @@ class OccurrenceDeterminations implements InitialTimestampInterface
         return $this;
     }
 
-    public function getTaxaIdInterpreted(): ?Taxa
+    public function getTaxaId(): ?Taxa
     {
-        return $this->taxaIdInterpreted;
+        return $this->taxaId;
     }
 
-    public function setTaxaIdInterpreted(?Taxa $taxaIdInterpreted): self
+    public function setTaxaId(?Taxa $taxaId): self
     {
-        $this->taxaIdInterpreted = $taxaIdInterpreted;
+        $this->taxaId = $taxaId;
 
         return $this;
     }
