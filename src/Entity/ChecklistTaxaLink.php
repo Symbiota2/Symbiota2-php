@@ -33,7 +33,7 @@ class ChecklistTaxaLink implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID", nullable=false)
      * })
      */
     private $taxaId;
@@ -43,7 +43,7 @@ class ChecklistTaxaLink implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Checklists")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="CLID", referencedColumnName="CLID")
+     *   @ORM\JoinColumn(name="CLID", referencedColumnName="CLID", nullable=false)
      * })
      */
     private $checklistId;

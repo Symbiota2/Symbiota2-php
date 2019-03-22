@@ -25,7 +25,7 @@ class CollectionStats implements InitialTimestampInterface, ModifiedTimestampInt
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="\App\Entity\Collections")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
+     *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID", nullable=false)
      * })
      */
     private $collectionId;

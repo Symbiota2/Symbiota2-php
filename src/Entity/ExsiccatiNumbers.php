@@ -44,7 +44,7 @@ class ExsiccatiNumbers implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\ExsiccatiTitles")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ometid", referencedColumnName="ometid")
+     *   @ORM\JoinColumn(name="ometid", referencedColumnName="ometid", nullable=false)
      * })
      */
     private $exsiccatiTitleId;

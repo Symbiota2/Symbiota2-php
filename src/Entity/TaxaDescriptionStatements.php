@@ -33,9 +33,8 @@ class TaxaDescriptionStatements implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\TaxaDescriptionBlock")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tdbid", referencedColumnName="tdbid")
+     *   @ORM\JoinColumn(name="tdbid", referencedColumnName="tdbid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $descriptionBlockId;
 

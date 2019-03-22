@@ -34,9 +34,8 @@ class UserTaxonomy implements InitialTimestampInterface, ModifiedTimestampInterf
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $userId;
 
@@ -45,9 +44,8 @@ class UserTaxonomy implements InitialTimestampInterface, ModifiedTimestampInterf
      *
      * @ORM\ManyToOne(targetEntity="Taxa")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $taxaId;
 
@@ -56,9 +54,8 @@ class UserTaxonomy implements InitialTimestampInterface, ModifiedTimestampInterf
      *
      * @ORM\ManyToOne(targetEntity="TaxaAuthorities")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="taxauthid", referencedColumnName="taxauthid")
+     *   @ORM\JoinColumn(name="taxauthid", referencedColumnName="taxauthid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $taxaAuthorityId;
 

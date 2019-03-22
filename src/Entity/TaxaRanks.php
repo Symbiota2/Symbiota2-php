@@ -59,9 +59,8 @@ class TaxaRanks implements InitialTimestampInterface, ModifiedTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\TaxaRanks")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="dirparentrankid", referencedColumnName="rankid")
+     *   @ORM\JoinColumn(name="dirparentrankid", referencedColumnName="rankid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $directParentRankId;
 

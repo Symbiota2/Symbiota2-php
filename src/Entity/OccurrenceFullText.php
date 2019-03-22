@@ -25,7 +25,7 @@ class OccurrenceFullText
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid", nullable=false)
      * })
      */
     private $occurrenceId;

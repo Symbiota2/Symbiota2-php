@@ -35,7 +35,7 @@ class ChecklistVouchers implements InitialTimestampInterface
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="\App\Entity\Checklists")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="CLID", referencedColumnName="CLID")
+     *   @ORM\JoinColumn(name="CLID", referencedColumnName="CLID", nullable=false)
      * })
      */
     private $checklistId;
@@ -46,7 +46,7 @@ class ChecklistVouchers implements InitialTimestampInterface
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid", nullable=false)
      * })
      */
     private $occurrenceId;

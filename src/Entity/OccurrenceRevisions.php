@@ -34,9 +34,8 @@ class OccurrenceRevisions implements CreatedUserIdInterface, InitialTimestampInt
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $occurrenceId;
 

@@ -33,7 +33,7 @@ class ChecklistProjectCategories implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\ChecklistProjects")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="pid", referencedColumnName="pid")
+     *   @ORM\JoinColumn(name="pid", referencedColumnName="pid", nullable=false)
      * })
      */
     private $projectId;

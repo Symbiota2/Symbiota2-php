@@ -46,7 +46,7 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\LookupReferenceTypes")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ReferenceTypeId", referencedColumnName="ReferenceTypeId")
+     *   @ORM\JoinColumn(name="ReferenceTypeId", referencedColumnName="ReferenceTypeId", nullable=false)
      * })
      */
     private $referenceTypeId;

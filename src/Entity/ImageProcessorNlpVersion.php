@@ -33,9 +33,8 @@ class ImageProcessorNlpVersion implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\ImageProcessorRawLabels")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="prlid", referencedColumnName="prlid")
+     *   @ORM\JoinColumn(name="prlid", referencedColumnName="prlid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $imageProcessorRawLabelId;
 

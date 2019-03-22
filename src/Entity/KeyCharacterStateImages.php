@@ -33,9 +33,8 @@ class KeyCharacterStateImages implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\KeyCharacterStates")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="kmcsid", referencedColumnName="kmcsid")
+     *   @ORM\JoinColumn(name="kmcsid", referencedColumnName="kmcsid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $characterStateId;
 

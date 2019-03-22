@@ -33,9 +33,8 @@ class ImageProcessorRawLabels implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Images")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="imgid", referencedColumnName="imgid")
+     *   @ORM\JoinColumn(name="imgid", referencedColumnName="imgid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $imageId;
 
@@ -46,7 +45,6 @@ class ImageProcessorRawLabels implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
      * })
-     * @Assert\NotBlank()
      */
     private $occurrenceId;
 

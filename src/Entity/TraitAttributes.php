@@ -26,7 +26,7 @@ class TraitAttributes implements ModifiedUserIdInterface, CreatedUserIdInterface
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="\App\Entity\TraitStates")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="stateid", referencedColumnName="stateid")
+     *   @ORM\JoinColumn(name="stateid", referencedColumnName="stateid", nullable=false)
      * })
      */
     private $stateId;
@@ -37,7 +37,7 @@ class TraitAttributes implements ModifiedUserIdInterface, CreatedUserIdInterface
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid", nullable=false)
      * })
      */
     private $occurrenceId;

@@ -34,9 +34,8 @@ class OccurrenceComments implements CreatedUserIdInterface, InitialTimestampInte
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $occurrenceId;
 
@@ -56,7 +55,6 @@ class OccurrenceComments implements CreatedUserIdInterface, InitialTimestampInte
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
-     * @Assert\NotBlank()
      */
     private $createdUserId;
 

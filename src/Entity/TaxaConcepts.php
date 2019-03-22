@@ -33,9 +33,8 @@ class TaxaConcepts implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $taxaId;
 
@@ -44,9 +43,8 @@ class TaxaConcepts implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tidaccepted", referencedColumnName="TID")
+     *   @ORM\JoinColumn(name="tidaccepted", referencedColumnName="TID", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $taxaIdAccepted;
 
@@ -55,9 +53,8 @@ class TaxaConcepts implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\TaxaAuthorities")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="taxauthid", referencedColumnName="taxauthid")
+     *   @ORM\JoinColumn(name="taxauthid", referencedColumnName="taxauthid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $taxaAuthorityId;
 

@@ -33,9 +33,8 @@ class OccurrenceEdits implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $occurrenceId;
 
@@ -106,9 +105,8 @@ class OccurrenceEdits implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $userId;
 

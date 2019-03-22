@@ -34,9 +34,8 @@ class ImageKeywords implements CreatedUserIdInterface, InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Images")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="imgid", referencedColumnName="imgid")
+     *   @ORM\JoinColumn(name="imgid", referencedColumnName="imgid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $imageId;
 

@@ -35,9 +35,8 @@ class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterfa
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Collections")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
+     *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $collectionId;
 

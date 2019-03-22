@@ -34,7 +34,7 @@ class ChecklistTaxaComments implements CreatedUserIdInterface, InitialTimestampI
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Checklists")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="clid", referencedColumnName="CLID")
+     *   @ORM\JoinColumn(name="clid", referencedColumnName="CLID", nullable=false)
      * })
      */
     private $checklistId;
@@ -44,7 +44,7 @@ class ChecklistTaxaComments implements CreatedUserIdInterface, InitialTimestampI
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID", nullable=false)
      * })
      */
     private $taxaId;

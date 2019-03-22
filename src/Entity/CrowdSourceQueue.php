@@ -33,7 +33,7 @@ class CrowdSourceQueue implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\CrowdSourceCentral")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="omcsid", referencedColumnName="omcsid")
+     *   @ORM\JoinColumn(name="omcsid", referencedColumnName="omcsid", nullable=false)
      * })
      */
     private $crowdSourceCentralId;
@@ -43,9 +43,8 @@ class CrowdSourceQueue implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $occurrenceId;
 

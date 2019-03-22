@@ -33,9 +33,8 @@ class LookupStateProvinces implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\LookupCountries")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="countryId", referencedColumnName="countryId")
+     *   @ORM\JoinColumn(name="countryId", referencedColumnName="countryId", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $countryId;
 

@@ -35,9 +35,8 @@ class KeyCharacterStates implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\KeyCharacters")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="cid", referencedColumnName="cid")
+     *   @ORM\JoinColumn(name="cid", referencedColumnName="cid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $characterId;
 

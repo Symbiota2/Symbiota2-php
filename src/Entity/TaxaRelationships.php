@@ -25,7 +25,7 @@ class TaxaRelationships implements InitialTimestampInterface
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID", nullable=false)
      * })
      */
     private $taxaId;
@@ -36,7 +36,7 @@ class TaxaRelationships implements InitialTimestampInterface
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="\App\Entity\TaxaAuthorities")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="taxauthid", referencedColumnName="taxauthid")
+     *   @ORM\JoinColumn(name="taxauthid", referencedColumnName="taxauthid", nullable=false)
      * })
      */
     private $taxaAuthorityId;
@@ -47,7 +47,7 @@ class TaxaRelationships implements InitialTimestampInterface
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="parenttid", referencedColumnName="TID")
+     *   @ORM\JoinColumn(name="parenttid", referencedColumnName="TID", nullable=false)
      * })
      */
     private $parentTaxaId;

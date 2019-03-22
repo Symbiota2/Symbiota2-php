@@ -26,7 +26,7 @@ class ChecklistChildren implements InitialTimestampInterface, ModifiedTimestampI
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="\App\Entity\Checklists")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="clid", referencedColumnName="CLID")
+     *   @ORM\JoinColumn(name="clid", referencedColumnName="CLID", nullable=false)
      * })
      */
     private $checklistId;
@@ -37,7 +37,7 @@ class ChecklistChildren implements InitialTimestampInterface, ModifiedTimestampI
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="\App\Entity\Checklists")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="clidchild", referencedColumnName="CLID")
+     *   @ORM\JoinColumn(name="clidchild", referencedColumnName="CLID", nullable=false)
      * })
      */
     private $checklistIdChild;

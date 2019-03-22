@@ -25,9 +25,8 @@ class KeyDescriptions implements InitialTimestampInterface
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $taxaId;
 
@@ -37,9 +36,8 @@ class KeyDescriptions implements InitialTimestampInterface
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="\App\Entity\KeyCharacters")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="CID", referencedColumnName="cid")
+     *   @ORM\JoinColumn(name="CID", referencedColumnName="cid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $characterId;
 
@@ -49,9 +47,8 @@ class KeyDescriptions implements InitialTimestampInterface
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="\App\Entity\KeyCharacterStates")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="kmcsid", referencedColumnName="kmcsid")
+     *   @ORM\JoinColumn(name="kmcsid", referencedColumnName="kmcsid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $characterStateId;
 

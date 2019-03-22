@@ -25,7 +25,7 @@ class TraitDependencies implements InitialTimestampInterface
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="\App\Entity\Traits")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="traitid", referencedColumnName="traitid")
+     *   @ORM\JoinColumn(name="traitid", referencedColumnName="traitid", nullable=false)
      * })
      */
     private $traitId;
@@ -36,7 +36,7 @@ class TraitDependencies implements InitialTimestampInterface
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="\App\Entity\TraitStates")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="parentstateid", referencedColumnName="stateid")
+     *   @ORM\JoinColumn(name="parentstateid", referencedColumnName="stateid", nullable=false)
      * })
      */
     private $parentStateId;

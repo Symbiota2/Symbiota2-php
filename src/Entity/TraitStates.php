@@ -34,9 +34,8 @@ class TraitStates implements ModifiedUserIdInterface, CreatedUserIdInterface, In
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Traits")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="traitid", referencedColumnName="traitid")
+     *   @ORM\JoinColumn(name="traitid", referencedColumnName="traitid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $traitId;
 

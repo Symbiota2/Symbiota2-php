@@ -25,7 +25,7 @@ class OccurrenceGeoIndex implements InitialTimestampInterface
      * @ORM\Id
      * @ORM\OneToOne(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
+     *   @ORM\JoinColumn(name="tid", referencedColumnName="TID", nullable=false)
      * })
      */
     private $taxaId;

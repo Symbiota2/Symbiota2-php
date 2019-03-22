@@ -49,9 +49,8 @@ class UserRoles implements UserIdAssignedByInterface, InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Users")
      * @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="uid", referencedColumnName="uid")
+     *      @ORM\JoinColumn(name="uid", referencedColumnName="uid", nullable=false)
      * })
-     * @Assert\NotBlank()
      * @Groups({"post"})
      */
     private $userId;

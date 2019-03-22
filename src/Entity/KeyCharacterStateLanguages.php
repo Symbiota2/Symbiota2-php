@@ -25,9 +25,8 @@ class KeyCharacterStateLanguages implements InitialTimestampInterface
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="\App\Entity\KeyCharacterStates")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="kmcsid", referencedColumnName="kmcsid")
+     *   @ORM\JoinColumn(name="kmcsid", referencedColumnName="kmcsid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $characterStateId;
 
@@ -64,9 +63,8 @@ class KeyCharacterStateLanguages implements InitialTimestampInterface
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="\App\Entity\LookupLanguages")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="langid", referencedColumnName="langid")
+     *   @ORM\JoinColumn(name="langid", referencedColumnName="langid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $languageId;
 

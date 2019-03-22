@@ -51,9 +51,8 @@ class KeyCharacterHeading implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\LookupLanguages")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="langid", referencedColumnName="langid")
+     *   @ORM\JoinColumn(name="langid", referencedColumnName="langid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $languageId;
 

@@ -33,9 +33,8 @@ class GlossaryTermLink implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Glossary")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="glossgrpid", referencedColumnName="glossid")
+     *   @ORM\JoinColumn(name="glossgrpid", referencedColumnName="glossid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $glossaryGroupId;
 
@@ -44,9 +43,8 @@ class GlossaryTermLink implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Glossary")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="glossid", referencedColumnName="glossid")
+     *   @ORM\JoinColumn(name="glossid", referencedColumnName="glossid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $glossaryId;
 

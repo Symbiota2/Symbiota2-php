@@ -33,9 +33,8 @@ class UploadMappings implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\UploadParameters")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uspid", referencedColumnName="uspid")
+     *   @ORM\JoinColumn(name="uspid", referencedColumnName="uspid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $uploadParameterId;
 

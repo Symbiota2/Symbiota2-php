@@ -33,9 +33,8 @@ class ImageProcessorNlpFragment implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\ImageProcessorNlp")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="spnlpid", referencedColumnName="spnlpid")
+     *   @ORM\JoinColumn(name="spnlpid", referencedColumnName="spnlpid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $imageProcessorNlpId;
 

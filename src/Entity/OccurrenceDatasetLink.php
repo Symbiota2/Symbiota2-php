@@ -33,9 +33,8 @@ class OccurrenceDatasetLink implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid")
+     *   @ORM\JoinColumn(name="occid", referencedColumnName="occid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $occurrenceId;
 
@@ -44,9 +43,8 @@ class OccurrenceDatasetLink implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\OccurrenceDatasets")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="datasetid", referencedColumnName="datasetid")
+     *   @ORM\JoinColumn(name="datasetid", referencedColumnName="datasetid", nullable=false)
      * })
-     * @Assert\NotBlank()
      */
     private $datasetId;
 

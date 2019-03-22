@@ -33,10 +33,8 @@ class ImageProcessorOcrFragment implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\ImageProcessorRawLabels")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="prlid", referencedColumnName="prlid")
+     *   @ORM\JoinColumn(name="prlid", referencedColumnName="prlid", nullable=false)
      * })
-     * @Assert\NotBlank()
-     * @Assert\Type(type="integer")
      */
     private $imageProcessorRawLabelId;
 
