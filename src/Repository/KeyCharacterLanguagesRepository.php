@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\KeyCharacterDependence;
+use App\Entity\KeyCharacterLanguages;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method KeyCharacterDependence|null find($id, $lockMode = null, $lockVersion = null)
- * @method KeyCharacterDependence|null findOneBy(array $criteria, array $orderBy = null)
- * @method KeyCharacterDependence[]    findAll()
- * @method KeyCharacterDependence[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method KeyCharacterLanguages|null find($id, $lockMode = null, $lockVersion = null)
+ * @method KeyCharacterLanguages|null findOneBy(array $criteria, array $orderBy = null)
+ * @method KeyCharacterLanguages[]    findAll()
+ * @method KeyCharacterLanguages[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class KeyCharacterDependenceRepository extends ServiceEntityRepository
+class KeyCharacterLanguagesRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, KeyCharacterDependence::class);
+        parent::__construct($registry, KeyCharacterLanguages::class);
     }
 
     // /**
-    //  * @return KeyCharacterDependence[] Returns an array of KeyCharacterDependence objects
+    //  * @return KeyCharacterLanguages[] Returns an array of KeyCharacterLanguages objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class KeyCharacterDependenceRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?KeyCharacterDependence
+    public function findOneBySomeField($value): ?KeyCharacterLanguages
     {
         return $this->createQueryBuilder('k')
             ->andWhere('k.exampleField = :val')

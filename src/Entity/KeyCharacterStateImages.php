@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * KeyCharacterStateImages
  *
- * @ORM\Table(name="kmcsimages", indexes={@ORM\Index(name="FK_kscsimages_kscs_idx", columns={"cid", "cs"})})
+ * @ORM\Table(name="kmcsimages", indexes={@ORM\Index(name="FK_kscsimages_kscs_idx", columns={"kmcsid"})})
  * @ORM\Entity(repositoryClass="App\Repository\KeyCharacterStateImagesRepository")
  * @ApiResource(
  *     itemOperations={"get"},
@@ -29,24 +29,15 @@ class KeyCharacterStateImages implements InitialTimestampInterface
     private $id;
 
     /**
-     * @var \App\Entity\KeyCharacters
+     * @var \App\Entity\KeyCharacterStates
      *
-     * @ORM\ManyToOne(targetEntity="\App\Entity\KeyCharacters")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\KeyCharacterStates")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="cid", referencedColumnName="cid")
+     *   @ORM\JoinColumn(name="kmcsid", referencedColumnName="kmcsid")
      * })
      * @Assert\NotBlank()
      */
-    private $characterId;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="cs", type="string", length=16)
-     * @Assert\NotBlank()
-     * @Assert\Length(max=16)
-     */
-    private $characterState;
+    private $characterStateId;
 
     /**
      * @var string
@@ -95,26 +86,14 @@ class KeyCharacterStateImages implements InitialTimestampInterface
         return $this->id;
     }
 
-    public function getCharacterId(): ?KeyCharacters
+    public function getCharacterStateId(): ?KeyCharacterStates
     {
-        return $this->characterId;
+        return $this->characterStateId;
     }
 
-    public function setCharacterId(?KeyCharacters $characterId): self
+    public function setCharacterStateId(?KeyCharacterStates $characterStateId): self
     {
-        $this->characterId = $characterId;
-
-        return $this;
-    }
-
-    public function getCharacterState(): ?string
-    {
-        return $this->characterState;
-    }
-
-    public function setCharacterState(string $characterState): self
-    {
-        $this->characterState = $characterState;
+        $this->characterStateId = $characterStateId;
 
         return $this;
     }

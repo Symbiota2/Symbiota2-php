@@ -8,46 +8,37 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * KeyCharacterStateLanguages
+ * KeyCharacterLanguages
  *
- * @ORM\Table(name="kmcslang", indexes={@ORM\Index(name="FK_cslang_lang_idx", columns={"langid"})})
- * @ORM\Entity(repositoryClass="App\Repository\KeyCharacterStateLanguagesRepository")
+ * @ORM\Table(name="kmcharacterlang")
+ * @ORM\Entity(repositoryClass="App\Repository\KeyCharacterLanguagesRepository")
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}
  * )
  */
-class KeyCharacterStateLanguages implements InitialTimestampInterface
+class KeyCharacterLanguages implements InitialTimestampInterface
 {
     /**
-     * @var \App\Entity\KeyCharacterStates
+     * @var \App\Entity\KeyCharacters
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="\App\Entity\KeyCharacterStates")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\KeyCharacters")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="kmcsid", referencedColumnName="kmcsid")
+     *   @ORM\JoinColumn(name="cid", referencedColumnName="cid")
      * })
      * @Assert\NotBlank()
      */
-    private $characterStateId;
+    private $characterId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cs", type="string", length=16)
-     * @Assert\NotBlank()
-     * @Assert\Length(max=16)
-     */
-    private $characterState;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="charstatename", type="string", length=150)
+     * @ORM\Column(name="charname", type="string", length=150)
      * @Assert\NotBlank()
      * @Assert\Length(max=150)
      */
-    private $characterStateName;
+    private $characterName;
 
     /**
      * @var string
@@ -87,6 +78,14 @@ class KeyCharacterStateLanguages implements InitialTimestampInterface
     private $notes;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(name="helpurl", type="string", length=500, nullable=true)
+     * @Assert\Length(max=500)
+     */
+    private $helpUrl;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
@@ -94,21 +93,28 @@ class KeyCharacterStateLanguages implements InitialTimestampInterface
      */
     private $initialTimestamp;
 
-    public function getCharacterStateId(): ?KeyCharacterStates
+    public function getCharacterId(): ?KeyCharacters
     {
-        return $this->characterStateId;
+        return $this->characterId;
     }
 
-    public function setCharacterStateId(?KeyCharacterStates $characterStateId): self
+    public function setCharacterId(?KeyCharacters $characterId): self
     {
-        $this->characterStateId = $characterStateId;
+        $this->characterId = $characterId;
 
         return $this;
     }
 
-    public function getCharacterState(): ?string
+    public function getCharacterName(): ?string
     {
-        return $this->characterState;
+        return $this->characterName;
+    }
+
+    public function setCharacterName(string $characterName): self
+    {
+        $this->characterName = $characterName;
+
+        return $this;
     }
 
     public function getLanguageId(): ?LookupLanguages
@@ -119,18 +125,6 @@ class KeyCharacterStateLanguages implements InitialTimestampInterface
     public function setLanguageId(?LookupLanguages $languageId): self
     {
         $this->languageId = $languageId;
-
-        return $this;
-    }
-
-    public function getCharacterStateName(): ?string
-    {
-        return $this->characterStateName;
-    }
-
-    public function setCharacterStateName(string $characterStateName): self
-    {
-        $this->characterStateName = $characterStateName;
 
         return $this;
     }
@@ -167,6 +161,18 @@ class KeyCharacterStateLanguages implements InitialTimestampInterface
     public function setNotes(?string $notes): self
     {
         $this->notes = $notes;
+
+        return $this;
+    }
+
+    public function getHelpUrl(): ?string
+    {
+        return $this->helpUrl;
+    }
+
+    public function setHelpUrl(?string $helpUrl): self
+    {
+        $this->helpUrl = $helpUrl;
 
         return $this;
     }

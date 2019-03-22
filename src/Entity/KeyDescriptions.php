@@ -44,6 +44,18 @@ class KeyDescriptions implements InitialTimestampInterface
     private $characterId;
 
     /**
+     * @var \App\Entity\KeyCharacterStates
+     *
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="\App\Entity\KeyCharacterStates")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="kmcsid", referencedColumnName="kmcsid")
+     * })
+     * @Assert\NotBlank()
+     */
+    private $characterStateId;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="Modifier", type="string", length=255, nullable=true)
@@ -55,7 +67,6 @@ class KeyDescriptions implements InitialTimestampInterface
      * @var string
      *
      * @ORM\Column(name="CS", type="string", length=16)
-     * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      * @Assert\NotBlank()
      * @Assert\Length(max=16)
@@ -141,6 +152,18 @@ class KeyDescriptions implements InitialTimestampInterface
     public function setCharacterId(?KeyCharacters $characterId): self
     {
         $this->characterId = $characterId;
+
+        return $this;
+    }
+
+    public function getCharacterStateId(): ?KeyCharacterStates
+    {
+        return $this->characterStateId;
+    }
+
+    public function setCharacterStateId(?KeyCharacterStates $characterStateId): self
+    {
+        $this->characterStateId = $characterStateId;
 
         return $this;
     }

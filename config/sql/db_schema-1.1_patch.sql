@@ -5,9 +5,6 @@ ALTER TABLE `agents`
 ALTER TABLE `kmchartaxalink`
   CHANGE COLUMN `EditabilityInherited` `EditabilityInherited` int(1) DEFAULT NULL;
 
-ALTER TABLE `kmcslang`
-  DROP FOREIGN KEY `FK_cslang_lang`;
-
 ALTER TABLE `fmchklstchildren`
   DROP FOREIGN KEY `FK_fmchklstchild_child`;
 
@@ -60,20 +57,6 @@ ALTER TABLE `fmchklsttaxalink`
 ALTER TABLE `fmchklsttaxalink`
   ADD UNIQUE `FK_clidtidmorph_id` (`TID`, `CLID`, `morphospecies`) comment '';
 
-ALTER TABLE `kmchardependance`
-  DROP FOREIGN KEY `FK_chardependance_cs`;
-
-ALTER TABLE `kmcsimages`
-  DROP FOREIGN KEY `FK_kscsimages_kscs`;
-
-ALTER TABLE `kmcslang`
-  CHANGE COLUMN `intialtimestamp` `initialtimestamp` timestamp(0) NOT NULL DEFAULT current_timestamp AFTER `notes`,
-  DROP FOREIGN KEY `FK_cslang_1`;
-
-ALTER TABLE `kmdescr`
-  CHANGE COLUMN `DateEntered` `InitialTimeStamp` timestamp(0) NOT NULL DEFAULT current_timestamp AFTER `Notes`,
-  DROP FOREIGN KEY `FK_descr_cs`;
-
 ALTER TABLE `kmcs`
   DROP PRIMARY KEY;
 
@@ -86,6 +69,64 @@ ALTER TABLE `kmcs`
 
 ALTER TABLE `kmcs`
   ADD UNIQUE `FK_cidclid_id` (`cid`, `cs`) comment '';
+
+ALTER TABLE `kmchardependance`
+  DROP PRIMARY KEY,
+  DROP FOREIGN KEY `FK_chardependance_cs`,
+  DROP FOREIGN KEY `FK_chardependance_cid`,
+  DROP INDEX `FK_chardependance_cid_idx`,
+  DROP INDEX `FK_chardependance_cs_idx`;
+
+RENAME TABLE `kmchardependance` TO `kmchardependence`;
+
+ALTER TABLE `kmchardependence`
+  ADD COLUMN `kmcsid` int(10) NOT NULL AFTER `CID`;
+
+UPDATE kmchardependence AS d LEFT JOIN kmcs AS cs ON d.CIDDependance = cs.cid AND d.CSDependance = cs.cs
+  SET d.kmcsid = cs.kmcsid;
+
+ALTER TABLE `kmchardependance`
+  DROP COLUMN `CIDDependance`,
+  DROP COLUMN `CSDependance`,
+  DROP COLUMN `InitialTimeStamp`;
+
+ALTER TABLE `kmcsimages`
+  DROP FOREIGN KEY `FK_kscsimages_kscs`,
+  ADD COLUMN `kmcsid` int(10) NOT NULL AFTER `csimgid`;
+
+UPDATE kmcsimages AS i LEFT JOIN kmcs AS cs ON i.cid = cs.cid AND i.cs = cs.cs
+  SET i.kmcsid = cs.kmcsid;
+
+ALTER TABLE `kmcsimages`
+  DROP COLUMN `cid`,
+  DROP COLUMN `cs`;
+
+ALTER TABLE `kmcslang`
+  DROP PRIMARY KEY,
+  CHANGE COLUMN `intialtimestamp` `initialtimestamp` timestamp(0) NOT NULL DEFAULT current_timestamp AFTER `notes`,
+  DROP FOREIGN KEY `FK_cslang_lang`,
+  DROP FOREIGN KEY `FK_cslang_1`,
+  ADD COLUMN `kmcsid` int(10) NOT NULL AFTER `cid`;
+
+UPDATE kmcslang AS l LEFT JOIN kmcs AS cs ON l.cid = cs.cid AND l.cs = cs.cs
+  SET l.kmcsid = cs.kmcsid;
+
+ALTER TABLE `kmcslang`
+  DROP COLUMN `cid`,
+
+ALTER TABLE `kmdescr`
+  CHANGE COLUMN `DateEntered` `InitialTimeStamp` timestamp(0) NOT NULL DEFAULT current_timestamp AFTER `Notes`,
+  DROP FOREIGN KEY `FK_descr_cs`,
+  ADD COLUMN `kmcsid` int(10) NOT NULL AFTER `CID`;
+
+UPDATE kmdescr AS d LEFT JOIN kmcs AS cs ON d.CID = cs.cid AND d.CS = cs.cs
+  SET d.kmcsid = cs.kmcsid;
+
+ALTER TABLE `kmdescrdeletions`
+  ADD COLUMN `kmcsid` int(10) NOT NULL AFTER `CID`;
+
+UPDATE kmdescrdeletions AS d LEFT JOIN kmcs AS cs ON d.CID = cs.cid AND d.CS = cs.cs
+  SET d.kmcsid = cs.kmcsid;
 
 ALTER TABLE `omoccurdatasetlink`
   DROP PRIMARY KEY;
@@ -567,10 +608,6 @@ ALTER TABLE `kmcharacterlang`
   DROP FOREIGN KEY `FK_charlang_lang`,
   DROP INDEX `FK_charlang_lang_idx`;
 
-ALTER TABLE `kmchardependance`
-  DROP FOREIGN KEY `FK_chardependance_cid`,
-  DROP INDEX `FK_chardependance_cid_idx`;
-
 ALTER TABLE `kmcharheading`
   DROP FOREIGN KEY `FK_kmcharheading_lang`,
   DROP INDEX `FK_kmcharheading_lang_idx`;
@@ -699,23 +736,25 @@ WHERE RankName IN("Organism","Kingdom","Subkingdom","Division","Phylum","Subdivi
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (1, 'Organism', 1, 1);
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (10, 'Kingdom', 1, 1);
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (20, 'Subkingdom', 10, 10);
-INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (25, 'clade', 10, 10);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (25, 'Subkingdom clade', 10, 10);
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (30, 'Division', 20, 10);
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (30, 'Phylum', 20, 10);
-INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (35, 'clade', 30, 10);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (35, 'Division clade', 30, 10);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (35, 'Phylum clade', 30, 10);
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (40, 'Subdivision', 30, 30);
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (40, 'Subphylum', 30, 30);
-INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (45, 'clade', 40, 30);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (45, 'Subdivision clade', 40, 30);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (45, 'Subphylum clade', 40, 30);
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (50, 'Superclass', 40, 30);
-INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (55, 'clade', 50, 30);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (55, 'Superclass clade', 50, 30);
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (60, 'Class', 50, 30);
-INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (65, 'clade', 60, 30);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (65, 'Class clade', 60, 30);
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (70, 'Subclass', 60, 60);
-INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (75, 'clade', 70, 60);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (75, 'Subclass clade', 70, 60);
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (100, 'Order', 70, 60);
-INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (105, 'clade', 100, 60);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (105, 'Order clade', 100, 60);
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (110, 'Suborder', 100, 100);
-INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (115, 'clade', 110, 100);
+INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (115, 'Suborder clade', 110, 100);
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (140, 'Family', 110, 100);
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (150, 'Subfamily', 140, 140);
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (160, 'Tribe', 150, 140);

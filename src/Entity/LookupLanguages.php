@@ -72,13 +72,6 @@ class LookupLanguages implements InitialTimestampInterface
     private $initialTimestamp;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\KeyCharacters", mappedBy="languageId")
-     */
-    private $characterId;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -147,34 +140,6 @@ class LookupLanguages implements InitialTimestampInterface
     public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
         $this->initialTimestamp = $initialTimestamp;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|KeyCharacters[]
-     */
-    public function getCharacterId(): Collection
-    {
-        return $this->characterId;
-    }
-
-    public function addCharacterId(KeyCharacters $characterId): self
-    {
-        if (!$this->characterId->contains($characterId)) {
-            $this->characterId[] = $characterId;
-            $characterId->addLanguageId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCharacterId(KeyCharacters $characterId): self
-    {
-        if ($this->characterId->contains($characterId)) {
-            $this->characterId->removeElement($characterId);
-            $characterId->removeLanguageId($this);
-        }
 
         return $this;
     }

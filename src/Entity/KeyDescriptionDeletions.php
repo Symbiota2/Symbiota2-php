@@ -41,6 +41,17 @@ class KeyDescriptionDeletions
     private $characterId;
 
     /**
+     * @var \App\Entity\KeyCharacterStates
+     *
+     * @ORM\ManyToOne(targetEntity="\App\Entity\KeyCharacterStates")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="kmcsid", referencedColumnName="kmcsid")
+     * })
+     * @Assert\NotBlank()
+     */
+    private $characterStateId;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="CS", type="string", length=16)
@@ -158,6 +169,18 @@ class KeyDescriptionDeletions
     public function setCharacterId(?KeyCharacters $characterId): self
     {
         $this->characterId = $characterId;
+
+        return $this;
+    }
+
+    public function getCharacterStateId(): ?KeyCharacterStates
+    {
+        return $this->characterStateId;
+    }
+
+    public function setCharacterStateId(?KeyCharacterStates $characterStateId): self
+    {
+        $this->characterStateId = $characterStateId;
 
         return $this;
     }

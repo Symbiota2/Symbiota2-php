@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -119,6 +121,13 @@ class KeyCharacterStates implements InitialTimestampInterface
      * @Assert\Length(max=45)
      */
     private $enteredBy;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="\App\Entity\KeyCharacters", mappedBy="characterStateDependence")
+     */
+    private $characterDependence;
 
     public function getId(): ?int
     {
@@ -257,5 +266,31 @@ class KeyCharacterStates implements InitialTimestampInterface
         return $this;
     }
 
+    /**
+     * @return Collection|KeyCharacters[]
+     */
+    public function getCharacterDependence(): Collection
+    {
+        return $this->characterDependence;
+    }
 
+    public function addCharacterDependence(KeyCharacters $characterDependence): self
+    {
+        if (!$this->characterDependence->contains($characterDependence)) {
+            $this->characterDependence[] = $characterDependence;
+            $characterDependence->addCharacterStateDependence($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCharacterDependence(KeyCharacters $characterDependence): self
+    {
+        if ($this->characterDependence->contains($characterDependence)) {
+            $this->characterDependence->removeElement($characterDependence);
+            $characterDependence->removeCharacterStateDependence($this);
+        }
+
+        return $this;
+    }
 }

@@ -144,25 +144,25 @@ class KeyCharacters implements InitialTimestampInterface
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\LookupLanguages", inversedBy="characterId")
-     * @ORM\JoinTable(name="kmcharacterlang",
-     *   joinColumns={
-     *     @ORM\JoinColumn(name="cid", referencedColumnName="cid")
-     *   },
-     *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="langid", referencedColumnName="langid")
-     *   }
-     * )
-     */
-    private $languageId;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
      * @ORM\ManyToMany(targetEntity="\App\Entity\Taxa", mappedBy="characterId")
      * @Assert\NotBlank()
      */
     private $taxaId;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="\App\Entity\KeyCharacterStates", inversedBy="characterDependence")
+     * @ORM\JoinTable(name="kmchardependence",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="CID", referencedColumnName="cid")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="kmcsid", referencedColumnName="kmcsid")
+     *   }
+     * )
+     */
+    private $characterStateDependence;
 
     /**
      * Constructor
@@ -335,26 +335,26 @@ class KeyCharacters implements InitialTimestampInterface
     }
 
     /**
-     * @return Collection|LookupLanguages[]
+     * @return Collection|KeyCharacterStates[]
      */
-    public function getLanguageId(): Collection
+    public function getCharacterStateDependence(): Collection
     {
-        return $this->languageId;
+        return $this->characterStateDependence;
     }
 
-    public function addLanguageId(LookupLanguages $languageId): self
+    public function addCharacterStateDependence(KeyCharacterStates $characterStateDependence): self
     {
-        if (!$this->languageId->contains($languageId)) {
-            $this->languageId[] = $languageId;
+        if (!$this->characterStateDependence->contains($characterStateDependence)) {
+            $this->characterStateDependence[] = $characterStateDependence;
         }
 
         return $this;
     }
 
-    public function removeLanguageId(LookupLanguages $languageId): self
+    public function removeCharacterStateDependence(KeyCharacterStates $characterStateDependence): self
     {
-        if ($this->languageId->contains($languageId)) {
-            $this->languageId->removeElement($languageId);
+        if ($this->characterStateDependence->contains($characterStateDependence)) {
+            $this->characterStateDependence->removeElement($characterStateDependence);
         }
 
         return $this;

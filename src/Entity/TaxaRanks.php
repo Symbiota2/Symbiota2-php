@@ -40,9 +40,9 @@ class TaxaRanks implements InitialTimestampInterface, ModifiedTimestampInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="rankname", type="string", length=15)
+     * @ORM\Column(name="rankname", type="string", length=25)
      * @Assert\NotBlank()
-     * @Assert\Length(max=15)
+     * @Assert\Length(max=25)
      */
     private $rankName;
 
