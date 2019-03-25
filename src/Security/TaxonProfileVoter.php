@@ -23,6 +23,8 @@ class TaxonProfileVoter extends Voter
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
+        $vote = false;
+
         if(!$token->getUser() instanceof Users) {
             return false;
         }
@@ -32,12 +34,17 @@ class TaxonProfileVoter extends Voter
         $resultArr = $q->iterate();
         foreach ($resultArr as $row) {
             $role = $row[0]->getRole();
+            if($role === 'SuperAdmin') {
+                $token->getUser()->addCurrentPermissions('SuperAdmin');
+                $vote = true;
+            }
             if($role === 'TaxonProfile') {
-                return true;
+                $token->getUser()->addCurrentPermissions('TaxonProfile');
+                $vote = true;
             }
         }
 
-        return false;
+        return $vote;
     }
 
 }

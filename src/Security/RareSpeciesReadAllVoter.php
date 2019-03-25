@@ -23,6 +23,8 @@ class RareSpeciesReadAllVoter extends Voter
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
+        $vote = false;
+
         if(!$token->getUser() instanceof Users) {
             return false;
         }
@@ -32,15 +34,21 @@ class RareSpeciesReadAllVoter extends Voter
         $resultArr = $q->iterate();
         foreach ($resultArr as $row) {
             $role = $row[0]->getRole();
+            if($role === 'SuperAdmin') {
+                $token->getUser()->addCurrentPermissions('SuperAdmin');
+                $vote = true;
+            }
             if($role === 'RareSppAdmin') {
-                return true;
+                $token->getUser()->addCurrentPermissions('RareSppAdmin');
+                $vote = true;
             }
             if($role === 'RareSppReadAll') {
-                return true;
+                $token->getUser()->addCurrentPermissions('RareSppReadAll');
+                $vote = true;
             }
         }
 
-        return false;
+        return $vote;
     }
 
 }

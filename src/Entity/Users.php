@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *      itemOperations={
  *          "get"={
- *              "access_control"="is_granted('SuperAdmin', object) or object == user",
+ *              "access_control"="is_granted('KeyEditor', object) or object == user",
  *              "normalization_context"={
  *                  "groups"={"get"}
  *              }
@@ -247,7 +247,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=100, nullable=false)
-     * @Groups({"post", "put"})
+     * @Groups({"post", "put", "get_admin", "get-owner"})
      * @Assert\NotBlank(groups={"post", "put"})
      * @Assert\Email(groups={"post", "put"})
      * @Assert\Length(max=100, groups={"post", "put"})
@@ -333,6 +333,12 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @Groups({"get"})
      */
     private $permissions;
+
+    /**
+     * @var array
+     * @Groups({""})
+     */
+    private $currentPermissions = array();
 
     /**
      * Constructor
@@ -656,6 +662,20 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
     {
         return $this->permissions;
 
+    }
+
+    public function getCurrentPermissions(): ?array
+    {
+        return $this->currentPermissions;
+    }
+
+    public function addCurrentPermissions(?string $currentPermissions): self
+    {
+        if(!in_array($currentPermissions, $this->currentPermissions)) {
+            $this->currentPermissions[] = $currentPermissions;
+        }
+
+        return $this;
     }
 
     public function getRoles(): array

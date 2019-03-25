@@ -25,6 +25,8 @@ class ProjectAdminVoter extends Voter
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
+        $vote = false;
+
         if(!$token->getUser() instanceof Users) {
             return false;
         }
@@ -41,14 +43,19 @@ class ProjectAdminVoter extends Voter
         $resultArr = $q->iterate();
         foreach ($resultArr as $row) {
             $role = $row[0]->getRole();
+            if($role === 'SuperAdmin') {
+                $token->getUser()->addCurrentPermissions('SuperAdmin');
+                $vote = true;
+            }
             if($role === 'ProjAdmin') {
                 if($row[0]->getTableId() == $this->projectId) {
-                    return true;
+                    $token->getUser()->addCurrentPermissions('ProjAdmin');
+                    $vote = true;
                 }
             }
         }
 
-        return false;
+        return $vote;
     }
 
 }
