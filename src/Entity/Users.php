@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Controller\ResetPasswordController;
+use App\Controller\VerifyUserController;
 
 /**
  * Users
@@ -20,7 +21,7 @@ use App\Controller\ResetPasswordController;
  * @ApiResource(
  *      itemOperations={
  *          "get"={
- *              "access_control"="is_granted('KeyEditor', object) or object == user",
+ *              "access_control"="is_granted('SuperAdmin', object) or object == user",
  *              "normalization_context"={
  *                  "groups"={"get"}
  *              }
@@ -36,14 +37,22 @@ use App\Controller\ResetPasswordController;
  *              "validation_groups"={"put"}
  *          },
  *          "password_reset"={
- *             "access_control"="is_granted('SuperAdmin', object) and object == user",
- *             "method"="PUT",
- *             "path"="/users/{id}/passwordreset",
- *             "controller"=ResetPasswordController::class,
- *             "denormalization_context"={
- *                 "groups"={"password_reset"}
- *             },
- *             "validation_groups"={"password_reset"}
+ *              "access_control"="is_granted('SuperAdmin', object) and object == user",
+ *              "method"="PUT",
+ *              "path"="/users/{id}/passwordreset",
+ *              "controller"=ResetPasswordController::class,
+ *              "denormalization_context"={
+ *                  "groups"={"password_reset"}
+ *              },
+ *              "validation_groups"={"password_reset"}
+*           },
+ *          "verify_user"={
+*               "method"="GET",
+ *              "path"="/users/{id}/verify/{token}",
+ *              "controller"=VerifyUserController::class,
+ *              "normalization_context"={
+ *                  "groups"={"get"}
+ *              }
  *          }
  *      },
  *      collectionOperations={
@@ -102,7 +111,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
     /**
      * @var string
      *
-     * @ORM\Column(name="lastname", type="string", length=45, nullable=false)
+     * @ORM\Column(name="lastname", type="string", length=45)
      * @Groups({"get", "get-roles", "get-checklist-info", "post", "put"})
      * @Assert\NotBlank(groups={"post"})
      * @Assert\Length(max=45, groups={"post"})
@@ -112,7 +121,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=45, nullable=false)
+     * @ORM\Column(name="username", type="string", length=45)
      * @Groups({"get", "get-roles", "get-checklist-info", "post"})
      * @Assert\NotBlank(groups={"post"})
      * @Assert\Length(min=6, max=45, groups={"post"})
@@ -122,7 +131,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=255, nullable=false)
+     * @ORM\Column(name="password", type="string", length=255)
      * @Groups({"post"})
      * @Assert\NotBlank(groups={"post"})
      * @Assert\Regex(
@@ -257,7 +266,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=100, nullable=false)
+     * @ORM\Column(name="email", type="string", length=100)
      * @Groups({"post", "put", "get_admin", "get-owner"})
      * @Assert\NotBlank(groups={"post"})
      * @Assert\Email(groups={"post"})
@@ -286,7 +295,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
     /**
      * @var int
      *
-     * @ORM\Column(name="ispublic", type="integer", options={"unsigned"=true, "default"="1"})
+     * @ORM\Column(name="ispublic", type="integer", options={"unsigned"=true})
      * @Groups({"get", "post", "put"})
      * @Assert\NotBlank(groups={"post"})
      */
@@ -319,7 +328,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
     /**
      * @var int
      *
-     * @ORM\Column(name="verified", type="integer", options={"default"="0"})
+     * @ORM\Column(name="verified", type="integer")
      * @Groups({"get"})
      */
     private $verified = 0;
@@ -334,7 +343,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
     /**
      * @var string|null
      *
-     * @ORM\Column(name="verification_token", type="string", length=255, nullable=true)
+     * @ORM\Column(name="verification_token", type="string", length=40, nullable=true)
      * @Groups({"get"})
      */
     private $verificationToken;

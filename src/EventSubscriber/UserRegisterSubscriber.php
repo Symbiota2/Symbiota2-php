@@ -4,39 +4,46 @@ namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Users;
+use App\Guard\TokenGenerator;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class PasswordHashSubscriber implements EventSubscriberInterface
+class UserRegisterSubscriber implements EventSubscriberInterface
 {
     private $passwordEncoder;
+    private $tokenGenerator;
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder, TokenGenerator $tokenGenerator)
     {
         $this->passwordEncoder = $passwordEncoder;
+        $this->tokenGenerator = $tokenGenerator;
     }
 
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['hashPassword', EventPriorities::PRE_WRITE],
+            KernelEvents::VIEW => ['registerUser', EventPriorities::PRE_WRITE],
         ];
     }
 
-    public function hashPassword(GetResponseForControllerResultEvent $event)
+    public function registerUser(GetResponseForControllerResultEvent $event)
     {
         $user = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        if (!$user instanceof Users || !in_array($method, [Request::METHOD_POST])) {
+        if (!$user instanceof Users || $method != Request::METHOD_POST) {
             return;
         }
 
         $user->setPassword(
             $this->passwordEncoder->encodePassword($user, $user->getPassword())
+        );
+
+        $user->setVerificationToken(
+            $this->tokenGenerator->getVerificationToken()
         );
     }
 }

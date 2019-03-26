@@ -13,7 +13,7 @@ class ResetPasswordController
 {
     private $validator;
     private $userPasswordEncoder;
-    private $entityManager;
+    private $em;
     private $tokenManager;
 
     public function __construct(
@@ -25,7 +25,7 @@ class ResetPasswordController
     {
         $this->validator = $validator;
         $this->userPasswordEncoder = $userPasswordEncoder;
-        $this->entityManager = $entityManager;
+        $this->em = $entityManager;
         $this->tokenManager = $tokenManager;
     }
 
@@ -41,7 +41,7 @@ class ResetPasswordController
 
         $data->setPasswordChangeDate(time());
 
-        $this->entityManager->flush();
+        $this->em->flush();
 
         $token = $this->tokenManager->create($data);
 
