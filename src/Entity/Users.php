@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Controller\ResetPasswordController;
 
 /**
  * Users
@@ -33,6 +34,16 @@ use Symfony\Component\Validator\Constraints as Assert;
  *                  "groups"={"get"}
  *              },
  *              "validation_groups"={"put"}
+ *          },
+ *          "password_reset"={
+ *             "access_control"="is_granted('SuperAdmin', object) and object == user",
+ *             "method"="PUT",
+ *             "path"="/users/{id}/passwordreset",
+ *             "controller"=ResetPasswordController::class,
+ *             "denormalization_context"={
+ *                 "groups"={"password_reset"}
+ *             },
+ *             "validation_groups"={"password_reset"}
  *          }
  *      },
  *      collectionOperations={
@@ -56,7 +67,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
  * @UniqueEntity("username", errorPath="username", groups={"post"})
- * @UniqueEntity("email", groups={"post", "put"})
+ * @UniqueEntity("email", groups={"post"})
  */
 class Users implements UserInterface, InitialTimestampInterface, ModifiedTimestampInterface
 {
@@ -75,7 +86,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      *
      * @ORM\Column(name="firstname", type="string", length=45, nullable=true)
      * @Groups({"get", "get-roles", "get-checklist-info", "post", "put"})
-     * @Assert\Length(max=45, groups={"post", "put"})
+     * @Assert\Length(max=45, groups={"post"})
      */
     private $firstName;
 
@@ -84,7 +95,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      *
      * @ORM\Column(name="middleinitial", type="string", length=2, nullable=true)
      * @Groups({"get", "get-roles", "get-checklist-info", "post", "put"})
-     * @Assert\Length(max=2, groups={"post", "put"})
+     * @Assert\Length(max=2, groups={"post"})
      */
     private $middleInitial;
 
@@ -93,8 +104,8 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      *
      * @ORM\Column(name="lastname", type="string", length=45, nullable=false)
      * @Groups({"get", "get-roles", "get-checklist-info", "post", "put"})
-     * @Assert\NotBlank(groups={"post", "put"})
-     * @Assert\Length(max=45, groups={"post", "put"})
+     * @Assert\NotBlank(groups={"post"})
+     * @Assert\Length(max=45, groups={"post"})
      */
     private $lastName;
 
@@ -112,23 +123,23 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var string
      *
      * @ORM\Column(name="password", type="string", length=255, nullable=false)
-     * @Groups({"post", "put"})
-     * @Assert\NotBlank(groups={"post", "put"})
+     * @Groups({"post"})
+     * @Assert\NotBlank(groups={"post"})
      * @Assert\Regex(
      *     pattern="/(?=.*[A-Za-z])(?=.*[0-9]).{6,}/",
      *     message="Password must be at least six characters long and contain at least one digit and one upper or lower case letter",
-     *     groups={"post", "put"}
+     *     groups={"post"}
      * )
      */
     private $password;
 
     /**
-     * @Groups({"post", "put"})
-     * @Assert\NotBlank(groups={"post", "put"})
+     * @Groups({"post"})
+     * @Assert\NotBlank(groups={"post"})
      * @Assert\Expression(
      *     "this.getPassword() === this.getRetypedPassword()",
      *     message="Passwords do not match",
-     *     groups={"post", "put"}
+     *     groups={"post"}
      * )
      */
     private $retypedPassword;
@@ -167,7 +178,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      *
      * @ORM\Column(name="title", type="string", length=150, nullable=true)
      * @Groups({"get", "post", "put"})
-     * @Assert\Length(max=150, groups={"post", "put"})
+     * @Assert\Length(max=150, groups={"post"})
      */
     private $title;
 
@@ -176,7 +187,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      *
      * @ORM\Column(name="institution", type="string", length=200, nullable=true)
      * @Groups({"get", "post", "put"})
-     * @Assert\Length(max=200, groups={"post", "put"})
+     * @Assert\Length(max=200, groups={"post"})
      */
     private $institution;
 
@@ -185,7 +196,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      *
      * @ORM\Column(name="department", type="string", length=200, nullable=true)
      * @Groups({"get", "post", "put"})
-     * @Assert\Length(max=200, groups={"post", "put"})
+     * @Assert\Length(max=200, groups={"post"})
      */
     private $department;
 
@@ -194,7 +205,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      *
      * @ORM\Column(name="address", type="string", length=255, nullable=true)
      * @Groups({"get", "post", "put"})
-     * @Assert\Length(max=255, groups={"post", "put"})
+     * @Assert\Length(max=255, groups={"post"})
      */
     private $address;
 
@@ -203,7 +214,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      *
      * @ORM\Column(name="city", type="string", length=100, nullable=true)
      * @Groups({"get", "post", "put"})
-     * @Assert\Length(max=100, groups={"post", "put"})
+     * @Assert\Length(max=100, groups={"post"})
      */
     private $city;
 
@@ -212,7 +223,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      *
      * @ORM\Column(name="state", type="string", length=50, nullable=true)
      * @Groups({"get", "post", "put"})
-     * @Assert\Length(max=50, groups={"post", "put"})
+     * @Assert\Length(max=50, groups={"post"})
      */
     private $state;
 
@@ -221,7 +232,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      *
      * @ORM\Column(name="zip", type="string", length=15, nullable=true)
      * @Groups({"get", "post", "put"})
-     * @Assert\Length(max=15, groups={"post", "put"})
+     * @Assert\Length(max=15, groups={"post"})
      */
     private $zip;
 
@@ -230,7 +241,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      *
      * @ORM\Column(name="country", type="string", length=50, nullable=true)
      * @Groups({"get", "post", "put"})
-     * @Assert\Length(max=50, groups={"post", "put"})
+     * @Assert\Length(max=50, groups={"post"})
      */
     private $country;
 
@@ -239,7 +250,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      *
      * @ORM\Column(name="phone", type="string", length=45, nullable=true)
      * @Groups({"get", "post", "put"})
-     * @Assert\Length(max=45, groups={"post", "put"})
+     * @Assert\Length(max=45, groups={"post"})
      */
     private $phone;
 
@@ -248,9 +259,9 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      *
      * @ORM\Column(name="email", type="string", length=100, nullable=false)
      * @Groups({"post", "put", "get_admin", "get-owner"})
-     * @Assert\NotBlank(groups={"post", "put"})
-     * @Assert\Email(groups={"post", "put"})
-     * @Assert\Length(max=100, groups={"post", "put"})
+     * @Assert\NotBlank(groups={"post"})
+     * @Assert\Email(groups={"post"})
+     * @Assert\Length(max=100, groups={"post"})
      */
     private $email;
 
@@ -259,7 +270,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      *
      * @ORM\Column(name="url", type="string", length=400, nullable=true)
      * @Groups({"get", "post", "put"})
-     * @Assert\Length(max=400, groups={"post", "put"})
+     * @Assert\Length(max=400, groups={"post"})
      */
     private $url;
 
@@ -268,14 +279,14 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      *
      * @ORM\Column(name="Biography", type="string", length=1500, nullable=true)
      * @Groups({"get", "post", "put"})
-     * @Assert\Length(max=1500, groups={"post", "put"})
+     * @Assert\Length(max=1500, groups={"post"})
      */
     private $biography;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="ispublic", type="integer", nullable=false, options={"unsigned"=true, "default"="1"})
+     * @ORM\Column(name="ispublic", type="integer", options={"unsigned"=true, "default"="1"})
      * @Groups({"get", "post", "put"})
      * @Assert\NotBlank(groups={"post"})
      */
@@ -308,15 +319,23 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
     /**
      * @var int
      *
-     * @ORM\Column(name="verified", type="integer", nullable=false, options={"default"="0"})
+     * @ORM\Column(name="verified", type="integer", options={"default"="0"})
      * @Groups({"get"})
      */
-    private $verified;
+    private $verified = 0;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="passwordChangeDate", type="integer", nullable=true)
+     */
+    private $passwordChangeDate;
 
     /**
      * @var string|null
      *
      * @ORM\Column(name="verification_token", type="string", length=255, nullable=true)
+     * @Groups({"get"})
      */
     private $verificationToken;
 
@@ -324,6 +343,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="\App\Entity\Collections", mappedBy="userId")
+     * @Groups({"get"})
      */
     private $collectionId;
 
@@ -336,7 +356,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
 
     /**
      * @var array
-     * @Groups({""})
+     * @Groups({"none"})
      */
     private $currentPermissions = array();
 
@@ -614,6 +634,18 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
     public function setVerified(int $verified): self
     {
         $this->verified = $verified;
+
+        return $this;
+    }
+
+    public function getPasswordChangeDate(): ?int
+    {
+        return $this->passwordChangeDate;
+    }
+
+    public function setPasswordChangeDate(int $passwordChangeDate): self
+    {
+        $this->passwordChangeDate = $passwordChangeDate;
 
         return $this;
     }
