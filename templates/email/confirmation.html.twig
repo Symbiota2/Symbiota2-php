@@ -1,0 +1,8 @@
+<h3>
+    Hello {{ user.getFirstName() }} {{ user.getLastName() }}, you have created a new user account on the Symbiota2 portal
+    with the username: {{ user.getUsername() }}
+</h3>
+
+<p>
+    <a href="{{ url('api_users_verify_user_item', {'id': user.getId(), 'token': user.getVerificationToken()}) }}">Please confirm your email by clicking this link.</a>
+</p>

@@ -4,12 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class VerifyUserController
+class VerifyUserController extends AbstractController
 {
     private $requestStack;
     private $em;
@@ -23,7 +22,6 @@ class VerifyUserController
     public function __invoke($data)
     {
         if(!$data instanceof Users) {
-            //throw new NotFoundHttpException();
             return Response::HTTP_NOT_FOUND;
         }
 
@@ -34,10 +32,8 @@ class VerifyUserController
             $data->setVerified(1);
             $data->setVerificationToken(null);
             $this->em->flush();
-
-            return Response::HTTP_OK;
         }
 
-        return Response::HTTP_BAD_REQUEST;
+        return $this->redirectToRoute('');
     }
 }

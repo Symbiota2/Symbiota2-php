@@ -11,12 +11,15 @@ use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class UserRegisterSubscriber implements EventSubscriberInterface
+class UserRegisterPreSubscriber implements EventSubscriberInterface
 {
     private $passwordEncoder;
     private $tokenGenerator;
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder, TokenGenerator $tokenGenerator)
+    public function __construct(
+        UserPasswordEncoderInterface $passwordEncoder,
+        TokenGenerator $tokenGenerator
+    )
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->tokenGenerator = $tokenGenerator;
