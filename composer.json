@@ -21,7 +21,8 @@
         "symfony/swiftmailer-bundle": "^3.2",
         "symfony/twig-bundle": "4.2.*",
         "symfony/validator": "4.2.*",
-        "symfony/yaml": "4.2.*"
+        "symfony/yaml": "4.2.*",
+        "vich/uploader-bundle": "^1.8"
     },
     "config": {
         "preferred-install": {
