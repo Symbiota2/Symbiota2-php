@@ -8,15 +8,26 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use App\Controller\ImageUploadController;
 
 /**
  * Images
  *
  * @ORM\Table(name="images", indexes={@ORM\Index(name="FK_images_occ", columns={"occid"}), @ORM\Index(name="Index_tid", columns={"tid"}), @ORM\Index(name="Index_images_datelastmod", columns={"InitialTimeStamp"}), @ORM\Index(name="FK_photographeruid", columns={"photographeruid"})})
  * @ORM\Entity(repositoryClass="App\Repository\ImagesRepository")
+ * @Vich\Uploadable()
  * @ApiResource(
  *     itemOperations={"get"},
- *     collectionOperations={"get"}
+ *     collectionOperations={
+ *         "get",
+ *         "post"={
+ *             "method"="POST",
+ *             "path"="/images",
+ *             "controller"=ImageUploadController::class,
+ *             "defaults"={"_api_receive"=false}
+ *         }
+ *     }
  * )
  */
 class Images implements InitialTimestampInterface
@@ -31,6 +42,11 @@ class Images implements InitialTimestampInterface
     private $id;
 
     /**
+     * @Vich\UploadableField(mapping="images", fileNameProperty="url")
+     */
+    private $file;
+
+    /**
      * @var \App\Entity\Taxa
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\Taxa")
@@ -43,9 +59,7 @@ class Images implements InitialTimestampInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Length(max=255)
+     * @ORM\Column(name="url", type="string", length=255, nullable=true)
      */
     private $url;
 
@@ -256,6 +270,16 @@ class Images implements InitialTimestampInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    public function setFile($file): void
+    {
+        $this->file = $file;
     }
 
     public function getUrl(): ?string

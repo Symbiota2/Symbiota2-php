@@ -104,6 +104,9 @@
     "egulias/email-validator": {
         "version": "2.1.7"
     },
+    "fig/link-util": {
+        "version": "1.0.0"
+    },
     "fzaninotto/faker": {
         "version": "v1.8.0"
     },
@@ -162,6 +165,9 @@
         "version": "1.0.1"
     },
     "psr/container": {
+        "version": "1.0.0"
+    },
+    "psr/link": {
         "version": "1.0.0"
     },
     "psr/log": {
@@ -390,6 +396,9 @@
     },
     "symfony/var-exporter": {
         "version": "v4.2.1"
+    },
+    "symfony/web-link": {
+        "version": "v4.2.4"
     },
     "symfony/yaml": {
         "version": "v4.2.1"
