@@ -772,6 +772,9 @@ INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrank
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (270, 'Subform', 260, 180);
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (300, 'Cultivated', 220, 220);
 
+UPDATE taxa AS t LEFT JOIN taxonunits AS u ON t.RankId = u.rankid
+  SET t.RankId = u.taxonunitid;
+
 TRUNCATE TABLE omoccurgeoindex;
 
 INSERT IGNORE INTO omoccurgeoindex(tid,decimallatitude,decimallongitude)

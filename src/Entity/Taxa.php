@@ -36,7 +36,7 @@ class Taxa implements ModifiedUserIdInterface, InitialTimestampInterface, Modifi
      *
      * @ORM\ManyToOne(targetEntity="\App\Entity\TaxaRanks")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="RankId", referencedColumnName="rankid", nullable=false)
+     *   @ORM\JoinColumn(name="RankId", referencedColumnName="taxonunitid", nullable=false)
      * })
      */
     private $rankId;
