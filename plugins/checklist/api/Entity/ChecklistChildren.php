@@ -1,12 +1,16 @@
 <?php
 
-namespace App\Entity;
+namespace Checklist\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\InitialTimestampInterface;
+use App\Entity\ModifiedTimestampInterface;
+use App\Entity\ModifiedUserIdInterface;
+use App\Entity\Users;
 
 /**
  * ChecklistChildren
@@ -21,10 +25,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ChecklistChildren implements InitialTimestampInterface, ModifiedTimestampInterface, ModifiedUserIdInterface
 {
     /**
-     * @var \App\Entity\Checklists
+     * @var \Checklist\Entity\Checklists
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Checklists")
+     * @ORM\ManyToOne(targetEntity="\Checklist\Entity\Checklists")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="clid", referencedColumnName="CLID", nullable=false)
      * })
@@ -32,10 +36,10 @@ class ChecklistChildren implements InitialTimestampInterface, ModifiedTimestampI
     private $checklistId;
 
     /**
-     * @var \App\Entity\Checklists
+     * @var \Checklist\Entity\Checklists
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Checklists")
+     * @ORM\ManyToOne(targetEntity="\Checklist\Entity\Checklists")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="clidchild", referencedColumnName="CLID", nullable=false)
      * })

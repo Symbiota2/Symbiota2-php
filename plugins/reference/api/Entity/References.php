@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace Reference\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -9,6 +9,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\ModifiedUserIdInterface;
+use App\Entity\InitialTimestampInterface;
+use App\Entity\ModifiedTimestampInterface;
+use App\Entity\Users;
+use Checklist\Entity\Checklists;
+use App\Entity\Collections;
+use App\Entity\Occurrences;
+use App\Entity\Taxa;
 
 /**
  * References
@@ -32,9 +40,9 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
     private $id;
 
     /**
-     * @var \App\Entity\References
+     * @var \Reference\Entity\References
      *
-     * @ORM\ManyToOne(targetEntity="\App\Entity\References")
+     * @ORM\ManyToOne(targetEntity="\Reference\Entity\References")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parentRefId", referencedColumnName="refid")
      * })
@@ -42,9 +50,9 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
     private $parentReferenceId;
 
     /**
-     * @var \App\Entity\LookupReferenceTypes
+     * @var \Reference\Entity\LookupReferenceTypes
      *
-     * @ORM\ManyToOne(targetEntity="\App\Entity\LookupReferenceTypes")
+     * @ORM\ManyToOne(targetEntity="\Reference\Entity\LookupReferenceTypes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ReferenceTypeId", referencedColumnName="ReferenceTypeId", nullable=false)
      * })
@@ -239,7 +247,7 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
     /**
      * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
      * })
@@ -265,7 +273,7 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\ReferenceAuthors", inversedBy="referenceId")
+     * @ORM\ManyToMany(targetEntity="\Reference\Entity\ReferenceAuthors", inversedBy="referenceId")
      * @ORM\JoinTable(name="referenceauthorlink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="refid", referencedColumnName="refid")
@@ -280,7 +288,7 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Checklists", inversedBy="referenceId")
+     * @ORM\ManyToMany(targetEntity="\Checklist\Entity\Checklists")
      * @ORM\JoinTable(name="referencechecklistlink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="refid", referencedColumnName="refid")
@@ -295,7 +303,7 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Collections", inversedBy="referenceId")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Collections")
      * @ORM\JoinTable(name="referencecollectionlink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="refid", referencedColumnName="refid")
@@ -310,7 +318,7 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Occurrences", inversedBy="referenceId")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Occurrences")
      * @ORM\JoinTable(name="referenceoccurlink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="refid", referencedColumnName="refid")
@@ -325,7 +333,7 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Taxa", inversedBy="referenceId")
+     * @ORM\ManyToMany(targetEntity="\App\Entity\Taxa")
      * @ORM\JoinTable(name="referencetaxalink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="refid", referencedColumnName="refid")

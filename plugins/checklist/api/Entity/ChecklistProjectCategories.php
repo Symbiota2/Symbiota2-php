@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Entity;
+namespace Checklist\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\InitialTimestampInterface;
 
 /**
  * ChecklistProjectCategories
@@ -29,9 +30,9 @@ class ChecklistProjectCategories implements InitialTimestampInterface
     private $id;
 
     /**
-     * @var \App\Entity\ChecklistProjects
+     * @var \Checklist\Entity\ChecklistProjects
      *
-     * @ORM\ManyToOne(targetEntity="\App\Entity\ChecklistProjects")
+     * @ORM\ManyToOne(targetEntity="\Checklist\Entity\ChecklistProjects")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="pid", referencedColumnName="pid", nullable=false)
      * })
@@ -64,9 +65,9 @@ class ChecklistProjectCategories implements InitialTimestampInterface
     private $description;
 
     /**
-     * @var \App\Entity\ChecklistProjects
+     * @var \Checklist\Entity\ChecklistProjects
      *
-     * @ORM\ManyToOne(targetEntity="\App\Entity\ChecklistProjects")
+     * @ORM\ManyToOne(targetEntity="\Checklist\Entity\ChecklistProjects")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parentpid", referencedColumnName="pid")
      * })

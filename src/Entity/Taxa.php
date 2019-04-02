@@ -185,13 +185,6 @@ class Taxa implements ModifiedUserIdInterface, InitialTimestampInterface, Modifi
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\ChecklistsDynamic", mappedBy="taxaId")
-     */
-    private $checklistsDynamicId;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
      * @ORM\ManyToMany(targetEntity="\App\Entity\Glossary", mappedBy="taxaId")
      */
     private $glossaryId;
@@ -210,13 +203,6 @@ class Taxa implements ModifiedUserIdInterface, InitialTimestampInterface, Modifi
      * )
      */
     private $characterId;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\References", mappedBy="taxaId")
-     */
-    private $referenceId;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -245,10 +231,8 @@ class Taxa implements ModifiedUserIdInterface, InitialTimestampInterface, Modifi
      */
     public function __construct()
     {
-        $this->checklistsDynamicId = new \Doctrine\Common\Collections\ArrayCollection();
         $this->glossaryId = new \Doctrine\Common\Collections\ArrayCollection();
         $this->characterId = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->referenceId = new \Doctrine\Common\Collections\ArrayCollection();
         $this->taxaAuthorityId = new \Doctrine\Common\Collections\ArrayCollection();
         $this->traitId = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -482,34 +466,6 @@ class Taxa implements ModifiedUserIdInterface, InitialTimestampInterface, Modifi
     }
 
     /**
-     * @return Collection|ChecklistsDynamic[]
-     */
-    public function getChecklistsDynamicId(): Collection
-    {
-        return $this->checklistsDynamicId;
-    }
-
-    public function addChecklistsDynamicId(ChecklistsDynamic $checklistsDynamicId): self
-    {
-        if (!$this->checklistsDynamicId->contains($checklistsDynamicId)) {
-            $this->checklistsDynamicId[] = $checklistsDynamicId;
-            $checklistsDynamicId->addTaxaId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeChecklistsDynamicId(ChecklistsDynamic $checklistsDynamicId): self
-    {
-        if ($this->checklistsDynamicId->contains($checklistsDynamicId)) {
-            $this->checklistsDynamicId->removeElement($checklistsDynamicId);
-            $checklistsDynamicId->removeTaxaId($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Glossary[]
      */
     public function getGlossaryId(): Collection
@@ -558,34 +514,6 @@ class Taxa implements ModifiedUserIdInterface, InitialTimestampInterface, Modifi
     {
         if ($this->characterId->contains($characterId)) {
             $this->characterId->removeElement($characterId);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|References[]
-     */
-    public function getReferenceId(): Collection
-    {
-        return $this->referenceId;
-    }
-
-    public function addReferenceId(References $referenceId): self
-    {
-        if (!$this->referenceId->contains($referenceId)) {
-            $this->referenceId[] = $referenceId;
-            $referenceId->addTaxaId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReferenceId(References $referenceId): self
-    {
-        if ($this->referenceId->contains($referenceId)) {
-            $this->referenceId->removeElement($referenceId);
-            $referenceId->removeTaxaId($this);
         }
 
         return $this;

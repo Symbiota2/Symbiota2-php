@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Security;
+namespace Checklist\Security;
 
 use App\Entity\Users;
-use App\Entity\Checklists;
+use Checklist\Entity\Checklists;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;

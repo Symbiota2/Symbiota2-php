@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Entity;
+namespace Reference\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Checklist\Entity\Checklists;
+use App\Entity\InitialTimestampInterface;
+use App\Entity\Taxa;
 
 /**
  * ReferenceChecklistTaxaLink
@@ -20,10 +23,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ReferenceChecklistTaxaLink implements InitialTimestampInterface
 {
     /**
-     * @var \App\Entity\References
+     * @var \Reference\Entity\References
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="\App\Entity\References")
+     * @ORM\ManyToOne(targetEntity="\Reference\Entity\References")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="refid", referencedColumnName="refid", nullable=false)
      * })
@@ -31,10 +34,10 @@ class ReferenceChecklistTaxaLink implements InitialTimestampInterface
     private $referenceId;
 
     /**
-     * @var \App\Entity\Checklists
+     * @var \Checklist\Entity\Checklists
      *
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Checklists")
+     * @ORM\ManyToOne(targetEntity="\Checklist\Entity\Checklists")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="clid", referencedColumnName="CLID", nullable=false)
      * })

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace Checklist\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiProperty;
@@ -10,6 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\CreatedUserIdInterface;
+use App\Entity\InitialTimestampInterface;
+use App\Entity\ModifiedTimestampInterface;
+use App\Entity\Users;
 
 /**
  * Checklists
@@ -152,9 +156,9 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
     private $parent;
 
     /**
-     * @var \App\Entity\Checklists
+     * @var \Checklist\Entity\Checklists
      *
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Checklists")
+     * @ORM\ManyToOne(targetEntity="\Checklist\Entity\Checklists")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parentclid", referencedColumnName="CLID")
      * })
@@ -302,18 +306,10 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\ChecklistProjects", mappedBy="checklistId")
+     * @ORM\ManyToMany(targetEntity="\Checklist\Entity\ChecklistProjects", mappedBy="checklistId")
      * @Groups({"get", "get-checklist-info"})
      */
     private $projectId;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\References", mappedBy="checklistId")
-     * @Groups({"get", "get-checklist-info"})
-     */
-    private $referenceId;
 
     /**
      * Constructor
@@ -321,7 +317,6 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
     public function __construct()
     {
         $this->projectId = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->referenceId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getId(): ?int
@@ -671,34 +666,6 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
         if ($this->projectId->contains($projectId)) {
             $this->projectId->removeElement($projectId);
             $projectId->removeChecklistId($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|References[]
-     */
-    public function getReferenceId(): Collection
-    {
-        return $this->referenceId;
-    }
-
-    public function addReferenceId(References $referenceId): self
-    {
-        if (!$this->referenceId->contains($referenceId)) {
-            $this->referenceId[] = $referenceId;
-            $referenceId->addChecklistId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReferenceId(References $referenceId): self
-    {
-        if ($this->referenceId->contains($referenceId)) {
-            $this->referenceId->removeElement($referenceId);
-            $referenceId->removeChecklistId($this);
         }
 
         return $this;

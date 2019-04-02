@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Entity;
+namespace Reference\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\CreatedUserIdInterface;
+use App\Entity\InitialTimestampInterface;
+use App\Entity\Users;
 
 /**
  * LookupReferenceTypes

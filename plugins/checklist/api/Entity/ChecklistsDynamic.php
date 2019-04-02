@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace Checklist\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\InitialTimestampInterface;
+use App\Entity\Taxa;
 
 /**
  * ChecklistsDynamic
@@ -83,7 +85,7 @@ class ChecklistsDynamic implements InitialTimestampInterface
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Taxa", inversedBy="checklistsDynamicId")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Taxa")
      * @ORM\JoinTable(name="fmdyncltaxalink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="dynclid", referencedColumnName="dynclid")

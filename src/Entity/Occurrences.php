@@ -897,13 +897,6 @@ class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterfa
     private $loanId;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\References", mappedBy="occurrenceId")
-     */
-    private $referenceId;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -912,7 +905,6 @@ class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterfa
         $this->duplicateId = new \Doctrine\Common\Collections\ArrayCollection();
         $this->chronostratigraphyId = new \Doctrine\Common\Collections\ArrayCollection();
         $this->loanId = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->referenceId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getId(): ?int
@@ -2247,34 +2239,6 @@ class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterfa
         if ($this->loanId->contains($loanId)) {
             $this->loanId->removeElement($loanId);
             $loanId->removeOccurrenceId($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|References[]
-     */
-    public function getReferenceId(): Collection
-    {
-        return $this->referenceId;
-    }
-
-    public function addRefid(References $refid): self
-    {
-        if (!$this->referenceId->contains($refid)) {
-            $this->referenceId[] = $refid;
-            $refid->addOccurrenceId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRefid(References $refid): self
-    {
-        if ($this->referenceId->contains($refid)) {
-            $this->referenceId->removeElement($refid);
-            $refid->removeOccurrenceId($this);
         }
 
         return $this;

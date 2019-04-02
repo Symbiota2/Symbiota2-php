@@ -1,12 +1,16 @@
 <?php
 
-namespace App\Entity;
+namespace Checklist\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\CreatedUserIdInterface;
+use App\Entity\InitialTimestampInterface;
+use App\Entity\Taxa;
+use App\Entity\Users;
 
 /**
  * ChecklistTaxaComments
@@ -30,9 +34,9 @@ class ChecklistTaxaComments implements CreatedUserIdInterface, InitialTimestampI
     private $id;
 
     /**
-     * @var \App\Entity\Checklists
+     * @var \Checklist\Entity\Checklists
      *
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Checklists")
+     * @ORM\ManyToOne(targetEntity="\Checklist\Entity\Checklists")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="clid", referencedColumnName="CLID", nullable=false)
      * })
@@ -78,9 +82,9 @@ class ChecklistTaxaComments implements CreatedUserIdInterface, InitialTimestampI
     private $isPublic = 1;
 
     /**
-     * @var \App\Entity\ChecklistTaxaComments
+     * @var \Checklist\Entity\ChecklistTaxaComments
      *
-     * @ORM\ManyToOne(targetEntity="\App\Entity\ChecklistTaxaComments")
+     * @ORM\ManyToOne(targetEntity="\Checklist\Entity\ChecklistTaxaComments")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parentid", referencedColumnName="cltaxacommentsid")
      * })

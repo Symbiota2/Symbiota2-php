@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Entity;
+namespace Checklist\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\InitialTimestampInterface;
+use App\Entity\Taxa;
 
 /**
  * ChecklistTaxaLink
@@ -39,9 +41,9 @@ class ChecklistTaxaLink implements InitialTimestampInterface
     private $taxaId;
 
     /**
-     * @var \App\Entity\Checklists
+     * @var \Checklist\Entity\Checklists
      *
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Checklists")
+     * @ORM\ManyToOne(targetEntity="\Checklist\Entity\Checklists")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="CLID", referencedColumnName="CLID", nullable=false)
      * })

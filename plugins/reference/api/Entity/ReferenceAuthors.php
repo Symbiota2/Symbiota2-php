@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace Reference\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -9,6 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\ModifiedUserIdInterface;
+use App\Entity\InitialTimestampInterface;
+use App\Entity\ModifiedTimestampInterface;
+use App\Entity\Users;
 
 /**
  * ReferenceAuthors
@@ -59,7 +63,7 @@ class ReferenceAuthors implements ModifiedUserIdInterface, InitialTimestampInter
     /**
      * @var \App\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Users")
+     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
      * })
@@ -85,7 +89,7 @@ class ReferenceAuthors implements ModifiedUserIdInterface, InitialTimestampInter
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\References", mappedBy="referenceAuthorId")
+     * @ORM\ManyToMany(targetEntity="\Reference\Entity\References", mappedBy="referenceAuthorId")
      */
     private $referenceId;
 

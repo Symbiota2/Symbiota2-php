@@ -32,7 +32,9 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src/",
+            "Checklist\\": "plugins/checklist/api/",
+            "Reference\\": "plugins/reference/api/"
         }
     },
     "autoload-dev": {

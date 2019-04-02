@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace Checklist\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\InitialTimestampInterface;
 
 /**
  * ChecklistProjects
@@ -122,9 +123,9 @@ class ChecklistProjects implements InitialTimestampInterface
     private $dynamicProperties;
 
     /**
-     * @var \App\Entity\ChecklistProjects
+     * @var \Checklist\Entity\ChecklistProjects
      *
-     * @ORM\ManyToOne(targetEntity="\App\Entity\ChecklistProjects")
+     * @ORM\ManyToOne(targetEntity="\Checklist\Entity\ChecklistProjects")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parentpid", referencedColumnName="pid")
      * })
@@ -151,7 +152,7 @@ class ChecklistProjects implements InitialTimestampInterface
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Checklists", inversedBy="projectId")
+     * @ORM\ManyToMany(targetEntity="\Checklist\Entity\Checklists", inversedBy="projectId")
      * @ORM\JoinTable(name="fmchklstprojlink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="pid", referencedColumnName="pid")

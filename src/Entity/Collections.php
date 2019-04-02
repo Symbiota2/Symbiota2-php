@@ -307,20 +307,12 @@ class Collections implements InitialTimestampInterface
     private $userId;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\References", mappedBy="collectionId")
-     */
-    private $referenceId;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
         $this->collectionCategoryId = new \Doctrine\Common\Collections\ArrayCollection();
         $this->userId = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->referenceId = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getId(): ?int
@@ -749,34 +741,6 @@ class Collections implements InitialTimestampInterface
     {
         if ($this->userId->contains($userId)) {
             $this->userId->removeElement($userId);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|References[]
-     */
-    public function getReferenceId(): Collection
-    {
-        return $this->referenceId;
-    }
-
-    public function addReferenceId(References $referenceId): self
-    {
-        if (!$this->referenceId->contains($referenceId)) {
-            $this->referenceId[] = $referenceId;
-            $referenceId->addCollectionId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReferenceId(References $referenceId): self
-    {
-        if ($this->referenceId->contains($referenceId)) {
-            $this->referenceId->removeElement($referenceId);
-            $referenceId->removeCollectionId($this);
         }
 
         return $this;

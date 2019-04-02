@@ -21,3 +21,15 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+            Checklist:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/plugins/checklist/api/Entity'
+                prefix: 'Checklist\Entity'
+                alias: Checklist
+            Reference:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/plugins/reference/api/Entity'
+                prefix: 'Reference\Entity'
+                alias: Reference
