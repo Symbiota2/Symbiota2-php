@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\ChecklistCoordinates;
+use Checklist\Entity\ChecklistCoordinates;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 

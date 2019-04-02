@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\LookupReferenceTypes;
+use Reference\Entity\LookupReferenceTypes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 

@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\ChecklistTaxaLink;
+use Checklist\Entity\ChecklistTaxaLink;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 

@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Checklists;
+use Checklist\Entity\Checklists;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
