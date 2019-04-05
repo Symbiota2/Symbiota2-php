@@ -18,6 +18,7 @@ use App\Entity\Users;
  * @ORM\Table(name="fmcltaxacomments", indexes={@ORM\Index(name="FK_clcomment_users", columns={"createduid"}), @ORM\Index(name="FK_clcomment_cltaxa", columns={"clid", "tid"})})
  * @ORM\Entity()
  * @ApiResource(
+ *     routePrefix="/checklist",
  *     itemOperations={"get"},
  *     collectionOperations={"get"}
  * )

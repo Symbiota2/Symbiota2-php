@@ -14,6 +14,7 @@ use App\Entity\InitialTimestampInterface;
  * @ORM\Table(name="fmprojectcategories", indexes={@ORM\Index(name="FK_fmprojcat_pid_idx", columns={"pid"})})
  * @ORM\Entity()
  * @ApiResource(
+ *     routePrefix="/checklist",
  *     itemOperations={"get"},
  *     collectionOperations={"get"}
  * )

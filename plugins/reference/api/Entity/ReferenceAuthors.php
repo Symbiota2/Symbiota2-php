@@ -20,6 +20,7 @@ use App\Entity\Users;
  * @ORM\Table(name="referenceauthors", indexes={@ORM\Index(name="INDEX_refauthlastname", columns={"lastname"})})
  * @ORM\Entity()
  * @ApiResource(
+ *     routePrefix="/reference",
  *     itemOperations={"get"},
  *     collectionOperations={"get"}
  * )

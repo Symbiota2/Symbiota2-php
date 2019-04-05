@@ -24,6 +24,7 @@ use App\Entity\Taxa;
  * @ORM\Table(name="referenceobject", indexes={@ORM\Index(name="FK_refobj_typeid_idx", columns={"ReferenceTypeId"}), @ORM\Index(name="FK_refobj_parentrefid_idx", columns={"parentRefId"}), @ORM\Index(name="INDEX_refobj_title", columns={"title"})})
  * @ORM\Entity()
  * @ApiResource(
+ *     routePrefix="/reference",
  *     itemOperations={"get"},
  *     collectionOperations={"get"}
  * )

@@ -18,6 +18,7 @@ use App\Entity\Users;
  * @ORM\Table(name="fmchklstchildren", indexes={@ORM\Index(name="FK_fmchklstchild_clid_idx", columns={"clid"}), @ORM\Index(name="FK_fmchklstchild_child_idx", columns={"clidchild"})})
  * @ORM\Entity()
  * @ApiResource(
+ *     routePrefix="/checklist",
  *     itemOperations={"get"},
  *     collectionOperations={"get"}
  * )

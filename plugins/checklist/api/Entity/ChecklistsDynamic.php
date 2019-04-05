@@ -17,6 +17,7 @@ use App\Entity\Taxa;
  * @ORM\Table(name="fmdynamicchecklists")
  * @ORM\Entity()
  * @ApiResource(
+ *     routePrefix="/checklist",
  *     itemOperations={"get"},
  *     collectionOperations={"get"}
  * )

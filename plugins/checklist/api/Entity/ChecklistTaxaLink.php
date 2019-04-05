@@ -15,6 +15,7 @@ use App\Entity\Taxa;
  * @ORM\Table(name="fmchklsttaxalink", uniqueConstraints={@ORM\UniqueConstraint(name="FK_clidtidmorph_id", columns={"tid", "CLID", "morphospecies"})}, indexes={@ORM\Index(name="FK_chklsttaxalink_cid", columns={"CLID"})})
  * @ORM\Entity()
  * @ApiResource(
+ *     routePrefix="/checklist",
  *     itemOperations={"get"},
  *     collectionOperations={"get"}
  * )

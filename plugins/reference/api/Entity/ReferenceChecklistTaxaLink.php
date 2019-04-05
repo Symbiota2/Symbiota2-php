@@ -16,6 +16,7 @@ use App\Entity\Taxa;
  * @ORM\Table(name="referencechklsttaxalink", indexes={@ORM\Index(name="FK_refchktaxalink_clidtid_idx", columns={"clid", "tid"}), @ORM\Index(name="IDX_1B708068FB7281BE", columns={"refid"})})
  * @ORM\Entity()
  * @ApiResource(
+ *     routePrefix="/reference",
  *     itemOperations={"get"},
  *     collectionOperations={"get"}
  * )

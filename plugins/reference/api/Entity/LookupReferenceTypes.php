@@ -17,6 +17,7 @@ use App\Entity\Users;
  * @ORM\Table(name="referencetype", uniqueConstraints={@ORM\UniqueConstraint(name="ReferenceType_UNIQUE", columns={"ReferenceType"})})
  * @ORM\Entity()
  * @ApiResource(
+ *     routePrefix="/reference",
  *     itemOperations={"get"},
  *     collectionOperations={"get"}
  * )
