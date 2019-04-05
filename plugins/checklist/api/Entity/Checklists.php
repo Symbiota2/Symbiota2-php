@@ -19,7 +19,7 @@ use App\Entity\Users;
  * Checklists
  *
  * @ORM\Table(name="fmchecklists", indexes={@ORM\Index(name="FK_checklists_uid", columns={"createduid"}), @ORM\Index(name="name", columns={"Name", "Type"})})
- * @ORM\Entity(repositoryClass="App\Repository\ChecklistsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={
  *          "get"={

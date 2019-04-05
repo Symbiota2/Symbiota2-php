@@ -22,7 +22,7 @@ use App\Entity\Taxa;
  * References
  *
  * @ORM\Table(name="referenceobject", indexes={@ORM\Index(name="FK_refobj_typeid_idx", columns={"ReferenceTypeId"}), @ORM\Index(name="FK_refobj_parentrefid_idx", columns={"parentRefId"}), @ORM\Index(name="INDEX_refobj_title", columns={"title"})})
- * @ORM\Entity(repositoryClass="App\Repository\ReferencesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

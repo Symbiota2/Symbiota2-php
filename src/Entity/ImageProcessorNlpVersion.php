@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * ImageProcessorNlpVersion
  *
  * @ORM\Table(name="specprocnlpversion", indexes={@ORM\Index(name="FK_specprocnlpver_rawtext_idx", columns={"prlid"})})
- * @ORM\Entity(repositoryClass="App\Repository\ImageProcessorNlpVersionRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

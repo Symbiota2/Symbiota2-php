@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Media
  *
  * @ORM\Table(name="media", indexes={@ORM\Index(name="FK_media_uid_idx", columns={"authoruid"}), @ORM\Index(name="FK_media_occid_idx", columns={"occid"}), @ORM\Index(name="FK_media_taxa_idx", columns={"tid"})})
- * @ORM\Entity(repositoryClass="App\Repository\MediaRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

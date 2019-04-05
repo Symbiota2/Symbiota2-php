@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * UploadTempTaxa
  *
  * @ORM\Table(name="uploadtaxa", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQUE_sciname", columns={"SciName", "RankId", "Author", "AcceptedStr"})}, indexes={@ORM\Index(name="sciname_index_uploadtaxa", columns={"SciName"}), @ORM\Index(name="acceptedStr_index", columns={"AcceptedStr"}), @ORM\Index(name="sourceAcceptedId_index", columns={"SourceAcceptedId"}), @ORM\Index(name="acceptance_index", columns={"Acceptance"}), @ORM\Index(name="parentStr_index", columns={"ParentStr"}), @ORM\Index(name="sourceID_index", columns={"SourceId"}), @ORM\Index(name="sourceParentId_index", columns={"SourceParentId"}), @ORM\Index(name="scinameinput_index", columns={"scinameinput"}), @ORM\Index(name="unitname1_index_uploadtaxa", columns={"UnitName1"})})
- * @ORM\Entity(repositoryClass="App\Repository\UploadTempTaxaRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

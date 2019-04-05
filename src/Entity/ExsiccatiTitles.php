@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * ExsiccatiTitles
  *
  * @ORM\Table(name="omexsiccatititles", indexes={@ORM\Index(name="index_exsiccatiTitle", columns={"title"})})
- * @ORM\Entity(repositoryClass="App\Repository\ExsiccatiTitlesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

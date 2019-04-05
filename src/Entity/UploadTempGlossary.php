@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * UploadTempGlossary
  *
  * @ORM\Table(name="uploadglossary", indexes={@ORM\Index(name="relatedterm_index", columns={"newGroupId"}), @ORM\Index(name="term_index", columns={"term"})})
- * @ORM\Entity(repositoryClass="App\Repository\UploadTempGlossaryRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

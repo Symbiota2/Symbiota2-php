@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Glossary
  *
  * @ORM\Table(name="glossary", indexes={@ORM\Index(name="FK_glossary_uid_idx", columns={"createduid"}), @ORM\Index(name="Index_glossary_lang", columns={"language"}), @ORM\Index(name="Index_term", columns={"term"})})
- * @ORM\Entity(repositoryClass="App\Repository\GlossaryRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

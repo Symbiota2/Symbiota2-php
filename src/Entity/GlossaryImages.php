@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * GlossaryImages
  *
  * @ORM\Table(name="glossaryimages", indexes={@ORM\Index(name="FK_glossaryimages_uid_idx", columns={"createduid"}), @ORM\Index(name="FK_glossaryimages_gloss", columns={"glossid"})})
- * @ORM\Entity(repositoryClass="App\Repository\GlossaryImagesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

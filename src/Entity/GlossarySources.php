@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * GlossarySources
  *
  * @ORM\Table(name="glossarysources")
- * @ORM\Entity(repositoryClass="App\Repository\GlossarySourcesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

@@ -15,7 +15,7 @@ use App\Controller\ImageUploadController;
  * Images
  *
  * @ORM\Table(name="images", indexes={@ORM\Index(name="FK_images_occ", columns={"occid"}), @ORM\Index(name="Index_tid", columns={"tid"}), @ORM\Index(name="Index_images_datelastmod", columns={"InitialTimeStamp"}), @ORM\Index(name="FK_photographeruid", columns={"photographeruid"})})
- * @ORM\Entity(repositoryClass="App\Repository\ImagesRepository")
+ * @ORM\Entity()
  * @Vich\Uploadable()
  * @ApiResource(
  *     itemOperations={"get"},

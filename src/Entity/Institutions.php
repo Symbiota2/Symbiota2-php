@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Institutions
  *
  * @ORM\Table(name="institutions", indexes={@ORM\Index(name="FK_inst_uid_idx", columns={"modifieduid"})})
- * @ORM\Entity(repositoryClass="App\Repository\InstitutionsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *      itemOperations={
  *          "get",

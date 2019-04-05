@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Taxa
  *
  * @ORM\Table(name="taxa", uniqueConstraints={@ORM\UniqueConstraint(name="sciname_unique", columns={"SciName", "RankId", "Author"})}, indexes={@ORM\Index(name="idx_taxacreated", columns={"InitialTimeStamp"}), @ORM\Index(name="FK_taxa_uid_idx", columns={"modifiedUid"}), @ORM\Index(name="unitname1_index_taxa", columns={"UnitName1", "UnitName2"}), @ORM\Index(name="sciname_index_taxa", columns={"SciName"}), @ORM\Index(name="rankid_index", columns={"RankId"})})
- * @ORM\Entity(repositoryClass="App\Repository\TaxaRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

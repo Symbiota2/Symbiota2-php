@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * CrowdSourceQueue
  *
  * @ORM\Table(name="omcrowdsourcequeue", uniqueConstraints={@ORM\UniqueConstraint(name="Index_omcrowdsource_occid", columns={"occid"})}, indexes={@ORM\Index(name="FK_omcrowdsourcequeue_uid", columns={"uidprocessor"})})
- * @ORM\Entity(repositoryClass="App\Repository\CrowdSourceQueueRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

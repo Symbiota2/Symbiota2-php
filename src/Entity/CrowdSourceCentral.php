@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * CrowdSourceCentral
  *
  * @ORM\Table(name="omcrowdsourcecentral", uniqueConstraints={@ORM\UniqueConstraint(name="Index_omcrowdsourcecentral_collid", columns={"collid"})})
- * @ORM\Entity(repositoryClass="App\Repository\CrowdSourceCentralRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

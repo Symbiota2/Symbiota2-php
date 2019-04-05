@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * OccurrenceAssociations
  *
  * @ORM\Table(name="omoccurassociations", indexes={@ORM\Index(name="omossococcur_occidassoc_idx", columns={"occidassociate"}), @ORM\Index(name="FK_occurassoc_uidcreated_idx", columns={"createduid"}), @ORM\Index(name="omossococcur_occid_idx", columns={"occid"}), @ORM\Index(name="FK_occurassoc_uidmodified_idx", columns={"modifieduid"}), @ORM\Index(name="INDEX_verbatimSciname", columns={"verbatimsciname"}), @ORM\Index(name="FK_occurassoc_tid_idx", columns={"tid"})})
- * @ORM\Entity(repositoryClass="App\Repository\OccurrenceAssociationsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

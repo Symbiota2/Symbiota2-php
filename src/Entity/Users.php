@@ -74,7 +74,7 @@ use App\Controller\VerifyUserController;
  *      },
  * )
  * @ORM\Table(name="users")
- * @ORM\Entity(repositoryClass="App\Repository\UsersRepository")
+ * @ORM\Entity()
  * @UniqueEntity("username", errorPath="username", groups={"post"})
  * @UniqueEntity("email", groups={"post"})
  */

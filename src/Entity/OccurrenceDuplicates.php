@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * OccurrenceDuplicates
  *
  * @ORM\Table(name="omoccurduplicates")
- * @ORM\Entity(repositoryClass="App\Repository\OccurrenceDuplicatesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

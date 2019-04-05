@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * OccurrenceFullText
  *
  * @ORM\Table(name="omoccurrencesfulltext", indexes={@ORM\Index(name="ft_occur_locality", columns={"locality"}, flags={"fulltext"}), @ORM\Index(name="ft_occur_recordedby", columns={"recordedby"})})
- * @ORM\Entity(repositoryClass="App\Repository\OccurrenceFullTextRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

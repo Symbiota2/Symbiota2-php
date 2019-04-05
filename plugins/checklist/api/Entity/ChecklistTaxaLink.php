@@ -13,7 +13,7 @@ use App\Entity\Taxa;
  * ChecklistTaxaLink
  *
  * @ORM\Table(name="fmchklsttaxalink", uniqueConstraints={@ORM\UniqueConstraint(name="FK_clidtidmorph_id", columns={"tid", "CLID", "morphospecies"})}, indexes={@ORM\Index(name="FK_chklsttaxalink_cid", columns={"CLID"})})
- * @ORM\Entity(repositoryClass="App\Repository\ChecklistTaxaLinkRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

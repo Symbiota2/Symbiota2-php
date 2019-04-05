@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * GlossaryTermLink
  *
  * @ORM\Table(name="glossarytermlink", uniqueConstraints={@ORM\UniqueConstraint(name="Unique_termkeys", columns={"glossgrpid", "glossid"})}, indexes={@ORM\Index(name="glossarytermlink_ibfk_1", columns={"glossid"}), @ORM\Index(name="IDX_5FB96611732EDCB4", columns={"glossgrpid"})})
- * @ORM\Entity(repositoryClass="App\Repository\GlossaryTermLinkRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

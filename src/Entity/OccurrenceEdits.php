@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * OccurrenceEdits
  *
  * @ORM\Table(name="omoccuredits", uniqueConstraints={@ORM\UniqueConstraint(name="guid_UNIQUE_omoccuredits", columns={"guid"})}, indexes={@ORM\Index(name="fk_omoccuredits_occid", columns={"occid"}), @ORM\Index(name="fk_omoccuredits_uid", columns={"uid"})})
- * @ORM\Entity(repositoryClass="App\Repository\OccurrenceEditsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * TaxaRelationships
  *
  * @ORM\Table(name="taxaenumtree", indexes={@ORM\Index(name="FK_tet_taxa", columns={"tid"}), @ORM\Index(name="FK_tet_taxa2", columns={"parenttid"}), @ORM\Index(name="FK_tet_taxauth", columns={"taxauthid"})})
- * @ORM\Entity(repositoryClass="App\Repository\TaxaRelationshipsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

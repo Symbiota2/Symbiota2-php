@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * UploadTempImages
  *
  * @ORM\Table(name="uploadimagetemp", indexes={@ORM\Index(name="Index_uploadimg_dbpk", columns={"dbpk"}), @ORM\Index(name="Index_uploadimg_collid", columns={"collid"}), @ORM\Index(name="Index_uploadimg_occid", columns={"occid"}), @ORM\Index(name="Index_uploadimg_ts", columns={"initialtimestamp"})})
- * @ORM\Entity(repositoryClass="App\Repository\UploadTempImagesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

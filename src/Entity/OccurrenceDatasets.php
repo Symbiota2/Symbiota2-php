@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * OccurrenceDatasets
  *
  * @ORM\Table(name="omoccurdatasets", indexes={@ORM\Index(name="FK_omcollections_collid_idx", columns={"collid"}), @ORM\Index(name="FK_omoccurdatasets_uid_idx", columns={"createduid"})})
- * @ORM\Entity(repositoryClass="App\Repository\OccurrenceDatasetsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

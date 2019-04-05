@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * TaxaDescriptionBlock
  *
  * @ORM\Table(name="taxadescrblock", uniqueConstraints={@ORM\UniqueConstraint(name="Index_unique_taxadescrblock", columns={"tid", "displaylevel", "language"})}, indexes={@ORM\Index(name="FK_taxadesc_lang_idx", columns={"langid"}), @ORM\Index(name="IDX_17AB94AF52596C31", columns={"tid"})})
- * @ORM\Entity(repositoryClass="App\Repository\TaxaDescriptionBlockRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

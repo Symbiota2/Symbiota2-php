@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * OccurrenceAccessStats
  *
  * @ORM\Table(name="omoccuraccessstats", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQUE_occuraccess", columns={"occid", "accessdate", "ipaddress", "accesstype"})}, indexes={@ORM\Index(name="IDX_FB36281B40A24FBA", columns={"occid"})})
- * @ORM\Entity(repositoryClass="App\Repository\OccurrenceAccessStatsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

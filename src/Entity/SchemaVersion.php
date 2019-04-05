@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * SchemaVersion
  *
  * @ORM\Table(name="schemaversion", uniqueConstraints={@ORM\UniqueConstraint(name="versionnumber_UNIQUE", columns={"versionnumber"})})
- * @ORM\Entity(repositoryClass="App\Repository\SchemaVersionRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

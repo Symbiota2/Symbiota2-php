@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * UploadTempOccurrences
  *
  * @ORM\Table(name="uploadspectemp", indexes={@ORM\Index(name="Index_uploadspectemp_dbpk", columns={"dbpk"}), @ORM\Index(name="Index_uploadspectemp_occid", columns={"occid"}), @ORM\Index(name="Index_uploadspec_catalognumber", columns={"catalogNumber"}), @ORM\Index(name="FK_uploadspectemp_coll", columns={"collid"}), @ORM\Index(name="Index_uploadspec_sciname", columns={"sciname"})})
- * @ORM\Entity(repositoryClass="App\Repository\UploadTempOccurrencesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

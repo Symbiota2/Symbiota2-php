@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * TaxaRanks
  *
  * @ORM\Table(name="taxonunits", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQUE_taxonunits", columns={"rankid", "rankname"})})
- * @ORM\Entity(repositoryClass="App\Repository\TaxaRanksRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

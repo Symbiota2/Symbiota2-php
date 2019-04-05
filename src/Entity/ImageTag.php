@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * ImageTag
  *
  * @ORM\Table(name="imagetag", uniqueConstraints={@ORM\UniqueConstraint(name="imgid", columns={"imgid", "keyvalue"})}, indexes={@ORM\Index(name="keyvalue", columns={"keyvalue"}), @ORM\Index(name="FK_imagetag_imgid_idx", columns={"imgid"})})
- * @ORM\Entity(repositoryClass="App\Repository\ImageTagRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

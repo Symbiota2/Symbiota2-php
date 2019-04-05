@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * ImageProcessorOcrFragment
  *
  * @ORM\Table(name="specprococrfrag", indexes={@ORM\Index(name="FK_specprococrfrag_prlid_idx", columns={"prlid"}), @ORM\Index(name="Index_keyterm", columns={"keyterm"})})
- * @ORM\Entity(repositoryClass="App\Repository\ImageProcessorOcrFragmentRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

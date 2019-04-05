@@ -15,7 +15,7 @@ use App\Entity\Users;
  * LookupReferenceTypes
  *
  * @ORM\Table(name="referencetype", uniqueConstraints={@ORM\UniqueConstraint(name="ReferenceType_UNIQUE", columns={"ReferenceType"})})
- * @ORM\Entity(repositoryClass="App\Repository\LookupReferenceTypesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

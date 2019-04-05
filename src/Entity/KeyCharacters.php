@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * KeyCharacters
  *
  * @ORM\Table(name="kmcharacters", indexes={@ORM\Index(name="FK_charheading_idx", columns={"hid"}), @ORM\Index(name="Index_sort", columns={"sortsequence"}), @ORM\Index(name="Index_charname", columns={"charname"})})
- * @ORM\Entity(repositoryClass="App\Repository\KeyCharactersRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

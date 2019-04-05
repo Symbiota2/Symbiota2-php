@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * KeyCharacterStateImages
  *
  * @ORM\Table(name="kmcsimages", indexes={@ORM\Index(name="FK_kscsimages_kscs_idx", columns={"kmcsid"})})
- * @ORM\Entity(repositoryClass="App\Repository\KeyCharacterStateImagesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

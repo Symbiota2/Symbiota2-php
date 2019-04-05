@@ -14,7 +14,7 @@ use App\Entity\Occurrences;
  * ChecklistVouchers
  *
  * @ORM\Table(name="fmvouchers", indexes={@ORM\Index(name="chklst_taxavouchers", columns={"TID", "CLID"}), @ORM\Index(name="IDX_6468A29340A24FBA", columns={"occid"})})
- * @ORM\Entity(repositoryClass="App\Repository\ChecklistVouchersRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * TaxaVernaculars
  *
  * @ORM\Table(name="taxavernaculars", uniqueConstraints={@ORM\UniqueConstraint(name="unique_key", columns={"Language", "VernacularName", "tid"})}, indexes={@ORM\Index(name="FK_vern_lang_idx", columns={"langid"}), @ORM\Index(name="tid1", columns={"tid"}), @ORM\Index(name="vernacularsnames", columns={"VernacularName"})})
- * @ORM\Entity(repositoryClass="App\Repository\TaxaVernacularsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * ImageProcessorProjects
  *
  * @ORM\Table(name="specprocessorprojects", indexes={@ORM\Index(name="FK_specprocessorprojects_coll", columns={"collid"})})
- * @ORM\Entity(repositoryClass="App\Repository\ImageProcessorProjectsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

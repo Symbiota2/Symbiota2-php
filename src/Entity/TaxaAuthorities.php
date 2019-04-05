@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * TaxaAuthorities
  *
  * @ORM\Table(name="taxauthority")
- * @ORM\Entity(repositoryClass="App\Repository\TaxaAuthoritiesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

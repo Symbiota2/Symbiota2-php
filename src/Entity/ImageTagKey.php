@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * ImageTagKey
  *
  * @ORM\Table(name="imagetagkey", indexes={@ORM\Index(name="sortorder", columns={"sortorder"})})
- * @ORM\Entity(repositoryClass="App\Repository\ImageTagKeyRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

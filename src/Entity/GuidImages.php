@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * GuidImages
  *
  * @ORM\Table(name="guidimages", uniqueConstraints={@ORM\UniqueConstraint(name="guidimages_imgid_unique", columns={"imgid"})})
- * @ORM\Entity(repositoryClass="App\Repository\GuidImagesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

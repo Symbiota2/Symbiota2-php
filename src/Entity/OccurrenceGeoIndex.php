@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * OccurrenceGeoIndex
  *
  * @ORM\Table(name="omoccurgeoindex", indexes={@ORM\Index(name="IDX_375D79BD52596C31", columns={"tid"})})
- * @ORM\Entity(repositoryClass="App\Repository\OccurrenceGeoIndexRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

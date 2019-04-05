@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * TaxaDescriptionStatements
  *
  * @ORM\Table(name="taxadescrstmts", indexes={@ORM\Index(name="FK_taxadescrstmts_tblock", columns={"tdbid"})})
- * @ORM\Entity(repositoryClass="App\Repository\TaxaDescriptionStatementsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

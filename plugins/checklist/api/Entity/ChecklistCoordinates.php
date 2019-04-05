@@ -13,7 +13,7 @@ use App\Entity\Taxa;
  * ChecklistCoordinates
  *
  * @ORM\Table(name="fmchklstcoordinates", uniqueConstraints={@ORM\UniqueConstraint(name="IndexUnique", columns={"clid", "tid", "decimallatitude", "decimallongitude"})}, indexes={@ORM\Index(name="FKchklsttaxalink", columns={"clid", "tid"})})
- * @ORM\Entity(repositoryClass="App\Repository\ChecklistCoordinatesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

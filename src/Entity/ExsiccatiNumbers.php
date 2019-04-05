@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * ExsiccatiNumbers
  *
  * @ORM\Table(name="omexsiccatinumbers", uniqueConstraints={@ORM\UniqueConstraint(name="Index_omexsiccatinumbers_unique", columns={"exsnumber", "ometid"})}, indexes={@ORM\Index(name="FK_exsiccatiTitleNumber", columns={"ometid"})})
- * @ORM\Entity(repositoryClass="App\Repository\ExsiccatiNumbersRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

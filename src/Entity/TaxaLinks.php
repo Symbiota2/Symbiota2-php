@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * TaxaLinks
  *
  * @ORM\Table(name="taxalinks", indexes={@ORM\Index(name="Index_unique_taxalinks", columns={"tid", "url"})})
- * @ORM\Entity(repositoryClass="App\Repository\TaxaLinksRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

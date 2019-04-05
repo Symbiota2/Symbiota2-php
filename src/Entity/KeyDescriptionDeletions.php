@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * KeyDescriptionDeletions
  *
  * @ORM\Table(name="kmdescrdeletions")
- * @ORM\Entity(repositoryClass="App\Repository\KeyDescriptionDeletionsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

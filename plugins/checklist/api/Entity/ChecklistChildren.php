@@ -16,7 +16,7 @@ use App\Entity\Users;
  * ChecklistChildren
  *
  * @ORM\Table(name="fmchklstchildren", indexes={@ORM\Index(name="FK_fmchklstchild_clid_idx", columns={"clid"}), @ORM\Index(name="FK_fmchklstchild_child_idx", columns={"clidchild"})})
- * @ORM\Entity(repositoryClass="App\Repository\ChecklistChildrenRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

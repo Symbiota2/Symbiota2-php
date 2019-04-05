@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * OccurrenceLoans
  *
  * @ORM\Table(name="omoccurloans", indexes={@ORM\Index(name="FK_occurloans_owncoll", columns={"collidOwn"}), @ORM\Index(name="FK_occurloans_borrinst", columns={"iidBorrower"}), @ORM\Index(name="FK_occurloans_owninst", columns={"iidOwner"}), @ORM\Index(name="FK_occurloans_borrcoll", columns={"collidBorr"})})
- * @ORM\Entity(repositoryClass="App\Repository\OccurrenceLoansRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

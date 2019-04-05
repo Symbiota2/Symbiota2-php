@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * TaxaConcepts
  *
  * @ORM\Table(name="taxstatus", indexes={@ORM\Index(name="Index_ts_taid", columns={"taxauthid"}), @ORM\Index(name="Index_ts_tidacc", columns={"tidaccepted"}), @ORM\Index(name="Index_ts_tid", columns={"tid"}), @ORM\Index(name="Index_ts_family", columns={"family"}), @ORM\Index(name="Index_ts_parenttid", columns={"parenttid"})})
- * @ORM\Entity(repositoryClass="App\Repository\TaxaConceptsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

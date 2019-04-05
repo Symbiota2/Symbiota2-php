@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * UserRoles
  *
  * @ORM\Table(name="userroles", indexes={@ORM\Index(name="Index_userroles_table", columns={"tablepk"}), @ORM\Index(name="FK_usrroles_uid2_idx", columns={"uidassignedby"}), @ORM\Index(name="FK_userroles_uid_idx", columns={"uid"})})
- * @ORM\Entity(repositoryClass="App\Repository\UserRolesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *      collectionOperations={
  *          "post"={

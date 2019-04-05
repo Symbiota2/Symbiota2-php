@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * LookupCounties
  *
  * @ORM\Table(name="lkupcounty", uniqueConstraints={@ORM\UniqueConstraint(name="unique_county", columns={"stateId", "countyName"})}, indexes={@ORM\Index(name="index_countyname", columns={"countyName"}), @ORM\Index(name="fk_stateprovince_lkupcounty", columns={"stateId"})})
- * @ORM\Entity(repositoryClass="App\Repository\LookupCountiesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

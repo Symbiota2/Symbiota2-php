@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * KeyCharacterHeading
  *
  * @ORM\Table(name="kmcharheading", uniqueConstraints={@ORM\UniqueConstraint(name="unique_kmcharheading", columns={"headingname", "langid"})}, indexes={@ORM\Index(name="FK_kmcharheading_lang_idx", columns={"langid"}), @ORM\Index(name="HeadingName", columns={"headingname"})})
- * @ORM\Entity(repositoryClass="App\Repository\KeyCharacterHeadingRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

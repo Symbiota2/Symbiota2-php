@@ -18,7 +18,7 @@ use App\Entity\Users;
  * ReferenceAuthors
  *
  * @ORM\Table(name="referenceauthors", indexes={@ORM\Index(name="INDEX_refauthlastname", columns={"lastname"})})
- * @ORM\Entity(repositoryClass="App\Repository\ReferenceAuthorsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

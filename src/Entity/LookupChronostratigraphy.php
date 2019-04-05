@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * LookupChronostratigraphy
  *
  * @ORM\Table(name="paleochronostratigraphy", indexes={@ORM\Index(name="Period", columns={"Period"}), @ORM\Index(name="Era", columns={"Era"}), @ORM\Index(name="Stage", columns={"Stage"}), @ORM\Index(name="Eon", columns={"Eon"}), @ORM\Index(name="Epoch", columns={"Epoch"})})
- * @ORM\Entity(repositoryClass="App\Repository\LookupChronostratigraphyRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

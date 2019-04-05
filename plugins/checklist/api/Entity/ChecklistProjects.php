@@ -14,7 +14,7 @@ use App\Entity\InitialTimestampInterface;
  * ChecklistProjects
  *
  * @ORM\Table(name="fmprojects", indexes={@ORM\Index(name="FK_parentpid_proj", columns={"parentpid"})})
- * @ORM\Entity(repositoryClass="App\Repository\ChecklistProjectsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

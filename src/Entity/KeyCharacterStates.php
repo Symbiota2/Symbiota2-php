@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * KeyCharacterStates
  *
  * @ORM\Table(name="kmcs", uniqueConstraints={@ORM\UniqueConstraint(name="FK_cidclid_id", columns={"cid", "cs"})}, indexes={@ORM\Index(name="FK_cs_chars", columns={"cid"})})
- * @ORM\Entity(repositoryClass="App\Repository\KeyCharacterStatesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

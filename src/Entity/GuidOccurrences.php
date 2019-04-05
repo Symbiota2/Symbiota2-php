@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * GuidOccurrences
  *
  * @ORM\Table(name="guidoccurrences", uniqueConstraints={@ORM\UniqueConstraint(name="guidoccurrences_occid_unique", columns={"occid"})})
- * @ORM\Entity(repositoryClass="App\Repository\GuidOccurrencesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

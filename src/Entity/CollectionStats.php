@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * CollectionStats
  *
  * @ORM\Table(name="omcollectionstats")
- * @ORM\Entity(repositoryClass="App\Repository\CollectionStatsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

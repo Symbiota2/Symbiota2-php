@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Traits
  *
  * @ORM\Table(name="tmtraits", indexes={@ORM\Index(name="FK_traits_uidmodified_idx", columns={"modifieduid"}), @ORM\Index(name="FK_traits_uidcreated_idx", columns={"createduid"}), @ORM\Index(name="traitsname", columns={"traitname"})})
- * @ORM\Entity(repositoryClass="App\Repository\TraitsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

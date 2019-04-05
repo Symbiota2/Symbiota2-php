@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * OccurrenceGenetic
  *
  * @ORM\Table(name="omoccurgenetic", indexes={@ORM\Index(name="FK_omoccurgenetic", columns={"occid"}), @ORM\Index(name="INDEX_omoccurgenetic_name", columns={"resourcename"})})
- * @ORM\Entity(repositoryClass="App\Repository\OccurrenceGeneticRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

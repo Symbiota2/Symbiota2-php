@@ -16,7 +16,7 @@ use App\Entity\Users;
  * ChecklistTaxaComments
  *
  * @ORM\Table(name="fmcltaxacomments", indexes={@ORM\Index(name="FK_clcomment_users", columns={"createduid"}), @ORM\Index(name="FK_clcomment_cltaxa", columns={"clid", "tid"})})
- * @ORM\Entity(repositoryClass="App\Repository\ChecklistTaxaCommentsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * ImageProcessorRawLabels
  *
  * @ORM\Table(name="specprocessorrawlabels", indexes={@ORM\Index(name="FK_specproc_occid", columns={"occid"}), @ORM\Index(name="FK_specproc_images", columns={"imgid"})})
- * @ORM\Entity(repositoryClass="App\Repository\ImageProcessorRawLabelsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

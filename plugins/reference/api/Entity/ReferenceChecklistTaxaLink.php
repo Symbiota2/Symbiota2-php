@@ -14,7 +14,7 @@ use App\Entity\Taxa;
  * ReferenceChecklistTaxaLink
  *
  * @ORM\Table(name="referencechklsttaxalink", indexes={@ORM\Index(name="FK_refchktaxalink_clidtid_idx", columns={"clid", "tid"}), @ORM\Index(name="IDX_1B708068FB7281BE", columns={"refid"})})
- * @ORM\Entity(repositoryClass="App\Repository\ReferenceChecklistTaxaLinkRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

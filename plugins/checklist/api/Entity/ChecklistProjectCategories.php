@@ -12,7 +12,7 @@ use App\Entity\InitialTimestampInterface;
  * ChecklistProjectCategories
  *
  * @ORM\Table(name="fmprojectcategories", indexes={@ORM\Index(name="FK_fmprojcat_pid_idx", columns={"pid"})})
- * @ORM\Entity(repositoryClass="App\Repository\ChecklistProjectCategoriesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

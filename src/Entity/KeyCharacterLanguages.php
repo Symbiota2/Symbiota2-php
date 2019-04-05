@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * KeyCharacterLanguages
  *
  * @ORM\Table(name="kmcharacterlang")
- * @ORM\Entity(repositoryClass="App\Repository\KeyCharacterLanguagesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * TaxaMaps
  *
  * @ORM\Table(name="taxamaps", indexes={@ORM\Index(name="FK_tid_idx", columns={"tid"})})
- * @ORM\Entity(repositoryClass="App\Repository\TaxaMapsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

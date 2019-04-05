@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * OccurrenceExchange
  *
  * @ORM\Table(name="omoccurexchange", indexes={@ORM\Index(name="FK_occexch_coll", columns={"collid"})})
- * @ORM\Entity(repositoryClass="App\Repository\OccurrenceExchangeRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

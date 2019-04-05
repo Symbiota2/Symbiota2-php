@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * OccurrenceEditLocks
  *
  * @ORM\Table(name="omoccureditlocks")
- * @ORM\Entity(repositoryClass="App\Repository\OccurrenceEditLocksRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

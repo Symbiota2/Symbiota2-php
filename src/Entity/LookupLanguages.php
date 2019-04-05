@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * LookupLanguages
  *
  * @ORM\Table(name="adminlanguages", uniqueConstraints={@ORM\UniqueConstraint(name="index_langname_unique", columns={"langname"})})
- * @ORM\Entity(repositoryClass="App\Repository\LookupLanguagesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

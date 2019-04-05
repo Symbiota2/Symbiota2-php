@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * KeyDescriptions
  *
  * @ORM\Table(name="kmdescr", indexes={@ORM\Index(name="CSDescr", columns={"CID", "CS"}), @ORM\Index(name="IDX_6691F324C4FE2EBB", columns={"tid"})})
- * @ORM\Entity(repositoryClass="App\Repository\KeyDescriptionsRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

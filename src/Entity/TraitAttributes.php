@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * TraitAttributes
  *
  * @ORM\Table(name="tmattributes", indexes={@ORM\Index(name="FK_tmattr_occid_idx", columns={"occid"}), @ORM\Index(name="FK_tmattr_uidmodified_idx", columns={"modifieduid"}), @ORM\Index(name="FK_tmattr_stateid_idx", columns={"stateid"}), @ORM\Index(name="FK_attr_uidcreate_idx", columns={"createduid"}), @ORM\Index(name="FK_tmattr_imgid_idx", columns={"imgid"})})
- * @ORM\Entity(repositoryClass="App\Repository\TraitAttributesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

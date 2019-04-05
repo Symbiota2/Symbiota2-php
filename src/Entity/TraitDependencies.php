@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * TraitDependencies
  *
  * @ORM\Table(name="tmtraitdependencies", indexes={@ORM\Index(name="FK_tmdepend_stateid_idx", columns={"parentstateid"}), @ORM\Index(name="FK_tmdepend_traitid_idx", columns={"traitid"})})
- * @ORM\Entity(repositoryClass="App\Repository\TraitDependenciesRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

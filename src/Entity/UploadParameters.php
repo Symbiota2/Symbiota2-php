@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * UploadParameters
  *
  * @ORM\Table(name="uploadspecparameters", indexes={@ORM\Index(name="FK_uploadspecparameters_coll", columns={"CollID"})})
- * @ORM\Entity(repositoryClass="App\Repository\UploadParametersRepository")
+ * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}
