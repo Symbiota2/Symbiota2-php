@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace Core\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
@@ -12,14 +12,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Controller\ResetPasswordController;
-use App\Controller\VerifyUserController;
+use Core\Controller\ResetPasswordController;
+use Core\Controller\VerifyUserController;
 
 /**
  * Users
  *
  * @ApiResource(
- *      itemOperations={
+ *     routePrefix="/core",
+ *     itemOperations={
  *          "get"={
  *              "access_control"="is_granted('SuperAdmin', object) or object == user",
  *              "normalization_context"={
@@ -349,15 +350,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
     private $verificationToken;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Collections", mappedBy="userId")
-     * @Groups({"get"})
-     */
-    private $collectionId;
-
-    /**
-     * @ORM\OneToMany(targetEntity="\App\Entity\UserRoles", mappedBy="userId")
+     * @ORM\OneToMany(targetEntity="Core\Entity\UserRoles", mappedBy="userId")
      * @ApiSubresource()
      * @Groups({"get"})
      */
@@ -374,7 +367,6 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      */
     public function __construct()
     {
-        $this->collectionId = new ArrayCollection();
         $this->permissions = new ArrayCollection();
     }
 
@@ -667,34 +659,6 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
     public function setVerificationToken(?string $verificationToken): self
     {
         $this->verificationToken = $verificationToken;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Collections[]
-     */
-    public function getCollectionId(): Collection
-    {
-        return $this->collectionId;
-    }
-
-    public function addCollectionId(Collections $collectionId): self
-    {
-        if (!$this->collectionId->contains($collectionId)) {
-            $this->collectionId[] = $collectionId;
-            $collectionId->addUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCollectionId(Collections $collectionId): self
-    {
-        if ($this->collectionId->contains($collectionId)) {
-            $this->collectionId->removeElement($collectionId);
-            $collectionId->removeUserId($this);
-        }
 
         return $this;
     }

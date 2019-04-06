@@ -2,13 +2,13 @@ security:
     access_decision_manager:
         strategy: affirmative
     encoders:
-        App\Entity\Users: bcrypt
+        Core\Entity\Users: bcrypt
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
 #        in_memory: { memory: ~ }
         database:
             entity:
-                class: App\Entity\Users
+                class: Core\Entity\Users
                 property: username
     firewalls:
         dev:
@@ -25,8 +25,8 @@ security:
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
             guard:
                 authenticators:
-                    - App\Guard\TokenAuthenticator
-            user_checker: App\Guard\ValidUserCheck
+                    - Core\Guard\TokenAuthenticator
+            user_checker: Core\Guard\ValidUserCheck
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:

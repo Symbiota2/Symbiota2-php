@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace Core\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="adminlanguages", uniqueConstraints={@ORM\UniqueConstraint(name="index_langname_unique", columns={"langname"})})
  * @ORM\Entity()
  * @ApiResource(
+ *     routePrefix="/core",
  *     itemOperations={"get"},
  *     collectionOperations={"get"}
  * )
@@ -76,7 +77,7 @@ class LookupLanguages implements InitialTimestampInterface
      */
     public function __construct()
     {
-        $this->characterId = new \Doctrine\Common\Collections\ArrayCollection();
+
     }
 
     public function getId(): ?int

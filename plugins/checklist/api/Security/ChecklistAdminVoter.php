@@ -2,7 +2,7 @@
 
 namespace Checklist\Security;
 
-use App\Entity\Users;
+use Core\Entity\Users;
 use Checklist\Entity\Checklists;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;

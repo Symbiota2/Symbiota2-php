@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Operation;
+namespace Core\Operation;
 
 use ApiPlatform\Core\Operation\PathSegmentNameGeneratorInterface;
 

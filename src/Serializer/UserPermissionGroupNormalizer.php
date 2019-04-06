@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Serializer;
+namespace Core\Serializer;
 
-use App\Entity\Users;
+use Core\Entity\Users;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;

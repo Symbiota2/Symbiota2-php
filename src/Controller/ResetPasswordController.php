@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controller;
+namespace Core\Controller;
 
 use ApiPlatform\Core\Validator\ValidatorInterface;
-use App\Entity\Users;
+use Core\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;

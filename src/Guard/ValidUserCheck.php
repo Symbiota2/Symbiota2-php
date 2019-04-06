@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Guard;
+namespace Core\Guard;
 
-use App\Entity\Users;
+use Core\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use Symfony\Component\Security\Core\Exception\DisabledException;

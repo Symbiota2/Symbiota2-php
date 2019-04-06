@@ -10,10 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\CreatedUserIdInterface;
-use App\Entity\InitialTimestampInterface;
-use App\Entity\ModifiedTimestampInterface;
-use App\Entity\Users;
+use Core\Entity\CreatedUserIdInterface;
+use Core\Entity\InitialTimestampInterface;
+use Core\Entity\ModifiedTimestampInterface;
+use Core\Entity\Users;
 
 /**
  * Checklists
@@ -21,7 +21,6 @@ use App\Entity\Users;
  * @ORM\Table(name="fmchecklists", indexes={@ORM\Index(name="FK_checklists_uid", columns={"createduid"}), @ORM\Index(name="name", columns={"Name", "Type"})})
  * @ORM\Entity()
  * @ApiResource(
- *     routePrefix="/checklist",
  *     itemOperations={
  *          "get"={
  *             "normalization_context"={
@@ -159,7 +158,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
     /**
      * @var \Checklist\Entity\Checklists
      *
-     * @ORM\ManyToOne(targetEntity="\Checklist\Entity\Checklists")
+     * @ORM\ManyToOne(targetEntity="Checklist\Entity\Checklists")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parentclid", referencedColumnName="CLID")
      * })
@@ -258,9 +257,9 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
     private $headerUrl;
 
     /**
-     * @var \App\Entity\Users
+     * @var \Core\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="Core\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
@@ -307,7 +306,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\Checklist\Entity\ChecklistProjects", mappedBy="checklistId")
+     * @ORM\ManyToMany(targetEntity="Checklist\Entity\Projects", mappedBy="checklistId")
      * @Groups({"get", "get-checklist-info"})
      */
     private $projectId;
@@ -625,9 +624,6 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
         return $this;
     }
 
-    /**
-     * @return \App\Entity\Users|null
-     */
     public function getCreatedUserId(): ?Users
     {
         return $this->createdUserId;
@@ -645,14 +641,14 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
     }
 
     /**
-     * @return Collection|ChecklistProjects[]
+     * @return Collection|Projects[]
      */
     public function getProjectId(): Collection
     {
         return $this->projectId;
     }
 
-    public function addProjectId(ChecklistProjects $projectId): self
+    public function addProjectId(Projects $projectId): self
     {
         if (!$this->projectId->contains($projectId)) {
             $this->projectId[] = $projectId;
@@ -662,7 +658,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
         return $this;
     }
 
-    public function removeProjectId(ChecklistProjects $projectId): self
+    public function removeProjectId(Projects $projectId): self
     {
         if ($this->projectId->contains($projectId)) {
             $this->projectId->removeElement($projectId);

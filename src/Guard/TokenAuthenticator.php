@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Guard;
+namespace Core\Guard;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\ExpiredTokenException;
 use Lexik\Bundle\JWTAuthenticationBundle\Security\Authentication\Token\PreAuthenticationJWTUserToken;

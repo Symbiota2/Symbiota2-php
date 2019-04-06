@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace Core\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="schemaversion", uniqueConstraints={@ORM\UniqueConstraint(name="versionnumber_UNIQUE", columns={"versionnumber"})})
  * @ORM\Entity()
  * @ApiResource(
+ *     routePrefix="/core",
  *     itemOperations={"get"},
  *     collectionOperations={"get"}
  * )

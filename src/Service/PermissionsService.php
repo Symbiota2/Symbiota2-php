@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace Core\Service;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 

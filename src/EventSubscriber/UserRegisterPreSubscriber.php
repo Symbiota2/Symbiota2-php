@@ -1,10 +1,10 @@
 <?php
 
-namespace App\EventSubscriber;
+namespace Core\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
-use App\Entity\Users;
-use App\Guard\TokenGenerator;
+use Core\Entity\Users;
+use Core\Guard\TokenGenerator;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;

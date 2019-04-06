@@ -1,11 +1,11 @@
 <?php
 
-namespace App\EventSubscriber;
+namespace Core\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
-use App\Entity\ModifiedUserIdInterface;
-use App\Entity\CreatedUserIdInterface;
-use App\Entity\UserIdAssignedByInterface;
+use Core\Entity\ModifiedUserIdInterface;
+use Core\Entity\CreatedUserIdInterface;
+use Core\Entity\UserIdAssignedByInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;

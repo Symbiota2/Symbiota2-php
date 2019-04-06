@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Service;
+namespace Core\Service;
 
-use App\Entity\Users;
+use Core\Entity\Users;
 use Swift_Message;
 
 class MailerService

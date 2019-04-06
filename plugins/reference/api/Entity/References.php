@@ -9,14 +9,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\ModifiedUserIdInterface;
-use App\Entity\InitialTimestampInterface;
-use App\Entity\ModifiedTimestampInterface;
-use App\Entity\Users;
+use Core\Entity\ModifiedUserIdInterface;
+use Core\Entity\InitialTimestampInterface;
+use Core\Entity\ModifiedTimestampInterface;
+use Core\Entity\Users;
 use Checklist\Entity\Checklists;
-use App\Entity\Collections;
-use App\Entity\Occurrences;
-use App\Entity\Taxa;
+use Collection\Entity\Collections;
+use Occurrence\Entity\Occurrences;
+use Taxa\Entity\Taxa;
 
 /**
  * References
@@ -24,7 +24,6 @@ use App\Entity\Taxa;
  * @ORM\Table(name="referenceobject", indexes={@ORM\Index(name="FK_refobj_typeid_idx", columns={"ReferenceTypeId"}), @ORM\Index(name="FK_refobj_parentrefid_idx", columns={"parentRefId"}), @ORM\Index(name="INDEX_refobj_title", columns={"title"})})
  * @ORM\Entity()
  * @ApiResource(
- *     routePrefix="/reference",
  *     itemOperations={"get"},
  *     collectionOperations={"get"}
  * )
@@ -43,7 +42,7 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
     /**
      * @var \Reference\Entity\References
      *
-     * @ORM\ManyToOne(targetEntity="\Reference\Entity\References")
+     * @ORM\ManyToOne(targetEntity="Reference\Entity\References")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parentRefId", referencedColumnName="refid")
      * })
@@ -53,7 +52,7 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
     /**
      * @var \Reference\Entity\LookupReferenceTypes
      *
-     * @ORM\ManyToOne(targetEntity="\Reference\Entity\LookupReferenceTypes")
+     * @ORM\ManyToOne(targetEntity="Reference\Entity\LookupReferenceTypes")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ReferenceTypeId", referencedColumnName="ReferenceTypeId", nullable=false)
      * })
@@ -246,9 +245,9 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
     private $cheatCitation;
 
     /**
-     * @var \App\Entity\Users
+     * @var \Core\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="Core\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="modifieduid", referencedColumnName="uid")
      * })
@@ -274,7 +273,7 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\Reference\Entity\ReferenceAuthors", inversedBy="referenceId")
+     * @ORM\ManyToMany(targetEntity="Reference\Entity\Authors", inversedBy="referenceId")
      * @ORM\JoinTable(name="referenceauthorlink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="refid", referencedColumnName="refid")
@@ -289,7 +288,7 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\Checklist\Entity\Checklists")
+     * @ORM\ManyToMany(targetEntity="Checklist\Entity\Checklists")
      * @ORM\JoinTable(name="referencechecklistlink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="refid", referencedColumnName="refid")
@@ -304,7 +303,7 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Collections")
+     * @ORM\ManyToMany(targetEntity="Collection\Entity\Collections")
      * @ORM\JoinTable(name="referencecollectionlink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="refid", referencedColumnName="refid")
@@ -319,7 +318,7 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Occurrences")
+     * @ORM\ManyToMany(targetEntity="Occurrence\Entity\Occurrences")
      * @ORM\JoinTable(name="referenceoccurlink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="refid", referencedColumnName="refid")
@@ -334,7 +333,7 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="\App\Entity\Taxa")
+     * @ORM\ManyToMany(targetEntity="Taxa\Entity\Taxa")
      * @ORM\JoinTable(name="referencetaxalink",
      *   joinColumns={
      *     @ORM\JoinColumn(name="refid", referencedColumnName="refid")
@@ -704,14 +703,14 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
     }
 
     /**
-     * @return Collection|ReferenceAuthors[]
+     * @return Collection|Authors[]
      */
     public function getReferenceAuthorId(): Collection
     {
         return $this->referenceAuthorId;
     }
 
-    public function addReferenceAuthorId(ReferenceAuthors $referenceAuthorId): self
+    public function addReferenceAuthorId(Authors $referenceAuthorId): self
     {
         if (!$this->referenceAuthorId->contains($referenceAuthorId)) {
             $this->referenceAuthorId[] = $referenceAuthorId;
@@ -720,7 +719,7 @@ class References implements ModifiedUserIdInterface, InitialTimestampInterface, 
         return $this;
     }
 
-    public function removeReferenceAuthorId(ReferenceAuthors $referenceAuthorId): self
+    public function removeReferenceAuthorId(Authors $referenceAuthorId): self
     {
         if ($this->referenceAuthorId->contains($referenceAuthorId)) {
             $this->referenceAuthorId->removeElement($referenceAuthorId);

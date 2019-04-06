@@ -7,9 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Entity\CreatedUserIdInterface;
-use App\Entity\InitialTimestampInterface;
-use App\Entity\Users;
+use Core\Entity\CreatedUserIdInterface;
+use Core\Entity\InitialTimestampInterface;
+use Core\Entity\Users;
 
 /**
  * LookupReferenceTypes
@@ -187,9 +187,9 @@ class LookupReferenceTypes implements CreatedUserIdInterface, InitialTimestampIn
     private $figures;
 
     /**
-     * @var \App\Entity\Users
+     * @var \Core\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="\App\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="Core\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })

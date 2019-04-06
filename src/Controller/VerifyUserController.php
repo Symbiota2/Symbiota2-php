@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace Core\Controller;
 
-use App\Entity\Users;
+use Core\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;

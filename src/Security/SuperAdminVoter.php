@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Security;
+namespace Core\Security;
 
-use App\Entity\Users;
-use App\Service\PermissionsService;
+use Core\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -11,9 +10,8 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class SuperAdminVoter extends Voter
 {
     private $em;
-    private $ps;
 
-    public function __construct(EntityManagerInterface $em, PermissionsService $ps)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }

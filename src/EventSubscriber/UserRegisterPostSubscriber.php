@@ -1,10 +1,10 @@
 <?php
 
-namespace App\EventSubscriber;
+namespace Core\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
-use App\Entity\Users;
-use App\Service\MailerService;
+use Core\Entity\Users;
+use Core\Service\MailerService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;

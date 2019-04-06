@@ -32,9 +32,24 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/",
+            "Core\\": "src/",
             "Checklist\\": "plugins/checklist/api/",
-            "Reference\\": "plugins/reference/api/"
+            "Reference\\": "plugins/reference/api/",
+            "Collection\\": "plugins/collection/api/",
+            "CrowdSource\\": "plugins/crowdSource/api/",
+            "Exsiccati\\": "plugins/exsiccati/api/",
+            "Glossary\\": "plugins/glossary/api/",
+            "ImageProcessor\\": "plugins/imageProcessor/api/",
+            "Key\\": "plugins/key/api/",
+            "Media\\": "plugins/media/api/",
+            "Occurrence\\": "plugins/occurrence/api/",
+            "OccurrenceAssociation\\": "plugins/occurrenceAssociation/api/",
+            "OccurrenceComment\\": "plugins/occurrenceComment/api/",
+            "OccurrenceDataset\\": "plugins/occurrenceDataset/api/",
+            "OccurrenceGenetic\\": "plugins/occurrenceGenetic/api/",
+            "OccurrenceLoan\\": "plugins/occurrenceLoan/api/",
+            "Taxa\\": "plugins/taxa/api/",
+            "Traits\\": "plugins/traits/api/"
         }
     },
     "autoload-dev": {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace Core\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,7 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="userroles", indexes={@ORM\Index(name="Index_userroles_table", columns={"tablepk"}), @ORM\Index(name="FK_usrroles_uid2_idx", columns={"uidassignedby"}), @ORM\Index(name="FK_userroles_uid_idx", columns={"uid"})})
  * @ORM\Entity()
  * @ApiResource(
- *      collectionOperations={
+ *     routePrefix="/core",
+ *     collectionOperations={
  *          "post"={
  *              "access_control"="is_granted('SuperAdmin', object)",
  *              "normalization_context"={
@@ -45,9 +46,9 @@ class UserRoles implements UserIdAssignedByInterface, InitialTimestampInterface
     private $id;
 
     /**
-     * @var \App\Entity\Users
+     * @var \Core\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="Core\Entity\Users")
      * @ORM\JoinColumns({
      *      @ORM\JoinColumn(name="uid", referencedColumnName="uid", nullable=false)
      * })
@@ -75,9 +76,9 @@ class UserRoles implements UserIdAssignedByInterface, InitialTimestampInterface
     private $tableId;
 
     /**
-     * @var \App\Entity\Users
+     * @var \Core\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="Core\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="uidassignedby", referencedColumnName="uid")
      * })

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\EventSubscriber;
+namespace Core\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
-use App\Entity\InitialTimestampInterface;
-use App\Entity\ModifiedTimestampInterface;
+use Core\Entity\InitialTimestampInterface;
+use Core\Entity\ModifiedTimestampInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;

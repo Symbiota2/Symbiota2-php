@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventListener;
+namespace Core\EventListener;
 
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationFailureEvent;
 use Lexik\Bundle\JWTAuthenticationBundle\Response\JWTAuthenticationFailureResponse;
