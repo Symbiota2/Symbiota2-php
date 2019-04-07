@@ -9,10 +9,6 @@ services:
     volumes:
       - ./:/symbiota2
       - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - mysql
-      - mariadb
-      - postgres
     ports:
       - 80:80
 
@@ -24,10 +20,6 @@ services:
     volumes:
       - ./:/symbiota2
       - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini
-    depends_on:
-      - mysql
-      - mariadb
-      - postgres
 
   openssl:
     build: ./docker/openssl
@@ -80,9 +72,5 @@ services:
     image: adminer:4.7
     container_name: adminer
     restart: always
-    depends_on:
-      - mysql
-      - mariadb
-      - postgres
     ports:
       - 8080:8080

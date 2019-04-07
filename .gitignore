@@ -60,3 +60,7 @@ Homestead.yaml
 /config/sql/dev/
 /config/sql/default/
 /docker/data/
+
+/*.yml
+!/docker-compose.dist.yml
+!/docker-compose-elk.dist.yml
