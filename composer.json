@@ -71,7 +71,9 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "pre-update-cmd": [
-            "@php -r \"file_exists('.env') || copy('.env.dist', '.env');\""
+            "@php -r \"file_exists('.env') || copy('.env.dist', '.env');\"",
+            "@php -r \"file_exists('docker-compose.yml') || copy('docker-compose.yml.dist', 'docker-compose.yml');\"",
+            "@php -r \"file_exists('docker-compose-elk.yml') || copy('docker-compose-elk.yml.dist', 'docker-compose-elk.yml');\""
         ],
         "post-install-cmd": [
             "@auto-scripts"

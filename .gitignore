@@ -62,5 +62,3 @@ Homestead.yaml
 /docker/data/
 
 /*.yml
-!/docker-compose.dist.yml
-!/docker-compose-elk.dist.yml
