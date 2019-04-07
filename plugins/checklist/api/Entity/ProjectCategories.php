@@ -31,9 +31,9 @@ class ProjectCategories implements InitialTimestampInterface
     private $id;
 
     /**
-     * @var \Checklist\Entity\Projects
+     * @var \Checklist\Entity\ChecklistProjects
      *
-     * @ORM\ManyToOne(targetEntity="Checklist\Entity\Projects")
+     * @ORM\ManyToOne(targetEntity="Checklist\Entity\ChecklistProjects")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="pid", referencedColumnName="pid", nullable=false)
      * })
@@ -66,9 +66,9 @@ class ProjectCategories implements InitialTimestampInterface
     private $description;
 
     /**
-     * @var \Checklist\Entity\Projects
+     * @var \Checklist\Entity\ChecklistProjects
      *
-     * @ORM\ManyToOne(targetEntity="Checklist\Entity\Projects")
+     * @ORM\ManyToOne(targetEntity="Checklist\Entity\ChecklistProjects")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parentpid", referencedColumnName="pid")
      * })
@@ -156,12 +156,12 @@ class ProjectCategories implements InitialTimestampInterface
         return $this;
     }
 
-    public function getParentProjectId(): ?Projects
+    public function getParentProjectId(): ?ChecklistProjects
     {
         return $this->parentProjectId;
     }
 
-    public function setParentProjectId(?Projects $parentProjectId): self
+    public function setParentProjectId(?ChecklistProjects $parentProjectId): self
     {
         $this->parentProjectId = $parentProjectId;
 
@@ -228,12 +228,12 @@ class ProjectCategories implements InitialTimestampInterface
         return $this;
     }
 
-    public function getProjectId(): ?Projects
+    public function getProjectId(): ?ChecklistProjects
     {
         return $this->projectId;
     }
 
-    public function setProjectId(?Projects $projectId): self
+    public function setProjectId(?ChecklistProjects $projectId): self
     {
         $this->projectId = $projectId;
 

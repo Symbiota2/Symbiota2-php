@@ -10,7 +10,7 @@ use Core\Entity\InitialTimestampInterface;
 use Collection\Entity\Collections;
 
 /**
- * Projects
+ * ChecklistProjects
  *
  * @ORM\Table(name="specprocessorprojects", indexes={@ORM\Index(name="FK_specprocessorprojects_coll", columns={"collid"})})
  * @ORM\Entity()

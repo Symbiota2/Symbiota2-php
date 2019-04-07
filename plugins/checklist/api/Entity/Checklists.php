@@ -306,7 +306,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Checklist\Entity\Projects", mappedBy="checklistId")
+     * @ORM\ManyToMany(targetEntity="Checklist\Entity\ChecklistProjects", mappedBy="checklistId")
      * @Groups({"get", "get-checklist-info"})
      */
     private $projectId;
@@ -641,14 +641,14 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
     }
 
     /**
-     * @return Collection|Projects[]
+     * @return Collection|ChecklistProjects[]
      */
     public function getProjectId(): Collection
     {
         return $this->projectId;
     }
 
-    public function addProjectId(Projects $projectId): self
+    public function addProjectId(ChecklistProjects $projectId): self
     {
         if (!$this->projectId->contains($projectId)) {
             $this->projectId[] = $projectId;
@@ -658,7 +658,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
         return $this;
     }
 
-    public function removeProjectId(Projects $projectId): self
+    public function removeProjectId(ChecklistProjects $projectId): self
     {
         if ($this->projectId->contains($projectId)) {
             $this->projectId->removeElement($projectId);

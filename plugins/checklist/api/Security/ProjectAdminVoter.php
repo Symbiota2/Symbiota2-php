@@ -3,7 +3,7 @@
 namespace Checklist\Security;
 
 use Core\Entity\Users;
-use Checklist\Entity\Projects;
+use Checklist\Entity\ChecklistProjects;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -31,7 +31,7 @@ class ProjectAdminVoter extends Voter
             return false;
         }
 
-        if ($subject instanceof Projects) {
+        if ($subject instanceof ChecklistProjects) {
             $this->projectId = $subject->getId();
         }
         else {

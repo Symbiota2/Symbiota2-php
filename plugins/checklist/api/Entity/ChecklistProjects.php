@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Core\Entity\InitialTimestampInterface;
 
 /**
- * Projects
+ * ChecklistProjects
  *
  * @ORM\Table(name="fmprojects", indexes={@ORM\Index(name="FK_parentpid_proj", columns={"parentpid"})})
  * @ORM\Entity()
@@ -21,7 +21,7 @@ use Core\Entity\InitialTimestampInterface;
  *     collectionOperations={"get"}
  * )
  */
-class Projects implements InitialTimestampInterface
+class ChecklistProjects implements InitialTimestampInterface
 {
     /**
      * @var int
@@ -124,9 +124,9 @@ class Projects implements InitialTimestampInterface
     private $dynamicProperties;
 
     /**
-     * @var \Checklist\Entity\Projects
+     * @var \Checklist\Entity\ChecklistProjects
      *
-     * @ORM\ManyToOne(targetEntity="Checklist\Entity\Projects")
+     * @ORM\ManyToOne(targetEntity="Checklist\Entity\ChecklistProjects")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parentpid", referencedColumnName="pid")
      * })
