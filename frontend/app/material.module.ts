@@ -15,7 +15,7 @@ import {
     MatExpansionModule,
     MatSelectModule,
     MatTreeModule
-} from "@angular/material";
+} from '@angular/material';
 
 @NgModule({
     imports: [

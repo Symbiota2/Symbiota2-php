@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from "../login.service";
+import {LoginService} from '../login.service';
 import {AuthenticationService} from '../authentication.service';
-import {FormValidationService} from "../../shared/form-validation/form-validation.service";
-import {HttpClient} from "@angular/common/http";
-import {Router} from "@angular/router";
+import {FormValidationService} from '../../shared/form-validation/form-validation.service';
+import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -34,14 +34,13 @@ export class LoginComponent implements OnInit {
             this.loginService.getUser().subscribe((value) => {
                 localStorage.setItem('userInfo', JSON.stringify(value));
                 console.log(JSON.stringify(value));
-                //this.notificationService.onSuccess('Welcome...'+JSON.parse(localStorage.getItem('userInfo')).name);
+                // this.notificationService.onSuccess('Welcome...'+JSON.parse(localStorage.getItem('userInfo')).name);
                 this.router.navigateByUrl('');
             });
         }, err => {
-            if (err.status_code == 422) {
+            if (err.status_code === 422) {
                 this.errMsgArr = this.formValidationService.getErrors(err.errors);
-            }
-            else {
+            } else {
                 this.errMsgArr = [err.error.message];
             }
         });

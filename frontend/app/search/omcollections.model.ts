@@ -3,9 +3,9 @@ export interface omcollections {
     institutioncode: string;
     collectioncode: string;
     collectionname: string;
-    //collectionid: string;
-    //datasetname: string;
-    //fulldescription: string;
-    //homepage: string;
+    // collectionid: string;
+    // datasetname: string;
+    // fulldescription: string;
+    // homepage: string;
 
 }

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Observable} from "rxjs/index";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Observable} from 'rxjs';
 
 @Component({
-    selector: 'createaccount-outlet',
+    selector: 'app-createaccount-outlet',
     templateUrl: './createaccount.component.html',
     styleUrls: ['./createaccount.component.css']
 })
@@ -58,43 +58,52 @@ export class CreateaccountComponent implements OnInit {
     }
 
     checkPasswords(form: FormGroup): { [s: string]: boolean } {
-        var pwdControl = form.get('password');
-        var pwd2Control = form.get('c_password');
+        const pwdControl = form.get('password');
+        const pwd2Control = form.get('c_password');
         if (pwdControl != null && pwd2Control != null && form.dirty) {
-            var pwdVal = pwdControl.value;
-            var pwd2Val = pwd2Control.value;
-            var pwdErr = {};
-            var pwd2Err = {};
+            const pwdVal = pwdControl.value;
+            const pwd2Val = pwd2Control.value;
+            const pwdErr = {};
+            const pwd2Err = {};
             if (pwdVal !== pwd2Val) {
                 pwdErr['PasswordsDoNotMatch'] = true;
                 pwd2Err['PasswordsDoNotMatch'] = true;
             }
             if (pwdControl.touched) {
                 if (pwdVal) {
-                    if (pwdVal.length < 6) pwdErr['minlength'] = true;
-                    else if (pwdVal.charAt(0) == " " || pwdVal.slice(-1) == " ") pwdErr['spaces'] = true;
-                }
-                else {
+                    if (pwdVal.length < 6) {
+                        pwdErr['minlength'] = true;
+                    } else if (pwdVal.charAt(0) === ' ' || pwdVal.slice(-1) === ' ') {
+                        pwdErr['spaces'] = true;
+                    }
+                } else {
                     pwdErr['required'] = true;
                 }
-                if (Object.keys(pwdErr).length === 0) pwdControl.setErrors(null);
-                else pwdControl.setErrors(pwdErr);
+                if (Object.keys(pwdErr).length === 0) {
+                    pwdControl.setErrors(null);
+                } else {
+                    pwdControl.setErrors(pwdErr);
+                }
                 pwdControl.markAsTouched();
             }
             if (pwd2Control.touched) {
                 if (pwd2Val) {
-                    if (pwd2Val.length < 6) pwd2Err['minlength'] = true;
-                    else if (pwd2Val.charAt(0) == " " || pwd2Val.slice(-1) == " ") pwd2Err['spaces'] = true;
-                }
-                else {
+                    if (pwd2Val.length < 6) {
+                        pwd2Err['minlength'] = true;
+                    } else if (pwd2Val.charAt(0) === ' ' || pwd2Val.slice(-1) === ' ') {
+                        pwd2Err['spaces'] = true;
+                    }
+                } else {
                     pwd2Err['required'] = true;
                 }
-                if (Object.keys(pwd2Err).length === 0) pwd2Control.setErrors(null);
-                else pwd2Control.setErrors(pwd2Err);
+                if (Object.keys(pwd2Err).length === 0) {
+                    pwd2Control.setErrors(null);
+                } else { pwd2Control.setErrors(pwd2Err); }
                 pwd2Control.markAsTouched();
             }
-            if (Object.keys(pwdErr).length === 0) pwdControl.setErrors(null);
-            else pwdControl.setErrors(pwdErr);
+            if (Object.keys(pwdErr).length === 0) {
+                pwdControl.setErrors(null);
+            } else { pwdControl.setErrors(pwdErr); }
         }
         return null;
     }
@@ -104,8 +113,7 @@ export class CreateaccountComponent implements OnInit {
             setTimeout(() => {
                 if (control.value === 'test@test.com') {
                     resolve({'LoginAlreadyUsed': true});
-                }
-                else {
+                } else {
                     resolve(null);
                 }
             }, 1500);
@@ -118,8 +126,7 @@ export class CreateaccountComponent implements OnInit {
             setTimeout(() => {
                 if (control.value === 'test@test.com') {
                     resolve({'EmailAlreadyUsed': true});
-                }
-                else {
+                } else {
                     resolve(null);
                 }
             }, 1500);

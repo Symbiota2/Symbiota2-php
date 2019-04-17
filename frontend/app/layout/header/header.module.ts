@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
-import {SharedModule} from "../../shared/shared.module";
+import {SharedModule} from '../../shared/shared.module';
 
 import {BannerComponent} from './banner/banner.component';
 import {TopnavComponent} from './topnav/topnav.component';
-import {HeaderComponent} from "./header.component";
+import {HeaderComponent} from './header.component';
 
 @NgModule({
     declarations: [
