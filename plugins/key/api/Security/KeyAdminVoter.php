@@ -30,7 +30,7 @@ class KeyAdminVoter extends Voter
         }
 
         $authenticatedUserId = $token->getUser()->getId();
-        $q = $this->em->createQuery('SELECT ur FROM App\Entity\UserRoles ur WHERE ur.userId = '.$authenticatedUserId);
+        $q = $this->em->createQuery('SELECT ur FROM Core\Entity\UserRoles ur WHERE ur.userId = '.$authenticatedUserId);
         $resultArr = $q->iterate();
         foreach ($resultArr as $row) {
             $role = $row[0]->getRole();
