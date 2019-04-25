@@ -34,6 +34,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_failure, method: onAuthenticationFailureResponse }
 
+    Core\EventListener\AuthenticationSuccessListener:
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }
+
     Core\Operation\EntityPathSegmentNameGenerator: ~
 
     Core\Serializer\UserPermissionGroupNormalizer:

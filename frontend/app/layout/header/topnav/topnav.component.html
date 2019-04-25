@@ -19,7 +19,7 @@
             <li *ngIf="isAuth"><a routerLink="/myprofile">My Profile</a></li>
             <li *ngIf="isAuth"><a routerLink="/logout" (click)="onLogout()">Logout</a></li>
             <li *ngIf="!isAuth"><a routerLink="/login">Login</a></li>
-            <li *ngIf="!isAuth"><a routerLink="/createaccount">New Account</a></li>
+            <li *ngIf="!isAuth"><a routerLink="/signup">New Account</a></li>
             <li><a routerLink="/sitemap">Sitemap</a></li>
         </ul>
     </div>

@@ -4,10 +4,10 @@ import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-createaccount-outlet',
-    templateUrl: './createaccount.component.html',
-    styleUrls: ['./createaccount.component.css']
+    templateUrl: './signup.component.html',
+    styleUrls: ['./signup.component.css']
 })
-export class CreateaccountComponent implements OnInit {
+export class SignupComponent implements OnInit {
 
     createaccountForm: FormGroup;
 

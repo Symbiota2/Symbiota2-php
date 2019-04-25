@@ -1,12 +1,14 @@
 <section class="login-form">
-    <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" (ngSubmit)="login()" #loginForm=ngForm>
+    <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
+    <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" (submit)="onLogin(loginForm)" #loginForm=ngForm *ngIf="!isLoading">
         <mat-form-field>
-            <input type="text" matInput placeholder="Login" name="username" [(ngModel)]="loginData.username" maxlength="45" required />
+            <input type="text" matInput ngModel placeholder="Login" name="username" #usernameInput="ngModel" maxlength="45" required />
+            <mat-error *ngIf="usernameInput.invalid">Please enter your username.</mat-error>
         </mat-form-field>
         <mat-form-field>
-            <input type="password" matInput placeholder="Password" name="password" [(ngModel)]="loginData.password" minlength="6" required />
+            <input type="password" matInput ngModel placeholder="Password" name="password" #passwordInput="ngModel" minlength="6" required />
+            <mat-error *ngIf="passwordInput.invalid">Please enter your password.</mat-error>
         </mat-form-field>
-        <mat-checkbox name="remember" ngModel>Remember me on this computer</mat-checkbox>
-        <button type="submit" mat-raised-button color="primary" [disabled]="!loginForm.valid">Login</button>
+        <button type="submit" mat-raised-button color="primary" *ngIf="!isLoading">Login</button>
     </form>
 </section>

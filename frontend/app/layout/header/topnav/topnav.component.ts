@@ -1,20 +1,30 @@
-import {Component, OnInit, EventEmitter, Output} from '@angular/core';
+import {Component, OnInit, OnDestroy, EventEmitter, Output} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
+import {Subscription} from 'rxjs';
+
+import * as fromRoot from '../../../app.reducer';
+import {AuthService} from '../../../auth/auth.service';
 
 @Component({
     selector: 'header-topnav',
     templateUrl: './topnav.component.html',
     styleUrls: ['./topnav.component.css']
 })
-export class TopnavComponent implements OnInit {
+export class TopnavComponent implements OnInit, OnDestroy {
     @Output() sidenavToggle = new EventEmitter<void>();
-    isAuth$: Observable<boolean>;
+    isAuth = false;
+    private authListener: Subscription;
 
-    constructor() {
-    }
+    constructor(private store: Store<fromRoot.State>, private authService: AuthService) {}
 
     ngOnInit() {
+        this.isAuth = this.authService.getIsAuth();
+        this.authListener = this.authService
+            .getAuthStatusListener()
+            .subscribe(isAuthenticated => {
+                this.isAuth = isAuthenticated;
+            });
     }
 
     toggleSidenav() {
@@ -22,6 +32,10 @@ export class TopnavComponent implements OnInit {
     }
 
     onLogout() {
+        this.authService.logout();
+    }
 
+    ngOnDestroy() {
+        this.authListener.unsubscribe();
     }
 }

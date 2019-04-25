@@ -4,10 +4,7 @@
 
 export const environment = {
     production: false,
-    apiUrl: 'http://localhost/public/',
-    clientSecret: '123456789',
-    clientId: 2,
-    grantType: 'password',
+    apiUrl: 'http://localhost/api',
 };
 
 /*
