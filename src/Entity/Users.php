@@ -689,7 +689,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
 
     public function getSalt()
     {
-        return null;
+        return $this->id;
     }
 
     public function eraseCredentials()

@@ -38,10 +38,16 @@ export class SignupComponent implements OnInit {
             }
             if (pwdControl.touched) {
                 if (pwdVal) {
+                    const re_num = /[0-9]/;
+                    const re_letter = /[A-Za-z]/;
                     if (pwdVal.length < 6) {
                         pwdErr['minlength'] = true;
                     } else if (pwdVal.charAt(0) === ' ' || pwdVal.slice(-1) === ' ') {
                         pwdErr['spaces'] = true;
+                    } else if (!re_num.test(pwdVal)) {
+                        pwdErr['numbers'] = true;
+                    } else if (!re_letter.test(pwdVal)) {
+                        pwdErr['letters'] = true;
                     }
                 } else {
                     pwdErr['required'] = true;

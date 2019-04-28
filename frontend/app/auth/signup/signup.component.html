@@ -33,6 +33,14 @@
                 Password cannot start or end with a space
             </mat-error>
             <mat-error
+                *ngIf="createaccountForm.get('password').errors && createaccountForm.get('password').errors['numbers']">
+                Password must contain a number
+            </mat-error>
+            <mat-error
+                *ngIf="createaccountForm.get('password').errors && createaccountForm.get('password').errors['letters']">
+                Password must contain an upper or lower case letter
+            </mat-error>
+            <mat-error
                 *ngIf="createaccountForm.get('password').errors && createaccountForm.get('password').errors['PasswordsDoNotMatch']">
                 Passwords do not match
             </mat-error>
@@ -52,6 +60,14 @@
             <mat-error
                 *ngIf="createaccountForm.get('retypedPassword').errors && createaccountForm.get('retypedPassword').errors['spaces']">
                 Password cannot start or end with a space
+            </mat-error>
+            <mat-error
+                *ngIf="createaccountForm.get('retypedPassword').errors && createaccountForm.get('retypedPassword').errors['numbers']">
+                Password must contain a number
+            </mat-error>
+            <mat-error
+                *ngIf="createaccountForm.get('retypedPassword').errors && createaccountForm.get('retypedPassword').errors['letters']">
+                Password must contain an upper or lower case letter
             </mat-error>
             <mat-error
                 *ngIf="createaccountForm.get('retypedPassword').errors && createaccountForm.get('retypedPassword').errors['PasswordsDoNotMatch']">
