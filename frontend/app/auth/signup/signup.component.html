@@ -1,6 +1,6 @@
 <section class="createaccount-form">
-    <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="createaccountForm"
-          id="createaccountFormObj" (ngSubmit)="onSubmit()">
+    <form (submit)="onSignup(createaccountForm)" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="createaccountForm"
+          id="createaccountFormObj">
         <mat-form-field>
             <input type="text" matInput placeholder="Login" name="username" formControlName="username" maxlength="45">
             <mat-error
@@ -38,43 +38,43 @@
             </mat-error>
         </mat-form-field>
         <mat-form-field>
-            <input type="password" matInput placeholder="Password Again" name="c_password" id="c_password" minlength="6"
-                   formControlName="c_password" maxlength="45">
+            <input type="password" matInput placeholder="Password Again" name="retypedPassword" id="retypedPassword" minlength="6"
+                   formControlName="retypedPassword" maxlength="45">
             <mat-hint>Enter password again.</mat-hint>
             <mat-error
-                *ngIf="createaccountForm.get('c_password').errors && createaccountForm.get('c_password').errors['required']">
+                *ngIf="createaccountForm.get('retypedPassword').errors && createaccountForm.get('retypedPassword').errors['required']">
                 Field must not be blank
             </mat-error>
             <mat-error
-                *ngIf="createaccountForm.get('c_password').errors && createaccountForm.get('c_password').errors['minlength']">
+                *ngIf="createaccountForm.get('retypedPassword').errors && createaccountForm.get('retypedPassword').errors['minlength']">
                 Password must be at least 6 characters
             </mat-error>
             <mat-error
-                *ngIf="createaccountForm.get('c_password').errors && createaccountForm.get('c_password').errors['spaces']">
+                *ngIf="createaccountForm.get('retypedPassword').errors && createaccountForm.get('retypedPassword').errors['spaces']">
                 Password cannot start or end with a space
             </mat-error>
             <mat-error
-                *ngIf="createaccountForm.get('c_password').errors && createaccountForm.get('c_password').errors['PasswordsDoNotMatch']">
+                *ngIf="createaccountForm.get('retypedPassword').errors && createaccountForm.get('retypedPassword').errors['PasswordsDoNotMatch']">
                 Passwords do not match
             </mat-error>
         </mat-form-field>
         <mat-form-field>
-            <input type="text" matInput placeholder="First Name" name="firstname" formControlName="firstname"
+            <input type="text" matInput placeholder="First Name" name="firstName" formControlName="firstName"
                    maxlength="45">
             <mat-error
-                *ngIf="createaccountForm.get('firstname').errors && createaccountForm.get('firstname').errors['required']">
+                *ngIf="createaccountForm.get('firstName').errors && createaccountForm.get('firstName').errors['required']">
                 Field must not be blank
             </mat-error>
         </mat-form-field>
         <mat-form-field>
-            <input type="text" matInput placeholder="Middle Initial" name="middleinitial"
-                   formControlName="middleinitial" maxlength="2">
+            <input type="text" matInput placeholder="Middle Initial" name="middleInitial"
+                   formControlName="middleInitial" maxlength="2">
         </mat-form-field>
         <mat-form-field>
-            <input type="text" matInput placeholder="Last Name" name="lastname" formControlName="lastname"
+            <input type="text" matInput placeholder="Last Name" name="lastName" formControlName="lastName"
                    maxlength="45">
             <mat-error
-                *ngIf="createaccountForm.get('lastname').errors && createaccountForm.get('lastname').errors['required']">
+                *ngIf="createaccountForm.get('lastName').errors && createaccountForm.get('lastName').errors['required']">
                 Field must not be blank
             </mat-error>
         </mat-form-field>
@@ -128,13 +128,9 @@
                       maxlength="1500"></textarea>
             <mat-hint align="end">{{ biography.value?.length }} / 1500</mat-hint>
         </mat-form-field>
-        <mat-checkbox name="ispublic" formControlName="ispublic">Public can view email and bio within website (e.g.
+        <mat-checkbox name="isPublic" formControlName="isPublic" (change)="setIsPublicValue($event)">Public can view email and bio within website (e.g.
             photographer listing)
         </mat-checkbox>
-        <mat-form-field>
-            Type "symbiota" below to prove you're human
-            <input type="text" matInput name="humanvalid" formControlName="humanvalid" maxlength="50">
-        </mat-form-field>
         <button type="submit" mat-raised-button color="primary" [disabled]="createaccountForm.invalid">Create Profile
         </button>
     </form>

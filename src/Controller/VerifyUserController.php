@@ -34,6 +34,6 @@ class VerifyUserController extends AbstractController
             $this->em->flush();
         }
 
-        return $this->redirectToRoute('');
+        return $this->redirect('http://localhost:4200');
     }
 }

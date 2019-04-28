@@ -1,5 +1,4 @@
 import {Component, OnInit, OnDestroy, EventEmitter, Output} from '@angular/core';
-import {Observable} from 'rxjs';
 import {Store} from '@ngrx/store';
 import {Subscription} from 'rxjs';
 
@@ -14,6 +13,7 @@ import {AuthService} from '../../../auth/auth.service';
 export class TopnavComponent implements OnInit, OnDestroy {
     @Output() sidenavToggle = new EventEmitter<void>();
     isAuth = false;
+    firstName = '';
     private authListener: Subscription;
 
     constructor(private store: Store<fromRoot.State>, private authService: AuthService) {}
@@ -24,6 +24,7 @@ export class TopnavComponent implements OnInit, OnDestroy {
             .getAuthStatusListener()
             .subscribe(isAuthenticated => {
                 this.isAuth = isAuthenticated;
+                this.firstName = localStorage.getItem('firstName');
             });
     }
 

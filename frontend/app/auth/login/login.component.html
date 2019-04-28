@@ -1,5 +1,4 @@
 <section class="login-form">
-    <mat-spinner *ngIf="isLoading" class="spinner"></mat-spinner>
     <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" (submit)="onLogin(loginForm)" #loginForm=ngForm *ngIf="!isLoading">
         <mat-form-field>
             <input type="text" matInput ngModel placeholder="Login" name="username" #usernameInput="ngModel" maxlength="45" required />

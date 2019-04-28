@@ -2,64 +2,31 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 
+import {UserService} from '../user.service';
+import {SpinnerOverlayService} from '../../shared/spinner-overlay.service';
+
 @Component({
     selector: 'app-createaccount-outlet',
     templateUrl: './signup.component.html',
     styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
+    isPublicValue = 0;
+
+    constructor(public userService: UserService, public spinnerService: SpinnerOverlayService) {}
 
     createaccountForm: FormGroup;
 
-    constructor() {
-    }
-
-    ngOnInit() {
-        this.createaccountForm = new FormGroup({
-            'username': new FormControl(null, [Validators.required, this.checkLoginSpaces.bind(this)], this.checkLogin.bind(this)),
-            'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
-            'c_password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
-            'firstname': new FormControl(null, [Validators.required]),
-            'middleinitial': new FormControl(null),
-            'lastname': new FormControl(null, [Validators.required]),
-            'email': new FormControl(null, [Validators.required, Validators.email], this.checkEmail.bind(this)),
-            'title': new FormControl(null),
-            'institution': new FormControl(null),
-            'department': new FormControl(null),
-            'address': new FormControl(null),
-            'city': new FormControl(null),
-            'state': new FormControl(null),
-            'zip': new FormControl(null),
-            'country': new FormControl(null),
-            'url': new FormControl(null),
-            'biography': new FormControl(null),
-            'ispublic': new FormControl(null),
-            'humanvalid': new FormControl(null, [Validators.required, this.checkHuman.bind(this)])
-        }, this.checkPasswords.bind(this));
-
-    }
-
-    onSubmit(form: FormGroup) {
-
-    }
-
-    checkHuman(control: FormControl): { [s: string]: boolean } {
-        if (control.value !== 'symbiota') {
-            return {'NotHuman': true};
-        }
-        return null;
-    }
-
-    checkLoginSpaces(control: FormControl): { [s: string]: boolean } {
+    static checkLoginSpaces(control: FormControl): { [s: string]: boolean } {
         if (/[^0-9A-Za-z_!@#$-+]/.test(control.value)) {
             return {'spaces': true};
         }
         return null;
     }
 
-    checkPasswords(form: FormGroup): { [s: string]: boolean } {
+    static checkPasswords(form: FormGroup): { [s: string]: boolean } {
         const pwdControl = form.get('password');
-        const pwd2Control = form.get('c_password');
+        const pwd2Control = form.get('retypedPassword');
         if (pwdControl != null && pwd2Control != null && form.dirty) {
             const pwdVal = pwdControl.value;
             const pwd2Val = pwd2Control.value;
@@ -108,30 +75,62 @@ export class SignupComponent implements OnInit {
         return null;
     }
 
-    checkLogin(control: FormControl): Promise<any> | Observable<any> {
-        const loginpromise = new Promise<any>((resolve, reject) => {
-            setTimeout(() => {
-                if (control.value === 'test@test.com') {
-                    resolve({'LoginAlreadyUsed': true});
-                } else {
-                    resolve(null);
-                }
-            }, 1500);
-        });
-        return loginpromise;
+    ngOnInit() {
+        this.createaccountForm = new FormGroup({
+            'username': new FormControl(null, [Validators.required, SignupComponent.checkLoginSpaces.bind(this)]),
+            'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
+            'retypedPassword': new FormControl(null, [Validators.required, Validators.minLength(6)]),
+            'firstName': new FormControl(null, [Validators.required]),
+            'middleInitial': new FormControl(null),
+            'lastName': new FormControl(null, [Validators.required]),
+            'email': new FormControl(null, [Validators.required, Validators.email]),
+            'title': new FormControl(null),
+            'institution': new FormControl(null),
+            'department': new FormControl(null),
+            'address': new FormControl(null),
+            'city': new FormControl(null),
+            'state': new FormControl(null),
+            'zip': new FormControl(null),
+            'country': new FormControl(null),
+            'url': new FormControl(null),
+            'biography': new FormControl(null),
+            'isPublic': new FormControl(null)
+        }, SignupComponent.checkPasswords.bind(this));
+
     }
 
-    checkEmail(control: FormControl): Promise<any> | Observable<any> {
-        const emailpromise = new Promise<any>((resolve, reject) => {
-            setTimeout(() => {
-                if (control.value === 'test@test.com') {
-                    resolve({'EmailAlreadyUsed': true});
-                } else {
-                    resolve(null);
-                }
-            }, 1500);
-        });
-        return emailpromise;
+    onSignup(form: FormGroup) {
+        if (form.invalid) {
+            return;
+        }
+        this.spinnerService.show();
+        this.userService.createUser(
+            form.value.username,
+            form.value.password,
+            form.value.retypedPassword,
+            form.value.firstName,
+            form.value.middleInitial,
+            form.value.lastName,
+            form.value.email,
+            form.value.title,
+            form.value.institution,
+            form.value.department,
+            form.value.address,
+            form.value.city,
+            form.value.state,
+            form.value.zip,
+            form.value.country,
+            form.value.url,
+            form.value.biography,
+            this.isPublicValue
+        );
     }
 
+    setIsPublicValue(event) {
+        if (event.checked === true) {
+            this.isPublicValue = 1;
+        } else {
+            this.isPublicValue = 0;
+        }
+    }
 }

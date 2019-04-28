@@ -1,9 +1,3 @@
 mat-form-field {
     width: 400px;
 }
-
-.spinner {
-    display: flex;
-    align-content: center;
-    align-items: center;
-}

@@ -9,6 +9,8 @@ import {CommonModule} from '@angular/common';
 
 import {MaterialModule} from '../material.module';
 
+import {SpinnerOverlayComponent} from './spinner-overlay/spinner-overlay.component';
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -28,7 +30,14 @@ import {MaterialModule} from '../material.module';
         ReactiveFormsModule,
         FormsModule,
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        SpinnerOverlayComponent
+    ],
+    declarations: [
+        SpinnerOverlayComponent
+    ],
+    entryComponents: [
+        SpinnerOverlayComponent
     ]
 })
 export class SharedModule {

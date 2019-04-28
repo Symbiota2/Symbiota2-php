@@ -32,11 +32,9 @@ class AuthenticationSuccessListener
             $permissionArr[$row[0]->getRole()][] = $row[0]->getTableId();
         }
 
-        $data['user'] = array(
-            'id' => $userId,
-            'firstname' => $user->getFirstName(),
-            'permissions' => $permissionArr,
-        );
+        $data['id'] = $userId;
+        $data['firstName'] = $user->getFirstName();
+        $data['permissions'] = $permissionArr;
 
         $event->setData($data);
     }

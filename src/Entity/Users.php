@@ -19,7 +19,6 @@ use Core\Controller\VerifyUserController;
  * Users
  *
  * @ApiResource(
- *     routePrefix="/core",
  *     itemOperations={
  *          "get"={
  *              "access_control"="is_granted('SuperAdmin', object) or object == user",

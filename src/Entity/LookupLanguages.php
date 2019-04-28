@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="adminlanguages", uniqueConstraints={@ORM\UniqueConstraint(name="index_langname_unique", columns={"langname"})})
  * @ORM\Entity()
  * @ApiResource(
- *     routePrefix="/core",
  *     itemOperations={"get"},
  *     collectionOperations={"get"}
  * )

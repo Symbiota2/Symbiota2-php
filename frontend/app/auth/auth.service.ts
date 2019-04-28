@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Subject} from 'rxjs';
 
+import {SpinnerOverlayService} from '../shared/spinner-overlay.service';
+
 import {environment} from '../../environments/environment';
 import {AuthData} from './auth-data.model';
 
@@ -20,7 +22,7 @@ export class AuthService {
     private permissions: {};
     private authStatusListener = new Subject<boolean>();
 
-    constructor(private http: HttpClient, private router: Router) {}
+    constructor(private http: HttpClient, private router: Router, public spinnerService: SpinnerOverlayService) {}
 
     getToken() {
         return this.token;
@@ -38,26 +40,15 @@ export class AuthService {
         return this.authStatusListener.asObservable();
     }
 
-    createUser(username: string, password: string) {
-        const authData: AuthData = { username: username, password: password };
-        this.http.post(BACKEND_URL + '/signup', authData).subscribe(
-            () => {
-                this.router.navigate(['/']);
-            },
-            error => {
-                this.authStatusListener.next(false);
-            }
-        );
-    }
-
     login(username: string, password: string) {
         const authData: AuthData = { username: username, password: password };
+        this.clearAuthData();
         this.http
-            .post<{ token: string, user: {
+            .post<{ token: string
                     id: string,
-                    firstname: string,
+                    firstName: string,
                     permissions: {}
-                } }>(
+                }>(
                 BACKEND_URL + '/login',
                 authData
             )
@@ -66,17 +57,17 @@ export class AuthService {
                     const token = response.token;
                     this.token = token;
                     if (token) {
-                        const user = response.user;
                         const expiresInDuration = 14400;
                         this.isAuthenticated = true;
                         this.setAuthTimer(expiresInDuration);
                         this.userName = username;
                         this.password = password;
-                        this.userId = String(user.id);
-                        this.firstName = user.firstname;
-                        this.permissions = user.permissions;
+                        this.userId = String(response.id);
+                        this.firstName = response.firstName;
+                        this.permissions = response.permissions;
                         this.authStatusListener.next(true);
                         this.saveAuthData();
+                        this.spinnerService.hide();
                         this.router.navigate(['/']);
                     }
                 },
@@ -122,16 +113,16 @@ export class AuthService {
     }
 
     logout() {
-        this.token = null;
-        this.userId = null;
-        this.userName = null;
-        this.password = null;
-        this.firstName = null;
-        this.permissions = null;
+        this.clearAuthData();
+        this.token = '';
+        this.userId = '';
+        this.userName = '';
+        this.password = '';
+        this.firstName = '';
+        this.permissions = {};
         this.isAuthenticated = false;
         this.authStatusListener.next(false);
         clearTimeout(this.tokenTimer);
-        this.clearAuthData();
         this.router.navigate(['/']);
     }
 
