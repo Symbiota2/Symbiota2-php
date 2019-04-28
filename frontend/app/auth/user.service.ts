@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {Subject} from 'rxjs';
 
 import {SpinnerOverlayService} from '../shared/spinner-overlay.service';
+import {AlertService} from '../shared/alert.service';
 
 import {environment} from '../../environments/environment';
 import {UserData} from './user.model';
@@ -15,7 +16,11 @@ const BACKEND_URL = environment.apiUrl;
 })
 export class UserService {
 
-    constructor(private http: HttpClient, private router: Router, public spinnerService: SpinnerOverlayService) {
+    constructor(
+        private http: HttpClient, private router: Router,
+        public spinnerService: SpinnerOverlayService,
+        public alertService: AlertService
+    ) {
     }
 
     createUser(
@@ -62,6 +67,12 @@ export class UserService {
             () => {
                 this.spinnerService.hide();
                 this.router.navigate(['/']);
+                this.alertService.showSnackbar(
+                    'An email confirmation was sent to the address you provided. ' +
+                    'Please follow the link in that email to activate your account.',
+                    '',
+                    5000
+                );
             },
             error => {
                 console.log(error);

@@ -15,8 +15,8 @@ import {CollectionsComponent} from './search/collections/collections.component';
 import {SpatialComponent} from './spatial/spatial.component';
 
 import {AuthService} from './auth/auth.service';
-import {UIService} from './shared/ui.service';
 import {SpinnerOverlayService} from './shared/spinner-overlay.service';
+import {AlertService} from './shared/alert.service';
 import {omcollectionsService} from './search/omcollections.service';
 import {SnotifyModule, SnotifyService, ToastDefaults} from 'ng-snotify';
 
@@ -38,8 +38,8 @@ import {SnotifyModule, SnotifyService, ToastDefaults} from 'ng-snotify';
     ],
     providers: [
         AuthService,
-        UIService,
         SpinnerOverlayService,
+        AlertService,
         omcollectionsService,
         {provide: 'SnotifyToastConfig', useValue: ToastDefaults},
         SnotifyService
