@@ -8,6 +8,7 @@
             <input type="password" matInput ngModel placeholder="Password" name="password" #passwordInput="ngModel" minlength="6" required />
             <mat-error *ngIf="passwordInput.invalid">Please enter your password.</mat-error>
         </mat-form-field>
-        <button type="submit" mat-raised-button color="primary" *ngIf="!isLoading">Login</button>
+        <mat-checkbox name="maintainLogin" ngModel (change)="setMaintainLogin($event)">Remember me on this computer</mat-checkbox>
+        <button type="submit" mat-raised-button color="primary">Login</button>
     </form>
 </section>

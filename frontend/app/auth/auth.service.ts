@@ -40,8 +40,8 @@ export class AuthService {
         return this.authStatusListener.asObservable();
     }
 
-    login(username: string, password: string) {
-        const authData: AuthData = { username: username, password: password };
+    login(username: string, password: string, maintainLogin: number) {
+        const authData: AuthData = { username: username, password: password, maintainLogin: maintainLogin };
         this.clearAuthData();
         this.http
             .post<{ token: string
@@ -77,12 +77,12 @@ export class AuthService {
             );
     }
 
-    autoAuthUser() {
+    /*autoAuthUser() {
         const authInformation = this.getAuthData();
         if (!authInformation) {
             return;
         }
-        const authData: AuthData = { username: authInformation.username, password: authInformation.password };
+        const authData: AuthData = { username: username, password: password, maintainLogin: maintainLogin };
         this.http
             .post<{ token: string, user: {} }>(
                 BACKEND_URL + '/login',
@@ -110,7 +110,7 @@ export class AuthService {
                     this.authStatusListener.next(false);
                 }
             );
-    }
+    }*/
 
     logout() {
         this.clearAuthData();
@@ -131,7 +131,7 @@ export class AuthService {
         this.tokenTimer = setTimeout(() => {
             this.logout();
             if (this.isAuthenticated) {
-                this.autoAuthUser();
+                // this.autoAuthUser();
             }
         }, duration * 1000);
     }

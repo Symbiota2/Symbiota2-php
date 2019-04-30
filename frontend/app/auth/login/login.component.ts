@@ -10,18 +10,24 @@ import {SpinnerOverlayService} from '../../shared/spinner-overlay.service';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit, OnDestroy {
-    constructor(public authService: AuthService, public spinnerService: SpinnerOverlayService) {}
+export class LoginComponent {
+    maintainLoginValue = 0;
 
-    ngOnInit() {}
+    constructor(public authService: AuthService, public spinnerService: SpinnerOverlayService) {}
 
     onLogin(form: NgForm) {
         if (form.invalid) {
             return;
         }
         this.spinnerService.show();
-        this.authService.login(form.value.username, form.value.password);
+        this.authService.login(form.value.username, form.value.password, this.maintainLoginValue);
     }
 
-    ngOnDestroy() {}
+    setMaintainLogin(event) {
+        if (event.checked === true) {
+            this.maintainLoginValue = 1;
+        } else {
+            this.maintainLoginValue = 0;
+        }
+    }
 }
