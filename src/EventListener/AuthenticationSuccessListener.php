@@ -6,14 +6,17 @@ use Core\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\AuthenticationSuccessEvent;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class AuthenticationSuccessListener
 {
     private $em;
+    private $requestStack;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, RequestStack $requestStack)
     {
         $this->em = $em;
+        $this->requestStack = $requestStack;
     }
 
     public function onAuthenticationSuccessResponse(AuthenticationSuccessEvent $event)
@@ -22,15 +25,24 @@ class AuthenticationSuccessListener
         $data = $event->getData();
         $user = $event->getUser();
         $userId = $user->getId();
+        $request = json_decode($this->requestStack->getCurrentRequest()->getContent(),true);
+        $maintainLogin = (array_key_exists('maintainLogin', $request)?$request['maintainLogin']:0);
 
         if (!$user instanceof Users) {
             return;
         }
 
+        if($maintainLogin) {
+            $cookieExp = time() + 31536000;
+        }
+        else {
+            $cookieExp = time() + 9000;
+        }
+
         $cookie = new Cookie(
             'BEARER',
             $data['token'],
-            time() + 63072000
+            $cookieExp
         );
 
         $q = $this->em->createQuery('SELECT ur FROM Core\Entity\UserRoles ur WHERE ur.userId = '.$userId);
@@ -40,6 +52,7 @@ class AuthenticationSuccessListener
         }
 
         $data['id'] = $userId;
+        $data['maintainLogin'] = $maintainLogin;
         $data['firstName'] = $user->getFirstName();
         $data['permissions'] = $permissionArr;
 
