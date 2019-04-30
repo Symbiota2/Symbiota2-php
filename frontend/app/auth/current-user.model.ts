@@ -1,6 +1,7 @@
-export interface CurrentUserData {
-    token: string;
+export interface CurrentUser {
     id: number;
     firstName: string;
     permissions: object;
+    maintainLogin: number;
+    tokenExpire: number;
 }

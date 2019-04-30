@@ -1,28 +1,45 @@
+import {shareReplay, filter, tap, map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Router} from '@angular/router';
-import {Subject} from 'rxjs';
+import {Observable, BehaviorSubject} from 'rxjs';
 
 import {SpinnerOverlayService} from '../shared/spinner-overlay.service';
 
 import {environment} from '../../environments/environment';
 import {AuthData} from './auth-data.model';
+import {CurrentUser} from './current-user.model';
 
 const BACKEND_URL = environment.apiUrl;
+const ANONYMOUS_USER: CurrentUser = {
+    id: undefined,
+    firstName: undefined,
+    permissions: {},
+    maintainLogin: undefined,
+    tokenExpire: undefined
+};
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AuthService {
-    private isAuthenticated = false;
-    private token: string;
-    private tokenTimer: any;
-    private userId: string;
-    private userName: string;
-    private password: string;
-    private firstName: string;
-    private permissions: {};
-    private authStatusListener = new Subject<boolean>();
+    private subject = new BehaviorSubject<CurrentUser>(undefined);
+    currentUser$: Observable<CurrentUser> = this.subject.asObservable().pipe(
+        filter(currentUser => !!currentUser)
+    );
+    isLoggedIn$: Observable<boolean> = this.currentUser$.pipe(
+        map(currentUser => !!currentUser.id)
+    );
+    isLoggedOut$: Observable<boolean> = this.isLoggedIn$.pipe(
+        map(isLoggedIn => !isLoggedIn)
+    );
 
-    constructor(private http: HttpClient, private router: Router, public spinnerService: SpinnerOverlayService) {}
+    // constructor(private http: HttpClient, private router: Router, public spinnerService: SpinnerOverlayService) {}
+
+    constructor(private http: HttpClient) {
+        http.get<CurrentUser>('/api/user').pipe(
+            tap(console.log)
+        ).subscribe(
+            currentUser => this.subject.next(currentUser ? currentUser : ANONYMOUS_USER)
+        );
+    }
 
     getToken() {
         return this.token;

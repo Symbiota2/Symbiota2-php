@@ -33,16 +33,16 @@ class AuthenticationSuccessListener
         }
 
         if($maintainLogin) {
-            $cookieExp = time() + 31536000;
+            $cookieExp = 31536000;
         }
         else {
-            $cookieExp = time() + 9000;
+            $cookieExp = 9000;
         }
 
         $cookie = new Cookie(
             'BEARER',
             $data['token'],
-            $cookieExp
+            time() + $cookieExp
         );
 
         $q = $this->em->createQuery('SELECT ur FROM Core\Entity\UserRoles ur WHERE ur.userId = '.$userId);
@@ -52,9 +52,10 @@ class AuthenticationSuccessListener
         }
 
         $data['id'] = $userId;
-        $data['maintainLogin'] = $maintainLogin;
         $data['firstName'] = $user->getFirstName();
         $data['permissions'] = $permissionArr;
+        $data['maintainLogin'] = $maintainLogin;
+        $data['tokenExpire'] = $cookieExp;
 
         $event->setData($data);
         $response = $event->getResponse();

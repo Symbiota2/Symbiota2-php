@@ -7,7 +7,7 @@ import {SpinnerOverlayService} from '../shared/spinner-overlay.service';
 import {AlertService} from '../shared/alert.service';
 
 import {environment} from '../../environments/environment';
-import {UserData} from './user.model';
+import {User} from './user.model';
 
 const BACKEND_URL = environment.apiUrl;
 
@@ -43,7 +43,7 @@ export class UserService {
         biography: string,
         isPublic: number
     ) {
-        const userData: UserData = {
+        const userData: User = {
             username: username,
             password: password,
             retypedPassword: retypedPassword,

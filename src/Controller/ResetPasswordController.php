@@ -40,11 +40,8 @@ class ResetPasswordController
         );
 
         $data->setPasswordChangeDate(time());
-
         $this->em->flush();
-
         $token = $this->tokenManager->create($data);
-
         return new JsonResponse(['token' => $token]);
     }
 }

@@ -34,9 +34,6 @@ class CurrentUserSubscriber implements EventSubscriberInterface
         $entity = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        /**
-         * @var UserInterface $user
-         */
         $user = $this->tokenStorage->getToken()->getUser();
 
         if((!$entity instanceof ModifiedUserIdInterface && !$entity instanceof CreatedUserIdInterface && !$entity instanceof UserIdAssignedByInterface) || !in_array($method, [Request::METHOD_POST, Request::METHOD_PUT])) {

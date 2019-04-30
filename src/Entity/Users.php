@@ -362,6 +362,18 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
     private $currentPermissions = array();
 
     /**
+     * @var int|null
+     * @Groups({"get"})
+     */
+    private $maintainLogin = 0;
+
+    /**
+     * @var int|null
+     * @Groups({"get"})
+     */
+    private $tokenExpiration = 0;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -678,6 +690,30 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
         if(!in_array($currentPermissions, $this->currentPermissions)) {
             $this->currentPermissions[] = $currentPermissions;
         }
+
+        return $this;
+    }
+
+    public function getMaintainLogin(): ?int
+    {
+        return $this->maintainLogin;
+    }
+
+    public function setMaintainLogin(?int $maintainLogin): self
+    {
+        $this->maintainLogin = $maintainLogin;
+
+        return $this;
+    }
+
+    public function getTokenExpiration(): ?int
+    {
+        return $this->tokenExpiration;
+    }
+
+    public function setTokenExpiration(?int $tokenExpiration): self
+    {
+        $this->tokenExpiration = $tokenExpiration;
 
         return $this;
     }

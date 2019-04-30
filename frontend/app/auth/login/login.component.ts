@@ -1,6 +1,6 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {Subscription} from 'rxjs';
+import {Router} from '@angular/router';
 
 import {AuthService} from '../auth.service';
 import {SpinnerOverlayService} from '../../shared/spinner-overlay.service';
@@ -13,14 +13,26 @@ import {SpinnerOverlayService} from '../../shared/spinner-overlay.service';
 export class LoginComponent {
     maintainLoginValue = 0;
 
-    constructor(public authService: AuthService, public spinnerService: SpinnerOverlayService) {}
+    constructor(
+        private authService: AuthService,
+        private spinnerService: SpinnerOverlayService,
+        private router: Router
+    ) {}
 
     onLogin(form: NgForm) {
         if (form.invalid) {
             return;
         }
         this.spinnerService.show();
-        this.authService.login(form.value.username, form.value.password, this.maintainLoginValue);
+        this.authService.login(
+            form.value.username,
+            form.value.password,
+            this.maintainLoginValue
+        ).subscribe(
+            () => {
+                this.router.navigateByUrl('/');
+            }
+        );
     }
 
     setMaintainLogin(event) {
