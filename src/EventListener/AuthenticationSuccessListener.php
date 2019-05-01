@@ -42,7 +42,9 @@ class AuthenticationSuccessListener
         $cookie = new Cookie(
             'BEARER',
             $data['token'],
-            time() + $cookieExp
+            time() + $cookieExp,
+            '',
+            'localhost'
         );
 
         $q = $this->em->createQuery('SELECT ur FROM Core\Entity\UserRoles ur WHERE ur.userId = '.$userId);

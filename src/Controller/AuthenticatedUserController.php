@@ -12,17 +12,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class AuthenticatedUserController extends AbstractController
 {
     private $em;
-    private $json;
     private $tokenStorage;
 
     public function __construct(
         EntityManagerInterface $em,
-        JsonResponse $json,
         TokenStorageInterface $tokenStorage
     )
     {
         $this->em = $em;
-        $this->json = $json;
         $this->tokenStorage = $tokenStorage;
     }
 
@@ -37,11 +34,12 @@ class AuthenticatedUserController extends AbstractController
     {
         $permissionArr = array();
         $user = $this->tokenStorage->getToken()->getUser();
-        $userId = $user->getId();
 
         if (!$user instanceof Users) {
-            return $this->json([]);
+            return new JsonResponse([]);
         }
+
+        $userId = $user->getId();
 
         $q = $this->em->createQuery('SELECT ur FROM Core\Entity\UserRoles ur WHERE ur.userId = '.$userId);
         $resultArr = $q->iterate();
@@ -49,14 +47,12 @@ class AuthenticatedUserController extends AbstractController
             $permissionArr[$row[0]->getRole()][] = $row[0]->getTableId();
         }
 
-        return $this->json(
-            [
-                'id' => $userId,
-                'firstName' => $user->getFirstName(),
-                'permissions' => $permissionArr,
-                'maintainLogin' => $user->getMaintainLogin(),
-                'tokenExpire' => $user->getTokenExpiration()
-            ]
-        );
+        return new JsonResponse([
+            'id' => $userId,
+            'firstName' => $user->getFirstName(),
+            'permissions' => $permissionArr,
+            'maintainLogin' => $user->getMaintainLogin(),
+            'tokenExpire' => $user->getTokenExpiration()
+        ]);
     }
 }

@@ -18,10 +18,10 @@ class JWTAuthenticatedSubscriber implements EventSubscriberInterface
     {
         $payload = $event->getPayload();
         $maintainLogin = (array_key_exists('maintainLogin', $payload)?$payload['maintainLogin']:0);
-        $tokenCreated = $payload['iat'];
+        $currentTime = time();
         $tokenExpire = $payload['exp'];
 
         $event->getToken()->getUser()->setMaintainLogin($maintainLogin);
-        $event->getToken()->getUser()->setTokenExpiration(($tokenExpire - $tokenCreated));
+        $event->getToken()->getUser()->setTokenExpiration(($tokenExpire - $currentTime));
     }
 }
