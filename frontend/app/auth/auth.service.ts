@@ -1,15 +1,16 @@
 import {shareReplay, filter, tap, map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, BehaviorSubject} from 'rxjs';
+import {Observable, BehaviorSubject, Subscription} from 'rxjs';
+import {Router} from '@angular/router';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import {SpinnerOverlayService} from '../shared/spinner-overlay.service';
+import {AlertService} from '../shared/alert.service';
 
-import {environment} from '../../environments/environment';
 import {AuthData} from './auth-data.model';
 import {CurrentUser} from './current-user.model';
 
-const BACKEND_URL = environment.apiUrl;
 const ANONYMOUS_USER: CurrentUser = {
     id: undefined,
     firstName: undefined,
@@ -21,168 +22,100 @@ const ANONYMOUS_USER: CurrentUser = {
 @Injectable()
 export class AuthService {
     private subject = new BehaviorSubject<CurrentUser>(undefined);
-    currentUser$: Observable<CurrentUser> = this.subject.asObservable().pipe(
-        filter(currentUser => !!currentUser)
+    private logoutTimer: any;
+    private warningTimer: any;
+    private warningDialog: any;
+    private username: string;
+    private password: string;
+    user$: Observable<CurrentUser> = this.subject.asObservable().pipe(
+        filter(user => !!user)
     );
-    isLoggedIn$: Observable<boolean> = this.currentUser$.pipe(
-        map(currentUser => !!currentUser.id)
+    maintainLogin$: Observable<number> = this.user$.pipe(
+        map(user => user.maintainLogin)
     );
-    isLoggedOut$: Observable<boolean> = this.isLoggedIn$.pipe(
-        map(isLoggedIn => !isLoggedIn)
+    tokenExpire$: Observable<number> = this.user$.pipe(
+        map(user => user.tokenExpire)
+    );
+    isAuthenticated$: Observable<boolean> = this.user$.pipe(
+        map(user => !!user.id)
+    );
+    isLoggedOut$: Observable<boolean> = this.isAuthenticated$.pipe(
+        map(isAuthenticated => !isAuthenticated)
     );
 
-    // constructor(private http: HttpClient, private router: Router, public spinnerService: SpinnerOverlayService) {}
-
-    constructor(private http: HttpClient) {
-        http.get<CurrentUser>('/api/user').pipe(
-            tap(console.log)
-        ).subscribe(
-            currentUser => this.subject.next(currentUser ? currentUser : ANONYMOUS_USER)
+    constructor(
+        private http: HttpClient,
+        private spinnerService: SpinnerOverlayService,
+        private alertService: AlertService,
+        private router: Router,
+        public dialog: MatDialog
+    ) {
+        this.spinnerService.show();
+        http.get<CurrentUser>('/api/authuser').subscribe(
+            user => {
+                this.subject.next(user ? user : ANONYMOUS_USER);
+                this.spinnerService.hide();
+                // console.log(user);
+            }
         );
     }
 
-    getToken() {
-        return this.token;
-    }
-
-    getIsAuth() {
-        return this.isAuthenticated;
-    }
-
-    getUserId() {
-        return this.userId;
-    }
-
-    getAuthStatusListener() {
-        return this.authStatusListener.asObservable();
-    }
-
-    login(username: string, password: string, maintainLogin: number) {
+    login(username: string, password: string, maintainLogin: number, redirect: string) {
         const authData: AuthData = { username: username, password: password, maintainLogin: maintainLogin };
-        this.clearAuthData();
-        this.http
-            .post<{ token: string
-                    id: string,
-                    firstName: string,
-                    permissions: {}
-                }>(
-                BACKEND_URL + '/login',
-                authData
-            )
-            .subscribe(
-                response => {
-                    const token = response.token;
-                    this.token = token;
-                    if (token) {
-                        const expiresInDuration = 14400;
-                        this.isAuthenticated = true;
-                        this.setAuthTimer(expiresInDuration);
-                        this.userName = username;
-                        this.password = password;
-                        this.userId = String(response.id);
-                        this.firstName = response.firstName;
-                        this.permissions = response.permissions;
-                        this.authStatusListener.next(true);
-                        this.saveAuthData();
-                        this.spinnerService.hide();
-                        this.router.navigate(['/']);
-                    }
-                },
-                error => {
-                    this.authStatusListener.next(false);
+        this.http.post<CurrentUser>('/api/login', authData).subscribe(
+            user => {
+                if (!user.maintainLogin) {
+                    this.username = username;
+                    this.password = password;
                 }
-            );
+                this.subject.next(user);
+                this.spinnerService.hide();
+                if (redirect) {
+                    this.router.navigateByUrl('/');
+                }
+                // console.log(user);
+            }
+        );
     }
-
-    /*autoAuthUser() {
-        const authInformation = this.getAuthData();
-        if (!authInformation) {
-            return;
-        }
-        const authData: AuthData = { username: username, password: password, maintainLogin: maintainLogin };
-        this.http
-            .post<{ token: string, user: {} }>(
-                BACKEND_URL + '/login',
-                authData
-            )
-            .subscribe(
-                response => {
-                    const token = response.token;
-                    this.token = token;
-                    if (token) {
-                        const user = response.user;
-                        const expiresInDuration = 14400;
-                        this.isAuthenticated = true;
-                        this.setAuthTimer(expiresInDuration);
-                        this.userName = authInformation.username;
-                        this.password = authInformation.password;
-                        this.userId = authInformation.userId;
-                        this.firstName = authInformation.firstName;
-                        this.permissions = authInformation.permissions;
-                        this.authStatusListener.next(true);
-                        this.saveAuthData();
-                    }
-                },
-                error => {
-                    this.authStatusListener.next(false);
-                }
-            );
-    }*/
 
     logout() {
-        this.clearAuthData();
-        this.token = '';
-        this.userId = '';
-        this.userName = '';
-        this.password = '';
-        this.firstName = '';
-        this.permissions = {};
-        this.isAuthenticated = false;
-        this.authStatusListener.next(false);
-        clearTimeout(this.tokenTimer);
-        this.router.navigate(['/']);
-    }
-
-    private setAuthTimer(duration: number) {
-        // console.log('Setting timer: ' + duration);
-        this.tokenTimer = setTimeout(() => {
-            this.logout();
-            if (this.isAuthenticated) {
-                // this.autoAuthUser();
+        this.http.get('/api/logout').subscribe(
+            () => {
+                this.maintainLogin$ = undefined;
+                this.username = '';
+                this.password = '';
+                clearTimeout(this.logoutTimer);
+                clearTimeout(this.warningTimer);
+                this.subject.next(ANONYMOUS_USER);
             }
-        }, duration * 1000);
+        );
     }
 
-    private saveAuthData() {
-        localStorage.setItem('username', this.userName);
-        localStorage.setItem('password', this.password);
-        localStorage.setItem('token', this.token);
-        localStorage.setItem('userId', this.userId);
-        localStorage.setItem('firstName', this.firstName);
-        localStorage.setItem('permissions', JSON.stringify(this.permissions));
-    }
-
-    private clearAuthData() {
-        localStorage.removeItem('username');
-        localStorage.removeItem('password');
-        localStorage.removeItem('token');
-        localStorage.removeItem('userId');
-        localStorage.removeItem('firstName');
-        localStorage.removeItem('permissions');
-    }
-
-    private getAuthData() {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            return;
+    setWarningTimer(duration: number, dialog: any) {
+        // console.log('Setting timer: ' + duration);
+        if (this.username && this.password) {
+            this.warningTimer = setTimeout(() => {
+                this.warningDialog = this.dialog.open(dialog, {
+                    width: '450px',
+                    data: {username: this.username, password: this.password}
+                });
+            }, duration * 1000);
         }
-        return {
-            token: token,
-            username: localStorage.getItem('username'),
-            password: localStorage.getItem('password'),
-            userId: localStorage.getItem('userId'),
-            firstName: localStorage.getItem('firstName'),
-            permissions: localStorage.getItem('permissions')
-        };
+    }
+
+    setLogoutTimer(duration: number) {
+        // console.log('Setting timer: ' + duration);
+        this.logoutTimer = setTimeout(() => {
+            if (this.warningDialog) {
+                this.warningDialog.close();
+                this.warningDialog = '';
+            }
+            this.logout();
+            this.alertService.showSnackbar(
+                'Your user session has expired',
+                '',
+                5000
+            );
+        }, duration * 1000);
     }
 }

@@ -23,9 +23,6 @@ security:
                 check_path: /api/login
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
-            logout:
-                path: /api/logout
-                delete_cookies: ['BEARER']
             guard:
                 authenticators:
                     - Core\Guard\TokenAuthenticator

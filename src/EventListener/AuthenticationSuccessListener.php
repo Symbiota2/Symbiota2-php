@@ -36,7 +36,7 @@ class AuthenticationSuccessListener
             $cookieExp = 31536000;
         }
         else {
-            $cookieExp = 9000;
+            $cookieExp = 60;
         }
 
         $cookie = new Cookie(

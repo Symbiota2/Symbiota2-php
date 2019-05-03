@@ -6,10 +6,7 @@ import {Subject} from 'rxjs';
 import {SpinnerOverlayService} from '../shared/spinner-overlay.service';
 import {AlertService} from '../shared/alert.service';
 
-import {environment} from '../../environments/environment';
 import {User} from './user.model';
-
-const BACKEND_URL = environment.apiUrl;
 
 @Injectable({
     providedIn: 'root'
@@ -63,7 +60,7 @@ export class UserService {
             biography: biography,
             isPublic: isPublic
         };
-        this.http.post(BACKEND_URL + '/users', userData).subscribe(
+        this.http.post('/api/users', userData).subscribe(
             () => {
                 this.spinnerService.hide();
                 this.router.navigate(['/']);

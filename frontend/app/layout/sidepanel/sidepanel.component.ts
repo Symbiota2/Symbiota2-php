@@ -1,6 +1,8 @@
 import {Component, OnInit, EventEmitter, Output} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Store} from '@ngrx/store';
+
+import {AuthService} from '../../auth/auth.service';
+import {CurrentUser} from '../../auth/current-user.model';
 
 @Component({
     selector: 'sidepanel-outlet',
@@ -9,12 +11,16 @@ import {Store} from '@ngrx/store';
 })
 export class SidepanelComponent implements OnInit {
     @Output() sidenavToggle = new EventEmitter<void>();
-    isAuth$: Observable<boolean>;
+    isLoggedIn$: Observable<boolean>;
+    isLoggedOut$: Observable<boolean>;
+    currentUser$: Observable<CurrentUser>;
 
-    constructor() {
-    }
+    constructor(private authService: AuthService) {}
 
     ngOnInit() {
+        this.isLoggedIn$ = this.authService.isAuthenticated$;
+        this.isLoggedOut$ = this.authService.isLoggedOut$;
+        this.currentUser$ = this.authService.user$;
     }
 
     toggleSidenav() {
@@ -23,5 +29,6 @@ export class SidepanelComponent implements OnInit {
 
     onLogout() {
         this.toggleSidenav();
+        this.authService.logout();
     }
 }

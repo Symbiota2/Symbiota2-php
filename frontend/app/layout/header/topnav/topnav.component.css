@@ -11,6 +11,8 @@ a:hover, a:active {
 .top-navigation-bar {
     background-color: #0E6B88;
     height: 60px;
+    color: white;
+    font-size: 13px;
 }
 
 .navigation-items {
@@ -21,7 +23,6 @@ a:hover, a:active {
 
 .right-links {
     height: 100%;
-    font-size: 13px;
     margin-right: 20px;
 }
 

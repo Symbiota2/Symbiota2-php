@@ -1,6 +1,5 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {Router} from '@angular/router';
 
 import {AuthService} from '../auth.service';
 import {SpinnerOverlayService} from '../../shared/spinner-overlay.service';
@@ -15,8 +14,7 @@ export class LoginComponent {
 
     constructor(
         private authService: AuthService,
-        private spinnerService: SpinnerOverlayService,
-        private router: Router
+        private spinnerService: SpinnerOverlayService
     ) {}
 
     onLogin(form: NgForm) {
@@ -27,11 +25,8 @@ export class LoginComponent {
         this.authService.login(
             form.value.username,
             form.value.password,
-            this.maintainLoginValue
-        ).subscribe(
-            () => {
-                this.router.navigateByUrl('/');
-            }
+            this.maintainLoginValue,
+            '/'
         );
     }
 

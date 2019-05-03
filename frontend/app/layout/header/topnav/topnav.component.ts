@@ -1,31 +1,28 @@
-import {Component, OnInit, OnDestroy, EventEmitter, Output} from '@angular/core';
+import {Component, OnInit, EventEmitter, Output} from '@angular/core';
 import {Store} from '@ngrx/store';
-import {Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 
 import * as fromRoot from '../../../app.reducer';
 import {AuthService} from '../../../auth/auth.service';
+import {CurrentUser} from '../../../auth/current-user.model';
 
 @Component({
     selector: 'header-topnav',
     templateUrl: './topnav.component.html',
     styleUrls: ['./topnav.component.css']
 })
-export class TopnavComponent implements OnInit, OnDestroy {
+export class TopnavComponent implements OnInit {
     @Output() sidenavToggle = new EventEmitter<void>();
-    isAuth = false;
-    firstName = '';
-    private authListener: Subscription;
+    isLoggedIn$: Observable<boolean>;
+    isLoggedOut$: Observable<boolean>;
+    currentUser$: Observable<CurrentUser>;
 
     constructor(private store: Store<fromRoot.State>, private authService: AuthService) {}
 
     ngOnInit() {
-        this.isAuth = this.authService.getIsAuth();
-        this.authListener = this.authService
-            .getAuthStatusListener()
-            .subscribe(isAuthenticated => {
-                this.isAuth = isAuthenticated;
-                this.firstName = localStorage.getItem('firstName');
-            });
+        this.isLoggedIn$ = this.authService.isAuthenticated$;
+        this.isLoggedOut$ = this.authService.isLoggedOut$;
+        this.currentUser$ = this.authService.user$;
     }
 
     toggleSidenav() {
@@ -34,9 +31,5 @@ export class TopnavComponent implements OnInit, OnDestroy {
 
     onLogout() {
         this.authService.logout();
-    }
-
-    ngOnDestroy() {
-        this.authListener.unsubscribe();
     }
 }

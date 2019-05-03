@@ -10,6 +10,7 @@ import {CommonModule} from '@angular/common';
 import {MaterialModule} from '../material.module';
 
 import {SpinnerOverlayComponent} from './spinner-overlay/spinner-overlay.component';
+import {SessionExpireWarningDialogComponent} from './session-expire-warning-dialog/session-expire-warning-dialog.component';
 
 @NgModule({
     imports: [
@@ -31,13 +32,16 @@ import {SpinnerOverlayComponent} from './spinner-overlay/spinner-overlay.compone
         FormsModule,
         CommonModule,
         MaterialModule,
-        SpinnerOverlayComponent
+        SpinnerOverlayComponent,
+        SessionExpireWarningDialogComponent
     ],
     declarations: [
-        SpinnerOverlayComponent
+        SpinnerOverlayComponent,
+        SessionExpireWarningDialogComponent
     ],
     entryComponents: [
-        SpinnerOverlayComponent
+        SpinnerOverlayComponent,
+        SessionExpireWarningDialogComponent
     ]
 })
 export class SharedModule {
