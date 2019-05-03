@@ -22,11 +22,11 @@ trait InitialTimestampTrait
         return $this->initialTimestamp;
     }
 
-    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp)
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): self
     {
         $this->initialTimestamp = $initialTimestamp;
 
-        //return $this;
+        return $this;
     }
 
 }
