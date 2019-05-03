@@ -4,5 +4,5 @@ namespace Core\Entity;
 
 interface InitialTimestampInterface
 {
-    public function setInitialTimestamp(\DateTimeInterface $initialtimestamp): InitialTimestampInterface;
+    public function setInitialTimestamp(\DateTimeInterface $initialtimestamp);
 }
