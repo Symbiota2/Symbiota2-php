@@ -32,7 +32,7 @@ class JWTCreateSubscriber implements EventSubscriberInterface
                 $expiration = date_add($now,date_interval_create_from_date_string("8760 hours"));
             }
             else {
-                $expiration = date_add($now,date_interval_create_from_date_string("60 seconds"));
+                $expiration = date_add($now,date_interval_create_from_date_string("9000 seconds"));
             }
 
             $payload = $event->getData();

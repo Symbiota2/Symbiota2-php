@@ -62,6 +62,8 @@ export class AuthService {
 
     login(username: string, password: string, maintainLogin: number, redirect: string) {
         const authData: AuthData = { username: username, password: password, maintainLogin: maintainLogin };
+        clearTimeout(this.logoutTimer);
+        clearTimeout(this.warningTimer);
         this.http.post<CurrentUser>('/api/login', authData).subscribe(
             user => {
                 if (!user.maintainLogin) {
