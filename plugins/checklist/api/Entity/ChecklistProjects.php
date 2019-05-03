@@ -9,9 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Core\Entity\InitialTimestampInterface;
+use Core\Entity\InitialTimestampTrait;
 
 /**
- * ChecklistProjects
+ * ChecklistProjects Checklists are organized into projects, there can be many checklists in a project and a
+ * checklist can be part of several projects.
  *
  * @ORM\Table(name="fmprojects", indexes={@ORM\Index(name="FK_parentpid_proj", columns={"parentpid"})})
  * @ORM\Entity()
@@ -23,8 +25,9 @@ use Core\Entity\InitialTimestampInterface;
  */
 class ChecklistProjects implements InitialTimestampInterface
 {
+    use InitialTimestampTrait;
     /**
-     * @var int
+     * @var int The id is auto-generated.  Every Checklist project has a unique id.
      *
      * @ORM\Column(name="pid", type="integer", options={"unsigned"=true})
      * @ORM\Id
@@ -143,12 +146,12 @@ class ChecklistProjects implements InitialTimestampInterface
     private $sortSequence = 50;
 
     /**
-     * @var \DateTime
+     * var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime")
-     * @Assert\DateTime
+     * ORM\Column(name="InitialTimeStamp", type="datetime")
+     * Assert\DateTime
      */
-    private $initialTimestamp;
+    //private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -322,6 +325,7 @@ class ChecklistProjects implements InitialTimestampInterface
         return $this;
     }
 
+    /*
     public function getInitialTimestamp(): ?\DateTimeInterface
     {
         return $this->initialTimestamp;
@@ -333,7 +337,7 @@ class ChecklistProjects implements InitialTimestampInterface
 
         return $this;
     }
-
+    */
     public function getParentProjectId(): ?self
     {
         return $this->parentProjectId;
