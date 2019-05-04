@@ -1,9 +1,8 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Observable} from 'rxjs';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import {AuthService} from './auth/auth.service';
-import {SessionExpireWarningDialogComponent} from './shared/session-expire-warning-dialog/session-expire-warning-dialog.component';
+import {SessionExpireWarningDialogComponent} from './auth/session-expire-warning-dialog/session-expire-warning-dialog.component';
 
 import {CurrentUser} from './auth/current-user.model';
 

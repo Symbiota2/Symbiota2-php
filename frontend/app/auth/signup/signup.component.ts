@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {FormControl, FormGroup, Validators, FormBuilder} from '@angular/forms';
 
 import {UserService} from '../user.service';
 import {SpinnerOverlayService} from '../../shared/spinner-overlay.service';
@@ -12,14 +11,28 @@ import {SpinnerOverlayService} from '../../shared/spinner-overlay.service';
 })
 export class SignupComponent implements OnInit {
     isPublicValue = 0;
-
-    constructor(public userService: UserService, public spinnerService: SpinnerOverlayService) {}
-
     createaccountForm: FormGroup;
+
+    constructor(
+        public userService: UserService,
+        public spinnerService: SpinnerOverlayService,
+        public fb: FormBuilder
+    ) {}
 
     static checkLoginSpaces(control: FormControl): { [s: string]: boolean } {
         if (/[^0-9A-Za-z_!@#$-+]/.test(control.value)) {
             return {'spaces': true};
+        }
+        return null;
+    }
+
+    static checkHumanVerified(form: FormGroup): { [s: string]: boolean } {
+        const isHumanControl = form.get('human-verified');
+        if (isHumanControl.value === false) {
+            const isHumanErr = {'notHuman': true};
+            isHumanControl.setErrors(isHumanErr);
+        } else {
+            isHumanControl.setErrors(null);
         }
         return null;
     }
@@ -100,8 +113,10 @@ export class SignupComponent implements OnInit {
             'country': new FormControl(null),
             'url': new FormControl(null),
             'biography': new FormControl(null),
-            'isPublic': new FormControl(null)
-        }, SignupComponent.checkPasswords.bind(this));
+            'isPublic': new FormControl(null),
+            'human-entry': new FormControl(null),
+            'human-verified': new FormControl(null, [Validators.required])
+        }, [SignupComponent.checkPasswords.bind(this), SignupComponent.checkHumanVerified.bind(this)]);
 
     }
 
@@ -138,5 +153,9 @@ export class SignupComponent implements OnInit {
         } else {
             this.isPublicValue = 0;
         }
+    }
+
+    setHumanVerified(event) {
+        this.createaccountForm.controls['human-verified'].setValue(event);
     }
 }

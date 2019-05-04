@@ -10,7 +10,7 @@ import {CommonModule} from '@angular/common';
 import {MaterialModule} from '../material.module';
 
 import {SpinnerOverlayComponent} from './spinner-overlay/spinner-overlay.component';
-import {SessionExpireWarningDialogComponent} from './session-expire-warning-dialog/session-expire-warning-dialog.component';
+import {CaptchaComponent} from './captcha/captcha.component';
 
 @NgModule({
     imports: [
@@ -33,15 +33,15 @@ import {SessionExpireWarningDialogComponent} from './session-expire-warning-dial
         CommonModule,
         MaterialModule,
         SpinnerOverlayComponent,
-        SessionExpireWarningDialogComponent
+        CaptchaComponent
     ],
     declarations: [
         SpinnerOverlayComponent,
-        SessionExpireWarningDialogComponent
+        CaptchaComponent
     ],
     entryComponents: [
         SpinnerOverlayComponent,
-        SessionExpireWarningDialogComponent
+        CaptchaComponent
     ]
 })
 export class SharedModule {

@@ -106,7 +106,7 @@
             </mat-error>
             <mat-error
                 *ngIf="createaccountForm.get('email').errors && createaccountForm.get('email').errors['EmailAlreadyUsed']">
-                Login is already being used
+                Email is already registered to a user account
             </mat-error>
         </mat-form-field>
         <mat-form-field>
@@ -147,6 +147,7 @@
         <mat-checkbox name="isPublic" formControlName="isPublic" (change)="setIsPublicValue($event)">Public can view email and bio within website (e.g.
             photographer listing)
         </mat-checkbox>
+        <app-captcha [parent]="createaccountForm" (getProvenHumanChange)="setHumanVerified($event)"></app-captcha>
         <button type="submit" mat-raised-button color="primary" [disabled]="createaccountForm.invalid">Create Profile
         </button>
     </form>
