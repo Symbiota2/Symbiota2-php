@@ -40,7 +40,7 @@ class SchemaVersion implements ModifiedTimestampInterface
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="modifiedtimestamp", type="datetime")
+     * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true)
      * @Assert\DateTime
      */
     private $modifiedTimestamp;

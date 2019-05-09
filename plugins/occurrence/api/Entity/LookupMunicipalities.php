@@ -52,7 +52,7 @@ class LookupMunicipalities implements InitialTimestampInterface
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true)
      * @Assert\DateTime
      */
     private $initialTimestamp;

@@ -36,8 +36,7 @@ class CharacterLanguages implements InitialTimestampInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="charname", type="string", length=150)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="charname", type="string", length=150, nullable=true)
      * @Assert\Length(max=150)
      */
     private $characterName;
@@ -45,8 +44,7 @@ class CharacterLanguages implements InitialTimestampInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="language", type="string", length=45)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="language", type="string", length=45, nullable=true)
      * @Assert\Length(max=45)
      */
     private $language;
@@ -89,7 +87,7 @@ class CharacterLanguages implements InitialTimestampInterface
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true)
      * @Assert\DateTime
      */
     private $initialTimestamp;

@@ -62,7 +62,7 @@ class Ranks implements InitialTimestampInterface, ModifiedTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="Taxa\Entity\Ranks")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="dirparentrankid", referencedColumnName="rankid", nullable=false)
+     *   @ORM\JoinColumn(name="dirparentrankid", referencedColumnName="taxonunitid", nullable=false)
      * })
      */
     private $directParentRankId;
@@ -72,7 +72,7 @@ class Ranks implements InitialTimestampInterface, ModifiedTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="Taxa\Entity\Ranks")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="reqparentrankid", referencedColumnName="rankid")
+     *   @ORM\JoinColumn(name="reqparentrankid", referencedColumnName="taxonunitid")
      * })
      */
     private $requiredParentRankId;
@@ -96,7 +96,7 @@ class Ranks implements InitialTimestampInterface, ModifiedTimestampInterface
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="initialtimestamp", type="datetime")
+     * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true)
      * @Assert\DateTime
      */
     private $initialTimestamp;
