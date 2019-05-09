@@ -11,7 +11,7 @@ trait InitialTimestampTrait
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="InitialTimeStamp", type="datetime")
+     * @ORM\Column(name="initialTimeStamp", type="datetime")
      * @Assert\DateTime
      */
     private $initialTimestamp;
@@ -22,11 +22,11 @@ trait InitialTimestampTrait
         return $this->initialTimestamp;
     }
 
-    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): self
+    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp)
     {
         $this->initialTimestamp = $initialTimestamp;
 
-        return $this;
+        //return $this;
     }
 
 }
