@@ -1,5 +1,12 @@
 import {Component, Input, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {FormGroup, FormControl, FormGroupDirective, NgForm} from '@angular/forms';
+import {ErrorStateMatcher} from '@angular/material';
+
+class CaptchaErrorMatcher implements ErrorStateMatcher {
+    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+        return control.dirty && form.invalid;
+    }
+}
 
 @Component({
     selector: 'app-captcha',
@@ -14,6 +21,7 @@ export class CaptchaComponent implements AfterViewInit {
     private randNumber: number;
     private provenHuman: boolean;
     private cx: CanvasRenderingContext2D;
+    errorMatcher = new CaptchaErrorMatcher();
 
     public ngAfterViewInit() {
         this.setCanvas();

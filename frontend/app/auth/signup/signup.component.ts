@@ -26,13 +26,9 @@ export class SignupComponent implements OnInit {
         return null;
     }
 
-    static checkHumanVerified(form: FormGroup): { [s: string]: boolean } {
-        const isHumanControl = form.get('human-verified');
-        if (isHumanControl.value === false) {
-            const isHumanErr = {'notHuman': true};
-            isHumanControl.setErrors(isHumanErr);
-        } else {
-            isHumanControl.setErrors(null);
+    static checkHumanVerified(control: FormControl): { [s: string]: boolean } {
+        if (control.value === false) {
+            return {'notHuman': true};
         }
         return null;
     }
@@ -95,7 +91,7 @@ export class SignupComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.createaccountForm = new FormGroup({
+        this.createaccountForm = this.fb.group({
             'username': new FormControl(null, [Validators.required, SignupComponent.checkLoginSpaces.bind(this)]),
             'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
             'retypedPassword': new FormControl(null, [Validators.required, Validators.minLength(6)]),
@@ -114,9 +110,9 @@ export class SignupComponent implements OnInit {
             'url': new FormControl(null),
             'biography': new FormControl(null),
             'isPublic': new FormControl(null),
-            'human-entry': new FormControl(null),
-            'human-verified': new FormControl(null, [Validators.required])
-        }, [SignupComponent.checkPasswords.bind(this), SignupComponent.checkHumanVerified.bind(this)]);
+            'human-entry': new FormControl(null, [Validators.required]),
+            'human-verified': new FormControl(null, [Validators.required, SignupComponent.checkHumanVerified.bind(this)])
+        }, [SignupComponent.checkPasswords.bind(this)]);
 
     }
 
