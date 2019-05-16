@@ -54,15 +54,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *                  "groups"={"password_reset"}
  *              },
  *              "validation_groups"={"password_reset"}
-*           },
- *          "verify_user"={
-*               "method"="GET",
- *              "path"="/users/{id}/verify/{token}",
- *              "controller"=VerifyUserController::class,
- *              "normalization_context"={
- *                  "groups"={"get"}
- *              }
- *          }
+*           }
  *      },
  *      collectionOperations={
  *          "get"={
