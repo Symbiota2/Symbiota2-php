@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends AbstractController
 {
@@ -34,9 +34,10 @@ class UserController extends AbstractController
     public function getAuthenticatedUser()
     {
         $permissionArr = array();
-        $user = $this->tokenStorage->getToken()->getUser();
+        $token = $this->tokenStorage->getToken();
+        $user = $token->getUser();
 
-        if (!$user instanceof Users) {
+        if (!$token || !$token->isAuthenticated() || !$user instanceof Users) {
             return new JsonResponse([]);
         }
 
@@ -55,6 +56,20 @@ class UserController extends AbstractController
             'maintainLogin' => $user->getMaintainLogin(),
             'tokenExpire' => $user->getTokenExpiration()
         ]);
+    }
+
+    /**
+     * @Route(
+     *     name="logout_user",
+     *     path="/api/logout",
+     *     methods={"GET"}
+     * )
+     */
+    public function logoutUser()
+    {
+        $res = new Response();
+        $res->headers->clearCookie('BEARER');
+        $res->send();
     }
 
     /**

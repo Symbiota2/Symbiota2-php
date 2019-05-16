@@ -95,18 +95,6 @@ export class AuthService {
         );
     }
 
-    checkUsername(username) {
-        return this.http.get<any>('/api/checkusername/' + username).pipe(
-            map(res => res.available)
-        );
-    }
-
-    checkEmail(email) {
-        return this.http.get<any>('/api/checkemail/' + email).pipe(
-            map(res => res.available)
-        );
-    }
-
     setWarningTimer(duration: number, dialog: any) {
         // console.log('Setting timer: ' + duration);
         if (this.username && this.password) {

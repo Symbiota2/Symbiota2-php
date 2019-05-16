@@ -7,6 +7,7 @@ import {SpinnerOverlayService} from '../shared/spinner-overlay.service';
 import {AlertService} from '../shared/alert.service';
 
 import {User} from './user.model';
+import {map} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -74,6 +75,18 @@ export class UserService {
             error => {
                 console.log(error);
             }
+        );
+    }
+
+    checkUsername(username) {
+        return this.http.get<any>('/api/checkusername/' + username).pipe(
+            map(res => res.available)
+        );
+    }
+
+    checkEmail(email) {
+        return this.http.get<any>('/api/checkemail/' + email).pipe(
+            map(res => res.available)
         );
     }
 }

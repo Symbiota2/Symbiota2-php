@@ -5,7 +5,6 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 import {UserService} from '../user.service';
-import {AuthService} from '../auth.service';
 import {SpinnerOverlayService} from '../../shared/spinner-overlay.service';
 
 @Component({
@@ -20,7 +19,6 @@ export class SignupComponent implements OnInit {
 
     constructor(
         private http: HttpClient,
-        public authService: AuthService,
         public userService: UserService,
         public spinnerService: SpinnerOverlayService,
         public fb: FormBuilder
@@ -161,7 +159,7 @@ export class SignupComponent implements OnInit {
         control.setErrors({'CheckingLogin': true});
         return new Promise(resolve => {
             this.debouncer = setTimeout(() => {
-                this.authService.checkUsername(control.value).subscribe((res) => {
+                this.userService.checkUsername(control.value).subscribe((res) => {
                     if (res) {
                         resolve({'LoginAlreadyUsed': true});
                     }
@@ -177,7 +175,7 @@ export class SignupComponent implements OnInit {
         control.setErrors({'CheckingEmail': true});
         return new Promise(resolve => {
             this.debouncer = setTimeout(() => {
-                this.authService.checkEmail(control.value).subscribe((res) => {
+                this.userService.checkEmail(control.value).subscribe((res) => {
                     if (res) {
                         resolve({'EmailAlreadyUsed': true});
                     }
