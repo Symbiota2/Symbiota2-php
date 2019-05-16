@@ -1,5 +1,6 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {NgForm} from '@angular/forms';
+import {MatDialogRef} from '@angular/material';
 
 import {AuthService} from '../auth.service';
 import {SpinnerOverlayService} from '../../shared/spinner-overlay.service';
@@ -13,6 +14,7 @@ export class LoginComponent {
     maintainLoginValue = 0;
 
     constructor(
+        public dialogRef: MatDialogRef<LoginComponent>,
         private authService: AuthService,
         private spinnerService: SpinnerOverlayService
     ) {}
@@ -21,12 +23,12 @@ export class LoginComponent {
         if (form.invalid) {
             return;
         }
+        this.dialogRef.close();
         this.spinnerService.show();
         this.authService.login(
             form.value.username,
             form.value.password,
-            this.maintainLoginValue,
-            '/'
+            this.maintainLoginValue
         );
     }
 

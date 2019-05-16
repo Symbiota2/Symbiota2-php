@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, BehaviorSubject, Subscription} from 'rxjs';
 import {Router} from '@angular/router';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialog} from '@angular/material';
 
 import {SpinnerOverlayService} from '../shared/spinner-overlay.service';
 import {AlertService} from '../shared/alert.service';
@@ -60,7 +60,7 @@ export class AuthService {
         );
     }
 
-    login(username: string, password: string, maintainLogin: number, redirect: string) {
+    login(username: string, password: string, maintainLogin: number) {
         const authData: AuthData = { username: username, password: password, maintainLogin: maintainLogin };
         clearTimeout(this.logoutTimer);
         clearTimeout(this.warningTimer);
@@ -72,9 +72,6 @@ export class AuthService {
                 }
                 this.subject.next(user);
                 this.spinnerService.hide();
-                if (redirect) {
-                    this.router.navigateByUrl('/');
-                }
                 // console.log(user);
             }
         );

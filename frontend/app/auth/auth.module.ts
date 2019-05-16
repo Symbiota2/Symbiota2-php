@@ -14,6 +14,7 @@ import {SessionExpireWarningDialogComponent} from './session-expire-warning-dial
         AuthRoutingModule
     ],
     exports: [
+        LoginComponent,
         SessionExpireWarningDialogComponent
     ],
     declarations: [
@@ -22,6 +23,7 @@ import {SessionExpireWarningDialogComponent} from './session-expire-warning-dial
         SessionExpireWarningDialogComponent
     ],
     entryComponents: [
+        LoginComponent,
         SessionExpireWarningDialogComponent
     ]
 })

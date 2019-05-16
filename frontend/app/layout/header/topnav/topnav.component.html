@@ -18,7 +18,7 @@
             <li *ngIf="(isLoggedIn$ | async) && (currentUser$ | async) as user">Welcome {{user.firstName}}!</li>
             <li *ngIf="isLoggedIn$ | async"><a routerLink="/myprofile">My Profile</a></li>
             <li *ngIf="isLoggedIn$ | async" (click)="onLogout()"><a>Logout</a></li>
-            <li *ngIf="isLoggedOut$ | async"><a routerLink="/login">Login</a></li>
+            <li *ngIf="isLoggedOut$ | async" (click)="openLoginDialog()"><a>Login</a></li>
             <li *ngIf="isLoggedOut$ | async"><a routerLink="/signup">New Account</a></li>
             <li><a routerLink="/sitemap">Sitemap</a></li>
         </ul>
