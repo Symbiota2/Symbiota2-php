@@ -26,8 +26,7 @@ export class SessionExpireWarningDialogComponent {
         this.authService.login(
             this.data.username,
             this.data.password,
-            0,
-            ''
+            0
         );
         this.dialogRef.close();
     }

@@ -9,6 +9,14 @@ import {AlertService} from '../shared/alert.service';
 import {User} from './user.model';
 import {map} from 'rxjs/operators';
 
+export interface ResetPassword {
+    username: string;
+}
+
+export interface RetrieveLogin {
+    email: string;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -73,19 +81,68 @@ export class UserService {
                 );
             },
             error => {
-                console.log(error);
+                this.spinnerService.hide();
+                this.alertService.showSnackbar(
+                    'There was an error with creating your account. ',
+                    '',
+                    5000
+                );
+            }
+        );
+    }
+
+    resetPassword(username: string) {
+        const resetData: ResetPassword = { username: username };
+        this.http.post<any>('/api/users/resetpassword', resetData).subscribe(
+            res => {
+                this.spinnerService.hide();
+                if (res.result) {
+                    this.alertService.showSnackbar(
+                        'A new password has been emailed to you. ',
+                        '',
+                        5000
+                    );
+                } else {
+                    this.alertService.showSnackbar(
+                        'Could not locate your account from the login provided. ',
+                        '',
+                        5000
+                    );
+                }
+            }
+        );
+    }
+
+    retrieveLogin(email: string) {
+        const retrieveData: RetrieveLogin = { email: email };
+        this.http.post<any>('/api/users/retrievelogin', retrieveData).subscribe(
+            res => {
+                this.spinnerService.hide();
+                if (res.result) {
+                    this.alertService.showSnackbar(
+                        'Your login has been emailed to you. ',
+                        '',
+                        5000
+                    );
+                } else {
+                    this.alertService.showSnackbar(
+                        'A user account could not be found asociated with email provided. ',
+                        '',
+                        5000
+                    );
+                }
             }
         );
     }
 
     checkUsername(username) {
-        return this.http.get<any>('/api/checkusername/' + username).pipe(
+        return this.http.get<any>('/api/users/checkusername/' + username).pipe(
             map(res => res.available)
         );
     }
 
     checkEmail(email) {
-        return this.http.get<any>('/api/checkemail/' + email).pipe(
+        return this.http.get<any>('/api/users/checkemail/' + email).pipe(
             map(res => res.available)
         );
     }

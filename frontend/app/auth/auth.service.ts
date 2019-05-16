@@ -51,7 +51,7 @@ export class AuthService {
         public dialog: MatDialog
     ) {
         this.spinnerService.show();
-        http.get<CurrentUser>('/api/authuser').subscribe(
+        http.get<CurrentUser>('/api/users/authuser').subscribe(
             user => {
                 this.subject.next(user ? user : ANONYMOUS_USER);
                 this.spinnerService.hide();
@@ -73,6 +73,14 @@ export class AuthService {
                 this.subject.next(user);
                 this.spinnerService.hide();
                 // console.log(user);
+            },
+            error => {
+                this.spinnerService.hide();
+                this.alertService.showSnackbar(
+                    'Login failed. Please ensure you entered the correct login and password. ',
+                    '',
+                    5000
+                );
             }
         );
     }

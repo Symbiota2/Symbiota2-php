@@ -8,26 +8,37 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Core\Service\MailerService;
 
 class UserController extends AbstractController
 {
+    private const KEY = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
     private $em;
     private $tokenStorage;
+    private $userPasswordEncoder;
+    private $mailer;
 
     public function __construct(
         EntityManagerInterface $em,
+        UserPasswordEncoderInterface $userPasswordEncoder,
+        MailerService $mailer,
         TokenStorageInterface $tokenStorage
     )
     {
         $this->em = $em;
+        $this->userPasswordEncoder = $userPasswordEncoder;
         $this->tokenStorage = $tokenStorage;
+        $this->mailer = $mailer;
     }
 
     /**
      * @Route(
      *     name="authenticated_user",
-     *     path="/api/authuser",
+     *     path="/api/users/authuser",
      *     methods={"GET"}
      * )
      */
@@ -87,6 +98,73 @@ class UserController extends AbstractController
 
     /**
      * @Route(
+     *     name="reset_password",
+     *     path="/api/users/resetpassword",
+     *     methods={"POST"}
+     * )
+     */
+    public function resetUserPassword(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $username = $data['username'];
+        $repository = $this->em->getRepository('Core\Entity\Users');
+        $user = $repository->findOneBy(['username' => $username]);
+
+        if(!$user instanceof Users) {
+            return new JsonResponse([
+                'result' => false
+            ]);
+        }
+
+        $newPassword = '';
+        $maxNumber = strlen(self::KEY);
+
+        for($i = 0; $i < 12; $i++) {
+            $newPassword .= self::KEY[random_int(0, $maxNumber - 1)];
+        }
+
+        $user->setPassword(
+            $this->userPasswordEncoder->encodePassword(
+                $user, $newPassword
+            )
+        );
+
+        $user->setPasswordChangeDate(time());
+        $this->em->flush();
+        $this->mailer->sendPasswordResetEmail($user, $newPassword);
+        return new JsonResponse([
+            'result' => true
+        ]);
+    }
+
+    /**
+     * @Route(
+     *     name="retrieve_login",
+     *     path="/api/users/retrievelogin",
+     *     methods={"POST"}
+     * )
+     */
+    public function retrieveUserLogin(Request $request)
+    {
+        $data = json_decode($request->getContent(), true);
+        $email = $data['email'];
+        $repository = $this->em->getRepository('Core\Entity\Users');
+        $user = $repository->findOneBy(['email' => $email]);
+
+        if(!$user instanceof Users) {
+            return new JsonResponse([
+                'result' => false
+            ]);
+        }
+
+        $this->mailer->sendRetrieveLoginEmail($user);
+        return new JsonResponse([
+            'result' => true
+        ]);
+    }
+
+    /**
+     * @Route(
      *     name="logout_user",
      *     path="/api/logout",
      *     methods={"GET"}
@@ -102,7 +180,7 @@ class UserController extends AbstractController
     /**
      * @Route(
      *     name="check_user_username",
-     *     path="/api/checkusername/{username}",
+     *     path="/api/users/checkusername/{username}",
      *     methods={"GET"}
      * )
      */
@@ -123,7 +201,7 @@ class UserController extends AbstractController
     /**
      * @Route(
      *     name="check_user_email",
-     *     path="/api/checkemail/{email}",
+     *     path="/api/users/checkemail/{email}",
      *     methods={"GET"}
      * )
      */

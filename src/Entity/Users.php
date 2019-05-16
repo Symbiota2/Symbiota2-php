@@ -13,8 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use Core\Controller\ResetPasswordController;
-use Core\Controller\VerifyUserController;
+use Core\Controller\ChangePasswordController;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
@@ -45,15 +44,15 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *              },
  *              "validation_groups"={"put"}
  *          },
- *          "password_reset"={
+ *          "change_password"={
  *              "access_control"="is_granted('SuperAdmin', object) and object == user",
  *              "method"="PUT",
- *              "path"="/users/{id}/passwordreset",
- *              "controller"=ResetPasswordController::class,
+ *              "path"="/users/{id}/changepassword",
+ *              "controller"=ChangePasswordController::class,
  *              "denormalization_context"={
- *                  "groups"={"password_reset"}
+ *                  "groups"={"change_password"}
  *              },
- *              "validation_groups"={"password_reset"}
+ *              "validation_groups"={"change_password"}
 *           }
  *      },
  *      collectionOperations={
@@ -155,31 +154,31 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
     private $retypedPassword;
 
     /**
-     * @Groups({"password_reset"})
-     * @Assert\NotBlank(groups={"password_reset"})
+     * @Groups({"change_password"})
+     * @Assert\NotBlank(groups={"change_password"})
      * @Assert\Regex(
      *     pattern="/(?=.*[A-Za-z])(?=.*[0-9]).{6,}/",
      *     message="Password must be at least six characters long and contain at least one digit and one upper or lower case letter",
-     *     groups={"password_reset"}
+     *     groups={"change_password"}
      * )
      */
     private $newPassword;
 
     /**
-     * @Groups({"password_reset"})
-     * @Assert\NotBlank(groups={"password_reset"})
+     * @Groups({"change_password"})
+     * @Assert\NotBlank(groups={"change_password"})
      * @Assert\Expression(
      *     "this.getNewPassword() === this.getNewRetypedPassword()",
      *     message="Passwords do not match",
-     *     groups={"password_reset"}
+     *     groups={"change_password"}
      * )
      */
     private $newRetypedPassword;
 
     /**
-     * @Groups({"password_reset"})
-     * @Assert\NotBlank(groups={"password_reset"})
-     * @UserPassword(groups={"password_reset"})
+     * @Groups({"change_password"})
+     * @Assert\NotBlank(groups={"change_password"})
+     * @UserPassword(groups={"change_password"})
      */
     private $oldPassword;
 
