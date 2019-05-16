@@ -1,7 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
-import {AuthService} from '../../auth/auth.service';
+import {AuthService} from '../auth.service';
 
 export interface LoginData {
     username: string;

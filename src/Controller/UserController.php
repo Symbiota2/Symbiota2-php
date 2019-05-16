@@ -8,23 +8,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends AbstractController
 {
     private $em;
     private $tokenStorage;
-    private $requestStack;
 
     public function __construct(
         EntityManagerInterface $em,
-        RequestStack $requestStack,
         TokenStorageInterface $tokenStorage
     )
     {
         $this->em = $em;
-        $this->requestStack = $requestStack;
         $this->tokenStorage = $tokenStorage;
     }
 
