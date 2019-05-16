@@ -1,7 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators, FormBuilder} from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 import {UserService} from '../user.service';
+import {AuthService} from '../auth.service';
 import {SpinnerOverlayService} from '../../shared/spinner-overlay.service';
 
 @Component({
@@ -11,9 +15,12 @@ import {SpinnerOverlayService} from '../../shared/spinner-overlay.service';
 })
 export class SignupComponent implements OnInit {
     isPublicValue = 0;
+    debouncer: any;
     createaccountForm: FormGroup;
 
     constructor(
+        private http: HttpClient,
+        public authService: AuthService,
         public userService: UserService,
         public spinnerService: SpinnerOverlayService,
         public fb: FormBuilder
@@ -92,13 +99,19 @@ export class SignupComponent implements OnInit {
 
     ngOnInit() {
         this.createaccountForm = this.fb.group({
-            'username': new FormControl(null, [Validators.required, SignupComponent.checkLoginSpaces.bind(this)]),
+            'username': new FormControl(null, {
+                validators: [Validators.required, SignupComponent.checkLoginSpaces.bind(this)],
+                asyncValidators: this.checkUsername.bind(this)
+            }),
             'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
             'retypedPassword': new FormControl(null, [Validators.required, Validators.minLength(6)]),
             'firstName': new FormControl(null, [Validators.required]),
             'middleInitial': new FormControl(null),
             'lastName': new FormControl(null, [Validators.required]),
-            'email': new FormControl(null, [Validators.required, Validators.email]),
+            'email': new FormControl(null, {
+                validators: [Validators.required, Validators.email],
+                asyncValidators: this.checkEmail.bind(this)
+            }),
             'title': new FormControl(null),
             'institution': new FormControl(null),
             'department': new FormControl(null),
@@ -141,6 +154,38 @@ export class SignupComponent implements OnInit {
             form.value.biography,
             this.isPublicValue
         );
+    }
+
+    checkUsername(control: FormControl): any {
+        clearTimeout(this.debouncer);
+        control.setErrors({'CheckingLogin': true});
+        return new Promise(resolve => {
+            this.debouncer = setTimeout(() => {
+                this.authService.checkUsername(control.value).subscribe((res) => {
+                    if (res) {
+                        resolve({'LoginAlreadyUsed': true});
+                    }
+                }, (err) => {
+                    resolve(null);
+                });
+            }, 1000);
+        });
+    }
+
+    checkEmail(control: FormControl): any {
+        clearTimeout(this.debouncer);
+        control.setErrors({'CheckingEmail': true});
+        return new Promise(resolve => {
+            this.debouncer = setTimeout(() => {
+                this.authService.checkEmail(control.value).subscribe((res) => {
+                    if (res) {
+                        resolve({'EmailAlreadyUsed': true});
+                    }
+                }, (err) => {
+                    resolve(null);
+                });
+            }, 1000);
+        });
     }
 
     setIsPublicValue(event) {

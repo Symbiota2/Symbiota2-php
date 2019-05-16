@@ -81,6 +81,7 @@ export class AuthService {
     }
 
     logout() {
+        this.spinnerService.show();
         this.http.get('/api/logout').subscribe(
             () => {
                 this.maintainLogin$ = undefined;
@@ -89,7 +90,20 @@ export class AuthService {
                 clearTimeout(this.logoutTimer);
                 clearTimeout(this.warningTimer);
                 this.subject.next(ANONYMOUS_USER);
+                this.spinnerService.hide();
             }
+        );
+    }
+
+    checkUsername(username) {
+        return this.http.get<any>('/api/checkusername/' + username).pipe(
+            map(res => res.available)
+        );
+    }
+
+    checkEmail(email) {
+        return this.http.get<any>('/api/checkemail/' + email).pipe(
+            map(res => res.available)
         );
     }
 

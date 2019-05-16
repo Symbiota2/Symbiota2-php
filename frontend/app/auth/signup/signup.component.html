@@ -12,6 +12,10 @@
                 Login cannot contain spaces
             </mat-error>
             <mat-error
+                    *ngIf="createaccountForm.get('username').errors && createaccountForm.get('username').errors['CheckingLogin']">
+                Checking is login is available
+            </mat-error>
+            <mat-error
                 *ngIf="createaccountForm.get('username').errors && createaccountForm.get('username').errors['LoginAlreadyUsed']">
                 Login is already being used
             </mat-error>
@@ -103,6 +107,10 @@
             </mat-error>
             <mat-error *ngIf="createaccountForm.get('email').errors && createaccountForm.get('email').errors['email']">
                 Email is invalid
+            </mat-error>
+            <mat-error
+                    *ngIf="createaccountForm.get('email').errors && createaccountForm.get('email').errors['CheckingEmail']">
+                Checking if email is already registered
             </mat-error>
             <mat-error
                 *ngIf="createaccountForm.get('email').errors && createaccountForm.get('email').errors['EmailAlreadyUsed']">

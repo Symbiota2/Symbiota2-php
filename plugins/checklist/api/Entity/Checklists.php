@@ -21,6 +21,7 @@ use Core\Entity\Users;
  * @ORM\Table(name="fmchecklists", indexes={@ORM\Index(name="FK_checklists_uid", columns={"createduid"}), @ORM\Index(name="name", columns={"Name", "Type"})})
  * @ORM\Entity()
  * @ApiResource(
+ *     attributes={"order"={"name": "ASC"}},
  *     itemOperations={
  *          "get"={
  *             "normalization_context"={

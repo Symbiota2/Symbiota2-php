@@ -3,6 +3,7 @@
 namespace Core\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -14,12 +15,20 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Core\Controller\ResetPasswordController;
 use Core\Controller\VerifyUserController;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * Users
  *
+ * @ApiFilter(
+ *      SearchFilter::class,
+ *      properties={
+ *          "username": "exact",
+ *          "email": "exact"
+ *      }
+ * )
  * @ApiResource(
- *     itemOperations={
+ *      itemOperations={
  *          "get"={
  *              "access_control"="is_granted('SuperAdmin', object) or object == user",
  *              "normalization_context"={
@@ -57,9 +66,9 @@ use Core\Controller\VerifyUserController;
  *      },
  *      collectionOperations={
  *          "get"={
- *              "access_control"="is_granted('SuperAdmin', object)",
+ *              "access_control"="is_granted('HasPermissions', object) or is_granted('IS_AUTHENTICATED_ANONYMOUSLY')",
  *              "normalization_context"={
- *                  "groups"={"get"}
+ *                  "groups"={"public"}
  *              }
  *          },
  *          "post"={
@@ -86,7 +95,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @ORM\Column(name="uid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Groups({"get", "get-roles", "get-checklist-info"})
+     * @Groups({"get", "get-roles", "get-checklist-info", "SuperAdmin"})
      */
     private $id;
 
@@ -94,7 +103,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var string|null
      *
      * @ORM\Column(name="firstname", type="string", length=45, nullable=true)
-     * @Groups({"get", "get-roles", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "get-roles", "get-checklist-info", "post", "put", "SuperAdmin"})
      * @Assert\Length(max=45, groups={"post"})
      */
     private $firstName;
@@ -103,7 +112,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var string|null
      *
      * @ORM\Column(name="middleinitial", type="string", length=2, nullable=true)
-     * @Groups({"get", "get-roles", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "get-roles", "get-checklist-info", "post", "put", "SuperAdmin"})
      * @Assert\Length(max=2, groups={"post"})
      */
     private $middleInitial;
@@ -112,7 +121,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", length=45)
-     * @Groups({"get", "get-roles", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "get-roles", "get-checklist-info", "post", "put", "SuperAdmin"})
      * @Assert\NotBlank(groups={"post"})
      * @Assert\Length(max=45, groups={"post"})
      */
@@ -122,7 +131,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=45)
-     * @Groups({"get", "get-roles", "get-checklist-info", "post"})
+     * @Groups({"get", "get-roles", "get-checklist-info", "post", "SuperAdmin"})
      * @Assert\NotBlank(groups={"post"})
      * @Assert\Length(min=6, max=45, groups={"post"})
      */
@@ -186,7 +195,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var string|null
      *
      * @ORM\Column(name="title", type="string", length=150, nullable=true)
-     * @Groups({"get", "post", "put"})
+     * @Groups({"get", "post", "put", "SuperAdmin"})
      * @Assert\Length(max=150, groups={"post"})
      */
     private $title;

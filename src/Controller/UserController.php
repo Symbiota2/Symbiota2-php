@@ -8,8 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
-class AuthenticatedUserController extends AbstractController
+class UserController extends AbstractController
 {
     private $em;
     private $tokenStorage;
@@ -53,6 +54,48 @@ class AuthenticatedUserController extends AbstractController
             'permissions' => $permissionArr,
             'maintainLogin' => $user->getMaintainLogin(),
             'tokenExpire' => $user->getTokenExpiration()
+        ]);
+    }
+
+    /**
+     * @Route(
+     *     name="check_user_username",
+     *     path="/api/checkusername/{username}",
+     *     methods={"GET"}
+     * )
+     */
+    public function checkUsername($username)
+    {
+        $repository = $this->em->getRepository('Core\Entity\Users');
+        $result = $repository->findBy(['username' => $username]);
+
+        if (!$result) {
+            throw $this->createNotFoundException();
+        }
+
+        return new JsonResponse([
+            'available' => true
+        ]);
+    }
+
+    /**
+     * @Route(
+     *     name="check_user_email",
+     *     path="/api/checkemail/{email}",
+     *     methods={"GET"}
+     * )
+     */
+    public function checkEmail($email)
+    {
+        $repository = $this->em->getRepository('Core\Entity\Users');
+        $result = $repository->findBy(['email' => $email]);
+
+        if (!$result) {
+            throw $this->createNotFoundException();
+        }
+
+        return new JsonResponse([
+            'available' => true
         ]);
     }
 }
