@@ -160,8 +160,10 @@ export class SignupComponent implements OnInit {
         return new Promise(resolve => {
             this.debouncer = setTimeout(() => {
                 this.userService.checkUsername(control.value).subscribe((res) => {
-                    if (res) {
+                    if (res.available) {
                         resolve({'LoginAlreadyUsed': true});
+                    } else {
+                        resolve(null);
                     }
                 }, (err) => {
                     resolve(null);
@@ -176,8 +178,11 @@ export class SignupComponent implements OnInit {
         return new Promise(resolve => {
             this.debouncer = setTimeout(() => {
                 this.userService.checkEmail(control.value).subscribe((res) => {
-                    if (res) {
+                    console.log(res.available);
+                    if (res.available) {
                         resolve({'EmailAlreadyUsed': true});
+                    } else {
+                        resolve(null);
                     }
                 }, (err) => {
                     resolve(null);

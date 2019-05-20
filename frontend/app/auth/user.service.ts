@@ -137,13 +137,13 @@ export class UserService {
 
     checkUsername(username) {
         return this.http.get<any>('/api/users/checkusername/' + username).pipe(
-            map(res => res.available)
+            map(res => res)
         );
     }
 
     checkEmail(email) {
         return this.http.get<any>('/api/users/checkemail/' + email).pipe(
-            map(res => res.available)
+            map(res => res)
         );
     }
 }

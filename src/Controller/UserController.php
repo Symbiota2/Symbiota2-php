@@ -190,7 +190,9 @@ class UserController extends AbstractController
         $result = $repository->findBy(['username' => $username]);
 
         if (!$result) {
-            throw $this->createNotFoundException();
+            return new JsonResponse([
+                'available' => false
+            ]);
         }
 
         return new JsonResponse([
@@ -211,7 +213,9 @@ class UserController extends AbstractController
         $result = $repository->findBy(['email' => $email]);
 
         if (!$result) {
-            throw $this->createNotFoundException();
+            return new JsonResponse([
+                'available' => false
+            ]);
         }
 
         return new JsonResponse([
