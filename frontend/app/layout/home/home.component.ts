@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
     title = '';
 
     constructor(config: ConfigurationService) {
-        this.title = config.data.DEFAULT_TITLE;
+        this.title = (config.data.DEFAULT_TITLE ? config.data.DEFAULT_TITLE : '');
     }
 
     ngOnInit() {
