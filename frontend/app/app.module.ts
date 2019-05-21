@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {NgModule, APP_INITIALIZER} from '@angular/core';
 import {StoreModule} from '@ngrx/store';
 import {HttpClientModule} from '@angular/common/http';
 
@@ -19,6 +19,13 @@ import {SpinnerOverlayService} from './shared/spinner-overlay.service';
 import {AlertService} from './shared/alert.service';
 import {omcollectionsService} from './search/omcollections.service';
 import {SnotifyModule, SnotifyService, ToastDefaults} from 'ng-snotify';
+import {ConfigurationService} from './configuration.service';
+
+export function setupConfigServiceFactory(
+    service: ConfigurationService
+): Function {
+    return () => service.load();
+}
 
 @NgModule({
     declarations: [
@@ -41,8 +48,17 @@ import {SnotifyModule, SnotifyService, ToastDefaults} from 'ng-snotify';
         SpinnerOverlayService,
         AlertService,
         omcollectionsService,
-        {provide: 'SnotifyToastConfig', useValue: ToastDefaults},
-        SnotifyService
+        {
+            provide: 'SnotifyToastConfig',
+            useValue: ToastDefaults
+        },
+        SnotifyService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: setupConfigServiceFactory,
+            deps: [ConfigurationService],
+            multi: true
+        }
     ],
     bootstrap: [AppComponent]
 })

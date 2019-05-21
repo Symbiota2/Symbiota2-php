@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
+import {ConfigurationService} from '../../configuration.service';
+
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
@@ -7,7 +9,10 @@ import {Component, OnInit} from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-    constructor() {
+    title = '';
+
+    constructor(config: ConfigurationService) {
+        this.title = config.data.DEFAULT_TITLE;
     }
 
     ngOnInit() {
