@@ -5,7 +5,7 @@
   "projects": {
     "symbiota2": {
       "root": "",
-      "sourceRoot": "frontend",
+      "sourceRoot": "src/ui",
       "projectType": "application",
       "prefix": "app",
       "schematics": {},
@@ -14,16 +14,16 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "public",
-            "index": "frontend/index.html",
-            "main": "frontend/main.ts",
-            "polyfills": "frontend/polyfills.ts",
-            "tsConfig": "frontend/tsconfig.app.json",
+            "index": "src/ui/index.html",
+            "main": "src/ui/main.ts",
+            "polyfills": "src/ui/polyfills.ts",
+            "tsConfig": "src/ui/tsconfig.app.json",
             "assets": [
-              "frontend/favicon.ico",
-              "frontend/assets"
+              "src/ui/favicon.ico",
+              "src/ui/assets"
             ],
             "styles": [
-              "frontend/styles.css"
+              "src/ui/styles.css"
             ],
             "scripts": []
           },
@@ -31,8 +31,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "frontend/environments/environment.ts",
-                  "with": "frontend/environments/environment.prod.ts"
+                  "replace": "src/ui/environments/environment.ts",
+                  "with": "src/ui/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -67,17 +67,17 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "frontend/test.ts",
-            "polyfills": "frontend/polyfills.ts",
-            "tsConfig": "frontend/tsconfig.spec.json",
-            "karmaConfig": "frontend/karma.conf.js",
+            "main": "src/ui/test.ts",
+            "polyfills": "src/ui/polyfills.ts",
+            "tsConfig": "src/ui/tsconfig.spec.json",
+            "karmaConfig": "src/ui/karma.conf.js",
             "styles": [
-              "frontend/styles.css"
+              "src/ui/styles.css"
             ],
             "scripts": [],
             "assets": [
-              "frontend/favicon.ico",
-              "frontend/assets"
+              "src/ui/favicon.ico",
+              "src/ui/assets"
             ]
           }
         },
@@ -85,8 +85,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "frontend/tsconfig.app.json",
-              "frontend/tsconfig.spec.json"
+              "src/ui/tsconfig.app.json",
+              "src/ui/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
