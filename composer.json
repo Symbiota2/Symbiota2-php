@@ -33,7 +33,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Core\\": "src/",
+            "Core\\": "src/api/",
             "Checklist\\": "plugins/checklist/api/",
             "Reference\\": "plugins/reference/api/",
             "Collection\\": "plugins/collection/api/",
