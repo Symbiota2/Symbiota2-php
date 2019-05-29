@@ -45,7 +45,7 @@ export function setupConfigServiceFactory(
         AppRoutingModule,
         StoreModule.forRoot(reducers),
         BrowserModule.withServerTransition({ appId: 'serverApp' }),
-        BrowserTransferStateModule,
+        BrowserTransferStateModule
     ],
     providers: [
         AuthService,
