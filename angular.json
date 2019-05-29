@@ -25,7 +25,11 @@
             "styles": [
               "src/ui/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/systemjs/dist/s.js",
+              "node_modules/systemjs/dist/extras/named-register.js",
+              "node_modules/systemjs/dist/extras/amd.js"
+            ]
           },
           "configurations": {
             "production": {

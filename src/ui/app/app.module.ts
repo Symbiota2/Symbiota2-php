@@ -1,6 +1,7 @@
 import {NgModule, APP_INITIALIZER} from '@angular/core';
 import {StoreModule} from '@ngrx/store';
 import {HttpClientModule} from '@angular/common/http';
+import {BrowserModule, BrowserTransferStateModule} from '@angular/platform-browser';
 
 import {reducers} from './app.reducer';
 
@@ -18,8 +19,10 @@ import {AuthService} from './auth/auth.service';
 import {SpinnerOverlayService} from './shared/spinner-overlay.service';
 import {AlertService} from './shared/alert.service';
 import {omcollectionsService} from './search/omcollections.service';
-import {SnotifyModule, SnotifyService, ToastDefaults} from 'ng-snotify';
 import {ConfigurationService} from './configuration.service';
+import {LoaderService} from './loader.service';
+import {PluginConfigService} from './plugin-config.service';
+import {PluginLoaderService} from './plugin-loader.service';
 
 export function setupConfigServiceFactory(
     service: ConfigurationService
@@ -40,8 +43,9 @@ export function setupConfigServiceFactory(
         LayoutModule,
         HttpClientModule,
         AppRoutingModule,
-        SnotifyModule,
-        StoreModule.forRoot(reducers)
+        StoreModule.forRoot(reducers),
+        BrowserModule.withServerTransition({ appId: 'serverApp' }),
+        BrowserTransferStateModule,
     ],
     providers: [
         AuthService,
@@ -49,15 +53,25 @@ export function setupConfigServiceFactory(
         AlertService,
         omcollectionsService,
         {
-            provide: 'SnotifyToastConfig',
-            useValue: ToastDefaults
-        },
-        SnotifyService,
-        {
             provide: APP_INITIALIZER,
             useFactory: setupConfigServiceFactory,
             deps: [ConfigurationService],
             multi: true
+        },
+        {
+            provide: LoaderService,
+            useClass: PluginLoaderService
+        },
+        PluginConfigService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (provider: PluginConfigService) => () =>
+                provider
+                    .loadConfig()
+                    .toPromise()
+                    .then(config => (provider.config = config)),
+            multi: true,
+            deps: [PluginConfigService]
         }
     ],
     bootstrap: [AppComponent]
