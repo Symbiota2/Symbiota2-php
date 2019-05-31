@@ -1,9 +1,0 @@
-{
-  "builders": {
-    "plugin": {
-      "class": "./plugin-builder",
-      "schema": "./plugin-builder/schema.json",
-      "description": "Plugin Builder"
-    }
-  }
-}
