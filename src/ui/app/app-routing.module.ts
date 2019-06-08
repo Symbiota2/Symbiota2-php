@@ -1,9 +1,13 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {Routes, RouterModule, Route} from '@angular/router';
 
 import {HomeComponent} from './layout/home/home.component';
 import {SpatialComponent} from './spatial/spatial.component';
 import {SearchComponent} from './search/search.component';
+
+import {PluginLoaderService} from './plugin-loader.service';
+import {PluginRouterService} from './plugin-router.service';
+
 import {AuthGuard} from './auth/auth.guard';
 
 const routes: Routes = [
@@ -17,4 +21,15 @@ const routes: Routes = [
     exports: [RouterModule],
     providers: [AuthGuard]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+    pluginRoutes: Route[];
+
+    constructor(
+        private pluginLoader: PluginLoaderService,
+        private pluginRouter: PluginRouterService
+    ) {
+        this.pluginLoader.loadedPluginRoutes.subscribe(value => {
+            this.pluginRouter.activatePluginRoutes(value);
+        });
+    }
+}

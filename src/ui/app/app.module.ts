@@ -13,12 +13,15 @@ import {AppComponent} from './app.component';
 import {SearchComponent} from './search/search.component';
 import {CollectionsComponent} from './search/collections/collections.component';
 import {SpatialComponent} from './spatial/spatial.component';
+import {PluginOutletComponent} from './plugin-outlet.component';
 
 import {AuthService} from './auth/auth.service';
 import {SpinnerOverlayService} from './shared/spinner-overlay.service';
 import {AlertService} from './shared/alert.service';
 import {omcollectionsService} from './search/omcollections.service';
 import {ConfigurationService} from './configuration.service';
+import {PluginRouterService} from './plugin-router.service';
+import {PluginLoaderService} from './plugin-loader.service';
 
 export function setupConfigServiceFactory(
     service: ConfigurationService
@@ -26,12 +29,19 @@ export function setupConfigServiceFactory(
     return () => service.load();
 }
 
+export function setupPluginLoaderServiceFactory(
+    service: PluginLoaderService
+): Function {
+    return () => service.initialize();
+}
+
 @NgModule({
     declarations: [
         AppComponent,
         SearchComponent,
         CollectionsComponent,
-        SpatialComponent
+        SpatialComponent,
+        PluginOutletComponent
     ],
     imports: [
         AuthModule,
@@ -41,8 +51,12 @@ export function setupConfigServiceFactory(
         AppRoutingModule,
         StoreModule.forRoot(reducers)
     ],
+    entryComponents: [
+        PluginOutletComponent
+    ],
     providers: [
         AuthService,
+        PluginRouterService,
         SpinnerOverlayService,
         AlertService,
         omcollectionsService,
@@ -50,6 +64,12 @@ export function setupConfigServiceFactory(
             provide: APP_INITIALIZER,
             useFactory: setupConfigServiceFactory,
             deps: [ConfigurationService],
+            multi: true
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: setupPluginLoaderServiceFactory,
+            deps: [PluginLoaderService],
             multi: true
         }
     ],
