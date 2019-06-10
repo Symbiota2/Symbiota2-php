@@ -1,4 +1,6 @@
 {
+    "name": "Symbiota2/Symbiota2",
+    "version": "0.1.1",
     "type": "project",
     "license": "proprietary",
     "require": {
@@ -23,7 +25,8 @@
         "symfony/twig-bundle": "4.2.*",
         "symfony/validator": "4.2.*",
         "symfony/yaml": "4.2.*",
-        "vich/uploader-bundle": "^1.8"
+        "vich/uploader-bundle": "^1.8",
+        "wikimedia/composer-merge-plugin": "^1.4"
     },
     "config": {
         "preferred-install": {
@@ -33,24 +36,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Core\\": "src/api/",
-            "Checklist\\": "plugins/checklist/api/",
-            "Reference\\": "plugins/reference/api/",
-            "Collection\\": "plugins/collection/api/",
-            "CrowdSource\\": "plugins/crowdSource/api/",
-            "Exsiccati\\": "plugins/exsiccati/api/",
-            "Glossary\\": "plugins/glossary/api/",
-            "ImageProcessor\\": "plugins/imageProcessor/api/",
-            "Key\\": "plugins/key/api/",
-            "Media\\": "plugins/media/api/",
-            "Occurrence\\": "plugins/occurrence/api/",
-            "OccurrenceAssociation\\": "plugins/occurrenceAssociation/api/",
-            "OccurrenceComment\\": "plugins/occurrenceComment/api/",
-            "OccurrenceDataset\\": "plugins/occurrenceDataset/api/",
-            "OccurrenceGenetic\\": "plugins/occurrenceGenetic/api/",
-            "OccurrenceLoan\\": "plugins/occurrenceLoan/api/",
-            "Taxa\\": "plugins/taxa/api/",
-            "Traits\\": "plugins/traits/api/"
+            "Core\\": "src/api/"
         }
     },
     "autoload-dev": {
@@ -73,8 +59,12 @@
         },
         "pre-update-cmd": [
             "@php -r \"file_exists('.env') || copy('.env.dist', '.env');\"",
+            "@php -r \"file_exists('plugin-composer.json') || copy('plugin-composer.json.dist', 'plugin-composer.json');\"",
             "@php -r \"file_exists('docker-compose.yml') || copy('docker-compose.yml.dist', 'docker-compose.yml');\"",
-            "@php -r \"file_exists('docker-compose-elk.yml') || copy('docker-compose-elk.yml.dist', 'docker-compose-elk.yml');\""
+            "@php -r \"file_exists('docker-compose-elk.yml') || copy('docker-compose-elk.yml.dist', 'docker-compose-elk.yml');\"",
+            "@php -r \"file_exists('./config/packages/api_platform.yaml') || copy('./config/packages/api_platform.yaml.dist', './config/packages/api_platform.yaml');\"",
+            "@php -r \"file_exists('./config/packages/doctrine.yaml') || copy('./config/packages/doctrine.yaml.dist', './config/packages/doctrine.yaml');\"",
+            "@php -r \"file_exists('./config/plugin-config.json') || copy('./config/plugin-config.json.dist', './config/plugin-config.json');\""
         ],
         "post-install-cmd": [
             "@auto-scripts"
@@ -87,6 +77,18 @@
         "symfony/symfony": "*"
     },
     "extra": {
+        "merge-plugin": {
+            "include": [
+                "plugin-composer.json"
+            ],
+            "recurse": true,
+            "replace": false,
+            "ignore-duplicates": true,
+            "merge-dev": true,
+            "merge-extra": false,
+            "merge-extra-deep": false,
+            "merge-scripts": true
+        },
         "symfony": {
             "allow-contrib": true,
             "require": "4.2.*"

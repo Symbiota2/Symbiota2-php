@@ -62,3 +62,7 @@ Homestead.yaml
 /docker/data/
 
 /*.yml
+/plugin-composer.json
+/config/plugin-config.json
+/config/packages/api_platform.yaml
+/config/packages/doctrine.yaml

@@ -436,6 +436,9 @@
     "webmozart/assert": {
         "version": "1.3.0"
     },
+    "wikimedia/composer-merge-plugin": {
+        "version": "v1.4.1"
+    },
     "willdurand/negotiation": {
         "version": "v2.3.1"
     },
