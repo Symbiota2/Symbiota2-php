@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter} from '@angular/core';
+import {Component, Input, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter, ViewContainerRef} from '@angular/core';
 import {FormGroup, FormControl, FormGroupDirective, NgForm} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material';
 
@@ -16,7 +16,7 @@ class CaptchaErrorMatcher implements ErrorStateMatcher {
 export class CaptchaComponent implements AfterViewInit {
     @Input() parent: FormGroup;
     @Output() getProvenHumanChange = new EventEmitter<boolean>();
-    @ViewChild('canvas') public canvas: ElementRef;
+    @ViewChild('canvas', { static: false }) public canvas: ElementRef;
 
     private randNumber: number;
     private provenHuman: boolean;

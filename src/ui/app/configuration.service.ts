@@ -16,10 +16,13 @@ export class ConfigurationService {
         this.spinnerService.show();
         return new Promise<any>(resolve => {
             this.http.get('/api/clientconfigurations').subscribe(
-                res => {
+                (res) => {
                     this.data = res;
                     resolve(this.data);
                     this.spinnerService.hide();
+                },
+                (error) => {
+                    console.log(error);
                 }
             );
         });

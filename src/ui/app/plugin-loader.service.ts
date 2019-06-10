@@ -10,7 +10,6 @@ import {PluginOutletComponent} from './plugin-outlet.component';
 import * as AngularCore from '@angular/core';
 import * as AngularCommon from '@angular/common';
 import * as AngularRouter from '@angular/router';
-import * as AngularClarity from '@clr/angular';
 import * as BrowserAnimations from '@angular/platform-browser/animations';
 
 declare var SystemJS: any;
@@ -38,10 +37,13 @@ export class PluginLoaderService {
     initialize(): Promise<any> {
         return new Promise<any>(resolve => {
             this.http.get('./assets/modules.json').subscribe(
-                res => {
+                (res) => {
                     this.pluginData = res;
                     this.resolvePluginDependencies();
                     resolve(this.pluginData);
+                },
+                (error) => {
+                    console.log(error);
                 }
             );
         });
@@ -154,7 +156,6 @@ export class PluginLoaderService {
         SystemJS.set('@angular/common', SystemJS.newModule(AngularCommon));
         SystemJS.set('@angular/router', SystemJS.newModule(AngularRouter));
         SystemJS.set('@angular/platform-browser/animations', SystemJS.newModule(BrowserAnimations));
-        SystemJS.set('@clr/angular', SystemJS.newModule(AngularClarity));
 
         return SystemJS.import(`${url}`).then((loadedPlugin) => {
             return this.compiler.compileModuleAndAllComponentsSync(loadedPlugin[`${plugin.module}`]);

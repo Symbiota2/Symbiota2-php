@@ -21,7 +21,7 @@ declare const SystemJS: any;
 })
 export class PluginOutletComponent implements OnInit, AfterViewInit, OnDestroy {
 
-    @ViewChild('content',  { read: ViewContainerRef })
+    @ViewChild('content',  { read: ViewContainerRef, static: false })
     content: ViewContainerRef;
 
     private file: string;

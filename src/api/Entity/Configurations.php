@@ -3,15 +3,24 @@
 namespace Core\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * Configurations
  *
  * @ORM\Table(name="configurations", indexes={@ORM\Index(name="Index_configuration_name", columns={"configname"}), @ORM\Index(name="Index_configuration_side", columns={"configside"})})
  * @ORM\Entity()
+ * @ApiFilter(
+ *      SearchFilter::class,
+ *      properties={
+ *          "configurationName": "exact",
+ *          "configurationSide": "exact"
+ *      }
+ * )
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}

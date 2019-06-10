@@ -1,4 +1,4 @@
-import {Component, Injectable, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Injectable, ViewChild} from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
@@ -63,7 +63,7 @@ export class CollectionsListData {
     styleUrls: ['./collections.component.css'],
     providers: [CollectionsListData]
 })
-export class CollectionsComponent {
+export class CollectionsComponent implements AfterViewInit {
 
     flatNodeMap = new Map<DataFlatNode, DataNode>();
 
@@ -129,7 +129,7 @@ export class CollectionsComponent {
             : this.checklistSelection.deselect(...descendants);
     }
 
-    @ViewChild('colltree') tree;
+    @ViewChild('colltree', { static: false }) tree;
 
     ngAfterViewInit() {
         this.treeControl.expand(this.tree.treeControl.dataNodes[0]);
