@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'lib-occurrenceSearch',
-  template: `
+    selector: 'lib-occurrenceSearch',
+    template: `
     <p>
       occurrence-search works!
     </p>
   `,
-  styles: []
+    styles: []
 })
 export class OccurrenceSearchComponent implements OnInit {
 
-  constructor() { }
+    constructor() {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
 }

@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CollectionComponent } from './collection.component';
+import {NgModule} from '@angular/core';
+import {CollectionComponent} from './collection.component';
 
 @NgModule({
-  declarations: [CollectionComponent],
-  imports: [
-  ],
-  exports: [CollectionComponent]
+    declarations: [CollectionComponent],
+    imports: [],
+    exports: [CollectionComponent]
 })
-export class CollectionModule { }
+export class CollectionModule {
+}

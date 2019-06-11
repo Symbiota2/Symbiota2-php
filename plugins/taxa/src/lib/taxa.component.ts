@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'lib-taxa',
-  template: `
+    selector: 'lib-taxa',
+    template: `
     <p>
       taxa works!
     </p>
   `,
-  styles: []
+    styles: []
 })
 export class TaxaComponent implements OnInit {
 
-  constructor() { }
+    constructor() {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
 }

@@ -17,5 +17,5 @@ import {SpatialComponent} from './spatial.component';
     providers: [],
     bootstrap: [SpatialComponent]
 })
-export class LayoutModule {
+export class SpatialModule {
 }

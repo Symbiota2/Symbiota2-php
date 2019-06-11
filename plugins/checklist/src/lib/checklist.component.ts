@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'lib-checklist',
-  template: `
+    selector: 'lib-checklist',
+    template: `
     <p>
       checklist works!
     </p>
   `,
-  styles: []
+    styles: []
 })
 export class ChecklistComponent implements OnInit {
 
-  constructor() { }
+    constructor() {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
 }

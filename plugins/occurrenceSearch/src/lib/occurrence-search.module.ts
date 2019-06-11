@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { OccurrenceSearchComponent } from './occurrence-search.component';
+import {NgModule} from '@angular/core';
+import {OccurrenceSearchComponent} from './occurrence-search.component';
 
 @NgModule({
-  declarations: [OccurrenceSearchComponent],
-  imports: [
-  ],
-  exports: [OccurrenceSearchComponent]
+    declarations: [OccurrenceSearchComponent],
+    imports: [],
+    exports: [OccurrenceSearchComponent]
 })
-export class OccurrenceSearchModule { }
+export class OccurrenceSearchModule {
+}

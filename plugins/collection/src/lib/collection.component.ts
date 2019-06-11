@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'lib-collection',
-  template: `
+    selector: 'lib-collection',
+    template: `
     <p>
       collection works!
     </p>
   `,
-  styles: []
+    styles: []
 })
 export class CollectionComponent implements OnInit {
 
-  constructor() { }
+    constructor() {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
 }

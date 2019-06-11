@@ -12,7 +12,6 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {SearchComponent} from './search/search.component';
 import {CollectionsComponent} from './search/collections/collections.component';
-import {SpatialComponent} from './spatial/spatial.component';
 import {PluginOutletComponent} from './plugin-outlet.component';
 
 import {AuthService} from './auth/auth.service';
@@ -40,7 +39,6 @@ export function setupPluginLoaderServiceFactory(
         AppComponent,
         SearchComponent,
         CollectionsComponent,
-        SpatialComponent,
         PluginOutletComponent
     ],
     imports: [
