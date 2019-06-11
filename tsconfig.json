@@ -20,10 +20,42 @@
     ],
     "paths": {
       "checklist": [
+        "dist/checklist",
         "dist/checklist"
       ],
       "checklist/*": [
+        "dist/checklist/*",
         "dist/checklist/*"
+      ],
+      "collection": [
+        "dist/collection"
+      ],
+      "collection/*": [
+        "dist/collection/*"
+      ],
+      "occurrence": [
+        "dist/occurrence"
+      ],
+      "occurrence/*": [
+        "dist/occurrence/*"
+      ],
+      "taxa": [
+        "dist/taxa"
+      ],
+      "taxa/*": [
+        "dist/taxa/*"
+      ],
+      "spatial": [
+        "dist/spatial"
+      ],
+      "spatial/*": [
+        "dist/spatial/*"
+      ],
+      "occurrence-search": [
+        "dist/occurrence-search"
+      ],
+      "occurrence-search/*": [
+        "dist/occurrence-search/*"
       ]
     }
   }

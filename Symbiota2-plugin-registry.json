@@ -1,3 +1,56 @@
 {
-
+  "checklist": {
+    "name": "Checklist plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin to create and manage biological checklists.",
+    "dependencies": [
+      "occurrence",
+      "taxa"
+    ]
+  },
+  "collection": {
+    "name": "Collection plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin to manage collection entities."
+  },
+  "occurrence": {
+    "name": "Occurrence plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin to manage occurrence data.",
+    "dependencies": [
+      "collection",
+      "taxa"
+    ]
+  },
+  "occurrenceSearch": {
+    "name": "Occurrence search plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin that provides a search interface for occurrence records.",
+    "dependencies": [
+      "occurrence",
+      "collection",
+      "taxa"
+    ]
+  },
+  "spatial": {
+    "name": "Spatial module",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin that provides the spatial module",
+    "dependencies": [
+      "occurrence",
+      "collection",
+      "taxa"
+    ]
+  },
+  "taxa": {
+    "name": "Taxa plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin for managing the taxonomic thesaurus."
+  }
 }

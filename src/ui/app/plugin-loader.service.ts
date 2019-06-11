@@ -7,10 +7,26 @@ import {Route} from '@angular/router';
 
 import {PluginOutletComponent} from './plugin-outlet.component';
 
-import * as AngularCore from '@angular/core';
 import * as AngularCommon from '@angular/common';
+import * as AngularCore from '@angular/core';
+import * as AngularFlexLayout from '@angular/flex-layout';
+import * as AngularForms from '@angular/forms';
+import * as AngularMaterial from '@angular/material';
+import * as AngularBrowser from '@angular/platform-browser';
+import * as AngularBrowserAnimations from '@angular/platform-browser/animations';
 import * as AngularRouter from '@angular/router';
-import * as BrowserAnimations from '@angular/platform-browser/animations';
+import * as NgrxStore from '@ngrx/store';
+import * as OlLayer from 'ol/layer.js';
+import * as OlMap from 'ol/Map.js';
+import * as OlOverlay from 'ol/Overlay.js';
+import * as OlProject from 'ol/proj.js';
+import * as OlSource from 'ol/source.js';
+import * as OlStyle from 'ol/style.js';
+import * as OlVector from 'ol/layer/Vector.js';
+import * as OlView from 'ol/View.js';
+import * as OlXyz from 'ol/source/XYZ.js';
+import * as Rxjs from 'rxjs';
+import * as RxjsOperators from 'rxjs/operators';
 
 declare var SystemJS: any;
 
@@ -30,13 +46,9 @@ export class PluginLoaderService {
         private http: HttpClient
     ) {}
 
-    loadPluginData(): Observable<PluginData[]> {
-        return this.http.get<PluginData[]>('./assets/modules.json');
-    }
-
     initialize(): Promise<any> {
         return new Promise<any>(resolve => {
-            this.http.get('./assets/modules.json').subscribe(
+            this.http.get('/api/pluginconfigurations').subscribe(
                 (res) => {
                     this.pluginData = res;
                     this.resolvePluginDependencies();
@@ -151,23 +163,31 @@ export class PluginLoaderService {
     }
 
     activatePlugin(plugin: PluginData): Promise<any> {
-        const url = './assets/' + plugin.file;
-        SystemJS.set('@angular/core', SystemJS.newModule(AngularCore));
+        const url = './assets/js/plugins/' + plugin.file;
         SystemJS.set('@angular/common', SystemJS.newModule(AngularCommon));
+        SystemJS.set('@angular/core', SystemJS.newModule(AngularCore));
+        SystemJS.set('@angular/flex-layout', SystemJS.newModule(AngularFlexLayout));
+        SystemJS.set('@angular/forms', SystemJS.newModule(AngularForms));
+        SystemJS.set('@angular/material', SystemJS.newModule(AngularMaterial));
+        SystemJS.set('@angular/platform-browser', SystemJS.newModule(AngularBrowser));
+        SystemJS.set('@angular/platform-browser/animations', SystemJS.newModule(AngularBrowserAnimations));
         SystemJS.set('@angular/router', SystemJS.newModule(AngularRouter));
-        SystemJS.set('@angular/platform-browser/animations', SystemJS.newModule(BrowserAnimations));
+        SystemJS.set('@ngrx/store', SystemJS.newModule(NgrxStore));
+        SystemJS.set('ol/layer', SystemJS.newModule(OlLayer));
+        SystemJS.set('ol/Map', SystemJS.newModule(OlMap));
+        SystemJS.set('ol/Overlay', SystemJS.newModule(OlOverlay));
+        SystemJS.set('ol/proj', SystemJS.newModule(OlProject));
+        SystemJS.set('ol/source', SystemJS.newModule(OlSource));
+        SystemJS.set('ol/style', SystemJS.newModule(OlStyle));
+        SystemJS.set('ol/layer/Vector', SystemJS.newModule(OlVector));
+        SystemJS.set('ol/View', SystemJS.newModule(OlView));
+        SystemJS.set('ol/source/XYZ', SystemJS.newModule(OlXyz));
+        SystemJS.set('rxjs', SystemJS.newModule(Rxjs));
+        SystemJS.set('rxjs/operators', SystemJS.newModule(RxjsOperators));
 
         return SystemJS.import(`${url}`).then((loadedPlugin) => {
             return this.compiler.compileModuleAndAllComponentsSync(loadedPlugin[`${plugin.module}`]);
         });
-    }
-
-    enableDisablePlugin(plugin: PluginData) {
-        if (this.pluginIsLoaded(plugin.name)) {
-            // this.pluginRouterService.unRegisterRoute(plugin.name);
-        } else {
-            this.loadPlugin(plugin);
-        }
     }
 
     addRouteToLoadedRouteList(route: Route) {

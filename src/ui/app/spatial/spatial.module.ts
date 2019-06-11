@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 
-import {SharedModule} from "../shared/shared.module";
+import {SharedModule} from '../shared/shared.module';
 
-import {SpatialComponent} from "./spatial.component";
+import {SpatialComponent} from './spatial.component';
 
 @NgModule({
     declarations: [

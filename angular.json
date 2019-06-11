@@ -125,10 +125,10 @@
       }
     },
     "checklist": {
+      "projectType": "library",
       "root": "plugins/checklist",
       "sourceRoot": "plugins/checklist/src",
-      "projectType": "library",
-      "prefix": "checklist",
+      "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -151,6 +151,181 @@
             "tsConfig": [
               "plugins/checklist/tsconfig.lib.json",
               "plugins/checklist/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "collection": {
+      "projectType": "library",
+      "root": "plugins/collection",
+      "sourceRoot": "plugins/collection/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "plugins/collection/tsconfig.lib.json",
+            "project": "plugins/collection/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "plugins/collection/src/test.ts",
+            "tsConfig": "plugins/collection/tsconfig.spec.json",
+            "karmaConfig": "plugins/collection/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "plugins/collection/tsconfig.lib.json",
+              "plugins/collection/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "occurrence": {
+      "projectType": "library",
+      "root": "plugins/occurrence",
+      "sourceRoot": "plugins/occurrence/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "plugins/occurrence/tsconfig.lib.json",
+            "project": "plugins/occurrence/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "plugins/occurrence/src/test.ts",
+            "tsConfig": "plugins/occurrence/tsconfig.spec.json",
+            "karmaConfig": "plugins/occurrence/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "plugins/occurrence/tsconfig.lib.json",
+              "plugins/occurrence/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "taxa": {
+      "projectType": "library",
+      "root": "plugins/taxa",
+      "sourceRoot": "plugins/taxa/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "plugins/taxa/tsconfig.lib.json",
+            "project": "plugins/taxa/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "plugins/taxa/src/test.ts",
+            "tsConfig": "plugins/taxa/tsconfig.spec.json",
+            "karmaConfig": "plugins/taxa/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "plugins/taxa/tsconfig.lib.json",
+              "plugins/taxa/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "spatial": {
+      "projectType": "library",
+      "root": "plugins/spatial",
+      "sourceRoot": "plugins/spatial/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "plugins/spatial/tsconfig.lib.json",
+            "project": "plugins/spatial/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "plugins/spatial/src/test.ts",
+            "tsConfig": "plugins/spatial/tsconfig.spec.json",
+            "karmaConfig": "plugins/spatial/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "plugins/spatial/tsconfig.lib.json",
+              "plugins/spatial/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "occurrenceSearch": {
+      "projectType": "library",
+      "root": "plugins/occurrence-search",
+      "sourceRoot": "plugins/occurrence-search/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "plugins/occurrence-search/tsconfig.lib.json",
+            "project": "plugins/occurrence-search/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "plugins/occurrence-search/src/test.ts",
+            "tsConfig": "plugins/occurrence-search/tsconfig.spec.json",
+            "karmaConfig": "plugins/occurrence-search/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "plugins/occurrence-search/tsconfig.lib.json",
+              "plugins/occurrence-search/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

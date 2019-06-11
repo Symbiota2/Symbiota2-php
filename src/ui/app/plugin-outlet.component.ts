@@ -46,7 +46,7 @@ export class PluginOutletComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private async loadPlugins() {
-        const module = await SystemJS.import('assets/' + this.file);
+        const module = await SystemJS.import('assets/js/plugins/' + this.file);
         const moduleFactory = await this.compiler.compileModuleAsync<any>(module[this.module]);
         const moduleRef = moduleFactory.create(this.injector);
         const componentProvider = moduleRef.injector.get(this.provider);

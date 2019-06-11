@@ -7,7 +7,7 @@ import VectorLayer from 'ol/layer/Vector.js';
 import {Cluster, OSM, Vector as VectorSource} from 'ol/source.js';
 import {fromLonLat} from 'ol/proj.js';
 import View from 'ol/View.js';
-import PropertyCluster from '../../assets/js/PropertyCluster.js';
+import PropertyCluster from '../../assets/js/libraries/PropertyCluster.js';
 import {
     AtlasManager,
     Circle as CircleStyle,
@@ -37,7 +37,8 @@ export class SpatialComponent implements OnInit {
     ngOnInit() {
         this.source = new XYZ({
             // Tiles from Mapbox (Light)
-            url: 'https://api.tiles.mapbox.com/v4/mapbox.light/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+            url: 'https://api.tiles.mapbox.com/v4/mapbox.light/{z}/{x}/{y}.png?' +
+                'access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
         });
 
         this.layer = new TileLayer({
