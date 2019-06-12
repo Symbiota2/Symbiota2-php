@@ -128,7 +128,7 @@
       "projectType": "library",
       "root": "plugins/checklist",
       "sourceRoot": "plugins/checklist/src",
-      "prefix": "lib",
+      "prefix": "checklist",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -163,7 +163,7 @@
       "projectType": "library",
       "root": "plugins/collection",
       "sourceRoot": "plugins/collection/src",
-      "prefix": "lib",
+      "prefix": "collection",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -198,7 +198,7 @@
       "projectType": "library",
       "root": "plugins/occurrence",
       "sourceRoot": "plugins/occurrence/src",
-      "prefix": "lib",
+      "prefix": "occurrence",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -233,7 +233,7 @@
       "projectType": "library",
       "root": "plugins/taxa",
       "sourceRoot": "plugins/taxa/src",
-      "prefix": "lib",
+      "prefix": "taxa",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -268,7 +268,7 @@
       "projectType": "library",
       "root": "plugins/spatial",
       "sourceRoot": "plugins/spatial/src",
-      "prefix": "lib",
+      "prefix": "spatial",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
