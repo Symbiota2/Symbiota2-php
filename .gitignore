@@ -11,7 +11,7 @@
 ###< symfony/framework-bundle >###
 
 # compiled output
-# /dist
+/dist
 /dist-server
 /tmp
 /out-tsc
