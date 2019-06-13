@@ -9,19 +9,7 @@ import {SpatialComponent} from './spatial.component';
     exports: [
         SpatialComponent
     ],
-    entryComponents: [
-        SpatialComponent
-    ],
-    providers: [
-        {
-            provide: 'spatial-component',
-            useValue: [{
-                name: 'lib-spatial',
-                component: SpatialComponent
-            }],
-            multi: true
-        }
-    ]
+    bootstrap: [SpatialComponent]
 })
 export class SpatialModule {
 }
