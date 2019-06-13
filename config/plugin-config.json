@@ -1,0 +1,22 @@
+[
+  {
+    "name": "collection",
+    "file": "collection.umd.js",
+    "module": "CollectionModule",
+    "description": "collection module",
+    "enabled": true
+  },
+  {
+    "name": "occurrence-search",
+    "file": "occurrence-search.umd.js",
+    "module": "OccurrenceSearchModule",
+    "description": "occurrence-search module",
+    "dependencies": [
+      "collection"
+    ],
+    "routes": [
+      {"path": "searchcollections", "provider": "occurrence-search"}
+    ],
+    "enabled": true
+  }
+]

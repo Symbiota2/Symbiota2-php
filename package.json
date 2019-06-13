@@ -24,14 +24,14 @@
     "npm_pack_occurrence-search": "cd dist/occurrence-search && npm pack",
     "move_occurrence-search": "mv ./dist/occurrence-search/bundles/occurrence-search.umd.js ./src/ui/assets/js/plugins/",
     "package_occurrence-search": "npm run build_occurrence-search_lib && npm run npm_pack_occurrence-search && npm run move_occurrence-search",
-    "build_spatial_lib": "ng build spatial",
-    "npm_pack_spatial": "cd dist/spatial && npm pack",
-    "move_spatial": "mv ./dist/spatial/bundles/spatial.umd.js ./src/ui/assets/js/plugins/",
-    "package_spatial": "npm run build_spatial_lib && npm run npm_pack_spatial && npm run move_spatial",
     "build_taxa_lib": "ng build taxa",
     "npm_pack_taxa": "cd dist/taxa && npm pack",
     "move_taxa": "mv ./dist/taxa/bundles/taxa.umd.js ./src/ui/assets/js/plugins/",
-    "package_taxa": "npm run build_taxa_lib && npm run npm_pack_taxa && npm run move_taxa"
+    "package_taxa": "npm run build_taxa_lib && npm run npm_pack_taxa && npm run move_taxa",
+    "build_symbiota-spatial_lib": "ng build symbiota-spatial",
+    "npm_pack_symbiota-spatial": "cd dist/symbiota-spatial && npm pack",
+    "install_symbiota-spatial": "npm install dist/symbiota-spatial/symbiota-spatial-0.0.1.tgz",
+    "package_symbiota-spatial": "npm run build_symbiota-spatial_lib && npm run npm_pack_symbiota-spatial && npm run install_symbiota-spatial"
   },
   "private": true,
   "dependencies": {
@@ -55,7 +55,7 @@
     "npm-check-updates": "^3.1.10",
     "ol": "^5.3.3",
     "rxjs": "^6.5.2",
-    "spatial": "file:dist/spatial/spatial-0.0.1.tgz",
+    "symbiota-spatial": "file:dist/symbiota-spatial/symbiota-spatial-0.0.1.tgz",
     "systemjs": "^0.21.6",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"

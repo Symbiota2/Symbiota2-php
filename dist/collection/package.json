@@ -1,0 +1,21 @@
+{
+  "name": "collection",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^8.0.0",
+    "@angular/core": "^8.0.0"
+  },
+  "main": "bundles/collection.umd.js",
+  "module": "fesm5/collection.js",
+  "es2015": "fesm2015/collection.js",
+  "esm5": "esm5/collection.js",
+  "esm2015": "esm2015/collection.js",
+  "fesm5": "fesm5/collection.js",
+  "fesm2015": "fesm2015/collection.js",
+  "typings": "collection.d.ts",
+  "metadata": "collection.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

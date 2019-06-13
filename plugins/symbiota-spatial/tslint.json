@@ -1,0 +1,17 @@
+{
+  "extends": "../../tslint.json",
+  "rules": {
+    "directive-selector": [
+      true,
+      "attribute",
+      "symbiotaSpatial",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "symbiota-spatial",
+      "kebab-case"
+    ]
+  }
+}

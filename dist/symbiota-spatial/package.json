@@ -1,0 +1,22 @@
+{
+  "name": "symbiota-spatial",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^8.0.0",
+    "@angular/core": "^8.0.0",
+    "ol": "^5.3.3"
+  },
+  "main": "bundles/symbiota-spatial.umd.js",
+  "module": "fesm5/symbiota-spatial.js",
+  "es2015": "fesm2015/symbiota-spatial.js",
+  "esm5": "esm5/symbiota-spatial.js",
+  "esm2015": "esm2015/symbiota-spatial.js",
+  "fesm5": "fesm5/symbiota-spatial.js",
+  "fesm2015": "fesm2015/symbiota-spatial.js",
+  "typings": "symbiota-spatial.d.ts",
+  "metadata": "symbiota-spatial.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

@@ -8,7 +8,7 @@ import {AuthModule} from './auth/auth.module';
 import {SharedModule} from './shared/shared.module';
 import {LayoutModule} from './layout/layout.module';
 import {AppRoutingModule} from './app-routing.module';
-import {SpatialModule} from 'spatial';
+import {SymbiotaSpatialModule} from 'symbiota-spatial';
 
 import {AppComponent} from './app.component';
 import {PluginOutletComponent} from './plugin-outlet.component';
@@ -43,7 +43,7 @@ export function setupPluginLoaderServiceFactory(
         LayoutModule,
         HttpClientModule,
         AppRoutingModule,
-        SpatialModule,
+        SymbiotaSpatialModule,
         StoreModule.forRoot(reducers)
     ],
     entryComponents: [

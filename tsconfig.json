@@ -45,12 +45,6 @@
       "taxa/*": [
         "dist/taxa/*"
       ],
-      "spatial": [
-        "dist/spatial"
-      ],
-      "spatial/*": [
-        "dist/spatial/*"
-      ],
       "occurrence-search": [
         "dist/occurrence-search",
         "dist/occurrence-search"
@@ -58,6 +52,12 @@
       "occurrence-search/*": [
         "dist/occurrence-search/*",
         "dist/occurrence-search/*"
+      ],
+      "symbiota-spatial": [
+        "dist/symbiota-spatial"
+      ],
+      "symbiota-spatial/*": [
+        "dist/symbiota-spatial/*"
       ]
     }
   }

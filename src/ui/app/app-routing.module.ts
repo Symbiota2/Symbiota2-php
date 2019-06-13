@@ -6,13 +6,13 @@ import {HomeComponent} from './layout/home/home.component';
 import {PluginLoaderService} from './plugin-loader.service';
 import {PluginRouterService} from './plugin-router.service';
 
-import {SpatialComponent} from 'spatial';
+import {SymbiotaSpatialComponent} from 'symbiota-spatial';
 
 import {AuthGuard} from './auth/auth.guard';
 
 const routes: Routes = [
     {path: '', component: HomeComponent},
-    {path: 'spatial', component: SpatialComponent},
+    {path: 'spatial', component: SymbiotaSpatialComponent},
 ];
 
 @NgModule({

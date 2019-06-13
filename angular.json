@@ -264,41 +264,6 @@
         }
       }
     },
-    "spatial": {
-      "projectType": "library",
-      "root": "plugins/spatial",
-      "sourceRoot": "plugins/spatial/src",
-      "prefix": "spatial",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "plugins/spatial/tsconfig.lib.json",
-            "project": "plugins/spatial/ng-package.json"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "plugins/spatial/src/test.ts",
-            "tsConfig": "plugins/spatial/tsconfig.spec.json",
-            "karmaConfig": "plugins/spatial/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "plugins/spatial/tsconfig.lib.json",
-              "plugins/spatial/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
     "occurrence-search": {
       "projectType": "library",
       "root": "plugins/occurrence-search",
@@ -326,6 +291,41 @@
             "tsConfig": [
               "plugins/occurrence-search/tsconfig.lib.json",
               "plugins/occurrence-search/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "symbiota-spatial": {
+      "projectType": "library",
+      "root": "plugins/symbiota-spatial",
+      "sourceRoot": "plugins/symbiota-spatial/src",
+      "prefix": "symbiota-spatial",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "plugins/symbiota-spatial/tsconfig.lib.json",
+            "project": "plugins/symbiota-spatial/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "plugins/symbiota-spatial/src/test.ts",
+            "tsConfig": "plugins/symbiota-spatial/tsconfig.spec.json",
+            "karmaConfig": "plugins/symbiota-spatial/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "plugins/symbiota-spatial/tsconfig.lib.json",
+              "plugins/symbiota-spatial/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
