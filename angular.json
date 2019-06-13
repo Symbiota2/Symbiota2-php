@@ -299,11 +299,11 @@
         }
       }
     },
-    "occurrenceSearch": {
+    "occurrence-search": {
       "projectType": "library",
       "root": "plugins/occurrence-search",
       "sourceRoot": "plugins/occurrence-search/src",
-      "prefix": "lib",
+      "prefix": "occurrence-search",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",

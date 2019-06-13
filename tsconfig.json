@@ -52,9 +52,11 @@
         "dist/spatial/*"
       ],
       "occurrence-search": [
+        "dist/occurrence-search",
         "dist/occurrence-search"
       ],
       "occurrence-search/*": [
+        "dist/occurrence-search/*",
         "dist/occurrence-search/*"
       ]
     }

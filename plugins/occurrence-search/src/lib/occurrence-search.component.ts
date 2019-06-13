@@ -1,11 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 
 @Component({
-    selector: 'lib-occurrenceSearch',
+    selector: 'occurrence-search-occurrence-search',
     template: `
-    <p>
-      occurrence-search works!
-    </p>
+        <collection-checkbox-list></collection-checkbox-list>
   `,
     styles: []
 })

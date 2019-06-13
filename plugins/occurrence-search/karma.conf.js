@@ -3,7 +3,7 @@
 
 module.exports = function (config) {
     config.set({
-        basePath: '../occurrence-search',
+        basePath: '',
         frameworks: ['jasmine', '@angular-devkit/build-angular'],
         plugins: [
             require('karma-jasmine'),

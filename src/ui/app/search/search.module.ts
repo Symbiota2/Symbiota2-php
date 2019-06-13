@@ -3,13 +3,11 @@ import {SharedModule} from '../shared/shared.module';
 
 import {SearchComponent} from './search.component';
 import {CollectionsComponent} from './collections/collections.component';
-import {MapComponent} from './map/map.component';
 
 @NgModule({
     declarations: [
         SearchComponent,
         CollectionsComponent,
-        MapComponent
     ],
     imports: [
         SharedModule
@@ -17,10 +15,9 @@ import {MapComponent} from './map/map.component';
     exports: [
         SearchComponent,
         CollectionsComponent,
-        MapComponent
     ],
     providers: [],
     bootstrap: [SearchComponent]
 })
-export class LayoutModule {
+export class SearchModule {
 }
