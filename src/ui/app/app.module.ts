@@ -10,14 +10,11 @@ import {LayoutModule} from './layout/layout.module';
 import {AppRoutingModule} from './app-routing.module';
 
 import {AppComponent} from './app.component';
-import {SearchComponent} from './search/search.component';
-import {CollectionsComponent} from './search/collections/collections.component';
 import {PluginOutletComponent} from './plugin-outlet.component';
 
 import {AuthService} from './auth/auth.service';
 import {SpinnerOverlayService} from './shared/spinner-overlay.service';
 import {AlertService} from './shared/alert.service';
-import {omcollectionsService} from './search/omcollections.service';
 import {ConfigurationService} from './configuration.service';
 import {PluginRouterService} from './plugin-router.service';
 import {PluginLoaderService} from './plugin-loader.service';
@@ -37,8 +34,6 @@ export function setupPluginLoaderServiceFactory(
 @NgModule({
     declarations: [
         AppComponent,
-        SearchComponent,
-        CollectionsComponent,
         PluginOutletComponent
     ],
     imports: [
@@ -57,7 +52,6 @@ export function setupPluginLoaderServiceFactory(
         PluginRouterService,
         SpinnerOverlayService,
         AlertService,
-        omcollectionsService,
         {
             provide: APP_INITIALIZER,
             useFactory: setupConfigServiceFactory,

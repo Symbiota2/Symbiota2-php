@@ -7,11 +7,14 @@ import {Route} from '@angular/router';
 
 import {PluginOutletComponent} from './plugin-outlet.component';
 
+import * as AngularCdkCollections from '@angular/cdk/collections';
+import * as AngularCdkTree from '@angular/cdk/tree';
 import * as AngularCommon from '@angular/common';
 import * as AngularCore from '@angular/core';
 import * as AngularFlexLayout from '@angular/flex-layout';
 import * as AngularForms from '@angular/forms';
 import * as AngularMaterial from '@angular/material';
+import * as AngularMaterialTree from '@angular/material/tree';
 import * as AngularBrowser from '@angular/platform-browser';
 import * as AngularBrowserAnimations from '@angular/platform-browser/animations';
 import * as AngularRouter from '@angular/router';
@@ -164,11 +167,14 @@ export class PluginLoaderService {
 
     activatePlugin(plugin: PluginData): Promise<any> {
         const url = './assets/js/plugins/' + plugin.file;
+        SystemJS.set('@angular/cdk/collections', SystemJS.newModule(AngularCdkCollections));
+        SystemJS.set('@angular/cdk/tree', SystemJS.newModule(AngularCdkTree));
         SystemJS.set('@angular/common', SystemJS.newModule(AngularCommon));
         SystemJS.set('@angular/core', SystemJS.newModule(AngularCore));
         SystemJS.set('@angular/flex-layout', SystemJS.newModule(AngularFlexLayout));
         SystemJS.set('@angular/forms', SystemJS.newModule(AngularForms));
         SystemJS.set('@angular/material', SystemJS.newModule(AngularMaterial));
+        SystemJS.set('@angular/material/tree', SystemJS.newModule(AngularMaterialTree));
         SystemJS.set('@angular/platform-browser', SystemJS.newModule(AngularBrowser));
         SystemJS.set('@angular/platform-browser/animations', SystemJS.newModule(AngularBrowserAnimations));
         SystemJS.set('@angular/router', SystemJS.newModule(AngularRouter));

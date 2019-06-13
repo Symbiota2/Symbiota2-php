@@ -1,7 +1,5 @@
 import {NgModule} from '@angular/core';
 import {MatTreeModule, MatCheckboxModule, MatIconModule, MatButtonModule} from '@angular/material';
-import {BrowserModule} from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormsModule} from '@angular/forms';
@@ -20,8 +18,6 @@ import {CollectionCheckboxListComponent} from './collection-checkbox-list.compon
         MatCheckboxModule,
         MatIconModule,
         MatButtonModule,
-        BrowserModule,
-        BrowserAnimationsModule,
         FlexLayoutModule,
         ReactiveFormsModule,
         FormsModule,

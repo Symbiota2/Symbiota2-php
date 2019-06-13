@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {OccurrenceSearchComponent} from './occurrence-search.component';
 
-import {CollectionModule} from '../../../collection/src/lib/collection.module';
+import {CollectionModule} from 'collection';
 
 @NgModule({
     imports: [
