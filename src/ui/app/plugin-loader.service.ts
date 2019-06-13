@@ -163,7 +163,7 @@ export class PluginLoaderService {
     }
 
     activatePlugin(plugin: PluginData): Promise<any> {
-        const url = './assets/js/plugins/bundles/' + plugin.file;
+        const url = './assets/js/plugins/' + plugin.file;
         SystemJS.set('@angular/common', SystemJS.newModule(AngularCommon));
         SystemJS.set('@angular/core', SystemJS.newModule(AngularCore));
         SystemJS.set('@angular/flex-layout', SystemJS.newModule(AngularFlexLayout));
