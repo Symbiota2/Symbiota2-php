@@ -1,4 +1,6 @@
 import {NgModule, APP_INITIALIZER} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 
 import {LayoutModule} from './layout/layout.module';
@@ -31,6 +33,8 @@ export function setupPluginLoaderServiceFactory(
         AppComponent,
     ],
     imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
         LayoutModule,
         UserModule,
         PluginModule,

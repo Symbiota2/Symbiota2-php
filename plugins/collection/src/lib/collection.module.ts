@@ -1,9 +1,5 @@
 import {NgModule} from '@angular/core';
-import {MatTreeModule, MatCheckboxModule, MatIconModule, MatButtonModule} from '@angular/material';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {ReactiveFormsModule} from '@angular/forms';
-import {FormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';
+import {SymbiotaSharedModule} from 'symbiota-shared';
 
 import {CollectionListService} from './collection-list.service';
 
@@ -14,14 +10,7 @@ import {CollectionCheckboxListComponent} from './collection-checkbox-list.compon
         CollectionCheckboxListComponent
     ],
     imports: [
-        MatTreeModule,
-        MatCheckboxModule,
-        MatIconModule,
-        MatButtonModule,
-        FlexLayoutModule,
-        ReactiveFormsModule,
-        FormsModule,
-        CommonModule
+        SymbiotaSharedModule
     ],
     exports: [
         CollectionCheckboxListComponent

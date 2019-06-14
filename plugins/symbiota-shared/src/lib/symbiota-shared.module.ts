@@ -1,6 +1,4 @@
 import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormsModule} from '@angular/forms';
@@ -17,8 +15,6 @@ import {ConfigurationService} from './configuration.service';
 
 @NgModule({
     imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
         FlexLayoutModule,
         ReactiveFormsModule,
         FormsModule,
@@ -26,8 +22,6 @@ import {ConfigurationService} from './configuration.service';
         MaterialModule
     ],
     exports: [
-        BrowserModule,
-        BrowserAnimationsModule,
         FlexLayoutModule,
         ReactiveFormsModule,
         FormsModule,

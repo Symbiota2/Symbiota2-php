@@ -21,6 +21,9 @@ import * as AngularRouter from '@angular/router';
 import * as NgrxStore from '@ngrx/store';
 import * as Rxjs from 'rxjs';
 import * as RxjsOperators from 'rxjs/operators';
+import * as SymbiotaAuth from 'symbiota-auth';
+import * as SymbiotaShared from 'symbiota-shared';
+import * as SymbiotaSpatial from 'symbiota-spatial';
 
 declare var SystemJS: any;
 
@@ -172,6 +175,9 @@ export class PluginLoaderService {
         SystemJS.set('@ngrx/store', SystemJS.newModule(NgrxStore));
         SystemJS.set('rxjs', SystemJS.newModule(Rxjs));
         SystemJS.set('rxjs/operators', SystemJS.newModule(RxjsOperators));
+        SystemJS.set('symbiota-auth', SystemJS.newModule(SymbiotaAuth));
+        SystemJS.set('symbiota-shared', SystemJS.newModule(SymbiotaShared));
+        SystemJS.set('symbiota-spatial', SystemJS.newModule(SymbiotaSpatial));
 
         return SystemJS.import(`${url}`).then((loadedPlugin) => {
             return this.compiler.compileModuleAndAllComponentsSync(loadedPlugin[`${plugin.module}`]);
