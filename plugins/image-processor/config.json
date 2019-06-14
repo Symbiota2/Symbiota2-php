@@ -1,11 +1,14 @@
 {
-  "plugin": "taxa",
-  "name": "Taxa Plugin",
+  "plugin": "image-processor",
+  "name": "Image Processor Plugin",
   "source": "local",
   "version": "0.0.1",
-  "description": "Adds the Taxa module to manage taxonomic data.",
-  "dependencies": [],
-  "api_namespace": "Taxa",
+  "description": "A plugin to add the batch image processing module to Symbiota.",
+  "dependencies": [
+    "media",
+    "collection"
+  ],
+  "api_namespace": "ImageProcessor",
   "ui_filename": "",
   "ui_module_name": "",
   "ui_routes": [

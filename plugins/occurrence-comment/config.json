@@ -1,11 +1,13 @@
 {
-  "plugin": "taxa",
-  "name": "Taxa Plugin",
+  "plugin": "occurrence-comment",
+  "name": "Occurrence Comments Plugin",
   "source": "local",
   "version": "0.0.1",
-  "description": "Adds the Taxa module to manage taxonomic data.",
-  "dependencies": [],
-  "api_namespace": "Taxa",
+  "description": "A plugin to add the ability to add comments to occurrence records.",
+  "dependencies": [
+    "occurrence"
+  ],
+  "api_namespace": "OccurrenceComment",
   "ui_filename": "",
   "ui_module_name": "",
   "ui_routes": [

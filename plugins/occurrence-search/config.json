@@ -1,40 +1,32 @@
 {
-  "plugin": "",
-  "name": "",
-  "source": "",
-  "version": "",
-  "description": "",
-  "dependencies": [],
-  "api-directory": "",
-  "api-namespace": "",
-  "api-entity-prefix": "",
-  "api-entity-alias": "",
-  "ui-files": [
+  "plugin": "occurrence-search",
+  "name": "Search Occurrences Plugin",
+  "source": "local",
+  "version": "0.0.1",
+  "description": "A plugin that adds the Search Collections module to Symbiota.",
+  "dependencies": [
+    "collection"
+  ],
+  "api_namespace": "",
+  "ui_filename": "occurrence-search.umd.js",
+  "ui_module_name": "OccurrenceSearchModule",
+  "ui_routes": [
     {
-      "fileName": "",
-      "module": ""
+      "path": "searchcollections",
+      "provider": "occurrence-search"
     }
   ],
-  "ui-routes": [
-    {
-      "path": "",
-      "file": "",
-      "module": "",
-      "provider": ""
-    }
-  ],
-  "tab-hooks": [
+  "tab_hooks": [
     {
       "outlet": "",
-      "tab-name": "",
-      "tab-text": "",
-      "tab-index": 0
+      "tab_name": "",
+      "tab_text": "",
+      "tab_index": 0
     }
   ],
-  "component-hooks": [
+  "component_hooks": [
     {
       "outlet": "",
-      "file": "",
       "module": "",
       "provider": ""
     }

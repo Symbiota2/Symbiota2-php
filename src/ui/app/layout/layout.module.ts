@@ -10,6 +10,7 @@ import {BannerComponent} from './header/banner/banner.component';
 import {TopnavComponent} from './header/topnav/topnav.component';
 import {HeaderComponent} from './header/header.component';
 import {SidepanelComponent} from './sidepanel/sidepanel.component';
+import {SitemapComponent} from './sitemap/sitemap.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import {SidepanelComponent} from './sidepanel/sidepanel.component';
         BannerComponent,
         TopnavComponent,
         HeaderComponent,
-        SidepanelComponent
+        SidepanelComponent,
+        SitemapComponent
     ],
     imports: [
         AppRoutingModule,

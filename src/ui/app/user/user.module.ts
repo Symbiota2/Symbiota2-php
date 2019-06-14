@@ -7,10 +7,12 @@ import {UserRoutingModule} from './user-routing.module';
 import {SignupComponent} from './signup/signup.component';
 
 import {UserService} from './user.service';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
     declarations: [
-        SignupComponent
+        SignupComponent,
+        UserProfileComponent
     ],
     imports: [
         CommonModule,

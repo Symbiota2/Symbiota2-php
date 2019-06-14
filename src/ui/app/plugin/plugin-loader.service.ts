@@ -60,18 +60,18 @@ export class PluginLoaderService {
 
     resolvePluginDependencies() {
         this.pluginData.forEach((plugin, index) => {
-            if (plugin.dependencies) {
+            if (plugin.enabled && plugin.ui_filename && plugin.dependencies) {
                 plugin.dependencies.forEach((depName, index2) => {
-                    const dep = this.pluginData.find(x => x.name === depName);
-                    if (dep.dependencies) {
+                    const dep = this.pluginData.find(x => x.plugin === depName);
+                    if (dep.enabled && dep.ui_filename && dep.dependencies) {
                         dep.dependencies.forEach((secDepName, index3) => {
-                            const secDep = this.pluginData.find(x => x.name === secDepName);
-                            if (!this.pluginIsLoaded(secDep.name)) {
+                            const secDep = this.pluginData.find(x => x.plugin === secDepName);
+                            if (!this.pluginIsLoaded(secDep.plugin)) {
                                 this.loadPlugin(secDep);
                             }
                         });
                     }
-                    if (!this.pluginIsLoaded(dep.name)) {
+                    if (dep.enabled && dep.ui_filename && !this.pluginIsLoaded(dep.plugin)) {
                         this.loadPlugin(dep);
                     }
                 });
@@ -82,7 +82,7 @@ export class PluginLoaderService {
 
     loadPlugins() {
         this.pluginData.forEach((plugin, index) => {
-            if (!this.pluginIsLoaded(plugin.name)) {
+            if (plugin.enabled && plugin.ui_filename && !this.pluginIsLoaded(plugin.plugin)) {
                 this.loadPlugin(plugin);
             }
         });
@@ -91,13 +91,13 @@ export class PluginLoaderService {
     private loadPlugin(plugin: PluginData) {
         this.activatePlugin(plugin);
         this.collectPluginRoutes(plugin);
-        this.addPluginToLoadedPluginList(plugin.name);
+        this.addPluginToLoadedPluginList(plugin.plugin);
     }
 
     collectPluginRoutes(plugin: PluginData) {
-        if (plugin.routes) {
-            const routes = plugin.routes;
-            const moduleName = plugin.module;
+        if (plugin.ui_routes) {
+            const routes = plugin.ui_routes;
+            const moduleName = plugin.ui_module_name;
             let route: Route = {};
 
             routes.forEach((rt, index) => {
@@ -117,8 +117,8 @@ export class PluginLoaderService {
                                 path: childrt.path,
                                 component: PluginOutletComponent,
                                 data: {
-                                    file: plugin.file,
-                                    module: plugin.module,
+                                    file: plugin.ui_filename,
+                                    module: plugin.ui_module_name,
                                     provider: childrt.provider
                                 }
                             };
@@ -129,8 +129,8 @@ export class PluginLoaderService {
                         path: rt.path,
                         component: PluginOutletComponent,
                         data: {
-                            file: plugin.file,
-                            module: plugin.module,
+                            file: plugin.ui_filename,
+                            module: plugin.ui_module_name,
                             provider: rt.provider
                         },
                         children: routeChildren
@@ -146,8 +146,8 @@ export class PluginLoaderService {
                             path: rt.path,
                             component: PluginOutletComponent,
                             data: {
-                                file: plugin.file,
-                                module: plugin.module,
+                                file: plugin.ui_filename,
+                                module: plugin.ui_module_name,
                                 provider: rt.provider
                             }
                         };
@@ -160,7 +160,7 @@ export class PluginLoaderService {
     }
 
     activatePlugin(plugin: PluginData): Promise<any> {
-        const url = './assets/js/plugins/' + plugin.file;
+        const url = './assets/js/plugins/' + plugin.ui_filename;
         SystemJS.set('@angular/cdk/collections', SystemJS.newModule(AngularCdkCollections));
         SystemJS.set('@angular/cdk/tree', SystemJS.newModule(AngularCdkTree));
         SystemJS.set('@angular/common', SystemJS.newModule(AngularCommon));
@@ -180,7 +180,7 @@ export class PluginLoaderService {
         SystemJS.set('symbiota-spatial', SystemJS.newModule(SymbiotaSpatial));
 
         return SystemJS.import(`${url}`).then((loadedPlugin) => {
-            return this.compiler.compileModuleAndAllComponentsSync(loadedPlugin[`${plugin.module}`]);
+            return this.compiler.compileModuleAndAllComponentsSync(loadedPlugin[`${plugin.ui_module_name}`]);
         });
     }
 

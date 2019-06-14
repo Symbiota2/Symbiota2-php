@@ -37,11 +37,6 @@ export class PluginRouterService {
         this.updateRouteConfig(this.router.config);
     }
 
-    unRegisterRoute(path: string) {
-        console.log('Unregister', path);
-        this.updateRouteConfig(this.router.config.filter(route => route.path !== path));
-    }
-
     private updateRouteConfig(config) {
         this.router.resetConfig(config);
     }

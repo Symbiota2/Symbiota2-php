@@ -1,7 +1,7 @@
 <div fxFlex fxLayout fxLayoutAlign="start" class="sidenav-links" fxHide.gt-sm>
     <ul fxLayout="column" fxLayoutGap="20px" class="navigation-items">
         <li fxHide.gt-xs *ngIf="(isLoggedIn$ | async) && (currentUser$ | async) as user">Welcome {{user.firstName}}!</li>
-        <li fxHide.gt-xs *ngIf="isLoggedIn$ | async"><a routerLink="/myprofile">My Profile</a></li>
+        <li fxHide.gt-xs *ngIf="isLoggedIn$ | async"><a routerLink="/viewprofile">My Profile</a></li>
         <li fxHide.gt-xs *ngIf="isLoggedIn$ | async" (click)="onLogout()"><a>Logout</a></li>
         <li fxHide.gt-xs *ngIf="isLoggedOut$ | async" (click)="openLoginDialog()"><a (click)="toggleSidenav()">Login</a></li>
         <li fxHide.gt-xs *ngIf="isLoggedOut$ | async"><a routerLink="/signup" (click)="toggleSidenav()">New Account</a></li>

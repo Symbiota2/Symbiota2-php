@@ -1,11 +1,13 @@
 {
-  "plugin": "taxa",
-  "name": "Taxa Plugin",
+  "plugin": "traits",
+  "name": "Traits Plugin",
   "source": "local",
   "version": "0.0.1",
-  "description": "Adds the Taxa module to manage taxonomic data.",
-  "dependencies": [],
-  "api_namespace": "Taxa",
+  "description": "Adds the Traits Module to Symbiota.",
+  "dependencies": [
+    "taxa"
+  ],
+  "api_namespace": "Traits",
   "ui_filename": "",
   "ui_module_name": "",
   "ui_routes": [

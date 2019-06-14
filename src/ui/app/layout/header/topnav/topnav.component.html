@@ -16,7 +16,7 @@
     <div fxFlex fxLayout fxLayoutAlign="end center" class="right-links" fxHide.xs>
         <ul fxLayout fxLayoutGap="15px" class="navigation-items">
             <li *ngIf="(isLoggedIn$ | async) && (currentUser$ | async) as user">Welcome {{user.firstName}}!</li>
-            <li *ngIf="isLoggedIn$ | async"><a routerLink="/myprofile">My Profile</a></li>
+            <li *ngIf="isLoggedIn$ | async"><a routerLink="/viewprofile">My Profile</a></li>
             <li *ngIf="isLoggedIn$ | async" (click)="onLogout()"><a>Logout</a></li>
             <li *ngIf="isLoggedOut$ | async" (click)="openLoginDialog()"><a>Login</a></li>
             <li *ngIf="isLoggedOut$ | async"><a routerLink="/signup">New Account</a></li>
