@@ -4,19 +4,21 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormsModule} from '@angular/forms';
-import {AppRoutingModule} from '../app-routing.module';
 import {CommonModule} from '@angular/common';
 
-import {MaterialModule} from '../material.module';
+import {MaterialModule} from './material.module';
 
 import {SpinnerOverlayComponent} from './spinner-overlay/spinner-overlay.component';
 import {CaptchaComponent} from './captcha/captcha.component';
+
+import {SpinnerOverlayService} from './spinner-overlay.service';
+import {AlertService} from './alert.service';
+import {ConfigurationService} from './configuration.service';
 
 @NgModule({
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        AppRoutingModule,
         FlexLayoutModule,
         ReactiveFormsModule,
         FormsModule,
@@ -26,7 +28,6 @@ import {CaptchaComponent} from './captcha/captcha.component';
     exports: [
         BrowserModule,
         BrowserAnimationsModule,
-        AppRoutingModule,
         FlexLayoutModule,
         ReactiveFormsModule,
         FormsModule,
@@ -38,6 +39,11 @@ import {CaptchaComponent} from './captcha/captcha.component';
     declarations: [
         SpinnerOverlayComponent,
         CaptchaComponent
+    ],
+    providers: [
+        SpinnerOverlayService,
+        AlertService,
+        ConfigurationService
     ],
     entryComponents: [
         SpinnerOverlayComponent,

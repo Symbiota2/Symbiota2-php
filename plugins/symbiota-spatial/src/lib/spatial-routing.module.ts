@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
-import {SignupComponent} from './signup/signup.component';
+import {SymbiotaSpatialComponent} from './symbiota-spatial.component';
 
 const routes: Routes = [
-    { path: 'signup', component: SignupComponent }
+    {path: 'spatial', component: SymbiotaSpatialComponent}
 ];
 
 @NgModule({
@@ -13,4 +13,5 @@ const routes: Routes = [
     ],
     exports: [RouterModule]
 })
-export class AuthRoutingModule {}
+export class SpatialRoutingModule {
+}

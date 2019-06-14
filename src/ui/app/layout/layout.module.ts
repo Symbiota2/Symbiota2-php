@@ -1,30 +1,38 @@
 import {NgModule} from '@angular/core';
-import {SharedModule} from '../shared/shared.module';
 
-import {HeaderModule} from './header/header.module';
-import {SidepanelModule} from './sidepanel/sidepanel.module';
-import {FooterModule} from './footer/footer.module';
+import {SharedModule} from '../shared/shared.module';
+import {AppRoutingModule} from '../app-routing.module';
 
 import {LayoutComponent} from './layout.component';
 import {HomeComponent} from './home/home.component';
+import {FooterComponent} from './footer/footer.component';
+import {BannerComponent} from './header/banner/banner.component';
+import {TopnavComponent} from './header/topnav/topnav.component';
+import {HeaderComponent} from './header/header.component';
+import {SidepanelComponent} from './sidepanel/sidepanel.component';
 
 @NgModule({
     declarations: [
         LayoutComponent,
-        HomeComponent
+        HomeComponent,
+        FooterComponent,
+        BannerComponent,
+        TopnavComponent,
+        HeaderComponent,
+        SidepanelComponent
     ],
     imports: [
         SharedModule,
-        HeaderModule,
-        SidepanelModule,
-        FooterModule
+        AppRoutingModule
     ],
     exports: [
         LayoutComponent,
         HomeComponent
     ],
     providers: [],
-    bootstrap: [LayoutComponent]
+    bootstrap: [
+        LayoutComponent
+    ]
 })
 export class LayoutModule {
 }

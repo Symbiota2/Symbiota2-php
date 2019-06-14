@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
-import {SpinnerOverlayService} from './shared/spinner-overlay.service';
+import {SpinnerOverlayService} from './spinner-overlay.service';
 
 @Injectable({
     providedIn: 'root'

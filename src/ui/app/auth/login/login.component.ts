@@ -3,7 +3,7 @@ import {NgForm} from '@angular/forms';
 import {MatDialogRef} from '@angular/material';
 
 import {AuthService} from '../auth.service';
-import {UserService} from '../user.service';
+import {UserService} from '../../user/user.service';
 import {SpinnerOverlayService} from '../../shared/spinner-overlay.service';
 
 @Component({

@@ -3,16 +3,15 @@ import {Routes, RouterModule, Route} from '@angular/router';
 
 import {HomeComponent} from './layout/home/home.component';
 
-import {PluginLoaderService} from './plugin-loader.service';
-import {PluginRouterService} from './plugin-router.service';
+import {PluginLoaderService} from './plugin/plugin-loader.service';
+import {PluginRouterService} from './plugin/plugin-router.service';
 
 import {SymbiotaSpatialComponent} from 'symbiota-spatial';
 
 import {AuthGuard} from './auth/auth.guard';
 
 const routes: Routes = [
-    {path: '', component: HomeComponent},
-    {path: 'spatial', component: SymbiotaSpatialComponent},
+    {path: '', component: HomeComponent}
 ];
 
 @NgModule({

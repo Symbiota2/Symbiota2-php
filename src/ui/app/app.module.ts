@@ -1,24 +1,18 @@
 import {NgModule, APP_INITIALIZER} from '@angular/core';
-import {StoreModule} from '@ngrx/store';
 import {HttpClientModule} from '@angular/common/http';
-
-import {reducers} from './app.reducer';
 
 import {AuthModule} from './auth/auth.module';
 import {SharedModule} from './shared/shared.module';
 import {LayoutModule} from './layout/layout.module';
+import {UserModule} from './user/user.module';
+import {PluginModule} from './plugin/plugin.module';
 import {AppRoutingModule} from './app-routing.module';
 import {SymbiotaSpatialModule} from 'symbiota-spatial';
 
 import {AppComponent} from './app.component';
-import {PluginOutletComponent} from './plugin-outlet.component';
 
-import {AuthService} from './auth/auth.service';
-import {SpinnerOverlayService} from './shared/spinner-overlay.service';
-import {AlertService} from './shared/alert.service';
-import {ConfigurationService} from './configuration.service';
-import {PluginRouterService} from './plugin-router.service';
-import {PluginLoaderService} from './plugin-loader.service';
+import {ConfigurationService} from './shared/configuration.service';
+import {PluginLoaderService} from './plugin/plugin-loader.service';
 
 export function setupConfigServiceFactory(
     service: ConfigurationService
@@ -35,25 +29,18 @@ export function setupPluginLoaderServiceFactory(
 @NgModule({
     declarations: [
         AppComponent,
-        PluginOutletComponent
     ],
     imports: [
         AuthModule,
         SharedModule,
         LayoutModule,
+        UserModule,
+        PluginModule,
         HttpClientModule,
         AppRoutingModule,
-        SymbiotaSpatialModule,
-        StoreModule.forRoot(reducers)
-    ],
-    entryComponents: [
-        PluginOutletComponent
+        SymbiotaSpatialModule
     ],
     providers: [
-        AuthService,
-        PluginRouterService,
-        SpinnerOverlayService,
-        AlertService,
         {
             provide: APP_INITIALIZER,
             useFactory: setupConfigServiceFactory,

@@ -1,26 +1,28 @@
 import {NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 
-import {SignupComponent} from './signup/signup.component';
-import {LoginComponent} from './login/login.component';
 import {SharedModule} from '../shared/shared.module';
-import {AuthRoutingModule} from './auth-routing.module';
+
+import {LoginComponent} from './login/login.component';
 import {SessionExpireWarningDialogComponent} from './session-expire-warning-dialog/session-expire-warning-dialog.component';
+
+import {AuthService} from './auth.service';
 
 @NgModule({
     imports: [
         ReactiveFormsModule,
         SharedModule,
-        AuthRoutingModule
     ],
     exports: [
         LoginComponent,
         SessionExpireWarningDialogComponent
     ],
     declarations: [
-        SignupComponent,
         LoginComponent,
         SessionExpireWarningDialogComponent
+    ],
+    providers: [
+        AuthService
     ],
     entryComponents: [
         LoginComponent,

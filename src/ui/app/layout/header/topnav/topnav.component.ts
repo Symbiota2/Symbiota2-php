@@ -3,7 +3,6 @@ import {Store} from '@ngrx/store';
 import {Observable} from 'rxjs';
 import {MatDialog} from '@angular/material';
 
-import * as fromRoot from '../../../app.reducer';
 import {AuthService} from '../../../auth/auth.service';
 import {CurrentUser} from '../../../auth/current-user.model';
 import {LoginComponent} from '../../../auth/login/login.component';
@@ -21,7 +20,6 @@ export class TopnavComponent implements OnInit {
     private loginDialog: any;
 
     constructor(
-        private store: Store<fromRoot.State>,
         private authService: AuthService,
         public dialog: MatDialog
     ) {}
