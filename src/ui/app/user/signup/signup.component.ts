@@ -1,11 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators, FormBuilder} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
 
 import {UserService} from '../user.service';
-import {SpinnerOverlayService} from '../../shared/spinner-overlay.service';
+import {SpinnerOverlayService} from 'symbiota-shared';
 
 @Component({
     selector: 'app-createaccount-outlet',

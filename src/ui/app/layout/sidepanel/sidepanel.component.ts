@@ -2,9 +2,9 @@ import {Component, OnInit, EventEmitter, Output} from '@angular/core';
 import {Observable} from 'rxjs';
 import {MatDialog} from '@angular/material';
 
-import {AuthService} from '../../auth/auth.service';
-import {LoginComponent} from '../../auth/login/login.component';
-import {CurrentUser} from '../../auth/current-user.model';
+import {AuthService} from 'symbiota-auth';
+import {LoginComponent} from 'symbiota-auth';
+import {CurrentUser} from '../../user/current-user.model';
 
 @Component({
     selector: 'sidepanel-outlet',

@@ -1,0 +1,17 @@
+{
+  "extends": "../../tslint.json",
+  "rules": {
+    "directive-selector": [
+      true,
+      "attribute",
+      "symbiotaAuth",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "symbiota-auth",
+      "kebab-case"
+    ]
+  }
+}

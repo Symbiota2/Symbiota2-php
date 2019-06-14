@@ -333,6 +333,76 @@
           }
         }
       }
+    },
+    "symbiota-auth": {
+      "projectType": "library",
+      "root": "plugins/symbiota-auth",
+      "sourceRoot": "plugins/symbiota-auth/src",
+      "prefix": "symbiota-auth",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "plugins/symbiota-auth/tsconfig.lib.json",
+            "project": "plugins/symbiota-auth/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "plugins/symbiota-auth/src/test.ts",
+            "tsConfig": "plugins/symbiota-auth/tsconfig.spec.json",
+            "karmaConfig": "plugins/symbiota-auth/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "plugins/symbiota-auth/tsconfig.lib.json",
+              "plugins/symbiota-auth/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "symbiota-shared": {
+      "projectType": "library",
+      "root": "plugins/symbiota-shared",
+      "sourceRoot": "plugins/symbiota-shared/src",
+      "prefix": "symbiota-shared",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "plugins/symbiota-shared/tsconfig.lib.json",
+            "project": "plugins/symbiota-shared/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "plugins/symbiota-shared/src/test.ts",
+            "tsConfig": "plugins/symbiota-shared/tsconfig.spec.json",
+            "karmaConfig": "plugins/symbiota-shared/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "plugins/symbiota-shared/tsconfig.lib.json",
+              "plugins/symbiota-shared/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "symbiota2"

@@ -3,8 +3,7 @@ import {NgForm} from '@angular/forms';
 import {MatDialogRef} from '@angular/material';
 
 import {AuthService} from '../auth.service';
-import {UserService} from '../../user/user.service';
-import {SpinnerOverlayService} from '../../shared/spinner-overlay.service';
+import {SpinnerOverlayService} from 'symbiota-shared';
 
 @Component({
     selector: 'app-login',
@@ -17,7 +16,6 @@ export class LoginComponent {
 
     constructor(
         public dialogRef: MatDialogRef<LoginComponent>,
-        private userService: UserService,
         private authService: AuthService,
         private spinnerService: SpinnerOverlayService
     ) {}
@@ -47,7 +45,7 @@ export class LoginComponent {
         }
         this.dialogRef.close();
         this.spinnerService.show();
-        this.userService.retrieveLogin(
+        this.authService.retrieveLogin(
             form.value.email
         );
     }
@@ -59,7 +57,7 @@ export class LoginComponent {
         }
         this.dialogRef.close();
         this.spinnerService.show();
-        this.userService.resetPassword(
+        this.authService.resetPassword(
             form.value.username
         );
     }

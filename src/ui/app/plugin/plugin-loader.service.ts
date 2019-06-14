@@ -19,15 +19,6 @@ import * as AngularBrowser from '@angular/platform-browser';
 import * as AngularBrowserAnimations from '@angular/platform-browser/animations';
 import * as AngularRouter from '@angular/router';
 import * as NgrxStore from '@ngrx/store';
-import * as OlLayer from 'ol/layer';
-import * as OlMap from 'ol/Map';
-import * as OlOverlay from 'ol/Overlay';
-import * as OlProject from 'ol/proj';
-import * as OlSource from 'ol/source';
-import * as OlStyle from 'ol/style';
-import * as OlVector from 'ol/layer/Vector';
-import * as OlView from 'ol/View';
-import * as OlXyz from 'ol/source/XYZ';
 import * as Rxjs from 'rxjs';
 import * as RxjsOperators from 'rxjs/operators';
 
@@ -179,15 +170,6 @@ export class PluginLoaderService {
         SystemJS.set('@angular/platform-browser/animations', SystemJS.newModule(AngularBrowserAnimations));
         SystemJS.set('@angular/router', SystemJS.newModule(AngularRouter));
         SystemJS.set('@ngrx/store', SystemJS.newModule(NgrxStore));
-        SystemJS.set('ol/layer', SystemJS.newModule(OlLayer));
-        SystemJS.set('ol/Map', SystemJS.newModule(OlMap));
-        SystemJS.set('ol/Overlay', SystemJS.newModule(OlOverlay));
-        SystemJS.set('ol/proj', SystemJS.newModule(OlProject));
-        SystemJS.set('ol/source', SystemJS.newModule(OlSource));
-        SystemJS.set('ol/style', SystemJS.newModule(OlStyle));
-        SystemJS.set('ol/layer/Vector', SystemJS.newModule(OlVector));
-        SystemJS.set('ol/View', SystemJS.newModule(OlView));
-        SystemJS.set('ol/source/XYZ', SystemJS.newModule(OlXyz));
         SystemJS.set('rxjs', SystemJS.newModule(Rxjs));
         SystemJS.set('rxjs/operators', SystemJS.newModule(RxjsOperators));
 

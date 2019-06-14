@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
-import {SharedModule} from '../shared/shared.module';
+import {SymbiotaSharedModule} from 'symbiota-shared';
 import {UserRoutingModule} from './user-routing.module';
 
 import {SignupComponent} from './signup/signup.component';
@@ -14,7 +14,7 @@ import {UserService} from './user.service';
     ],
     imports: [
         CommonModule,
-        SharedModule,
+        SymbiotaSharedModule,
         UserRoutingModule
     ],
     providers: [

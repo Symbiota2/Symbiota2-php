@@ -1,17 +1,17 @@
 import {NgModule, APP_INITIALIZER} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 
-import {AuthModule} from './auth/auth.module';
-import {SharedModule} from './shared/shared.module';
 import {LayoutModule} from './layout/layout.module';
 import {UserModule} from './user/user.module';
 import {PluginModule} from './plugin/plugin.module';
 import {AppRoutingModule} from './app-routing.module';
 import {SymbiotaSpatialModule} from 'symbiota-spatial';
+import {SymbiotaSharedModule} from 'symbiota-shared';
+import {SymbiotaAuthModule} from 'symbiota-auth';
 
 import {AppComponent} from './app.component';
 
-import {ConfigurationService} from './shared/configuration.service';
+import {ConfigurationService} from 'symbiota-shared';
 import {PluginLoaderService} from './plugin/plugin-loader.service';
 
 export function setupConfigServiceFactory(
@@ -31,14 +31,14 @@ export function setupPluginLoaderServiceFactory(
         AppComponent,
     ],
     imports: [
-        AuthModule,
-        SharedModule,
         LayoutModule,
         UserModule,
         PluginModule,
         HttpClientModule,
         AppRoutingModule,
-        SymbiotaSpatialModule
+        SymbiotaSpatialModule,
+        SymbiotaSharedModule,
+        SymbiotaAuthModule
     ],
     providers: [
         {

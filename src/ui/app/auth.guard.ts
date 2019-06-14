@@ -2,7 +2,7 @@ import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 
-import {AuthService} from './auth.service';
+import {AuthService} from 'symbiota-auth';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

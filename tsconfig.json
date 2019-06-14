@@ -58,6 +58,18 @@
       ],
       "symbiota-spatial/*": [
         "dist/symbiota-spatial/*"
+      ],
+      "symbiota-auth": [
+        "dist/symbiota-auth"
+      ],
+      "symbiota-auth/*": [
+        "dist/symbiota-auth/*"
+      ],
+      "symbiota-shared": [
+        "dist/symbiota-shared"
+      ],
+      "symbiota-shared/*": [
+        "dist/symbiota-shared/*"
       ]
     }
   }

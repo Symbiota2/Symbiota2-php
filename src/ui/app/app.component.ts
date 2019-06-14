@@ -1,10 +1,10 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Observable} from 'rxjs';
 
-import {AuthService} from './auth/auth.service';
-import {SessionExpireWarningDialogComponent} from './auth/session-expire-warning-dialog/session-expire-warning-dialog.component';
+import {AuthService} from 'symbiota-auth';
+import {SessionExpireWarningDialogComponent} from 'symbiota-auth';
 
-import {CurrentUser} from './auth/current-user.model';
+import {CurrentUser} from './user/current-user.model';
 
 @Component({
     selector: 'app-root',

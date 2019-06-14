@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 
-import {SharedModule} from '../shared/shared.module';
+import {SymbiotaSharedModule} from 'symbiota-shared';
 import {AppRoutingModule} from '../app-routing.module';
 
 import {LayoutComponent} from './layout.component';
@@ -22,8 +22,8 @@ import {SidepanelComponent} from './sidepanel/sidepanel.component';
         SidepanelComponent
     ],
     imports: [
-        SharedModule,
-        AppRoutingModule
+        AppRoutingModule,
+        SymbiotaSharedModule
     ],
     exports: [
         LayoutComponent,

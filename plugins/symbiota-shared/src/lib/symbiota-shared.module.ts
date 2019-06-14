@@ -50,5 +50,5 @@ import {ConfigurationService} from './configuration.service';
         CaptchaComponent
     ]
 })
-export class SharedModule {
+export class SymbiotaSharedModule {
 }

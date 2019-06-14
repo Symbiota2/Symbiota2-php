@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 
-import {SharedModule} from '../shared/shared.module';
+import {SymbiotaSharedModule} from 'symbiota-shared';
 
 import {LoginComponent} from './login/login.component';
 import {SessionExpireWarningDialogComponent} from './session-expire-warning-dialog/session-expire-warning-dialog.component';
@@ -11,7 +11,7 @@ import {AuthService} from './auth.service';
 @NgModule({
     imports: [
         ReactiveFormsModule,
-        SharedModule,
+        SymbiotaSharedModule
     ],
     exports: [
         LoginComponent,
@@ -29,4 +29,5 @@ import {AuthService} from './auth.service';
         SessionExpireWarningDialogComponent
     ]
 })
-export class AuthModule {}
+export class SymbiotaAuthModule {
+}

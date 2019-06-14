@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 
-import {ConfigurationService} from '../../shared/configuration.service';
+import {ConfigurationService} from 'symbiota-shared';
 
 @Component({
     selector: 'app-home',
