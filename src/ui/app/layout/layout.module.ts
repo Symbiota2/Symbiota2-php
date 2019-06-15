@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {SymbiotaSharedModule} from 'symbiota-shared';
 import {AppRoutingModule} from '../app-routing.module';
 
-import {LayoutComponent} from './layout.component';
+import {LayoutComponent} from './layout/layout.component';
 import {HomeComponent} from './home/home.component';
 import {FooterComponent} from './footer/footer.component';
 import {BannerComponent} from './header/banner/banner.component';

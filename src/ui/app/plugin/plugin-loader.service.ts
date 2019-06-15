@@ -5,7 +5,7 @@ import {Injectable, Compiler} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Route} from '@angular/router';
 
-import {PluginOutletComponent} from './plugin-outlet.component';
+import {PluginOutletComponent} from './plugin-outlet/plugin-outlet.component';
 
 import * as AngularCdkCollections from '@angular/cdk/collections';
 import * as AngularCdkTree from '@angular/cdk/tree';
