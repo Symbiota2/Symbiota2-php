@@ -14,4 +14,11 @@ export class AlertService {
             duration: duration
         });
     }
+
+    showErrorSnackbar(message, action, duration) {
+        this.snackbar.open(message, action, {
+            duration: duration,
+            panelClass: ['error-snackbar']
+        });
+    }
 }

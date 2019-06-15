@@ -84,7 +84,7 @@ export class AuthService {
             },
             error => {
                 this.spinnerService.hide();
-                this.alertService.showSnackbar(
+                this.alertService.showErrorSnackbar(
                     'Login failed. Please ensure you entered the correct login and password. ',
                     '',
                     5000
@@ -120,7 +120,7 @@ export class AuthService {
                         5000
                     );
                 } else {
-                    this.alertService.showSnackbar(
+                    this.alertService.showErrorSnackbar(
                         'Could not locate your account from the login provided. ',
                         '',
                         5000
@@ -142,7 +142,7 @@ export class AuthService {
                         5000
                     );
                 } else {
-                    this.alertService.showSnackbar(
+                    this.alertService.showErrorSnackbar(
                         'A user account could not be found asociated with email provided. ',
                         '',
                         5000
@@ -172,7 +172,7 @@ export class AuthService {
                 this.warningDialog = '';
             }
             this.logout();
-            this.alertService.showSnackbar(
+            this.alertService.showErrorSnackbar(
                 'Your user session has expired',
                 '',
                 5000

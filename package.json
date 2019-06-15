@@ -39,7 +39,10 @@
     "build_symbiota-shared": "ng build symbiota-shared",
     "npm_pack_symbiota-shared": "cd dist/symbiota-shared && npm pack",
     "install_symbiota-shared": "npm install dist/symbiota-shared/symbiota-shared-0.0.1.tgz",
-    "package_symbiota-shared": "npm run build_symbiota-shared && npm run npm_pack_symbiota-shared && npm run install_symbiota-shared"
+    "package_symbiota-shared": "npm run build_symbiota-shared && npm run npm_pack_symbiota-shared && npm run install_symbiota-shared",
+    "package_all_plugins": "npm run package_checklist && npm run package_collection && npm run package_occurrence && npm run package_occurrence-search && npm run package_taxa && npm run package_symbiota-spatial && npm run package_symbiota-auth && npm run package_symbiota-shared",
+    "package_optional_plugins": "npm run package_checklist && npm run package_collection && npm run package_occurrence && npm run package_occurrence-search && npm run package_taxa",
+    "package_core_plugins": "npm run package_symbiota-spatial && npm run package_symbiota-auth && npm run package_symbiota-shared"
   },
   "private": true,
   "dependencies": {
