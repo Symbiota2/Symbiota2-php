@@ -3,7 +3,7 @@ import {SymbiotaSharedModule} from 'symbiota-shared';
 
 import {CollectionListService} from './collection-list.service';
 
-import {CollectionCheckboxListComponent} from './collection-checkbox-list.component';
+import {CollectionCheckboxListComponent} from './collection-checkbox-list/collection-checkbox-list.component';
 
 @NgModule({
     declarations: [

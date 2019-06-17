@@ -7,7 +7,7 @@ import VectorLayer from 'ol/layer/Vector.js';
 import {Cluster, OSM, Vector as VectorSource} from 'ol/source.js';
 import {fromLonLat} from 'ol/proj.js';
 import View from 'ol/View.js';
-import PropertyCluster from '../../../../src/ui/assets/js/libraries/PropertyCluster.js';
+import PropertyCluster from '../../../../../src/ui/assets/js/libraries/PropertyCluster.js';
 import {
     AtlasManager,
     Circle as CircleStyle,

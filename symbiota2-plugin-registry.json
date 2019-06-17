@@ -1,0 +1,176 @@
+[
+  {
+    "plugin": "checklist",
+    "name": "Checklist Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin to create, modify, and manage species checklists within Symbiota.",
+    "dependencies": [
+      "occurrence",
+      "taxa"
+    ]
+  },
+  {
+    "plugin": "collection",
+    "name": "Collection Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin to create and manage occurrence collections within Symbiota."
+  },
+  {
+    "plugin": "crowd-source",
+    "name": "Crowd Source Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin to allow crowd-sourcing for occurrence data edits.",
+    "dependencies": [
+      "occurrence"
+    ]
+  },
+  {
+    "plugin": "exsiccati",
+    "name": "Exsiccati Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin to connect exsiccati data with occurrence records.",
+    "dependencies": [
+      "occurrence"
+    ]
+  },
+  {
+    "plugin": "glossary",
+    "name": "Glossary Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin to add glossary module to Symbiota.",
+    "dependencies": [
+      "taxa"
+    ]
+  },
+  {
+    "plugin": "image-processor",
+    "name": "Image Processor Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin to add the batch image processing module to Symbiota.",
+    "dependencies": [
+      "media",
+      "collection"
+    ]
+  },
+  {
+    "plugin": "key",
+    "name": "Key Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin to add the key module to Symbiota.",
+    "dependencies": [
+      "taxa"
+    ]
+  },
+  {
+    "plugin": "media",
+    "name": "Media Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin to add the management of media files to Symbiota.",
+    "dependencies": [
+      "occurrence"
+    ]
+  },
+  {
+    "plugin": "occurrence",
+    "name": "Occurrence Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin to add the managment of occurrence records within Symbiota.",
+    "dependencies": [
+      "collection",
+      "taxa"
+    ]
+  },
+  {
+    "plugin": "occurrence-association",
+    "name": "Occurrence Assiciations Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin to track associations within occurrence records.",
+    "dependencies": [
+      "occurrence"
+    ]
+  },
+  {
+    "plugin": "occurrence-comment",
+    "name": "Occurrence Comments Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin to add the ability to add comments to occurrence records.",
+    "dependencies": [
+      "occurrence"
+    ]
+  },
+  {
+    "plugin": "occurrence-dataset",
+    "name": "Occurrence Dataset Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin to add the occurrence dataset module to Symbiota.",
+    "dependencies": [
+      "occurrence"
+    ]
+  },
+  {
+    "plugin": "occurrence-genetic",
+    "name": "Occurrence Genetic Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin to add the ability to link genetic data to occurrence records.",
+    "dependencies": [
+      "occurrence"
+    ]
+  },
+  {
+    "plugin": "occurrence-loan",
+    "name": "Occurrence Loan Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin to add the occurrence loans module to Symbiota.",
+    "dependencies": [
+      "occurrence"
+    ]
+  },
+  {
+    "plugin": "occurrence-search",
+    "name": "Search Occurrences Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin that adds the Search Collections module to Symbiota.",
+    "dependencies": [
+      "collection"
+    ]
+  },
+  {
+    "plugin": "reference",
+    "name": "Reference Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin that adds the reference module to Symbiota."
+  },
+  {
+    "plugin": "taxa",
+    "name": "Taxa Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "Adds the Taxa module to manage taxonomic data."
+  },
+  {
+    "plugin": "traits",
+    "name": "Traits Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "Adds the Traits Module to Symbiota.",
+    "dependencies": [
+      "taxa"
+    ]
+  }
+]

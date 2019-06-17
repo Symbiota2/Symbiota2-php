@@ -1,4 +1,10 @@
 import {Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
+
+import {PluginLoaderService} from '../plugin-loader.service';
+import {PluginInstallerService} from '../plugin-installer.service';
+
+import {AvailablePluginData} from '../available-plugin-data.model';
 
 @Component({
     selector: 'app-plugin-admin',
@@ -6,11 +12,18 @@ import {Component, OnInit} from '@angular/core';
     styleUrls: ['./plugin-admin.component.css']
 })
 export class PluginAdminComponent implements OnInit {
+    availablePlugins$: Observable<AvailablePluginData[]>;
+    installedPlugins: any;
 
-    constructor() {
+    constructor(
+        private pluginLoader: PluginLoaderService,
+        private pluginInstaller: PluginInstallerService
+    ) {
     }
 
     ngOnInit() {
+        this.installedPlugins = this.pluginLoader.pluginData;
+        this.availablePlugins$ = this.pluginInstaller.pluginList$;
     }
 
 }

@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 
 import {SpatialRoutingModule} from './spatial-routing.module';
 
-import {SymbiotaSpatialComponent} from './symbiota-spatial.component';
+import {SymbiotaSpatialComponent} from './symbiota-spatial/symbiota-spatial.component';
 
 @NgModule({
     declarations: [

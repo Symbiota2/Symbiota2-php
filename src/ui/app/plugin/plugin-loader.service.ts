@@ -1,11 +1,11 @@
-import {Observable} from 'rxjs';
-import {PluginData} from './plugin-data.model';
-import {HttpClient} from '@angular/common/http';
 import {Injectable, Compiler} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 import {Route} from '@angular/router';
+import {Observable, BehaviorSubject} from 'rxjs';
 
 import {PluginOutletComponent} from './plugin-outlet/plugin-outlet.component';
+
+import {PluginData} from './plugin-data.model';
 
 import * as AngularCdkCollections from '@angular/cdk/collections';
 import * as AngularCdkTree from '@angular/cdk/tree';
@@ -31,12 +31,11 @@ declare var SystemJS: any;
     providedIn: 'root'
 })
 export class PluginLoaderService {
-    loadedPlugins: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
-    private pluginRoutes: BehaviorSubject<Route[]> = new BehaviorSubject<Route[]>([]);
+
+    loadedPlugins = new BehaviorSubject<string[]>([]);
+    private pluginRoutes = new BehaviorSubject<Route[]>([]);
     public readonly loadedPluginRoutes: Observable<Route[]> = this.pluginRoutes.asObservable();
     pluginData: any;
-    errorMessage: string;
-    errorVisible = false;
 
     constructor(
         private compiler: Compiler,
@@ -209,13 +208,4 @@ export class PluginLoaderService {
         this.loadedPlugins.next(currentList);
     }
 
-    private showError(message: string, err) {
-        this.errorMessage = message;
-        this.errorVisible = true;
-        console.log(err);
-    }
-
-    closeError() {
-        this.errorVisible = false;
-    }
 }

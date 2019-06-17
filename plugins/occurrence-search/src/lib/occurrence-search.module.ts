@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {OccurrenceSearchComponent} from './occurrence-search.component';
+import {OccurrenceSearchComponent} from './occurrence-search/occurrence-search.component';
 
 import {CollectionModule} from 'collection';
 

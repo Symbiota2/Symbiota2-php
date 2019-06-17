@@ -32,7 +32,8 @@ export class PluginOutletComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private injector: Injector,
-        private compiler: Compiler) {
+        private compiler: Compiler
+    ) {
     }
 
     ngOnInit() {

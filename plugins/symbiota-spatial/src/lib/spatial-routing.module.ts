@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
-import {SymbiotaSpatialComponent} from './symbiota-spatial.component';
+import {SymbiotaSpatialComponent} from './symbiota-spatial/symbiota-spatial.component';
 
 const routes: Routes = [
     {path: 'spatial', component: SymbiotaSpatialComponent}

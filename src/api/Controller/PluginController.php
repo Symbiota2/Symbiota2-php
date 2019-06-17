@@ -53,8 +53,8 @@ class PluginController extends AbstractController
     {
         $fileContents = '';
         $rootDir = $this->params->get('kernel.project_dir');
-        if(file_exists($rootDir.'/Symbiota2-plugin-registry.json')) {
-            $fileContents = file_get_contents($rootDir.'/Symbiota2-plugin-registry.json');
+        if(file_exists($rootDir.'/symbiota2-plugin-registry.json')) {
+            $fileContents = file_get_contents($rootDir.'/symbiota2-plugin-registry.json');
         }
 
         return new Response($fileContents);

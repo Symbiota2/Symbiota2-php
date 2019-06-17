@@ -1,8 +1,7 @@
-import {shareReplay, filter, tap, map} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, BehaviorSubject, Subscription} from 'rxjs';
-import {Router} from '@angular/router';
+import {Observable, BehaviorSubject} from 'rxjs';
 import {MatDialog} from '@angular/material';
 
 import {SpinnerOverlayService} from 'symbiota-shared';
@@ -55,7 +54,6 @@ export class AuthService {
         private http: HttpClient,
         private spinnerService: SpinnerOverlayService,
         private alertService: AlertService,
-        private router: Router,
         public dialog: MatDialog
     ) {
         this.spinnerService.show();
