@@ -17,6 +17,7 @@ Symbiota2 can be installed for development in the following steps:
 - `cd portal-name`
 - `composer install`
 - `npm install`
+- `npm run package_all_plugins`
 
 [Go here to learn how to setup the pre-configured Symbiota2 development environment (recommended)](https://github.com/Symbiota2/Symbiota2/wiki/Setup-the-Symbiota2-development-environment)
 
