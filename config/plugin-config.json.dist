@@ -10,7 +10,7 @@
       "taxa"
     ],
     "api_namespace": "Checklist",
-    "enabled": false
+    "enabled": true
   },
   {
     "plugin": "collection",
@@ -21,7 +21,7 @@
     "api_namespace": "Collection",
     "ui_filename": "collection.umd.js",
     "ui_module_name": "CollectionModule",
-    "enabled": false
+    "enabled": true
   },
   {
     "plugin": "crowd-source",
@@ -33,7 +33,7 @@
       "occurrence"
     ],
     "api_namespace": "CrowdSource",
-    "enabled": false
+    "enabled": true
   },
   {
     "plugin": "exsiccati",
@@ -45,7 +45,7 @@
       "occurrence"
     ],
     "api_namespace": "Exsiccati",
-    "enabled": false
+    "enabled": true
   },
   {
     "plugin": "glossary",
@@ -57,7 +57,7 @@
       "taxa"
     ],
     "api_namespace": "Glossary",
-    "enabled": false
+    "enabled": true
   },
   {
     "plugin": "image-processor",
@@ -70,7 +70,7 @@
       "collection"
     ],
     "api_namespace": "ImageProcessor",
-    "enabled": false
+    "enabled": true
   },
   {
     "plugin": "key",
@@ -82,7 +82,7 @@
       "taxa"
     ],
     "api_namespace": "Key",
-    "enabled": false
+    "enabled": true
   },
   {
     "plugin": "media",
@@ -94,7 +94,7 @@
       "occurrence"
     ],
     "api_namespace": "Media",
-    "enabled": false
+    "enabled": true
   },
   {
     "plugin": "occurrence",
@@ -107,7 +107,7 @@
       "taxa"
     ],
     "api_namespace": "Occurrence",
-    "enabled": false
+    "enabled": true
   },
   {
     "plugin": "occurrence-association",
@@ -119,7 +119,7 @@
       "occurrence"
     ],
     "api_namespace": "OccurrenceAssociation",
-    "enabled": false
+    "enabled": true
   },
   {
     "plugin": "occurrence-comment",
@@ -131,7 +131,7 @@
       "occurrence"
     ],
     "api_namespace": "OccurrenceComment",
-    "enabled": false
+    "enabled": true
   },
   {
     "plugin": "occurrence-dataset",
@@ -143,7 +143,7 @@
       "occurrence"
     ],
     "api_namespace": "OccurrenceDataset",
-    "enabled": false
+    "enabled": true
   },
   {
     "plugin": "occurrence-genetic",
@@ -155,7 +155,7 @@
       "occurrence"
     ],
     "api_namespace": "OccurrenceGenetic",
-    "enabled": false
+    "enabled": true
   },
   {
     "plugin": "occurrence-loan",
@@ -167,7 +167,7 @@
       "occurrence"
     ],
     "api_namespace": "OccurrenceLoan",
-    "enabled": false
+    "enabled": true
   },
   {
     "plugin": "occurrence-search",
@@ -186,7 +186,7 @@
         "provider": "occurrence-search"
       }
     ],
-    "enabled": false
+    "enabled": true
   },
   {
     "plugin": "reference",
@@ -195,7 +195,7 @@
     "version": "0.0.1",
     "description": "A plugin that adds the reference module to Symbiota.",
     "api_namespace": "Reference",
-    "enabled": false
+    "enabled": true
   },
   {
     "plugin": "taxa",
@@ -204,7 +204,7 @@
     "version": "0.0.1",
     "description": "Adds the Taxa module to manage taxonomic data.",
     "api_namespace": "Taxa",
-    "enabled": false
+    "enabled": true
   },
   {
     "plugin": "traits",
@@ -216,6 +216,6 @@
       "taxa"
     ],
     "api_namespace": "Traits",
-    "enabled": false
+    "enabled": true
   }
 ]

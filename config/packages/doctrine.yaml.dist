@@ -2,22 +2,6 @@ parameters:
     env(DATABASE_URL): ''
     env(DATABASE_DRIVER): ''
     env(DATABASE_SERVER_VERSION): ''
-
 doctrine:
-    dbal:
-        driver: '%env(resolve:DATABASE_DRIVER)%'
-        server_version: '%env(resolve:DATABASE_SERVER_VERSION)%'
-        url: '%env(resolve:DATABASE_URL)%'
-        mapping_types:
-            _text: string
-    orm:
-        auto_generate_proxy_classes: true
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
-        mappings:
-            Core:
-                is_bundle: false
-                type: annotation
-                dir: '%kernel.project_dir%/src/api/Entity'
-                prefix: 'Core\Entity'
-                alias: Core
+    dbal: { driver: '%env(resolve:DATABASE_DRIVER)%', server_version: '%env(resolve:DATABASE_SERVER_VERSION)%', url: '%env(resolve:DATABASE_URL)%', mapping_types: { _text: string } }
+    orm: { auto_generate_proxy_classes: true, naming_strategy: doctrine.orm.naming_strategy.underscore, auto_mapping: true, mappings: { Core: { is_bundle: false, type: annotation, dir: '%kernel.project_dir%/src/api/Entity', prefix: Core\Entity, alias: Core }, Checklist: { is_bundle: false, type: annotation, dir: '%kernel.project_dir%/plugins/checklist/api/Entity', prefix: Checklist\Entity, alias: Checklist }, Collection: { is_bundle: false, type: annotation, dir: '%kernel.project_dir%/plugins/collection/api/Entity', prefix: Collection\Entity, alias: Collection }, CrowdSource: { is_bundle: false, type: annotation, dir: '%kernel.project_dir%/plugins/crowd-source/api/Entity', prefix: CrowdSource\Entity, alias: CrowdSource }, Exsiccati: { is_bundle: false, type: annotation, dir: '%kernel.project_dir%/plugins/exsiccati/api/Entity', prefix: Exsiccati\Entity, alias: Exsiccati }, Glossary: { is_bundle: false, type: annotation, dir: '%kernel.project_dir%/plugins/glossary/api/Entity', prefix: Glossary\Entity, alias: Glossary }, ImageProcessor: { is_bundle: false, type: annotation, dir: '%kernel.project_dir%/plugins/image-processor/api/Entity', prefix: ImageProcessor\Entity, alias: ImageProcessor }, Key: { is_bundle: false, type: annotation, dir: '%kernel.project_dir%/plugins/key/api/Entity', prefix: Key\Entity, alias: Key }, Media: { is_bundle: false, type: annotation, dir: '%kernel.project_dir%/plugins/media/api/Entity', prefix: Media\Entity, alias: Media }, OccurrenceAssociation: { is_bundle: false, type: annotation, dir: '%kernel.project_dir%/plugins/occurrence-association/api/Entity', prefix: OccurrenceAssociation\Entity, alias: OccurrenceAssociation }, OccurrenceComment: { is_bundle: false, type: annotation, dir: '%kernel.project_dir%/plugins/occurrence-comment/api/Entity', prefix: OccurrenceComment\Entity, alias: OccurrenceComment }, OccurrenceDataset: { is_bundle: false, type: annotation, dir: '%kernel.project_dir%/plugins/occurrence-dataset/api/Entity', prefix: OccurrenceDataset\Entity, alias: OccurrenceDataset }, OccurrenceGenetic: { is_bundle: false, type: annotation, dir: '%kernel.project_dir%/plugins/occurrence-genetic/api/Entity', prefix: OccurrenceGenetic\Entity, alias: OccurrenceGenetic }, OccurrenceLoan: { is_bundle: false, type: annotation, dir: '%kernel.project_dir%/plugins/occurrence-loan/api/Entity', prefix: OccurrenceLoan\Entity, alias: OccurrenceLoan }, Occurrence: { is_bundle: false, type: annotation, dir: '%kernel.project_dir%/plugins/occurrence/api/Entity', prefix: Occurrence\Entity, alias: Occurrence }, Reference: { is_bundle: false, type: annotation, dir: '%kernel.project_dir%/plugins/reference/api/Entity', prefix: Reference\Entity, alias: Reference }, Taxa: { is_bundle: false, type: annotation, dir: '%kernel.project_dir%/plugins/taxa/api/Entity', prefix: Taxa\Entity, alias: Taxa }, Traits: { is_bundle: false, type: annotation, dir: '%kernel.project_dir%/plugins/traits/api/Entity', prefix: Traits\Entity, alias: Traits } } }
