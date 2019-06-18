@@ -1,19 +1,24 @@
-<mat-card *ngFor="let plugin of installedPlugins | orderBy:name">
+<div class="plugin-card">
+    <button class="all-button" mat-raised-button color="primary" *ngIf="!allPluginsEnabled" (click)="onEnableAll()">ENABLE ALL</button>
+    <button class="all-button" mat-raised-button color="primary" *ngIf="!allPluginsDisabled" (click)="onDisableAll()">DISABLE ALL</button>
+    <button class="all-button" mat-raised-button color="primary" *ngIf="updatesAvailable" (click)="onUpdateAll()">UPDATE ALL</button>
+</div>
+<mat-divider></mat-divider>
+<mat-card class="plugin-card" *ngFor="let plugin of installedPlugins">
     <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>Shiba Inu</mat-card-title>
-        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+        <mat-card-title>{{plugin.name}}</mat-card-title>
+        <mat-card-subtitle class="enabledText" *ngIf="plugin.enabled">ENABLED</mat-card-subtitle>
+        <mat-card-subtitle class="warningText" *ngIf="!plugin.enabled">DISABLED</mat-card-subtitle>
+        <mat-card-subtitle class="warningText" *ngIf="plugin.updateAvailable">UPDATE AVAILABLE</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
     <mat-card-content>
-        <p>
-            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-            bred for hunting.
-        </p>
+        <div *ngIf="plugin.description">{{plugin.description}}</div>
+        <div>Version: {{plugin.version}}</div>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-button>LIKE</button>
-        <button mat-button>SHARE</button>
+        <button mat-raised-button color="primary" *ngIf="plugin.enabled" (click)="onDisablePlugin(plugin.plugin)">DISABLE</button>
+        <button mat-raised-button color="primary" *ngIf="!plugin.enabled" (click)="onEnablePlugin(plugin.plugin)">ENABLE</button>
+        <button mat-raised-button color="primary" *ngIf="plugin.updateAvailable" (click)="onUpdatePlugin(plugin.plugin)">UPDATE</button>
+        <button mat-raised-button color="primary" (click)="onDeletePlugin(plugin.plugin)">DELETE</button>
     </mat-card-actions>
 </mat-card>

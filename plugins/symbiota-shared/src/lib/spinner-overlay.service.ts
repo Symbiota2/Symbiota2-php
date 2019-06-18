@@ -8,6 +8,7 @@ import {SpinnerOverlayComponent} from './spinner-overlay/spinner-overlay.compone
 })
 export class SpinnerOverlayService {
     private overlayRef: OverlayRef = null;
+    private spinnerOverlayPortal: any = null;
 
     constructor(private overlay: Overlay) {
     }
@@ -17,13 +18,17 @@ export class SpinnerOverlayService {
             this.overlayRef = this.overlay.create();
         }
 
-        const spinnerOverlayPortal = new ComponentPortal(SpinnerOverlayComponent);
-        const component = this.overlayRef.attach(spinnerOverlayPortal);
+        if (!this.spinnerOverlayPortal) {
+            this.spinnerOverlayPortal = new ComponentPortal(SpinnerOverlayComponent);
+            this.overlayRef.attach(this.spinnerOverlayPortal);
+        }
     }
 
     public hide() {
         if (!!this.overlayRef) {
             this.overlayRef.detach();
         }
+        this.overlayRef = null;
+        this.spinnerOverlayPortal = null;
     }
 }

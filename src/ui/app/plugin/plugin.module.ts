@@ -7,6 +7,7 @@ import {PluginRoutingModule} from './plugin-routing.module';
 
 import {PluginOutletComponent} from './plugin-outlet/plugin-outlet.component';
 import {PluginAdminComponent} from './plugin-admin/plugin-admin.component';
+import {PluginDependencyDialogComponent} from './plugin-dependency-dialog/plugin-dependency-dialog.component';
 
 import {PluginLoaderService} from './plugin-loader.service';
 import {PluginRouterService} from './plugin-router.service';
@@ -15,7 +16,8 @@ import {PluginInstallerService} from './plugin-installer.service';
 @NgModule({
     declarations: [
         PluginOutletComponent,
-        PluginAdminComponent
+        PluginAdminComponent,
+        PluginDependencyDialogComponent
     ],
     imports: [
         CommonModule,
@@ -23,7 +25,8 @@ import {PluginInstallerService} from './plugin-installer.service';
         SymbiotaSharedModule
     ],
     entryComponents: [
-        PluginOutletComponent
+        PluginOutletComponent,
+        PluginDependencyDialogComponent
     ],
     providers: [
         PluginLoaderService,

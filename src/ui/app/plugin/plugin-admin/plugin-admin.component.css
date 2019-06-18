@@ -1,0 +1,15 @@
+.plugin-card {
+    margin: 10px;
+}
+
+.all-button {
+    margin: 0 15px;
+}
+
+.enabledText {
+    color: green;
+}
+
+.warningText {
+    color: red;
+}
