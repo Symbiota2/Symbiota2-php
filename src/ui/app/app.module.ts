@@ -1,4 +1,4 @@
-import {NgModule, APP_INITIALIZER} from '@angular/core';
+import {NgModule, APP_INITIALIZER, ErrorHandler} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
@@ -10,11 +10,13 @@ import {AppRoutingModule} from './app-routing.module';
 import {SymbiotaSpatialModule} from 'symbiota-spatial';
 import {SymbiotaSharedModule} from 'symbiota-shared';
 import {SymbiotaAuthModule} from 'symbiota-auth';
+import {ErrorRoutingModule} from './error-handlers/error-routing.module';
 
 import {AppComponent} from './app.component';
 
 import {ConfigurationService} from 'symbiota-shared';
 import {PluginLoaderService} from './plugin/plugin-loader.service';
+import {ErrorHandlerService} from './error-handlers/error-handler.service';
 
 export function setupConfigServiceFactory(
     service: ConfigurationService
@@ -42,7 +44,8 @@ export function setupPluginLoaderServiceFactory(
         AppRoutingModule,
         SymbiotaSpatialModule,
         SymbiotaSharedModule,
-        SymbiotaAuthModule
+        SymbiotaAuthModule,
+        ErrorRoutingModule
     ],
     providers: [
         {
@@ -56,6 +59,10 @@ export function setupPluginLoaderServiceFactory(
             useFactory: setupPluginLoaderServiceFactory,
             deps: [PluginLoaderService],
             multi: true
+        },
+        {
+            provide: ErrorHandler,
+            useClass: ErrorHandlerService
         }
     ],
     bootstrap: [AppComponent]

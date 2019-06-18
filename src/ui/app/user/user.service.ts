@@ -73,7 +73,7 @@ export class UserService {
             },
             error => {
                 this.spinnerService.hide();
-                this.alertService.showSnackbar(
+                this.alertService.showErrorSnackbar(
                     'There was an error with creating your account. ',
                     '',
                     5000
