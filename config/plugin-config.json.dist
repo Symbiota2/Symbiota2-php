@@ -183,7 +183,7 @@
     "ui_routes": [
       {
         "path": "searchcollections",
-        "provider": "occurrence_search"
+        "provider": "occurrence-search"
       }
     ],
     "enabled": false
