@@ -16,8 +16,8 @@ declare const SystemJS: any;
 @Component({
     selector: 'app-plugin-outlet',
     template: `
-    <div #content></div>
-  `
+        <ng-container #content></ng-container>
+      `
 })
 export class PluginOutletComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -43,12 +43,12 @@ export class PluginOutletComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngAfterViewInit() {
-        this.loadPlugins();
+        this.loadComponent();
     }
 
-    private async loadPlugins() {
+    private async loadComponent() {
         const module = await SystemJS.import('assets/js/plugins/' + this.file);
-        const moduleFactory = await this.compiler.compileModuleAsync<any>(module[this.module]);
+        const moduleFactory = this.compiler.compileModuleSync<any>(module[this.module]);
         const moduleRef = moduleFactory.create(this.injector);
         const componentProvider = moduleRef.injector.get(this.provider);
         const componentFactory = moduleRef.componentFactoryResolver.resolveComponentFactory<any>(

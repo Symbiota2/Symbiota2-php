@@ -1,14 +1,11 @@
-import {HttpClient} from '@angular/common/http';
 import {Router, Route} from '@angular/router';
-import {Injectable, Compiler} from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class PluginRouterService {
 
     constructor(
         private router: Router,
-        private compiler: Compiler,
-        private http: HttpClient
     ) {}
 
     private get routes(): Route[] {

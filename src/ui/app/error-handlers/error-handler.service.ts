@@ -35,6 +35,6 @@ export class ErrorHandlerService implements ErrorHandler {
             );
         }
 
-        // console.error(error);
+        console.error(error);
     }
 }

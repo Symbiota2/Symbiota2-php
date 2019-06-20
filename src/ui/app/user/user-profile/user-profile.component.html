@@ -1,3 +1,13 @@
-<p>
-    user-profile works!
-</p>
+<mat-tab-group animationDuration="0ms">
+    <mat-tab *ngFor="let tab of tabsArr">
+        <ng-template mat-tab-label>
+            {{tab.tab_text}}
+        </ng-template>
+        <ng-container *ngIf="tab.moduleFactory">
+            <ng-container *ngComponentOutlet="tab.component; ngModuleFactory: tab.moduleFactory; injector: tab.injector"></ng-container>
+        </ng-container>
+        <ng-container *ngIf="!tab.moduleFactory">
+            <ng-container *ngComponentOutlet="tab.component"></ng-container>
+        </ng-container>
+    </mat-tab>
+</mat-tab-group>

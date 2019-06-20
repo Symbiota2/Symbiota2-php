@@ -5,6 +5,8 @@ import {Observable, BehaviorSubject} from 'rxjs';
 
 import {PluginOutletComponent} from './plugin-outlet/plugin-outlet.component';
 
+import {PluginTabService} from './plugin-tab.service';
+
 import {PluginData} from './plugin-data.model';
 
 import * as AngularCdkCollections from '@angular/cdk/collections';
@@ -38,6 +40,7 @@ export class PluginLoaderService {
     pluginData: any;
 
     constructor(
+        private tabsService: PluginTabService,
         private compiler: Compiler,
         private http: HttpClient
     ) {}
@@ -89,41 +92,62 @@ export class PluginLoaderService {
 
     private loadPlugin(plugin: PluginData) {
         this.activatePlugin(plugin);
-        this.collectPluginRoutes(plugin);
+        if (!!plugin.ui_routes) {
+            this.collectPluginRoutes(plugin);
+        }
+        if (!!plugin.tab_hooks) {
+            this.tabsService.loadPluginTabs(plugin.tab_hooks, plugin.ui_filename);
+        }
         this.addPluginToLoadedPluginList(plugin.plugin);
     }
 
     collectPluginRoutes(plugin: PluginData) {
-        if (plugin.ui_routes) {
-            const routes = plugin.ui_routes;
-            const moduleName = plugin.ui_module_name;
-            let route: Route = {};
+        const routes = plugin.ui_routes;
+        const moduleName = plugin.ui_module_name;
+        let route: Route = {};
 
-            routes.forEach((rt, index) => {
-                if (rt.children) {
-                    const routeChildren: Route[] = [];
-                    const children = rt.children;
-                    let childRoute: Route = {};
+        routes.forEach((rt, index) => {
+            if (rt.children) {
+                const routeChildren: Route[] = [];
+                const children = rt.children;
+                let childRoute: Route = {};
 
-                    children.forEach((childrt, index2) => {
-                        if (childrt.redirectTo) {
-                            childRoute = {
-                                path: childrt.path,
-                                redirectTo: childrt.redirectTo
-                            };
-                        } else {
-                            childRoute = {
-                                path: childrt.path,
-                                component: PluginOutletComponent,
-                                data: {
-                                    file: plugin.ui_filename,
-                                    module: plugin.ui_module_name,
-                                    provider: childrt.provider
-                                }
-                            };
-                        }
-                        routeChildren.push(childRoute);
-                    });
+                children.forEach((childrt, index2) => {
+                    if (childrt.redirectTo) {
+                        childRoute = {
+                            path: childrt.path,
+                            redirectTo: childrt.redirectTo
+                        };
+                    } else {
+                        childRoute = {
+                            path: childrt.path,
+                            component: PluginOutletComponent,
+                            data: {
+                                file: plugin.ui_filename,
+                                module: plugin.ui_module_name,
+                                provider: childrt.provider
+                            }
+                        };
+                    }
+                    routeChildren.push(childRoute);
+                });
+                route = {
+                    path: rt.path,
+                    component: PluginOutletComponent,
+                    data: {
+                        file: plugin.ui_filename,
+                        module: plugin.ui_module_name,
+                        provider: rt.provider
+                    },
+                    children: routeChildren
+                };
+            } else {
+                if (rt.redirectTo) {
+                    route = {
+                        path: rt.path,
+                        redirectTo: rt.redirectTo
+                    };
+                } else {
                     route = {
                         path: rt.path,
                         component: PluginOutletComponent,
@@ -131,31 +155,13 @@ export class PluginLoaderService {
                             file: plugin.ui_filename,
                             module: plugin.ui_module_name,
                             provider: rt.provider
-                        },
-                        children: routeChildren
+                        }
                     };
-                } else {
-                    if (rt.redirectTo) {
-                        route = {
-                            path: rt.path,
-                            redirectTo: rt.redirectTo
-                        };
-                    } else {
-                        route = {
-                            path: rt.path,
-                            component: PluginOutletComponent,
-                            data: {
-                                file: plugin.ui_filename,
-                                module: plugin.ui_module_name,
-                                provider: rt.provider
-                            }
-                        };
-                    }
                 }
+            }
 
-                this.addRouteToLoadedRouteList(route);
-            });
-        }
+            this.addRouteToLoadedRouteList(route);
+        });
     }
 
     activatePlugin(plugin: PluginData): Promise<any> {

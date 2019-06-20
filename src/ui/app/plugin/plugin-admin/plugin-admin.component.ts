@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog} from '@angular/material/dialog';
-import {Router} from '@angular/router';
 
 import {PluginDependencyDialogComponent} from '../plugin-dependency-dialog/plugin-dependency-dialog.component';
 
@@ -28,7 +27,6 @@ export class PluginAdminComponent implements OnInit {
         private spinnerService: SpinnerOverlayService,
         private alertService: AlertService,
         private http: HttpClient,
-        private router: Router,
         public dialog: MatDialog
     ) {
         this.spinnerService.show();

@@ -20,9 +20,11 @@ export interface PluginData {
     }>;
     tab_hooks?: Array<{
         outlet: string,
-        tab_name: string,
         tab_text: string,
-        tab_index?: number
+        index: number,
+        module?: string,
+        provider?: string,
+        component?: any
     }>;
     component_hooks?: Array<{
         outlet: string,

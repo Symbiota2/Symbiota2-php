@@ -5,19 +5,24 @@ import {SymbiotaSharedModule} from 'symbiota-shared';
 import {UserRoutingModule} from './user-routing.module';
 
 import {SignupComponent} from './signup/signup.component';
+import {UserProfileComponent} from './user-profile/user-profile.component';
+import {EditProfileComponent} from './edit-profile/edit-profile.component';
 
 import {UserService} from './user.service';
-import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
     declarations: [
         SignupComponent,
-        UserProfileComponent
+        UserProfileComponent,
+        EditProfileComponent
     ],
     imports: [
         CommonModule,
         SymbiotaSharedModule,
         UserRoutingModule
+    ],
+    entryComponents: [
+        EditProfileComponent
     ],
     providers: [
         UserService
