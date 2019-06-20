@@ -4,7 +4,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {SymbiotaSpatialComponent} from './symbiota-spatial/symbiota-spatial.component';
 
 const routes: Routes = [
-    {path: 'spatial', component: SymbiotaSpatialComponent}
+    {path: 'spatial', component: SymbiotaSpatialComponent, data: {fullWindow: true}}
 ];
 
 @NgModule({

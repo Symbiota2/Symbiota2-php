@@ -1,4 +1,4 @@
-import {Component, OnInit, EventEmitter, Output} from '@angular/core';
+import {Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
 import {Observable} from 'rxjs';
 import {MatDialog} from '@angular/material';
 
@@ -12,6 +12,9 @@ import {CurrentUser} from '../../user/current-user.model';
     styleUrls: ['./sidepanel.component.css']
 })
 export class SidepanelComponent implements OnInit {
+    @Input()
+    fullWindow: boolean;
+
     @Output() sidenavToggle = new EventEmitter<void>();
     isLoggedIn$: Observable<boolean>;
     isLoggedOut$: Observable<boolean>;

@@ -1,12 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 html, body {
 }
 
 body {
-    width: 80%;
-    margin: 25px auto;
+    width: 100%;
+    height: 100%;
+    margin: 0;
     font-family: Verdana, Geneva, sans-serif;
     background-color: #91BDB7;
 }

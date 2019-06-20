@@ -1,19 +1,44 @@
-mat-sidenav-container, mat-sidenav-content, mat-sidenav {
+.framedWindow {
+    width: 80%;
+    margin: 25px auto;
+}
+
+.fullWindow {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+mat-sidenav-content, mat-sidenav {
     height: 100%;
 }
 
 mat-sidenav {
-    width: 300px;
+    width: 400px;
     background-color: #0E6B88;
     padding: 20px;
     color: white;
 }
 
-main {
+.mainFramedWindow {
     padding: 20px;
     min-height: 400px;
     background-color: white;
     transition: none !important;
     box-shadow: none !important;
     border: 0;
+}
+
+.mainFullWindow {}
+
+.sidePanelToggle {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    z-index: 1000;
+    height: 25px;
+    width: 20px;
+    background-color: #0E6B88;
+    color: white;
+    cursor: pointer;
 }
