@@ -15,3 +15,7 @@ body {
     background-color: #ff4d4d;
     color: black;
 }
+
+.dynamic-tab-content {
+    padding: 20px;
+}

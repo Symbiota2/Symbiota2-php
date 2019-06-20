@@ -8,6 +8,8 @@ import {SignupComponent} from './signup/signup.component';
 import {UserProfileComponent} from './user-profile/user-profile.component';
 import {EditProfileComponent} from './edit-profile/edit-profile.component';
 
+import {PluginModule} from '../plugin/plugin.module';
+
 import {UserService} from './user.service';
 
 @NgModule({
@@ -19,7 +21,8 @@ import {UserService} from './user.service';
     imports: [
         CommonModule,
         SymbiotaSharedModule,
-        UserRoutingModule
+        UserRoutingModule,
+        PluginModule
     ],
     entryComponents: [
         EditProfileComponent

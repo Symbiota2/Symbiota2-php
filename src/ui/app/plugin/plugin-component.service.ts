@@ -4,7 +4,20 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class PluginComponentService {
+    pluginComponents = {};
 
-    constructor() {
+    loadPluginComponents(componentArr, filename) {
+        componentArr.forEach((component, index) => {
+            component.filename = filename;
+            const outlet = component.outlet.toString();
+            if (!this.pluginComponents[outlet]) {
+                this.pluginComponents[outlet] = [];
+            }
+            this.pluginComponents[outlet].push(component);
+        });
+    }
+
+    getOutletComponents(outlet: string) {
+        return (this.pluginComponents[outlet] ? this.pluginComponents[outlet] : []);
     }
 }

@@ -15,5 +15,5 @@ main {
     background-color: white;
     transition: none !important;
     box-shadow: none !important;
-    border: 0px;
+    border: 0;
 }

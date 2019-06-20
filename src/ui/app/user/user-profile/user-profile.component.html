@@ -3,10 +3,8 @@
         <ng-template mat-tab-label>
             {{tab.tab_text}}
         </ng-template>
-        <ng-container *ngIf="tab.moduleFactory">
-            <ng-container *ngComponentOutlet="tab.component; ngModuleFactory: tab.moduleFactory; injector: tab.injector"></ng-container>
-        </ng-container>
-        <ng-container *ngIf="!tab.moduleFactory">
+        <app-plugin-outlet class="dynamic-tab-content" *ngIf="tab.module" [file]="tab.filename" [module]="tab.module" [provider]="tab.provider" [child]="true"></app-plugin-outlet>
+        <ng-container *ngIf="!tab.module">
             <ng-container *ngComponentOutlet="tab.component"></ng-container>
         </ng-container>
     </mat-tab>

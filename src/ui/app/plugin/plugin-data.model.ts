@@ -28,9 +28,10 @@ export interface PluginData {
     }>;
     component_hooks?: Array<{
         outlet: string,
-        module: string,
-        provider: string,
-        index?: number
+        index: number,
+        module?: string,
+        provider?: string,
+        component?: any
     }>;
     enabled: boolean;
 }

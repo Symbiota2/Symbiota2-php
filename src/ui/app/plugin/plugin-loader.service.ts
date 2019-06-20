@@ -6,6 +6,7 @@ import {Observable, BehaviorSubject} from 'rxjs';
 import {PluginOutletComponent} from './plugin-outlet/plugin-outlet.component';
 
 import {PluginTabService} from './plugin-tab.service';
+import {PluginComponentService} from './plugin-component.service';
 
 import {PluginData} from './plugin-data.model';
 
@@ -41,6 +42,7 @@ export class PluginLoaderService {
 
     constructor(
         private tabsService: PluginTabService,
+        private componentService: PluginComponentService,
         private compiler: Compiler,
         private http: HttpClient
     ) {}
@@ -97,6 +99,9 @@ export class PluginLoaderService {
         }
         if (!!plugin.tab_hooks) {
             this.tabsService.loadPluginTabs(plugin.tab_hooks, plugin.ui_filename);
+        }
+        if (!!plugin.component_hooks) {
+            this.componentService.loadPluginComponents(plugin.component_hooks, plugin.ui_filename);
         }
         this.addPluginToLoadedPluginList(plugin.plugin);
     }

@@ -21,6 +21,15 @@
     "api_namespace": "Collection",
     "ui_filename": "collection.umd.js",
     "ui_module_name": "CollectionModule",
+    "tab_hooks": [
+      {
+        "outlet": "user-profile",
+        "tab_text": "Specimen Management",
+        "index": 1,
+        "module": "CollectionModule",
+        "provider": "user-profile-collection-tab"
+      }
+    ],
     "enabled": true
   },
   {

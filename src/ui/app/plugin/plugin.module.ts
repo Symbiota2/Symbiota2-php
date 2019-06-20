@@ -11,7 +11,8 @@ import {PluginDependencyDialogComponent} from './plugin-dependency-dialog/plugin
 
 import {PluginLoaderService} from './plugin-loader.service';
 import {PluginRouterService} from './plugin-router.service';
-import {PluginInstallerService} from './plugin-installer.service';
+import {PluginComponentService} from './plugin-component.service';
+import {PluginTabService} from './plugin-tab.service';
 
 @NgModule({
     declarations: [
@@ -28,10 +29,14 @@ import {PluginInstallerService} from './plugin-installer.service';
         PluginOutletComponent,
         PluginDependencyDialogComponent
     ],
+    exports: [
+        PluginOutletComponent
+    ],
     providers: [
         PluginLoaderService,
         PluginRouterService,
-        PluginInstallerService
+        PluginComponentService,
+        PluginTabService
     ]
 })
 export class PluginModule {

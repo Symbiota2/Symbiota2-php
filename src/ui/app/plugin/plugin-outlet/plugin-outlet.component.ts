@@ -7,7 +7,8 @@ import {
     ViewChild,
     ViewContainerRef,
     Compiler,
-    ComponentRef
+    ComponentRef,
+    Input
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -15,31 +16,44 @@ declare const SystemJS: any;
 
 @Component({
     selector: 'app-plugin-outlet',
-    template: `
-        <ng-container #content></ng-container>
-      `
+    templateUrl: './plugin-outlet.component.html',
+    styleUrls: ['./plugin-outlet.component.css']
 })
 export class PluginOutletComponent implements OnInit, AfterViewInit, OnDestroy {
-
     @ViewChild('content',  { read: ViewContainerRef, static: false })
     content: ViewContainerRef;
 
-    private file: string;
-    private module: string;
-    private provider: string;
+    @Input()
+    file: string;
+
+    @Input()
+    module: string;
+
+    @Input()
+    provider: string;
+
+    @Input()
+    params: any;
+
+    @Input()
+    child = false;
     component: ComponentRef<any>;
 
     constructor(
         private route: ActivatedRoute,
         private injector: Injector,
         private compiler: Compiler
-    ) {
-    }
+    ) {}
 
     ngOnInit() {
-        this.file = this.route.snapshot.data.file;
-        this.module = this.route.snapshot.data.module;
-        this.provider = this.route.snapshot.data.provider;
+        if (!this.child) {
+            this.file = this.route.snapshot.data.file;
+            this.module = this.route.snapshot.data.module;
+            this.provider = this.route.snapshot.data.provider;
+            if (this.route.snapshot.data.params) {
+                this.params = this.route.snapshot.data.params;
+            }
+        }
     }
 
     ngAfterViewInit() {
@@ -56,6 +70,7 @@ export class PluginOutletComponent implements OnInit, AfterViewInit, OnDestroy {
         );
 
         this.component = this.content.createComponent(componentFactory);
+        this.component.instance.params = this.params;
     }
 
     ngOnDestroy() {
