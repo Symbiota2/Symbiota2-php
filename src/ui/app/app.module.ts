@@ -6,6 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {LayoutModule} from './layout/layout.module';
 import {UserModule} from './user/user.module';
 import {PluginModule} from './plugin/plugin.module';
+import {PluginAdminModule} from './plugin-admin/plugin-admin.module';
 import {AppRoutingModule} from './app-routing.module';
 import {SymbiotaSpatialModule} from 'symbiota-spatial';
 import {SymbiotaSharedModule} from 'symbiota-shared';
@@ -40,6 +41,7 @@ export function setupPluginLoaderServiceFactory(
         LayoutModule,
         UserModule,
         PluginModule,
+        PluginAdminModule,
         HttpClientModule,
         AppRoutingModule,
         SymbiotaSpatialModule,

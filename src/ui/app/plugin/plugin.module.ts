@@ -3,11 +3,7 @@ import {CommonModule} from '@angular/common';
 
 import {SymbiotaSharedModule} from 'symbiota-shared';
 
-import {PluginRoutingModule} from './plugin-routing.module';
-
 import {PluginOutletComponent} from './plugin-outlet/plugin-outlet.component';
-import {PluginAdminComponent} from './plugin-admin/plugin-admin.component';
-import {PluginDependencyDialogComponent} from './plugin-dependency-dialog/plugin-dependency-dialog.component';
 
 import {PluginLoaderService} from './plugin-loader.service';
 import {PluginRouterService} from './plugin-router.service';
@@ -16,18 +12,14 @@ import {PluginTabService} from './plugin-tab.service';
 
 @NgModule({
     declarations: [
-        PluginOutletComponent,
-        PluginAdminComponent,
-        PluginDependencyDialogComponent
+        PluginOutletComponent
     ],
     imports: [
         CommonModule,
-        PluginRoutingModule,
         SymbiotaSharedModule
     ],
     entryComponents: [
-        PluginOutletComponent,
-        PluginDependencyDialogComponent
+        PluginOutletComponent
     ],
     exports: [
         PluginOutletComponent
