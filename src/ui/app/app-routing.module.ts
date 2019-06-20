@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule, Route} from '@angular/router';
+import {Routes, RouterModule} from '@angular/router';
 
 import {HomeComponent} from './layout/home/home.component';
 import {SitemapComponent} from './layout/sitemap/sitemap.component';
 
-import {PluginLoaderService} from './plugin/plugin-loader.service';
-import {PluginRouterService} from './plugin/plugin-router.service';
+import {PluginLoaderService} from 'symbiota-plugin-loader';
+import {PluginRouterService} from 'symbiota-plugin';
 
 import {AuthGuard} from './auth.guard';
 

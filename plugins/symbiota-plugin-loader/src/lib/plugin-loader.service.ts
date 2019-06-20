@@ -3,10 +3,10 @@ import {HttpClient} from '@angular/common/http';
 import {Route} from '@angular/router';
 import {Observable, BehaviorSubject} from 'rxjs';
 
-import {PluginOutletComponent} from './plugin-outlet/plugin-outlet.component';
+import {PluginOutletComponent} from 'symbiota-plugin';
 
-import {PluginTabService} from './plugin-tab.service';
-import {PluginComponentService} from './plugin-component.service';
+import {PluginTabService} from 'symbiota-plugin';
+import {PluginComponentService} from 'symbiota-plugin';
 
 import {PluginData} from './plugin-data.model';
 
@@ -25,6 +25,7 @@ import * as NgrxStore from '@ngrx/store';
 import * as Rxjs from 'rxjs';
 import * as RxjsOperators from 'rxjs/operators';
 import * as SymbiotaAuth from 'symbiota-auth';
+import * as SymbiotaPlugin from 'symbiota-plugin';
 import * as SymbiotaShared from 'symbiota-shared';
 import * as SymbiotaSpatial from 'symbiota-spatial';
 
@@ -186,6 +187,7 @@ export class PluginLoaderService {
         SystemJS.set('rxjs', SystemJS.newModule(Rxjs));
         SystemJS.set('rxjs/operators', SystemJS.newModule(RxjsOperators));
         SystemJS.set('symbiota-auth', SystemJS.newModule(SymbiotaAuth));
+        SystemJS.set('symbiota-plugin', SystemJS.newModule(SymbiotaPlugin));
         SystemJS.set('symbiota-shared', SystemJS.newModule(SymbiotaShared));
         SystemJS.set('symbiota-spatial', SystemJS.newModule(SymbiotaSpatial));
 

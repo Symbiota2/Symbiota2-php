@@ -70,6 +70,18 @@
       ],
       "symbiota-shared/*": [
         "dist/symbiota-shared/*"
+      ],
+      "symbiota-plugin": [
+        "dist/symbiota-plugin"
+      ],
+      "symbiota-plugin/*": [
+        "dist/symbiota-plugin/*"
+      ],
+      "symbiota-plugin-loader": [
+        "dist/symbiota-plugin-loader"
+      ],
+      "symbiota-plugin-loader/*": [
+        "dist/symbiota-plugin-loader/*"
       ]
     }
   }

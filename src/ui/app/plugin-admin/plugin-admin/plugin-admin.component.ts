@@ -4,7 +4,7 @@ import {MatDialog} from '@angular/material/dialog';
 
 import {PluginDependencyDialogComponent} from '../plugin-dependency-dialog/plugin-dependency-dialog.component';
 
-import {PluginLoaderService} from '../../plugin/plugin-loader.service';
+import {PluginLoaderService} from 'symbiota-plugin-loader';
 import {SpinnerOverlayService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
 

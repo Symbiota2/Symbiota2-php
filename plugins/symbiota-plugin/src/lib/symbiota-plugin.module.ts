@@ -5,7 +5,6 @@ import {SymbiotaSharedModule} from 'symbiota-shared';
 
 import {PluginOutletComponent} from './plugin-outlet/plugin-outlet.component';
 
-import {PluginLoaderService} from './plugin-loader.service';
 import {PluginRouterService} from './plugin-router.service';
 import {PluginComponentService} from './plugin-component.service';
 import {PluginTabService} from './plugin-tab.service';
@@ -25,11 +24,10 @@ import {PluginTabService} from './plugin-tab.service';
         PluginOutletComponent
     ],
     providers: [
-        PluginLoaderService,
         PluginRouterService,
         PluginComponentService,
         PluginTabService
     ]
 })
-export class PluginModule {
+export class SymbiotaPluginModule {
 }

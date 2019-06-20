@@ -8,7 +8,7 @@ import {SignupComponent} from './signup/signup.component';
 import {UserProfileComponent} from './user-profile/user-profile.component';
 import {EditProfileComponent} from './edit-profile/edit-profile.component';
 
-import {PluginModule} from '../plugin/plugin.module';
+import {SymbiotaPluginModule} from 'symbiota-plugin';
 
 import {UserService} from './user.service';
 
@@ -22,7 +22,7 @@ import {UserService} from './user.service';
         CommonModule,
         SymbiotaSharedModule,
         UserRoutingModule,
-        PluginModule
+        SymbiotaPluginModule
     ],
     entryComponents: [
         EditProfileComponent

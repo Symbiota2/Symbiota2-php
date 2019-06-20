@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 
 import {EditProfileComponent} from '../edit-profile/edit-profile.component';
 
-import {PluginTabService} from '../../plugin/plugin-tab.service';
+import {PluginTabService} from 'symbiota-plugin';
 
 @Component({
     selector: 'app-user-profile',

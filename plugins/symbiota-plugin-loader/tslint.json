@@ -1,0 +1,17 @@
+{
+  "extends": "../../tslint.json",
+  "rules": {
+    "directive-selector": [
+      true,
+      "attribute",
+      "symbiotaPluginLoader",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "symbiota-plugin-loader",
+      "kebab-case"
+    ]
+  }
+}

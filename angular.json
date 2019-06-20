@@ -403,6 +403,76 @@
           }
         }
       }
+    },
+    "symbiota-plugin": {
+      "projectType": "library",
+      "root": "plugins/symbiota-plugin",
+      "sourceRoot": "plugins/symbiota-plugin/src",
+      "prefix": "symbiota-plugin",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "plugins/symbiota-plugin/tsconfig.lib.json",
+            "project": "plugins/symbiota-plugin/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "plugins/symbiota-plugin/src/test.ts",
+            "tsConfig": "plugins/symbiota-plugin/tsconfig.spec.json",
+            "karmaConfig": "plugins/symbiota-plugin/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "plugins/symbiota-plugin/tsconfig.lib.json",
+              "plugins/symbiota-plugin/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "symbiota-plugin-loader": {
+      "projectType": "library",
+      "root": "plugins/symbiota-plugin-loader",
+      "sourceRoot": "plugins/symbiota-plugin-loader/src",
+      "prefix": "symbiota-plugin-loader",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "plugins/symbiota-plugin-loader/tsconfig.lib.json",
+            "project": "plugins/symbiota-plugin-loader/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "plugins/symbiota-plugin-loader/src/test.ts",
+            "tsConfig": "plugins/symbiota-plugin-loader/tsconfig.spec.json",
+            "karmaConfig": "plugins/symbiota-plugin-loader/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "plugins/symbiota-plugin-loader/tsconfig.lib.json",
+              "plugins/symbiota-plugin-loader/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "symbiota2"
