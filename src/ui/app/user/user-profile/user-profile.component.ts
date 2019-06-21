@@ -20,7 +20,7 @@ export class UserProfileComponent {
     };
 
     constructor(
-        private tabsService: PluginTabService,
+        private tabsService: PluginTabService
     ) {
         this.tabsArr = Object.assign([], this.tabsService.getOutletTabs('user-profile'));
         this.tabsArr.push(this.editTab);

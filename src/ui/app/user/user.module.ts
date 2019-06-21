@@ -2,13 +2,12 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {SymbiotaSharedModule} from 'symbiota-shared';
+import {SymbiotaPluginModule} from 'symbiota-plugin';
 import {UserRoutingModule} from './user-routing.module';
 
 import {SignupComponent} from './signup/signup.component';
 import {UserProfileComponent} from './user-profile/user-profile.component';
 import {EditProfileComponent} from './edit-profile/edit-profile.component';
-
-import {SymbiotaPluginModule} from 'symbiota-plugin';
 
 import {UserService} from './user.service';
 

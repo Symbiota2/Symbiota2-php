@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 
 import {SymbiotaSharedModule} from 'symbiota-shared';
+import {SymbiotaPluginModule} from 'symbiota-plugin';
 import {AppRoutingModule} from '../app-routing.module';
 
 import {LayoutComponent} from './layout/layout.component';
@@ -25,7 +26,8 @@ import {SitemapComponent} from './sitemap/sitemap.component';
     ],
     imports: [
         AppRoutingModule,
-        SymbiotaSharedModule
+        SymbiotaSharedModule,
+        SymbiotaPluginModule
     ],
     exports: [
         LayoutComponent,

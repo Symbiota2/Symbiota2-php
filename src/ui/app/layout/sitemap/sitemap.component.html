@@ -1,13 +1,59 @@
-<mat-accordion>
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                Portal Management
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-
-        <ul>
-            <li><a routerLink="/pluginadmin">Manage Plugins</a></li>
+<mat-card class="upper-cards">
+    <mat-card-content>
+        <ul *ngIf="generalLinksArr.length > 0">
+            <li *ngFor="let link of generalLinksArr">
+                <a routerLink="{{link.link_path}}">{{link.link_text}}</a>
+            </li>
         </ul>
-    </mat-expansion-panel>
-</mat-accordion>
+        <ng-container *ngIf="generalComponentsArr.length > 0">
+            <ng-container *ngFor="let component of generalComponentsArr">
+                <app-plugin-outlet class="dynamic-tab-content" *ngIf="component.module" [file]="component.filename" [module]="component.module" [provider]="component.provider" [child]="true"></app-plugin-outlet>
+                <ng-container *ngIf="!component.module">
+                    <ng-container *ngComponentOutlet="component.component"></ng-container>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="upper-cards">
+    <mat-card-header>
+        Portal Management
+    </mat-card-header>
+    <mat-card-content>
+        <ul *ngIf="portalAdminLinksArr.length > 0">
+            <li *ngFor="let link of portalAdminLinksArr">
+                <a routerLink="{{link.link_path}}">{{link.link_text}}</a>
+            </li>
+        </ul>
+        <ng-container *ngIf="portalAdminComponentsArr.length > 0">
+            <ng-container *ngFor="let component of portalAdminComponentsArr">
+                <app-plugin-outlet class="dynamic-tab-content" *ngIf="component.module" [file]="component.filename" [module]="component.module" [provider]="component.provider" [child]="true"></app-plugin-outlet>
+                <ng-container *ngIf="!component.module">
+                    <ng-container *ngComponentOutlet="component.component"></ng-container>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </mat-card-content>
+</mat-card>
+
+<mat-card>
+    <mat-card-header>
+        Data Management
+    </mat-card-header>
+    <mat-card-content>
+        <ul *ngIf="dataManagementLinksArr.length > 0">
+            <li *ngFor="let link of dataManagementLinksArr">
+                <a routerLink="{{link.link_path}}">{{link.link_text}}</a>
+            </li>
+        </ul>
+        <ng-container *ngIf="dataManagementComponentsArr.length > 0">
+            <ng-container *ngFor="let component of dataManagementComponentsArr">
+                <app-plugin-outlet class="dynamic-tab-content" *ngIf="component.module" [file]="component.filename" [module]="component.module" [provider]="component.provider" [child]="true"></app-plugin-outlet>
+                <ng-container *ngIf="!component.module">
+                    <ng-container *ngComponentOutlet="component.component"></ng-container>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </mat-card-content>
+</mat-card>
