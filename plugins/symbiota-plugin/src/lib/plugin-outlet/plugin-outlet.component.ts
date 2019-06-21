@@ -20,23 +20,13 @@ declare const SystemJS: any;
     styleUrls: ['./plugin-outlet.component.css']
 })
 export class PluginOutletComponent implements OnInit, AfterViewInit, OnDestroy {
-    @ViewChild('content',  { read: ViewContainerRef, static: false })
-    content: ViewContainerRef;
+    @ViewChild('content',  { read: ViewContainerRef, static: false }) content: ViewContainerRef;
+    @Input() file: string;
+    @Input() module: string;
+    @Input() provider: string;
+    @Input() params: any;
+    @Input() child = false;
 
-    @Input()
-    file: string;
-
-    @Input()
-    module: string;
-
-    @Input()
-    provider: string;
-
-    @Input()
-    params: any;
-
-    @Input()
-    child = false;
     component: ComponentRef<any>;
 
     constructor(

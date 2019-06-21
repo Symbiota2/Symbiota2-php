@@ -1,9 +1,13 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {MatDialogRef} from '@angular/material';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import {AuthService} from '../auth.service';
 import {SpinnerOverlayService} from 'symbiota-shared';
+
+export interface RedirectData {
+    redirect: string;
+}
 
 @Component({
     selector: 'app-login',
@@ -15,6 +19,7 @@ export class LoginComponent {
     show = false;
 
     constructor(
+        @Inject(MAT_DIALOG_DATA) public data: RedirectData,
         public dialogRef: MatDialogRef<LoginComponent>,
         private authService: AuthService,
         private spinnerService: SpinnerOverlayService
@@ -34,7 +39,8 @@ export class LoginComponent {
         this.authService.login(
             form.value.username,
             form.value.password,
-            this.maintainLoginValue
+            this.maintainLoginValue,
+            this.data.redirect
         );
     }
 

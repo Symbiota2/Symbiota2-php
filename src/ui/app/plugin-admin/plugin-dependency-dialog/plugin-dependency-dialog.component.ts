@@ -15,8 +15,7 @@ export interface DependencyDialogData {
 export class PluginDependencyDialogComponent {
 
     constructor(
-        public dialogRef: MatDialogRef<PluginDependencyDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: DependencyDialogData
+        @Inject(MAT_DIALOG_DATA) public data: DependencyDialogData,
+        public dialogRef: MatDialogRef<PluginDependencyDialogComponent>
     ) {}
-
 }

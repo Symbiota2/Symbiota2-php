@@ -1,9 +1,7 @@
 import {Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
 import {Observable} from 'rxjs';
-import {MatDialog} from '@angular/material';
 
 import {AuthService} from 'symbiota-auth';
-import {LoginComponent} from 'symbiota-auth';
 import {CurrentUser} from '../../user/current-user.model';
 
 @Component({
@@ -12,18 +10,15 @@ import {CurrentUser} from '../../user/current-user.model';
     styleUrls: ['./sidepanel.component.css']
 })
 export class SidepanelComponent implements OnInit {
-    @Input()
-    fullWindow: boolean;
-
+    @Input() fullWindow: boolean;
     @Output() sidenavToggle = new EventEmitter<void>();
+
     isLoggedIn$: Observable<boolean>;
     isLoggedOut$: Observable<boolean>;
     currentUser$: Observable<CurrentUser>;
-    private loginDialog: any;
 
     constructor(
-        private authService: AuthService,
-        public dialog: MatDialog
+        private authService: AuthService
     ) {}
 
     ngOnInit() {
@@ -36,10 +31,8 @@ export class SidepanelComponent implements OnInit {
         this.sidenavToggle.emit();
     }
 
-    openLoginDialog() {
-        this.loginDialog = this.dialog.open(LoginComponent, {
-            width: '450px'
-        });
+    onLogin() {
+        this.authService.openLoginDialog();
     }
 
     onLogout() {

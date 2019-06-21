@@ -7,17 +7,18 @@ import {SitemapComponent} from './layout/sitemap/sitemap.component';
 import {PluginLoaderService} from 'symbiota-plugin-loader';
 import {PluginRouterService} from 'symbiota-plugin';
 
-import {AuthGuard} from './auth.guard';
-
 const routes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'sitemap', component: SitemapComponent}
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule],
-    providers: [AuthGuard]
+    imports: [
+        RouterModule.forRoot(routes)
+    ],
+    exports: [
+        RouterModule
+    ]
 })
 export class AppRoutingModule {
 

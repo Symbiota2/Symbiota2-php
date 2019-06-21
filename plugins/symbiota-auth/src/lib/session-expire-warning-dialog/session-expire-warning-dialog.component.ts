@@ -16,17 +16,17 @@ export interface LoginData {
 export class SessionExpireWarningDialogComponent {
 
     constructor(
+        @Inject(MAT_DIALOG_DATA) private data: LoginData,
         public dialogRef: MatDialogRef<SessionExpireWarningDialogComponent>,
-        private authService: AuthService,
-        @Inject(MAT_DIALOG_DATA) private data: LoginData
-    ) {
-    }
+        private authService: AuthService
+    ) {}
 
     onYesClick(): void {
         this.authService.login(
             this.data.username,
             this.data.password,
-            0
+            0,
+            ''
         );
         this.dialogRef.close();
     }

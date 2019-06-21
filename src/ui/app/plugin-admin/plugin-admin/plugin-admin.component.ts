@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -7,6 +7,7 @@ import {PluginDependencyDialogComponent} from '../plugin-dependency-dialog/plugi
 import {PluginLoaderService} from 'symbiota-plugin-loader';
 import {SpinnerOverlayService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
+import {AuthService} from 'symbiota-auth';
 
 import {AvailablePluginData} from '../available-plugin-data.model';
 
@@ -15,20 +16,25 @@ import {AvailablePluginData} from '../available-plugin-data.model';
     templateUrl: './plugin-admin.component.html',
     styleUrls: ['./plugin-admin.component.css']
 })
-export class PluginAdminComponent implements OnInit {
+export class PluginAdminComponent {
     availablePlugins: any;
     installedPlugins: any;
     updatesAvailable = false;
     allPluginsEnabled = true;
     allPluginsDisabled = true;
+    accessPermissions = [
+        'SuperAdmin'
+    ];
 
     constructor(
         private pluginLoader: PluginLoaderService,
         private spinnerService: SpinnerOverlayService,
         private alertService: AlertService,
+        private authService: AuthService,
         private http: HttpClient,
         public dialog: MatDialog
     ) {
+        this.authService.validateAccess(this.accessPermissions);
         this.spinnerService.show();
         http.get<AvailablePluginData[]>('/api/pluginregistry').subscribe(
             pluginList => {
@@ -40,8 +46,6 @@ export class PluginAdminComponent implements OnInit {
             }
         );
     }
-
-    ngOnInit() {}
 
     primePluginData() {
         this.installedPlugins.forEach((plugin, index) => {

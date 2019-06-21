@@ -1,10 +1,8 @@
 import {Component, OnInit, EventEmitter, Output} from '@angular/core';
 import {Observable} from 'rxjs';
-import {MatDialog} from '@angular/material';
 
 import {AuthService} from 'symbiota-auth';
 import {CurrentUser} from '../../../user/current-user.model';
-import {LoginComponent} from 'symbiota-auth';
 
 @Component({
     selector: 'header-topnav',
@@ -13,14 +11,13 @@ import {LoginComponent} from 'symbiota-auth';
 })
 export class TopnavComponent implements OnInit {
     @Output() sidenavToggle = new EventEmitter<void>();
+
     isLoggedIn$: Observable<boolean>;
     isLoggedOut$: Observable<boolean>;
     currentUser$: Observable<CurrentUser>;
-    private loginDialog: any;
 
     constructor(
-        private authService: AuthService,
-        public dialog: MatDialog
+        private authService: AuthService
     ) {}
 
     ngOnInit() {
@@ -33,10 +30,8 @@ export class TopnavComponent implements OnInit {
         this.sidenavToggle.emit();
     }
 
-    openLoginDialog() {
-        this.loginDialog = this.dialog.open(LoginComponent, {
-            width: '450px'
-        });
+    onLogin() {
+        this.authService.openLoginDialog();
     }
 
     onLogout() {

@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Yaml\Yaml;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class PluginController extends AbstractController
 {
@@ -49,6 +50,7 @@ class PluginController extends AbstractController
      *     path="/api/pluginregistry",
      *     methods={"GET"}
      * )
+     * @IsGranted("SuperAdmin")
      */
     public function getPluginRegistry()
     {
@@ -67,6 +69,7 @@ class PluginController extends AbstractController
      *     path="/api/disableplugins",
      *     methods={"POST"}
      * )
+     * @IsGranted("SuperAdmin")
      */
     public function disablePlugins(Request $request)
     {
@@ -97,6 +100,7 @@ class PluginController extends AbstractController
      *     path="/api/enableplugins",
      *     methods={"POST"}
      * )
+     * @IsGranted("SuperAdmin")
      */
     public function enablePlugins(Request $request)
     {

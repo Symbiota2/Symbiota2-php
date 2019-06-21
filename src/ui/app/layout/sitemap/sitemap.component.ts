@@ -9,7 +9,6 @@ import {PluginLinkService} from 'symbiota-plugin';
     styleUrls: ['./sitemap.component.css']
 })
 export class SitemapComponent {
-
     generalLinksArr = [];
     portalAdminLinksArr = [];
     dataManagementLinksArr = [];

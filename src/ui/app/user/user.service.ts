@@ -14,11 +14,11 @@ import {User} from './user.model';
 export class UserService {
 
     constructor(
-        private http: HttpClient, private router: Router,
+        private http: HttpClient,
+        private router: Router,
         public spinnerService: SpinnerOverlayService,
         public alertService: AlertService
-    ) {
-    }
+    ) {}
 
     createUser(
         username: string,

@@ -5,7 +5,6 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
-    availablePermissions: ['SuperAdmin','TaxonProfile','Taxonomy','KeyAdmin','KeyEditor','RareSppAdmin','RareSppReadAll','ClAdmin','ProjAdmin','DatasetAdmin','DatasetEditor','CollAdmin','CollEditor','RareSppReader']
 
 services:
     # default configuration for services in *this* file

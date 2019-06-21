@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 import {ConfigurationService} from 'symbiota-shared';
 
@@ -7,15 +7,10 @@ import {ConfigurationService} from 'symbiota-shared';
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
-
+export class HomeComponent {
     title = '';
 
     constructor(config: ConfigurationService) {
         this.title = (config.data.DEFAULT_TITLE ? config.data.DEFAULT_TITLE : '');
     }
-
-    ngOnInit() {
-    }
-
 }
