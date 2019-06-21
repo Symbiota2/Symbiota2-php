@@ -7,6 +7,7 @@ import {PluginOutletComponent} from 'symbiota-plugin';
 
 import {PluginTabService} from 'symbiota-plugin';
 import {PluginComponentService} from 'symbiota-plugin';
+import {PluginLinkService} from 'symbiota-plugin';
 
 import {PluginData} from './plugin-data.model';
 
@@ -44,6 +45,7 @@ export class PluginLoaderService {
     constructor(
         private tabsService: PluginTabService,
         private componentService: PluginComponentService,
+        private linkService: PluginLinkService,
         private compiler: Compiler,
         private http: HttpClient
     ) {}
@@ -103,6 +105,9 @@ export class PluginLoaderService {
         }
         if (!!plugin.component_hooks) {
             this.componentService.loadPluginComponents(plugin.component_hooks, plugin.ui_filename);
+        }
+        if (!!plugin.link_hooks) {
+            this.linkService.loadPluginLinks(plugin.link_hooks);
         }
         this.addPluginToLoadedPluginList(plugin.plugin);
     }

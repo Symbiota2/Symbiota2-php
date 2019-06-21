@@ -33,5 +33,10 @@ export interface PluginData {
         provider?: string,
         component?: any
     }>;
+    link_hooks?: Array<{
+        outlet: string,
+        link_path: string,
+        link_text: string
+    }>;
     enabled: boolean;
 }

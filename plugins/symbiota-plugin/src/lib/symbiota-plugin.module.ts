@@ -8,6 +8,7 @@ import {PluginOutletComponent} from './plugin-outlet/plugin-outlet.component';
 import {PluginRouterService} from './plugin-router.service';
 import {PluginComponentService} from './plugin-component.service';
 import {PluginTabService} from './plugin-tab.service';
+import {PluginLinkService} from './plugin-link.service';
 
 @NgModule({
     declarations: [
@@ -26,7 +27,8 @@ import {PluginTabService} from './plugin-tab.service';
     providers: [
         PluginRouterService,
         PluginComponentService,
-        PluginTabService
+        PluginTabService,
+        PluginLinkService
     ]
 })
 export class SymbiotaPluginModule {
