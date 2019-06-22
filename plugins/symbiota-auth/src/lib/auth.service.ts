@@ -48,6 +48,9 @@ export class AuthService {
     tokenExpire$: Observable<number> = this.user$.pipe(
         map(user => user.tokenExpire)
     );
+    userPermissions$: Observable<object> = this.user$.pipe(
+        map(user => user.permissions)
+    );
     isAuthenticated$: Observable<boolean> = this.user$.pipe(
         map(user => !!user.id)
     );

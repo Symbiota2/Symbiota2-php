@@ -16,7 +16,7 @@
     </mat-card-content>
 </mat-card>
 
-<mat-card class="upper-cards">
+<mat-card class="upper-cards" *ngIf="(isAdmin$ | async)">
     <mat-card-header>
         Portal Management
     </mat-card-header>

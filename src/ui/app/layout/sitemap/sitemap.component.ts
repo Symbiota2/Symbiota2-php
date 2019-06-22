@@ -1,14 +1,20 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
 
 import {PluginComponentService} from 'symbiota-plugin';
 import {PluginLinkService} from 'symbiota-plugin';
+import {AuthService} from 'symbiota-auth';
+import {map} from 'rxjs/operators';
 
 @Component({
     selector: 'app-sitemap',
     templateUrl: './sitemap.component.html',
     styleUrls: ['./sitemap.component.css']
 })
-export class SitemapComponent {
+export class SitemapComponent implements OnInit {
+    currentPermissions$: Observable<object>;
+    isAdmin$: Observable<boolean>;
+
     generalLinksArr = [];
     portalAdminLinksArr = [];
     dataManagementLinksArr = [];
@@ -23,7 +29,8 @@ export class SitemapComponent {
 
     constructor(
         private linkService: PluginLinkService,
-        private componentService: PluginComponentService
+        private componentService: PluginComponentService,
+        private authService: AuthService
     ) {
         this.generalLinksArr = Object.assign([], this.linkService.getOutletLinks('sitemap-general'));
         this.generalLinksArr.sort((a, b) => a.link_text.localeCompare(b.link_text));
@@ -43,5 +50,12 @@ export class SitemapComponent {
 
         this.dataManagementComponentsArr = Object.assign([], this.componentService.getOutletComponents('sitemap-data-management'));
         this.dataManagementComponentsArr.sort((a, b) => a.index - b.index);
+    }
+
+    ngOnInit() {
+        this.currentPermissions$ = this.authService.userPermissions$;
+        this.isAdmin$ = this.currentPermissions$.pipe(
+            map(permissions => !!permissions['SuperAdmin'])
+        );
     }
 }
