@@ -50,7 +50,6 @@ class PluginController extends AbstractController
      *     path="/api/pluginregistry",
      *     methods={"GET"}
      * )
-     * @IsGranted("SuperAdmin")
      */
     public function getPluginRegistry()
     {

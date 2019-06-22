@@ -109,6 +109,7 @@ export class AuthService {
 
     logout() {
         this.spinnerService.show();
+        this.router.navigate(['/']);
         this.http.get('/api/logout').subscribe(
             () => {
                 this.maintainLogin$ = undefined;
@@ -118,7 +119,6 @@ export class AuthService {
                 clearTimeout(this.warningTimer);
                 this.subject.next(ANONYMOUS_USER);
                 this.spinnerService.hide();
-                location.reload();
             }
         );
     }
