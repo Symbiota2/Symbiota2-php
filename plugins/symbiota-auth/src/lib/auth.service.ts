@@ -198,6 +198,41 @@ export class AuthService {
         }, duration * 1000);
     }
 
+    getCurrentPermissions() {
+        let permissions = {};
+        if (this.subject.getValue() && this.subject.getValue().id) {
+            permissions = Object.assign({}, this.subject.getValue().permissions);
+        }
+        return permissions;
+    }
+
+    validatePermissions(permissions: any[]) {
+        let validated = false;
+        if (this.subject.getValue() && this.subject.getValue().id) {
+            const currentPermissions = Object.assign({}, this.subject.getValue().permissions);
+            if (currentPermissions['SuperAdmin']) {
+                return true;
+            } else {
+                const currentPermKeys = Object.keys(currentPermissions);
+                permissions.forEach((perm, index) => {
+                    if (typeof perm === 'string') {
+                        if (currentPermKeys.includes(perm)) {
+                            validated = true;
+                        }
+                    }
+                    if (typeof perm === 'object') {
+                        const permKey = Object.keys(perm)[0];
+                        const permValue = perm[permKey];
+                        if (currentPermKeys.includes(permKey) && currentPermissions[permKey].includes(permValue)) {
+                            validated = true;
+                        }
+                    }
+                });
+            }
+        }
+        return validated;
+    }
+
     validateAccess(permissions: any[]) {
         if (this.subject.getValue() && this.subject.getValue().id) {
             let accessGranted = false;
