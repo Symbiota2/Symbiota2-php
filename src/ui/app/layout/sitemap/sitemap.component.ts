@@ -11,7 +11,6 @@ import {AuthService} from 'symbiota-auth';
     styleUrls: ['./sitemap.component.css']
 })
 export class SitemapComponent implements OnInit {
-    isLoggedIn$: Observable<boolean>;
     currentPermissions$: Observable<object>;
 
     generalLinksArr = [];
@@ -52,7 +51,6 @@ export class SitemapComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.isLoggedIn$ = this.authService.isAuthenticated$;
         this.currentPermissions$ = this.authService.userPermissions$;
     }
 }
