@@ -12,10 +12,12 @@ export interface PluginData {
         path: string,
         redirectTo?: string,
         provider?: string,
+        data?: object,
         children?: Array<{
             path: string,
             redirectTo?: string,
-            provider?: string
+            provider?: string,
+            data?: object
         }>
     }>;
     tab_hooks?: Array<{

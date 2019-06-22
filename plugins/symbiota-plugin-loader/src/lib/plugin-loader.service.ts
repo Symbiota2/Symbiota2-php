@@ -118,12 +118,38 @@ export class PluginLoaderService {
         let route: Route = {};
 
         routes.forEach((rt, index) => {
+            let routeData = {};
+            const data = {
+                file: plugin.ui_filename,
+                module: plugin.ui_module_name,
+                provider: rt.provider
+            };
+
+            if (rt.data) {
+                routeData = Object.assign({}, data, rt.data);
+            } else {
+                routeData = Object.assign({}, data);
+            }
+
             if (rt.children) {
                 const routeChildren: Route[] = [];
                 const children = rt.children;
                 let childRoute: Route = {};
 
                 children.forEach((childrt, index2) => {
+                    let childRouteData = {};
+                    const childData = {
+                        file: plugin.ui_filename,
+                        module: plugin.ui_module_name,
+                        provider: childrt.provider
+                    };
+
+                    if (childrt.data) {
+                        childRouteData = Object.assign({}, data, childrt.data);
+                    } else {
+                        childRouteData = Object.assign({}, data);
+                    }
+
                     if (childrt.redirectTo) {
                         childRoute = {
                             path: childrt.path,
@@ -133,11 +159,7 @@ export class PluginLoaderService {
                         childRoute = {
                             path: childrt.path,
                             component: PluginOutletComponent,
-                            data: {
-                                file: plugin.ui_filename,
-                                module: plugin.ui_module_name,
-                                provider: childrt.provider
-                            }
+                            data: childRouteData
                         };
                     }
                     routeChildren.push(childRoute);
@@ -145,11 +167,7 @@ export class PluginLoaderService {
                 route = {
                     path: rt.path,
                     component: PluginOutletComponent,
-                    data: {
-                        file: plugin.ui_filename,
-                        module: plugin.ui_module_name,
-                        provider: rt.provider
-                    },
+                    data: routeData,
                     children: routeChildren
                 };
             } else {
@@ -162,11 +180,7 @@ export class PluginLoaderService {
                     route = {
                         path: rt.path,
                         component: PluginOutletComponent,
-                        data: {
-                            file: plugin.ui_filename,
-                            module: plugin.ui_module_name,
-                            provider: rt.provider
-                        }
+                        data: routeData
                     };
                 }
             }
