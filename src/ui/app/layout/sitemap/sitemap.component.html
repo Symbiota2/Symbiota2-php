@@ -16,44 +16,48 @@
     </mat-card-content>
 </mat-card>
 
-<mat-card class="upper-cards" *ngIf="(isAdmin$ | async)">
-    <mat-card-header>
-        Portal Management
-    </mat-card-header>
-    <mat-card-content>
-        <ul *ngIf="portalAdminLinksArr.length > 0">
-            <li *ngFor="let link of portalAdminLinksArr">
-                <a routerLink="{{link.link_path}}">{{link.link_text}}</a>
-            </li>
-        </ul>
-        <ng-container *ngIf="portalAdminComponentsArr.length > 0">
-            <ng-container *ngFor="let component of portalAdminComponentsArr">
-                <app-plugin-outlet class="dynamic-tab-content" *ngIf="component.module" [file]="component.filename" [module]="component.module" [provider]="component.provider" [child]="true"></app-plugin-outlet>
-                <ng-container *ngIf="!component.module">
-                    <ng-container *ngComponentOutlet="component.component"></ng-container>
+<ng-container *ngIf="isLoggedIn$">
+    <mat-card class="upper-cards" *ngIf="(currentPermissions$ | async)?.SuperAdmin">
+        <mat-card-header>
+            Portal Management
+        </mat-card-header>
+        <mat-card-content>
+            <ul *ngIf="portalAdminLinksArr.length > 0">
+                <li *ngFor="let link of portalAdminLinksArr">
+                    <a routerLink="{{link.link_path}}">{{link.link_text}}</a>
+                </li>
+            </ul>
+            <ng-container *ngIf="portalAdminComponentsArr.length > 0">
+                <ng-container *ngFor="let component of portalAdminComponentsArr">
+                    <app-plugin-outlet class="dynamic-tab-content" *ngIf="component.module" [file]="component.filename" [module]="component.module" [provider]="component.provider" [child]="true"></app-plugin-outlet>
+                    <ng-container *ngIf="!component.module">
+                        <ng-container *ngComponentOutlet="component.component"></ng-container>
+                    </ng-container>
                 </ng-container>
             </ng-container>
-        </ng-container>
-    </mat-card-content>
-</mat-card>
+        </mat-card-content>
+    </mat-card>
+</ng-container>
 
-<mat-card>
-    <mat-card-header>
-        Data Management
-    </mat-card-header>
-    <mat-card-content>
-        <ul *ngIf="dataManagementLinksArr.length > 0">
-            <li *ngFor="let link of dataManagementLinksArr">
-                <a routerLink="{{link.link_path}}">{{link.link_text}}</a>
-            </li>
-        </ul>
-        <ng-container *ngIf="dataManagementComponentsArr.length > 0">
-            <ng-container *ngFor="let component of dataManagementComponentsArr">
-                <app-plugin-outlet class="dynamic-tab-content" *ngIf="component.module" [file]="component.filename" [module]="component.module" [provider]="component.provider" [child]="true"></app-plugin-outlet>
-                <ng-container *ngIf="!component.module">
-                    <ng-container *ngComponentOutlet="component.component"></ng-container>
+<ng-container *ngIf="isLoggedIn$">
+    <mat-card>
+        <mat-card-header>
+            Data Management
+        </mat-card-header>
+        <mat-card-content>
+            <ul *ngIf="dataManagementLinksArr.length > 0">
+                <li *ngFor="let link of dataManagementLinksArr">
+                    <a routerLink="{{link.link_path}}">{{link.link_text}}</a>
+                </li>
+            </ul>
+            <ng-container *ngIf="dataManagementComponentsArr.length > 0">
+                <ng-container *ngFor="let component of dataManagementComponentsArr">
+                    <app-plugin-outlet class="dynamic-tab-content" *ngIf="component.module" [file]="component.filename" [module]="component.module" [provider]="component.provider" [child]="true"></app-plugin-outlet>
+                    <ng-container *ngIf="!component.module">
+                        <ng-container *ngComponentOutlet="component.component"></ng-container>
+                    </ng-container>
                 </ng-container>
             </ng-container>
-        </ng-container>
-    </mat-card-content>
-</mat-card>
+        </mat-card-content>
+    </mat-card>
+</ng-container>

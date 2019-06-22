@@ -4,7 +4,6 @@ import {Observable} from 'rxjs';
 import {PluginComponentService} from 'symbiota-plugin';
 import {PluginLinkService} from 'symbiota-plugin';
 import {AuthService} from 'symbiota-auth';
-import {map} from 'rxjs/operators';
 
 @Component({
     selector: 'app-sitemap',
@@ -12,8 +11,8 @@ import {map} from 'rxjs/operators';
     styleUrls: ['./sitemap.component.css']
 })
 export class SitemapComponent implements OnInit {
+    isLoggedIn$: Observable<boolean>;
     currentPermissions$: Observable<object>;
-    isAdmin$: Observable<boolean>;
 
     generalLinksArr = [];
     portalAdminLinksArr = [];
@@ -53,9 +52,7 @@ export class SitemapComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.isLoggedIn$ = this.authService.isAuthenticated$;
         this.currentPermissions$ = this.authService.userPermissions$;
-        this.isAdmin$ = this.currentPermissions$.pipe(
-            map(permissions => !!permissions['SuperAdmin'])
-        );
     }
 }
