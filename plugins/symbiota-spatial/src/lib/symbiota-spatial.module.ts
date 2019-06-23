@@ -2,19 +2,20 @@ import {NgModule} from '@angular/core';
 
 import {SpatialRoutingModule} from './spatial-routing.module';
 
-import {SymbiotaSpatialComponent} from './symbiota-spatial/symbiota-spatial.component';
+import {SpatialAnalysisComponent} from './spatial-analysis/spatial-analysis.component';
+
+import {MapProviderService} from './map-provider.service';
 
 @NgModule({
     declarations: [
-        SymbiotaSpatialComponent
+        SpatialAnalysisComponent
     ],
     imports: [
         SpatialRoutingModule
     ],
-    exports: [
-        SymbiotaSpatialComponent
-    ],
-    bootstrap: [SymbiotaSpatialComponent]
+    providers: [
+        MapProviderService
+    ]
 })
 export class SymbiotaSpatialModule {
 }

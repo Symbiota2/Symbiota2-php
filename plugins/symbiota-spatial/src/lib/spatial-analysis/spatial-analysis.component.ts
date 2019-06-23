@@ -21,16 +21,14 @@ import {
 import Overlay from 'ol/Overlay';
 
 @Component({
-    selector: 'symbiota-spatial-symbiota-spatial',
-    template: `
-        <div id="map" class="map"></div>
-    `,
+    selector: 'symbiota-spatial-spatial-analysis',
+    templateUrl: './spatial-analysis.component.html',
     styleUrls: [
         '../../../../../node_modules/ol/ol.css',
-        './symbiota-spatial.component.css'
+        './spatial-analysis.component.css'
     ]
 })
-export class SymbiotaSpatialComponent implements OnInit {
+export class SpatialAnalysisComponent implements OnInit {
 
     map: OlMap;
     source: XYZ;
