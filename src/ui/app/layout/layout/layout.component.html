@@ -5,7 +5,7 @@
     <mat-sidenav-content>
         <header-outlet *ngIf="!fullWindow" (sidenavToggle)="sidenav.toggle()"></header-outlet>
         <main [ngClass]="{'mainFullWindow': fullWindow,'mainFramedWindow': !fullWindow}">
-            <div class="sidePanelToggle" *ngIf="fullWindow" (click)="sidenav.toggle()">
+            <div class="sidePanelToggleOpen" *ngIf="fullWindow" (click)="sidenav.toggle()">
                 <mat-icon>arrow_forward_ios</mat-icon>
             </div>
             <router-outlet></router-outlet>

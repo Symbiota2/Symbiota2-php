@@ -7,17 +7,26 @@
     width: 100%;
     height: 100%;
     margin: 0;
+    padding: 0;
 }
 
 mat-sidenav-content, mat-sidenav {
     height: 100%;
+    margin: 0;
+}
+
+mat-sidenav-container {
+    height: 100%;
+    margin: 0;
 }
 
 mat-sidenav {
     width: 400px;
-    background-color: #0E6B88;
+    background-color: #EEEEEE;
     padding: 20px;
-    color: white;
+    color: black;
+    overflow: visible;
+    z-index: 20;
 }
 
 .mainFramedWindow {
@@ -31,14 +40,18 @@ mat-sidenav {
 
 .mainFullWindow {}
 
-.sidePanelToggle {
+.sidePanelToggleOpen {
+    padding-left: 25px;
+    border-radius: 25px;
     position: absolute;
-    top: 10px;
-    left: 0;
-    z-index: 1000;
+    top: 0;
+    left: -15px;
+    z-index: 10;
     height: 25px;
-    width: 20px;
-    background-color: #0E6B88;
-    color: white;
+    width: 35px;
+    background-color: #EEEEEE;
     cursor: pointer;
+    border-right: 2px solid black;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
 }

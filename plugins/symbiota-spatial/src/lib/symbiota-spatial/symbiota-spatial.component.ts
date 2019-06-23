@@ -1,12 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 
-import Map from 'ol/Map.js';
-import XYZ from 'ol/source/XYZ.js';
-import {Heatmap as HeatmapLayer, Tile as TileLayer} from 'ol/layer.js';
-import VectorLayer from 'ol/layer/Vector.js';
-import {Cluster, OSM, Vector as VectorSource} from 'ol/source.js';
-import {fromLonLat} from 'ol/proj.js';
-import View from 'ol/View.js';
+import OlMap from 'ol/Map';
+import XYZ from 'ol/source/XYZ';
+import {defaults as defaultControls, FullScreen, Zoom} from 'ol/control';
+import {ZoomSlider} from 'ol/control';
+import {Heatmap as HeatmapLayer, Tile as TileLayer} from 'ol/layer';
+import VectorLayer from 'ol/layer/Vector';
+import {Cluster, OSM, Vector as VectorSource} from 'ol/source';
+import {fromLonLat} from 'ol/proj';
+import OlView from 'ol/View';
 import PropertyCluster from '../../../../../src/ui/assets/js/libraries/PropertyCluster.js';
 import {
     AtlasManager,
@@ -15,22 +17,25 @@ import {
     Stroke as StrokeStyle,
     RegularShape,
     Style
-} from 'ol/style.js';
-import Overlay from 'ol/Overlay.js';
+} from 'ol/style';
+import Overlay from 'ol/Overlay';
 
 @Component({
     selector: 'symbiota-spatial-symbiota-spatial',
     template: `
         <div id="map" class="map"></div>
     `,
-    styleUrls: ['./symbiota-spatial.component.css']
+    styleUrls: [
+        '../../../../../node_modules/ol/ol.css',
+        './symbiota-spatial.component.css'
+    ]
 })
 export class SymbiotaSpatialComponent implements OnInit {
 
-    map: Map;
+    map: OlMap;
     source: XYZ;
     layer: TileLayer;
-    view: View;
+    view: OlView;
 
     constructor() {
     }
@@ -46,16 +51,20 @@ export class SymbiotaSpatialComponent implements OnInit {
             source: this.source
         });
 
-        this.view = new View({
+        this.view = new OlView({
             center: fromLonLat([-110.90713, 32.21976]),
             zoom: 8,
         });
 
-        this.map = new Map({
+        this.map = new OlMap({
+            // controls: [],
             target: 'map',
             layers: [this.layer],
             view: this.view
         });
+
+        const zoomslider = new ZoomSlider();
+        this.map.addControl(zoomslider);
     }
 
 }

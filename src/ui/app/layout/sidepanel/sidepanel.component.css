@@ -1,11 +1,11 @@
 a {
     text-decoration: none;
-    color: white;
     cursor: pointer;
+    margin-left: 10px;
 }
 
 a:hover, a:active {
-    color: lightgray;
+    color: gray;
 }
 
 .sidenav-links {
@@ -28,13 +28,15 @@ a:hover, a:active {
     color: black;
 }
 
-.sidePanelToggle {
+.sidePanelToggleClose {
+    padding-left: 25px;
+    border-radius: 25px;
     position: absolute;
-    top: 10px;
-    right: 0;
-    z-index: 1000;
+    top: 2px;
+    right: -45px;
+    z-index: 0;
     height: 25px;
-    width: 20px;
-    background-color: #0E6B88;
+    width: 35px;
+    background-color: #EEEEEE;
     cursor: pointer;
 }
