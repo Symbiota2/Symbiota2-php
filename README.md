@@ -16,8 +16,8 @@ Symbiota2 can be installed for development in the following steps:
 `git clone https://github.com/Symbiota2/Symbiota2.git portal-name`
 - `cd portal-name`
 - `composer install`
-- `npm install`
 - `npm run package_all_plugins`
+- `npm install`
 
 [Go here to learn how to setup the pre-configured Symbiota2 development environment (recommended)](https://github.com/Symbiota2/Symbiota2/wiki/Setup-the-Symbiota2-development-environment)
 
