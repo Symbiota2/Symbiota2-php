@@ -10,7 +10,9 @@ import {ConfigurationService} from 'symbiota-shared';
 export class HomeComponent {
     title = '';
 
-    constructor(config: ConfigurationService) {
-        this.title = (config.data.DEFAULT_TITLE ? config.data.DEFAULT_TITLE : '');
+    constructor(
+        configService: ConfigurationService
+    ) {
+        this.title = (configService.data.DEFAULT_TITLE ? configService.data.DEFAULT_TITLE : '');
     }
 }

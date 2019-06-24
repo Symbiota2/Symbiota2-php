@@ -13,7 +13,7 @@ import {SpatialToolsService} from './spatial-tools.service';
         SpatialAnalysisComponent
     ],
     imports: [
-        // SpatialRoutingModule,
+        SpatialRoutingModule,
         SymbiotaSharedModule
     ],
     providers: [
@@ -21,5 +21,4 @@ import {SpatialToolsService} from './spatial-tools.service';
         SpatialToolsService
     ]
 })
-export class SymbiotaSpatialModule {
-}
+export class SpatialModule { }
