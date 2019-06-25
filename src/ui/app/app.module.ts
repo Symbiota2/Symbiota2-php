@@ -55,6 +55,10 @@ export function setupPluginLoaderServiceFactory(
     ],
     providers: [
         {
+            provide: ErrorHandler,
+            useClass: ErrorHandlerService
+        },
+        {
             provide: APP_INITIALIZER,
             useFactory: setupConfigServiceFactory,
             deps: [ConfigurationService],
@@ -65,10 +69,6 @@ export function setupPluginLoaderServiceFactory(
             useFactory: setupPluginLoaderServiceFactory,
             deps: [PluginLoaderService],
             multi: true
-        },
-        {
-            provide: ErrorHandler,
-            useClass: ErrorHandlerService
         }
     ],
     bootstrap: [AppComponent]

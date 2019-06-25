@@ -8,6 +8,8 @@ import {PluginOutletComponent} from 'symbiota-plugin';
 import {PluginTabService} from 'symbiota-plugin';
 import {PluginComponentService} from 'symbiota-plugin';
 import {PluginLinkService} from 'symbiota-plugin';
+import {SpinnerOverlayService} from 'symbiota-shared';
+import {AlertService} from 'symbiota-shared';
 
 import {PluginData} from './plugin-data.model';
 
@@ -47,7 +49,9 @@ export class PluginLoaderService {
         private componentService: PluginComponentService,
         private linkService: PluginLinkService,
         private compiler: Compiler,
-        private http: HttpClient
+        private http: HttpClient,
+        private alertService: AlertService,
+        private spinnerService: SpinnerOverlayService
     ) {}
 
     initialize(): Promise<any> {
@@ -59,7 +63,14 @@ export class PluginLoaderService {
                     resolve(this.pluginData);
                 },
                 (error) => {
+                    this.spinnerService.hide();
+                    this.alertService.showErrorSnackbar(
+                        'Cannot get plugin configurations',
+                        '',
+                        5000
+                    );
                     console.log(error);
+                    resolve(this.pluginData);
                 }
             );
         });

@@ -13,6 +13,6 @@ export class HomeComponent {
     constructor(
         configService: ConfigurationService
     ) {
-        this.title = (configService.data.DEFAULT_TITLE ? configService.data.DEFAULT_TITLE : '');
+        this.title = (configService.data ? configService.data.DEFAULT_TITLE : '');
     }
 }
