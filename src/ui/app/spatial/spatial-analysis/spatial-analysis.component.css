@@ -163,8 +163,7 @@
     left: -50%;
     padding: 5px;
     display: block;
-    width: 375px;
-    height: 20px;
+    width: 380px;
     z-index: 3;
     font-family: Arial, sans-serif;
     -moz-border-radius: 5px ! important;
@@ -173,35 +172,25 @@
     opacity: 0.85;
 }
 
-#drawcontrol {
-    float: left;
-    width: 115px;
-    height:30px;
-    z-index: 3;
+.topToolboxRow {
+    height: 25px;
+    display: flex;
+    justify-content: space-between;
 }
 
-#selectcontrol {
-    float: left;
-    width: 380px;
-    height:30px;
-    z-index: 3;
+.middleToolboxRow {
+    height: 25px;
+    display: flex;
+    justify-content: flex-start;
 }
 
-#basecontrol {
-    float: left;
-    height:30px;
-    margin-left: 5px;
-    z-index: 3;
+.bottomToolboxRow {
+    height: 20px;
+    display: flex;
+    justify-content: space-around;
 }
 
-#loadlayers {
-    float: right;
-    width: 80px;
-    height:30px;
-    z-index: 3;
-}
-
-#selectlayerselect {
+.baseLayerSelect {
     width: 240px;
 }
 

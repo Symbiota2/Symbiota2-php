@@ -5,8 +5,7 @@ import {SymbiotaSharedModule} from 'symbiota-shared';
 
 import {SpatialAnalysisComponent} from './spatial-analysis/spatial-analysis.component';
 
-import {MapProviderService} from './map-provider.service';
-import {SpatialToolsService} from './spatial-tools.service';
+import {MapService} from './map.service';
 
 @NgModule({
     declarations: [
@@ -17,8 +16,7 @@ import {SpatialToolsService} from './spatial-tools.service';
         SymbiotaSharedModule
     ],
     providers: [
-        MapProviderService,
-        SpatialToolsService
+        MapService
     ]
 })
 export class SpatialModule { }

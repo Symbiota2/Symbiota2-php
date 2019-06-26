@@ -1,12 +1,12 @@
 import {TestBed} from '@angular/core/testing';
 
-import {SpatialToolsService} from './spatial-tools.service';
+import {MapService} from './map.service';
 
-describe('SpatialToolsService', () => {
+describe('MapService', () => {
     beforeEach(() => TestBed.configureTestingModule({}));
 
     it('should be created', () => {
-        const service: SpatialToolsService = TestBed.get(SpatialToolsService);
+        const service: MapService = TestBed.get(MapService);
         expect(service).toBeTruthy();
     });
 });
