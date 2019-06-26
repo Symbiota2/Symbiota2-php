@@ -109,7 +109,7 @@ export class SpatialAnalysisComponent implements OnInit {
             configService.data.MAP_INITIAL_CENTER ? JSON.parse(configService.data.MAP_INITIAL_CENTER) : [-110.90713, 32.21976]
         );
         this.mapZoom = (configService.data.MAP_INITIAL_ZOOM ? configService.data.MAP_INITIAL_ZOOM : 7);
-        for (let z = 0; z < 16; ++z) {
+        for (let z = 0; z < 20; ++z) {
             this.resolutions[z] = this.maxResolution / Math.pow(2, z);
         }
     }
