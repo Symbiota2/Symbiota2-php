@@ -45,7 +45,6 @@ export class SpatialAnalysisComponent implements OnInit {
     layers = {};
     mapCenter: [];
     mapZoom: number;
-    mouseCoordinates: string;
 
     mapProjection = new Projection({
         code: 'EPSG:3857'
@@ -73,8 +72,9 @@ export class SpatialAnalysisComponent implements OnInit {
             }
             const template = 'Lat: {y} Lon: {x}';
             const coord2 = [coord1[1], coord1[0]];
-            this.mouseCoordinates = format(coord1, template, 5);
+            return format(coord1, template, 5);
         },
+        className: 'mousecoordinates',
         projection: 'EPSG:4326',
         undefinedHTML: '&nbsp;'
     });

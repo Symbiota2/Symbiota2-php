@@ -1,33 +1,30 @@
-<div id="map" class="map"></div>
-
-<div id="mapinfo">
-    <div id="mapcoords">{{mouseCoordinates}}</div>
-</div>
-
-<div id="maptoolcontainer">
-    <div id="maptoolbox">
-        <div id="drawcontrol">
-            <span class="maptext">Draw</span>
-            <select id="drawselect">
-                <option value="None">None</option>
-                <option value="Polygon">Polygon</option>
-                <option value="Circle">Circle</option>
-                <option value="LineString">Line</option>
-                <option value="Point">Point</option>
-            </select>
-        </div>
-        <div id="basecontrol">
-            <span class="maptext">Base Layer</span>
-            <select id="base-map" (change)="changeBaseMap($event.target)">
-                <option value="worldtopo">ESRI World Topo</option>
-                <option value="openstreet">OpenStreetMap</option>
-                <option value="blackwhite">Stamen Design Black &amp; White</option>
-                <option value="worldimagery">ESRI World Imagery</option>
-                <option value="ocean">ESRI Ocean</option>
-                <option value="ngstopo">National Geographic Topo</option>
-                <option value="natgeoworld">National Geographic World</option>
-                <option value="esristreet">ESRI StreetMap</option>
-            </select>
+<div id="map" class="map">
+    <div class="mapinfo"></div>
+    <div class="maptoolcontainer">
+        <div class="maptoolbox">
+            <div id="drawcontrol">
+                <span class="maptext">Draw</span>
+                <select id="drawselect">
+                    <option value="None">None</option>
+                    <option value="Polygon">Polygon</option>
+                    <option value="Circle">Circle</option>
+                    <option value="LineString">Line</option>
+                    <option value="Point">Point</option>
+                </select>
+            </div>
+            <div id="basecontrol">
+                <span class="maptext">Base Layer</span>
+                <select id="base-map" (change)="changeBaseMap($event.target)">
+                    <option value="worldtopo">ESRI World Topo</option>
+                    <option value="openstreet">OpenStreetMap</option>
+                    <option value="blackwhite">Stamen Design Black &amp; White</option>
+                    <option value="worldimagery">ESRI World Imagery</option>
+                    <option value="ocean">ESRI Ocean</option>
+                    <option value="ngstopo">National Geographic Topo</option>
+                    <option value="natgeoworld">National Geographic World</option>
+                    <option value="esristreet">ESRI StreetMap</option>
+                </select>
+            </div>
         </div>
     </div>
 </div>

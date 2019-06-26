@@ -122,17 +122,13 @@
     will-change: contents, width;
 }
 
-.ol-mouse-position {
-    display: none;
-}
-
-#mapcoords {
+.mousecoordinates {
     font-size: 12px;
-    clear: both;
-    float: left;
-    margin-left: 10px;
     color: white;
-    background: inherit;
+    z-index: 100;
+    bottom: 55px;
+    right: 18px;
+    position: absolute;
 }
 
 #hiddenMouseCoords {
@@ -140,12 +136,12 @@
     top: -500px;
 }
 
-#mapinfo {
+.mapinfo {
     bottom: 10px;
     right: 10px;
     padding: 5px;
     position: absolute;
-    width: 180px;
+    width: 200px;
     height:55px;
     z-index: 3;
     font-family: Arial, sans-serif;
@@ -155,14 +151,14 @@
     opacity: 0.85;
 }
 
-#maptoolcontainer {
+.maptoolcontainer {
     position: absolute;
     top: 10px;
     left: 50%;
     z-index: 3;
 }
 
-#maptoolbox {
+.maptoolbox {
     position: relative;
     left: -50%;
     padding: 5px;
