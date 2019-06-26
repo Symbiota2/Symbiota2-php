@@ -56,12 +56,12 @@ export class SpatialAnalysisComponent implements OnInit {
     atlasManager = new AtlasManager();
 
     mousePositionControl = new MousePosition({
-        coordinateFormat: this.formatMouseCoordinates(),
+        coordinateFormat: createStringXY(),
         projection: 'EPSG:4326',
         // comment the following two lines to have the mouse position
         // be placed within the map.
-        // className: 'mapcoords',
-        // target: document.getElementById('mapcoords'),
+        className: 'mapcoords',
+        target: document.getElementById('mapcoords'),
         undefinedHTML: '&nbsp;'
     });
 
@@ -102,8 +102,7 @@ export class SpatialAnalysisComponent implements OnInit {
 
         this.map = new OlMap({
             controls: defaults().extend([
-                new FullScreen(),
-                this.mousePositionControl
+                new FullScreen()
             ]),
             target: 'map',
             layers: [this.layer],
@@ -111,7 +110,8 @@ export class SpatialAnalysisComponent implements OnInit {
         });
 
         const zoomslider = new ZoomSlider();
-        this.map.addControl(zoomslider);
+        // this.map.addControl(zoomslider);
+        // this.map.addControl(this.mousePositionControl);
     }
 
     formatMouseCoordinates() {

@@ -1,28 +1,24 @@
-body {
-    overflow: hidden;
-}
-
 .map {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
 }
 
 .ol-attribution{
     display: none;
 }
 
-.ol-scale-line {
-    background-color: #3c668d;
-}
-
 .ol-zoom {
-    top: 40px;
+    top: 42px;
     left: auto;
     right: .5em;
 }
 
 .ol-zoom .ol-zoom-out {
-    margin-top: 244px;
+    margin-top: 260px;
     left: auto;
     right: 8px;
 }
@@ -90,39 +86,67 @@ body {
     content: "✖";
 }
 
-#mapscale_us {
-    height: 20px;
-    width: 100%;
-    position: relative;
-    float: left;
-    color: white;
+.mapscale_us {
+    border-radius: 4px;
+    bottom: 35px;
+    z-index: 100;
+    right: 25px;
+    padding: 2px;
+    position: absolute;
+}
+.mapscale_us-inner {
+    border: 1px solid #eee;
+    border-top: none;
+    color: #eee;
+    font-size: 10px;
+    text-align: center;
+    margin: 1px;
+    will-change: contents, width;
 }
 
-#mapscale_metric {
-    height: 20px;
-    width: 100%;
-    position: relative;
-    float: left;
-    color: white;
+.mapscale_metric {
+    border-radius: 4px;
+    bottom: 15px;
+    z-index: 100;
+    right: 25px;
+    padding: 2px;
+    position: absolute;
+}
+.mapscale_metric-inner {
+    border: 1px solid #eee;
+    border-top: none;
+    color: #eee;
+    font-size: 10px;
+    text-align: center;
+    margin: 1px;
+    will-change: contents, width;
+}
+
+.ol-mouse-position {
+    display: none;
 }
 
 #mapcoords {
-    height: 30px;
+    font-size: 12px;
     clear: both;
-    position: relative;
     float: left;
     margin-left: 10px;
     color: white;
     background: inherit;
 }
 
+#hiddenMouseCoords {
+    position: absolute;
+    top: -500px;
+}
+
 #mapinfo {
     bottom: 10px;
     right: 10px;
-    padding: 10px;
+    padding: 5px;
     position: absolute;
-    width: 200px;
-    height:80px;
+    width: 180px;
+    height:55px;
     z-index: 3;
     font-family: Arial, sans-serif;
     -moz-border-radius: 5px ! important;
@@ -143,7 +167,8 @@ body {
     left: -50%;
     padding: 5px;
     display: block;
-    width: 400px;
+    width: 375px;
+    height: 20px;
     z-index: 3;
     font-family: Arial, sans-serif;
     -moz-border-radius: 5px ! important;
@@ -168,7 +193,6 @@ body {
 
 #basecontrol {
     float: left;
-    width: 270px;
     height:30px;
     margin-left: 5px;
     z-index: 3;
