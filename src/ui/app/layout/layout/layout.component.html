@@ -1,4 +1,4 @@
-<mat-sidenav-container [ngClass]="{'fullWindow': fullWindow,'framedWindow': !fullWindow}">
+<mat-sidenav-container hasBackdrop="false" [ngClass]="{'fullWindow': fullWindow,'framedWindow': !fullWindow}">
     <mat-sidenav #sidenav role="navigation">
         <sidepanel-outlet [fullWindow]="fullWindow" (sidenavToggle)="sidenav.toggle()"></sidepanel-outlet>
     </mat-sidenav>
