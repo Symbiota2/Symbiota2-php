@@ -2,12 +2,14 @@ import {Injectable} from '@angular/core';
 
 import OlMap from 'ol/Map';
 import XYZ from 'ol/source/XYZ';
-import {defaults as defaultControls, FullScreen, Zoom} from 'ol/control';
-import {ZoomSlider, ScaleLine} from 'ol/control';
+import {FullScreen, ZoomSlider, ScaleLine} from 'ol/control';
 import {GPX, GeoJSON, IGC, KML, TopoJSON} from 'ol/format';
-import {defaults as defaultInteractions, DragAndDrop} from 'ol/interaction';
+import {DragAndDrop} from 'ol/interaction';
 import MousePosition from 'ol/control/MousePosition';
-import {createStringXY, format} from 'ol/coordinate';
+import {format} from 'ol/coordinate';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
+import {createEmpty, extend} from 'ol/extent';
 import {Heatmap, Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
 import {Cluster, OSM, Stamen, Vector as VectorSource, TileImage} from 'ol/source';
 import TileGrid from 'ol/tilegrid/TileGrid';
@@ -31,6 +33,7 @@ import {
 import {Overlay} from 'ol/Overlay';
 
 import {ConfigurationService} from 'symbiota-shared';
+import {AlertService} from 'symbiota-shared';
 
 @Injectable({
     providedIn: 'root'
@@ -38,7 +41,8 @@ import {ConfigurationService} from 'symbiota-shared';
 export class MapService {
 
     constructor(
-        configService: ConfigurationService
+        private configService: ConfigurationService,
+        private alertService: AlertService
     ) {
         this.mapCenter = (
             configService.data.MAP_INITIAL_CENTER ? JSON.parse(configService.data.MAP_INITIAL_CENTER) : [-110.90713, 32.21976]
@@ -64,25 +68,227 @@ export class MapService {
             maxZoom: 19,
             center: transform(this.mapCenter, 'EPSG:4326', 'EPSG:3857'),
         });
+
+        this.selectedPointFeatures.on('add', (event) => {
+            // setSpatialParamBox();
+            // buildQueryStrings();
+        });
+
+        this.selectedPointFeatures.on('remove', (event) => {
+            // setSpatialParamBox();
+            // buildQueryStrings();
+        });
+
+        this.dragAndDropInteraction.on('addfeatures', (event) => {
+            let filename = event.file.name.split('.');
+            const fileType = filename.pop();
+            filename = filename.join('');
+            if (fileType === 'geojson' || fileType === 'kml' || fileType === 'shp' || fileType === 'dbf') {
+                if (fileType === 'geojson' || fileType === 'kml') {
+                    if (this.setDragDropTarget()) {
+                        const infoArr = {};
+                        infoArr['Name'] = this.dragDropTarget;
+                        infoArr['layerType'] = 'vector';
+                        infoArr['Title'] = filename;
+                        infoArr['Abstract'] = '';
+                        infoArr['DefaultCRS'] = '';
+                        const sourceIndex = this.dragDropTarget + 'Source';
+                        let features = event.features;
+                        if (fileType === 'kml') {
+                            const geoJSONFormat = new GeoJSON();
+                            features = geoJSONFormat.readFeatures(geoJSONFormat.writeFeatures(features));
+                        }
+                        this.layers[sourceIndex] = new VectorSource({
+                            features: features
+                        });
+                        this.layers[this.dragDropTarget].setStyle(this.getDragDropStyle);
+                        this.layers[this.dragDropTarget].setSource(this.layers[sourceIndex]);
+                        // buildLayerTableRow(infoArr, true);
+                        this.map.getView().fit(this.layers[sourceIndex].getExtent());
+                        // toggleLayerTable();
+                    }
+                } else if (fileType === 'shp' || fileType === 'dbf') {
+                    if (fileType === 'shp') {
+                        this.droppedShapefile = window.URL.createObjectURL(event.file);
+                    }
+                    if (fileType === 'dbf') {
+                        this.droppedDBF = window.URL.createObjectURL(event.file);
+                    }
+                    if (fileType === 'shp') {
+                        if (this.setDragDropTarget()) {
+                            setTimeout(() => {
+                                /* shapefile = new Shapefile({
+                                    shp: droppedShapefile,
+                                    dbf: droppedDBF
+                                }, (data) => {
+                                    var infoArr = [];
+                                    infoArr['Name'] = this.dragDropTarget;
+                                    infoArr['layerType'] = 'vector';
+                                    infoArr['Title'] = filename;
+                                    infoArr['Abstract'] = '';
+                                    infoArr['DefaultCRS'] = '';
+                                    var sourceIndex = dragDropTarget+'Source';
+                                    var format = new ol.format.GeoJSON();
+                                    var res = map.getView().getResolution();
+                                    var features = format.readFeatures(data.geojson, {
+                                        featureProjection: 'EPSG:3857'
+                                    });
+                                    layersArr[sourceIndex] = new ol.source.Vector({
+                                        features: features
+                                    });
+                                    layersArr[dragDropTarget].setStyle(getDragDropStyle);
+                                    layersArr[dragDropTarget].setSource(layersArr[sourceIndex]);
+                                    buildLayerTableRow(infoArr,true);
+                                    map.getView().fit(layersArr[sourceIndex].getExtent());
+                                    toggleLayerTable();
+                                    droppedShapefile = '';
+                                    droppedDBF = '';
+                                }); */
+                            }, 500);
+                        }
+                    }
+                }
+            } else {
+                this.alertService.showErrorSnackbar(
+                    'The drag and drop file loading only supports GeoJSON, kml, and shp file formats.',
+                    '',
+                    5000
+                );
+            }
+        });
+
+        this.pointInteraction.on('select', (event) => {
+            const newfeatures = event.selected;
+            const zoomLevel = this.map.getView().getZoom();
+            if (newfeatures.length > 0) {
+                if (zoomLevel < 17) {
+                    const extent = createEmpty();
+                    if (newfeatures.length > 1) {
+                        for (const n in newfeatures) {
+                            if (newfeatures[n]) {
+                                const nfeature = newfeatures[n];
+                                this.pointInteraction.getFeatures().remove(nfeature);
+                                if (nfeature.get('features')) {
+                                    const cFeatures = nfeature.get('features');
+                                    for (const f in cFeatures) {
+                                        if (cFeatures[f]) {
+                                            extend(extent, cFeatures[f].getGeometry().getExtent());
+                                        }
+                                    }
+                                } else {
+                                    extend(extent, nfeature.getGeometry().getExtent());
+                                }
+                            }
+                        }
+                        this.map.getView().fit(extent, this.map.getSize());
+                    } else {
+                        const newfeature = newfeatures[0];
+                        this.pointInteraction.getFeatures().remove(newfeature);
+                        if (newfeature.get('features')) {
+                            const clusterCnt = newfeature.get('features').length;
+                            if (clusterCnt > 1) {
+                                const cFeatures = newfeature.get('features');
+                                for (const f in cFeatures) {
+                                    if (cFeatures[f]) {
+                                        extend(extent, cFeatures[f].getGeometry().getExtent());
+                                    }
+                                }
+                                this.map.getView().fit(extent, this.map.getSize());
+                            } else {
+                                this.processPointSelection(newfeature);
+                            }
+                        } else {
+                            this.processPointSelection(newfeature);
+                        }
+                    }
+                } else {
+                    if (newfeatures.length > 1 && !this.spiderFeature) {
+                        this.pointInteraction.getFeatures().clear();
+                        if (!this.spiderCluster) {
+                            this.spiderifyPoints(newfeatures);
+                        }
+                    } else {
+                        let newfeature = newfeatures[0];
+                        if (this.spiderFeature) {
+                            newfeature = Object.assign({}, this.spiderFeature);
+                            this.spiderFeature = Object.assign({}, {});
+                        }
+                        this.pointInteraction.getFeatures().clear();
+                        if (newfeature.get('features')) {
+                            const clusterCnt = newfeatures[0].get('features').length;
+                            if (clusterCnt > 1 && !this.spiderCluster) {
+                                this.spiderifyPoints(newfeatures);
+                            } else {
+                                this.processPointSelection(newfeature);
+                            }
+                        } else {
+                            this.processPointSelection(newfeature);
+                        }
+                    }
+                }
+            }
+        });
+
+        this.selectedFeatures.on('add', function(event) {
+            // setSpatialParamBox();
+            // buildQueryStrings();
+        });
+
+        this.selectedFeatures.on('remove', function(event) {
+            // setSpatialParamBox();
+            // buildQueryStrings();
+        });
+
+        this.selectsource.on('change', function(event) {
+            if (!this.draw) {
+                const featureCnt = this.selectsource.getFeatures().length;
+                if (featureCnt > 0) {
+                    if (!this.shapeActive) {
+                        const infoArr = {};
+                        infoArr['Name'] = 'select';
+                        infoArr['layerType'] = 'vector';
+                        infoArr['Title'] = 'Shapes';
+                        infoArr['Abstract'] = '';
+                        infoArr['DefaultCRS'] = '';
+                        // buildLayerTableRow(infoArr,true);
+                        this.shapeActive = true;
+                    }
+                } else {
+                    if (this.shapeActive) {
+                        // removeLayerToSelList('select');
+                        this.shapeActive = false;
+                    }
+                }
+            }
+        });
     }
+
     map: OlMap;
     view: OlView;
     layers = {};
+    draw = {};
     mapCenter: [];
     mapZoom: number;
     heatMapRadius = '5';
     heatMapBlur = '15';
     activeLayer = 'none';
     clusterPoints = true;
+    shapeActive = false;
     selections = [];
     mapSymbology = 'coll';
     collSymbology = [];
     taxaSymbology = [];
     clusterKey = 'CollectionName';
-    spiderCluster = {};
+    spiderCluster = false;
     spiderFeature = {};
     hiddenClusters = [];
     clickedFeatures = [];
+    dragDropTarget = '';
+    dragDrop1 = false;
+    dragDrop2 = false;
+    dragDrop3 = false;
+    droppedShapefile = '';
+    droppedDBF = '';
 
     dragDropStyle = {
         'Point': new Style({
@@ -323,7 +529,7 @@ export class MapService {
                                 }
                             }
                             this.hiddenClusters = [];
-                            this.spiderCluster = {};
+                            this.spiderCluster = false;
                             this.spiderFeature = {};
                             this.layers['pointv'].getSource().changed();
                         }
@@ -353,6 +559,9 @@ export class MapService {
         style: this.getPointStyle
     });
 
+    selectedFeatures = this.selectInteraction.getFeatures();
+    selectedPointFeatures = this.pointInteraction.getFeatures();
+
     projection = get('EPSG:4326');
     projectionExtent = this.projection.getExtent();
     tileSize = 512;
@@ -366,6 +575,18 @@ export class MapService {
             g: parseInt(result[2], 16),
             b: parseInt(result[3], 16)
         } : null;
+    }
+
+    static hideFeature(feature) {
+        const invisibleStyle = new Style({
+            image: new Circle({
+                radius: feature.get('radius'),
+                fill: new Fill({
+                    color: 'rgba(255, 255, 255, 0.01)'
+                })
+            })
+        });
+        feature.setStyle(invisibleStyle);
     }
 
     getMap() {
@@ -383,6 +604,27 @@ export class MapService {
             ],
             view: this.view
         });
+
+        this.map.getView().on('change:resolution', (event) => {
+            if (this.spiderCluster) {
+                const source = this.layers['spider'].getSource();
+                source.clear();
+                const blankSource = new VectorSource({
+                    features: new Collection(),
+                    useSpatialIndex: true
+                });
+                this.layers['spider'].setSource(blankSource);
+                for (const i in this.hiddenClusters) {
+                    if (this.hiddenClusters[i]) {
+                        this.showFeature(this.hiddenClusters[i]);
+                    }
+                }
+                this.hiddenClusters = [];
+                this.spiderCluster = false;
+                this.layers['pointv'].getSource().changed();
+            }
+        });
+
         return this.map;
     }
 
@@ -407,7 +649,7 @@ export class MapService {
                 const clusterindex = feature.get('identifiers');
                 if (this.selections.length > 0) {
                     for (const i in this.selections) {
-                        if (clusterindex.indexOf(this.selections[i]) !== -1){
+                        if (clusterindex.indexOf(this.selections[i]) !== -1) {
                             selected = true;
                         }
                     }
@@ -514,6 +756,23 @@ export class MapService {
         baseLayer.setSource(blsource);
     }
 
+    processPointSelection(sFeature) {
+        const feature = (sFeature.get('features') ? sFeature.get('features')[0] : sFeature);
+        const occid = Number(feature.get('occid'));
+        if (this.selections.indexOf(occid) < 0) {
+            this.selections.push(occid);
+            // var infoArr = getPointInfoArr(sFeature);
+            // updateSelections(occid,infoArr);
+        } else {
+            const index = this.selections.indexOf(occid);
+            this.selections.splice(index, 1);
+            // removeSelectionRecord(occid);
+        }
+        const style = (sFeature.get('features') ? this.setClusterSymbol(sFeature) : this.setSymbol(sFeature));
+        sFeature.setStyle(style);
+        // adjustSelectionsTab();
+    }
+
     showFeature(feature) {
         let featureStyle = {};
         if (feature.get('features')) {
@@ -589,6 +848,108 @@ export class MapService {
         }
 
         return style;
+    }
+
+    setDragDropTarget() {
+        this.dragDropTarget = '';
+        if (!this.dragDrop1) {
+            this.dragDrop1 = true;
+            this.dragDropTarget = 'dragdrop1';
+            return true;
+        } else if (!this.dragDrop2) {
+            this.dragDrop2 = true;
+            this.dragDropTarget = 'dragdrop2';
+            return true;
+        } else if (!this.dragDrop3) {
+            this.dragDrop3 = true;
+            this.dragDropTarget = 'dragdrop3';
+            return true;
+        } else {
+            this.alertService.showErrorSnackbar(
+                'You may only have 3 uploaded layers at a time. Please remove one of the currently uploaded layers to upload more.',
+                '',
+                5000
+            );
+            return false;
+        }
+    }
+
+    getDragDropStyle(feature, resolution) {
+        const featureStyleFunction = feature.getStyleFunction();
+        if (featureStyleFunction) {
+            return featureStyleFunction.call(feature, resolution);
+        } else {
+            return this.dragDropStyle[feature.getGeometry().getType()];
+        }
+    }
+
+    spiderifyPoints(features) {
+        this.spiderCluster = true;
+        this.spiderFeature = Object.assign({}, {});
+        const spiderFeatures = [];
+        for (const f in features) {
+            if (features[f]) {
+                const feature = features[f];
+                MapService.hideFeature(feature);
+                this.hiddenClusters.push(feature);
+                if (feature.get('features')) {
+                    const addFeatures = feature.get('features');
+                    for (const fa in addFeatures) {
+                        if (addFeatures[fa]) {
+                            spiderFeatures.push(addFeatures[fa]);
+                        }
+                    }
+                } else {
+                    spiderFeatures.push(feature);
+                }
+            }
+        }
+
+        const source = this.layers['spider'].getSource();
+        source.clear();
+
+        const center = features[0].getGeometry().getCoordinates();
+        const pix = this.map.getView().getResolution();
+        const rad = pix * 12 * (0.5 + spiderFeatures.length / 4);
+        if (spiderFeatures.length <= 10) {
+            const max = Math.min(spiderFeatures.length, 10);
+            for (const i in spiderFeatures) {
+                if (spiderFeatures[i]) {
+                    let acos = 2 * Math.PI * Number(i) / max;
+                    if (max === 2 || max === 4) {
+                        acos += Math.PI / 4;
+                    }
+                    const pos = [center[0] + rad * Math.sin(acos), center[1] + rad * Math.cos(acos)];
+                    const cf = new Feature({
+                        features: [spiderFeatures[i]],
+                        geometry: new Point(pos)
+                    });
+                    const style = this.setClusterSymbol(cf);
+                    cf.setStyle(style);
+                    source.addFeature(cf);
+                }
+            }
+        } else {
+            let acos = 0;
+            const dec = 30;
+            const max = Math.min (60, spiderFeatures.length);
+            for (const i in spiderFeatures) {
+                if (spiderFeatures[i]) {
+                    const rad2 = dec / 2 + dec * acos / (2 * Math.PI);
+                    acos = acos + (dec + 0.1) / rad2;
+                    const dx = pix * rad2 * Math.sin(acos);
+                    const dy = pix * rad2 * Math.cos(acos);
+                    const pos = [center[0] + dx, center[1] + dy];
+                    const cf = new Feature({
+                        features: [spiderFeatures[i]],
+                        geometry: new Point(pos)
+                    });
+                    const style = this.setClusterSymbol(cf);
+                    cf.setStyle(style);
+                    source.addFeature(cf);
+                }
+            }
+        }
     }
 
     setBaseLayerSource(urlTemplate) {

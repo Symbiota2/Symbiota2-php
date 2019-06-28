@@ -29,6 +29,9 @@ export class SpatialAnalysisComponent implements OnInit {
         this.map.addControl(this.mapService.mousePositionControl);
         this.map.addControl(this.mapService.scaleLineControl_us);
         this.map.addControl(this.mapService.scaleLineControl_metric);
+        this.map.addInteraction(this.mapService.selectInteraction);
+        this.map.addInteraction(this.mapService.pointInteraction);
+        this.map.addInteraction(this.mapService.dragAndDropInteraction);
     }
 
     baseMapSelectChange(event) {
