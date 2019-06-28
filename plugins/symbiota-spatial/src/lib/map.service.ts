@@ -17,7 +17,7 @@ import {Projection, fromLonLat, transform, get} from 'ol/proj';
 import Collection from 'ol/Collection';
 import {click as clickCondition} from 'ol/events/condition';
 import OlView from 'ol/View';
-import {PropertyCluster} from '../../assets/js/libraries/PropertyCluster.js';
+import {PropertyCluster} from './PropertyCluster.js';
 import {
     AtlasManager,
     Circle,
@@ -28,7 +28,7 @@ import {
     Style
 } from 'ol/style';
 import {Overlay} from 'ol/Overlay';
-import * as shp from 'shpjs';
+import shp from 'shpjs';
 
 import {ConfigurationService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';

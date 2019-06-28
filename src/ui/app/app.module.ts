@@ -4,7 +4,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 
 import {LayoutModule} from './layout/layout.module';
-import {SpatialModule} from './spatial/spatial.module';
 import {UserModule} from './user/user.module';
 import {PluginAdminModule} from './plugin-admin/plugin-admin.module';
 import {AppRoutingModule} from './app-routing.module';
@@ -38,7 +37,6 @@ export function setupPluginLoaderServiceFactory(
         AppComponent,
     ],
     imports: [
-        SpatialModule,
         BrowserModule,
         BrowserAnimationsModule,
         LayoutModule,
