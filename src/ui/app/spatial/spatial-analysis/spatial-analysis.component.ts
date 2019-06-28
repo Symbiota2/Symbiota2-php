@@ -12,15 +12,21 @@ import {MapService} from '../map.service';
         '../../../../../node_modules/ol/ol.css',
         '../../../assets/css/symbiota-ol.css',
         './spatial-analysis.component.css'
-    ]
+    ],
+    providers: [MapService]
 })
 export class SpatialAnalysisComponent implements OnInit {
 
     map: OlMap;
+    drawSelectedValue: string;
 
     constructor(
         public mapService: MapService
-    ) {}
+    ) {
+        this.mapService.drawToolSelectedValue.subscribe(value => {
+            this.drawSelectedValue = value.toString();
+        });
+    }
 
     ngOnInit() {
         this.map = this.mapService.getMap();

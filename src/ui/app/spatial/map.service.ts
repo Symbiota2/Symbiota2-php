@@ -1,26 +1,22 @@
 import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 import OlMap from 'ol/Map';
 import XYZ from 'ol/source/XYZ';
-import {FullScreen, ZoomSlider, ScaleLine} from 'ol/control';
+import {FullScreen, ZoomSlider, ScaleLine, MousePosition} from 'ol/control';
 import {GPX, GeoJSON, IGC, KML, TopoJSON} from 'ol/format';
-import {DragAndDrop} from 'ol/interaction';
-import Draw from 'ol/interaction/Draw';
-import MousePosition from 'ol/control/MousePosition';
+import {DragAndDrop, Select, Draw} from 'ol/interaction';
 import {format} from 'ol/coordinate';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
-import {createEmpty, extend} from 'ol/extent';
+import {createEmpty, extend, getTopLeft, getWidth} from 'ol/extent';
 import {Heatmap, Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
 import {Cluster, OSM, Stamen, Vector as VectorSource, TileImage} from 'ol/source';
 import TileGrid from 'ol/tilegrid/TileGrid';
-import {getTopLeft, getWidth} from 'ol/extent';
-import Select from 'ol/interaction/Select';
-import {fromLonLat, transform, get} from 'ol/proj';
+import {Projection, fromLonLat, transform, get} from 'ol/proj';
 import Collection from 'ol/Collection';
 import {click as clickCondition} from 'ol/events/condition';
 import OlView from 'ol/View';
-import Projection from 'ol/proj/Projection';
 import {PropertyCluster} from '../../assets/js/libraries/PropertyCluster.js';
 import {
     AtlasManager,
@@ -283,6 +279,8 @@ export class MapService {
     dragDrop1 = false;
     dragDrop2 = false;
     dragDrop3 = false;
+    drawToolSelected = new BehaviorSubject<string>('None');
+    public readonly drawToolSelectedValue: Observable<string> = this.drawToolSelected.asObservable();
 
     atlasManager = new AtlasManager();
 
@@ -419,20 +417,20 @@ export class MapService {
         },
         style: new Style({
             fill: new Fill({
-                color: 'rgba(255,255,255,0.5)'
+                color: 'rgba(255, 255, 255, 0.5)'
             }),
             stroke: new Stroke({
-                color: 'rgba(0,153,255,1)',
+                color: 'rgba(0, 153, 255, 1)',
                 width: 5
             }),
             image: new Circle({
                 radius: 7,
                 stroke: new Stroke({
-                    color: 'rgba(0,153,255,1)',
+                    color: 'rgba(0, 153, 255, 1)',
                     width: 2
                 }),
                 fill: new Fill({
-                    color: 'rgba(0,153,255,1)'
+                    color: 'rgba(0, 153, 255, 1)'
                 })
             })
         }),
@@ -714,7 +712,7 @@ export class MapService {
             });
 
             this.draw.on('drawend', (evt) => {
-                // this.typeSelect.value = 'None';
+                this.drawToolSelected.next('None');
                 this.map.removeInteraction(this.draw);
                 if (!this.shapeActive) {
                     const infoArr = [];
