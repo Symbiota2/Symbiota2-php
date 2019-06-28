@@ -32,6 +32,7 @@ import {
     Style
 } from 'ol/style';
 import {Overlay} from 'ol/Overlay';
+import * as shp from 'shpjs';
 
 import {ConfigurationService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
@@ -85,8 +86,9 @@ export class MapService {
         this.dragAndDropInteraction.on('addfeatures', (event) => {
             let filename = event.file.name.split('.');
             const fileType = filename.pop();
+            const geoJSONFormat = new GeoJSON();
             filename = filename.join('');
-            if (fileType === 'geojson' || fileType === 'kml' || fileType === 'shp' || fileType === 'dbf') {
+            if (fileType === 'geojson' || fileType === 'kml' || fileType === 'zip') {
                 if (fileType === 'geojson' || fileType === 'kml') {
                     if (this.setDragDropTarget()) {
                         const infoArr = {};
@@ -98,59 +100,50 @@ export class MapService {
                         const sourceIndex = this.dragDropTarget + 'Source';
                         let features = event.features;
                         if (fileType === 'kml') {
-                            const geoJSONFormat = new GeoJSON();
                             features = geoJSONFormat.readFeatures(geoJSONFormat.writeFeatures(features));
                         }
                         this.layers[sourceIndex] = new VectorSource({
                             features: features
                         });
-                        this.layers[this.dragDropTarget].setStyle(this.getDragDropStyle);
+                        this.layers[this.dragDropTarget].setStyle(MapService.getDragDropStyle);
                         this.layers[this.dragDropTarget].setSource(this.layers[sourceIndex]);
                         // buildLayerTableRow(infoArr, true);
                         this.map.getView().fit(this.layers[sourceIndex].getExtent());
                         // toggleLayerTable();
                     }
-                } else if (fileType === 'shp' || fileType === 'dbf') {
-                    if (fileType === 'shp') {
-                        this.droppedShapefile = window.URL.createObjectURL(event.file);
-                    }
-                    if (fileType === 'dbf') {
-                        this.droppedDBF = window.URL.createObjectURL(event.file);
-                    }
-                    if (fileType === 'shp') {
-                        if (this.setDragDropTarget()) {
-                            setTimeout(() => {
-                                /* shapefile = new Shapefile({
-                                    shp: droppedShapefile,
-                                    dbf: droppedDBF
-                                }, (data) => {
-                                    var infoArr = [];
-                                    infoArr['Name'] = this.dragDropTarget;
-                                    infoArr['layerType'] = 'vector';
-                                    infoArr['Title'] = filename;
-                                    infoArr['Abstract'] = '';
-                                    infoArr['DefaultCRS'] = '';
-                                    var sourceIndex = dragDropTarget+'Source';
-                                    var format = new ol.format.GeoJSON();
-                                    var res = map.getView().getResolution();
-                                    var features = format.readFeatures(data.geojson, {
-                                        featureProjection: 'EPSG:3857'
-                                    });
-                                    layersArr[sourceIndex] = new ol.source.Vector({
-                                        features: features
-                                    });
-                                    layersArr[dragDropTarget].setStyle(getDragDropStyle);
-                                    layersArr[dragDropTarget].setSource(layersArr[sourceIndex]);
-                                    buildLayerTableRow(infoArr,true);
-                                    map.getView().fit(layersArr[sourceIndex].getExtent());
-                                    toggleLayerTable();
-                                    droppedShapefile = '';
-                                    droppedDBF = '';
-                                }); */
-                            }, 500);
-                        }
+                } else if (fileType === 'zip') {
+                    if (this.setDragDropTarget()) {
+                        this.sharedTools.getArrayBuffer(event.file).then((data) => {
+                            shp(data).then((geojson) => {
+                                const infoArr = [];
+                                infoArr['Name'] = this.dragDropTarget;
+                                infoArr['layerType'] = 'vector';
+                                infoArr['Title'] = filename;
+                                infoArr['Abstract'] = '';
+                                infoArr['DefaultCRS'] = '';
+                                const sourceIndex = this.dragDropTarget + 'Source';
+                                const res = this.map.getView().getResolution();
+                                const features = geoJSONFormat.readFeatures(geojson, {
+                                    featureProjection: 'EPSG:3857'
+                                });
+                                this.layers[sourceIndex] = new VectorSource({
+                                    features: features
+                                });
+                                this.layers[this.dragDropTarget].setStyle(MapService.getDragDropStyle);
+                                this.layers[this.dragDropTarget].setSource(this.layers[sourceIndex]);
+                                // buildLayerTableRow(infoArr, true);
+                                this.map.getView().fit(this.layers[sourceIndex].getExtent());
+                                // toggleLayerTable();
+                            });
+                        });
                     }
                 }
+            } else if (fileType === 'shp' || fileType === 'dbf') {
+                this.alertService.showErrorSnackbar(
+                    'The drag and drop file loading only supports shapefiles when they are loaded in the full shapefile zip archive.',
+                    '',
+                    5000
+                );
             } else {
                 this.alertService.showErrorSnackbar(
                     'The drag and drop file loading only supports GeoJSON, kml, and shp file formats.',
@@ -290,65 +283,6 @@ export class MapService {
     dragDrop1 = false;
     dragDrop2 = false;
     dragDrop3 = false;
-    droppedShapefile = '';
-    droppedDBF = '';
-
-    dragDropStyle = {
-        'Point': new Style({
-            image: new Circle({
-                fill: new Fill({
-                    color: 'rgba(255,255,0,0.5)'
-                }),
-                radius: 5,
-                stroke: new Stroke({
-                    color: '#ff0',
-                    width: 1
-                })
-            })
-        }),
-        'LineString': new Style({
-            stroke: new Stroke({
-                color: '#f00',
-                width: 3
-            })
-        }),
-        'Polygon': new Style({
-            fill: new Fill({
-                color: 'rgba(170,170,170,0.3)'
-            }),
-            stroke: new Stroke({
-                color: '#000000',
-                width: 1
-            })
-        }),
-        'MultiPoint': new Style({
-            image: new Circle({
-                fill: new Fill({
-                    color: 'rgba(255,0,255,0.5)'
-                }),
-                radius: 5,
-                stroke: new Stroke({
-                    color: '#f0f',
-                    width: 1
-                })
-            })
-        }),
-        'MultiLineString': new Style({
-            stroke: new Stroke({
-                color: '#0f0',
-                width: 3
-            })
-        }),
-        'MultiPolygon': new Style({
-            fill: new Fill({
-                color: 'rgba(170,170,170,0.3)'
-            }),
-            stroke: new Stroke({
-                color: '#000000',
-                width: 1
-            })
-        })
-    };
 
     atlasManager = new AtlasManager();
 
@@ -581,6 +515,71 @@ export class MapService {
             })
         });
         feature.setStyle(invisibleStyle);
+    }
+
+    static getDragDropStyle(feature, resolution) {
+        const featureStyleFunction = feature.getStyleFunction();
+        const dragDropStyle = {
+            'Point': new Style({
+                image: new Circle({
+                    fill: new Fill({
+                        color: 'rgba(255, 255, 0, 0.5)'
+                    }),
+                    radius: 5,
+                    stroke: new Stroke({
+                        color: '#ff0',
+                        width: 1
+                    })
+                })
+            }),
+            'LineString': new Style({
+                stroke: new Stroke({
+                    color: '#f00',
+                    width: 3
+                })
+            }),
+            'Polygon': new Style({
+                fill: new Fill({
+                    color: 'rgba(170, 170, 170, 0.3)'
+                }),
+                stroke: new Stroke({
+                    color: '#000000',
+                    width: 1
+                })
+            }),
+            'MultiPoint': new Style({
+                image: new Circle({
+                    fill: new Fill({
+                        color: 'rgba(255, 0, 255, 0.5)'
+                    }),
+                    radius: 5,
+                    stroke: new Stroke({
+                        color: '#f0f',
+                        width: 1
+                    })
+                })
+            }),
+            'MultiLineString': new Style({
+                stroke: new Stroke({
+                    color: '#0f0',
+                    width: 3
+                })
+            }),
+            'MultiPolygon': new Style({
+                fill: new Fill({
+                    color: 'rgba(170, 170, 170, 0.3)'
+                }),
+                stroke: new Stroke({
+                    color: '#000000',
+                    width: 1
+                })
+            })
+        };
+        if (featureStyleFunction) {
+            return featureStyleFunction.call(feature, resolution);
+        } else {
+            return dragDropStyle[feature.getGeometry().getType()];
+        }
     }
 
     getMap() {
@@ -900,15 +899,6 @@ export class MapService {
                 5000
             );
             return false;
-        }
-    }
-
-    getDragDropStyle(feature, resolution) {
-        const featureStyleFunction = feature.getStyleFunction();
-        if (featureStyleFunction) {
-            return featureStyleFunction.call(feature, resolution);
-        } else {
-            return this.dragDropStyle[feature.getGeometry().getType()];
         }
     }
 

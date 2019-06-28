@@ -45,6 +45,18 @@ export class SharedToolsService {
         return dYear + '-' + dMonth + '-' + dDay;
     }
 
+    getArrayBuffer(file) {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.readAsArrayBuffer(file);
+            reader.onload = () => {
+                const arrayBuffer = reader.result;
+                const bytes = new Uint8Array(<ArrayBuffer>arrayBuffer);
+                resolve(bytes);
+            };
+        });
+    }
+
     imagePostFunction(image, src) {
         const img = image.getImage();
         if (typeof window.btoa === 'function') {
