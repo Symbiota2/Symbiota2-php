@@ -12,6 +12,7 @@ import {CaptchaComponent} from './captcha/captcha.component';
 import {SpinnerOverlayService} from './spinner-overlay.service';
 import {AlertService} from './alert.service';
 import {ConfigurationService} from './configuration.service';
+import {SharedToolsService} from './shared-tools.service';
 
 @NgModule({
     imports: [
@@ -37,7 +38,8 @@ import {ConfigurationService} from './configuration.service';
     providers: [
         SpinnerOverlayService,
         AlertService,
-        ConfigurationService
+        ConfigurationService,
+        SharedToolsService
     ],
     entryComponents: [
         SpinnerOverlayComponent,

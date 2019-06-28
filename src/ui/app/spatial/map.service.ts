@@ -5,6 +5,7 @@ import XYZ from 'ol/source/XYZ';
 import {FullScreen, ZoomSlider, ScaleLine} from 'ol/control';
 import {GPX, GeoJSON, IGC, KML, TopoJSON} from 'ol/format';
 import {DragAndDrop} from 'ol/interaction';
+import Draw from 'ol/interaction/Draw';
 import MousePosition from 'ol/control/MousePosition';
 import {format} from 'ol/coordinate';
 import Feature from 'ol/Feature';
@@ -34,6 +35,7 @@ import {Overlay} from 'ol/Overlay';
 
 import {ConfigurationService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
+import {SharedToolsService} from 'symbiota-shared';
 
 @Injectable({
     providedIn: 'root'
@@ -42,7 +44,8 @@ export class MapService {
 
     constructor(
         private configService: ConfigurationService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private sharedTools: SharedToolsService
     ) {
         this.mapCenter = (
             configService.data.MAP_INITIAL_CENTER ? JSON.parse(configService.data.MAP_INITIAL_CENTER) : [-110.90713, 32.21976]
@@ -229,17 +232,17 @@ export class MapService {
             }
         });
 
-        this.selectedFeatures.on('add', function(event) {
+        this.selectedFeatures.on('add', (event) => {
             // setSpatialParamBox();
             // buildQueryStrings();
         });
 
-        this.selectedFeatures.on('remove', function(event) {
+        this.selectedFeatures.on('remove', (event) => {
             // setSpatialParamBox();
             // buildQueryStrings();
         });
 
-        this.selectsource.on('change', function(event) {
+        this.selectsource.on('change', (event) => {
             if (!this.draw) {
                 const featureCnt = this.selectsource.getFeatures().length;
                 if (featureCnt > 0) {
@@ -266,7 +269,7 @@ export class MapService {
     map: OlMap;
     view: OlView;
     layers = {};
-    draw = {};
+    draw: any;
     mapCenter: [];
     mapZoom: number;
     heatMapRadius = '5';
@@ -568,15 +571,6 @@ export class MapService {
     maxResolution = getWidth(this.projectionExtent) / (this.tileSize * 2);
     resolutions = new Array(19);
 
-    static hexToRgb(hex) {
-        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        return result ? {
-            r: parseInt(result[1], 16),
-            g: parseInt(result[2], 16),
-            b: parseInt(result[3], 16)
-        } : null;
-    }
-
     static hideFeature(feature) {
         const invisibleStyle = new Style({
             image: new Circle({
@@ -661,7 +655,7 @@ export class MapService {
                 } else if (this.mapSymbology === 'taxa') {
                     hexcolor = '#' + this.taxaSymbology[cKey]['color'];
                 }
-                const colorArr = MapService.hexToRgb(hexcolor);
+                const colorArr = this.sharedTools.hexToRgb(hexcolor);
                 let radius = 0;
                 if (size < 10) {
                     radius = 10;
@@ -712,9 +706,44 @@ export class MapService {
         return style;
     }
 
-    changeBaseMap(map, selection) {
+    changeDrawTool(selection) {
+        this.map.removeInteraction(this.draw);
+        if (selection !== 'None') {
+            this.draw = new Draw({
+                source: this.selectsource,
+                type: (selection)
+            });
+
+            this.draw.on('drawend', (evt) => {
+                // this.typeSelect.value = 'None';
+                this.map.removeInteraction(this.draw);
+                if (!this.shapeActive) {
+                    const infoArr = [];
+                    infoArr['Name'] = 'select';
+                    infoArr['Title'] = 'Shapes';
+                    infoArr['layerType'] = 'vector';
+                    infoArr['Abstract'] = '';
+                    infoArr['DefaultCRS'] = '';
+                    // buildLayerTableRow(infoArr,true);
+                    this.shapeActive = true;
+                    // document.getElementById("selectlayerselect").value = 'select';
+                    // setActiveLayer();
+                } else {
+                    // document.getElementById("selectlayerselect").value = 'select';
+                    // setActiveLayer();
+                }
+                this.draw = Object.assign({}, {});
+            });
+
+            this.map.addInteraction(this.draw);
+        } else {
+            this.draw = Object.assign({}, {});
+        }
+    }
+
+    changeBaseMap(selection) {
         let blsource = {};
-        const baseLayer = map.getLayers().getArray()[0];
+        const baseLayer = this.map.getLayers().getArray()[0];
         if (selection === 'worldtopo') {
             blsource = new XYZ({
                 url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',

@@ -5,7 +5,7 @@
             <div class="topToolboxRow">
                 <div id="drawcontrol">
                     <span class="maptext">Draw</span>
-                    <select id="drawselect">
+                    <select id="drawselect" (change)="drawToolSelectChange($event.target)">
                         <option value="None">None</option>
                         <option value="Polygon">Polygon</option>
                         <option value="Circle">Circle</option>

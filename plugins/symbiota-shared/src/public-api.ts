@@ -7,4 +7,5 @@ export * from './lib/captcha/captcha.component';
 export * from './lib/spinner-overlay.service';
 export * from './lib/alert.service';
 export * from './lib/configuration.service';
+export * from './lib/shared-tools.service';
 export * from './lib/symbiota-shared.module';

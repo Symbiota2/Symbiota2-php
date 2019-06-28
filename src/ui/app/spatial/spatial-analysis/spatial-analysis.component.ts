@@ -35,7 +35,11 @@ export class SpatialAnalysisComponent implements OnInit {
     }
 
     baseMapSelectChange(event) {
-        this.mapService.changeBaseMap(this.map, event.value);
+        this.mapService.changeBaseMap(event.value);
+    }
+
+    drawToolSelectChange(event) {
+        this.mapService.changeDrawTool(event.value);
     }
 
 }
