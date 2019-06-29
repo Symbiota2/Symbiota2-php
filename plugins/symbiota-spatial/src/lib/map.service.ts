@@ -285,17 +285,26 @@ export class MapService {
     atlasManager = new AtlasManager();
 
     mousePositionControl = new MousePosition({
-        coordinateFormat: (coord1) => {
-            const mouseCoords = coord1;
-            if (coord1[0] < -180) {
-                coord1[0] = coord1[0] + 360;
-            }
-            if (coord1[0] > 180) {
-                coord1[0] = coord1[0] - 360;
+        coordinateFormat: (coord) => {
+            if (coord[0] < 0) {
+                const longitude = ((coord[0] % 360) + 180);
+                if (longitude < 0) {
+                    coord[0] = (coord[0] % 360) + 360;
+                }
+                if (longitude > 0) {
+                    coord[0] = coord[0] % 360;
+                }
+            } else {
+                const longitude = ((coord[0] % 360) - 180);
+                if (longitude > 0) {
+                    coord[0] = (coord[0] % 360) - 360;
+                }
+                if (longitude < 0) {
+                    coord[0] = coord[0] % 360;
+                }
             }
             const template = 'Lat: {y} Lon: {x}';
-            const coord2 = [coord1[1], coord1[0]];
-            return format(coord1, template, 5);
+            return format(coord, template, 5);
         },
         className: 'mousecoordinates',
         projection: 'EPSG:4326',
