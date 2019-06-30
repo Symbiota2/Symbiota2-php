@@ -94,12 +94,6 @@ export class MapService {
             if (fileType === 'geojson' || fileType === 'kml' || fileType === 'zip') {
                 if (fileType === 'geojson' || fileType === 'kml') {
                     if (this.setDragDropTarget()) {
-                        const infoArr = {};
-                        infoArr['Name'] = this.dragDropTarget;
-                        infoArr['layerType'] = 'vector';
-                        infoArr['Title'] = filename;
-                        infoArr['Abstract'] = '';
-                        infoArr['DefaultCRS'] = '';
                         const sourceIndex = this.dragDropTarget + 'Source';
                         let features = event.features;
                         if (fileType === 'kml') {
@@ -110,7 +104,12 @@ export class MapService {
                         });
                         this.layers[this.dragDropTarget].setStyle(MapService.getDragDropStyle);
                         this.layers[this.dragDropTarget].setSource(this.layers[sourceIndex]);
-                        // buildLayerTableRow(infoArr, true);
+                        this.addLayerToSelectorArr({
+                            name: this.dragDropTarget,
+                            title: filename,
+                            layerType: 'vector',
+                            removable: true
+                        });
                         this.map.getView().fit(this.layers[sourceIndex].getExtent());
                         // toggleLayerTable();
                     }
@@ -118,12 +117,6 @@ export class MapService {
                     if (this.setDragDropTarget()) {
                         this.sharedTools.getArrayBuffer(event.file).then((data) => {
                             shp(data).then((geojson) => {
-                                const infoArr = [];
-                                infoArr['Name'] = this.dragDropTarget;
-                                infoArr['layerType'] = 'vector';
-                                infoArr['Title'] = filename;
-                                infoArr['Abstract'] = '';
-                                infoArr['DefaultCRS'] = '';
                                 const sourceIndex = this.dragDropTarget + 'Source';
                                 const res = this.map.getView().getResolution();
                                 const features = geoJSONFormat.readFeatures(geojson, {
@@ -134,7 +127,12 @@ export class MapService {
                                 });
                                 this.layers[this.dragDropTarget].setStyle(MapService.getDragDropStyle);
                                 this.layers[this.dragDropTarget].setSource(this.layers[sourceIndex]);
-                                // buildLayerTableRow(infoArr, true);
+                                this.addLayerToSelectorArr({
+                                    name: this.dragDropTarget,
+                                    title: filename,
+                                    layerType: 'vector',
+                                    removable: true
+                                });
                                 this.map.getView().fit(this.layers[sourceIndex].getExtent());
                                 // toggleLayerTable();
                             });
@@ -243,18 +241,17 @@ export class MapService {
                 const featureCnt = this.selectsource.getFeatures().length;
                 if (featureCnt > 0) {
                     if (!this.shapeActive) {
-                        const infoArr = {};
-                        infoArr['Name'] = 'select';
-                        infoArr['layerType'] = 'vector';
-                        infoArr['Title'] = 'Shapes';
-                        infoArr['Abstract'] = '';
-                        infoArr['DefaultCRS'] = '';
-                        // buildLayerTableRow(infoArr,true);
+                        this.addLayerToSelectorArr({
+                            name: 'select',
+                            title: 'Shapes',
+                            layerType: 'vector',
+                            removable: true
+                        });
                         this.shapeActive = true;
                     }
                 } else {
                     if (this.shapeActive) {
-                        // removeLayerToSelList('select');
+                        this.removeLayerFromSelectorArr('select');
                         this.shapeActive = false;
                     }
                 }
@@ -616,7 +613,7 @@ export class MapService {
         this.layersSelectorSubject.next(updatedArr);
     }
 
-    removeLayerToSelectorArr(name: string) {
+    removeLayerFromSelectorArr(name: string) {
         const currentArr = this.layersSelectorSubject.value;
         currentArr.forEach((layer, index) => {
             if (layer.name === name) { currentArr.splice(index, 1); }
@@ -759,19 +756,16 @@ export class MapService {
                 this.drawToolSelectedSubject.next('None');
                 this.map.removeInteraction(this.draw);
                 if (!this.shapeActive) {
-                    const infoArr = [];
-                    infoArr['Name'] = 'select';
-                    infoArr['Title'] = 'Shapes';
-                    infoArr['layerType'] = 'vector';
-                    infoArr['Abstract'] = '';
-                    infoArr['DefaultCRS'] = '';
-                    // buildLayerTableRow(infoArr,true);
+                    this.addLayerToSelectorArr({
+                        name: 'select',
+                        title: 'Shapes',
+                        layerType: 'vector',
+                        removable: true
+                    });
                     this.shapeActive = true;
-                    // document.getElementById("selectlayerselect").value = 'select';
-                    // setActiveLayer();
+                    this.setActiveLayer('select');
                 } else {
-                    // document.getElementById("selectlayerselect").value = 'select';
-                    // setActiveLayer();
+                    this.setActiveLayer('select');
                 }
                 this.draw = Object.assign({}, {});
             });
