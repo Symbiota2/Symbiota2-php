@@ -34,6 +34,9 @@ import {ConfigurationService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
 import {SharedToolsService} from 'symbiota-shared';
 
+import {Layer} from './layer.model';
+import {filter, map} from 'rxjs/operators';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -44,6 +47,10 @@ export class MapService {
         private alertService: AlertService,
         private sharedTools: SharedToolsService
     ) {
+        this.activeLayerValue.subscribe(value => {
+            this.activeLayer = value.toString();
+        });
+
         this.mapCenter = (
             configService.data.MAP_INITIAL_CENTER ? JSON.parse(configService.data.MAP_INITIAL_CENTER) : [-110.90713, 32.21976]
         );
@@ -261,9 +268,9 @@ export class MapService {
     draw: any;
     mapCenter: [];
     mapZoom: number;
+    activeLayer: string;
     heatMapRadius = '5';
     heatMapBlur = '15';
-    activeLayer = 'none';
     clusterPoints = true;
     shapeActive = false;
     selections = [];
@@ -279,8 +286,18 @@ export class MapService {
     dragDrop1 = false;
     dragDrop2 = false;
     dragDrop3 = false;
-    drawToolSelected = new BehaviorSubject<string>('None');
-    public readonly drawToolSelectedValue: Observable<string> = this.drawToolSelected.asObservable();
+    drawToolSelectedSubject = new BehaviorSubject<string>('None');
+    public readonly drawToolSelectedValue: Observable<string> = this.drawToolSelectedSubject.asObservable();
+    layersSelectorSubject = new BehaviorSubject<Layer[]>([
+        {
+            name: 'none',
+            title: 'None',
+            removable: false
+        }
+    ]);
+    public readonly layersSelectorArr: Observable<Layer[]> = this.layersSelectorSubject.asObservable();
+    activeLayerSubject = new BehaviorSubject<string>('none');
+    public readonly activeLayerValue: Observable<string> = this.activeLayerSubject.asObservable();
 
     atlasManager = new AtlasManager();
 
@@ -530,18 +547,18 @@ export class MapService {
             'Point': new Style({
                 image: new Circle({
                     fill: new Fill({
-                        color: 'rgba(255, 255, 0, 0.5)'
+                        color: 'rgba(170, 170, 170, 0.3)'
                     }),
                     radius: 5,
                     stroke: new Stroke({
-                        color: '#ff0',
+                        color: '#000000',
                         width: 1
                     })
                 })
             }),
             'LineString': new Style({
                 stroke: new Stroke({
-                    color: '#f00',
+                    color: '#000000',
                     width: 3
                 })
             }),
@@ -557,18 +574,18 @@ export class MapService {
             'MultiPoint': new Style({
                 image: new Circle({
                     fill: new Fill({
-                        color: 'rgba(255, 0, 255, 0.5)'
+                        color: 'rgba(170, 170, 170, 0.3)'
                     }),
                     radius: 5,
                     stroke: new Stroke({
-                        color: '#f0f',
+                        color: '#000000',
                         width: 1
                     })
                 })
             }),
             'MultiLineString': new Style({
                 stroke: new Stroke({
-                    color: '#0f0',
+                    color: '#000000',
                     width: 3
                 })
             }),
@@ -587,6 +604,24 @@ export class MapService {
         } else {
             return dragDropStyle[feature.getGeometry().getType()];
         }
+    }
+
+    setActiveLayer(value: string) {
+        this.activeLayerSubject.next(value);
+    }
+
+    addLayerToSelectorArr(layer: Layer) {
+        const currentArr = this.layersSelectorSubject.value;
+        const updatedArr = [...currentArr, layer];
+        this.layersSelectorSubject.next(updatedArr);
+    }
+
+    removeLayerToSelectorArr(name: string) {
+        const currentArr = this.layersSelectorSubject.value;
+        currentArr.forEach((layer, index) => {
+            if (layer.name === name) { currentArr.splice(index, 1); }
+        });
+        this.layersSelectorSubject.next(currentArr);
     }
 
     getMap() {
@@ -721,7 +756,7 @@ export class MapService {
             });
 
             this.draw.on('drawend', (evt) => {
-                this.drawToolSelected.next('None');
+                this.drawToolSelectedSubject.next('None');
                 this.map.removeInteraction(this.draw);
                 if (!this.shapeActive) {
                     const infoArr = [];

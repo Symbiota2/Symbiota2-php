@@ -30,8 +30,8 @@
             <div class="middleToolboxRow">
                 <div id="selectcontrol">
                     <span class="maptext">Active Layer</span>
-                    <select class="baseLayerSelect" id="selectlayerselect" onchange="setActiveLayer();">
-                        <option id="lsel-none" value="none">None</option>
+                    <select class="activeLayerSelect" [(ngModel)]="activeLayerValue" (change)="activeLayerChange($event.target)">
+                        <option *ngFor="let layer of layersArr" value="{{layer.name}}">{{layer.title}}</option>
                     </select>
                 </div>
             </div>

@@ -4,6 +4,8 @@ import OlMap from 'ol/Map';
 
 import {MapService} from '../map.service';
 
+import {Layer} from '../layer.model';
+
 @Component({
     selector: 'symbiota-spatial-spatial-analysis',
     templateUrl: './spatial-analysis.component.html',
@@ -19,12 +21,20 @@ export class SpatialAnalysisComponent implements OnInit {
 
     map: OlMap;
     drawSelectedValue: string;
+    activeLayerValue: string;
+    layersArr: Layer[];
 
     constructor(
         public mapService: MapService
     ) {
         this.mapService.drawToolSelectedValue.subscribe(value => {
             this.drawSelectedValue = value.toString();
+        });
+        this.mapService.layersSelectorArr.subscribe(value => {
+            this.layersArr = value;
+        });
+        this.mapService.activeLayerValue.subscribe(value => {
+            this.activeLayerValue = value.toString();
         });
     }
 
@@ -42,6 +52,10 @@ export class SpatialAnalysisComponent implements OnInit {
 
     baseMapSelectChange(event) {
         this.mapService.changeBaseMap(event.value);
+    }
+
+    activeLayerChange(event) {
+        this.mapService.setActiveLayer(event.value);
     }
 
     drawToolSelectChange(event) {
