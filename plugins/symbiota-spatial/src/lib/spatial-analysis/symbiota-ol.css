@@ -42,9 +42,11 @@
     bottom: 12px;
     left: -50px;
     min-width: 270px;
+    font-size: 12px;
 }
 .ol-popup-finder {
     min-width: 100px;
+    padding: 5px;
 }
 .ol-popup:after, .ol-popup:before {
     top: 100%;
@@ -214,4 +216,8 @@ body:fullscreen {
     top: 272px;
     left: auto;
     right: .5em;
+}
+
+#finderpopup-closer {
+    display: none;
 }

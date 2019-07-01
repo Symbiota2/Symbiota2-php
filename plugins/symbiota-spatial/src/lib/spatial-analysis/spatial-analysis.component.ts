@@ -23,6 +23,12 @@ export class SpatialAnalysisComponent implements OnInit {
     drawSelectedValue: string;
     activeLayerValue: string;
     layersArr: Layer[];
+    popupContainer: any;
+    popupCloser: any;
+    popupContent: any;
+    finderPopupContainer: any;
+    finderPopupCloser: any;
+    finderPopupContent: any;
 
     constructor(
         public mapService: MapService
@@ -48,6 +54,16 @@ export class SpatialAnalysisComponent implements OnInit {
         this.map.addInteraction(this.mapService.selectInteraction);
         this.map.addInteraction(this.mapService.pointInteraction);
         this.map.addInteraction(this.mapService.dragAndDropInteraction);
+
+        this.popupContainer = document.getElementById('popup');
+        this.popupContent = document.getElementById('popup-content');
+        this.popupCloser = document.getElementById('popup-closer');
+        this.mapService.initializePopup(this.popupContainer, this.popupContent, this.popupCloser);
+
+        this.finderPopupContainer = document.getElementById('finderpopup');
+        this.finderPopupContent = document.getElementById('finderpopup-content');
+        this.finderPopupCloser = document.getElementById('finderpopup-closer');
+        this.mapService.initializeFinderPopup(this.finderPopupContainer, this.finderPopupContent, this.finderPopupCloser);
     }
 
     baseMapSelectChange(event) {
