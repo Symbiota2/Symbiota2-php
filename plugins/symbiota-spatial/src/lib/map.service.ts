@@ -443,7 +443,7 @@ export class MapService {
 
     selectInteraction = new Select({
         layers: [
-            this.layers['select']
+            this.selectlayer
         ],
         condition: (evt) => {
             return (evt.type === 'click' && this.activeLayer === 'select' && !evt.originalEvent.altKey);
