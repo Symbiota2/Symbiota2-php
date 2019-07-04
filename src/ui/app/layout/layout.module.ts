@@ -12,6 +12,7 @@ import {TopnavComponent} from './header/topnav/topnav.component';
 import {HeaderComponent} from './header/header.component';
 import {SidepanelComponent} from './sidepanel/sidepanel.component';
 import {SitemapComponent} from './sitemap/sitemap.component';
+import {SidepanelLinksComponent} from './sidepanel-links/sidepanel-links.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import {SitemapComponent} from './sitemap/sitemap.component';
         TopnavComponent,
         HeaderComponent,
         SidepanelComponent,
-        SitemapComponent
+        SitemapComponent,
+        SidepanelLinksComponent
     ],
     imports: [
         AppRoutingModule,
@@ -32,6 +34,9 @@ import {SitemapComponent} from './sitemap/sitemap.component';
     exports: [
         LayoutComponent,
         HomeComponent
+    ],
+    entryComponents: [
+        SidepanelLinksComponent
     ],
     providers: [],
     bootstrap: [

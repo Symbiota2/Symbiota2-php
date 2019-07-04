@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {Router, RoutesRecognized} from '@angular/router';
 
 @Component({
@@ -8,6 +8,7 @@ import {Router, RoutesRecognized} from '@angular/router';
 })
 export class LayoutComponent {
     fullWindow = false;
+    sidenavOpenState = false;
 
     constructor(
         private router: Router
