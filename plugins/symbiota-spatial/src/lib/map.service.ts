@@ -1255,4 +1255,14 @@ export class MapService {
             crossOrigin: 'anonymous'
         });
     }
+
+    deleteSelections() {
+        this.selectInteraction.getFeatures().forEach((feature) => {
+            this.layers['select'].getSource().removeFeature(feature);
+        });
+        this.selectInteraction.getFeatures().clear();
+        if (this.layers['select'].getSource().getFeatures().length < 1) {
+            this.removeLayerFromSelectorArr('select');
+        }
+    }
 }

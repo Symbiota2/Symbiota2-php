@@ -78,4 +78,7 @@ export class SpatialAnalysisComponent implements OnInit {
         this.mapService.changeDrawTool(event.value);
     }
 
+    onDeleteSelections() {
+        this.mapService.deleteSelections();
+    }
 }
