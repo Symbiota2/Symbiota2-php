@@ -1,0 +1,15 @@
+.option-container {
+    margin-top:5px;
+}
+
+.map-settings-labels {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+    color: black;
+}
+
+.text-input {
+    font-size: 14px;
+    width:50px;
+}

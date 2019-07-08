@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {BehaviorSubject, Observable} from 'rxjs';
-
 import OlMap from 'ol/Map';
 import XYZ from 'ol/source/XYZ';
 import {FullScreen, ZoomSlider, ScaleLine, MousePosition} from 'ol/control';
@@ -31,6 +31,9 @@ import {
 import Overlay from 'ol/Overlay';
 import shp from 'shpjs';
 
+import {MapSettingsDialogComponent} from './map-settings-dialog/map-settings-dialog.component';
+import {MapLayersDialogComponent} from './map-layers-dialog/map-layers-dialog.component';
+
 import {ConfigurationService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
 import {SharedToolsService} from 'symbiota-shared';
@@ -46,7 +49,8 @@ export class MapService {
         private configService: ConfigurationService,
         private alertService: AlertService,
         private sharedTools: SharedToolsService,
-        private http: HttpClient
+        private http: HttpClient,
+        private dialog: MatDialog
     ) {
         this.activeLayerValue.subscribe(value => {
             this.activeLayer = value.toString();
@@ -264,6 +268,7 @@ export class MapService {
     view: OlView;
     layers = {};
     draw: any;
+    clustersource: any;
     popupOverlay: any;
     popupContainer: any;
     popupCloser: any;
@@ -277,7 +282,6 @@ export class MapService {
     activeLayer: string;
     heatMapRadius = '5';
     heatMapBlur = '15';
-    clusterPoints = true;
     shapeActive = false;
     selections = [];
     mapSymbology = 'coll';
@@ -293,6 +297,7 @@ export class MapService {
     dragDrop1 = false;
     dragDrop2 = false;
     dragDrop3 = false;
+    returnClusters = false;
     drawToolSelectedSubject = new BehaviorSubject<string>('None');
     public readonly drawToolSelectedValue: Observable<string> = this.drawToolSelectedSubject.asObservable();
     layersSelectorSubject = new BehaviorSubject<Layer[]>([
@@ -305,6 +310,18 @@ export class MapService {
     public readonly layersSelectorArr: Observable<Layer[]> = this.layersSelectorSubject.asObservable();
     activeLayerSubject = new BehaviorSubject<string>('none');
     public readonly activeLayerValue: Observable<string> = this.activeLayerSubject.asObservable();
+    clusterDistanceSubject = new BehaviorSubject<number>(50);
+    public readonly clusterDistanceValue: Observable<number> = this.clusterDistanceSubject.asObservable();
+    heatMapRadiusSubject = new BehaviorSubject<number>(5);
+    public readonly heatMapRadiusValue: Observable<number> = this.heatMapRadiusSubject.asObservable();
+    heatMapBlurSubject = new BehaviorSubject<number>(15);
+    public readonly heatMapBlurValue: Observable<number> = this.heatMapBlurSubject.asObservable();
+    clusterPointsSubject = new BehaviorSubject<boolean>(true);
+    public readonly clusterPointsValue: Observable<boolean> = this.clusterPointsSubject.asObservable();
+    dateSliderActiveSubject = new BehaviorSubject<boolean>(false);
+    public readonly dateSliderActiveValue: Observable<boolean> = this.dateSliderActiveSubject.asObservable();
+    showHeatMapSubject = new BehaviorSubject<boolean>(false);
+    public readonly showHeatMapValue: Observable<boolean> = this.showHeatMapSubject.asObservable();
 
     atlasManager = new AtlasManager();
 
@@ -613,6 +630,79 @@ export class MapService {
         }
     }
 
+    setClusterPointsValue(value: boolean) {
+        this.clusterPointsSubject.next(value);
+        if (this.clusterPointsSubject.value) {
+            // this.removeDateSlider();
+            // this.loadPointWFSLayer(0);
+        } else {
+            this.layers['pointv'].setSource(this.pointvectorsource);
+        }
+    }
+
+    setClusterDistanceValue(value: number) {
+        this.clusterDistanceSubject.next(value);
+        // this.clustersource.setDistance(this.clusterDistanceSubject.value);
+    }
+
+    setShowHeatMapValue(value: boolean) {
+        this.showHeatMapSubject.next(value);
+        if (this.showHeatMapSubject.value) {
+            this.layers['pointv'].setVisible(false);
+            this.layers['heat'].setVisible(true);
+        } else {
+            if (this.returnClusters && !this.dateSliderActiveSubject.value) {
+                this.returnClusters = false;
+                this.setClusterPointsValue(true);
+            }
+            this.layers['heat'].setVisible(false);
+            this.layers['pointv'].setVisible(true);
+        }
+    }
+
+    setHeatMapRadiusValue(value: number) {
+        this.heatMapRadiusSubject.next(value);
+        this.layers['heat'].setRadius(parseInt(this.heatMapRadiusSubject.value.toString(), 10));
+    }
+
+    setHeatMapBlurValue(value: number) {
+        this.heatMapBlurSubject.next(value);
+        this.layers['heat'].setBlur(parseInt(this.heatMapBlurSubject.value.toString(), 10));
+    }
+
+    setDateSliderActiveValue(value: boolean) {
+        this.dateSliderActiveSubject.next(value);
+        /* if (this.dateSliderActiveSubject.value) {
+            if (dsOldestDate && dsNewestDate) {
+                if (dsOldestDate !== dsNewestDate) {
+                    if (!this.clusterPointsSubject.value) {
+                        // var dual = document.getElementById("dsdualtype").checked;
+                        // createDateSlider(true);
+                    } else {
+                        this.returnClusters = true;
+                        this.setClusterPointsValue(false);
+                        // createDateSlider(true);
+                    }
+                } else {
+                    this.alertService.showErrorSnackbar(
+                        'The current records on the map do not have a range of dates for the Date Slider to populate.',
+                        '',
+                        5000
+                    );
+                }
+            } else {
+                this.dateSliderActiveSubject.next(false);
+                this.alertService.showErrorSnackbar(
+                    'Points must be loaded onto the map to use the Date Slider.',
+                    '',
+                    5000
+                );
+            }
+        } else {
+            // removeDateSlider();
+        } */
+    }
+
     initializePopup(container: any, content: any, closer: any) {
         this.popupContainer = container;
         this.popupContent = content;
@@ -804,9 +894,9 @@ export class MapService {
                         targetFeature = Object.assign({}, this.clickedFeatures[0]);
                     }
                     if (targetFeature) {
-                        if (this.clusterPoints && targetFeature.get('features').length === 1) {
+                        if (this.clusterPointsSubject.value && targetFeature.get('features').length === 1) {
                             iFeature = targetFeature.get('features')[0];
-                        } else if (!this.clusterPoints) {
+                        } else if (!this.clusterPointsSubject.value) {
                             iFeature = Object.assign({}, targetFeature);
                         }
                     } else {
@@ -886,7 +976,7 @@ export class MapService {
 
     getPointStyle(feature) {
         let style = '';
-        if (this.clusterPoints) {
+        if (this.clusterPointsSubject.value) {
             style = this.setClusterSymbol(feature);
         } else {
             style = this.setSymbol(feature);
@@ -1264,5 +1354,31 @@ export class MapService {
         if (this.layers['select'].getSource().getFeatures().length < 1) {
             this.removeLayerFromSelectorArr('select');
         }
+    }
+
+    openMapSettingsDialog(mapService: any) {
+        const dialogRef = this.dialog.open(MapSettingsDialogComponent, {
+            width: '500px',
+            data: {
+                mapService: mapService
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            // this.animal = result;
+        });
+    }
+
+    openMapLayersDialog(mapService: any) {
+        const dialogRef = this.dialog.open(MapLayersDialogComponent, {
+            width: '500px',
+            data: {
+                mapService: mapService
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            // this.animal = result;
+        });
     }
 }

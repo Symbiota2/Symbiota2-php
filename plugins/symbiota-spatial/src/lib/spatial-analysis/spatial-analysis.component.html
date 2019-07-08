@@ -37,13 +37,10 @@
             </div>
             <div class="bottomToolboxRow">
                 <div>
-                    <span class="maptext"><a class="mapsettings_open" href="#mapsettings"><b>Settings</b></a></span>
+                    <span class="maptext"><a class="maplink" (click)="onMapSettingsOpen()"><b>Settings</b></a></span>
                 </div>
                 <div>
-                    <span class="maptext"><a class="maptools_open" href="#maptools"><b>Tools</b></a></span>
-                </div>
-                <div>
-                    <span class="maptext"><a class="addLayers_open" href="#addLayers"><b>Layers</b></a></span>
+                    <span class="maptext"><a  class="maplink" (click)="onMapLayersOpen()"><b>Layers</b></a></span>
                 </div>
                 <div>
                     <button type="button" (click)="onDeleteSelections()">Delete Shapes</button>

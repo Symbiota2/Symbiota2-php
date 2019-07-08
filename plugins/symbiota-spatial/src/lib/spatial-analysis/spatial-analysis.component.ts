@@ -81,4 +81,12 @@ export class SpatialAnalysisComponent implements OnInit {
     onDeleteSelections() {
         this.mapService.deleteSelections();
     }
+
+    onMapSettingsOpen() {
+        this.mapService.openMapSettingsDialog(this.mapService);
+    }
+
+    onMapLayersOpen() {
+        this.mapService.openMapLayersDialog(this.mapService);
+    }
 }

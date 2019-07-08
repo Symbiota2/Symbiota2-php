@@ -192,6 +192,10 @@
     margin-right: 5px;
     color: white;
 }
+
+.maplink{
+    cursor: pointer;
+}
 body:-moz-full-screen {
     height: 100%;
 }
