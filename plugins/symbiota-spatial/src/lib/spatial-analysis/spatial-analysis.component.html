@@ -31,16 +31,20 @@
                 <div id="selectcontrol">
                     <span class="maptext">Active Layer</span>
                     <select class="activeLayerSelect" [(ngModel)]="activeLayerValue" (change)="activeLayerChange($event.target)">
-                        <option *ngFor="let layer of layersArr" value="{{layer.name}}">{{layer.title}}</option>
+                        <ng-container *ngFor="let layer of layersArr">
+                            <ng-container *ngIf="layer.visible">
+                                <option value="{{layer.name}}">{{layer.title}}</option>
+                            </ng-container>
+                        </ng-container>
                     </select>
                 </div>
             </div>
             <div class="bottomToolboxRow">
                 <div>
-                    <span class="maptext"><a class="maplink" (click)="onMapSettingsOpen()"><b>Settings</b></a></span>
+                    <span class="maptext"><a class="maplink" (click)="onMapSettingsOpen()">Settings</a></span>
                 </div>
-                <div>
-                    <span class="maptext"><a  class="maplink" (click)="onMapLayersOpen()"><b>Layers</b></a></span>
+                <div *ngIf="layersArr.length > 1">
+                    <span class="maptext"><a class="maplink" (click)="onMapLayersOpen()">Layers</a></span>
                 </div>
                 <div>
                     <button type="button" (click)="onDeleteSelections()">Delete Shapes</button>

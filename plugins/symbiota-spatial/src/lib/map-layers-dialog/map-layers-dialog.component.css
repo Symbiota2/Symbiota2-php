@@ -1,0 +1,31 @@
+table {
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.checkboxRow {
+    width: 20px;
+}
+
+.nameRow {
+    width: 170px;
+    font-size: 12px;
+}
+
+.abstractRow {
+    width: 330px;
+    font-size: 12px;
+}
+
+.typeIconRow {
+    width: 20px;
+}
+
+.deleteIconRow {
+    width: 20px;
+    cursor: pointer;
+}

@@ -1,3 +1,20 @@
-<p>
-    map-layers-dialog works!
-</p>
+<table class="layerTable">
+    <tr *ngFor="let layer of layersArr">
+        <ng-container *ngIf="layer.name !== 'none'">
+            <td class="checkboxRow">
+                <mat-checkbox [checked]="layer.visible" (change)="layerToggleChange($event, layer.name)"></mat-checkbox>
+            </td>
+            <td class="nameRow">{{layer.title}}</td>
+            <td class="abstractRow">{{layer.abstract}}</td>
+            <td class="typeIconRow">
+                <mat-icon *ngIf="layer.layerType === 'vector'">timeline</mat-icon>
+                <mat-icon *ngIf="layer.layerType === 'raster'">grid_on</mat-icon>
+            </td>
+            <td class="deleteIconRow">
+                <ng-container *ngIf="layer.removable === true">
+                    <a (click)="onLayerDelete(layer.name)"><mat-icon>delete_forever</mat-icon></a>
+                </ng-container>
+            </td>
+        </ng-container>
+    </tr>
+</table>

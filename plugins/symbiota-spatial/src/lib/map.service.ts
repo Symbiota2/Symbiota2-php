@@ -113,7 +113,8 @@ export class MapService {
                             name: this.dragDropTarget,
                             title: filename,
                             layerType: 'vector',
-                            removable: true
+                            removable: true,
+                            visible: true
                         });
                         this.map.getView().fit(this.layers[sourceIndex].getExtent());
                         // toggleLayerTable();
@@ -136,7 +137,8 @@ export class MapService {
                                     name: this.dragDropTarget,
                                     title: filename,
                                     layerType: 'vector',
-                                    removable: true
+                                    removable: true,
+                                    visible: true
                                 });
                                 this.map.getView().fit(this.layers[sourceIndex].getExtent());
                                 // toggleLayerTable();
@@ -250,7 +252,8 @@ export class MapService {
                             name: 'select',
                             title: 'Shapes',
                             layerType: 'vector',
-                            removable: true
+                            removable: true,
+                            visible: true
                         });
                         this.shapeActive = true;
                     }
@@ -283,6 +286,7 @@ export class MapService {
     heatMapRadius = '5';
     heatMapBlur = '15';
     shapeActive = false;
+    clusterPoints = true;
     selections = [];
     mapSymbology = 'coll';
     collSymbology = [];
@@ -293,6 +297,7 @@ export class MapService {
     hiddenClusters = [];
     clickedFeatures = [];
     overlayLayers = [];
+    vectorizeLayers = [];
     dragDropTarget = '';
     dragDrop1 = false;
     dragDrop2 = false;
@@ -304,7 +309,8 @@ export class MapService {
         {
             name: 'none',
             title: 'None',
-            removable: false
+            removable: false,
+            visible: true
         }
     ]);
     public readonly layersSelectorArr: Observable<Layer[]> = this.layersSelectorSubject.asObservable();
@@ -627,6 +633,83 @@ export class MapService {
             return featureStyleFunction.call(feature, resolution);
         } else {
             return dragDropStyle[feature.getGeometry().getType()];
+        }
+    }
+
+    toggleLayer(value: boolean, layer: string) {
+        const currentArr = this.layersSelectorSubject.value;
+        currentArr.forEach((arrLayer, index) => {
+            if (arrLayer.name === layer) { arrLayer.visible = value; }
+        });
+        this.layersSelectorSubject.next(currentArr);
+        this.setActiveLayer('none');
+        if (value) {
+            this.layers[layer].setVisible(true);
+        } else {
+            this.layers[layer].setVisible(false);
+        }
+    }
+
+    removeLayer(layerID) {
+        if (layerID === 'select') {
+            this.selectInteraction.getFeatures().clear();
+            this.layers[layerID].getSource().clear(true);
+            this.shapeActive = false;
+        } else if (layerID === 'pointv') {
+            this.clearSelections();
+            // adjustSelectionsTab();
+            // removeDateSlider();
+            this.pointvectorsource = new VectorSource({wrapX: false});
+            this.layers['pointv'].setSource(this.pointvectorsource);
+            this.layers['heat'].setSource(this.pointvectorsource);
+            this.layers['heat'].setVisible(false);
+            this.clustersource = '';
+        } else if (this.overlayLayers[layerID]) {
+            const layerTileSourceName = layerID + 'Source';
+            const layerRasterSourceName = layerID + 'RasterSource';
+            this.layers[layerTileSourceName] = Object.assign({}, {});
+            this.layers[layerRasterSourceName] = Object.assign({}, {});
+            this.layers[layerID].setVisible(false);
+            const index = this.overlayLayers.indexOf(layerID);
+            this.overlayLayers.splice(index, 1);
+            if (this.vectorizeLayers[layerID]) {
+                const vecindex = this.vectorizeLayers.indexOf(layerID);
+                this.vectorizeLayers.splice(vecindex, 1);
+            }
+        } else {
+            this.layers[layerID].setSource(this.blankdragdropsource);
+            if (layerID === 'dragdrop1') {
+                this.dragDrop1 = false;
+            } else if (layerID === 'dragdrop2') {
+                this.dragDrop2 = false;
+            } else if (layerID === 'dragdrop3') {
+                this.dragDrop3 = false;
+            }
+        }
+        this.removeLayerFromSelectorArr(layerID);
+        this.setActiveLayer('none');
+    }
+
+    clearSelections() {
+        const selpoints = Object.assign([], this.selections);
+        this.selections = Object.assign([], []);
+        for (const i in selpoints) {
+            if (!this.clusterPoints) {
+                const point = this.findOccPoint(selpoints[i]);
+                const style = this.setSymbol(point);
+                point.setStyle(style);
+            }
+        }
+        this.layers['pointv'].getSource().changed();
+        // adjustSelectionsTab();
+    }
+
+    findOccPoint(occid) {
+        const features = this.layers['pointv'].getSource().getFeatures();
+        for (const f in features) {
+            if (Number(features[f].get('occid')) === occid) {
+                return features[f];
+            }
         }
     }
 
@@ -1074,7 +1157,8 @@ export class MapService {
                         name: 'select',
                         title: 'Shapes',
                         layerType: 'vector',
-                        removable: true
+                        removable: true,
+                        visible: true
                     });
                     this.shapeActive = true;
                     this.setActiveLayer('select');

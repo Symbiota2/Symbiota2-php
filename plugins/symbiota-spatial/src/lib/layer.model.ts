@@ -5,4 +5,5 @@ export interface Layer {
     abstract?: string;
     defaultCRS?: string;
     removable: boolean;
+    visible: boolean;
 }
