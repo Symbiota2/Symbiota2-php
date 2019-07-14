@@ -6,6 +6,7 @@ import {SymbiotaSharedModule} from 'symbiota-shared';
 import {SpatialAnalysisComponent} from './spatial-analysis/spatial-analysis.component';
 import {MapSettingsDialogComponent} from './map-settings-dialog/map-settings-dialog.component';
 import {MapLayersDialogComponent} from './map-layers-dialog/map-layers-dialog.component';
+import {VectorToolsTabComponent} from './vector-tools-tab/vector-tools-tab.component';
 
 import {MapService} from './map.service';
 import {VectorToolsService} from './vector-tools.service';
@@ -14,7 +15,8 @@ import {VectorToolsService} from './vector-tools.service';
     declarations: [
         SpatialAnalysisComponent,
         MapSettingsDialogComponent,
-        MapLayersDialogComponent
+        MapLayersDialogComponent,
+        VectorToolsTabComponent
     ],
     imports: [
         SpatialRoutingModule,
@@ -26,7 +28,8 @@ import {VectorToolsService} from './vector-tools.service';
     ],
     entryComponents: [
         MapSettingsDialogComponent,
-        MapLayersDialogComponent
+        MapLayersDialogComponent,
+        VectorToolsTabComponent
     ]
 })
 export class SymbiotaSpatialModule {

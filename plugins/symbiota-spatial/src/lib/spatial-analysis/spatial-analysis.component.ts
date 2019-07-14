@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 
 import OlMap from 'ol/Map';
 
@@ -14,11 +14,10 @@ import {Layer} from '../layer.model';
         '../../../../../node_modules/ol/ol.css',
         './symbiota-ol.css',
         './spatial-analysis.component.css'
-    ],
-    providers: [MapService]
+    ]
 })
 export class SpatialAnalysisComponent implements OnInit {
-
+    @Input() params: any;
     map: OlMap;
     drawSelectedValue: string;
     activeLayerValue: string;

@@ -6,9 +6,7 @@ import {Component, OnInit, Input} from '@angular/core';
     styleUrls: ['./user-profile-collection-tab.component.css']
 })
 export class UserProfileCollectionTabComponent implements OnInit {
-
-    @Input()
-    params: any;
+    @Input() params: any;
 
     constructor() {
     }
