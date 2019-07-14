@@ -32,6 +32,7 @@ export class SpatialAnalysisComponent implements OnInit {
     constructor(
         public mapService: MapService
     ) {
+        this.mapService.setMapId('analysis');
         this.mapService.drawToolSelectedValue.subscribe(value => {
             this.drawSelectedValue = value.toString();
         });

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {BehaviorSubject, Observable} from 'rxjs';
 import OlMap from 'ol/Map';
 import XYZ from 'ol/source/XYZ';
@@ -116,7 +116,7 @@ export class MapService {
                             removable: true,
                             visible: true
                         });
-                        this.map.getView().fit(this.layers[sourceIndex].getExtent());
+                        this.map[this.mapId].getView().fit(this.layers[sourceIndex].getExtent());
                         // toggleLayerTable();
                     }
                 } else if (fileType === 'zip') {
@@ -124,7 +124,7 @@ export class MapService {
                         this.sharedTools.getArrayBuffer(event.file).then((data) => {
                             shp(data).then((geojson) => {
                                 const sourceIndex = this.dragDropTarget + 'Source';
-                                const res = this.map.getView().getResolution();
+                                const res = this.map[this.mapId].getView().getResolution();
                                 const features = geoJSONFormat.readFeatures(geojson, {
                                     featureProjection: 'EPSG:3857'
                                 });
@@ -140,7 +140,7 @@ export class MapService {
                                     removable: true,
                                     visible: true
                                 });
-                                this.map.getView().fit(this.layers[sourceIndex].getExtent());
+                                this.map[this.mapId].getView().fit(this.layers[sourceIndex].getExtent());
                                 // toggleLayerTable();
                             });
                         });
@@ -163,7 +163,7 @@ export class MapService {
 
         this.pointInteraction.on('select', (event) => {
             const newfeatures = event.selected;
-            const zoomLevel = this.map.getView().getZoom();
+            const zoomLevel = this.map[this.mapId].getView().getZoom();
             if (newfeatures.length > 0) {
                 if (zoomLevel < 17) {
                     const extent = createEmpty();
@@ -184,7 +184,7 @@ export class MapService {
                                 }
                             }
                         }
-                        this.map.getView().fit(extent, this.map.getSize());
+                        this.map[this.mapId].getView().fit(extent, this.map[this.mapId].getSize());
                     } else {
                         const newfeature = newfeatures[0];
                         this.pointInteraction.getFeatures().remove(newfeature);
@@ -197,7 +197,7 @@ export class MapService {
                                         extend(extent, cFeatures[f].getGeometry().getExtent());
                                     }
                                 }
-                                this.map.getView().fit(extent, this.map.getSize());
+                                this.map[this.mapId].getView().fit(extent, this.map[this.mapId].getSize());
                             } else {
                                 this.processPointSelection(newfeature);
                             }
@@ -267,7 +267,8 @@ export class MapService {
         });
     }
 
-    map: OlMap;
+    map = {};
+    mapId = 'analysis';
     view: OlView;
     layers = {};
     draw: any;
@@ -502,7 +503,7 @@ export class MapService {
             if (evt.type === 'click' && this.activeLayer === 'pointv') {
                 if (!evt.originalEvent.altKey) {
                     if (this.spiderCluster) {
-                        const spiderclick = this.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
+                        const spiderclick = this.map[this.mapId].forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
                             this.spiderFeature = feature;
                             if (feature && layer === this.layers['spider']) {
                                 return feature;
@@ -527,7 +528,7 @@ export class MapService {
                     }
                     return true;
                 } else if (evt.originalEvent.altKey) {
-                    this.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
+                    this.map[this.mapId].forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
                         if (feature) {
                             if (this.spiderCluster && layer === this.layers['spider']) {
                                 this.clickedFeatures.push(feature);
@@ -805,7 +806,7 @@ export class MapService {
             return false;
         };
 
-        this.map.addOverlay(this.popupOverlay);
+        this.map[this.mapId].addOverlay(this.popupOverlay);
     }
 
     setPopup(content: string, position: any) {
@@ -832,7 +833,7 @@ export class MapService {
             return false;
         };
 
-        this.map.addOverlay(this.finderPopupOverlay);
+        this.map[this.mapId].addOverlay(this.finderPopupOverlay);
     }
 
     setFinderPopup(content: string, position: any) {
@@ -858,8 +859,12 @@ export class MapService {
         this.layersSelectorSubject.next(currentArr);
     }
 
+    setMapId(id: string) {
+        this.mapId = id;
+    }
+
     getMap() {
-        this.map = new OlMap({
+        this.map[this.mapId] = new OlMap({
             target: 'map',
             layers: [
                 this.layers['base'],
@@ -874,7 +879,7 @@ export class MapService {
             view: this.view
         });
 
-        this.map.getView().on('change:resolution', (event) => {
+        this.map[this.mapId].getView().on('change:resolution', (event) => {
             if (this.spiderCluster) {
                 const source = this.layers['spider'].getSource();
                 source.clear();
@@ -894,7 +899,7 @@ export class MapService {
             }
         });
 
-        this.map.on('singleclick', (evt) => {
+        this.map[this.mapId].on('singleclick', (evt) => {
             if (evt.originalEvent.altKey) {
                 const layerIndex = this.activeLayer + 'Source';
                 const viewResolution = this.view.getResolution();
@@ -951,7 +956,7 @@ export class MapService {
                     || this.activeLayer === 'dragdrop3'
                     || this.activeLayer === 'select') {
                     let infoHTML = '';
-                    const selectedFeature = this.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
+                    const selectedFeature = this.map[this.mapId].forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
                         if (layer === this.layers[this.activeLayer]) {
                             return feature;
                         }
@@ -1026,7 +1031,7 @@ export class MapService {
                 const layerIndex = this.activeLayer + 'Source';
                 if (this.activeLayer !== 'none' && this.activeLayer !== 'select' && this.activeLayer !== 'pointv') {
                     if (this.activeLayer === 'dragdrop1' || this.activeLayer === 'dragdrop2' || this.activeLayer === 'dragdrop3') {
-                        this.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
+                        this.map[this.mapId].forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
                             if (layer === this.layers[this.activeLayer]) {
                                 try {
                                     this.selectsource.addFeature(feature);
@@ -1054,7 +1059,7 @@ export class MapService {
             }
         });
 
-        return this.map;
+        return this.map[this.mapId];
     }
 
     getPointStyle(feature) {
@@ -1142,7 +1147,7 @@ export class MapService {
     }
 
     changeDrawTool(selection) {
-        this.map.removeInteraction(this.draw);
+        this.map[this.mapId].removeInteraction(this.draw);
         if (selection !== 'None') {
             this.draw = new Draw({
                 source: this.selectsource,
@@ -1151,7 +1156,7 @@ export class MapService {
 
             this.draw.on('drawend', (evt) => {
                 this.drawToolSelectedSubject.next('None');
-                this.map.removeInteraction(this.draw);
+                this.map[this.mapId].removeInteraction(this.draw);
                 if (!this.shapeActive) {
                     this.addLayerToSelectorArr({
                         name: 'select',
@@ -1168,7 +1173,7 @@ export class MapService {
                 this.draw = Object.assign({}, {});
             });
 
-            this.map.addInteraction(this.draw);
+            this.map[this.mapId].addInteraction(this.draw);
         } else {
             this.draw = Object.assign({}, {});
         }
@@ -1176,7 +1181,7 @@ export class MapService {
 
     changeBaseMap(selection) {
         let blsource = {};
-        const baseLayer = this.map.getLayers().getArray()[0];
+        const baseLayer = this.map[this.mapId].getLayers().getArray()[0];
         if (selection === 'worldtopo') {
             blsource = new XYZ({
                 url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
@@ -1362,7 +1367,7 @@ export class MapService {
         source.clear();
 
         const center = features[0].getGeometry().getCoordinates();
-        const pix = this.map.getView().getResolution();
+        const pix = this.map[this.mapId].getView().getResolution();
         const rad = pix * 12 * (0.5 + spiderFeatures.length / 4);
         if (spiderFeatures.length <= 10) {
             const max = Math.min(spiderFeatures.length, 10);
@@ -1447,10 +1452,6 @@ export class MapService {
                 mapService: mapService
             }
         });
-
-        dialogRef.afterClosed().subscribe(result => {
-            // this.animal = result;
-        });
     }
 
     openMapLayersDialog(mapService: any) {
@@ -1459,10 +1460,6 @@ export class MapService {
             data: {
                 mapService: mapService
             }
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            // this.animal = result;
         });
     }
 }
