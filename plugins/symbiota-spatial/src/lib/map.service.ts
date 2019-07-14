@@ -864,200 +864,203 @@ export class MapService {
     }
 
     getMap() {
-        this.map[this.mapId] = new OlMap({
-            target: 'map',
-            layers: [
-                this.layers['base'],
-                this.layers['dragdrop1'],
-                this.layers['dragdrop2'],
-                this.layers['dragdrop3'],
-                this.layers['select'],
-                this.layers['pointv'],
-                this.layers['heat'],
-                this.layers['spider']
-            ],
-            view: this.view
-        });
+        if (!this.map[this.mapId]) {
+            this.map[this.mapId] = new OlMap({
+                target: 'map',
+                layers: [
+                    this.layers['base'],
+                    this.layers['dragdrop1'],
+                    this.layers['dragdrop2'],
+                    this.layers['dragdrop3'],
+                    this.layers['select'],
+                    this.layers['pointv'],
+                    this.layers['heat'],
+                    this.layers['spider']
+                ],
+                view: this.view
+            });
 
-        this.map[this.mapId].getView().on('change:resolution', (event) => {
-            if (this.spiderCluster) {
-                const source = this.layers['spider'].getSource();
-                source.clear();
-                const blankSource = new VectorSource({
-                    features: new Collection(),
-                    useSpatialIndex: true
-                });
-                this.layers['spider'].setSource(blankSource);
-                for (const i in this.hiddenClusters) {
-                    if (this.hiddenClusters[i]) {
-                        this.showFeature(this.hiddenClusters[i]);
-                    }
-                }
-                this.hiddenClusters = [];
-                this.spiderCluster = false;
-                this.layers['pointv'].getSource().changed();
-            }
-        });
-
-        this.map[this.mapId].on('singleclick', (evt) => {
-            if (evt.originalEvent.altKey) {
-                const layerIndex = this.activeLayer + 'Source';
-                const viewResolution = this.view.getResolution();
-                if (this.activeLayer !== 'none'
-                    && this.activeLayer !== 'select'
-                    && this.activeLayer !== 'pointv'
-                    && this.activeLayer !== 'dragdrop1'
-                    && this.activeLayer !== 'dragdrop2'
-                    && this.activeLayer !== 'dragdrop3') {
-                    const url = this.layers[layerIndex].getGetFeatureInfoUrl(
-                        evt.coordinate,
-                        viewResolution,
-                        'EPSG:3857',
-                        {'INFO_FORMAT': 'application/json'}
-                    );
-                    if (url) {
-                        this.http.get(url).subscribe(
-                            (res) => {
-                                if (res) {
-                                    let infoHTML = '';
-                                    const propArr = res['features'][0]['properties'];
-                                    if (this.overlayLayers[this.activeLayer]) {
-                                        const sourceVal = propArr['GRAY_INDEX'];
-                                        const lowCalVal = this.overlayLayers[this.activeLayer]['values']['rasmin'];
-                                        const highCalVal = this.overlayLayers[this.activeLayer]['values']['rasmax'];
-                                        const calcVal = this.overlayLayers[this.activeLayer]['values']['newval'];
-                                        if (sourceVal >= lowCalVal && sourceVal <= highCalVal) {
-                                            infoHTML += '<b>Value:</b> ' + calcVal + '<br />';
-                                        } else {
-                                            infoHTML += '<b>Value:</b> 0<br />';
-                                        }
-                                    } else {
-                                        for (const key in propArr) {
-                                            if (propArr[key]) {
-                                                let valTag = '';
-                                                if (key === 'GRAY_INDEX') {
-                                                    valTag = 'Value';
-                                                } else {
-                                                    valTag = key;
-                                                }
-                                                infoHTML += '<b>' + valTag + ':</b> ' + propArr[key] + '<br />';
-                                            }
-                                        }
-                                    }
-                                    if (this.popupOverlay) {
-                                        this.setPopup(infoHTML, evt.coordinate);
-                                    }
-                                }
-                            }
-                        );
-                    }
-                } else if (this.activeLayer === 'dragdrop1'
-                    || this.activeLayer === 'dragdrop2'
-                    || this.activeLayer === 'dragdrop3'
-                    || this.activeLayer === 'select') {
-                    let infoHTML = '';
-                    const selectedFeature = this.map[this.mapId].forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
-                        if (layer === this.layers[this.activeLayer]) {
-                            return feature;
-                        }
+            this.map[this.mapId].getView().on('change:resolution', (event) => {
+                if (this.spiderCluster) {
+                    const source = this.layers['spider'].getSource();
+                    source.clear();
+                    const blankSource = new VectorSource({
+                        features: new Collection(),
+                        useSpatialIndex: true
                     });
-                    if (selectedFeature) {
-                        const properties = selectedFeature.getKeys();
-                        for (const i in properties) {
-                            if (properties[i].toString() !== 'geometry') {
-                                infoHTML += '<b>' + properties[i] + ':</b> ' + selectedFeature.get(properties[i]) + '<br />';
-                            }
-                        }
-                        if (infoHTML) {
-                            if (this.popupOverlay) {
-                                this.setPopup(infoHTML, evt.coordinate);
-                            }
+                    this.layers['spider'].setSource(blankSource);
+                    for (const i in this.hiddenClusters) {
+                        if (this.hiddenClusters[i]) {
+                            this.showFeature(this.hiddenClusters[i]);
                         }
                     }
-                } else if (this.activeLayer === 'pointv') {
-                    let infoHTML = '';
-                    let targetFeature: any;
-                    let iFeature: any;
-                    if (this.clickedFeatures.length === 1) {
-                        targetFeature = Object.assign({}, this.clickedFeatures[0]);
-                    }
-                    if (targetFeature) {
-                        if (this.clusterPointsSubject.value && targetFeature.get('features').length === 1) {
-                            iFeature = targetFeature.get('features')[0];
-                        } else if (!this.clusterPointsSubject.value) {
-                            iFeature = Object.assign({}, targetFeature);
-                        }
-                    } else {
-                        return;
-                    }
-                    if (iFeature) {
-                        infoHTML += '<b>occid:</b> ' + iFeature.get('occid') + '<br />';
-                        infoHTML += '<b>CollectionName:</b> '
-                            + (iFeature.get('CollectionName') ? iFeature.get('CollectionName') : '') + '<br />';
-                        infoHTML += '<b>catalogNumber:</b> '
-                            + (iFeature.get('catalogNumber') ? iFeature.get('catalogNumber') : '') + '<br />';
-                        infoHTML += '<b>otherCatalogNumbers:</b> '
-                            + (iFeature.get('otherCatalogNumbers') ? iFeature.get('otherCatalogNumbers') : '') + '<br />';
-                        infoHTML += '<b>family:</b> ' + (iFeature.get('family') ? iFeature.get('family') : '') + '<br />';
-                        infoHTML += '<b>sciname:</b> ' + (iFeature.get('sciname') ? iFeature.get('sciname') : '') + '<br />';
-                        infoHTML += '<b>recordedBy:</b> ' + (iFeature.get('recordedBy') ? iFeature.get('recordedBy') : '') + '<br />';
-                        infoHTML += '<b>recordNumber:</b> ' + (iFeature.get('recordNumber') ? iFeature.get('recordNumber') : '') + '<br />';
-                        infoHTML += '<b>eventDate:</b> ' + (iFeature.get('displayDate') ? iFeature.get('displayDate') : '') + '<br />';
-                        infoHTML += '<b>habitat:</b> ' + (iFeature.get('habitat') ? iFeature.get('habitat') : '') + '<br />';
-                        infoHTML += '<b>associatedTaxa:</b> '
-                            + (iFeature.get('associatedTaxa') ? iFeature.get('associatedTaxa') : '') + '<br />';
-                        infoHTML += '<b>country:</b> ' + (iFeature.get('country') ? iFeature.get('country') : '') + '<br />';
-                        infoHTML += '<b>StateProvince:</b> '
-                            + (iFeature.get('StateProvince') ? iFeature.get('StateProvince') : '') + '<br />';
-                        infoHTML += '<b>county:</b> ' + (iFeature.get('county') ? iFeature.get('county') : '') + '<br />';
-                        infoHTML += '<b>locality:</b> ' + (iFeature.get('locality') ? iFeature.get('locality') : '') + '<br />';
-                        if (iFeature.get('thumbnailurl')) {
-                            const thumburl = iFeature.get('thumbnailurl');
-                            infoHTML += '<img src="' + thumburl + '" style="height:150px" />';
-                        }
-                        if (this.popupOverlay) {
-                            this.setPopup(infoHTML, evt.coordinate);
-                        }
-                    } else {
-                        this.alertService.showErrorSnackbar(
-                            'You clicked on multiple points. The info window can only display data for a single point.',
-                            '',
-                            5000
-                        );
-                    }
-                    this.clickedFeatures = [];
+                    this.hiddenClusters = [];
+                    this.spiderCluster = false;
+                    this.layers['pointv'].getSource().changed();
                 }
-            } else {
-                const layerIndex = this.activeLayer + 'Source';
-                if (this.activeLayer !== 'none' && this.activeLayer !== 'select' && this.activeLayer !== 'pointv') {
-                    if (this.activeLayer === 'dragdrop1' || this.activeLayer === 'dragdrop2' || this.activeLayer === 'dragdrop3') {
-                        this.map[this.mapId].forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
-                            if (layer === this.layers[this.activeLayer]) {
-                                try {
-                                    this.selectsource.addFeature(feature);
-                                    this.setActiveLayer('select');
-                                } catch (e) {
-                                    this.alertService.showErrorSnackbar(
-                                        'Feature has already been added to Shapes layer.',
-                                        '',
-                                        5000
-                                    );
-                                }
-                            }
-                        });
-                    } else {
-                        const viewResolution = this.view.getResolution();
+            });
+
+            this.map[this.mapId].on('singleclick', (evt) => {
+                if (evt.originalEvent.altKey) {
+                    const layerIndex = this.activeLayer + 'Source';
+                    const viewResolution = this.view.getResolution();
+                    if (this.activeLayer !== 'none'
+                        && this.activeLayer !== 'select'
+                        && this.activeLayer !== 'pointv'
+                        && this.activeLayer !== 'dragdrop1'
+                        && this.activeLayer !== 'dragdrop2'
+                        && this.activeLayer !== 'dragdrop3') {
                         const url = this.layers[layerIndex].getGetFeatureInfoUrl(
                             evt.coordinate,
                             viewResolution,
                             'EPSG:3857',
                             {'INFO_FORMAT': 'application/json'}
                         );
-                        // selectObjectFromID(url, this.activeLayer);
+                        if (url) {
+                            this.http.get(url).subscribe(
+                                (res) => {
+                                    if (res) {
+                                        let infoHTML = '';
+                                        const propArr = res['features'][0]['properties'];
+                                        if (this.overlayLayers[this.activeLayer]) {
+                                            const sourceVal = propArr['GRAY_INDEX'];
+                                            const lowCalVal = this.overlayLayers[this.activeLayer]['values']['rasmin'];
+                                            const highCalVal = this.overlayLayers[this.activeLayer]['values']['rasmax'];
+                                            const calcVal = this.overlayLayers[this.activeLayer]['values']['newval'];
+                                            if (sourceVal >= lowCalVal && sourceVal <= highCalVal) {
+                                                infoHTML += '<b>Value:</b> ' + calcVal + '<br />';
+                                            } else {
+                                                infoHTML += '<b>Value:</b> 0<br />';
+                                            }
+                                        } else {
+                                            for (const key in propArr) {
+                                                if (propArr[key]) {
+                                                    let valTag = '';
+                                                    if (key === 'GRAY_INDEX') {
+                                                        valTag = 'Value';
+                                                    } else {
+                                                        valTag = key;
+                                                    }
+                                                    infoHTML += '<b>' + valTag + ':</b> ' + propArr[key] + '<br />';
+                                                }
+                                            }
+                                        }
+                                        if (this.popupOverlay) {
+                                            this.setPopup(infoHTML, evt.coordinate);
+                                        }
+                                    }
+                                }
+                            );
+                        }
+                    } else if (this.activeLayer === 'dragdrop1'
+                        || this.activeLayer === 'dragdrop2'
+                        || this.activeLayer === 'dragdrop3'
+                        || this.activeLayer === 'select') {
+                        let infoHTML = '';
+                        const selectedFeature = this.map[this.mapId].forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
+                            if (layer === this.layers[this.activeLayer]) {
+                                return feature;
+                            }
+                        });
+                        if (selectedFeature) {
+                            const properties = selectedFeature.getKeys();
+                            for (const i in properties) {
+                                if (properties[i].toString() !== 'geometry') {
+                                    infoHTML += '<b>' + properties[i] + ':</b> ' + selectedFeature.get(properties[i]) + '<br />';
+                                }
+                            }
+                            if (infoHTML) {
+                                if (this.popupOverlay) {
+                                    this.setPopup(infoHTML, evt.coordinate);
+                                }
+                            }
+                        }
+                    } else if (this.activeLayer === 'pointv') {
+                        let infoHTML = '';
+                        let targetFeature: any;
+                        let iFeature: any;
+                        if (this.clickedFeatures.length === 1) {
+                            targetFeature = Object.assign({}, this.clickedFeatures[0]);
+                        }
+                        if (targetFeature) {
+                            if (this.clusterPointsSubject.value && targetFeature.get('features').length === 1) {
+                                iFeature = targetFeature.get('features')[0];
+                            } else if (!this.clusterPointsSubject.value) {
+                                iFeature = Object.assign({}, targetFeature);
+                            }
+                        } else {
+                            return;
+                        }
+                        if (iFeature) {
+                            infoHTML += '<b>occid:</b> ' + iFeature.get('occid') + '<br />';
+                            infoHTML += '<b>CollectionName:</b> '
+                                + (iFeature.get('CollectionName') ? iFeature.get('CollectionName') : '') + '<br />';
+                            infoHTML += '<b>catalogNumber:</b> '
+                                + (iFeature.get('catalogNumber') ? iFeature.get('catalogNumber') : '') + '<br />';
+                            infoHTML += '<b>otherCatalogNumbers:</b> '
+                                + (iFeature.get('otherCatalogNumbers') ? iFeature.get('otherCatalogNumbers') : '') + '<br />';
+                            infoHTML += '<b>family:</b> ' + (iFeature.get('family') ? iFeature.get('family') : '') + '<br />';
+                            infoHTML += '<b>sciname:</b> ' + (iFeature.get('sciname') ? iFeature.get('sciname') : '') + '<br />';
+                            infoHTML += '<b>recordedBy:</b> ' + (iFeature.get('recordedBy') ? iFeature.get('recordedBy') : '') + '<br />';
+                            infoHTML += '<b>recordNumber:</b> ' + (iFeature.get('recordNumber') ? iFeature.get('recordNumber') : '')
+                                + '<br />';
+                            infoHTML += '<b>eventDate:</b> ' + (iFeature.get('displayDate') ? iFeature.get('displayDate') : '') + '<br />';
+                            infoHTML += '<b>habitat:</b> ' + (iFeature.get('habitat') ? iFeature.get('habitat') : '') + '<br />';
+                            infoHTML += '<b>associatedTaxa:</b> '
+                                + (iFeature.get('associatedTaxa') ? iFeature.get('associatedTaxa') : '') + '<br />';
+                            infoHTML += '<b>country:</b> ' + (iFeature.get('country') ? iFeature.get('country') : '') + '<br />';
+                            infoHTML += '<b>StateProvince:</b> '
+                                + (iFeature.get('StateProvince') ? iFeature.get('StateProvince') : '') + '<br />';
+                            infoHTML += '<b>county:</b> ' + (iFeature.get('county') ? iFeature.get('county') : '') + '<br />';
+                            infoHTML += '<b>locality:</b> ' + (iFeature.get('locality') ? iFeature.get('locality') : '') + '<br />';
+                            if (iFeature.get('thumbnailurl')) {
+                                const thumburl = iFeature.get('thumbnailurl');
+                                infoHTML += '<img src="' + thumburl + '" style="height:150px" />';
+                            }
+                            if (this.popupOverlay) {
+                                this.setPopup(infoHTML, evt.coordinate);
+                            }
+                        } else {
+                            this.alertService.showErrorSnackbar(
+                                'You clicked on multiple points. The info window can only display data for a single point.',
+                                '',
+                                5000
+                            );
+                        }
+                        this.clickedFeatures = [];
+                    }
+                } else {
+                    const layerIndex = this.activeLayer + 'Source';
+                    if (this.activeLayer !== 'none' && this.activeLayer !== 'select' && this.activeLayer !== 'pointv') {
+                        if (this.activeLayer === 'dragdrop1' || this.activeLayer === 'dragdrop2' || this.activeLayer === 'dragdrop3') {
+                            this.map[this.mapId].forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
+                                if (layer === this.layers[this.activeLayer]) {
+                                    try {
+                                        this.selectsource.addFeature(feature);
+                                        this.setActiveLayer('select');
+                                    } catch (e) {
+                                        this.alertService.showErrorSnackbar(
+                                            'Feature has already been added to Shapes layer.',
+                                            '',
+                                            5000
+                                        );
+                                    }
+                                }
+                            });
+                        } else {
+                            const viewResolution = this.view.getResolution();
+                            const url = this.layers[layerIndex].getGetFeatureInfoUrl(
+                                evt.coordinate,
+                                viewResolution,
+                                'EPSG:3857',
+                                {'INFO_FORMAT': 'application/json'}
+                            );
+                            // selectObjectFromID(url, this.activeLayer);
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
 
         return this.map[this.mapId];
     }
