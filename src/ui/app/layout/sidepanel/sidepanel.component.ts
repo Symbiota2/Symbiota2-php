@@ -32,7 +32,7 @@ export class SidepanelComponent {
         'component': SidepanelLinksComponent
     };
 
-    vectorTab = {
+    vectorToolsTab = {
         'tab_text': 'Vector',
         'index': 20,
         'component': VectorToolsTabComponent
@@ -62,7 +62,7 @@ export class SidepanelComponent {
                     this.clearTabsArr();
                 }
                 if (val.snapshot.data.spatial) {
-                    this.addTabToTabsArr(this.vectorTab);
+                    this.addTabToTabsArr(this.vectorToolsTab);
                 }
             }
         });
