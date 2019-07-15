@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation, OnDestroy} from '@angular/core';
 
 import OlMap from 'ol/Map';
 
@@ -16,7 +16,7 @@ import {Layer} from '../layer.model';
         './spatial-analysis.component.css'
     ]
 })
-export class SpatialAnalysisComponent implements OnInit {
+export class SpatialAnalysisComponent implements OnInit, OnDestroy {
     @Input() params: any;
     map: OlMap;
     drawSelectedValue: string;
@@ -88,5 +88,9 @@ export class SpatialAnalysisComponent implements OnInit {
 
     onMapLayersOpen() {
         this.mapService.openMapLayersDialog(this.mapService);
+    }
+
+    ngOnDestroy() {
+        this.mapService.destroyMap();
     }
 }

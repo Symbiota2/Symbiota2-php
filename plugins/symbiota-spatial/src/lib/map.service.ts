@@ -863,6 +863,10 @@ export class MapService {
         this.mapId = id;
     }
 
+    destroyMap() {
+        delete this.map[this.mapId];
+    }
+
     getMap() {
         if (!this.map[this.mapId]) {
             this.map[this.mapId] = new OlMap({

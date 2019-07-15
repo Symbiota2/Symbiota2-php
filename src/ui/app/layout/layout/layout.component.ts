@@ -8,6 +8,7 @@ import {Router, RoutesRecognized} from '@angular/router';
 })
 export class LayoutComponent {
     fullWindow = false;
+    spatial = false;
     sidenavOpenState = false;
 
     constructor(
@@ -19,6 +20,12 @@ export class LayoutComponent {
                     this.fullWindow = val.state.root.firstChild.data.fullWindow;
                 } else {
                     this.fullWindow = false;
+                }
+
+                if (val.state.root.firstChild.data.spatial) {
+                    this.spatial = val.state.root.firstChild.data.spatial;
+                } else {
+                    this.spatial = false;
                 }
             }
         });
