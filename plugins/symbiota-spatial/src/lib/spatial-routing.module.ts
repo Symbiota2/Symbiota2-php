@@ -4,7 +4,7 @@ import {Routes, RouterModule} from '@angular/router';
 import {SpatialAnalysisComponent} from './spatial-analysis/spatial-analysis.component';
 
 const routes: Routes = [
-    {path: 'spatial', component: SpatialAnalysisComponent, data: {fullWindow: true}}
+    {path: 'spatial', component: SpatialAnalysisComponent, data: {fullWindow: true, spatial: true}}
 ];
 
 @NgModule({

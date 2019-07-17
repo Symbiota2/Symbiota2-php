@@ -43,4 +43,5 @@ a:hover, a:active {
 
 .cards {
     margin-top: 10px;
+    border: 1px solid black;
 }

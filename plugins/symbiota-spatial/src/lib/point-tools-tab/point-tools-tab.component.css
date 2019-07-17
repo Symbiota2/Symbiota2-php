@@ -1,0 +1,17 @@
+.cards {
+    margin-top: 10px;
+    border: 1px solid black;
+}
+
+.content-div {
+    padding: 10px;
+}
+
+.select-input {
+    margin-top: 3px;
+}
+
+.text-input {
+    width: 75px;
+    margin-top: 3px;
+}

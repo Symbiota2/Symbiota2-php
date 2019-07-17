@@ -1,3 +1,38 @@
-<p>
-    vector-tools-tab works!
-</p>
+<mat-card class="cards">
+    <mat-card-content>
+        <div class="top-div">
+            <div class="top-div-child">
+                Total area of selected shapes (sq/km)
+            </div>
+            <div class="top-div-child">
+                <input type="text" id="polyarea" class="selected-area-box" value="{{selectedArea}}" disabled />
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="content-div">
+            <b>Download Shapes</b>
+            <select class="download-button" (change)="downloadTypeChange($event.target)">
+                <option value="">Download Type</option>
+                <option value="kml">KML</option>
+                <option value="geojson">GeoJSON</option>
+            </select>
+            <button class="download-button" type="button" (click)="onDownloadShapesLayer()">Download</button>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="content-div">
+            <button (click)="onCreateBuffers()">Buffer</button> Creates buffer polygon of <input type="text" class="buffer-input" [(ngModel)]="bufferSize" (change)="bufferSizeChange($event.target)" /> km around selected features.
+        </div>
+        <mat-divider></mat-divider>
+        <div class="content-div">
+            <button (click)="onCreatePolyDifference()">Difference</button> Returns a new polygon with the area of the polygon or circle selected first, exluding the area of the polygon or circle selected second.
+        </div>
+        <mat-divider></mat-divider>
+        <div class="content-div">
+            <button (click)="onCreatePolyIntersect()">Intersect</button> Returns a new polygon with the area overlapping of both selected polygons or circles.
+        </div>
+        <mat-divider></mat-divider>
+        <div class="content-div">
+            <button (click)="onCreatePolyUnion()">Union</button> Returns a new polygon with the combined area of two or more selected polygons or circles. *Note new polygon will replace all selected shapes.
+        </div>
+    </mat-card-content>
+</mat-card>

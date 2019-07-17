@@ -4,10 +4,10 @@ import {BehaviorSubject, Observable} from 'rxjs';
 
 import {SidepanelLinksComponent} from '../sidepanel-links/sidepanel-links.component';
 import {VectorToolsTabComponent} from '../../spatial/vector-tools-tab/vector-tools-tab.component';
+import {PointToolsTabComponent} from '../../spatial/point-tools-tab/point-tools-tab.component';
 import {LayoutComponent} from '../layout/layout.component';
 
 import {PluginTabService} from 'symbiota-plugin';
-import {Layer} from '../../../../../plugins/symbiota-spatial/src/lib/layer.model';
 import {map} from 'rxjs/operators';
 
 @Component({
@@ -34,8 +34,14 @@ export class SidepanelComponent {
 
     vectorToolsTab = {
         'tab_text': 'Vector',
-        'index': 20,
+        'index': 10,
         'component': VectorToolsTabComponent
+    };
+
+    pointToolsTab = {
+        'tab_text': 'Point',
+        'index': 20,
+        'component': PointToolsTabComponent
     };
 
     constructor(
@@ -63,6 +69,7 @@ export class SidepanelComponent {
                 }
                 if (val.snapshot.data.spatial) {
                     this.addTabToTabsArr(this.vectorToolsTab);
+                    this.addTabToTabsArr(this.pointToolsTab);
                 }
             }
         });

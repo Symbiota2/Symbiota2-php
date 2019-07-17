@@ -1,0 +1,34 @@
+.cards {
+    margin-top: 10px;
+    border: 1px solid black;
+}
+
+.top-div {
+    height: 45px;
+    padding: 10px;
+}
+
+.content-div {
+    padding: 10px;
+}
+
+.download-button {
+    margin-left: 5px;
+}
+
+.buffer-input {
+    width: 50px;
+}
+
+.top-div-child {
+    float: right;
+    margin-top: 5px;
+}
+
+.selected-area-box {
+    width: 250px;
+    border: 2px solid black;
+    text-align: center;
+    font-weight: bold;
+    color: black;
+}

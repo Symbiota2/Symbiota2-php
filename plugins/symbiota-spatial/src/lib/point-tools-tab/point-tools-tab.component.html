@@ -1,0 +1,24 @@
+<mat-card class="cards">
+    <mat-card-content>
+        <div *ngIf="pointsInactive$ | async" id="pointToolsNoneDiv" class="content-div">
+            There are no points loaded on the map.
+        </div>
+        <div *ngIf="pointsActive$ | async" id="pointToolsDiv">
+            <div class="content-div">
+                <button onclick="createConcavePoly();" (click)="onCreateConcavePoly()">Concave Hull Polygon</button> Creates a concave hull polygon or multipolygon for
+                <select class="select-input" (change)="concavePolySourceChange($event.target)">
+                    <option value="all">all</option>
+                    <option value="selected">selected</option>
+                </select> points with a maximum edge length of <input type="text" class="text-input" [(ngModel)]="concaveMaxEdgeLength" /> kilometers.
+            </div>
+            <mat-divider></mat-divider>
+            <div class="content-div">
+                <button onclick="createConvexPoly();" (click)="onCreateConvexPoly()">Convex Hull Polygon</button> Creates a convex hull polygon for
+                <select class="select-input" (change)="convexPolySourceChange($event.target)">
+                    <option value="all">all</option>
+                    <option value="selected">selected</option>
+                </select> points.
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

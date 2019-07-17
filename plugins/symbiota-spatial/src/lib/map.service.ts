@@ -5,10 +5,11 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import OlMap from 'ol/Map';
 import XYZ from 'ol/source/XYZ';
 import {FullScreen, ZoomSlider, ScaleLine, MousePosition} from 'ol/control';
-import {GPX, GeoJSON, IGC, KML, TopoJSON} from 'ol/format';
+import {GPX, GeoJSON, IGC, KML, TopoJSON, WKT} from 'ol/format';
 import {DragAndDrop, Select, Draw} from 'ol/interaction';
 import {format} from 'ol/coordinate';
 import Feature from 'ol/Feature';
+import {getDistance as haversineDistance} from 'ol/sphere';
 import Point from 'ol/geom/Point';
 import {createEmpty, extend, getTopLeft, getWidth} from 'ol/extent';
 import {Heatmap, Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
@@ -37,8 +38,10 @@ import {MapLayersDialogComponent} from './map-layers-dialog/map-layers-dialog.co
 import {ConfigurationService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
 import {SharedToolsService} from 'symbiota-shared';
+import {VectorToolsService} from './vector-tools.service';
 
 import {Layer} from './layer.model';
+import {map} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -48,6 +51,7 @@ export class MapService {
     constructor(
         private configService: ConfigurationService,
         private alertService: AlertService,
+        private vectorService: VectorToolsService,
         private sharedTools: SharedToolsService,
         private http: HttpClient,
         private dialog: MatDialog
@@ -116,15 +120,14 @@ export class MapService {
                             removable: true,
                             visible: true
                         });
-                        this.map[this.mapId].getView().fit(this.layers[sourceIndex].getExtent());
-                        // toggleLayerTable();
+                        this.map.getView().fit(this.layers[sourceIndex].getExtent());
                     }
                 } else if (fileType === 'zip') {
                     if (this.setDragDropTarget()) {
                         this.sharedTools.getArrayBuffer(event.file).then((data) => {
                             shp(data).then((geojson) => {
                                 const sourceIndex = this.dragDropTarget + 'Source';
-                                const res = this.map[this.mapId].getView().getResolution();
+                                const res = this.map.getView().getResolution();
                                 const features = geoJSONFormat.readFeatures(geojson, {
                                     featureProjection: 'EPSG:3857'
                                 });
@@ -140,8 +143,7 @@ export class MapService {
                                     removable: true,
                                     visible: true
                                 });
-                                this.map[this.mapId].getView().fit(this.layers[sourceIndex].getExtent());
-                                // toggleLayerTable();
+                                this.map.getView().fit(this.layers[sourceIndex].getExtent());
                             });
                         });
                     }
@@ -163,7 +165,7 @@ export class MapService {
 
         this.pointInteraction.on('select', (event) => {
             const newfeatures = event.selected;
-            const zoomLevel = this.map[this.mapId].getView().getZoom();
+            const zoomLevel = this.map.getView().getZoom();
             if (newfeatures.length > 0) {
                 if (zoomLevel < 17) {
                     const extent = createEmpty();
@@ -184,7 +186,7 @@ export class MapService {
                                 }
                             }
                         }
-                        this.map[this.mapId].getView().fit(extent, this.map[this.mapId].getSize());
+                        this.map.getView().fit(extent, this.map.getSize());
                     } else {
                         const newfeature = newfeatures[0];
                         this.pointInteraction.getFeatures().remove(newfeature);
@@ -197,7 +199,7 @@ export class MapService {
                                         extend(extent, cFeatures[f].getGeometry().getExtent());
                                     }
                                 }
-                                this.map[this.mapId].getView().fit(extent, this.map[this.mapId].getSize());
+                                this.map.getView().fit(extent, this.map.getSize());
                             } else {
                                 this.processPointSelection(newfeature);
                             }
@@ -236,11 +238,13 @@ export class MapService {
         this.selectedFeatures.on('add', (event) => {
             // setSpatialParamBox();
             // buildQueryStrings();
+            this.processShapeSelectionChange();
         });
 
         this.selectedFeatures.on('remove', (event) => {
             // setSpatialParamBox();
             // buildQueryStrings();
+            this.processShapeSelectionChange();
         });
 
         this.selectsource.on('change', (event) => {
@@ -267,7 +271,7 @@ export class MapService {
         });
     }
 
-    map = {};
+    map: OlMap;
     mapId = 'analysis';
     view: OlView;
     layers = {};
@@ -329,6 +333,19 @@ export class MapService {
     public readonly dateSliderActiveValue: Observable<boolean> = this.dateSliderActiveSubject.asObservable();
     showHeatMapSubject = new BehaviorSubject<boolean>(false);
     public readonly showHeatMapValue: Observable<boolean> = this.showHeatMapSubject.asObservable();
+    pointsActiveSubject = new BehaviorSubject<boolean>(false);
+    public readonly pointsActiveValue: Observable<boolean> = this.pointsActiveSubject.asObservable();
+    public readonly pointsInactiveValue: Observable<boolean> = this.pointsActiveValue.pipe(
+        map(active => !active)
+    );
+    selectedShapesSubject = new BehaviorSubject<[]>([]);
+    public readonly selectedShapesValue: Observable<[]> = this.selectedShapesSubject.asObservable();
+    selectedShapeAreaSubject = new BehaviorSubject<number>(0);
+    public readonly selectedShapeAreaValue: Observable<number> = this.selectedShapeAreaSubject.asObservable();
+    bufferDistanceSubject = new BehaviorSubject<number>(0);
+    public readonly bufferDistanceValue: Observable<number> = this.bufferDistanceSubject.asObservable();
+    concaveMaxEdgeLengthSubject = new BehaviorSubject<number>(0);
+    public readonly concaveMaxEdgeLengthValue: Observable<number> = this.concaveMaxEdgeLengthSubject.asObservable();
 
     atlasManager = new AtlasManager();
 
@@ -404,7 +421,7 @@ export class MapService {
         source: this.selectsource,
         style: new Style({
             fill: new Fill({
-                color: 'rgba(255,255,255,0.4)'
+                color: 'rgba(255, 255, 255, 0.4)'
             }),
             stroke: new Stroke({
                 color: '#3399CC',
@@ -417,7 +434,7 @@ export class MapService {
                     width: 2
                 }),
                 fill: new Fill({
-                    color: 'rgba(255,255,255,0.4)'
+                    color: 'rgba(255, 255, 255, 0.4)'
                 })
             })
         })
@@ -503,7 +520,7 @@ export class MapService {
             if (evt.type === 'click' && this.activeLayer === 'pointv') {
                 if (!evt.originalEvent.altKey) {
                     if (this.spiderCluster) {
-                        const spiderclick = this.map[this.mapId].forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
+                        const spiderclick = this.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
                             this.spiderFeature = feature;
                             if (feature && layer === this.layers['spider']) {
                                 return feature;
@@ -528,7 +545,7 @@ export class MapService {
                     }
                     return true;
                 } else if (evt.originalEvent.altKey) {
-                    this.map[this.mapId].forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
+                    this.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
                         if (feature) {
                             if (this.spiderCluster && layer === this.layers['spider']) {
                                 this.clickedFeatures.push(feature);
@@ -637,6 +654,15 @@ export class MapService {
         }
     }
 
+    static findOccPointInCluster(cluster: any, occid: number) {
+        const cFeatures = cluster.get('features');
+        for (const f in cFeatures) {
+            if (Number(cFeatures[f].get('occid')) === occid) {
+                return cFeatures[f];
+            }
+        }
+    }
+
     toggleLayer(value: boolean, layer: string) {
         const currentArr = this.layersSelectorSubject.value;
         currentArr.forEach((arrLayer, index) => {
@@ -689,6 +715,76 @@ export class MapService {
         }
         this.removeLayerFromSelectorArr(layerID);
         this.setActiveLayer('none');
+    }
+
+    processShapeSelectionChange() {
+        let totalAreaCalc = 0;
+        this.selectInteraction.getFeatures().forEach((feature) => {
+            if (feature) {
+                const selectedClone = feature.clone();
+                const geoType = selectedClone.getGeometry().getType();
+                const wktFormat = new WKT();
+                const geoJSONFormat = new GeoJSON();
+                if (geoType === 'MultiPolygon' || geoType === 'Polygon') {
+                    const selectiongeometry = selectedClone.getGeometry();
+                    const fixedselectgeometry = selectiongeometry.transform(this.mapProjection, this.wgs84Projection);
+                    const geojsonStr = geoJSONFormat.writeGeometry(fixedselectgeometry);
+                    let polyCoords = JSON.parse(geojsonStr).coordinates;
+                    let turfSimple = {};
+                    if (geoType === 'MultiPolygon') {
+                        const areaFeat = this.vectorService.getTurfFeature(geoType, polyCoords);
+                        const area_km = this.vectorService.getFeatureArea(areaFeat);
+                        totalAreaCalc += area_km;
+                        for (const e in polyCoords) {
+                            if (polyCoords[e]) {
+                                let singlePoly = this.vectorService.getTurfFeature('Polygon', polyCoords[e]);
+                                // console.log('start multipolygon length: '+singlePoly.geometry.coordinates.length);
+                                if (singlePoly.geometry.coordinates.length > 10) {
+                                    singlePoly = this.vectorService.getSimplifiedFeature(singlePoly);
+                                }
+                                // console.log('end multipolygon length: '+singlePoly.geometry.coordinates.length);
+                                polyCoords[e] = singlePoly.geometry.coordinates;
+                            }
+                        }
+                        turfSimple = this.vectorService.getTurfFeature(geoType, polyCoords);
+                    }
+                    if (geoType === 'Polygon') {
+                        let areaFeat = this.vectorService.getTurfFeature(geoType, polyCoords);
+                        const area_km = this.vectorService.getFeatureArea(areaFeat);
+                        totalAreaCalc += area_km;
+                        // console.log('start multipolygon length: '+areaFeat.geometry.coordinates.length);
+                        if (areaFeat.geometry.coordinates.length > 10) {
+                            areaFeat = this.vectorService.getSimplifiedFeature(areaFeat);
+                        }
+                        // console.log('end multipolygon length: '+areaFeat.geometry.coordinates.length);
+                        polyCoords = areaFeat.geometry.coordinates;
+                        turfSimple = this.vectorService.getTurfFeature(geoType, polyCoords);
+                    }
+                    const polySimple = geoJSONFormat.readFeature(turfSimple, {featureProjection: 'EPSG:3857'});
+                    const simplegeometry = polySimple.getGeometry();
+                    const fixedgeometry = simplegeometry.transform(this.mapProjection, this.wgs84Projection);
+                    const wmswktString = wktFormat.writeGeometry(fixedgeometry);
+                    const geocoords = fixedgeometry.getCoordinates();
+                    const wfswktString = this.vectorService.writeWfsWktString(geoType, geocoords);
+                }
+                if (geoType === 'Circle') {
+                    const center = selectedClone.getGeometry().getCenter();
+                    const radius = selectedClone.getGeometry().getRadius();
+                    const edgeCoordinate = [center[0] + radius, center[1]];
+                    let groundRadius = haversineDistance(
+                        transform(center, 'EPSG:3857', 'EPSG:4326'),
+                        transform(edgeCoordinate, 'EPSG:3857', 'EPSG:4326')
+                    );
+                    groundRadius = groundRadius / 1000;
+                    const circleArea = Math.PI * groundRadius * groundRadius;
+                    totalAreaCalc += circleArea;
+                }
+            }
+        });
+        if (totalAreaCalc > 0) {
+            totalAreaCalc = Number(totalAreaCalc.toFixed(2));
+        }
+        this.selectedShapeAreaSubject.next(totalAreaCalc);
     }
 
     clearSelections() {
@@ -806,7 +902,7 @@ export class MapService {
             return false;
         };
 
-        this.map[this.mapId].addOverlay(this.popupOverlay);
+        this.map.addOverlay(this.popupOverlay);
     }
 
     setPopup(content: string, position: any) {
@@ -833,7 +929,7 @@ export class MapService {
             return false;
         };
 
-        this.map[this.mapId].addOverlay(this.finderPopupOverlay);
+        this.map.addOverlay(this.finderPopupOverlay);
     }
 
     setFinderPopup(content: string, position: any) {
@@ -859,17 +955,9 @@ export class MapService {
         this.layersSelectorSubject.next(currentArr);
     }
 
-    setMapId(id: string) {
-        this.mapId = id;
-    }
-
-    destroyMap() {
-        delete this.map[this.mapId];
-    }
-
     getMap() {
-        if (!this.map[this.mapId]) {
-            this.map[this.mapId] = new OlMap({
+        if (!this.map) {
+            this.map = new OlMap({
                 target: 'map',
                 layers: [
                     this.layers['base'],
@@ -884,7 +972,7 @@ export class MapService {
                 view: this.view
             });
 
-            this.map[this.mapId].getView().on('change:resolution', (event) => {
+            this.map.getView().on('change:resolution', (event) => {
                 if (this.spiderCluster) {
                     const source = this.layers['spider'].getSource();
                     source.clear();
@@ -904,7 +992,7 @@ export class MapService {
                 }
             });
 
-            this.map[this.mapId].on('singleclick', (evt) => {
+            this.map.on('singleclick', (evt) => {
                 if (evt.originalEvent.altKey) {
                     const layerIndex = this.activeLayer + 'Source';
                     const viewResolution = this.view.getResolution();
@@ -961,7 +1049,7 @@ export class MapService {
                         || this.activeLayer === 'dragdrop3'
                         || this.activeLayer === 'select') {
                         let infoHTML = '';
-                        const selectedFeature = this.map[this.mapId].forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
+                        const selectedFeature = this.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
                             if (layer === this.layers[this.activeLayer]) {
                                 return feature;
                             }
@@ -1037,7 +1125,7 @@ export class MapService {
                     const layerIndex = this.activeLayer + 'Source';
                     if (this.activeLayer !== 'none' && this.activeLayer !== 'select' && this.activeLayer !== 'pointv') {
                         if (this.activeLayer === 'dragdrop1' || this.activeLayer === 'dragdrop2' || this.activeLayer === 'dragdrop3') {
-                            this.map[this.mapId].forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
+                            this.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
                                 if (layer === this.layers[this.activeLayer]) {
                                     try {
                                         this.selectsource.addFeature(feature);
@@ -1066,7 +1154,7 @@ export class MapService {
             });
         }
 
-        return this.map[this.mapId];
+        return this.map;
     }
 
     getPointStyle(feature) {
@@ -1154,7 +1242,7 @@ export class MapService {
     }
 
     changeDrawTool(selection) {
-        this.map[this.mapId].removeInteraction(this.draw);
+        this.map.removeInteraction(this.draw);
         if (selection !== 'None') {
             this.draw = new Draw({
                 source: this.selectsource,
@@ -1163,7 +1251,7 @@ export class MapService {
 
             this.draw.on('drawend', (evt) => {
                 this.drawToolSelectedSubject.next('None');
-                this.map[this.mapId].removeInteraction(this.draw);
+                this.map.removeInteraction(this.draw);
                 if (!this.shapeActive) {
                     this.addLayerToSelectorArr({
                         name: 'select',
@@ -1180,7 +1268,7 @@ export class MapService {
                 this.draw = Object.assign({}, {});
             });
 
-            this.map[this.mapId].addInteraction(this.draw);
+            this.map.addInteraction(this.draw);
         } else {
             this.draw = Object.assign({}, {});
         }
@@ -1188,7 +1276,7 @@ export class MapService {
 
     changeBaseMap(selection) {
         let blsource = {};
-        const baseLayer = this.map[this.mapId].getLayers().getArray()[0];
+        const baseLayer = this.map.getLayers().getArray()[0];
         if (selection === 'worldtopo') {
             blsource = new XYZ({
                 url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
@@ -1374,7 +1462,7 @@ export class MapService {
         source.clear();
 
         const center = features[0].getGeometry().getCoordinates();
-        const pix = this.map[this.mapId].getView().getResolution();
+        const pix = this.map.getView().getResolution();
         const rad = pix * 12 * (0.5 + spiderFeatures.length / 4);
         if (spiderFeatures.length <= 10) {
             const max = Math.min(spiderFeatures.length, 10);
@@ -1468,5 +1556,444 @@ export class MapService {
                 mapService: mapService
             }
         });
+    }
+
+    downloadShapesLayer(dlType: string) {
+        if (dlType) {
+            if (this.selectInteraction.getFeatures().array_.length > 0) {
+                let filetype = '';
+                let format: any;
+                if (dlType === 'kml') {
+                    format = new KML();
+                    filetype = 'application/vnd.google-earth.kml+xml';
+                } else if (dlType === 'geojson') {
+                    format = new GeoJSON();
+                    filetype = 'application/vnd.geo+json';
+                }
+                const features = this.layers['select'].getSource().getFeatures();
+                const fixedFeatures = this.setDownloadFeatures(features);
+                let exportStr = format.writeFeatures(fixedFeatures, {
+                    'dataProjection': this.wgs84Projection,
+                    'featureProjection': this.mapProjection
+                });
+                if (dlType === 'kml') {
+                    exportStr = exportStr.replace(
+                        /<kml xmlns="http:\/\/www.opengis.net\/kml\/2.2" xmlns:gx="http:\/\/www.google.com\/kml\/ext\/2.2" xmlns:xsi="http:\/\/www.w3.org\/2001\/XMLSchema-instance" xsi:schemaLocation="http:\/\/www.opengis.net\/kml\/2.2 https:\/\/developers.google.com\/kml\/schema\/kml22gx.xsd">/g,
+                        '<kml xmlns="http://www.opengis.net/kml/2.2"><Document id="root_doc">'
+                        + '<Folder><name>shapes_export</name>');
+                    exportStr = exportStr.replace(
+                        /<Placemark>/g,
+                        '<Placemark><Style><LineStyle><color>ff000000</color><width>1</width></LineStyle>'
+                        + '<PolyStyle><color>4DAAAAAA</color><fill>1</fill></PolyStyle></Style>');
+                    exportStr = exportStr.replace(/<Polygon>/g, '<Polygon><altitudeMode>clampToGround</altitudeMode>');
+                    exportStr = exportStr.replace(/<\/kml>/g, '</Folder></Document></kml>');
+                }
+                const filename = 'shapes_' + this.sharedTools.getDateTimeString() + '.' + dlType;
+                const blob = new Blob([exportStr], {type: filetype});
+                if (window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveBlob(blob, filename);
+                } else {
+                    const elem = window.document.createElement('a');
+                    elem.href = window.URL.createObjectURL(blob);
+                    elem.download = filename;
+                    document.body.appendChild(elem);
+                    elem.click();
+                    document.body.removeChild(elem);
+                }
+            } else {
+                this.alertService.showErrorSnackbar(
+                    'There are no shapes selected',
+                    '',
+                    5000
+                );
+            }
+        } else {
+            this.alertService.showErrorSnackbar(
+                'Please select a download type',
+                '',
+                5000
+            );
+        }
+    }
+
+    setDownloadFeatures(features) {
+        const fixedFeatures = [];
+        for (const i in features) {
+            if (features[i]) {
+                const clone = features[i].clone();
+                const geoType = clone.getGeometry().getType();
+                if (geoType === 'Circle') {
+                    const geoJSONFormat = new GeoJSON();
+                    const geometry = clone.getGeometry();
+                    const fixedgeometry = geometry.transform(this.mapProjection, this.wgs84Projection);
+                    const center = fixedgeometry.getCenter();
+                    const radius = fixedgeometry.getRadius();
+                    const turfCircle = this.vectorService.getWGS84CirclePoly(center, radius);
+                    const circpoly = geoJSONFormat.readFeature(turfCircle);
+                    circpoly.getGeometry().transform(this.wgs84Projection, this.mapProjection);
+                    fixedFeatures.push(circpoly);
+                } else {
+                    fixedFeatures.push(clone);
+                }
+            }
+        }
+        return fixedFeatures;
+    }
+
+    createBuffers(bufferSize) {
+        if (!isNaN(bufferSize) && (bufferSize > 0)) {
+            if (this.selectInteraction.getFeatures().getArray().length >= 1) {
+                this.selectInteraction.getFeatures().forEach((feature) => {
+                    if (feature) {
+                        const selectedClone = feature.clone();
+                        const geoType = selectedClone.getGeometry().getType();
+                        const geoJSONFormat = new GeoJSON();
+                        const selectiongeometry = selectedClone.getGeometry();
+                        const fixedselectgeometry = selectiongeometry.transform(this.mapProjection, this.wgs84Projection);
+                        const geojsonStr = geoJSONFormat.writeGeometry(fixedselectgeometry);
+                        const featCoords = JSON.parse(geojsonStr).coordinates;
+                        let turfFeature = {};
+                        if (geoType !== 'Circle') {
+                            turfFeature = this.vectorService.getTurfFeature(geoType, featCoords);
+                        } else {
+                            const center = fixedselectgeometry.getCenter();
+                            const radius = fixedselectgeometry.getRadius();
+                            turfFeature = this.vectorService.getWGS84CirclePoly(center, radius);
+                        }
+                        const buffered = this.vectorService.getBufferFeature(turfFeature, bufferSize);
+                        const buffpoly = geoJSONFormat.readFeature(buffered);
+                        buffpoly.getGeometry().transform(this.wgs84Projection, this.mapProjection);
+                        this.selectsource.addFeature(buffpoly);
+                        this.bufferDistanceSubject.next(0);
+                    }
+                });
+            } else {
+                this.alertService.showErrorSnackbar(
+                    'You must have at least one shape selected in your Shapes layer to create a buffer polygon.',
+                    '',
+                    5000
+                );
+            }
+        } else {
+            this.alertService.showErrorSnackbar(
+                'Please enter a number for the buffer size.',
+                '',
+                5000
+            );
+        }
+    }
+
+    createPolyDifference() {
+        let shapeCount = 0;
+        this.selectInteraction.getFeatures().forEach((feature) => {
+            const selectedClone = feature.clone();
+            const geoType = selectedClone.getGeometry().getType();
+            if (geoType === 'Polygon' || geoType === 'MultiPolygon' || geoType === 'Circle') {
+                shapeCount++;
+            }
+        });
+        if (shapeCount === 2) {
+            const features = [];
+            const geoJSONFormat = new GeoJSON();
+            this.selectInteraction.getFeatures().forEach((feature) => {
+                if (feature) {
+                    const selectedClone = feature.clone();
+                    const geoType = selectedClone.getGeometry().getType();
+                    const selectiongeometry = selectedClone.getGeometry();
+                    const fixedselectgeometry = selectiongeometry.transform(this.mapProjection, this.wgs84Projection);
+                    const geojsonStr = geoJSONFormat.writeGeometry(fixedselectgeometry);
+                    const featCoords = JSON.parse(geojsonStr).coordinates;
+                    if (geoType !== 'Circle') {
+                        features.push(this.vectorService.getTurfFeature(geoType, featCoords));
+                    } else {
+                        const center = fixedselectgeometry.getCenter();
+                        const radius = fixedselectgeometry.getRadius();
+                        features.push(this.vectorService.getWGS84CirclePoly(center, radius));
+                    }
+                }
+            });
+            const difference = this.vectorService.getDifferenceFeature(features[0], features[1]);
+            if (difference) {
+                const diffpoly = geoJSONFormat.readFeature(difference);
+                diffpoly.getGeometry().transform(this.wgs84Projection, this.mapProjection);
+                this.selectsource.addFeature(diffpoly);
+            }
+        } else {
+            this.alertService.showErrorSnackbar(
+                'You must have two polygons or circles, and only two polygons or circles, ' +
+                'selected in your Shapes layer to find the difference.',
+                '',
+                5000
+            );
+        }
+    }
+
+    createPolyIntersect() {
+        let shapeCount = 0;
+        this.selectInteraction.getFeatures().forEach((feature) => {
+            const selectedClone = feature.clone();
+            const geoType = selectedClone.getGeometry().getType();
+            if (geoType === 'Polygon' || geoType === 'MultiPolygon' || geoType === 'Circle') {
+                shapeCount++;
+            }
+        });
+        if (shapeCount === 2) {
+            const features = [];
+            const geoJSONFormat = new GeoJSON();
+            this.selectInteraction.getFeatures().forEach((feature) => {
+                if (feature) {
+                    const selectedClone = feature.clone();
+                    const geoType = selectedClone.getGeometry().getType();
+                    const selectiongeometry = selectedClone.getGeometry();
+                    const fixedselectgeometry = selectiongeometry.transform(this.mapProjection, this.wgs84Projection);
+                    const geojsonStr = geoJSONFormat.writeGeometry(fixedselectgeometry);
+                    const featCoords = JSON.parse(geojsonStr).coordinates;
+                    if (geoType !== 'Circle') {
+                        features.push(this.vectorService.getTurfFeature(geoType, featCoords));
+                    } else {
+                        const center = fixedselectgeometry.getCenter();
+                        const radius = fixedselectgeometry.getRadius();
+                        features.push(this.vectorService.getWGS84CirclePoly(center, radius));
+                    }
+                }
+            });
+            const intersection = this.vectorService.getIntersectFeature(features[0], features[1]);
+            if (intersection) {
+                const interpoly = geoJSONFormat.readFeature(intersection);
+                interpoly.getGeometry().transform(this.wgs84Projection, this.mapProjection);
+                this.selectsource.addFeature(interpoly);
+            } else {
+                this.alertService.showErrorSnackbar(
+                    'The two selected shapes do not intersect.',
+                    '',
+                    5000
+                );
+            }
+        } else {
+            this.alertService.showErrorSnackbar(
+                'You must have two polygons or circles, and only two polygons or circles, ' +
+                'selected in your Shapes layer to find the intersect.',
+                '',
+                5000
+            );
+        }
+    }
+
+    createPolyUnion() {
+        let shapeCount = 0;
+        this.selectInteraction.getFeatures().forEach((feature) => {
+            const selectedClone = feature.clone();
+            const geoType = selectedClone.getGeometry().getType();
+            if (geoType === 'Polygon' || geoType === 'MultiPolygon' || geoType === 'Circle') {
+                shapeCount++;
+            }
+        });
+        if (shapeCount > 1) {
+            const features = [];
+            const geoJSONFormat = new GeoJSON();
+            this.selectInteraction.getFeatures().forEach((feature) => {
+                if (feature) {
+                    const selectedClone = feature.clone();
+                    const geoType = selectedClone.getGeometry().getType();
+                    const selectiongeometry = selectedClone.getGeometry();
+                    const fixedselectgeometry = selectiongeometry.transform(this.mapProjection, this.wgs84Projection);
+                    const geojsonStr = geoJSONFormat.writeGeometry(fixedselectgeometry);
+                    const featCoords = JSON.parse(geojsonStr).coordinates;
+                    if (geoType !== 'Circle') {
+                        features.push(this.vectorService.getTurfFeature(geoType, featCoords));
+                    } else {
+                        const center = fixedselectgeometry.getCenter();
+                        const radius = fixedselectgeometry.getRadius();
+                        features.push(this.vectorService.getWGS84CirclePoly(center, radius));
+                    }
+                }
+            });
+            let union = this.vectorService.getUnionFeature(features[0], features[1]);
+            for (const f in features) {
+                if (Number(f) > 1) {
+                    union = this.vectorService.getUnionFeature(union, features[f]);
+                }
+            }
+            if (union) {
+                this.deleteSelections();
+                const unionpoly = geoJSONFormat.readFeature(union);
+                unionpoly.getGeometry().transform(this.wgs84Projection, this.mapProjection);
+                this.selectsource.addFeature(unionpoly);
+                this.setActiveLayer('select');
+            }
+        } else {
+            this.alertService.showErrorSnackbar(
+                'You must have at least two polygons or circles selected in your Shapes layer to find the union.',
+                '',
+                5000
+            );
+        }
+    }
+
+    createConcavePoly(source: string, maxEdge: number) {
+        let features = {};
+        const geoJSONFormat = new GeoJSON();
+        if (maxEdge > 0) {
+            if (source === 'all') {
+                features = this.getTurfPointFeaturesetAll();
+            } else if (source === 'selected') {
+                if (this.selections.length >= 3) {
+                    features = this.getTurfPointFeaturesetSelected();
+                } else {
+                    this.alertService.showErrorSnackbar(
+                        'There must be at least 3 selected points on the map. Please either select ' +
+                        'more points or re-run this tool for all points.',
+                        '',
+                        5000
+                    );
+                    return;
+                }
+            }
+            if (features) {
+                let concavepoly = {};
+                try {
+                    concavepoly = this.vectorService.getConcavePolyFeature(features, Number(maxEdge));
+                } catch (e) {
+                    this.alertService.showErrorSnackbar(
+                        'Concave polygon was not able to be calculated. Perhaps try using a larger value for the maximum edge length.',
+                        '',
+                        5000
+                    );
+                }
+                if (concavepoly) {
+                    const cnvepoly = geoJSONFormat.readFeature(concavepoly);
+                    cnvepoly.getGeometry().transform(this.wgs84Projection, this.mapProjection);
+                    this.selectsource.addFeature(cnvepoly);
+                }
+            } else {
+                this.alertService.showErrorSnackbar(
+                    'There must be at least 3 points on the map to calculate polygon.',
+                    '',
+                    5000
+                );
+            }
+            this.concaveMaxEdgeLengthSubject.next(0);
+        } else {
+            this.alertService.showErrorSnackbar(
+                'Please enter a number for the maximum edge size.',
+                '',
+                5000
+            );
+        }
+    }
+
+    createConvexPoly(source: string) {
+        let features = {};
+        const geoJSONFormat = new GeoJSON();
+        if (source === 'all') {
+            features = this.getTurfPointFeaturesetAll();
+        } else if (source === 'selected') {
+            if (this.selections.length >= 3) {
+                features = this.getTurfPointFeaturesetSelected();
+            } else {
+                this.alertService.showErrorSnackbar(
+                    'There must be at least 3 selected points on the map. Please either select ' +
+                    'more points or re-run this tool for all points.',
+                    '',
+                    5000
+                );
+                return;
+            }
+        }
+        if (features) {
+            const convexpoly = this.vectorService.getConvexPolyFeature(features);
+            if (convexpoly) {
+                const cnvxpoly = geoJSONFormat.readFeature(convexpoly);
+                cnvxpoly.getGeometry().transform(this.wgs84Projection, this.mapProjection);
+                this.selectsource.addFeature(cnvxpoly);
+            }
+        } else {
+            this.alertService.showErrorSnackbar(
+                'There must be at least 3 points on the map to calculate polygon.',
+                '',
+                5000
+            );
+        }
+    }
+
+    getTurfPointFeaturesetAll() {
+        const turfFeatureArr = [];
+        const geoJSONFormat = new GeoJSON();
+        if (this.clusterPoints) {
+            const clusters = this.layers['pointv'].getSource().getFeatures();
+            for (const c in clusters) {
+                if (clusters[c]) {
+                    const cFeatures = clusters[c].get('features');
+                    for (const f in cFeatures) {
+                        if (cFeatures[f]) {
+                            const selectedClone = cFeatures[f].clone();
+                            const selectiongeometry = selectedClone.getGeometry();
+                            const fixedselectgeometry = selectiongeometry.transform(this.mapProjection, this.wgs84Projection);
+                            const geojsonStr = geoJSONFormat.writeGeometry(fixedselectgeometry);
+                            const pntCoords = JSON.parse(geojsonStr).coordinates;
+                            turfFeatureArr.push(this.vectorService.getTurfFeature('Point', pntCoords));
+                        }
+                    }
+                }
+            }
+        } else {
+            const features = this.layers['pointv'].getSource().getFeatures();
+            for (const f in features) {
+                if (features[f]) {
+                    const selectedClone = features[f].clone();
+                    const selectiongeometry = selectedClone.getGeometry();
+                    const fixedselectgeometry = selectiongeometry.transform(this.mapProjection, this.wgs84Projection);
+                    const geojsonStr = geoJSONFormat.writeGeometry(fixedselectgeometry);
+                    const pntCoords = JSON.parse(geojsonStr).coordinates;
+                    turfFeatureArr.push(this.vectorService.getTurfFeature('Point', pntCoords));
+                }
+            }
+        }
+        if (turfFeatureArr.length >= 3) {
+            return this.vectorService.getTurfFeatureCollection(turfFeatureArr);
+        } else {
+            return false;
+        }
+    }
+
+    getTurfPointFeaturesetSelected() {
+        const turfFeatureArr = [];
+        const geoJSONFormat = new GeoJSON();
+        for (const i in this.selections) {
+            if (this.selections[i]) {
+                let point: any;
+                if (this.clusterPoints) {
+                    const cluster = this.findOccCluster(this.selections[i]);
+                    point = MapService.findOccPointInCluster(cluster, this.selections[i]);
+                } else {
+                    point = this.findOccPoint(this.selections[i]);
+                }
+                if (point) {
+                    const selectedClone = point.clone();
+                    const selectiongeometry = selectedClone.getGeometry();
+                    const fixedselectgeometry = selectiongeometry.transform(this.mapProjection, this.wgs84Projection);
+                    const geojsonStr = geoJSONFormat.writeGeometry(fixedselectgeometry);
+                    const pntCoords = JSON.parse(geojsonStr).coordinates;
+                    turfFeatureArr.push(this.vectorService.getTurfFeature('Point', pntCoords));
+                }
+            }
+        }
+        if (turfFeatureArr.length >= 3) {
+            return this.vectorService.getTurfFeatureCollection(turfFeatureArr);
+        } else {
+            return false;
+        }
+    }
+
+    findOccCluster(occid: number) {
+        const clusters = this.layers['pointv'].getSource().getFeatures();
+        for (const c in clusters) {
+            if (clusters[c]) {
+                const clusterindex = clusters[c].get('identifiers');
+                if (clusterindex.indexOf(Number(occid)) !== -1) {
+                    return clusters[c];
+                }
+            }
+        }
     }
 }
