@@ -3,8 +3,8 @@ import {Router, NavigationEnd, ActivationEnd} from '@angular/router';
 import {BehaviorSubject, Observable} from 'rxjs';
 
 import {SidepanelLinksComponent} from '../sidepanel-links/sidepanel-links.component';
-import {VectorToolsTabComponent} from '../../spatial/vector-tools-tab/vector-tools-tab.component';
-import {PointToolsTabComponent} from '../../spatial/point-tools-tab/point-tools-tab.component';
+import {VectorToolsTabComponent} from 'symbiota-spatial';
+import {PointToolsTabComponent} from 'symbiota-spatial';
 import {LayoutComponent} from '../layout/layout.component';
 
 import {PluginTabService} from 'symbiota-plugin';
