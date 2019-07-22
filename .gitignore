@@ -66,3 +66,4 @@ Homestead.yaml
 /config/packages/doctrine.yaml
 /config/plugin-config.json
 /plugin-composer.json
+/package.json
