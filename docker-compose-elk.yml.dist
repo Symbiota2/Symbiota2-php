@@ -57,14 +57,17 @@ services:
       - 3310:3306
 
   postgres:
-    build: ./docker/postgis
+    image: kartoza/postgis:11.0-2.5
     container_name: postgres
-    restart: always
+    restart: on-failure
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: symbiota2
+      - POSTGRES_DB=symbiota2
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASS=password
+      - ALLOW_IP_RANGE=0.0.0.0/0
+      - POSTGRES_MULTIPLE_EXTENSIONS=postgis,hstore
     ports:
       - 5434:5432
 
