@@ -10,13 +10,7 @@ Symbiota2 is currently under development. Though some portions of the applicatio
 - Ctype
 - JSON
 
-Symbiota2 can be installed for development in the following steps:
-
-- Clone the code in this repository
-`git clone https://github.com/Symbiota2/Symbiota2.git portal-name`
-- `cd portal-name`
-- `composer install`
-- `npm install`
+[Symbiota2 can be installed for development following these steps](https://github.com/Symbiota2/Symbiota2/wiki/Clone-and-install)
 
 [Go here to learn how to setup the pre-configured Symbiota2 development environment (recommended)](https://github.com/Symbiota2/Symbiota2/wiki/Setup-the-Symbiota2-development-environment)
 
