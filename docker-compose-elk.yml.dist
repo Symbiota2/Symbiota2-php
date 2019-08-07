@@ -27,6 +27,7 @@ services:
     working_dir: /symbiota2
     volumes:
       - ./:/symbiota2
+      - ./docker/openssl/start.sh:/start.sh
 
   mysql:
     image: mysql:5.7

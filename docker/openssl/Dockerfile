@@ -8,4 +8,4 @@ WORKDIR "/symbiota2"
 
 COPY start.sh /
 RUN chmod +x /start.sh
-ENTRYPOINT ["/start.sh"]
+ENTRYPOINT ["/bin/bash", "/start.sh"]
