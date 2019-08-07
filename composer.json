@@ -59,6 +59,7 @@
         },
         "pre-update-cmd": [
             "@php -r \"file_exists('.env') || copy('.env.dist', '.env');\"",
+            "@php -r \"!file_exists('package.json') || copy('package.json', 'package.json.bak');\"",
             "@php -r \"copy('package.json.dist', 'package.json');\"",
             "@php -r \"file_exists('plugin-composer.json') || copy('plugin-composer.json.dist', 'plugin-composer.json');\"",
             "@php -r \"file_exists('docker-compose.yml') || copy('docker-compose.yml.dist', 'docker-compose.yml');\"",

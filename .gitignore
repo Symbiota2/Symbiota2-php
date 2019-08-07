@@ -67,3 +67,4 @@ Homestead.yaml
 /config/plugin-config.json
 /plugin-composer.json
 /package.json
+/package.json.bak
