@@ -3,5 +3,15 @@
     "target": "http://localhost",
     "secure": false,
     "logLevel": "debug"
+  },
+  "/bundles/*": {
+    "target": "http://localhost",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/docs/*": {
+    "target": "http://localhost",
+    "secure": false,
+    "logLevel": "debug"
   }
 }
