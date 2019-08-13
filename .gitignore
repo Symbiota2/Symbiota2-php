@@ -68,3 +68,6 @@ Homestead.yaml
 /plugin-composer.json
 /package.json
 /package.json.bak
+/docs/.sass-cache/
+/docs/_site/
+/docs/Gemfile.lock

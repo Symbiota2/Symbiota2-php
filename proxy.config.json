@@ -10,7 +10,7 @@
     "logLevel": "debug"
   },
   "/docs/*": {
-    "target": "http://localhost",
+    "target": "http://0.0.0.0:4000",
     "secure": false,
     "logLevel": "debug"
   }

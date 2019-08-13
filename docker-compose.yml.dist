@@ -72,9 +72,26 @@ services:
     ports:
       - 5434:5432
 
+  jekyll:
+    build: ./docker/jekyll
+    container_name: jekyll
+    command: jekyll serve
+    volumes:
+      - ./docs:/srv/jekyll
+    ports:
+      - 4000:4000
+
   adminer:
     image: adminer:4.7
     container_name: adminer
     restart: always
     ports:
       - 8080:8080
+
+  elk:
+    image: sebp/elk
+    container_name: elk
+    ports:
+      - 5601:5601
+      - 9200:9200
+      - 5044:5044

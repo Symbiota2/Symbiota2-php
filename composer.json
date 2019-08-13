@@ -63,7 +63,6 @@
             "@php -r \"copy('package.json.dist', 'package.json');\"",
             "@php -r \"file_exists('plugin-composer.json') || copy('plugin-composer.json.dist', 'plugin-composer.json');\"",
             "@php -r \"file_exists('docker-compose.yml') || copy('docker-compose.yml.dist', 'docker-compose.yml');\"",
-            "@php -r \"file_exists('docker-compose-elk.yml') || copy('docker-compose-elk.yml.dist', 'docker-compose-elk.yml');\"",
             "@php -r \"file_exists('./config/packages/api_platform.yaml') || copy('./config/packages/api_platform.yaml.dist', './config/packages/api_platform.yaml');\"",
             "@php -r \"file_exists('./config/packages/doctrine.yaml') || copy('./config/packages/doctrine.yaml.dist', './config/packages/doctrine.yaml');\"",
             "@php -r \"file_exists('./config/plugin-config.json') || copy('./config/plugin-config.json.dist', './config/plugin-config.json');\""
