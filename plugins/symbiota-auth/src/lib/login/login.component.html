@@ -10,7 +10,7 @@
         </mat-form-field>
         <mat-checkbox name="maintainLogin" ngModel (change)="setMaintainLogin($event)">Remember me on this computer</mat-checkbox>
         <button mat-raised-button color="primary" (click)="onLogin(loginForm)">Login</button>
-        <a class="helper-link" routerLink="/signup" (click)="closeLogin()">Don't have an account?</a>
+        <a class="helper-link" (click)="noAccount()">Don't have an account?</a>
         <a class="helper-link" (click)="onResetPassword(loginForm)">Can't remember your password?</a>
         <a class="helper-link" (click)="toggleRetrieveLogin()">Can't remember your login?</a>
         <ng-container *ngIf="show">

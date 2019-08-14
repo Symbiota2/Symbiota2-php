@@ -1,5 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {NgForm} from '@angular/forms';
+import {Router} from "@angular/router";
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 import {AuthService} from '../auth.service';
@@ -22,7 +23,8 @@ export class LoginComponent {
         @Inject(MAT_DIALOG_DATA) public data: RedirectData,
         public dialogRef: MatDialogRef<LoginComponent>,
         private authService: AuthService,
-        private spinnerService: SpinnerOverlayService
+        private spinnerService: SpinnerOverlayService,
+        private router: Router
     ) {}
 
     onLogin(form: NgForm) {
@@ -74,6 +76,11 @@ export class LoginComponent {
 
     toggleRetrieveLogin() {
         this.show = !this.show;
+    }
+
+    noAccount() {
+        this.dialogRef.close();
+        this.router.navigate(['/signup']);
     }
 
     setMaintainLogin(event) {
