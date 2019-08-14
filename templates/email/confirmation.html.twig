@@ -4,5 +4,5 @@
 </h3>
 
 <p>
-    <a href="{{ url('api_users_verify_user_item', {'id': user.getId(), 'token': user.getVerificationToken()}) }}">Please confirm your email by clicking this link.</a>
+    <a href="{{ url('verify_user', {'id': user.getId(), 'token': user.getVerificationToken()}) }}">Please confirm your email by clicking this link.</a>
 </p>

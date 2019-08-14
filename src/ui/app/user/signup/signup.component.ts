@@ -176,7 +176,6 @@ export class SignupComponent implements OnInit {
         return new Promise(resolve => {
             this.debouncer = setTimeout(() => {
                 this.userService.checkEmail(control.value).subscribe((res) => {
-                    console.log(res.available);
                     if (res.available) {
                         resolve({'EmailAlreadyUsed': true});
                     } else {
