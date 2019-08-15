@@ -2,122 +2,26 @@
 layout: default
 ---
 
-Text can be **bold**, _italic_, or ~~strikethrough~~.
+# Symbiota2 Documentation
 
-[Link to another page](./another-page.html).
+This is the location to access developer tutorials and further documentation on developing for the 
+Symbiota2 project. Follow any of the links below for reference in working with Symbiota2.
 
-There should be whitespace between paragraphs.
-
-There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
-
-# Header 1
-
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
-
-## Header 2
-
-> This is a blockquote following a header.
->
-> When something is important enough, you do it even if the odds are not in your favor.
-
-### Header 3
-
-```js
-// Javascript code with syntax highlighting.
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
-}
-```
-
-```ruby
-# Ruby code with syntax highlighting
-GitHubPages::Dependencies.gems.each do |gem, version|
-  s.add_dependency(gem, "= #{version}")
-end
-```
-
-#### Header 4
-
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-
-##### Header 5
-
-1.  This is an ordered list following a header.
-2.  This is an ordered list following a header.
-3.  This is an ordered list following a header.
-
-###### Header 6
-
-| head1        | head two          | three |
-|:-------------|:------------------|:------|
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good `oreos`      | hmm   |
-| ok           | good `zoute` drop | yumm  |
-
-### There's a horizontal rule below this.
-
-* * *
-
-### Here is an unordered list:
-
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
-
-### And an ordered list:
-
-1.  Item one
-1.  Item two
-1.  Item three
-1.  Item four
-
-### And a nested list:
-
-- level 1 item
-  - level 2 item
-  - level 2 item
-    - level 3 item
-    - level 3 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-
-### Small image
-
-![Octocat](https://github.githubassets.com/images/icons/emoji/octocat.png)
-
-### Large image
-
-![Branching](https://guides.github.com/activities/hello-world/branching.png)
-
-
-### Definition lists can be used with HTML syntax.
-
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
-
-```
-Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
-```
-
-```
-The final element.
-```
+- **[Configuration considerations](./setup/configuration_considerations.html)**
+- **[docker-compose documentation](./setup/docker-compose_documentation.html)**
+- **[Server stack software packages](./setup/server_stack_packages.html)**
+- **Installation and configuration of Symbiota2**
+  - [Install the software](./setup/installation.html)
+  - Configure the .env file
+      - [Configure the database parameters](./setup/configure_env_file_database.html)
+      - [Configure Swift Mailer](./setup/configure_env_file_swiftmailer.html)
+  - Initialize the Docker setup (if using Docker)
+    - [Customizing the docker-compose file (optional)](./setup/customizing_docker-compose.html)
+    - [Build Docker containers](./setup/build_docker_setup.html)
+  - [To upgrade a Symbiota 1.x database to use with Symbiota2](./setup/upgrade_1.x_database.html)
+  - [Setup the Symbiota2 database](./setup/setup_symbiota2_database.html)
+  - [If Docker openssl container is not being used](./setup/docker_no_openssl.html)
+  - [If Docker nginx and php containers are not being used](./setup/docker_no_php_nginx.html)
+  - [Start frontend Angular server and application urls](./setup/frontend_server_urls.html)
+  - [Generate list of API endpoints](./setup/list_api_endpoints.html)
+  - [Access the Docker DBMS containers using Adminer](./setup/access_database_adminer.html)

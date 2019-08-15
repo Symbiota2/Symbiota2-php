@@ -66,6 +66,8 @@ Homestead.yaml
 /config/packages/doctrine.yaml
 /config/plugin-config.json
 /plugin-composer.json
+/angular.json
+/angular.json.bak
 /package.json
 /package.json.bak
 /docs/.sass-cache/
