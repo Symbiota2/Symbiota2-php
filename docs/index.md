@@ -20,6 +20,7 @@ Symbiota2 project. Follow any of the links below for reference in working with S
     - [Build Docker containers](./setup/build_docker_setup.html)
   - [To upgrade a Symbiota 1.x database to use with Symbiota2](./setup/upgrade_1.x_database.html)
   - [Setup the Symbiota2 database](./setup/setup_symbiota2_database.html)
+  - [Populate the database with data](./setup/populate_database.html)
   - [If Docker openssl container is not being used](./setup/docker_no_openssl.html)
   - [If Docker nginx and php containers are not being used](./setup/docker_no_php_nginx.html)
   - [Start frontend Angular server and application urls](./setup/frontend_server_urls.html)
