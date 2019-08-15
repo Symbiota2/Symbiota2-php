@@ -2,7 +2,7 @@
 layout: default
 ---
 
-### [Back to index](/index.html)
+### [Back to index](../index.html)
 
 # Server stack software packages
 
@@ -14,4 +14,4 @@ these software packages offer many (if not all) of the necessary components in o
 - **[MAMP](https://www.mamp.info/en/){:target="_blank"}** (Windows, Mac)
 - **[LAMP](https://bitnami.com/stack/lamp){:target="_blank"}** (Windows, Mac, Linux) **FREE**
 
-### [Back to index](/index.html)
+### [Back to index](../index.html)

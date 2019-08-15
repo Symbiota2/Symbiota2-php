@@ -2,7 +2,7 @@
 layout: default
 ---
 
-### [Back to index](/index.html)
+### [Back to index](../index.html)
 
 # Customizing the docker-compose file
 
@@ -16,4 +16,4 @@ of your Symbiota2 installation by reducing CPU usage.
 To remove containers from your docker-compose.yml file, simply edit the file and delete the container clocks from the file.
 Be careful to preserve the indenting of the containers that remain in the file.
 
-### [Back to index](/index.html)
+### [Back to index](../index.html)

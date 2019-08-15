@@ -2,7 +2,7 @@
 layout: default
 ---
 
-### [Back to index](/index.html)
+### [Back to index](../index.html)
 
 # Install the software
 
@@ -42,4 +42,4 @@ To install Symbiota2:
     `npm install`
     
 
-### [Back to index](/index.html)
+### [Back to index](../index.html)

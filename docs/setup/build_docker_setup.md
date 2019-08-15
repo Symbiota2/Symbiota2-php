@@ -2,7 +2,7 @@
 layout: default
 ---
 
-### [Back to index](/index.html)
+### [Back to index](../index.html)
 
 # Build Docker containers
 
@@ -23,4 +23,4 @@ containers, follow the following steps:
     
     **Note - once you are done working in the terminal, exit the php container by typing:** `exit`
 
-### [Back to index](/index.html)
+### [Back to index](../index.html)

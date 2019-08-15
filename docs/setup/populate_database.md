@@ -2,7 +2,7 @@
 layout: default
 ---
 
-### [Back to index](/index.html)
+### [Back to index](../index.html)
 
 # Populate the database with data
 
@@ -42,4 +42,4 @@ To populate with the Symbiota2 development database follow these steps:
 
 * * *
 
-### [Back to index](/index.html)
+### [Back to index](../index.html)
