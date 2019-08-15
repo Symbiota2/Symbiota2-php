@@ -26,3 +26,4 @@ Symbiota2 project. Follow any of the links below for reference in working with S
   - [Start frontend Angular server and application urls](./setup/frontend_server_urls.html)
   - [Generate list of API endpoints](./setup/list_api_endpoints.html)
   - [Access the Docker DBMS containers using Adminer](./setup/access_database_adminer.html)
+  - [Initial user accounts in new databases](./setup/initial_user_accounts.html)
