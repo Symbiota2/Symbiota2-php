@@ -2,7 +2,7 @@
 layout: default
 ---
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)
 
 # Configuration considerations
 
@@ -34,4 +34,4 @@ stack for Symbiota2 to be run on a local machine:
     As already noted, [there are several server stack software packages that can nearly automate the setup 
     process](/setup/server_stack_packages.html), relieving much of the complication in the configuration.
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)
