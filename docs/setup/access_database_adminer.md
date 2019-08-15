@@ -2,7 +2,7 @@
 layout: default
 ---
 
-### [Back to index](./../index.html)
+### [Back to index](../index.html)
 
 # Access the Docker DBMS containers using Adminer
 
