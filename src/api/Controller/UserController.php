@@ -175,6 +175,7 @@ class UserController extends AbstractController
         $res = new Response();
         $res->headers->clearCookie('BEARER');
         $res->send();
+        return $res;
     }
 
     /**
