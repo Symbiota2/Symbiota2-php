@@ -40,7 +40,7 @@ export class PluginAdminComponent {
             pluginList => {
                 this.availablePlugins = pluginList;
                 this.installedPlugins = this.pluginLoader.pluginData;
-                this.installedPlugins.sort((a, b) => a.name.localeCompare(b.name));
+                this.installedPlugins.sort((a, b) => a.title.localeCompare(b.title));
                 this.primePluginData();
                 this.spinnerService.hide();
             }
@@ -57,7 +57,7 @@ export class PluginAdminComponent {
 
             let updateAvailable = false;
             const installedVersionArr = plugin.version.split('.');
-            const currentPlugin = this.availablePlugins.find(x => x.plugin === plugin.plugin);
+            const currentPlugin = this.availablePlugins.find(x => x.name === plugin.name);
             if (currentPlugin) {
                 const currentVersionArr = currentPlugin.version.split('.');
                 if (Number(currentVersionArr[0]) > Number(installedVersionArr[0])) {
@@ -98,7 +98,7 @@ export class PluginAdminComponent {
         if (depPluginArr.length > 0) {
             const depNameArr = [];
             depPluginArr.forEach((dep, index) => {
-                depNameArr.push(dep.name);
+                depNameArr.push(dep.title);
             });
             const dialogRef = this.dialog.open(PluginDependencyDialogComponent, {
                 width: '450px',
@@ -112,7 +112,7 @@ export class PluginAdminComponent {
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     depPluginArr.forEach((dep, index) => {
-                        disableArr.push(dep.plugin);
+                        disableArr.push(dep.name);
                     });
                     this.disablePlugins(disableArr);
                 }
@@ -129,7 +129,7 @@ export class PluginAdminComponent {
         if (depPluginArr.length > 0) {
             const depNameArr = [];
             depPluginArr.forEach((dep, index) => {
-                depNameArr.push(dep.name);
+                depNameArr.push(dep.title);
             });
             const dialogRef = this.dialog.open(PluginDependencyDialogComponent, {
                 width: '450px',
@@ -143,7 +143,7 @@ export class PluginAdminComponent {
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     depPluginArr.forEach((dep, index) => {
-                        enableArr.push(dep.plugin);
+                        enableArr.push(dep.name);
                     });
                     this.enablePlugins(enableArr);
                 }
@@ -164,7 +164,7 @@ export class PluginAdminComponent {
         if (depPluginArr.length > 0) {
             const depNameArr = [];
             depPluginArr.forEach((dep, index) => {
-                depNameArr.push(dep.name);
+                depNameArr.push(dep.title);
             });
             const dialogRef = this.dialog.open(PluginDependencyDialogComponent, {
                 width: '450px',
@@ -178,7 +178,7 @@ export class PluginAdminComponent {
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     depPluginArr.forEach((dep, index) => {
-                        deleteArr.push(dep.plugin);
+                        deleteArr.push(dep.name);
                     });
                     this.deletePlugins(deleteArr);
                 }
@@ -191,7 +191,7 @@ export class PluginAdminComponent {
     getAllPlugins() {
         const returnArr = [];
         this.installedPlugins.forEach((plugin, index) => {
-            returnArr.push(plugin.plugin);
+            returnArr.push(plugin.name);
         });
         return returnArr;
     }
@@ -202,7 +202,7 @@ export class PluginAdminComponent {
             if (plugin.dependencies && plugin.enabled) {
                 plugin.dependencies.forEach((dep, index2) => {
                     if (dep === pluginName) {
-                        returnArr.push({plugin: plugin.plugin, name: plugin.name});
+                        returnArr.push({name: plugin.name, title: plugin.title});
                     }
                 });
             }
@@ -212,12 +212,12 @@ export class PluginAdminComponent {
 
     getRequiredPlugins(pluginName: string) {
         const returnArr = [];
-        const enablePlugin = this.installedPlugins.find(x => x.plugin === pluginName);
+        const enablePlugin = this.installedPlugins.find(x => x.name === pluginName);
         if (enablePlugin.dependencies) {
             enablePlugin.dependencies.forEach((dep, index) => {
-                const depPlugin = this.installedPlugins.find(x => x.plugin === dep);
+                const depPlugin = this.installedPlugins.find(x => x.name === dep);
                 if (!depPlugin.enabled) {
-                    returnArr.push({plugin: depPlugin.plugin, name: depPlugin.name});
+                    returnArr.push({name: depPlugin.name, title: depPlugin.title});
                 }
             });
         }

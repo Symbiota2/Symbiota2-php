@@ -132,7 +132,7 @@ class PluginController extends AbstractController
             $pluginConfigArr = json_decode($pluginConfigJson, true);
             if($pluginConfigArr) {
                 foreach($pluginConfigArr as $i => $pArr){
-                    $returnArr[$pArr['plugin']] = $pArr;
+                    $returnArr[$pArr['name']] = $pArr;
                 }
             }
         }
@@ -235,7 +235,7 @@ class PluginController extends AbstractController
             $configArr = json_decode($fileContentsJson, true);
             if($configArr) {
                 foreach($configArr as $i => $pArr){
-                    if($pArr['plugin'] == $plugin) {
+                    if($pArr['name'] == $plugin) {
                         $pArr['enabled'] = false;
                     }
                     $newConfigArr[] = $pArr;
@@ -254,7 +254,7 @@ class PluginController extends AbstractController
             $configArr = json_decode($fileContentsJson, true);
             if($configArr) {
                 foreach($configArr as $i => $pArr){
-                    if($pArr['plugin'] == $plugin) {
+                    if($pArr['name'] == $plugin) {
                         $pArr['enabled'] = true;
                     }
                     $newConfigArr[] = $pArr;

@@ -1,7 +1,7 @@
 [
   {
-    "plugin": "checklist",
-    "name": "Checklist Plugin",
+    "name": "checklist",
+    "title": "Checklist Plugin",
     "source": "local",
     "version": "0.0.1",
     "description": "A plugin to create, modify, and manage species checklists within Symbiota.",
@@ -13,8 +13,8 @@
     "enabled": true
   },
   {
-    "plugin": "collection",
-    "name": "Collection Plugin",
+    "name": "collection",
+    "title": "Collection Plugin",
     "source": "local",
     "version": "0.0.1",
     "description": "A plugin to create and manage occurrence collections within Symbiota.",
@@ -33,8 +33,8 @@
     "enabled": true
   },
   {
-    "plugin": "crowd-source",
-    "name": "Crowd Source Plugin",
+    "name": "crowd-source",
+    "title": "Crowd Source Plugin",
     "source": "local",
     "version": "0.0.1",
     "description": "A plugin to allow crowd-sourcing for occurrence data edits.",
@@ -45,8 +45,8 @@
     "enabled": true
   },
   {
-    "plugin": "exsiccati",
-    "name": "Exsiccati Plugin",
+    "name": "exsiccati",
+    "title": "Exsiccati Plugin",
     "source": "local",
     "version": "0.0.1",
     "description": "A plugin to connect exsiccati data with occurrence records.",
@@ -57,8 +57,8 @@
     "enabled": true
   },
   {
-    "plugin": "glossary",
-    "name": "Glossary Plugin",
+    "name": "glossary",
+    "title": "Glossary Plugin",
     "source": "local",
     "version": "0.0.1",
     "description": "A plugin to add glossary module to Symbiota.",
@@ -69,8 +69,8 @@
     "enabled": true
   },
   {
-    "plugin": "image-processor",
-    "name": "Image Processor Plugin",
+    "name": "image-processor",
+    "title": "Image Processor Plugin",
     "source": "local",
     "version": "0.0.1",
     "description": "A plugin to add the batch image processing module to Symbiota.",
@@ -82,8 +82,8 @@
     "enabled": true
   },
   {
-    "plugin": "key",
-    "name": "Key Plugin",
+    "name": "key",
+    "title": "Key Plugin",
     "source": "local",
     "version": "0.0.1",
     "description": "A plugin to add the key module to Symbiota.",
@@ -94,8 +94,8 @@
     "enabled": true
   },
   {
-    "plugin": "media",
-    "name": "Media Plugin",
+    "name": "media",
+    "title": "Media Plugin",
     "source": "local",
     "version": "0.0.1",
     "description": "A plugin to add the management of media files to Symbiota.",
@@ -106,8 +106,8 @@
     "enabled": true
   },
   {
-    "plugin": "occurrence",
-    "name": "Occurrence Plugin",
+    "name": "occurrence",
+    "title": "Occurrence Plugin",
     "source": "local",
     "version": "0.0.1",
     "description": "A plugin to add the managment of occurrence records within Symbiota.",
@@ -119,8 +119,8 @@
     "enabled": true
   },
   {
-    "plugin": "occurrence-association",
-    "name": "Occurrence Assiciations Plugin",
+    "name": "occurrence-association",
+    "title": "Occurrence Assiciations Plugin",
     "source": "local",
     "version": "0.0.1",
     "description": "A plugin to track associations within occurrence records.",
@@ -131,8 +131,8 @@
     "enabled": true
   },
   {
-    "plugin": "occurrence-comment",
-    "name": "Occurrence Comments Plugin",
+    "name": "occurrence-comment",
+    "title": "Occurrence Comments Plugin",
     "source": "local",
     "version": "0.0.1",
     "description": "A plugin to add the ability to add comments to occurrence records.",
@@ -143,8 +143,8 @@
     "enabled": true
   },
   {
-    "plugin": "occurrence-dataset",
-    "name": "Occurrence Dataset Plugin",
+    "name": "occurrence-dataset",
+    "title": "Occurrence Dataset Plugin",
     "source": "local",
     "version": "0.0.1",
     "description": "A plugin to add the occurrence dataset module to Symbiota.",
@@ -155,8 +155,8 @@
     "enabled": true
   },
   {
-    "plugin": "occurrence-genetic",
-    "name": "Occurrence Genetic Plugin",
+    "name": "occurrence-genetic",
+    "title": "Occurrence Genetic Plugin",
     "source": "local",
     "version": "0.0.1",
     "description": "A plugin to add the ability to link genetic data to occurrence records.",
@@ -167,8 +167,8 @@
     "enabled": true
   },
   {
-    "plugin": "occurrence-loan",
-    "name": "Occurrence Loan Plugin",
+    "name": "occurrence-loan",
+    "title": "Occurrence Loan Plugin",
     "source": "local",
     "version": "0.0.1",
     "description": "A plugin to add the occurrence loans module to Symbiota.",
@@ -179,8 +179,8 @@
     "enabled": true
   },
   {
-    "plugin": "occurrence-search",
-    "name": "Search Occurrences Plugin",
+    "name": "occurrence-search",
+    "title": "Search Occurrences Plugin",
     "source": "local",
     "version": "0.0.1",
     "description": "A plugin that adds the Search Collections module to Symbiota.",
@@ -198,8 +198,8 @@
     "enabled": true
   },
   {
-    "plugin": "reference",
-    "name": "Reference Plugin",
+    "name": "reference",
+    "title": "Reference Plugin",
     "source": "local",
     "version": "0.0.1",
     "description": "A plugin that adds the reference module to Symbiota.",
@@ -207,8 +207,8 @@
     "enabled": true
   },
   {
-    "plugin": "taxa",
-    "name": "Taxa Plugin",
+    "name": "taxa",
+    "title": "Taxa Plugin",
     "source": "local",
     "version": "0.0.1",
     "description": "Adds the Taxa module to manage taxonomic data.",
@@ -216,8 +216,8 @@
     "enabled": true
   },
   {
-    "plugin": "traits",
-    "name": "Traits Plugin",
+    "name": "traits",
+    "title": "Traits Plugin",
     "source": "local",
     "version": "0.0.1",
     "description": "Adds the Traits Module to Symbiota.",

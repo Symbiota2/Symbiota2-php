@@ -6,7 +6,7 @@
 <mat-divider></mat-divider>
 <mat-card class="plugin-card" *ngFor="let plugin of installedPlugins">
     <mat-card-header>
-        <mat-card-title>{{plugin.name}}</mat-card-title>
+        <mat-card-title>{{plugin.title}}</mat-card-title>
         <mat-card-subtitle class="enabledText" *ngIf="plugin.enabled">ENABLED</mat-card-subtitle>
         <mat-card-subtitle class="warningText" *ngIf="!plugin.enabled">DISABLED</mat-card-subtitle>
         <mat-card-subtitle class="warningText" *ngIf="plugin.updateAvailable">UPDATE AVAILABLE</mat-card-subtitle>
@@ -16,9 +16,9 @@
         <div>Version: {{plugin.version}}</div>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-raised-button color="primary" *ngIf="plugin.enabled" (click)="onDisablePlugin(plugin.plugin)">DISABLE</button>
-        <button mat-raised-button color="primary" *ngIf="!plugin.enabled" (click)="onEnablePlugin(plugin.plugin)">ENABLE</button>
-        <button mat-raised-button color="primary" *ngIf="plugin.updateAvailable" (click)="onUpdatePlugin(plugin.plugin)">UPDATE</button>
-        <button mat-raised-button color="primary" (click)="onDeletePlugin(plugin.plugin)">DELETE</button>
+        <button mat-raised-button color="primary" *ngIf="plugin.enabled" (click)="onDisablePlugin(plugin.name)">DISABLE</button>
+        <button mat-raised-button color="primary" *ngIf="!plugin.enabled" (click)="onEnablePlugin(plugin.name)">ENABLE</button>
+        <button mat-raised-button color="primary" *ngIf="plugin.updateAvailable" (click)="onUpdatePlugin(plugin.name)">UPDATE</button>
+        <button mat-raised-button color="primary" (click)="onDeletePlugin(plugin.name)">DELETE</button>
     </mat-card-actions>
 </mat-card>

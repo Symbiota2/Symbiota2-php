@@ -67,7 +67,8 @@
             "@php -r \"file_exists('docker-compose.yml') || copy('docker-compose.yml.dist', 'docker-compose.yml');\"",
             "@php -r \"file_exists('./config/packages/api_platform.yaml') || copy('./config/packages/api_platform.yaml.dist', './config/packages/api_platform.yaml');\"",
             "@php -r \"file_exists('./config/packages/doctrine.yaml') || copy('./config/packages/doctrine.yaml.dist', './config/packages/doctrine.yaml');\"",
-            "@php -r \"file_exists('./config/plugin-config.json') || copy('./config/plugin-config.json.dist', './config/plugin-config.json');\""
+            "@php -r \"!file_exists('./config/plugin-config.json') || copy('./config/plugin-config.json', './config/plugin-config.json.bak');\"",
+            "@php -r \"copy('./config/plugin-config.json.dist', './config/plugin-config.json');\""
         ],
         "post-install-cmd": [
             "@auto-scripts"

@@ -80,16 +80,16 @@ export class PluginLoaderService {
         this.pluginData.forEach((plugin, index) => {
             if (plugin.enabled && plugin.ui_filename && plugin.dependencies) {
                 plugin.dependencies.forEach((depName, index2) => {
-                    const dep = this.pluginData.find(x => x.plugin === depName);
+                    const dep = this.pluginData.find(x => x.name === depName);
                     if (dep.enabled && dep.ui_filename && dep.dependencies) {
                         dep.dependencies.forEach((secDepName, index3) => {
-                            const secDep = this.pluginData.find(x => x.plugin === secDepName);
-                            if (!this.pluginIsLoaded(secDep.plugin)) {
+                            const secDep = this.pluginData.find(x => x.name === secDepName);
+                            if (!this.pluginIsLoaded(secDep.name)) {
                                 this.loadPlugin(secDep);
                             }
                         });
                     }
-                    if (dep.enabled && dep.ui_filename && !this.pluginIsLoaded(dep.plugin)) {
+                    if (dep.enabled && dep.ui_filename && !this.pluginIsLoaded(dep.name)) {
                         this.loadPlugin(dep);
                     }
                 });
@@ -100,7 +100,7 @@ export class PluginLoaderService {
 
     loadPlugins() {
         this.pluginData.forEach((plugin, index) => {
-            if (plugin.enabled && plugin.ui_filename && !this.pluginIsLoaded(plugin.plugin)) {
+            if (plugin.enabled && plugin.ui_filename && !this.pluginIsLoaded(plugin.name)) {
                 this.loadPlugin(plugin);
             }
         });
@@ -120,7 +120,7 @@ export class PluginLoaderService {
         if (!!plugin.link_hooks) {
             this.linkService.loadPluginLinks(plugin.link_hooks);
         }
-        this.addPluginToLoadedPluginList(plugin.plugin);
+        this.addPluginToLoadedPluginList(plugin.name);
     }
 
     collectPluginRoutes(plugin: PluginData) {

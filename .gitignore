@@ -65,6 +65,7 @@ Homestead.yaml
 /config/packages/api_platform.yaml
 /config/packages/doctrine.yaml
 /config/plugin-config.json
+/config/plugin-config.json.bak
 /plugin-composer.json
 /angular.json
 /angular.json.bak
