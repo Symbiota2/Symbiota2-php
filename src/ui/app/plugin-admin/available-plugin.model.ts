@@ -1,4 +1,4 @@
-export interface AvailablePluginData {
+export interface AvailablePlugin {
     name: string;
     title: string;
     source: string;

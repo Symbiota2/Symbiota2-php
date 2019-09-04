@@ -9,7 +9,7 @@ import {SpinnerOverlayService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
 import {AuthService} from 'symbiota-auth';
 
-import {AvailablePluginData} from '../available-plugin-data.model';
+import {AvailablePlugin} from '../available-plugin.model';
 
 @Component({
     selector: 'app-plugin-admin',
@@ -36,7 +36,7 @@ export class PluginAdminComponent {
     ) {
         this.authService.validateAccess(this.accessPermissions);
         this.spinnerService.show();
-        http.get<AvailablePluginData[]>('/api/pluginregistry').subscribe(
+        http.get<AvailablePlugin[]>('/api/pluginregistry').subscribe(
             pluginList => {
                 this.availablePlugins = pluginList;
                 this.installedPlugins = this.pluginLoader.pluginData;

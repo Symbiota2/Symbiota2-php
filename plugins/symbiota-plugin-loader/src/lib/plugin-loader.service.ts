@@ -11,7 +11,7 @@ import {PluginLinkService} from 'symbiota-plugin';
 import {SpinnerOverlayService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
 
-import {PluginData} from './plugin-data.model';
+import {Plugin} from './plugin.model';
 
 import * as AngularCdkCollections from '@angular/cdk/collections';
 import * as AngularCdkTree from '@angular/cdk/tree';
@@ -106,7 +106,7 @@ export class PluginLoaderService {
         });
     }
 
-    private loadPlugin(plugin: PluginData) {
+    private loadPlugin(plugin: Plugin) {
         this.activatePlugin(plugin);
         if (!!plugin.ui_routes) {
             this.collectPluginRoutes(plugin);
@@ -123,7 +123,7 @@ export class PluginLoaderService {
         this.addPluginToLoadedPluginList(plugin.name);
     }
 
-    collectPluginRoutes(plugin: PluginData) {
+    collectPluginRoutes(plugin: Plugin) {
         const routes = plugin.ui_routes;
         const moduleName = plugin.ui_module_name;
         let route: Route = {};
@@ -200,7 +200,7 @@ export class PluginLoaderService {
         });
     }
 
-    activatePlugin(plugin: PluginData): Promise<any> {
+    activatePlugin(plugin: Plugin): Promise<any> {
         const url = './assets/js/plugins/' + plugin.ui_filename;
         SystemJS.set('@angular/cdk/collections', SystemJS.newModule(AngularCdkCollections));
         SystemJS.set('@angular/cdk/tree', SystemJS.newModule(AngularCdkTree));
