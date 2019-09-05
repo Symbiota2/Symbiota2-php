@@ -1,6 +1,6 @@
 {
-  "plugin": "traits",
-  "name": "Traits Plugin",
+  "name": "traits",
+  "title": "Traits Plugin",
   "source": "local",
   "version": "0.0.1",
   "description": "Adds the Traits Module to Symbiota.",

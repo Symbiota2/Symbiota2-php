@@ -1,6 +1,6 @@
 {
-  "plugin": "checklist",
-  "name": "Checklist Plugin",
+  "name": "checklist",
+  "title": "Checklist Plugin",
   "source": "local",
   "version": "0.0.1",
   "description": "A plugin to create, modify, and manage species checklists within Symbiota.",

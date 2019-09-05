@@ -1,6 +1,6 @@
 {
-  "plugin": "key",
-  "name": "Key Plugin",
+  "name": "key",
+  "title": "Key Plugin",
   "source": "local",
   "version": "0.0.1",
   "description": "A plugin to add the key module to Symbiota.",

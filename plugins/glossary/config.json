@@ -1,6 +1,6 @@
 {
-  "plugin": "glossary",
-  "name": "Glossary Plugin",
+  "name": "glossary",
+  "title": "Glossary Plugin",
   "source": "local",
   "version": "0.0.1",
   "description": "A plugin to add glossary module to Symbiota.",

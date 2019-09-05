@@ -1,6 +1,6 @@
 {
-  "plugin": "occurrence-loan",
-  "name": "Occurrence Loan Plugin",
+  "name": "occurrence-loan",
+  "title": "Occurrence Loan Plugin",
   "source": "local",
   "version": "0.0.1",
   "description": "A plugin to add the occurrence loans module to Symbiota.",

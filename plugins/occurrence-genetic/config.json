@@ -1,6 +1,6 @@
 {
-  "plugin": "occurrence-genetic",
-  "name": "Occurrence Genetic Plugin",
+  "name": "occurrence-genetic",
+  "title": "Occurrence Genetic Plugin",
   "source": "local",
   "version": "0.0.1",
   "description": "A plugin to add the ability to link genetic data to occurrence records.",

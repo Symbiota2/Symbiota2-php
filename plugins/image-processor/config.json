@@ -1,6 +1,6 @@
 {
-  "plugin": "image-processor",
-  "name": "Image Processor Plugin",
+  "name": "image-processor",
+  "title": "Image Processor Plugin",
   "source": "local",
   "version": "0.0.1",
   "description": "A plugin to add the batch image processing module to Symbiota.",

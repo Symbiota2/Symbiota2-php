@@ -1,6 +1,6 @@
 {
-  "plugin": "taxa",
-  "name": "Taxa Plugin",
+  "name": "taxa",
+  "title": "Taxa Plugin",
   "source": "local",
   "version": "0.0.1",
   "description": "Adds the Taxa module to manage taxonomic data.",

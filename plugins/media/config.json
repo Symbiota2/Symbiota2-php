@@ -1,6 +1,6 @@
 {
-  "plugin": "media",
-  "name": "Media Plugin",
+  "name": "media",
+  "title": "Media Plugin",
   "source": "local",
   "version": "0.0.1",
   "description": "A plugin to add the management of media files to Symbiota.",

@@ -1,6 +1,6 @@
 {
-  "plugin": "occurrence-search",
-  "name": "Search Occurrences Plugin",
+  "name": "occurrence-search",
+  "title": "Search Occurrences Plugin",
   "source": "local",
   "version": "0.0.1",
   "description": "A plugin that adds the Search Collections module to Symbiota.",

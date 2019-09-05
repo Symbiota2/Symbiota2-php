@@ -1,6 +1,6 @@
 {
-  "plugin": "occurrence",
-  "name": "Occurrence Plugin",
+  "name": "occurrence",
+  "title": "Occurrence Plugin",
   "source": "local",
   "version": "0.0.1",
   "description": "A plugin to add the managment of occurrence records within Symbiota.",

@@ -1,6 +1,6 @@
 {
-  "plugin": "occurrence-comment",
-  "name": "Occurrence Comments Plugin",
+  "name": "occurrence-comment",
+  "title": "Occurrence Comments Plugin",
   "source": "local",
   "version": "0.0.1",
   "description": "A plugin to add the ability to add comments to occurrence records.",

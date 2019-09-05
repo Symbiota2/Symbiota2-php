@@ -1,6 +1,6 @@
 {
-  "plugin": "occurrence-dataset",
-  "name": "Occurrence Dataset Plugin",
+  "name": "occurrence-dataset",
+  "title": "Occurrence Dataset Plugin",
   "source": "local",
   "version": "0.0.1",
   "description": "A plugin to add the occurrence dataset module to Symbiota.",

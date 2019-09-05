@@ -1,6 +1,6 @@
 {
-  "plugin": "reference",
-  "name": "Reference Plugin",
+  "name": "reference",
+  "title": "Reference Plugin",
   "source": "local",
   "version": "0.0.1",
   "description": "A plugin that adds the reference module to Symbiota.",

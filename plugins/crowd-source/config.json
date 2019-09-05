@@ -1,6 +1,6 @@
 {
-  "plugin": "crowd-source",
-  "name": "Crowd Source Plugin",
+  "name": "crowd-source",
+  "title": "Crowd Source Plugin",
   "source": "local",
   "version": "0.0.1",
   "description": "A plugin to allow crowd-sourcing for occurrence data edits.",

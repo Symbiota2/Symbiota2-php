@@ -1,6 +1,6 @@
 {
-  "plugin": "collection",
-  "name": "Collection Plugin",
+  "name": "collection",
+  "title": "Collection Plugin",
   "source": "local",
   "version": "0.0.1",
   "description": "A plugin to create and manage occurrence collections within Symbiota.",

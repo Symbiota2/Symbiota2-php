@@ -1,6 +1,6 @@
 {
-  "plugin": "exsiccati",
-  "name": "Exsiccati Plugin",
+  "name": "exsiccati",
+  "title": "Exsiccati Plugin",
   "source": "local",
   "version": "0.0.1",
   "description": "A plugin to connect exsiccati data with occurrence records.",
