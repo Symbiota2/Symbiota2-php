@@ -2,7 +2,7 @@
 layout: default
 ---
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)
 
 # If Docker openssl container is not being used
 
@@ -22,4 +22,4 @@ docker-compose file, you will need to generate these key files through the follo
     ```
 - Enter `1234567891011121314151617181920` as pass phrase when prompted.
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)

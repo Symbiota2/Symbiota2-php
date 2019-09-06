@@ -2,7 +2,7 @@
 layout: default
 ---
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)
 
 # Generate list of API endpoints
 
@@ -11,4 +11,4 @@ installed and activated plugins, but running the following in your terminal:
     
     php bin/console debug:router
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)

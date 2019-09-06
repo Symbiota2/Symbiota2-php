@@ -2,7 +2,7 @@
 layout: default
 ---
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)
 
 # Troubleshooting
 
@@ -20,4 +20,4 @@ run the following:
  
 * * *
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)

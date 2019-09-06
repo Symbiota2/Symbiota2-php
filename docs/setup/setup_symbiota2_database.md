@@ -2,7 +2,7 @@
 layout: default
 ---
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)
 
 # Setup the Symbiota2 database
 
@@ -21,4 +21,4 @@ To run the initial setup scripts for your Symbiota2 database follow these steps:
     ```
 - Enter 'y' when prompted to confirm the execution of the migration scripts
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)

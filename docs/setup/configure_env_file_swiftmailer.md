@@ -2,7 +2,7 @@
 layout: default
 ---
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)
 
 # Configure Swift Mailer in the .env file
 
@@ -30,4 +30,4 @@ Account settings -> Security and set 'Less secure app access' to On. Then edit t
   - Set the encryption type after `encryption=` in line 61.
   - Set the authorization mode type after `auth_mode=` in line 61.
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)

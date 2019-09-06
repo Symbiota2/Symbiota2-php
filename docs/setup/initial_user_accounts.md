@@ -2,7 +2,7 @@
 layout: default
 ---
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)
 
 # Initial user accounts in new databases
 
@@ -51,4 +51,4 @@ For databases populated with the Symbiota2 development database, the users are:
 
 * * *
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)

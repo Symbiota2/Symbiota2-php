@@ -2,7 +2,7 @@
 layout: default
 ---
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)
 
 # docker-compose documentation
 
@@ -77,4 +77,4 @@ provides:
 - To shut down all Docker containers:
     `docker-compose down`
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)

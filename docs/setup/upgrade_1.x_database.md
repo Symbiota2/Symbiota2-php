@@ -2,7 +2,7 @@
 layout: default
 ---
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)
 
 # To upgrade a Symbiota 1.x database to use with Symbiota2
 
@@ -28,4 +28,4 @@ patch on your database by doing the following:
     php bin/console doctrine:database:import config/sql/db_schema-1.1_patch.sql --env=dev
     ```
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)

@@ -2,7 +2,7 @@
 layout: default
 ---
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)
 
 # Access the Docker DBMS containers using Adminer
 
@@ -29,4 +29,4 @@ To access each of the DBMS containers included in the docker-compose file:
   - **Username:** postgres
   - **Password:** password
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)

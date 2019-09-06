@@ -2,7 +2,7 @@
 layout: default
 ---
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)
 
 # Configure the database parameters in the .env file
 
@@ -92,4 +92,4 @@ you must edit the .env file by doing the following:
 - **NOTE - You can only have one DBMS database configuration uncommented at a time in the .env
     file. You can change the DBMS that is uncommented, but only one can be active at a time.**
 
-### [Back to index](../index.html)
+### [Back to index](./index.html)
