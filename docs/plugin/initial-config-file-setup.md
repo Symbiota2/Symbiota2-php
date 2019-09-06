@@ -20,12 +20,12 @@ To setup an initial config file for your plugin project, follow these steps:
       "dependencies": []
     }
     ```
-- Assign the value of the name property to the name of your plugin.
-- Assign the value of the title property to the title which you would like your plugin referred to in user interfaces.
-- Assign the value of the description property to a brief description of your plugin (Note: this is not required).
+- Assign the value of the `name` property to the name of your plugin.
+- Assign the value of the `title` property to the title which you would like your plugin referred to in user interfaces.
+- Assign the value of the `description` property to a brief description of your plugin (Note: this is not required).
 - If your plugin is going to have dependencies, add each dependency name as a string value to the `dependencies` array.
 - If further dependencies arise through the process of development, add their names to this array as they arise.
-- Here is an example of how the `config.json` file may look after these steps have been completed:
+- The `config.json` file should resemble the following after these steps have been completed:
     ```json
     {
       "name": "example-plugin",

@@ -61,6 +61,8 @@
             "@php -r \"file_exists('.env') || copy('.env.dist', '.env');\"",
             "@php -r \"!file_exists('angular.json') || copy('angular.json', 'angular.json.bak');\"",
             "@php -r \"copy('angular.json.dist', 'angular.json');\"",
+            "@php -r \"!file_exists('tsconfig.json') || copy('tsconfig.json', 'tsconfig.json.bak');\"",
+            "@php -r \"copy('tsconfig.json.dist', 'tsconfig.json');\"",
             "@php -r \"!file_exists('package.json') || copy('package.json', 'package.json.bak');\"",
             "@php -r \"copy('package.json.dist', 'package.json');\"",
             "@php -r \"file_exists('plugin-composer.json') || copy('plugin-composer.json.dist', 'plugin-composer.json');\"",

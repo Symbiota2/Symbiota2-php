@@ -19,5 +19,9 @@ layout: default
     - [ComponentHook object](./component-hook-object.html)
     - [LinkHook object](./link-hook-object.html)
   - [Initial config file setup](./initial-config-file-setup.html)
+- **Adding backend components**
+  - [Initial setup to add backend components](./backend-initial-setup.html)
+- **Adding frontend components**
+  - [Initial setup to add frontend components](./frontend-initial-setup.html)
 
 ### [Back to main menu](../index.html)
