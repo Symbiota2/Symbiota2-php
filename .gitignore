@@ -69,6 +69,8 @@ Homestead.yaml
 /plugin-composer.json
 /angular.json
 /angular.json.bak
+/tsconfig.json
+/tsconfig.json.bak
 /package.json
 /package.json.bak
 /docs/.sass-cache/
