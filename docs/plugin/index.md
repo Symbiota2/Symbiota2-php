@@ -23,5 +23,6 @@ layout: default
   - [Initial setup to add backend components](./backend-initial-setup.html)
 - **Adding frontend components**
   - [Initial setup to add frontend components](./frontend-initial-setup.html)
+  - [Add npm build scripts to the package.json file](./add-npm-build-scripts.html)
 
 ### [Back to main menu](../index.html)

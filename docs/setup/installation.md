@@ -28,7 +28,7 @@ To install Symbiota2:
 
     `git clone https://github.com/Symbiota2/Symbiota2.git <portal-name>`
     
-    changing `<portal-name>` to the folder name you would like to use for the root folder of your installation
+    replacing `<portal-name>` with the name you would like to use for the root folder of your installation
 - Change direcotry to root of installation:
     
     `cd <portal-name>`

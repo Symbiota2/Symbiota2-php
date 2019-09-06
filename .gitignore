@@ -68,11 +68,8 @@ Homestead.yaml
 /config/plugin-config.json.bak
 /plugin-composer.json
 /angular.json
-/angular.json.bak
 /tsconfig.json
-/tsconfig.json.bak
 /package.json
-/package.json.bak
 /docs/.sass-cache/
 /docs/_site/
 /docs/Gemfile.lock

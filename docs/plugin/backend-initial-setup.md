@@ -33,7 +33,7 @@ To setup your project to add backend components, follow these steps:
       "api_namespace": "ExamplePlugin"
     }
     ```
-- the root folder for the plugin project within the `plugins` folder of the Symbiota2 installation should have a 
+- The root folder for the plugin project within the `plugins` folder of the Symbiota2 installation should have a 
     structure resembling the following after these steps have been completed:
     ```
     plugins

@@ -12,7 +12,7 @@ on adding frontend components.**
 **Before proceeding, be sure to have [setup your plugin config file](./initial-config-file-setup.html).**
 
 To setup your project to add frontend components, follow these steps:
-- Build the Angular framework for the plugin by running the following (changing `<plugin-name>` to the name of your plugin):
+- Build the Angular framework for the plugin by running the following (replacing `<plugin-name>` with the name of your plugin):
 ```shell
 ng g library <plugin-name> --prefix=<plugin-name>
 ```
@@ -33,7 +33,7 @@ plugins
 │   │   tslint.json
 │   └───api
 │   └───src
-│       │   src.ts
+│       │   public-api.ts
 │       │   test.ts
 │       └───lib
 │           │   example-plugin.component.spec.ts
@@ -45,7 +45,7 @@ plugins
 │   ...
 ```
 - Remove the example component and service that were automatically built:
-  - Edit the `plugins/<plugin-name>/src/src.ts` file so that it resembles the following:
+  - Edit the `plugins/<plugin-name>/src/public-api.ts` file so that it resembles the following:
     ```typescript
     export * from './lib/example-plugin.module';
     ```
@@ -84,7 +84,7 @@ plugins
   │   │   tslint.json
   │   └───api
   │   └───src
-  │       │   src.ts
+  │       │   public-api.ts
   │       │   test.ts
   │       └───lib
   │           │   example-plugin.module.ts
