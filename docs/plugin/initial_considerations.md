@@ -16,7 +16,7 @@ important items to consider include:
     the software. The name must be unique to all of the plugins listed in the [plugin registry](https://github.com/Symbiota2/Symbiota2/blob/master/plugin-registry.json)
     and to all additional plugins that are installed within a Symbiota2 portal. Plugin names cannot not 
     contain spaces and it is suggested to use all lower-case letters. Additionally, plugins cannot start
-    with the prefix "symbiota-", which is reserved for core Symbiota2 plugins. To ensure that your plugin name will
+    with the prefix `symbiota-` or be named `core`, which are reserved for core Symbiota2 plugins. To ensure that your plugin name will
     be unique, it is suggested to use a developer-specific or project-specific prefix with your plugin name,
     such as "my_name-plugin_name". Review the [plugin registry documentation](./plugin_registry.html)
     for further information regarding the registry.

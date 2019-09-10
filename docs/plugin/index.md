@@ -21,6 +21,7 @@ layout: default
   - [Initial config file setup](./initial-config-file-setup.html)
 - **Adding backend components**
   - [Initial setup to add backend components](./backend-initial-setup.html)
+  - [Adding Entity classes to the backend](./adding-entity-classes.html)
 - **Adding frontend components**
   - [Initial setup to add frontend components](./frontend-initial-setup.html)
   - [Add npm build scripts to the package.json file](./add-npm-build-scripts.html)
