@@ -4,7 +4,7 @@ layout: default
 
 ### [Back to index](./index.html)
 
-# Adding Entity classes to backend
+# Adding Entity classes to the backend
 
 **NOTE: If you are not planning on including new Entity classes in the backend components of your plugin, skip this page.**
 
@@ -12,7 +12,7 @@ layout: default
 
 **The [Symfony documentation on creating Entity classes](https://symfony.com/doc/current/doctrine.html#creating-an-entity-class){:target="_blank"} 
   and the [API Platform documentation on mapping Entity classes](https://api-platform.com/docs/core/getting-started/#mapping-the-entities){:target="_blank"} 
-  should be used as a general reference for creating new Entity classes and annotating them as API endpoints.**
+  should be used as general references for creating new Entity classes and annotating them as API endpoints.**
 
 To add a new Entity class to the backend components of your plugin, follow these steps:
 - Create a new directory in the `api` directory of your plugin project and name it `Entity`. This directory will serve as the 
