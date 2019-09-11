@@ -35,5 +35,9 @@ layout: default
     - [Creating a tab outlet hook for a component](./creating-tab-hook.html)
   - [Creating a new frontend service](./creating-frontend-service.html)
   - [Creating a link outlet hook](./creating-link-hook.html)
+  - Adding outlets to the frontend:
+    - [Creating a component outlet](./creating-component-outlet.html)
+    - [Creating a tab outlet](./creating-tab-outlet.html)
+    - [Creating a link outlet](./creating-link-outlet.html)
 
 ### [Back to main menu](../index.html)
