@@ -28,16 +28,16 @@ important items to consider include:
     either through utilizing API endpoints in the backend, or services or components in the frontend, must be defined
     as a dependency. Dependencies are defined within the [plugin config file](./plugin_config.html).
 
-- **Backend components of your plugin** - 
-    If your plugin is going to include backend components, including additions to the data schema, it is good to
-    consider the architecture of these components and how they will integrate within the greater Symbiota2
+- **Backend elements of your plugin** - 
+    If your plugin is going to include backend elements, including additions to the data schema, it is good to
+    consider the architecture of these elements and how they will integrate within the greater Symbiota2
     architecture. Symbiota2 uses the [API Platform Framework](https://api-platform.com/){:target="_blank"}, which utilizes 
     the [Symfony Framework](https://symfony.com/doc/current/index.html){:target="_blank"}, in its backend. So all backend 
-    components must adhere to both of those frameworks.
+    elements must adhere to both of those frameworks.
 
-- **Frontend components of your plugin** - 
-    If your plugin is going to include frontend components, it is good to consider the architecture of these components 
+- **Frontend elements of your plugin** - 
+    If your plugin is going to include frontend elements, it is good to consider the architecture of these elements 
     as well and how they will integrate within the greater Symbiota2 architecture. Symbiota2 uses the [Angular Framework](https://angular.io/){:target="_blank"},
-    in its frontend. So all frontend components must adhere to this frameworks. 
+    in its frontend, so all frontend elements must adhere to this frameworks. 
     
 ### [Back to index](./index.html)

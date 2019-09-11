@@ -4,14 +4,14 @@ layout: default
 
 ### [Back to index](./index.html)
 
-# Initial setup to add frontend components
+# Initial setup to add frontend elements
 
-**NOTE: If you are not planning on including frontend components in your plugin, go back to the index and skip the section 
-on adding frontend components.**
+**NOTE: If you are not planning on including frontend elements in your plugin, go back to the index and skip the section 
+on adding frontend elements.**
 
 **Before proceeding, be sure to have [setup your plugin config file](./initial-config-file-setup.html).**
 
-To setup your project to add frontend components, follow these steps:
+To setup your project to add frontend elements, follow these steps:
 - Build the Angular framework for the plugin by running the following (replacing `<plugin-name>` with the name of your plugin):
 ```shell
 ng g library <plugin-name> --prefix=<plugin-name>

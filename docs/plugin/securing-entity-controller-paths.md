@@ -6,7 +6,7 @@ layout: default
 
 # Securing Entity and Controller class paths in the API
 
-**NOTE: If you are not planning on adding security to the Entity or Controller classes in the backend components of your plugin, skip this page.**
+**NOTE: If you are not planning on adding security to the Entity or Controller classes in the backend elements of your plugin, skip this page.**
 
 **Before proceeding, be sure to have [added the Entity classes to the backend of your plugin](./adding-entity-classes.html) 
   or have [added the Controller classes to the backend of your plugin](./adding-controller-classes.html).**
@@ -17,7 +17,7 @@ layout: default
   
 * * *
 
-To add security to an Entity class in the backend components of your plugin, follow these steps:
+To add security to an Entity class in the backend elements of your plugin, follow these steps:
 - Add the `access_control` attribute and assign its value using the following format (replacing `<permission-name>` with 
   the name of the permission level you would like to limit access to):
   
@@ -92,7 +92,7 @@ class ExampleEntity
 
 * * *
 
-To add security to a Controller method in the backend components of your plugin, follow these steps:
+To add security to a Controller method in the backend elements of your plugin, follow these steps:
 - Add the `@IsGranted` annotation to the method using the following format (replacing `<permission-name>` with 
   the name of the permission level you would like to limit access to):
   

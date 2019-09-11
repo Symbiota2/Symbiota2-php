@@ -6,16 +6,16 @@ layout: default
 
 # Adding Voter classes to the backend
 
-**NOTE: If you are not planning on including new Voter classes in the backend components of your plugin, skip this page.**
+**NOTE: If you are not planning on including new Voter classes in the backend elements of your plugin, skip this page.**
 
-**Before proceeding, be sure to have [setup your plugin for adding backend components](./backend-initial-setup.html).**
+**Before proceeding, be sure to have [setup your plugin for adding backend elements](./backend-initial-setup.html).**
 
 **The [Symfony documentation on creating Voter classes](https://symfony.com/doc/current/security/voters.html#creating-the-custom-voter){:target="_blank"} 
   should be used as a general reference for creating new Voter classes.**
 
-To add a new Voter class to the backend components of your plugin, follow these steps:
+To add a new Voter class to the backend elements of your plugin, follow these steps:
 - Create a new directory in the `api` directory of your plugin project and name it `Security`. This directory will serve as the 
-  directory for all further Voter classes added to the backend components of your plugin project.
+  directory for all further Voter classes added to the backend elements of your plugin project.
 - Create a new file in the `Security` directory that you have just created and name it the name of the Voter class in pascal case.
 - In the file that you have just created define the fully qualified namespace using the base namespace you have chosen for 
   your plugin.

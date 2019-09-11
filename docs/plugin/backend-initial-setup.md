@@ -4,16 +4,16 @@ layout: default
 
 ### [Back to index](./index.html)
 
-# Initial setup to add backend components
+# Initial setup to add backend elements
 
-**NOTE: If you are not planning on including backend components in your plugin, go back to the index and skip the section 
-on adding backend components.**
+**NOTE: If you are not planning on including backend elements in your plugin, go back to the index and skip the section 
+on adding backend elements.**
 
 **Before proceeding, be sure to have [setup your plugin config file](./initial-config-file-setup.html).**
 
-To setup your project to add backend components, follow these steps:
+To setup your project to add backend elements, follow these steps:
 - Create a new directory in the root directory of your plugin project and name it `api`. This directory will serve as the 
-  root directory for the backend components of your plugin project.
+  root directory for the backend elements of your plugin project.
 - Add the `api_namespace` property to your plugin config file.
 - Determine a namespace to use with the backend classes of your plugin. Note that the namespace must be unique and it is 
   strongly suggested to use a variation of the plugin name. The namespace should also be in pascal case. This namespace 

@@ -19,14 +19,16 @@ layout: default
     - [ComponentHook object](./component-hook-object.html)
     - [LinkHook object](./link-hook-object.html)
   - [Initial config file setup](./initial-config-file-setup.html)
-- **Adding backend components**
-  - [Initial setup to add backend components](./backend-initial-setup.html)
+- **Adding backend elements**
+  - [Initial setup to add backend elements](./backend-initial-setup.html)
   - [Adding Entity classes to the backend](./adding-entity-classes.html)
   - [Adding Controller classes to the backend](./adding-controller-classes.html)
   - [Adding Voter classes to the backend](./adding-voter-classes.html)
   - [Securing Entity and Controller class paths in the API](./securing-entity-controller-paths.html)
-- **Adding frontend components**
-  - [Initial setup to add frontend components](./frontend-initial-setup.html)
+- **Adding frontend elements**
+  - [Initial setup to add frontend elements](./frontend-initial-setup.html)
   - [Add npm build scripts to the package.json file](./add-npm-build-scripts.html)
+  - Adding components to the frontend:
+    - [Creating a new frontend component](./creating-frontend-component.html)
 
 ### [Back to main menu](../index.html)

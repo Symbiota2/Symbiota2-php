@@ -6,7 +6,7 @@ layout: default
 
 # Add npm build scripts to the package.json file
 
-**Before proceeding, be sure to have [setup your plugin to add frontend components](./frontend-initial-setup.html).**
+**Before proceeding, be sure to have [setup your plugin to add frontend elements](./frontend-initial-setup.html).**
 
 To add npm build scripts for your plugin to the package.json file, follow these steps:
 - **If you are using a Mac or Linux machine:**

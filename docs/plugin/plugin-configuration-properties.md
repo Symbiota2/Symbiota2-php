@@ -41,8 +41,8 @@ layout: default
 - **api_namespace:** The namespace used for the backend classes of the plugin. It is highly suggested to use the
     plugin name in pascal case for this value to ensure that no namespace conflicts occur.
 - **ui_filename:** The file within the plugin zip archive that is the packaged umd file for containing the frontend 
-    components of the plugin.
-- **ui_module_name:** The name of the module containing the frontend components of the plugin.
+    elements of the plugin.
+- **ui_module_name:** The name of the module containing the frontend elements of the plugin.
 - **ui_routes:** An array of routes that should be added to the Symbiota2 installation when this plugin is activated.
 - **tab_hooks:** An array of tab hooks that should be added to the Symbiota2 installation when this plugin is activated.
 - **component_hooks:** An array of component hooks that should be added to the Symbiota2 installation when this plugin is activated.
