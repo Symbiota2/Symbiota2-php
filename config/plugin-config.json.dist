@@ -26,7 +26,6 @@
         "outlet": "user-profile",
         "tab_text": "Specimen Management",
         "index": 1,
-        "module": "CollectionModule",
         "provider": "user-profile-collection-tab"
       }
     ],

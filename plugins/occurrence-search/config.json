@@ -7,28 +7,12 @@
   "dependencies": [
     "collection"
   ],
-  "api_namespace": "",
   "ui_filename": "occurrence-search.umd.js",
   "ui_module_name": "OccurrenceSearchModule",
   "ui_routes": [
     {
       "path": "searchcollections",
       "provider": "occurrence-search"
-    }
-  ],
-  "tab_hooks": [
-    {
-      "outlet": "",
-      "tab_name": "",
-      "tab_text": "",
-      "tab_index": 0
-    }
-  ],
-  "component_hooks": [
-    {
-      "outlet": "",
-      "module": "",
-      "provider": ""
     }
   ]
 }

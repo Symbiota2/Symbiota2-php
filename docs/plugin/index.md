@@ -30,5 +30,8 @@ layout: default
   - [Add npm build scripts to the package.json file](./add-npm-build-scripts.html)
   - Adding components to the frontend:
     - [Creating a new frontend component](./creating-frontend-component.html)
+    - [Assigning a unique route to a component](./assigning-unique-route-component.html)
+    - [Creating a component outlet hook for a component](./creating-component-hook.html)
+    - [Creating a tab outlet hook for a component](./creating-tab-hook.html)
 
 ### [Back to main menu](../index.html)

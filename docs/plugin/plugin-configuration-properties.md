@@ -44,8 +44,8 @@ layout: default
     elements of the plugin.
 - **ui_module_name:** The name of the module containing the frontend elements of the plugin.
 - **ui_routes:** An array of routes that should be added to the Symbiota2 installation when this plugin is activated.
-- **tab_hooks:** An array of tab hooks that should be added to the Symbiota2 installation when this plugin is activated.
-- **component_hooks:** An array of component hooks that should be added to the Symbiota2 installation when this plugin is activated.
+- **tab_hooks:** An array of tab outlet hooks that should be added to the Symbiota2 installation when this plugin is activated.
+- **component_hooks:** An array of component outlet hooks that should be added to the Symbiota2 installation when this plugin is activated.
 - **link_hooks:** An array of link hooks that should be added to the Symbiota2 installation when this plugin is activated.
 
 * * *

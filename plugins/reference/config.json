@@ -4,29 +4,5 @@
   "source": "local",
   "version": "0.0.1",
   "description": "A plugin that adds the reference module to Symbiota.",
-  "dependencies": [],
-  "api_namespace": "Reference",
-  "ui_filename": "",
-  "ui_module_name": "",
-  "ui_routes": [
-    {
-      "path": "",
-      "provider": ""
-    }
-  ],
-  "tab_hooks": [
-    {
-      "outlet": "",
-      "tab_name": "",
-      "tab_text": "",
-      "tab_index": 0
-    }
-  ],
-  "component_hooks": [
-    {
-      "outlet": "",
-      "module": "",
-      "provider": ""
-    }
-  ]
+  "api_namespace": "Reference"
 }

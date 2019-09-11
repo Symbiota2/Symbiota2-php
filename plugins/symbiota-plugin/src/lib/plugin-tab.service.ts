@@ -6,9 +6,10 @@ import {Injectable} from '@angular/core';
 export class PluginTabService {
     pluginTabs = {};
 
-    loadPluginTabs(tabsArr, filename) {
+    loadPluginTabs(tabsArr, filename, modulename) {
         tabsArr.forEach((tab, index) => {
             tab.filename = filename;
+            tab.module = modulename;
             const outlet = tab.outlet.toString();
             if (!this.pluginTabs[outlet]) {
                 this.pluginTabs[outlet] = [];

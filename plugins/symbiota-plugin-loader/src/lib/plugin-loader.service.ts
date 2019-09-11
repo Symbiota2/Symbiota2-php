@@ -112,10 +112,10 @@ export class PluginLoaderService {
             this.collectPluginRoutes(plugin);
         }
         if (!!plugin.tab_hooks) {
-            this.tabsService.loadPluginTabs(plugin.tab_hooks, plugin.ui_filename);
+            this.tabsService.loadPluginTabs(plugin.tab_hooks, plugin.ui_filename, plugin.ui_module_name);
         }
         if (!!plugin.component_hooks) {
-            this.componentService.loadPluginComponents(plugin.component_hooks, plugin.ui_filename);
+            this.componentService.loadPluginComponents(plugin.component_hooks, plugin.ui_filename, plugin.ui_module_name);
         }
         if (!!plugin.link_hooks) {
             this.linkService.loadPluginLinks(plugin.link_hooks);
