@@ -33,5 +33,7 @@ layout: default
     - [Assigning a unique route to a component](./assigning-unique-route-component.html)
     - [Creating a component outlet hook for a component](./creating-component-hook.html)
     - [Creating a tab outlet hook for a component](./creating-tab-hook.html)
+  - [Creating a new frontend service](./creating-frontend-service.html)
+  - [Creating a link outlet hook](./creating-link-hook.html)
 
 ### [Back to main menu](../index.html)

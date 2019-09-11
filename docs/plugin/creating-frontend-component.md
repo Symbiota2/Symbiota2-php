@@ -18,9 +18,9 @@ Components are essentially sections of the frontend framework. They can be made 
   of several sub-components. In Symbiota2, a plugin component can be integrated into the frontend framework in one of the 
   following three ways:
   - [By assigning a unique route to the component so that it can be accessed by its own url.](./assigning-unique-route-component.html)
-  - By creating a component outlet hook for the component so that it will be integrated into a specific component outlet as a sub-component.
-  - By creating a tab outlet hook for the component so that it will be integrated into a specific tab outlet as a sub-component
-    within a tabs component.
+  - [By creating a component outlet hook for the component so that it will be integrated into a specific component outlet as a sub-component.](./creating-component-hook.html)  
+  - [By creating a tab outlet hook for the component so that it will be integrated into a specific tab outlet as a sub-component
+    within a tabs component.](./creating-tab-hook.html)
 
 Regardless of how the component will be integrated into the frontend framework, it is strongly suggested to create its 
   initial structure using an Angular Schematic through either [the Angular CLI](https://angular.io/cli/generate){:target="_blank"}
@@ -35,15 +35,15 @@ Regardless of how the component will be integrated into the frontend framework, 
     ng g component
     ```
   - Enter a name for the new component when prompted.
-  - Once the component has been generated, edit the file named `<component-name>.module.ts` (with `<component-name>` being 
-    the name of your new component) in the following ways:
-    - Ensure that the new component has been imported in the top of the file and added to the `declarations` array property,
+  - Once the component has been generated, edit the file named `<plugin-name>.module.ts` (with `<plugin-name>` being 
+    the name of your plugin) in the following ways:
+    - Ensure that the new component has been imported in the top of the file and added to the `declarations` property array,
       if it has not, then import it and add it.
-    - Add the new component to the `exports` array property.
-    - If they do not already exist, add `entryComponents` and `providers` to the `@NgModule` declaration and assign them 
+    - Add the new component to the `exports` property array.
+    - If they do not already exist, add the `entryComponents` and `providers` properties to the `@NgModule` declaration and assign them 
       both empty array values.
-    - Add the new component to the `entryComponents` array property.
-    - Add the following object to the `providers` array property (replacing `<component-name>` with the name you 
+    - Add the new component to the `entryComponents` property array.
+    - Add the following object to the `providers` property array (replacing `<component-name>` with the name you 
       entered for the new component in kebab case, and replacing `<component>` with the actual component that was imported
       at the top of the file and has been added to the `declarations`, `exports`, and `entryComponents` properties):
       ```
@@ -94,7 +94,7 @@ After following the above steps, for a component named `example`:
     │   ...
     ```
 
-  - The `src/public-api.ts` file in your plugin root directory would resemble the following:
+  - The `src/public-api.ts` file in the plugin root directory would resemble the following:
     
     ```typescript
     /*
@@ -104,7 +104,7 @@ After following the above steps, for a component named `example`:
     export * from './lib/example-plugin.module';
     export * from './lib/example/example.component';
     ```
-  - The `src/lib/example-plugin.module.ts` file in your plugin root directory would resemble the following:
+  - The `src/lib/example-plugin.module.ts` file in the plugin root directory would resemble the following:
       
   ```typescript
   import { NgModule } from '@angular/core';
