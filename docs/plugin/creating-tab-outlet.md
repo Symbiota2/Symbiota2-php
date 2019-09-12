@@ -98,7 +98,7 @@ export class ExampleComponent implements OnInit {
     constructor(
         private tabsService: PluginTabService
     ) {
-        this.globalArray = Object.assign([], this.tabsService.getOutletTabs('user-profile'));
+        this.globalArray = Object.assign([], this.tabsService.getOutletTabs('example-plugin-tab-outlet'));
         this.globalArray.sort((a, b) => a.index - b.index);
     }
 
