@@ -39,5 +39,6 @@ layout: default
     - [Creating a component outlet](./creating-component-outlet.html)
     - [Creating a tab outlet](./creating-tab-outlet.html)
     - [Creating a link outlet](./creating-link-outlet.html)
+- **[Packaging a plugin for distribution](./packaging-plugin-distribution.html)**
 
 ### [Back to main menu](../index.html)
