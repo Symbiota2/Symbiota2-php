@@ -42,4 +42,9 @@ To populate with the Symbiota2 development database follow these steps:
 
 * * *
 
+**After completing these steps, if you are logged into the php Docker container, exit the container:**
+```shell
+exit
+```
+
 ### [Back to index](./index.html)
