@@ -6,7 +6,7 @@ layout: default
 
 # Install the software
 
-Symbiota2 uses the Symfony framework and requires [Composer](https://getcomposer.org/doc/00-intro.md), [node.js](https://nodejs.org/en/), and [PHP 7.1 or greater](http://php.net/manual/en/install.php) to be installed. In addition, the following PHP extensions need to be enabled:
+Symbiota2 uses the Symfony framework and requires [Composer](https://getcomposer.org/doc/00-intro.md), [node.js 10 or greater](https://nodejs.org/en/), and [PHP 7.1 or greater](http://php.net/manual/en/install.php) to be installed. In addition, the following PHP extensions need to be enabled:
 
 - Ctype
 - iconv
@@ -21,6 +21,8 @@ Symbiota2 uses the Symfony framework and requires [Composer](https://getcomposer
 
 If any of the Docker server stack components are to be used, [Docker Desktop](https://www.docker.com/products/docker-desktop)
 must be installed also.
+
+**If you are installing Symbiota2 on a Linux machine, make sure you have node.js 10 or greater installed.**
 
 To install Symbiota2:
 

@@ -67,7 +67,7 @@ provides:
 
 * * *
 
-**Helpful docker-compose commands**
+**Helpful docker-compose commands (on Linux machines run with `sudo`)**
 - To start all Docker containers in logging mode:
     `docker-compose up`
 - To start all Docker containers in detached (non-logging) mode:
