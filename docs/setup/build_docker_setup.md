@@ -11,6 +11,8 @@ of the packages will have to be downloaded, installed, and the container images 
 steps are complete, further launches are completed much faster. To perform the initial launch of the Docker 
 containers, follow the following steps:
 
+- **If you are using a Linux machine, and the nginx and php containers for your server, make sure that Apache is disabled
+  and port 80 is open.**
 - Start all of the Docker containers in detached (non-logging) mode (on Linux machines run with `sudo`):
     
     `docker-compose up -d`
