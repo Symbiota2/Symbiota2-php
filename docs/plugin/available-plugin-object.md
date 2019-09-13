@@ -30,7 +30,7 @@ layout: default
 - **version:** The current version of the plugin (in the format x.x.x).
 - **description:** A description of the plugin.
 - **project_url:** The url for the plugin documentation site.
-- **dependencies:** An array of names of the plugins that are dependencies for the plugin.
+- **dependencies:** An array of plugin names that are dependencies.
 
 * * *
 

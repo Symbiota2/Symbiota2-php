@@ -26,7 +26,7 @@ layout: default
 - **tab_text:** The text that should appear in the tab.
 - **index:** Numeric sort order value this tab should receive when being sorted with other tabs in the same outlet.
 - **provider:** The provider for the component of the tab (defined within the module of the plugin).
-- **component:** Can only be assigned value within the actual outlet component (and not within the config file). 
+- **component:** Can only be assigned a value from within the actual outlet component (and not within the config file). 
     Used to load default components for a specific outlet.
 
 * * *
