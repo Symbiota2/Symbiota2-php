@@ -5,10 +5,9 @@ import {Observable, BehaviorSubject} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
 import {MatDialog} from '@angular/material';
 
-import {LoginComponent} from './login/login.component';
-
 import {SpinnerOverlayService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
+import {LoginComponentService} from "./login-component.service";
 
 import {AuthData} from './auth-data.model';
 import {CurrentUser} from './current-user.model';
@@ -37,7 +36,6 @@ export class AuthService {
     private warningDialog: any;
     private username: string;
     private password: string;
-    private loginDialog: any;
     private redirectUrl = '';
     user$: Observable<CurrentUser> = this.subject.asObservable().pipe(
         filter(user => !!user)
@@ -62,6 +60,7 @@ export class AuthService {
         private http: HttpClient,
         private spinnerService: SpinnerOverlayService,
         private alertService: AlertService,
+        private loginComponentService: LoginComponentService,
         public dialog: MatDialog,
         private router: Router
     ) {
@@ -73,13 +72,6 @@ export class AuthService {
                 // console.log(user);
             }
         );
-    }
-
-    openLoginDialog() {
-        this.loginDialog = this.dialog.open(LoginComponent, {
-            width: '450px',
-            data: {redirect: this.redirectUrl}
-        });
     }
 
     login(username: string, password: string, maintainLogin: number, redirect: string) {
@@ -269,7 +261,7 @@ export class AuthService {
                 }
             });
             this.router.navigate(['/']);
-            this.openLoginDialog();
+            this.loginComponentService.openLoginDialog(this.redirectUrl);
             routerSub.unsubscribe();
         }
     }

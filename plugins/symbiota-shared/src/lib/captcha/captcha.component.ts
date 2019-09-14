@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter, ViewContainerRef} from '@angular/core';
+import {Component, Input, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter} from '@angular/core';
 import {FormGroup, FormControl, FormGroupDirective, NgForm} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material';
 

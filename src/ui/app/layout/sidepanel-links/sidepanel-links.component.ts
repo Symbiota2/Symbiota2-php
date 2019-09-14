@@ -2,6 +2,7 @@ import {Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
 import {Observable} from 'rxjs';
 
 import {AuthService} from 'symbiota-auth';
+import {LoginComponentService} from 'symbiota-auth';
 import {CurrentUser} from '../../user/current-user.model';
 
 @Component({
@@ -18,7 +19,8 @@ export class SidepanelLinksComponent implements OnInit {
     currentUser$: Observable<CurrentUser>;
 
     constructor(
-        private authService: AuthService
+        private authService: AuthService,
+        private loginComponentService: LoginComponentService
     ) {}
 
     ngOnInit() {
@@ -33,7 +35,7 @@ export class SidepanelLinksComponent implements OnInit {
 
     onLogin() {
         this.toggleSidenav();
-        this.authService.openLoginDialog();
+        this.loginComponentService.openLoginDialog();
     }
 
     onLogout() {

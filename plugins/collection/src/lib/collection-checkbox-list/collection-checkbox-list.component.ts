@@ -110,7 +110,7 @@ export class CollectionCheckboxListComponent implements AfterViewInit {
         this.flatNodeMap.set(flatNode, node);
         this.nestedNodeMap.set(node, flatNode);
         return flatNode;
-    }
+    };
 
     descendantsAllSelected(node: DataFlatNode): boolean {
         const descendants = this.treeControl.getDescendants(node);

@@ -2,6 +2,41 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/symbiota-spatial",
   "lib": {
-    "entryFile": "src/public-api.ts"
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "@turf/area": "@turf/area",
+      "@turf/buffer": "@turf/buffer",
+      "@turf/circle": "@turf/circle",
+      "@turf/concave": "@turf/concave",
+      "@turf/convex": "@turf/convex",
+      "@turf/difference": "@turf/difference",
+      "@turf/helpers": "@turf/helpers",
+      "@turf/intersect": "@turf/intersect",
+      "@turf/simplify": "@turf/simplify",
+      "@turf/union": "@turf/union",
+      "ol/control": "ol/control",
+      "ol/coordinate": "ol/coordinate",
+      "ol/events/condition": "ol/events/condition",
+      "ol/extent": "ol/extent",
+      "ol/format": "ol/format",
+      "ol/geom/Point": "ol/geom/Point",
+      "ol/interaction": "ol/interaction",
+      "ol/layer": "ol/layer",
+      "ol/proj": "ol/proj",
+      "ol/source": "ol/source",
+      "ol/source/XYZ": "ol/source/XYZ",
+      "ol/sphere": "ol/sphere",
+      "ol/style": "ol/style",
+      "ol/tilegrid/TileGrid": "ol/tilegrid/TileGrid",
+      "ol/Collection": "ol/Collection",
+      "ol/Feature": "ol/Feature",
+      "ol/Map": "ol/Map",
+      "ol/Overlay": "ol/Overlay",
+      "ol/View": "ol/View",
+      "shpjs": "shpjs",
+      "symbiota-auth": "symbiota-auth",
+      "symbiota-plugin": "symbiota-plugin",
+      "symbiota-shared": "symbiota-shared"
+    }
   }
 }
