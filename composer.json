@@ -66,14 +66,45 @@
             "@php -r \"file_exists('docker-compose.yml') || copy('docker-compose.yml.dist', 'docker-compose.yml');\"",
             "@php -r \"file_exists('./config/packages/api_platform.yaml') || copy('./config/packages/api_platform.yaml.dist', './config/packages/api_platform.yaml');\"",
             "@php -r \"file_exists('./config/packages/doctrine.yaml') || copy('./config/packages/doctrine.yaml.dist', './config/packages/doctrine.yaml');\"",
-            "@php -r \"!file_exists('./config/plugin-config.json') || copy('./config/plugin-config.json', './config/plugin-config.json.bak');\"",
-            "@php -r \"copy('./config/plugin-config.json.dist', './config/plugin-config.json');\""
+            "@php -r \"file_exists('./config/plugin-config.json') || copy('./config/plugin-config.json.dist', './config/plugin-config.json');\""
         ],
         "post-install-cmd": [
             "@auto-scripts"
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "update-angular-json": [
+            "@php -r \"!file_exists('angular.json') || copy('angular.json', 'angular.json.bak');\"",
+            "@php -r \"copy('angular.json.dist', 'angular.json');\""
+        ],
+        "update-api_platform-yaml": [
+            "@php -r \"!file_exists('./config/packages/api_platform.yaml') || copy('./config/packages/api_platform.yaml', './config/packages/api_platform.yaml.bak');\"",
+            "@php -r \"copy('./config/packages/api_platform.yaml.dist', './config/packages/api_platform.yaml');\""
+        ],
+        "update-docker-compose-yml": [
+            "@php -r \"!file_exists('docker-compose.yml') || copy('docker-compose.yml', 'docker-compose.yml.bak');\"",
+            "@php -r \"copy('docker-compose.yml.dist', 'docker-compose.yml');\""
+        ],
+        "update-doctrine-yaml": [
+            "@php -r \"!file_exists('./config/packages/doctrine.yaml') || copy('./config/packages/doctrine.yaml', './config/packages/doctrine.yaml.bak');\"",
+            "@php -r \"copy('./config/packages/doctrine.yaml.dist', './config/packages/doctrine.yaml');\""
+        ],
+        "update-package-json": [
+            "@php -r \"!file_exists('package.json') || copy('package.json', 'package.json.bak');\"",
+            "@php -r \"copy('package.json.dist', 'package.json');\""
+        ],
+        "update-plugin-composer-json": [
+            "@php -r \"!file_exists('plugin-composer.json') || copy('plugin-composer.json', 'plugin-composer.json.bak');\"",
+            "@php -r \"copy('plugin-composer.json.dist', 'plugin-composer.json');\""
+        ],
+        "update-plugin-config-json": [
+            "@php -r \"!file_exists('./config/plugin-config.json') || copy('./config/plugin-config.json', './config/plugin-config.json.bak');\"",
+            "@php -r \"copy('./config/plugin-config.json.dist', './config/plugin-config.json');\""
+        ],
+        "update-tsconfig-json": [
+            "@php -r \"!file_exists('tsconfig.json') || copy('tsconfig.json', 'tsconfig.json.bak');\"",
+            "@php -r \"copy('tsconfig.json.dist', 'tsconfig.json');\""
         ]
     },
     "conflict": {
@@ -98,6 +129,7 @@
         }
     },
     "require-dev": {
+        "roave/security-advisories": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "^3.0",
         "fzaninotto/faker": "^1.8",
         "symfony/maker-bundle": "^1.10"
