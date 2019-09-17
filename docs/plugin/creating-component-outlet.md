@@ -24,8 +24,8 @@ To create the outlet within a component, follow these steps:
   the component to serve as the outlet) in the following ways:
   - Import `PluginComponentService` from `symbiota-plugin` in the top of the file.
   - Create a global within the component class and assign it the value of an empty array. This will serve as the component array.
-  - Instantiate the `PluginComponentService` in the `constructor` arguments.
-  - Within the `constructor` method, call the `getOutletComponents` method of the instantiated `PluginComponentService` and pass it the name 
+  - Inject the `PluginComponentService` in the `constructor` method.
+  - Within the `constructor` method, call the `getOutletComponents` method of the injected `PluginComponentService` and pass it the name 
     you would like to use for this outlet and reassign the global to the value that is returned.
   - Sort the global by the `index` property.
 - From the root folder of your plugin, edit the file `src/lib/<component-name>/<component-name>.component.html` (with `<component-name>` being 
