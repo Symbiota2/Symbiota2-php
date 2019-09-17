@@ -59,10 +59,10 @@
     "npm_pack_symbiota-plugin-loader": "cd dist/symbiota-plugin-loader && npm pack",
     "install_symbiota-plugin-loader": "npm install dist/symbiota-plugin-loader/symbiota-plugin-loader-0.0.1.tgz",
     "package_symbiota-plugin-loader": "npm run build_symbiota-plugin-loader && npm run npm_pack_symbiota-plugin-loader && npm run install_symbiota-plugin-loader",
-    "package_all_plugins": "npm run package_checklist && npm run package_collection && npm run package_occurrence && npm run package_occurrence-search && npm run package_taxa && npm run package_symbiota-spatial && npm run package_symbiota-auth && npm run package_symbiota-shared && npm run package_symbiota-plugin && npm run package_symbiota-plugin-loader",
+    "package_all_plugins": "npm run package_core_plugins && npm run package_optional_plugins",
     "package_optional_plugins": "npm run package_checklist && npm run package_collection && npm run package_occurrence && npm run package_occurrence-search && npm run package_taxa",
     "package_core_plugins": "npm run package_symbiota-shared && npm run package_symbiota-auth && npm run package_symbiota-plugin && npm run package_symbiota-spatial && npm run package_symbiota-plugin-loader",
-    "postinstall" : "npm run package_core_plugins && npm run package_optional_plugins"
+    "postinstall": "npm run package_all_plugins"
   },
   "private": true,
   "dependencies": {
