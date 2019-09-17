@@ -39,7 +39,7 @@ To install Symbiota2:
 
   `composer install`
   
-- Run npm install:
+- Run npm install **(do not run `npm install` with sudo)**:
     
     `npm install`
     
