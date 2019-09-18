@@ -1,5 +1,6 @@
 import {Injectable, ErrorHandler, Injector} from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
+import {TranslateService} from "@ngx-translate/core";
 
 import {AlertService} from 'symbiota-shared';
 import {SpinnerOverlayService} from 'symbiota-shared';
@@ -8,7 +9,8 @@ import {SpinnerOverlayService} from 'symbiota-shared';
 export class ErrorHandlerService implements ErrorHandler {
 
     constructor(
-        private injector: Injector
+        private injector: Injector,
+        private translate: TranslateService
     ) { }
 
     handleError(error: Error | HttpErrorResponse) {
@@ -17,9 +19,10 @@ export class ErrorHandlerService implements ErrorHandler {
 
         if (error instanceof HttpErrorResponse) {
             if (!navigator.onLine) {
+                const errorMessage = this.translate.get('core.error.no_internet');
                 spinnerService.hide();
                 alertService.showErrorSnackbar(
-                    'No Internet Connection',
+                    errorMessage,
                     '',
                     5000
                 );

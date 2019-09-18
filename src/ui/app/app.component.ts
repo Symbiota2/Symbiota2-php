@@ -1,4 +1,5 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
+import {TranslateService} from "@ngx-translate/core";
 import {Observable} from 'rxjs';
 
 import {AuthService} from 'symbiota-auth';
@@ -18,8 +19,13 @@ export class AppComponent implements OnInit, OnDestroy {
     maintainLogin = 0;
 
     constructor(
-        private authService: AuthService
-    ) {}
+        private authService: AuthService,
+        private translate: TranslateService
+    ) {
+        translate.addLangs(['ar', 'zh', 'en', 'fr', 'de', 'hi', 'it', 'ja', 'fa', 'pt', 'ru', 'so', 'es', 'ur']);
+        translate.setDefaultLang('en');
+        translate.use('en');
+    }
 
     ngOnInit() {
         this.isLoggedIn$ = this.authService.isAuthenticated$;

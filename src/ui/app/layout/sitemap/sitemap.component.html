@@ -18,7 +18,7 @@
 
 <mat-card class="upper-cards" *ngIf="(currentPermissions$ | async)?.SuperAdmin">
     <mat-card-header>
-        Portal Management
+        {{ 'core.layout.sitemap.portal_management_header' | translate }}
     </mat-card-header>
     <mat-card-content>
         <ul *ngIf="portalAdminLinksArr.length > 0">
@@ -39,7 +39,7 @@
 
 <mat-card>
     <mat-card-header>
-        Data Management
+        {{ 'core.layout.sitemap.data_management_header' | translate }}
     </mat-card-header>
     <mat-card-content>
         <ul *ngIf="dataManagementLinksArr.length > 0">

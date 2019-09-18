@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {TranslateModule} from "@ngx-translate/core";
 
 import {SymbiotaSharedModule} from 'symbiota-shared';
 
@@ -16,7 +17,8 @@ import {PluginDependencyDialogComponent} from './plugin-dependency-dialog/plugin
     imports: [
         CommonModule,
         SymbiotaSharedModule,
-        PluginAdminRoutingModule
+        PluginAdminRoutingModule,
+        TranslateModule
     ],
     entryComponents: [
         PluginDependencyDialogComponent

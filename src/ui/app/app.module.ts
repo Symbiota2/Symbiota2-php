@@ -1,7 +1,9 @@
 import {NgModule, APP_INITIALIZER, ErrorHandler} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {LayoutModule} from './layout/layout.module';
 import {UserModule} from './user/user.module';
@@ -32,6 +34,12 @@ export function setupPluginLoaderServiceFactory(
     return () => service.initialize();
 }
 
+export function httpLoaderFactory(
+    http: HttpClient
+) {
+    return new TranslateHttpLoader(http);
+}
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -49,7 +57,14 @@ export function setupPluginLoaderServiceFactory(
         SymbiotaSpatialModule,
         SymbiotaSharedModule,
         SymbiotaAuthModule,
-        ErrorRoutingModule
+        ErrorRoutingModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: httpLoaderFactory,
+                deps: [HttpClient]
+            }
+        })
     ],
     providers: [
         {

@@ -3,47 +3,63 @@
         <button mat-icon-button (click)="toggleSidenav()">
             <mat-icon>menu</mat-icon>
         </button>
-        Menu
+        {{ 'core.layout.header.topnav.menu_button' | translate }}
     </div>
     <div fxFlex fxLayout fxLayoutAlign="left center" class="left-links" fxHide.lt-md>
         <ul fxLayout fxLayoutGap="40px" class="navigation-items">
-            <li><a routerLink="/">Home</a></li>
-            <li><a [matMenuTriggerFor]="search">Search</a></li>
-            <li><a [matMenuTriggerFor]="images">Images</a></li>
-            <li><a [matMenuTriggerFor]="symbiota">Symbiota</a></li>
+            <li><a routerLink="/">{{ 'core.layout.header.topnav.home_link' | translate }}</a></li>
+            <li><a [matMenuTriggerFor]="search">{{ 'core.layout.header.topnav.search_link' | translate }}</a></li>
+            <li><a [matMenuTriggerFor]="images">{{ 'core.layout.header.topnav.images_link' | translate }}</a></li>
+            <li><a [matMenuTriggerFor]="symbiota">{{ 'core.layout.header.topnav.symbiota_link' | translate }}</a></li>
+            <li>
+                <select id="drawselect" (change)="useLanguage($event.target)">
+                    <option value="en">English</option>
+                    <option value="ar">Arabic</option>
+                    <option value="zh">Chinese</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                    <option value="hi">Hindi</option>
+                    <option value="it">Italian</option>
+                    <option value="ja">Japanese</option>
+                    <option value="fa">Persian</option>
+                    <option value="pt">Portuguese</option>
+                    <option value="ru">Russian</option>
+                    <option value="es">Spanish</option>
+                    <option value="ur">Urdu</option>
+                </select>
+            </li>
         </ul>
     </div>
     <div fxFlex fxLayout fxLayoutAlign="end center" class="right-links" fxHide.xs>
         <ul fxLayout fxLayoutGap="15px" class="navigation-items">
-            <li *ngIf="(isLoggedIn$ | async) && (currentUser$ | async) as user">Welcome {{user.firstName}}!</li>
-            <li *ngIf="isLoggedIn$ | async"><a routerLink="/viewprofile">My Profile</a></li>
-            <li *ngIf="isLoggedIn$ | async" (click)="onLogout()"><a>Logout</a></li>
-            <li *ngIf="isLoggedOut$ | async" (click)="onLogin()"><a>Login</a></li>
-            <li *ngIf="isLoggedOut$ | async"><a routerLink="/signup">New Account</a></li>
-            <li><a routerLink="/sitemap">Sitemap</a></li>
+            <li *ngIf="(isLoggedIn$ | async) && (currentUser$ | async) as user">{{ 'core.layout.header.topnav.welcome_line' | translate:{'firstName':user.firstName} }}</li>
+            <li *ngIf="isLoggedIn$ | async"><a routerLink="/viewprofile">{{ 'core.layout.header.topnav.my_profile_link' | translate }}</a></li>
+            <li *ngIf="isLoggedIn$ | async" (click)="onLogout()"><a>{{ 'core.layout.header.topnav.logout_link' | translate }}</a></li>
+            <li *ngIf="isLoggedOut$ | async" (click)="onLogin()"><a>{{ 'core.layout.header.topnav.login_link' | translate }}</a></li>
+            <li *ngIf="isLoggedOut$ | async"><a routerLink="/signup">{{ 'core.layout.header.topnav.new_account_link' | translate }}</a></li>
+            <li><a routerLink="/sitemap">{{ 'core.layout.header.topnav.sitemap_link' | translate }}</a></li>
         </ul>
     </div>
     <mat-menu #search="matMenu">
         <ul fxLayout="column" fxLayoutGap="15px" class="navigation-items-sub">
-            <li mat-menu-item><a routerLink="/searchcollections">Search Collections</a></li>
-            <li mat-menu-item><a routerLink="/spatial">Spatial Search</a></li>
-            <li mat-menu-item><a routerLink="/dynamicchecklist">Dynamic Checklist</a></li>
-            <li mat-menu-item><a routerLink="/taxonomyexplorer">Taxonomy Explorer</a></li>
+            <li mat-menu-item><a routerLink="/searchcollections">{{ 'core.layout.header.topnav.search_collections_link' | translate }}</a></li>
+            <li mat-menu-item><a routerLink="/spatial">{{ 'core.layout.header.topnav.spatial_search_link' | translate }}</a></li>
+            <li mat-menu-item><a routerLink="/dynamicchecklist">{{ 'core.layout.header.topnav.dynamic_checklist_link' | translate }}</a></li>
+            <li mat-menu-item><a routerLink="/taxonomyexplorer">{{ 'core.layout.header.topnav.taxonomy_explorer_link' | translate }}</a></li>
         </ul>
     </mat-menu>
     <mat-menu #images="matMenu">
         <ul fxLayout="column" fxLayoutGap="15px" class="navigation-items-sub">
-            <li mat-menu-item><a routerLink="/imagesearch">Image Search</a></li>
-            <li mat-menu-item><a routerLink="/imagelibrary">Image Library</a></li>
+            <li mat-menu-item><a routerLink="/imagesearch">{{ 'core.layout.header.topnav.image_search_link' | translate }}</a></li>
+            <li mat-menu-item><a routerLink="/imagelibrary">{{ 'core.layout.header.topnav.image_library_link' | translate }}</a></li>
         </ul>
     </mat-menu>
     <mat-menu #symbiota="matMenu">
         <ul fxLayout="column" fxLayoutGap="15px" class="navigation-items-sub">
-            <li mat-menu-item><a href="http://symbiota.org/docs/" target="_blank">Symbiota</a></li>
+            <li mat-menu-item><a href="http://symbiota.org/docs/" target="_blank">{{ 'core.layout.header.topnav.symbiota_docs_link' | translate }}</a></li>
             <li mat-menu-item><a href="http://symbiota.org/docs/symbiota-introduction/symbiota-help-pages/"
-                                 target="_blank">Symbiota Help</a></li>
-            <li mat-menu-item><a href="http://symbiota.org/docs/google-group/" target="_blank">Sybmbiota Google
-                Group</a></li>
+                                 target="_blank">{{ 'core.layout.header.topnav.symbiota_help_link' | translate }}</a></li>
+            <li mat-menu-item><a href="http://symbiota.org/docs/google-group/" target="_blank">{{ 'core.layout.header.topnav.symbiota_google_group_link' | translate }}</a></li>
         </ul>
     </mat-menu>
 </div>

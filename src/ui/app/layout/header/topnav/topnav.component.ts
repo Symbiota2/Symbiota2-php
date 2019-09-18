@@ -1,5 +1,6 @@
 import {Component, OnInit, EventEmitter, Output} from '@angular/core';
 import {Observable} from 'rxjs';
+import {TranslateService} from "@ngx-translate/core";
 
 import {AuthService} from 'symbiota-auth';
 import {LoginComponentService} from 'symbiota-auth';
@@ -19,7 +20,8 @@ export class TopnavComponent implements OnInit {
 
     constructor(
         private authService: AuthService,
-        private loginComponentService: LoginComponentService
+        private loginComponentService: LoginComponentService,
+        private translate: TranslateService
     ) {}
 
     ngOnInit() {
@@ -38,5 +40,9 @@ export class TopnavComponent implements OnInit {
 
     onLogout() {
         this.authService.logout();
+    }
+
+    useLanguage(event) {
+        this.translate.use(event.value);
     }
 }

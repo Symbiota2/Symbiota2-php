@@ -62,7 +62,10 @@
     "package_all_plugins": "npm run package_core_plugins && npm run package_optional_plugins",
     "package_optional_plugins": "npm run package_checklist && npm run package_collection && npm run package_occurrence && npm run package_occurrence-search && npm run package_taxa",
     "package_core_plugins": "npm run package_symbiota-shared && npm run package_symbiota-auth && npm run package_symbiota-plugin && npm run package_symbiota-spatial && npm run package_symbiota-plugin-loader",
-    "postinstall": "npm run package_all_plugins"
+    "postinstall": "npm run package_all_plugins",
+    "extract-core-translations": "run-script-os",
+    "extract-core-translations:win32": "ngx-translate-extract --input .\\src .\\plugins\\symbiota-auth .\\plugins\\symbiota-plugin .\\plugins\\symbiota-plugin-loader .\\plugins\\symbiota-shared .\\plugins\\symbiota-spatial --output .\\src\\assets\\i18n\\ar.json .\\src\\ui\\assets\\i18n\\zh.json .\\src\\ui\\assets\\i18n\\en.json .\\src\\ui\\assets\\i18n\\fr.json .\\src\\ui\\assets\\i18n\\de.json .\\src\\ui\\assets\\i18n\\hi.json .\\src\\ui\\assets\\i18n\\it.json .\\src\\ui\\assets\\i18n\\ja.json .\\src\\ui\\assets\\i18n\\fa.json .\\src\\ui\\assets\\i18n\\pt.json .\\src\\ui\\assets\\i18n\\ru.json .\\src\\ui\\assets\\i18n\\es.json .\\src\\ui\\assets\\i18n\\ur.json --clean --sort",
+    "extract-core-translations:darwin:linux": "ngx-translate-extract --input ./src ./plugins/symbiota-auth ./plugins/symbiota-plugin ./plugins/symbiota-plugin-loader ./plugins/symbiota-shared ./plugins/symbiota-spatial --output ./src/ui/assets/i18n/{ar,zh,en,fr,de,hi,it,ja,fa,pt,ru,es,ur}.json --clean --sort"
   },
   "private": true,
   "dependencies": {
@@ -80,6 +83,8 @@
     "@ngrx/store": "^8.0.0",
     "@nguniversal/express-engine": "^7.1.1",
     "@nguniversal/module-map-ngfactory-loader": "^7.1.1",
+    "@ngx-translate/core": "^11.0.1",
+    "@ngx-translate/http-loader": "^4.0.0",
     "@turf/turf": "^5.1.6",
     "buffer": "^5.2.1",
     "classlist.js": "^1.1.20150312",
@@ -92,7 +97,7 @@
     "jszip": "^3.2.1",
     "npm-check-updates": "^3.1.10",
     "ol": "^5.3.3",
-    "rxjs": "^6.5.2",
+    "rxjs": "^6.5.3",
     "shpjs": "^3.4.3",
     "systemjs": "^0.21.6",
     "tslib": "^1.9.0",
@@ -105,6 +110,7 @@
     "@angular/cli": "~8.0.2",
     "@angular/compiler-cli": "^8.0.0",
     "@angular/language-service": "^8.0.0",
+    "@biesbjerg/ngx-translate-extract": "^4.2.0",
     "@types/jasmine": "^3.3.12",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^11.13.0",

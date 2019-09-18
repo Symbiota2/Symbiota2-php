@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
+import {TranslateService} from "@ngx-translate/core";
 
 import {SpinnerOverlayService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
@@ -17,7 +18,8 @@ export class UserService {
         private http: HttpClient,
         private router: Router,
         public spinnerService: SpinnerOverlayService,
-        public alertService: AlertService
+        public alertService: AlertService,
+        private translate: TranslateService
     ) {}
 
     createUser(
@@ -62,19 +64,20 @@ export class UserService {
         };
         this.http.post('/api/users', userData).subscribe(
             () => {
+                const confirmationMessage = this.translate.get('core.user.service.create_confirmation');
                 this.spinnerService.hide();
                 this.router.navigate(['/']);
                 this.alertService.showSnackbar(
-                    'An email confirmation was sent to the address you provided. ' +
-                    'Please follow the link in that email to activate your account.',
+                    confirmationMessage,
                     '',
                     5000
                 );
             },
             error => {
+                const errorMessage = this.translate.get('core.user.service.create_error');
                 this.spinnerService.hide();
                 this.alertService.showErrorSnackbar(
-                    'There was an error with creating your account. ',
+                    errorMessage,
                     '',
                     5000
                 );
