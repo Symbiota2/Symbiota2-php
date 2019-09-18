@@ -11,6 +11,16 @@
             <li><a [matMenuTriggerFor]="search">{{ 'core.layout.header.topnav.search_link' | translate }}</a></li>
             <li><a [matMenuTriggerFor]="images">{{ 'core.layout.header.topnav.images_link' | translate }}</a></li>
             <li><a [matMenuTriggerFor]="symbiota">{{ 'core.layout.header.topnav.symbiota_link' | translate }}</a></li>
+        </ul>
+    </div>
+    <div fxFlex fxLayout fxLayoutAlign="end center" class="right-links" fxHide.xs>
+        <ul fxLayout fxLayoutGap="15px" class="navigation-items">
+            <li *ngIf="(isLoggedIn$ | async) && (currentUser$ | async) as user">{{ 'core.layout.header.topnav.welcome_line' | translate:{'firstName':user.firstName} }}</li>
+            <li *ngIf="isLoggedIn$ | async"><a routerLink="/viewprofile">{{ 'core.layout.header.topnav.my_profile_link' | translate }}</a></li>
+            <li *ngIf="isLoggedIn$ | async" (click)="onLogout()"><a>{{ 'core.layout.header.topnav.logout_link' | translate }}</a></li>
+            <li *ngIf="isLoggedOut$ | async" (click)="onLogin()"><a>{{ 'core.layout.header.topnav.login_link' | translate }}</a></li>
+            <li *ngIf="isLoggedOut$ | async"><a routerLink="/signup">{{ 'core.layout.header.topnav.new_account_link' | translate }}</a></li>
+            <li><a routerLink="/sitemap">{{ 'core.layout.header.topnav.sitemap_link' | translate }}</a></li>
             <li>
                 <select id="drawselect" (change)="useLanguage($event.target)">
                     <option value="en">English</option>
@@ -28,16 +38,6 @@
                     <option value="ur">Urdu</option>
                 </select>
             </li>
-        </ul>
-    </div>
-    <div fxFlex fxLayout fxLayoutAlign="end center" class="right-links" fxHide.xs>
-        <ul fxLayout fxLayoutGap="15px" class="navigation-items">
-            <li *ngIf="(isLoggedIn$ | async) && (currentUser$ | async) as user">{{ 'core.layout.header.topnav.welcome_line' | translate:{'firstName':user.firstName} }}</li>
-            <li *ngIf="isLoggedIn$ | async"><a routerLink="/viewprofile">{{ 'core.layout.header.topnav.my_profile_link' | translate }}</a></li>
-            <li *ngIf="isLoggedIn$ | async" (click)="onLogout()"><a>{{ 'core.layout.header.topnav.logout_link' | translate }}</a></li>
-            <li *ngIf="isLoggedOut$ | async" (click)="onLogin()"><a>{{ 'core.layout.header.topnav.login_link' | translate }}</a></li>
-            <li *ngIf="isLoggedOut$ | async"><a routerLink="/signup">{{ 'core.layout.header.topnav.new_account_link' | translate }}</a></li>
-            <li><a routerLink="/sitemap">{{ 'core.layout.header.topnav.sitemap_link' | translate }}</a></li>
         </ul>
     </div>
     <mat-menu #search="matMenu">
