@@ -2,7 +2,7 @@ import {Injectable, Compiler} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Route} from '@angular/router';
 import {Observable, BehaviorSubject} from 'rxjs';
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateService} from '@ngx-translate/core';
 
 import {PluginOutletComponent} from 'symbiota-plugin';
 
@@ -11,6 +11,7 @@ import {PluginComponentService} from 'symbiota-plugin';
 import {PluginLinkService} from 'symbiota-plugin';
 import {SpinnerOverlayService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
+import {ConfigurationService} from 'symbiota-shared';
 
 import {Plugin} from './plugin.model';
 
@@ -44,6 +45,7 @@ export class PluginLoaderService {
     private pluginRoutes = new BehaviorSubject<Route[]>([]);
     public readonly loadedPluginRoutes: Observable<Route[]> = this.pluginRoutes.asObservable();
     pluginData: any;
+    configurations_failed: string;
 
     constructor(
         private tabsService: PluginTabService,
@@ -53,8 +55,13 @@ export class PluginLoaderService {
         private http: HttpClient,
         private alertService: AlertService,
         private spinnerService: SpinnerOverlayService,
-        private translate: TranslateService
-    ) {}
+        private translate: TranslateService,
+        private configService: ConfigurationService
+    ) {
+        this.configService.selectedLanguageValue.subscribe(value => {
+            this.setTranslations();
+        });
+    }
 
     initialize(): Promise<any> {
         return new Promise<any>(resolve => {
@@ -65,10 +72,9 @@ export class PluginLoaderService {
                     resolve(this.pluginData);
                 },
                 (error) => {
-                    const errorMessage = this.translate.get('symbiota-plugin-loader.plugin-loader-service.configurations_failed');
                     this.spinnerService.hide();
                     this.alertService.showErrorSnackbar(
-                        errorMessage,
+                        this.configurations_failed,
                         '',
                         5000
                     );
@@ -76,6 +82,12 @@ export class PluginLoaderService {
                     resolve(this.pluginData);
                 }
             );
+        });
+    }
+
+    setTranslations() {
+        this.translate.get('symbiota-plugin-loader.plugin-loader-service.configurations_failed').subscribe((res: string) => {
+            this.configurations_failed = res;
         });
     }
 

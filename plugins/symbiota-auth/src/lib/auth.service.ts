@@ -8,7 +8,8 @@ import {TranslateService} from "@ngx-translate/core";
 
 import {SpinnerOverlayService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
-import {LoginComponentService} from "./login-component.service";
+import {LoginComponentService} from './login-component.service';
+import {ConfigurationService} from 'symbiota-shared';
 
 import {AuthData} from './auth-data.model';
 import {CurrentUser} from './current-user.model';
@@ -57,6 +58,13 @@ export class AuthService {
         map(isAuthenticated => !isAuthenticated)
     );
 
+    login_failed: string;
+    login_sent: string;
+    new_password_sent: string;
+    no_account_found: string;
+    no_account_found_email: string;
+    session_expired: string;
+
     constructor(
         private http: HttpClient,
         private spinnerService: SpinnerOverlayService,
@@ -64,7 +72,8 @@ export class AuthService {
         private loginComponentService: LoginComponentService,
         public dialog: MatDialog,
         private router: Router,
-        private translate: TranslateService
+        private translate: TranslateService,
+        private configService: ConfigurationService
     ) {
         this.spinnerService.show();
         http.get<CurrentUser>('/api/users/authuser').subscribe(
@@ -74,6 +83,30 @@ export class AuthService {
                 // console.log(user);
             }
         );
+        this.configService.selectedLanguageValue.subscribe(value => {
+            this.setTranslations();
+        });
+    }
+
+    setTranslations() {
+        this.translate.get('symbiota-auth.auth-service.login_failed').subscribe((res: string) => {
+            this.login_failed = res;
+        });
+        this.translate.get('symbiota-auth.auth-service.login_sent').subscribe((res: string) => {
+            this.login_sent = res;
+        });
+        this.translate.get('symbiota-auth.auth-service.new_password_sent').subscribe((res: string) => {
+            this.new_password_sent = res;
+        });
+        this.translate.get('symbiota-auth.auth-service.no_account_found').subscribe((res: string) => {
+            this.no_account_found = res;
+        });
+        this.translate.get('symbiota-auth.auth-service.no_account_found_email').subscribe((res: string) => {
+            this.no_account_found_email = res;
+        });
+        this.translate.get('symbiota-auth.auth-service.session_expired').subscribe((res: string) => {
+            this.session_expired = res;
+        });
     }
 
     login(username: string, password: string, maintainLogin: number, redirect: string) {
@@ -94,10 +127,9 @@ export class AuthService {
                 // console.log(user);
             },
             error => {
-                const errorMessage = this.translate.get('symbiota-auth.auth-service.login_failed');
                 this.spinnerService.hide();
                 this.alertService.showErrorSnackbar(
-                    errorMessage,
+                    this.login_failed,
                     '',
                     5000
                 );
@@ -127,16 +159,14 @@ export class AuthService {
             res => {
                 this.spinnerService.hide();
                 if (res.result) {
-                    const newPasswordMessage = this.translate.get('symbiota-auth.auth-service.new_password_sent');
                     this.alertService.showSnackbar(
-                        newPasswordMessage,
+                        this.new_password_sent,
                         '',
                         5000
                     );
                 } else {
-                    const errorMessage = this.translate.get('symbiota-auth.auth-service.no_account_found');
                     this.alertService.showErrorSnackbar(
-                        errorMessage,
+                        this.no_account_found,
                         '',
                         5000
                     );
@@ -151,16 +181,14 @@ export class AuthService {
             res => {
                 this.spinnerService.hide();
                 if (res.result) {
-                    const loginSentMessage = this.translate.get('symbiota-auth.auth-service.login_sent');
                     this.alertService.showSnackbar(
-                        loginSentMessage,
+                        this.login_sent,
                         '',
                         5000
                     );
                 } else {
-                    const errorMessage = this.translate.get('symbiota-auth.auth-service.no_account_found_email');
                     this.alertService.showErrorSnackbar(
-                        errorMessage,
+                        this.no_account_found_email,
                         '',
                         5000
                     );
@@ -189,9 +217,8 @@ export class AuthService {
                 this.warningDialog = '';
             }
             this.logout();
-            const errorMessage = this.translate.get('symbiota-auth.auth-service.session_expired');
             this.alertService.showErrorSnackbar(
-                errorMessage,
+                this.session_expired,
                 '',
                 5000
             );

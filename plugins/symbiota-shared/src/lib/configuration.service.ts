@@ -14,6 +14,7 @@ export class ConfigurationService {
     data: any;
     selectedLanguageSubject = new BehaviorSubject<string>('en');
     public readonly selectedLanguageValue: Observable<string> = this.selectedLanguageSubject.asObservable();
+    configuration_failed: string;
 
     constructor(
         private http: HttpClient,
@@ -33,10 +34,9 @@ export class ConfigurationService {
                     this.spinnerService.hide();
                 },
                 (error) => {
-                    const errorMessage = this.translate.get('symbiota-shared.configuration-service.configuration_failed');
                     this.spinnerService.hide();
                     this.alertService.showErrorSnackbar(
-                        errorMessage,
+                        this.configuration_failed,
                         '',
                         5000
                     );
@@ -57,5 +57,8 @@ export class ConfigurationService {
         this.selectedLanguageSubject.next(value);
         localStorage.setItem('selectedLanguage', value);
         this.translate.use(value);
+        this.translate.get('symbiota-shared.configuration-service.configuration_failed').subscribe((res: string) => {
+            this.configuration_failed = res;
+        });
     }
 }
