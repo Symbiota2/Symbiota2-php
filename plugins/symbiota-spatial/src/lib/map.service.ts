@@ -2023,4 +2023,8 @@ export class MapService {
             }
         }
     }
+
+    destroyMap() {
+        this.map = undefined;
+    }
 }
