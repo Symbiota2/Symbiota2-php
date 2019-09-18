@@ -4,6 +4,7 @@ import {TranslateService} from "@ngx-translate/core";
 
 import {SpinnerOverlayService} from './spinner-overlay.service';
 import {AlertService} from './alert.service';
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -11,6 +12,8 @@ import {AlertService} from './alert.service';
 export class ConfigurationService {
 
     data: any;
+    selectedLanguageSubject = new BehaviorSubject<string>('en');
+    public readonly selectedLanguageValue: Observable<string> = this.selectedLanguageSubject.asObservable();
 
     constructor(
         private http: HttpClient,
@@ -24,6 +27,7 @@ export class ConfigurationService {
         return new Promise<any>(resolve => {
             this.http.get('/api/clientconfigurations').subscribe(
                 (res) => {
+                    this.checkLocalSelectedLanguage();
                     this.data = res;
                     resolve(this.data);
                     this.spinnerService.hide();
@@ -41,5 +45,17 @@ export class ConfigurationService {
                 }
             );
         });
+    }
+
+    checkLocalSelectedLanguage() {
+        if(localStorage.selectedLanguage) {
+            this.setSelectedLanguage(localStorage.selectedLanguage);
+        }
+    }
+
+    setSelectedLanguage(value: string) {
+        this.selectedLanguageSubject.next(value);
+        localStorage.setItem('selectedLanguage', value);
+        this.translate.use(value);
     }
 }

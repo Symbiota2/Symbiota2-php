@@ -13,7 +13,7 @@
                 <li><a [matMenuTriggerFor]="symbiotaSide">{{ 'core.layout.header.topnav.symbiota_link' | translate }}</a></li>
                 <li><a routerLink="/sitemap">{{ 'core.layout.header.topnav.sitemap_link' | translate }}</a></li>
                 <li>
-                    <select id="drawselect" (change)="useLanguage($event.target)">
+                    <select [(ngModel)]="selectedLanguage" (change)="useLanguage($event.target)">
                         <option value="en">English</option>
                         <option value="ar">Arabic</option>
                         <option value="zh">Chinese</option>
