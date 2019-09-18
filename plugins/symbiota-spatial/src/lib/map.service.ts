@@ -273,6 +273,14 @@ export class MapService {
                 }
             }
         });
+
+        this.translate.get('symbiota-spatial.map-service.lat_label').subscribe((res: string) => {
+            this.latLabel = res;
+        });
+
+        this.translate.get('symbiota-spatial.map-service.long_label').subscribe((res: string) => {
+            this.longLabel = res;
+        });
     }
 
     map: OlMap;
@@ -280,6 +288,8 @@ export class MapService {
     view: OlView;
     layers = {};
     draw: any;
+    latLabel: string;
+    longLabel: string;
     clustersource: any;
     popupOverlay: any;
     popupContainer: any;
@@ -372,7 +382,7 @@ export class MapService {
                     coord[0] = coord[0] % 360;
                 }
             }
-            const template = 'Lat: {y} Lon: {x}';
+            const template = this.latLabel + ' {y} ' + this.longLabel + ' {x}';
             return format(coord, template, 5);
         },
         className: 'mousecoordinates',
