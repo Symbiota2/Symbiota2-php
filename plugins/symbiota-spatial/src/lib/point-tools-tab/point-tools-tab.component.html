@@ -1,23 +1,23 @@
 <mat-card class="cards">
     <mat-card-content>
         <div *ngIf="pointsInactive$ | async" id="pointToolsNoneDiv" class="content-div">
-            There are no points loaded on the map.
+            {{ 'symbiota-spatial.point-tools-tab.no_points_text' | translate }}
         </div>
         <div *ngIf="pointsActive$ | async" id="pointToolsDiv">
             <div class="content-div">
-                <button onclick="createConcavePoly();" (click)="onCreateConcavePoly()">Concave Hull Polygon</button> Creates a concave hull polygon or multipolygon for
+                <button onclick="createConcavePoly();" (click)="onCreateConcavePoly()">{{ 'symbiota-spatial.point-tools-tab.concave_hull_button' | translate }}</button> {{ 'symbiota-spatial.point-tools-tab.concave_hull_help1' | translate }}
                 <select class="select-input" (change)="concavePolySourceChange($event.target)">
-                    <option value="all">all</option>
-                    <option value="selected">selected</option>
-                </select> points with a maximum edge length of <input type="text" class="text-input" [(ngModel)]="concaveMaxEdgeLength" /> kilometers.
+                    <option value="all">{{ 'symbiota-spatial.point-tools-tab.concave_hull_all' | translate }}</option>
+                    <option value="selected">{{ 'symbiota-spatial.point-tools-tab.concave_hull_selected' | translate }}</option>
+                </select> {{ 'symbiota-spatial.point-tools-tab.concave_hull_help2' | translate }} <input type="text" class="text-input" [(ngModel)]="concaveMaxEdgeLength" /> {{ 'symbiota-spatial.point-tools-tab.concave_hull_kilometers' | translate }}
             </div>
             <mat-divider></mat-divider>
             <div class="content-div">
-                <button onclick="createConvexPoly();" (click)="onCreateConvexPoly()">Convex Hull Polygon</button> Creates a convex hull polygon for
+                <button onclick="createConvexPoly();" (click)="onCreateConvexPoly()">{{ 'symbiota-spatial.point-tools-tab.convex_hull_button' | translate }}</button> {{ 'symbiota-spatial.point-tools-tab.convex_hull_help1' | translate }}
                 <select class="select-input" (change)="convexPolySourceChange($event.target)">
-                    <option value="all">all</option>
-                    <option value="selected">selected</option>
-                </select> points.
+                    <option value="all">{{ 'symbiota-spatial.point-tools-tab.convex_hull_all' | translate }}</option>
+                    <option value="selected">{{ 'symbiota-spatial.point-tools-tab.convex_hull_selected' | translate }}</option>
+                </select> {{ 'symbiota-spatial.point-tools-tab.convex_hull_help2' | translate }}
             </div>
         </div>
     </mat-card-content>

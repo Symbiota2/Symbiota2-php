@@ -4,6 +4,7 @@ import {Router, NavigationCancel} from '@angular/router';
 import {Observable, BehaviorSubject} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
 import {MatDialog} from '@angular/material';
+import {TranslateService} from "@ngx-translate/core";
 
 import {SpinnerOverlayService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
@@ -62,7 +63,8 @@ export class AuthService {
         private alertService: AlertService,
         private loginComponentService: LoginComponentService,
         public dialog: MatDialog,
-        private router: Router
+        private router: Router,
+        private translate: TranslateService
     ) {
         this.spinnerService.show();
         http.get<CurrentUser>('/api/users/authuser').subscribe(
@@ -92,9 +94,10 @@ export class AuthService {
                 // console.log(user);
             },
             error => {
+                const errorMessage = this.translate.get('symbiota-auth.auth-service.login_failed');
                 this.spinnerService.hide();
                 this.alertService.showErrorSnackbar(
-                    'Login failed. Please ensure you entered the correct login and password.',
+                    errorMessage,
                     '',
                     5000
                 );
@@ -124,14 +127,16 @@ export class AuthService {
             res => {
                 this.spinnerService.hide();
                 if (res.result) {
+                    const newPasswordMessage = this.translate.get('symbiota-auth.auth-service.new_password_sent');
                     this.alertService.showSnackbar(
-                        'A new password has been emailed to you.',
+                        newPasswordMessage,
                         '',
                         5000
                     );
                 } else {
+                    const errorMessage = this.translate.get('symbiota-auth.auth-service.no_account_found');
                     this.alertService.showErrorSnackbar(
-                        'Could not locate your account from the login provided.',
+                        errorMessage,
                         '',
                         5000
                     );
@@ -146,14 +151,16 @@ export class AuthService {
             res => {
                 this.spinnerService.hide();
                 if (res.result) {
+                    const loginSentMessage = this.translate.get('symbiota-auth.auth-service.login_sent');
                     this.alertService.showSnackbar(
-                        'Your login has been emailed to you.',
+                        loginSentMessage,
                         '',
                         5000
                     );
                 } else {
+                    const errorMessage = this.translate.get('symbiota-auth.auth-service.no_account_found_email');
                     this.alertService.showErrorSnackbar(
-                        'A user account could not be found asociated with email provided.',
+                        errorMessage,
                         '',
                         5000
                     );
@@ -182,8 +189,9 @@ export class AuthService {
                 this.warningDialog = '';
             }
             this.logout();
+            const errorMessage = this.translate.get('symbiota-auth.auth-service.session_expired');
             this.alertService.showErrorSnackbar(
-                'Your user session has expired',
+                errorMessage,
                 '',
                 5000
             );

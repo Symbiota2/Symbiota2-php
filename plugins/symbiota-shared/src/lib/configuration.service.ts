@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {TranslateService} from "@ngx-translate/core";
 
 import {SpinnerOverlayService} from './spinner-overlay.service';
 import {AlertService} from './alert.service';
@@ -14,7 +15,8 @@ export class ConfigurationService {
     constructor(
         private http: HttpClient,
         private alertService: AlertService,
-        private spinnerService: SpinnerOverlayService
+        private spinnerService: SpinnerOverlayService,
+        private translate: TranslateService
     ) {}
 
     load(): Promise<any> {
@@ -27,9 +29,10 @@ export class ConfigurationService {
                     this.spinnerService.hide();
                 },
                 (error) => {
+                    const errorMessage = this.translate.get('symbiota-shared.configuration-service.configuration_failed');
                     this.spinnerService.hide();
                     this.alertService.showErrorSnackbar(
-                        'Cannot get portal configurations',
+                        errorMessage,
                         '',
                         5000
                     );

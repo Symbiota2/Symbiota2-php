@@ -3,6 +3,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
+import {TranslateModule} from "@ngx-translate/core";
 
 import {MaterialModule} from './material.module';
 
@@ -20,7 +21,8 @@ import {SharedToolsService} from './shared-tools.service';
         ReactiveFormsModule,
         FormsModule,
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        TranslateModule
     ],
     exports: [
         FlexLayoutModule,

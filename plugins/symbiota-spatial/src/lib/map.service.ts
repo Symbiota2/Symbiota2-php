@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog} from '@angular/material/dialog';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {TranslateService} from "@ngx-translate/core";
 import OlMap from 'ol/Map';
 import XYZ from 'ol/source/XYZ';
 import {FullScreen, ZoomSlider, ScaleLine, MousePosition} from 'ol/control';
@@ -54,7 +55,8 @@ export class MapService {
         private vectorService: VectorToolsService,
         private sharedTools: SharedToolsService,
         private http: HttpClient,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private translate: TranslateService
     ) {
         this.activeLayerValue.subscribe(value => {
             this.activeLayer = value.toString();
@@ -149,14 +151,16 @@ export class MapService {
                     }
                 }
             } else if (fileType === 'shp' || fileType === 'dbf') {
+                const errorMessage = this.translate.get('symbiota-spatial.map-service.drag_drop_error1');
                 this.alertService.showErrorSnackbar(
-                    'The drag and drop file loading only supports shapefiles when they are loaded in the full shapefile zip archive.',
+                    errorMessage,
                     '',
                     5000
                 );
             } else {
+                const errorMessage = this.translate.get('symbiota-spatial.map-service.drag_drop_error2');
                 this.alertService.showErrorSnackbar(
-                    'The drag and drop file loading only supports GeoJSON, kml, and shp file formats.',
+                    errorMessage,
                     '',
                     5000
                 );
@@ -1113,8 +1117,9 @@ export class MapService {
                                 this.setPopup(infoHTML, evt.coordinate);
                             }
                         } else {
+                            const errorMessage = this.translate.get('symbiota-spatial.map-service.singleclick_error1');
                             this.alertService.showErrorSnackbar(
-                                'You clicked on multiple points. The info window can only display data for a single point.',
+                                errorMessage,
                                 '',
                                 5000
                             );
@@ -1131,8 +1136,9 @@ export class MapService {
                                         this.selectsource.addFeature(feature);
                                         this.setActiveLayer('select');
                                     } catch (e) {
+                                        const errorMessage = this.translate.get('symbiota-spatial.map-service.singleclick_error2');
                                         this.alertService.showErrorSnackbar(
-                                            'Feature has already been added to Shapes layer.',
+                                            errorMessage,
                                             '',
                                             5000
                                         );
@@ -1427,8 +1433,9 @@ export class MapService {
             this.dragDropTarget = 'dragdrop3';
             return true;
         } else {
+            const errorMessage = this.translate.get('symbiota-spatial.map-service.drag_drop_max_error1');
             this.alertService.showErrorSnackbar(
-                'You may only have 3 uploaded layers at a time. Please remove one of the currently uploaded layers to upload more.',
+                errorMessage,
                 '',
                 5000
             );
@@ -1601,15 +1608,17 @@ export class MapService {
                     document.body.removeChild(elem);
                 }
             } else {
+                const errorMessage = this.translate.get('symbiota-spatial.map-service.no_shapes_selected');
                 this.alertService.showErrorSnackbar(
-                    'There are no shapes selected',
+                    errorMessage,
                     '',
                     5000
                 );
             }
         } else {
+            const errorMessage = this.translate.get('symbiota-spatial.map-service.select_download_type');
             this.alertService.showErrorSnackbar(
-                'Please select a download type',
+                errorMessage,
                 '',
                 5000
             );
@@ -1668,15 +1677,17 @@ export class MapService {
                     }
                 });
             } else {
+                const errorMessage = this.translate.get('symbiota-spatial.map-service.buffer_error1');
                 this.alertService.showErrorSnackbar(
-                    'You must have at least one shape selected in your Shapes layer to create a buffer polygon.',
+                    errorMessage,
                     '',
                     5000
                 );
             }
         } else {
+            const errorMessage = this.translate.get('symbiota-spatial.map-service.buffer_error2');
             this.alertService.showErrorSnackbar(
-                'Please enter a number for the buffer size.',
+                errorMessage,
                 '',
                 5000
             );
@@ -1719,9 +1730,9 @@ export class MapService {
                 this.selectsource.addFeature(diffpoly);
             }
         } else {
+            const errorMessage = this.translate.get('symbiota-spatial.map-service.difference_error1');
             this.alertService.showErrorSnackbar(
-                'You must have two polygons or circles, and only two polygons or circles, ' +
-                'selected in your Shapes layer to find the difference.',
+                errorMessage,
                 '',
                 5000
             );
@@ -1763,16 +1774,17 @@ export class MapService {
                 interpoly.getGeometry().transform(this.wgs84Projection, this.mapProjection);
                 this.selectsource.addFeature(interpoly);
             } else {
+                const errorMessage = this.translate.get('symbiota-spatial.map-service.intersect_error1');
                 this.alertService.showErrorSnackbar(
-                    'The two selected shapes do not intersect.',
+                    errorMessage,
                     '',
                     5000
                 );
             }
         } else {
+            const errorMessage = this.translate.get('symbiota-spatial.map-service.intersect_error2');
             this.alertService.showErrorSnackbar(
-                'You must have two polygons or circles, and only two polygons or circles, ' +
-                'selected in your Shapes layer to find the intersect.',
+                errorMessage,
                 '',
                 5000
             );
@@ -1822,8 +1834,9 @@ export class MapService {
                 this.setActiveLayer('select');
             }
         } else {
+            const errorMessage = this.translate.get('symbiota-spatial.map-service.union_error1');
             this.alertService.showErrorSnackbar(
-                'You must have at least two polygons or circles selected in your Shapes layer to find the union.',
+                errorMessage,
                 '',
                 5000
             );
@@ -1840,9 +1853,9 @@ export class MapService {
                 if (this.selections.length >= 3) {
                     features = this.getTurfPointFeaturesetSelected();
                 } else {
+                    const errorMessage = this.translate.get('symbiota-spatial.map-service.concave_error1');
                     this.alertService.showErrorSnackbar(
-                        'There must be at least 3 selected points on the map. Please either select ' +
-                        'more points or re-run this tool for all points.',
+                        errorMessage,
                         '',
                         5000
                     );
@@ -1854,8 +1867,9 @@ export class MapService {
                 try {
                     concavepoly = this.vectorService.getConcavePolyFeature(features, Number(maxEdge));
                 } catch (e) {
+                    const errorMessage = this.translate.get('symbiota-spatial.map-service.concave_error2');
                     this.alertService.showErrorSnackbar(
-                        'Concave polygon was not able to be calculated. Perhaps try using a larger value for the maximum edge length.',
+                        errorMessage,
                         '',
                         5000
                     );
@@ -1866,16 +1880,18 @@ export class MapService {
                     this.selectsource.addFeature(cnvepoly);
                 }
             } else {
+                const errorMessage = this.translate.get('symbiota-spatial.map-service.concave_error3');
                 this.alertService.showErrorSnackbar(
-                    'There must be at least 3 points on the map to calculate polygon.',
+                    errorMessage,
                     '',
                     5000
                 );
             }
             this.concaveMaxEdgeLengthSubject.next(0);
         } else {
+            const errorMessage = this.translate.get('symbiota-spatial.map-service.concave_error4');
             this.alertService.showErrorSnackbar(
-                'Please enter a number for the maximum edge size.',
+                errorMessage,
                 '',
                 5000
             );
@@ -1891,9 +1907,9 @@ export class MapService {
             if (this.selections.length >= 3) {
                 features = this.getTurfPointFeaturesetSelected();
             } else {
+                const errorMessage = this.translate.get('symbiota-spatial.map-service.convex_error1');
                 this.alertService.showErrorSnackbar(
-                    'There must be at least 3 selected points on the map. Please either select ' +
-                    'more points or re-run this tool for all points.',
+                    errorMessage,
                     '',
                     5000
                 );
@@ -1908,8 +1924,9 @@ export class MapService {
                 this.selectsource.addFeature(cnvxpoly);
             }
         } else {
+            const errorMessage = this.translate.get('symbiota-spatial.map-service.convex_error2');
             this.alertService.showErrorSnackbar(
-                'There must be at least 3 points on the map to calculate polygon.',
+                errorMessage,
                 '',
                 5000
             );

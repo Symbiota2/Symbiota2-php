@@ -1,4 +1,5 @@
 import {NgModule} from '@angular/core';
+import {TranslateModule} from "@ngx-translate/core";
 
 import {SpatialRoutingModule} from './spatial-routing.module';
 import {SymbiotaSharedModule} from 'symbiota-shared';
@@ -22,7 +23,8 @@ import {VectorToolsService} from './vector-tools.service';
     ],
     imports: [
         SpatialRoutingModule,
-        SymbiotaSharedModule
+        SymbiotaSharedModule,
+        TranslateModule
     ],
     providers: [
         MapService,

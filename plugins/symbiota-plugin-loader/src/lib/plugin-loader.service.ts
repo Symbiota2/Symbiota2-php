@@ -2,6 +2,7 @@ import {Injectable, Compiler} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Route} from '@angular/router';
 import {Observable, BehaviorSubject} from 'rxjs';
+import {TranslateService} from "@ngx-translate/core";
 
 import {PluginOutletComponent} from 'symbiota-plugin';
 
@@ -51,7 +52,8 @@ export class PluginLoaderService {
         private compiler: Compiler,
         private http: HttpClient,
         private alertService: AlertService,
-        private spinnerService: SpinnerOverlayService
+        private spinnerService: SpinnerOverlayService,
+        private translate: TranslateService
     ) {}
 
     initialize(): Promise<any> {
@@ -63,9 +65,10 @@ export class PluginLoaderService {
                     resolve(this.pluginData);
                 },
                 (error) => {
+                    const errorMessage = this.translate.get('symbiota-plugin-loader.plugin-loader-service.configurations_failed');
                     this.spinnerService.hide();
                     this.alertService.showErrorSnackbar(
-                        'Cannot get plugin configurations',
+                        errorMessage,
                         '',
                         5000
                     );

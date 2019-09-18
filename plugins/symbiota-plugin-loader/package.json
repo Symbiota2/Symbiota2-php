@@ -5,6 +5,7 @@
     "@angular/common": "^8.0.0",
     "@angular/core": "^8.0.0",
     "@ngrx/store": "^8.0.0",
+    "@ngx-translate/core": "^11.0.1",
     "symbiota-plugin": "file:dist/symbiota-plugin/symbiota-plugin-0.0.1.tgz",
     "symbiota-shared": "file:dist/symbiota-shared/symbiota-shared-0.0.1.tgz",
     "systemjs": "^0.21.6"

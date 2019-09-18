@@ -1,24 +1,24 @@
 <div class="option-container">
-    <label for="clusterswitch" class="map-settings-labels">Cluster Points</label>
+    <label for="clusterswitch" class="map-settings-labels">{{ 'symbiota-spatial.map-settings-dialog.cluster_points' | translate }}</label>
     <mat-checkbox id="clusterswitch" (change)="clusterPointsChange($event)" [checked]="clusterPoints" [disabled]="dateSliderActive"></mat-checkbox>
 </div>
 <div class="option-container">
-    <label for="setclusterdistance" class="map-settings-labels">Cluster Distance</label>
+    <label for="setclusterdistance" class="map-settings-labels">{{ 'symbiota-spatial.map-settings-dialog.cluster_distance' | translate }}</label>
     <input type="text" id="setclusterdistance" class="text-input" value="{{clusterDistance}}" (change)="clusterDistanceChange($event.target)" />
 </div>
 <div class="option-container">
-    <label for="heatmapswitch" class="map-settings-labels">Display Heat Map</label>
+    <label for="heatmapswitch" class="map-settings-labels">{{ 'symbiota-spatial.map-settings-dialog.display_heat_map' | translate }}</label>
     <mat-checkbox id="heatmapswitch" (change)="showHeatMapChange($event)" [checked]="showHeatMap"></mat-checkbox>
 </div>
 <div class="option-container">
-    <label for="heatmapradius" class="map-settings-labels">Heat Map Radius</label>
+    <label for="heatmapradius" class="map-settings-labels">{{ 'symbiota-spatial.map-settings-dialog.heat_map_radius' | translate }}</label>
     <input type="text" id="heatmapradius" class="text-input" value="{{heatMapRadius}}" (change)="heatMapRadiusChange($event.target)" />
 </div>
 <div class="option-container">
-    <label for="heatmapblur" class="map-settings-labels">Heat Map Blur</label>
+    <label for="heatmapblur" class="map-settings-labels">{{ 'symbiota-spatial.map-settings-dialog.heat_map_blur' | translate }}</label>
     <input type="text" id="heatmapblur" class="text-input" value="{{heatMapBlur}}" (change)="heatMapBlurChange($event.target)" />
 </div>
 <div class="option-container">
-    <label for="datesliderswitch" class="map-settings-labels">Display Date Slider</label>
+    <label for="datesliderswitch" class="map-settings-labels">{{ 'symbiota-spatial.map-settings-dialog.display_date_slider' | translate }}</label>
     <mat-checkbox id="datesliderswitch" onchange="toggleDateSlider();" (change)="dateSliderActiveChange($event)" [checked]="dateSliderActive"></mat-checkbox>
 </div>

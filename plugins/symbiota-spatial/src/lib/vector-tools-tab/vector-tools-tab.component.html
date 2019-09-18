@@ -2,7 +2,7 @@
     <mat-card-content>
         <div class="top-div">
             <div class="top-div-child">
-                Total area of selected shapes (sq/km)
+                {{ 'symbiota-spatial.vector-tools-tab.total_text' | translate }}
             </div>
             <div class="top-div-child">
                 <input type="text" id="polyarea" class="selected-area-box" value="{{selectedArea}}" disabled />
@@ -10,29 +10,29 @@
         </div>
         <mat-divider></mat-divider>
         <div class="content-div">
-            <b>Download Shapes</b>
+            <b>{{ 'symbiota-spatial.vector-tools-tab.download_shapes_label' | translate }}</b>
             <select class="download-button" (change)="downloadTypeChange($event.target)">
-                <option value="">Download Type</option>
-                <option value="kml">KML</option>
-                <option value="geojson">GeoJSON</option>
+                <option value="">{{ 'symbiota-spatial.vector-tools-tab.download_shapes_type' | translate }}</option>
+                <option value="kml">{{ 'symbiota-spatial.vector-tools-tab.download_shapes_kml' | translate }}</option>
+                <option value="geojson">{{ 'symbiota-spatial.vector-tools-tab.download_shapes_geojson' | translate }}</option>
             </select>
-            <button class="download-button" type="button" (click)="onDownloadShapesLayer()">Download</button>
+            <button class="download-button" type="button" (click)="onDownloadShapesLayer()">{{ 'symbiota-spatial.vector-tools-tab.download_button' | translate }}</button>
         </div>
         <mat-divider></mat-divider>
         <div class="content-div">
-            <button (click)="onCreateBuffers()">Buffer</button> Creates buffer polygon of <input type="text" class="buffer-input" [(ngModel)]="bufferSize" (change)="bufferSizeChange($event.target)" /> km around selected features.
+            <button (click)="onCreateBuffers()">{{ 'symbiota-spatial.vector-tools-tab.buffer_button' | translate }}</button> {{ 'symbiota-spatial.vector-tools-tab.buffer_help1' | translate }} <input type="text" class="buffer-input" [(ngModel)]="bufferSize" (change)="bufferSizeChange($event.target)" /> {{ 'symbiota-spatial.vector-tools-tab.buffer_help2' | translate }}
         </div>
         <mat-divider></mat-divider>
         <div class="content-div">
-            <button (click)="onCreatePolyDifference()">Difference</button> Returns a new polygon with the area of the polygon or circle selected first, exluding the area of the polygon or circle selected second.
+            <button (click)="onCreatePolyDifference()">{{ 'symbiota-spatial.vector-tools-tab.difference_button' | translate }}</button> {{ 'symbiota-spatial.vector-tools-tab.difference_help' | translate }}
         </div>
         <mat-divider></mat-divider>
         <div class="content-div">
-            <button (click)="onCreatePolyIntersect()">Intersect</button> Returns a new polygon with the area overlapping of both selected polygons or circles.
+            <button (click)="onCreatePolyIntersect()">{{ 'symbiota-spatial.vector-tools-tab.intersect_button' | translate }}</button> {{ 'symbiota-spatial.vector-tools-tab.intersect_help' | translate }}
         </div>
         <mat-divider></mat-divider>
         <div class="content-div">
-            <button (click)="onCreatePolyUnion()">Union</button> Returns a new polygon with the combined area of two or more selected polygons or circles. *Note new polygon will replace all selected shapes.
+            <button (click)="onCreatePolyUnion()">{{ 'symbiota-spatial.vector-tools-tab.union_button' | translate }}</button> {{ 'symbiota-spatial.vector-tools-tab.union_help' | translate }}
         </div>
     </mat-card-content>
 </mat-card>

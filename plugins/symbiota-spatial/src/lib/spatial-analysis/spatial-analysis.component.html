@@ -4,32 +4,32 @@
         <div class="maptoolbox">
             <div class="topToolboxRow">
                 <div id="drawcontrol">
-                    <span class="maptext">Draw</span>
+                    <span class="maptext">{{ 'symbiota-spatial.spatial-analysis.draw_label' | translate }}</span>
                     <select id="drawselect" [(ngModel)]="drawSelectedValue" (change)="drawToolSelectChange($event.target)">
-                        <option value="None">None</option>
-                        <option value="Polygon">Polygon</option>
-                        <option value="Circle">Circle</option>
-                        <option value="LineString">Line</option>
-                        <option value="Point">Point</option>
+                        <option value="None">{{ 'symbiota-spatial.spatial-analysis.draw_none' | translate }}</option>
+                        <option value="Polygon">{{ 'symbiota-spatial.spatial-analysis.draw_polygon' | translate }}</option>
+                        <option value="Circle">{{ 'symbiota-spatial.spatial-analysis.draw_circle' | translate }}</option>
+                        <option value="LineString">{{ 'symbiota-spatial.spatial-analysis.draw_line' | translate }}</option>
+                        <option value="Point">{{ 'symbiota-spatial.spatial-analysis.draw_point' | translate }}</option>
                     </select>
                 </div>
                 <div id="basecontrol">
-                    <span class="maptext">Base Layer</span>
+                    <span class="maptext">{{ 'symbiota-spatial.spatial-analysis.base_layer_label' | translate }}</span>
                     <select id="base-map" (change)="baseMapSelectChange($event.target)">
-                        <option value="worldtopo">ESRI World Topo</option>
-                        <option value="openstreet">OpenStreetMap</option>
-                        <option value="blackwhite">Stamen Design Black &amp; White</option>
-                        <option value="worldimagery">ESRI World Imagery</option>
-                        <option value="ocean">ESRI Ocean</option>
-                        <option value="ngstopo">National Geographic Topo</option>
-                        <option value="natgeoworld">National Geographic World</option>
-                        <option value="esristreet">ESRI StreetMap</option>
+                        <option value="worldtopo">{{ 'symbiota-spatial.spatial-analysis.base_layer_worldtopo' | translate }}</option>
+                        <option value="openstreet">{{ 'symbiota-spatial.spatial-analysis.base_layer_openstreet' | translate }}</option>
+                        <option value="blackwhite">{{ 'symbiota-spatial.spatial-analysis.base_layer_blackwhite' | translate }}</option>
+                        <option value="worldimagery">{{ 'symbiota-spatial.spatial-analysis.base_layer_worldimagery' | translate }}</option>
+                        <option value="ocean">{{ 'symbiota-spatial.spatial-analysis.base_layer_ocean' | translate }}</option>
+                        <option value="ngstopo">{{ 'symbiota-spatial.spatial-analysis.base_layer_ngstopo' | translate }}</option>
+                        <option value="natgeoworld">{{ 'symbiota-spatial.spatial-analysis.base_layer_natgeoworld' | translate }}</option>
+                        <option value="esristreet">{{ 'symbiota-spatial.spatial-analysis.base_layer_esristreet' | translate }}</option>
                     </select>
                 </div>
             </div>
             <div class="middleToolboxRow">
                 <div id="selectcontrol">
-                    <span class="maptext">Active Layer</span>
+                    <span class="maptext">{{ 'symbiota-spatial.spatial-analysis.active_layer_label' | translate }}</span>
                     <select class="activeLayerSelect" [(ngModel)]="activeLayerValue" (change)="activeLayerChange($event.target)">
                         <ng-container *ngFor="let layer of layersArr">
                             <ng-container *ngIf="layer.visible">
@@ -41,13 +41,13 @@
             </div>
             <div class="bottomToolboxRow">
                 <div>
-                    <span class="maptext"><a class="maplink" (click)="onMapSettingsOpen()">Settings</a></span>
+                    <span class="maptext"><a class="maplink" (click)="onMapSettingsOpen()">{{ 'symbiota-spatial.spatial-analysis.settings_link' | translate }}</a></span>
                 </div>
                 <div *ngIf="layersArr.length > 1">
-                    <span class="maptext"><a class="maplink" (click)="onMapLayersOpen()">Layers</a></span>
+                    <span class="maptext"><a class="maplink" (click)="onMapLayersOpen()">{{ 'symbiota-spatial.spatial-analysis.layers_link' | translate }}</a></span>
                 </div>
                 <div>
-                    <button type="button" (click)="onDeleteSelections()">Delete Shapes</button>
+                    <button type="button" (click)="onDeleteSelections()">{{ 'symbiota-spatial.spatial-analysis.delete_shapes_button' | translate }}</button>
                 </div>
             </div>
         </div>
