@@ -61,6 +61,9 @@ export class MapService {
         this.activeLayerValue.subscribe(value => {
             this.activeLayer = value.toString();
         });
+        this.configService.selectedLanguageValue.subscribe(value => {
+            this.setTranslations();
+        });
 
         this.mapCenter = (
             configService.data.MAP_INITIAL_CENTER ? JSON.parse(configService.data.MAP_INITIAL_CENTER) : [-110.90713, 32.21976]
@@ -151,16 +154,14 @@ export class MapService {
                     }
                 }
             } else if (fileType === 'shp' || fileType === 'dbf') {
-                const errorMessage = this.translate.get('symbiota-spatial.map-service.drag_drop_error1');
                 this.alertService.showErrorSnackbar(
-                    errorMessage,
+                    this.drag_drop_error1,
                     '',
                     5000
                 );
             } else {
-                const errorMessage = this.translate.get('symbiota-spatial.map-service.drag_drop_error2');
                 this.alertService.showErrorSnackbar(
-                    errorMessage,
+                    this.drag_drop_error2,
                     '',
                     5000
                 );
@@ -273,14 +274,6 @@ export class MapService {
                 }
             }
         });
-
-        this.translate.get('symbiota-spatial.map-service.lat_label').subscribe((res: string) => {
-            this.latLabel = res;
-        });
-
-        this.translate.get('symbiota-spatial.map-service.long_label').subscribe((res: string) => {
-            this.longLabel = res;
-        });
     }
 
     map: OlMap;
@@ -288,8 +281,6 @@ export class MapService {
     view: OlView;
     layers = {};
     draw: any;
-    latLabel: string;
-    longLabel: string;
     clustersource: any;
     popupOverlay: any;
     popupContainer: any;
@@ -361,6 +352,28 @@ export class MapService {
     concaveMaxEdgeLengthSubject = new BehaviorSubject<number>(0);
     public readonly concaveMaxEdgeLengthValue: Observable<number> = this.concaveMaxEdgeLengthSubject.asObservable();
 
+    buffer_error1: string;
+    buffer_error2: string;
+    concave_error1: string;
+    concave_error2: string;
+    concave_error3: string;
+    concave_error4: string;
+    convex_error1: string;
+    convex_error2: string;
+    difference_error1: string;
+    drag_drop_error1: string;
+    drag_drop_error2: string;
+    drag_drop_max_error1: string;
+    intersect_error1: string;
+    intersect_error2: string;
+    lat_label: string;
+    long_label: string;
+    no_shapes_selected: string;
+    select_download_type: string;
+    singleclick_error1: string;
+    singleclick_error2: string;
+    union_error1: string;
+
     atlasManager = new AtlasManager();
 
     mousePositionControl = new MousePosition({
@@ -382,7 +395,7 @@ export class MapService {
                     coord[0] = coord[0] % 360;
                 }
             }
-            const template = this.latLabel + ' {y} ' + this.longLabel + ' {x}';
+            const template = this.lat_label + ' {y} ' + this.long_label + ' {x}';
             return format(coord, template, 5);
         },
         className: 'mousecoordinates',
@@ -1127,9 +1140,8 @@ export class MapService {
                                 this.setPopup(infoHTML, evt.coordinate);
                             }
                         } else {
-                            const errorMessage = this.translate.get('symbiota-spatial.map-service.singleclick_error1');
                             this.alertService.showErrorSnackbar(
-                                errorMessage,
+                                this.singleclick_error1,
                                 '',
                                 5000
                             );
@@ -1146,9 +1158,8 @@ export class MapService {
                                         this.selectsource.addFeature(feature);
                                         this.setActiveLayer('select');
                                     } catch (e) {
-                                        const errorMessage = this.translate.get('symbiota-spatial.map-service.singleclick_error2');
                                         this.alertService.showErrorSnackbar(
-                                            errorMessage,
+                                            this.singleclick_error2,
                                             '',
                                             5000
                                         );
@@ -1443,9 +1454,8 @@ export class MapService {
             this.dragDropTarget = 'dragdrop3';
             return true;
         } else {
-            const errorMessage = this.translate.get('symbiota-spatial.map-service.drag_drop_max_error1');
             this.alertService.showErrorSnackbar(
-                errorMessage,
+                this.drag_drop_max_error1,
                 '',
                 5000
             );
@@ -1618,17 +1628,15 @@ export class MapService {
                     document.body.removeChild(elem);
                 }
             } else {
-                const errorMessage = this.translate.get('symbiota-spatial.map-service.no_shapes_selected');
                 this.alertService.showErrorSnackbar(
-                    errorMessage,
+                    this.no_shapes_selected,
                     '',
                     5000
                 );
             }
         } else {
-            const errorMessage = this.translate.get('symbiota-spatial.map-service.select_download_type');
             this.alertService.showErrorSnackbar(
-                errorMessage,
+                this.select_download_type,
                 '',
                 5000
             );
@@ -1687,17 +1695,15 @@ export class MapService {
                     }
                 });
             } else {
-                const errorMessage = this.translate.get('symbiota-spatial.map-service.buffer_error1');
                 this.alertService.showErrorSnackbar(
-                    errorMessage,
+                    this.buffer_error1,
                     '',
                     5000
                 );
             }
         } else {
-            const errorMessage = this.translate.get('symbiota-spatial.map-service.buffer_error2');
             this.alertService.showErrorSnackbar(
-                errorMessage,
+                this.buffer_error2,
                 '',
                 5000
             );
@@ -1740,9 +1746,8 @@ export class MapService {
                 this.selectsource.addFeature(diffpoly);
             }
         } else {
-            const errorMessage = this.translate.get('symbiota-spatial.map-service.difference_error1');
             this.alertService.showErrorSnackbar(
-                errorMessage,
+                this.difference_error1,
                 '',
                 5000
             );
@@ -1784,17 +1789,15 @@ export class MapService {
                 interpoly.getGeometry().transform(this.wgs84Projection, this.mapProjection);
                 this.selectsource.addFeature(interpoly);
             } else {
-                const errorMessage = this.translate.get('symbiota-spatial.map-service.intersect_error1');
                 this.alertService.showErrorSnackbar(
-                    errorMessage,
+                    this.intersect_error1,
                     '',
                     5000
                 );
             }
         } else {
-            const errorMessage = this.translate.get('symbiota-spatial.map-service.intersect_error2');
             this.alertService.showErrorSnackbar(
-                errorMessage,
+                this.intersect_error2,
                 '',
                 5000
             );
@@ -1844,9 +1847,8 @@ export class MapService {
                 this.setActiveLayer('select');
             }
         } else {
-            const errorMessage = this.translate.get('symbiota-spatial.map-service.union_error1');
             this.alertService.showErrorSnackbar(
-                errorMessage,
+                this.union_error1,
                 '',
                 5000
             );
@@ -1863,9 +1865,8 @@ export class MapService {
                 if (this.selections.length >= 3) {
                     features = this.getTurfPointFeaturesetSelected();
                 } else {
-                    const errorMessage = this.translate.get('symbiota-spatial.map-service.concave_error1');
                     this.alertService.showErrorSnackbar(
-                        errorMessage,
+                        this.concave_error1,
                         '',
                         5000
                     );
@@ -1877,9 +1878,8 @@ export class MapService {
                 try {
                     concavepoly = this.vectorService.getConcavePolyFeature(features, Number(maxEdge));
                 } catch (e) {
-                    const errorMessage = this.translate.get('symbiota-spatial.map-service.concave_error2');
                     this.alertService.showErrorSnackbar(
-                        errorMessage,
+                        this.concave_error2,
                         '',
                         5000
                     );
@@ -1890,18 +1890,16 @@ export class MapService {
                     this.selectsource.addFeature(cnvepoly);
                 }
             } else {
-                const errorMessage = this.translate.get('symbiota-spatial.map-service.concave_error3');
                 this.alertService.showErrorSnackbar(
-                    errorMessage,
+                    this.concave_error3,
                     '',
                     5000
                 );
             }
             this.concaveMaxEdgeLengthSubject.next(0);
         } else {
-            const errorMessage = this.translate.get('symbiota-spatial.map-service.concave_error4');
             this.alertService.showErrorSnackbar(
-                errorMessage,
+                this.concave_error4,
                 '',
                 5000
             );
@@ -1917,9 +1915,8 @@ export class MapService {
             if (this.selections.length >= 3) {
                 features = this.getTurfPointFeaturesetSelected();
             } else {
-                const errorMessage = this.translate.get('symbiota-spatial.map-service.convex_error1');
                 this.alertService.showErrorSnackbar(
-                    errorMessage,
+                    this.convex_error1,
                     '',
                     5000
                 );
@@ -1934,9 +1931,8 @@ export class MapService {
                 this.selectsource.addFeature(cnvxpoly);
             }
         } else {
-            const errorMessage = this.translate.get('symbiota-spatial.map-service.convex_error2');
             this.alertService.showErrorSnackbar(
-                errorMessage,
+                this.convex_error2,
                 '',
                 5000
             );
@@ -2022,6 +2018,72 @@ export class MapService {
                 }
             }
         }
+    }
+
+    setTranslations() {
+        this.translate.get('symbiota-spatial.map-service.buffer_error1').subscribe((res: string) => {
+            this.buffer_error1 = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.buffer_error2').subscribe((res: string) => {
+            this.buffer_error2 = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.concave_error1').subscribe((res: string) => {
+            this.concave_error1 = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.concave_error2').subscribe((res: string) => {
+            this.concave_error2 = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.concave_error3').subscribe((res: string) => {
+            this.concave_error3 = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.concave_error4').subscribe((res: string) => {
+            this.concave_error4 = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.convex_error1').subscribe((res: string) => {
+            this.convex_error1 = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.convex_error2').subscribe((res: string) => {
+            this.convex_error2 = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.difference_error1').subscribe((res: string) => {
+            this.difference_error1 = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.drag_drop_error1').subscribe((res: string) => {
+            this.drag_drop_error1 = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.drag_drop_error2').subscribe((res: string) => {
+            this.drag_drop_error2 = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.drag_drop_max_error1').subscribe((res: string) => {
+            this.drag_drop_max_error1 = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.intersect_error1').subscribe((res: string) => {
+            this.intersect_error1 = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.intersect_error2').subscribe((res: string) => {
+            this.intersect_error2 = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.lat_label').subscribe((res: string) => {
+            this.lat_label = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.long_label').subscribe((res: string) => {
+            this.long_label = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.no_shapes_selected').subscribe((res: string) => {
+            this.no_shapes_selected = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.select_download_type').subscribe((res: string) => {
+            this.select_download_type = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.singleclick_error1').subscribe((res: string) => {
+            this.singleclick_error1 = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.singleclick_error2').subscribe((res: string) => {
+            this.singleclick_error2 = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.union_error1').subscribe((res: string) => {
+            this.union_error1 = res;
+        });
     }
 
     destroyMap() {

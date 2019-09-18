@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject, Observable} from "rxjs";
 import {TranslateService} from "@ngx-translate/core";
 
 import {SpinnerOverlayService} from './spinner-overlay.service';
 import {AlertService} from './alert.service';
-import {BehaviorSubject, Observable} from "rxjs";
 
 @Injectable({
     providedIn: 'root'
