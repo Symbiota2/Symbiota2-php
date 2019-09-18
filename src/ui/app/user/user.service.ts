@@ -2,10 +2,11 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateService} from '@ngx-translate/core';
 
 import {SpinnerOverlayService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
+import {ConfigurationService} from 'symbiota-shared';
 
 import {User} from './user.model';
 
@@ -14,13 +15,30 @@ import {User} from './user.model';
 })
 export class UserService {
 
+    create_confirmation: string;
+    create_error: string;
+
     constructor(
         private http: HttpClient,
         private router: Router,
         public spinnerService: SpinnerOverlayService,
         public alertService: AlertService,
-        private translate: TranslateService
-    ) {}
+        private translate: TranslateService,
+        private configService: ConfigurationService
+    ) {
+        this.configService.selectedLanguageValue.subscribe(value => {
+            this.setTranslations();
+        });
+    }
+
+    setTranslations() {
+        this.translate.get('core.user.service.create_confirmation').subscribe((res: string) => {
+            this.create_confirmation = res;
+        });
+        this.translate.get('core.user.service.create_error').subscribe((res: string) => {
+            this.create_error = res;
+        });
+    }
 
     createUser(
         username: string,
@@ -64,20 +82,18 @@ export class UserService {
         };
         this.http.post('/api/users', userData).subscribe(
             () => {
-                const confirmationMessage = this.translate.get('core.user.service.create_confirmation');
                 this.spinnerService.hide();
                 this.router.navigate(['/']);
                 this.alertService.showSnackbar(
-                    confirmationMessage,
+                    this.create_confirmation,
                     '',
                     5000
                 );
             },
             error => {
-                const errorMessage = this.translate.get('core.user.service.create_error');
                 this.spinnerService.hide();
                 this.alertService.showErrorSnackbar(
-                    errorMessage,
+                    this.create_error,
                     '',
                     5000
                 );
