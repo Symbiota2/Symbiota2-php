@@ -34,9 +34,7 @@ export function setupPluginLoaderServiceFactory(
     return () => service.initialize();
 }
 
-export function httpLoaderFactory(
-    http: HttpClient
-) {
+export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
 }
 
@@ -55,15 +53,16 @@ export function httpLoaderFactory(
         SymbiotaPluginModule,
         SymbiotaPluginLoaderModule,
         SymbiotaSpatialModule,
-        SymbiotaSharedModule,
+        SymbiotaSharedModule.forRoot(),
         SymbiotaAuthModule,
         ErrorRoutingModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
-                useFactory: httpLoaderFactory,
+                useFactory: HttpLoaderFactory,
                 deps: [HttpClient]
-            }
+            },
+            isolate : false
         })
     ],
     providers: [

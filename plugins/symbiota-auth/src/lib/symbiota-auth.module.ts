@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
-import {TranslateModule} from "@ngx-translate/core";
 
 import {SymbiotaSharedModule} from 'symbiota-shared';
 
@@ -13,8 +12,7 @@ import {LoginComponentService} from "./login-component.service";
 @NgModule({
     imports: [
         ReactiveFormsModule,
-        SymbiotaSharedModule,
-        TranslateModule
+        SymbiotaSharedModule
     ],
     exports: [
         LoginComponent,

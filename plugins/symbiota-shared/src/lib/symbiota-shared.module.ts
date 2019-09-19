@@ -1,9 +1,10 @@
-import {NgModule} from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {TranslateModule} from "@ngx-translate/core";
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {MaterialModule} from './material.module';
 
@@ -14,6 +15,11 @@ import {SpinnerOverlayService} from './spinner-overlay.service';
 import {AlertService} from './alert.service';
 import {ConfigurationService} from './configuration.service';
 import {SharedToolsService} from './shared-tools.service';
+import {HttpClient} from "@angular/common/http";
+
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+}
 
 @NgModule({
     imports: [
@@ -22,7 +28,14 @@ import {SharedToolsService} from './shared-tools.service';
         FormsModule,
         CommonModule,
         MaterialModule,
-        TranslateModule
+        TranslateModule.forChild({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            },
+            isolate: false
+        })
     ],
     exports: [
         FlexLayoutModule,
@@ -31,17 +44,12 @@ import {SharedToolsService} from './shared-tools.service';
         CommonModule,
         MaterialModule,
         SpinnerOverlayComponent,
-        CaptchaComponent
+        CaptchaComponent,
+        TranslateModule
     ],
     declarations: [
         SpinnerOverlayComponent,
         CaptchaComponent
-    ],
-    providers: [
-        SpinnerOverlayService,
-        AlertService,
-        ConfigurationService,
-        SharedToolsService
     ],
     entryComponents: [
         SpinnerOverlayComponent,
@@ -49,4 +57,15 @@ import {SharedToolsService} from './shared-tools.service';
     ]
 })
 export class SymbiotaSharedModule {
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: SymbiotaSharedModule,
+            providers: [
+                SpinnerOverlayService,
+                AlertService,
+                ConfigurationService,
+                SharedToolsService
+            ]
+        }
+    }
 }
