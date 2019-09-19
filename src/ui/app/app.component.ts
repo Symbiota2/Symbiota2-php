@@ -26,7 +26,7 @@ export class AppComponent implements OnInit, OnDestroy {
         private translate: TranslateService,
         private configService: ConfigurationService
     ) {
-        translate.addLangs(['ar', 'zh', 'en', 'fr', 'de', 'hi', 'it', 'ja', 'fa', 'pt', 'ru', 'so', 'es', 'ur']);
+        translate.addLangs(['ar', 'zh', 'en', 'fr', 'de', 'hi', 'it', 'ja', 'fa', 'pt', 'ru', 'es', 'ur']);
         translate.setDefaultLang('en');
         this.configService.selectedLanguageValue.subscribe(value => {
             this.selectedLanguage = value.toString();

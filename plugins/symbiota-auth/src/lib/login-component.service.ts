@@ -15,7 +15,7 @@ export class LoginComponentService {
 
     openLoginDialog(redirect = '') {
         this.loginDialog = this.dialog.open(LoginComponent, {
-            width: '450px',
+            width: '475px',
             data: {redirect: redirect}
         });
     }

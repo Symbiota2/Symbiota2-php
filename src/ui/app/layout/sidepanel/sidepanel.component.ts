@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Output, Input} from '@angular/core';
 import {Router, NavigationEnd, ActivationEnd} from '@angular/router';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
 
 import {SidepanelLinksComponent} from '../sidepanel-links/sidepanel-links.component';
 import {VectorToolsTabComponent} from 'symbiota-spatial';
@@ -8,7 +10,7 @@ import {PointToolsTabComponent} from 'symbiota-spatial';
 import {LayoutComponent} from '../layout/layout.component';
 
 import {PluginTabService} from 'symbiota-plugin';
-import {map} from 'rxjs/operators';
+import {ConfigurationService} from 'symbiota-shared';
 
 @Component({
     selector: 'sidepanel-outlet',
@@ -21,25 +23,28 @@ export class SidepanelComponent {
 
     tabsArr = [];
     domain: string;
+    link_tab_text: string;
+    vector_tools_tab_text: string;
+    point_tools_tab_text: string;
     tabsArrSubject = new BehaviorSubject<any[]>([]);
     tabsArr$: Observable<any[]> = this.tabsArrSubject.asObservable().pipe(
         map(arr => arr)
     );
 
     linksTab = {
-        'tab_text': 'Links',
+        'tab_text': this.link_tab_text,
         'index': 5,
         'component': SidepanelLinksComponent
     };
 
     vectorToolsTab = {
-        'tab_text': 'Vector',
+        'tab_text': this.vector_tools_tab_text,
         'index': 10,
         'component': VectorToolsTabComponent
     };
 
     pointToolsTab = {
-        'tab_text': 'Point',
+        'tab_text': this.point_tools_tab_text,
         'index': 20,
         'component': PointToolsTabComponent
     };
@@ -47,8 +52,16 @@ export class SidepanelComponent {
     constructor(
         private tabsService: PluginTabService,
         private router: Router,
-        private layoutComponent: LayoutComponent
+        private layoutComponent: LayoutComponent,
+        private translate: TranslateService,
+        private configService: ConfigurationService
     ) {
+        this.configService.selectedLanguageValue.subscribe(value => {
+            this.translate.use(value);
+            setTimeout(() => {
+                this.setTranslations();
+            }, 100);
+        });
         this.router.events.subscribe((val) => {
             if (val instanceof NavigationEnd) {
                 if (this.layoutComponent.sidenavOpenState) {
@@ -72,6 +85,21 @@ export class SidepanelComponent {
                     this.addTabToTabsArr(this.pointToolsTab);
                 }
             }
+        });
+    }
+
+    setTranslations() {
+        this.translate.get('core.layout.sidepanel.link_tab_text').subscribe((res: string) => {
+            this.link_tab_text = res;
+            this.linksTab.tab_text = res;
+        });
+        this.translate.get('core.layout.sidepanel.vector_tools_tab_text').subscribe((res: string) => {
+            this.vector_tools_tab_text = res;
+            this.vectorToolsTab.tab_text = res;
+        });
+        this.translate.get('core.layout.sidepanel.point_tools_tab_text').subscribe((res: string) => {
+            this.point_tools_tab_text = res;
+            this.pointToolsTab.tab_text = res;
         });
     }
 

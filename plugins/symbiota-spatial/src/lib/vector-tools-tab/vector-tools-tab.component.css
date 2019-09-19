@@ -4,7 +4,6 @@
 }
 
 .top-div {
-    height: 45px;
     padding: 10px;
 }
 
@@ -21,8 +20,8 @@
 }
 
 .top-div-child {
-    float: right;
     margin-top: 5px;
+    clear:both;
 }
 
 .selected-area-box {
