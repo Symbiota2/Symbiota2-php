@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {TranslateModule} from "@ngx-translate/core";
 
 import {SymbiotaSharedModule} from 'symbiota-shared';
 import {SymbiotaPluginModule} from 'symbiota-plugin';
@@ -21,7 +22,8 @@ import {UserService} from './user.service';
         CommonModule,
         SymbiotaSharedModule,
         UserRoutingModule,
-        SymbiotaPluginModule
+        SymbiotaPluginModule,
+        TranslateModule
     ],
     entryComponents: [
         EditProfileComponent

@@ -53,7 +53,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         SymbiotaPluginModule,
         SymbiotaPluginLoaderModule,
         SymbiotaSpatialModule,
-        SymbiotaSharedModule.forRoot(),
+        SymbiotaSharedModule,
         SymbiotaAuthModule,
         ErrorRoutingModule,
         TranslateModule.forRoot({
@@ -61,8 +61,7 @@ export function HttpLoaderFactory(http: HttpClient) {
                 provide: TranslateLoader,
                 useFactory: HttpLoaderFactory,
                 deps: [HttpClient]
-            },
-            isolate : false
+            }
         })
     ],
     providers: [

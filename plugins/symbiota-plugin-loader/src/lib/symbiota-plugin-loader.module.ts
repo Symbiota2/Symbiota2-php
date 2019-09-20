@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {TranslateModule} from "@ngx-translate/core";
 
 import {SymbiotaPluginModule} from 'symbiota-plugin';
-import {SymbiotaSharedModule} from 'symbiota-shared';
 
 import {PluginLoaderService} from './plugin-loader.service';
 
@@ -11,8 +11,9 @@ import {PluginLoaderService} from './plugin-loader.service';
     imports: [
         CommonModule,
         SymbiotaPluginModule,
-        SymbiotaSharedModule
+        TranslateModule
     ],
+    exports: [],
     providers: [
         PluginLoaderService
     ]

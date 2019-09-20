@@ -1,4 +1,5 @@
 import {NgModule} from '@angular/core';
+import {TranslateModule} from "@ngx-translate/core";
 
 import {SymbiotaSharedModule} from 'symbiota-shared';
 import {SymbiotaPluginModule} from 'symbiota-plugin';
@@ -29,7 +30,8 @@ import {SidepanelLinksComponent} from './sidepanel-links/sidepanel-links.compone
     imports: [
         AppRoutingModule,
         SymbiotaSharedModule,
-        SymbiotaPluginModule
+        SymbiotaPluginModule,
+        TranslateModule
     ],
     exports: [
         LayoutComponent,
