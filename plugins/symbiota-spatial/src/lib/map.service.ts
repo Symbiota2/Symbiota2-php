@@ -62,7 +62,9 @@ export class MapService {
             this.activeLayer = value.toString();
         });
         this.configService.selectedLanguageValue.subscribe(value => {
-            this.setTranslations();
+            setTimeout(() => {
+                this.setTranslations();
+            }, 100);
         });
 
         this.mapCenter = (
@@ -257,13 +259,7 @@ export class MapService {
                 const featureCnt = this.selectsource.getFeatures().length;
                 if (featureCnt > 0) {
                     if (!this.shapeActive) {
-                        this.addLayerToSelectorArr({
-                            name: 'select',
-                            title: 'Shapes',
-                            layerType: 'vector',
-                            removable: true,
-                            visible: true
-                        });
+                        this.addLayerToSelectorArr(this.shapeLayerSelectOption);
                         this.shapeActive = true;
                     }
                 } else {
@@ -275,6 +271,30 @@ export class MapService {
             }
         });
     }
+
+    buffer_error1: string;
+    buffer_error2: string;
+    concave_error1: string;
+    concave_error2: string;
+    concave_error3: string;
+    concave_error4: string;
+    convex_error1: string;
+    convex_error2: string;
+    difference_error1: string;
+    drag_drop_error1: string;
+    drag_drop_error2: string;
+    drag_drop_max_error1: string;
+    intersect_error1: string;
+    intersect_error2: string;
+    lat_label: string;
+    long_label: string;
+    no_shapes_selected: string;
+    select_download_type: string;
+    singleclick_error1: string;
+    singleclick_error2: string;
+    union_error1: string;
+    none_select_option = '';
+    shapes_select_option = '';
 
     map: OlMap;
     mapId = 'analysis';
@@ -313,15 +333,23 @@ export class MapService {
     dragDrop2 = false;
     dragDrop3 = false;
     returnClusters = false;
+    noneLayerSelectOption = {
+        name: 'none',
+        title: this.none_select_option,
+        removable: false,
+        visible: true
+    };
+    shapeLayerSelectOption = {
+        name: 'select',
+        title: this.shapes_select_option,
+        layerType: 'vector',
+        removable: true,
+        visible: true
+    };
     drawToolSelectedSubject = new BehaviorSubject<string>('None');
     public readonly drawToolSelectedValue: Observable<string> = this.drawToolSelectedSubject.asObservable();
     layersSelectorSubject = new BehaviorSubject<Layer[]>([
-        {
-            name: 'none',
-            title: 'None',
-            removable: false,
-            visible: true
-        }
+        this.noneLayerSelectOption
     ]);
     public readonly layersSelectorArr: Observable<Layer[]> = this.layersSelectorSubject.asObservable();
     activeLayerSubject = new BehaviorSubject<string>('none');
@@ -351,28 +379,6 @@ export class MapService {
     public readonly bufferDistanceValue: Observable<number> = this.bufferDistanceSubject.asObservable();
     concaveMaxEdgeLengthSubject = new BehaviorSubject<number>(0);
     public readonly concaveMaxEdgeLengthValue: Observable<number> = this.concaveMaxEdgeLengthSubject.asObservable();
-
-    buffer_error1: string;
-    buffer_error2: string;
-    concave_error1: string;
-    concave_error2: string;
-    concave_error3: string;
-    concave_error4: string;
-    convex_error1: string;
-    convex_error2: string;
-    difference_error1: string;
-    drag_drop_error1: string;
-    drag_drop_error2: string;
-    drag_drop_max_error1: string;
-    intersect_error1: string;
-    intersect_error2: string;
-    lat_label: string;
-    long_label: string;
-    no_shapes_selected: string;
-    select_download_type: string;
-    singleclick_error1: string;
-    singleclick_error2: string;
-    union_error1: string;
 
     atlasManager = new AtlasManager();
 
@@ -1280,13 +1286,7 @@ export class MapService {
                 this.drawToolSelectedSubject.next('None');
                 this.map.removeInteraction(this.draw);
                 if (!this.shapeActive) {
-                    this.addLayerToSelectorArr({
-                        name: 'select',
-                        title: 'Shapes',
-                        layerType: 'vector',
-                        removable: true,
-                        visible: true
-                    });
+                    this.addLayerToSelectorArr(this.shapeLayerSelectOption);
                     this.shapeActive = true;
                     this.setActiveLayer('select');
                 } else {
@@ -2083,6 +2083,14 @@ export class MapService {
         });
         this.translate.get('symbiota-spatial.map-service.union_error1').subscribe((res: string) => {
             this.union_error1 = res;
+        });
+        this.translate.get('symbiota-spatial.map-service.none_select_option').subscribe((res: string) => {
+            this.none_select_option = res;
+            this.noneLayerSelectOption.title = this.none_select_option;
+        });
+        this.translate.get('symbiota-spatial.map-service.shapes_select_option').subscribe((res: string) => {
+            this.shapes_select_option = res;
+            this.shapeLayerSelectOption.title = res;
         });
     }
 
