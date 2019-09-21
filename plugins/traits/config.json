@@ -7,5 +7,7 @@
   "dependencies": [
     "taxa"
   ],
-  "api_namespace": "Traits"
+  "api_namespace": "Traits",
+  "ui_filename": "traits.umd.js",
+  "ui_module_name": "TraitsModule"
 }

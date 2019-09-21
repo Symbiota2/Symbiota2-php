@@ -8,5 +8,7 @@
     "media",
     "collection"
   ],
-  "api_namespace": "ImageProcessor"
+  "api_namespace": "ImageProcessor",
+  "ui_filename": "image-processor.umd.js",
+  "ui_module_name": "ImageProcessorModule"
 }

@@ -8,5 +8,7 @@
     "occurrence",
     "taxa"
   ],
-  "api_namespace": "Checklist"
+  "api_namespace": "Checklist",
+  "ui_filename": "checklist.umd.js",
+  "ui_module_name": "ChecklistModule"
 }

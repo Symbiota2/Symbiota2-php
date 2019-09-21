@@ -16,7 +16,7 @@
 !/occurrence-genetic/**
 !/occurrence-loan/**
 !/occurrence-search/**
-!/referencer/**
+!/reference/**
 !/symbiota-auth/**
 !/symbiota-plugin/**
 !/symbiota-plugin-loader/**

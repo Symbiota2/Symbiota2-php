@@ -4,5 +4,7 @@
   "source": "local",
   "version": "0.0.1",
   "description": "A plugin that adds the reference module to Symbiota.",
-  "api_namespace": "Reference"
+  "api_namespace": "Reference",
+  "ui_filename": "reference.umd.js",
+  "ui_module_name": "ReferenceModule"
 }

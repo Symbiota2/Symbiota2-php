@@ -82,6 +82,84 @@
       ],
       "symbiota-plugin-loader/*": [
         "dist/symbiota-plugin-loader/*"
+      ],
+      "crowd-source": [
+        "dist/crowd-source"
+      ],
+      "crowd-source/*": [
+        "dist/crowd-source/*"
+      ],
+      "exsiccati": [
+        "dist/exsiccati"
+      ],
+      "exsiccati/*": [
+        "dist/exsiccati/*"
+      ],
+      "glossary": [
+        "dist/glossary"
+      ],
+      "glossary/*": [
+        "dist/glossary/*"
+      ],
+      "image-processor": [
+        "dist/image-processor"
+      ],
+      "image-processor/*": [
+        "dist/image-processor/*"
+      ],
+      "key": [
+        "dist/key"
+      ],
+      "key/*": [
+        "dist/key/*"
+      ],
+      "media": [
+        "dist/media"
+      ],
+      "media/*": [
+        "dist/media/*"
+      ],
+      "occurrence-association": [
+        "dist/occurrence-association"
+      ],
+      "occurrence-association/*": [
+        "dist/occurrence-association/*"
+      ],
+      "occurrence-comment": [
+        "dist/occurrence-comment"
+      ],
+      "occurrence-comment/*": [
+        "dist/occurrence-comment/*"
+      ],
+      "occurrence-dataset": [
+        "dist/occurrence-dataset"
+      ],
+      "occurrence-dataset/*": [
+        "dist/occurrence-dataset/*"
+      ],
+      "occurrence-genetic": [
+        "dist/occurrence-genetic"
+      ],
+      "occurrence-genetic/*": [
+        "dist/occurrence-genetic/*"
+      ],
+      "occurrence-loan": [
+        "dist/occurrence-loan"
+      ],
+      "occurrence-loan/*": [
+        "dist/occurrence-loan/*"
+      ],
+      "reference": [
+        "dist/reference"
+      ],
+      "reference/*": [
+        "dist/reference/*"
+      ],
+      "traits": [
+        "dist/traits"
+      ],
+      "traits/*": [
+        "dist/traits/*"
       ]
     }
   }

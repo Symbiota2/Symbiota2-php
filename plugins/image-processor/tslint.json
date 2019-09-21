@@ -1,0 +1,17 @@
+{
+  "extends": "../../tslint.json",
+  "rules": {
+    "directive-selector": [
+      true,
+      "attribute",
+      "imageProcessor",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "image-processor",
+      "kebab-case"
+    ]
+  }
+}

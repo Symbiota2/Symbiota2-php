@@ -1,10 +1,9 @@
 import {NgModule} from '@angular/core';
-import {ChecklistComponent} from './checklist.component';
 
 @NgModule({
-    declarations: [ChecklistComponent],
+    declarations: [],
     imports: [],
-    exports: [ChecklistComponent]
+    exports: []
 })
 export class ChecklistModule {
 }

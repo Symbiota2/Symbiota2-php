@@ -7,5 +7,7 @@
   "dependencies": [
     "occurrence"
   ],
-  "api_namespace": "OccurrenceLoan"
+  "api_namespace": "OccurrenceLoan",
+  "ui_filename": "occurrence-loan.umd.js",
+  "ui_module_name": "OccurrenceLoanModule"
 }

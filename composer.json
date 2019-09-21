@@ -105,6 +105,15 @@
         "update-tsconfig-json": [
             "@php -r \"!file_exists('tsconfig.json') || copy('tsconfig.json', 'tsconfig.json.bak');\"",
             "@php -r \"copy('tsconfig.json.dist', 'tsconfig.json');\""
+        ],
+        "update-all-files": [
+            "@update-angular-json",
+            "@update-api_platform-yaml",
+            "@update-doctrine-yaml",
+            "@update-package-json",
+            "@update-plugin-composer-json",
+            "@update-plugin-config-json",
+            "@update-tsconfig-json"
         ]
     },
     "conflict": {

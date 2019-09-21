@@ -7,5 +7,7 @@
   "dependencies": [
     "occurrence"
   ],
-  "api_namespace": "OccurrenceDataset"
+  "api_namespace": "OccurrenceDataset",
+  "ui_filename": "occurrence-dataset.umd.js",
+  "ui_module_name": "OccurrenceDatasetModule"
 }

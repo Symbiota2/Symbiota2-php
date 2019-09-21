@@ -1,10 +1,9 @@
 import {NgModule} from '@angular/core';
-import {OccurrenceComponent} from './occurrence.component';
 
 @NgModule({
-    declarations: [OccurrenceComponent],
+    declarations: [],
     imports: [],
-    exports: [OccurrenceComponent]
+    exports: []
 })
 export class OccurrenceModule {
 }

@@ -7,5 +7,7 @@
   "dependencies": [
     "occurrence"
   ],
-  "api_namespace": "Media"
+  "api_namespace": "Media",
+  "ui_filename": "media.umd.js",
+  "ui_module_name": "MediaModule"
 }

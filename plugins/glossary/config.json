@@ -7,5 +7,7 @@
   "dependencies": [
     "taxa"
   ],
-  "api_namespace": "Glossary"
+  "api_namespace": "Glossary",
+  "ui_filename": "glossary.umd.js",
+  "ui_module_name": "GlossaryModule"
 }

@@ -8,5 +8,7 @@
     "collection",
     "taxa"
   ],
-  "api_namespace": "Occurrence"
+  "api_namespace": "Occurrence",
+  "ui_filename": "occurrence.umd.js",
+  "ui_module_name": "OccurrenceModule"
 }

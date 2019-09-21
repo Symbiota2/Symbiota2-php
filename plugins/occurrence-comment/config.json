@@ -7,5 +7,7 @@
   "dependencies": [
     "occurrence"
   ],
-  "api_namespace": "OccurrenceComment"
+  "api_namespace": "OccurrenceComment",
+  "ui_filename": "occurrence-comment.umd.js",
+  "ui_module_name": "OccurrenceCommentModule"
 }

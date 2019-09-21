@@ -1,10 +1,9 @@
 import {NgModule} from '@angular/core';
-import {TaxaComponent} from './taxa.component';
 
 @NgModule({
-    declarations: [TaxaComponent],
+    declarations: [],
     imports: [],
-    exports: [TaxaComponent]
+    exports: []
 })
 export class TaxaModule {
 }

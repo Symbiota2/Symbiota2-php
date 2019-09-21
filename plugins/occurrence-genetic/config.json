@@ -7,5 +7,7 @@
   "dependencies": [
     "occurrence"
   ],
-  "api_namespace": "OccurrenceGenetic"
+  "api_namespace": "OccurrenceGenetic",
+  "ui_filename": "occurrence-genetic.umd.js",
+  "ui_module_name": "OccurrenceGeneticModule"
 }

@@ -7,5 +7,7 @@
   "dependencies": [
     "taxa"
   ],
-  "api_namespace": "Key"
+  "api_namespace": "Key",
+  "ui_filename": "key.umd.js",
+  "ui_module_name": "KeyModule"
 }

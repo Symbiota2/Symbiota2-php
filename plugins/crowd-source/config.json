@@ -7,5 +7,7 @@
   "dependencies": [
     "occurrence"
   ],
-  "api_namespace": "CrowdSource"
+  "api_namespace": "CrowdSource",
+  "ui_filename": "crowd-source.umd.js",
+  "ui_module_name": "CrowdSourceModule"
 }

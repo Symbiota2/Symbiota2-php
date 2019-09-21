@@ -4,5 +4,7 @@
   "source": "local",
   "version": "0.0.1",
   "description": "Adds the Taxa module to manage taxonomic data.",
-  "api_namespace": "Taxa"
+  "api_namespace": "Taxa",
+  "ui_filename": "taxa.umd.js",
+  "ui_module_name": "TaxaModule"
 }

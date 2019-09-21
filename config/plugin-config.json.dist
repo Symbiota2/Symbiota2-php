@@ -10,6 +10,8 @@
       "taxa"
     ],
     "api_namespace": "Checklist",
+    "ui_filename": "checklist.umd.js",
+    "ui_module_name": "ChecklistModule",
     "enabled": true
   },
   {
@@ -41,6 +43,8 @@
       "occurrence"
     ],
     "api_namespace": "CrowdSource",
+    "ui_filename": "crowd-source.umd.js",
+    "ui_module_name": "CrowdSourceModule",
     "enabled": true
   },
   {
@@ -53,6 +57,8 @@
       "occurrence"
     ],
     "api_namespace": "Exsiccati",
+    "ui_filename": "exsiccati.umd.js",
+    "ui_module_name": "ExsiccatiModule",
     "enabled": true
   },
   {
@@ -65,6 +71,8 @@
       "taxa"
     ],
     "api_namespace": "Glossary",
+    "ui_filename": "glossary.umd.js",
+    "ui_module_name": "GlossaryModule",
     "enabled": true
   },
   {
@@ -78,6 +86,8 @@
       "collection"
     ],
     "api_namespace": "ImageProcessor",
+    "ui_filename": "image-processor.umd.js",
+    "ui_module_name": "ImageProcessorModule",
     "enabled": true
   },
   {
@@ -90,6 +100,8 @@
       "taxa"
     ],
     "api_namespace": "Key",
+    "ui_filename": "key.umd.js",
+    "ui_module_name": "KeyModule",
     "enabled": true
   },
   {
@@ -102,6 +114,8 @@
       "occurrence"
     ],
     "api_namespace": "Media",
+    "ui_filename": "media.umd.js",
+    "ui_module_name": "MediaModule",
     "enabled": true
   },
   {
@@ -115,6 +129,8 @@
       "taxa"
     ],
     "api_namespace": "Occurrence",
+    "ui_filename": "occurrence.umd.js",
+    "ui_module_name": "OccurrenceModule",
     "enabled": true
   },
   {
@@ -127,6 +143,8 @@
       "occurrence"
     ],
     "api_namespace": "OccurrenceAssociation",
+    "ui_filename": "occurrence-association.umd.js",
+    "ui_module_name": "OccurrenceAssociationModule",
     "enabled": true
   },
   {
@@ -139,6 +157,8 @@
       "occurrence"
     ],
     "api_namespace": "OccurrenceComment",
+    "ui_filename": "occurrence-comment.umd.js",
+    "ui_module_name": "OccurrenceCommentModule",
     "enabled": true
   },
   {
@@ -151,6 +171,8 @@
       "occurrence"
     ],
     "api_namespace": "OccurrenceDataset",
+    "ui_filename": "occurrence-dataset.umd.js",
+    "ui_module_name": "OccurrenceDatasetModule",
     "enabled": true
   },
   {
@@ -163,6 +185,8 @@
       "occurrence"
     ],
     "api_namespace": "OccurrenceGenetic",
+    "ui_filename": "occurrence-genetic.umd.js",
+    "ui_module_name": "OccurrenceGeneticModule",
     "enabled": true
   },
   {
@@ -175,6 +199,8 @@
       "occurrence"
     ],
     "api_namespace": "OccurrenceLoan",
+    "ui_filename": "occurrence-loan.umd.js",
+    "ui_module_name": "OccurrenceLoanModule",
     "enabled": true
   },
   {
@@ -203,6 +229,8 @@
     "version": "0.0.1",
     "description": "A plugin that adds the reference module to Symbiota.",
     "api_namespace": "Reference",
+    "ui_filename": "reference.umd.js",
+    "ui_module_name": "ReferenceModule",
     "enabled": true
   },
   {
@@ -212,6 +240,8 @@
     "version": "0.0.1",
     "description": "Adds the Taxa module to manage taxonomic data.",
     "api_namespace": "Taxa",
+    "ui_filename": "taxa.umd.js",
+    "ui_module_name": "TaxaModule",
     "enabled": true
   },
   {
@@ -224,6 +254,8 @@
       "taxa"
     ],
     "api_namespace": "Traits",
+    "ui_filename": "traits.umd.js",
+    "ui_module_name": "TraitsModule",
     "enabled": true
   }
 ]
