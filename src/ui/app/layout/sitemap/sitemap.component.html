@@ -2,7 +2,8 @@
     <mat-card-content>
         <ul *ngIf="generalLinksArr.length > 0">
             <li *ngFor="let link of generalLinksArr">
-                <a routerLink="{{link.link_path}}">{{link.link_text}}</a>
+                <a routerLink="{{link.link_path}}" *ngIf="link.link_text">{{link.link_text}}</a>
+                <a routerLink="{{link.link_path}}" *ngIf="link.link_text_translation_key">{{ link.link_text_translation_key | translate }}</a>
             </li>
         </ul>
         <ng-container *ngIf="generalComponentsArr.length > 0">
@@ -23,7 +24,8 @@
     <mat-card-content>
         <ul *ngIf="portalAdminLinksArr.length > 0">
             <li *ngFor="let link of portalAdminLinksArr">
-                <a routerLink="{{link.link_path}}">{{link.link_text}}</a>
+                <a routerLink="{{link.link_path}}" *ngIf="link.link_text">{{link.link_text}}</a>
+                <a routerLink="{{link.link_path}}" *ngIf="link.link_text_translation_key">{{ link.link_text_translation_key | translate }}</a>
             </li>
         </ul>
         <ng-container *ngIf="portalAdminComponentsArr.length > 0">
@@ -44,7 +46,8 @@
     <mat-card-content>
         <ul *ngIf="dataManagementLinksArr.length > 0">
             <li *ngFor="let link of dataManagementLinksArr">
-                <a routerLink="{{link.link_path}}">{{link.link_text}}</a>
+                <a routerLink="{{link.link_path}}" *ngIf="link.link_text">{{link.link_text}}</a>
+                <a routerLink="{{link.link_path}}" *ngIf="link.link_text_translation_key">{{ link.link_text_translation_key | translate }}</a>
             </li>
         </ul>
         <ng-container *ngIf="dataManagementComponentsArr.length > 0">

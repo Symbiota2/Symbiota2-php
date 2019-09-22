@@ -32,19 +32,19 @@ export class SidepanelComponent {
     );
 
     linksTab = {
-        'tab_text': this.link_tab_text,
+        'tab_text_translation_key': 'core.layout.sidepanel.link_tab_text',
         'index': 5,
         'component': SidepanelLinksComponent
     };
 
     vectorToolsTab = {
-        'tab_text': this.vector_tools_tab_text,
+        'tab_text_translation_key': 'core.layout.sidepanel.vector_tools_tab_text',
         'index': 10,
         'component': VectorToolsTabComponent
     };
 
     pointToolsTab = {
-        'tab_text': this.point_tools_tab_text,
+        'tab_text_translation_key': 'core.layout.sidepanel.point_tools_tab_text',
         'index': 20,
         'component': PointToolsTabComponent
     };
@@ -58,9 +58,6 @@ export class SidepanelComponent {
     ) {
         this.configService.selectedLanguageValue.subscribe(value => {
             this.translate.use(value);
-            setTimeout(() => {
-                this.setTranslations();
-            }, 100);
         });
         this.router.events.subscribe((val) => {
             if (val instanceof NavigationEnd) {
@@ -85,21 +82,6 @@ export class SidepanelComponent {
                     this.addTabToTabsArr(this.pointToolsTab);
                 }
             }
-        });
-    }
-
-    setTranslations() {
-        this.translate.get('core.layout.sidepanel.link_tab_text').subscribe((res: string) => {
-            this.link_tab_text = res;
-            this.linksTab.tab_text = res;
-        });
-        this.translate.get('core.layout.sidepanel.vector_tools_tab_text').subscribe((res: string) => {
-            this.vector_tools_tab_text = res;
-            this.vectorToolsTab.tab_text = res;
-        });
-        this.translate.get('core.layout.sidepanel.point_tools_tab_text').subscribe((res: string) => {
-            this.point_tools_tab_text = res;
-            this.pointToolsTab.tab_text = res;
         });
     }
 

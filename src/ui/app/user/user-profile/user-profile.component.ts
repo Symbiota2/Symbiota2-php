@@ -14,7 +14,7 @@ export class UserProfileComponent {
     tabsArr = [];
 
     editTab = {
-        'tab_text': 'User Profile',
+        'tab_text_translation_key': 'core.user.user_profile_tab',
         'index': 5,
         'component': EditProfileComponent
     };

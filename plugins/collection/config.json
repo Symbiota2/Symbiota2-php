@@ -10,7 +10,7 @@
   "tab_hooks": [
     {
       "outlet": "user-profile",
-      "tab_text": "Specimen Management",
+      "tab_text_translation_key": "collection.specimen_management_tab",
       "index": 1,
       "provider": "user-profile-collection-tab"
     }

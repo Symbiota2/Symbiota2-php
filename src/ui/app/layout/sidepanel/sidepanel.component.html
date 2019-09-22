@@ -3,9 +3,8 @@
 </div>
 <mat-tab-group animationDuration="0ms">
     <mat-tab *ngFor="let tab of tabsArr$ | async">
-        <ng-template mat-tab-label>
-            {{tab.tab_text}}
-        </ng-template>
+        <ng-template mat-tab-label *ngIf="tab.tab_text">{{tab.tab_text}}</ng-template>
+        <ng-template mat-tab-label *ngIf="tab.tab_text_translation_key">{{ tab.tab_text_translation_key | translate }}</ng-template>
         <app-plugin-outlet class="dynamic-tab-content" *ngIf="tab.module" [file]="tab.filename" [module]="tab.module" [provider]="tab.provider" [child]="true"></app-plugin-outlet>
         <ng-container *ngIf="!tab.module">
             <ng-container *ngComponentOutlet="tab.component"></ng-container>

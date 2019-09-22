@@ -22,7 +22,11 @@ export class SitemapComponent implements OnInit {
     dataManagementComponentsArr = [];
 
     portalAdminLinks = [
-        {'link_path': '/pluginadmin', 'link_text': 'Manage Plugins'}
+        {
+            'link_path': '/pluginadmin',
+            'link_text_translation_key': 'core.layout.sitemap.manage_plugins_link_text',
+            'index': 1
+        }
     ];
 
     constructor(
@@ -31,14 +35,14 @@ export class SitemapComponent implements OnInit {
         private authService: AuthService
     ) {
         this.generalLinksArr = Object.assign([], this.linkService.getOutletLinks('sitemap-general'));
-        this.generalLinksArr.sort((a, b) => a.link_text.localeCompare(b.link_text));
+        this.generalLinksArr.sort((a, b) => a.index - b.index);
 
         this.portalAdminLinksArr = Object.assign([], this.linkService.getOutletLinks('sitemap-portal-admin'));
         this.portalAdminLinksArr = this.portalAdminLinksArr.concat(this.portalAdminLinks);
-        this.portalAdminLinksArr.sort((a, b) => a.link_text.localeCompare(b.link_text));
+        this.portalAdminLinksArr.sort((a, b) => a.index - b.index);
 
         this.dataManagementLinksArr = Object.assign([], this.linkService.getOutletLinks('sitemap-data-management'));
-        this.dataManagementLinksArr.sort((a, b) => a.link_text.localeCompare(b.link_text));
+        this.dataManagementLinksArr.sort((a, b) => a.index - b.index);
 
         this.generalComponentsArr = Object.assign([], this.componentService.getOutletComponents('sitemap-general'));
         this.generalComponentsArr.sort((a, b) => a.index - b.index);
