@@ -30,7 +30,8 @@
         "index": 1,
         "provider": "user-profile-collection-tab"
       }
-    ]
+    ],
+    "enabled": true
   },
   {
     "name": "crowd-source",
