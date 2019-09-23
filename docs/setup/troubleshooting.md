@@ -10,13 +10,12 @@ The following are some common errors that have been encountered with installatio
 development environment and how to fix them:
 
 * * *
-#### Error message when running `npm start` after running `git pull`
+#### `error TS2307: Cannot find module...` after running `npm start`
 
-Some newer developments have led to files that had been formerly part of the repository to be instead
-installed locally. This can cause a variety of error messages depending on the file. To fix this issue,
-run the following:
- - `composer update`
- - `npm install`
+If there is no `dist` directory in your Symbiota2 installation, or if this directory is empty, there was likely an
+issue with the execution of `npm install` on your system. This could be from running the command as the root user
+(or with sudo). To correct this either run `npm install` again not as the root user, or run `npm run package_all_plugins` to
+build the plugins specifically.
  
 * * *
 

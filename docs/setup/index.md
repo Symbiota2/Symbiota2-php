@@ -22,10 +22,13 @@ layout: default
   - [Populate the database with data](./populate_database.html)
   - [If Docker openssl container is not being used](./docker_no_openssl.html)
   - [If Docker nginx and php containers are not being used](./docker_no_php_nginx.html)
-  - [Start frontend Angular server and application urls](./frontend_server_urls.html)
-  - [Generate list of API endpoints](./list_api_endpoints.html)
-  - [Access the Docker DBMS containers using Adminer](./access_database_adminer.html)
-  - [Initial user accounts in new databases](./initial_user_accounts.html)
-  - [Troubleshooting](./troubleshooting.html)
+- **[Start frontend Angular server and application urls](./frontend_server_urls.html)**
+- **[Generate list of API endpoints](./list_api_endpoints.html)**
+- **[Access the Docker DBMS containers using Adminer](./access_database_adminer.html)**
+- **[Initial user accounts in new databases](./initial_user_accounts.html)**
+- **[Composer scripts for managing plugins](./plugin_composer_scripts.html)**
+- **[npm scripts for managing plugins](./managing_plugin_builds.html)**
+- **[Updating Symbiota2](./updating_symbiota2.html)**
+- **[Troubleshooting](./troubleshooting.html)**
   
-  ### [Back to main menu](../index.html)
+### [Back to main menu](../index.html)
