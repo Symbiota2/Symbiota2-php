@@ -5,6 +5,7 @@
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
       "@ngrx/store": "@ngrx/store",
+      "@ngx-translate/core": "@ngx-translate/core",
       "symbiota-auth": "symbiota-auth",
       "symbiota-plugin": "symbiota-plugin",
       "symbiota-shared": "symbiota-shared",

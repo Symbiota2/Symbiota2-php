@@ -4,6 +4,7 @@
   "lib": {
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
+      "@ngx-translate/core": "@ngx-translate/core",
       "collection": "collection",
       "symbiota-auth": "symbiota-auth",
       "symbiota-shared": "symbiota-shared"

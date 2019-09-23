@@ -1,11 +1,18 @@
 import {NgModule} from '@angular/core';
-import {OccurrenceSearchComponent} from './occurrence-search/occurrence-search.component';
+import {TranslateModule} from "@ngx-translate/core";
 
 import {CollectionModule} from 'collection';
+import {SymbiotaAuthModule} from 'symbiota-auth';
+import {SymbiotaSharedModule} from 'symbiota-shared';
+
+import {OccurrenceSearchComponent} from './occurrence-search/occurrence-search.component';
 
 @NgModule({
     imports: [
-        CollectionModule
+        TranslateModule,
+        CollectionModule,
+        SymbiotaAuthModule,
+        SymbiotaSharedModule
     ],
     declarations: [
         OccurrenceSearchComponent

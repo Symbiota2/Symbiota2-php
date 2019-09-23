@@ -2,8 +2,9 @@
   "name": "checklist",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^8.0.0",
-    "@angular/core": "^8.0.0",
+    "@angular/common": "^8.0.3",
+    "@angular/core": "^8.0.3",
+    "@ngx-translate/core": "^11.0.1",
     "symbiota-auth": "file:../../dist/symbiota-auth/symbiota-auth-0.0.1.tgz",
     "symbiota-shared": "file:../../dist/symbiota-shared/symbiota-shared-0.0.1.tgz"
   }

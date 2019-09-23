@@ -27,6 +27,7 @@ import * as AngularBrowser from '@angular/platform-browser';
 import * as AngularBrowserAnimations from '@angular/platform-browser/animations';
 import * as AngularRouter from '@angular/router';
 import * as NgrxStore from '@ngrx/store';
+import * as NgxTranslateCore from '@ngx-translate/core';
 import * as Rxjs from 'rxjs';
 import * as RxjsOperators from 'rxjs/operators';
 import * as SymbiotaAuth from 'symbiota-auth';
@@ -229,6 +230,7 @@ export class PluginLoaderService {
         SystemJS.set('@angular/platform-browser/animations', SystemJS.newModule(AngularBrowserAnimations));
         SystemJS.set('@angular/router', SystemJS.newModule(AngularRouter));
         SystemJS.set('@ngrx/store', SystemJS.newModule(NgrxStore));
+        SystemJS.set('@ngx-translate/core', SystemJS.newModule(NgxTranslateCore));
         SystemJS.set('rxjs', SystemJS.newModule(Rxjs));
         SystemJS.set('rxjs/operators', SystemJS.newModule(RxjsOperators));
         SystemJS.set('symbiota-auth', SystemJS.newModule(SymbiotaAuth));

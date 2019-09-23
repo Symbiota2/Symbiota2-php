@@ -1,10 +1,13 @@
 import {NgModule} from '@angular/core';
-import {SymbiotaSharedModule} from 'symbiota-shared';
+import {TranslateModule} from '@ngx-translate/core';
 
-import {CollectionListService} from './collection-list.service';
+import {SymbiotaAuthModule} from 'symbiota-auth';
+import {SymbiotaSharedModule} from 'symbiota-shared';
 
 import {CollectionCheckboxListComponent} from './collection-checkbox-list/collection-checkbox-list.component';
 import {UserProfileCollectionTabComponent} from './user-profile-collection-tab/user-profile-collection-tab.component';
+
+import {CollectionListService} from './collection-list.service';
 
 @NgModule({
     declarations: [
@@ -12,6 +15,8 @@ import {UserProfileCollectionTabComponent} from './user-profile-collection-tab/u
         UserProfileCollectionTabComponent
     ],
     imports: [
+        TranslateModule,
+        SymbiotaAuthModule,
         SymbiotaSharedModule
     ],
     exports: [

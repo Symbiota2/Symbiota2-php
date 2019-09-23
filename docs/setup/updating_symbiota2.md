@@ -32,11 +32,11 @@ plugin, or other changes have been made to the locally maintained Symbiota2 file
 maintained file can be referenced to determine if updating the local file is necessary. Either scan the GitHub log to see 
 if the template(s) of the locally maintained Symbiota2 file(s) that have been edited are included in the update, or visually 
 compare the Symbiota2 template itself for changes. If a Symbiota2 template file is included in the update, follow these 
-steps to update the locally maintained Symbiota2 file:
-- [Locate and run the update Composer script associated with the locally maintained Symbiota2 file.](./plugin_composer_scripts.html)
-- In the update process, a backup file will be created of the locally maintained Symbiota2 file within the same directory 
-  as the locally maintained file and have the same filename, but with a file type of `.bak`. Locate the update file that 
-  was created in the update process and use it to transfer the changes you had made to the newly updated file.
+steps to update the locally maintained Symbiota2 files:
+- Run `composer run-script update-all-files`
+- During the update process, backup files are created for each of the locally maintained Symbiota2 files, adding them to the same directory 
+  as each of the locally maintained files and having the same filename, but with a file type of `.bak`. Locate the backup files that 
+  corresponds to the edited locally maintained Symbiota2 files in your installation and use them to transfer the edits to the newly updated versions.
 - Once the local edits have been merged into the updated file, run `npm install`
 
 * * *
