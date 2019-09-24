@@ -27,7 +27,9 @@ layout: default
   - [Securing Entity and Controller class paths in the API](./securing-entity-controller-paths.html)
 - **Adding frontend elements**
   - [Initial setup to add frontend elements](./frontend-initial-setup.html)
-  - [Add npm build scripts to the package.json file](./add-npm-build-scripts.html)
+  - [i18n internationalization support setup](./i18n_internationalization_support_setup.html)
+  - [Importing commonly used libraries into a plugin](./importing-libraries.html)
+  - [Add npm scripts to the package.json file](./add-npm-build-scripts.html)
   - Adding components to the frontend:
     - [Creating a new frontend component](./creating-frontend-component.html)
     - [Assigning a unique route to a component](./assigning-unique-route-component.html)

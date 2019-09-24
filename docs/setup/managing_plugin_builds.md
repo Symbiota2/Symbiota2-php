@@ -4,7 +4,7 @@ layout: default
 
 ### [Back to index](./index.html)
 
-# npm scripts for managing plugins
+# npm scripts for managing plugins and libraries
 
 Despite several plugins being included with Symbiota2, the compiled frontend code for each plugin (for those that include
 frontend portions) however, is not included and therefore needs to be managed locally within each Symbiota2 installation.
@@ -46,7 +46,7 @@ the name of the target plugin):
   `merge-<plugin-name>-all-translations` in succession.
 
 * * *
-The following list of scripts are available for each of the core plugins included in Symbiota2 (replacing `<plugin-name>` with 
+The following list of scripts are available for each of the core libraries included in Symbiota2 (replacing `<plugin-name>` with 
 the name of the target plugin):
 
 - `build_<plugin-name>`
@@ -73,12 +73,12 @@ The following list of scripts are available for working with all of the plugins,
 - `set-core-all-translations`
 
   Sets (or resets) the main i18n translation files for the Symbiota2 installation and populates them with the i18n translation 
-  files included with the core frontend application and all of the core plugins.
+  files included with the core frontend application and all of the core libraries.
 
 - `merge-core-all-translations`
 
   Runs all of the separate merge scripts for each of the i18n translation files included with the core frontend application 
-  and all of the core plugins, which merge translation changes with the main i18n translation files for the Symbiota2 
+  and all of the core libraries, which merge translation changes with the main i18n translation files for the Symbiota2 
   installation.
 
 - `package_all_plugins`
@@ -92,7 +92,7 @@ The following list of scripts are available for working with all of the plugins,
 
 - `package_core_plugins`
 
-  Automates the process of running `package_<plugin-name>` for all core plugins, and then running `merge-core-all-translations` in
+  Automates the process of running `package_<plugin-name>` for all core libraries, and then running `merge-core-all-translations` in
   succession.
 
 * * *

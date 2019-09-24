@@ -11,15 +11,19 @@ layout: default
 **Before proceeding, be sure to have [created the frontend component to serve as the outlet](./creating-frontend-component.html).**
 
 To create the outlet within a component, follow these steps:
-- Open the `package.json` file in the root folder of your plugin and verify it has the following line in the `peerDependencies` object,
-  and if it doesn't add it:
-```
+- Open the `package.json` file in the root folder of your plugin and add the following line in the `peerDependencies` object:
+  
+```json
 "symbiota-plugin": "file:../../dist/symbiota-plugin/symbiota-plugin-0.0.1.tgz"
+```
+- Open the `ng-package.json` file in the root folder of your plugin and add the following line in the `umdModuleIds` object under the `lib` property:
+  
+```json
+"symbiota-plugin": "symbiota-plugin"
 ```
 - From the root folder of your plugin, edit the file `src/lib/<plugin-name>.module.ts` (with `<plugin-name>` being 
   the name of your plugin) in the following ways:
-  - If it has not already been imported, import `SymbiotaPluginModule` from `symbiota-plugin` in the top of the file.
-  - If it has not already been added, add `SymbiotaPluginModule` to the `imports` property array.
+  - Import `SymbiotaPluginModule` from `symbiota-plugin` in the top of the file and add it to the `imports` property array.
 - From the root folder of your plugin, edit the file `src/lib/<component-name>/<component-name>.component.ts` (with `<component-name>` being 
   the component to serve as the outlet) in the following ways:
   - Import `PluginComponentService` from `symbiota-plugin` in the top of the file.
@@ -31,6 +35,7 @@ To create the outlet within a component, follow these steps:
 - From the root folder of your plugin, edit the file `src/lib/<component-name>/<component-name>.component.html` (with `<component-name>` being 
   the component to serve as the outlet) add the following block of code where you would like the hooked components from the outlet
   to display (replacing `<global>` with the global you created in the previous steps):
+  
 ```typescript
 <ng-container *ngIf="<global>.length > 0">
   <ng-container *ngFor="let component of <global>">
@@ -41,8 +46,9 @@ To create the outlet within a component, follow these steps:
   </ng-container>
 </ng-container>
 ```
+
 After following the above steps, using a component named `example`: 
-  - The `package.json` file in the plugin root directory would resemble the following:
+- The `package.json` file in the plugin root directory would resemble the following:
     
 ```json
 {
@@ -51,26 +57,52 @@ After following the above steps, using a component named `example`:
   "peerDependencies": {
     "@angular/common": "^8.0.3",
     "@angular/core": "^8.0.3",
+    "@ngx-translate/core": "^11.0.1",
+    "symbiota-auth": "file:../../dist/symbiota-auth/symbiota-auth-0.0.1.tgz",
+    "symbiota-shared": "file:../../dist/symbiota-shared/symbiota-shared-0.0.1.tgz"
     "symbiota-plugin": "file:../../dist/symbiota-plugin/symbiota-plugin-0.0.1.tgz"
   }
 }
 ```
-  - The `src/lib/example-plugin.module.ts` file in the plugin root directory would resemble the following:
+- The `ng-package.json` file in the plugin root directory would resemble the following:
+    
+```json
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/example-plugin",
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "@ngx-translate/core": "@ngx-translate/core",
+      "symbiota-auth": "symbiota-auth",
+      "symbiota-shared": "symbiota-shared",
+      "symbiota-plugin": "symbiota-plugin"
+    }
+  }
+}
+```
+- The `src/lib/example-plugin.module.ts` file in the plugin root directory would resemble the following:
       
 ```typescript
 import { NgModule } from '@angular/core';
+import {TranslateModule} from '@ngx-translate/core';
+import {SymbiotaAuthModule} from 'symbiota-auth';
+import {SymbiotaSharedModule} from 'symbiota-shared';
 import {SymbiotaPluginModule} from "symbiota-plugin";
 
 @NgModule({
-  declarations: [],
-  imports: [
-      SymbiotaPluginModule
-  ],
-  exports: []
+    declarations: [],
+    imports: [
+        TranslateModule,
+        SymbiotaAuthModule,
+        SymbiotaSharedModule,      
+        SymbiotaPluginModule
+    ],
+    exports: []
 })
 export class ExamplePluginModule { }
 ```
-  - The `src/lib/example/example.component.ts` file in the plugin root directory would resemble the following:
+- The `src/lib/example/example.component.ts` file in the plugin root directory would resemble the following:
         
 ```typescript
 import {Component, OnInit} from '@angular/core';
@@ -97,7 +129,7 @@ export class ExampleComponent implements OnInit {
 
 }
 ```
-  - The `src/lib/example/example.component.html` file in the plugin root directory would resemble the following:
+- The `src/lib/example/example.component.html` file in the plugin root directory would resemble the following:
           
 ```typescript
 <ng-container *ngIf="globalArray.length > 0">

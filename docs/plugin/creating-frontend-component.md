@@ -14,6 +14,10 @@ index and skip the section on adding components to the frontend.**
 **The [Angular documentation on components](https://angular.io/guide/architecture-components){:target="_blank"} 
   should be used as a general reference for creating and working with components in the frontend.**
 
+**If you are going to be offering i18n internationalization support, [this ngx-translate tutorial](https://www.codeandweb.com/babeledit/tutorials/how-to-translate-your-angular8-app-with-ngx-translate){:target="_blank"} 
+  should be used as a general reference for providing i18n translation support. Note: all translation keys used withing 
+  your plugin must have a prefix of the plugin name in order to ensure uniqueness.**
+
 Components are essentially sections of the frontend framework. They can be made up of a single component, or be comprised
   of several sub-components. In Symbiota2, a plugin component can be integrated into the frontend framework in one of the 
   following three ways:
@@ -63,7 +67,8 @@ Regardless of how the component will be integrated into the frontend framework, 
     export * from './lib/<component-name>/<component-name>.component';
     ```
 
-After following the above steps, for a component named `example`: 
+After following the above steps, for a component named `example` in a plugin that offers i18n internationalization support 
+  for English, Spanish, and Portuguese: 
   - The root folder for the plugin project within the `plugins` folder of the Symbiota2 installation would have a structure 
     resembling the following:
     
@@ -80,6 +85,11 @@ After following the above steps, for a component named `example`:
     │   │   tsconfig.spec.json
     │   │   tslint.json
     │   └───api
+    │   └───i18n
+    │   │   │   en.json
+    │   │   │   es.json
+    │   │   │   pt.json
+    │   │   
     │   └───src
     │       │   public-api.ts
     │       │   test.ts
@@ -108,13 +118,20 @@ After following the above steps, for a component named `example`:
       
   ```typescript
   import { NgModule } from '@angular/core';
+  import {TranslateModule} from '@ngx-translate/core';
+  import {SymbiotaAuthModule} from 'symbiota-auth';
+  import {SymbiotaSharedModule} from 'symbiota-shared';
   import { ExampleComponent } from './example/example.component';
   
   @NgModule({
       declarations: [
           ExampleComponent
       ],
-      imports: [],
+      imports: [
+          TranslateModule,
+          SymbiotaAuthModule,
+          SymbiotaSharedModule
+      ],
       exports: [
           ExampleComponent
       ],

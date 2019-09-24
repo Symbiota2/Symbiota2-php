@@ -32,6 +32,7 @@ plugins
 │   │   tsconfig.spec.json
 │   │   tslint.json
 │   └───api
+│   └───i18n
 │   └───src
 │       │   public-api.ts
 │       │   test.ts
@@ -83,6 +84,7 @@ plugins
   │   │   tsconfig.spec.json
   │   │   tslint.json
   │   └───api
+  │   └───i18n
   │   └───src
   │       │   public-api.ts
   │       │   test.ts

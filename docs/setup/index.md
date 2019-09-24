@@ -27,7 +27,7 @@ layout: default
 - **[Access the Docker DBMS containers using Adminer](./access_database_adminer.html)**
 - **[Initial user accounts in new databases](./initial_user_accounts.html)**
 - **[Composer scripts for managing plugins](./plugin_composer_scripts.html)**
-- **[npm scripts for managing plugins](./managing_plugin_builds.html)**
+- **[npm scripts for managing plugins and libraries](./managing_plugin_builds.html)**
 - **[Updating Symbiota2](./updating_symbiota2.html)**
 - **[Troubleshooting](./troubleshooting.html)**
   
