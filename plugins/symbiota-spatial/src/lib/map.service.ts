@@ -22,7 +22,6 @@ import {click as clickCondition} from 'ol/events/condition';
 import OlView from 'ol/View';
 import {PropertyCluster} from './PropertyCluster.js';
 import {
-    AtlasManager,
     Circle,
     Fill,
     Stroke,
@@ -50,13 +49,13 @@ import {map} from 'rxjs/operators';
 export class MapService {
 
     constructor(
-        private configService: ConfigurationService,
-        private alertService: AlertService,
-        private vectorService: VectorToolsService,
-        private sharedTools: SharedToolsService,
-        private http: HttpClient,
-        private dialog: MatDialog,
-        private translate: TranslateService
+      private configService: ConfigurationService,
+      private alertService: AlertService,
+      private vectorService: VectorToolsService,
+      private sharedTools: SharedToolsService,
+      private http: HttpClient,
+      private dialog: MatDialog,
+      private translate: TranslateService
     ) {
         this.activeLayerValue.subscribe(value => {
             this.activeLayer = value.toString();
@@ -68,7 +67,7 @@ export class MapService {
         });
 
         this.mapCenter = (
-            configService.data.MAP_INITIAL_CENTER ? JSON.parse(configService.data.MAP_INITIAL_CENTER) : [-110.90713, 32.21976]
+          configService.data.MAP_INITIAL_CENTER ? JSON.parse(configService.data.MAP_INITIAL_CENTER) : [-110.90713, 32.21976]
         );
         this.mapZoom = (configService.data.MAP_INITIAL_ZOOM ? configService.data.MAP_INITIAL_ZOOM : 7);
         for (let z = 0; z < 20; ++z) {
@@ -157,15 +156,15 @@ export class MapService {
                 }
             } else if (fileType === 'shp' || fileType === 'dbf') {
                 this.alertService.showErrorSnackbar(
-                    this.drag_drop_error1,
-                    '',
-                    5000
+                  this.drag_drop_error1,
+                  '',
+                  5000
                 );
             } else {
                 this.alertService.showErrorSnackbar(
-                    this.drag_drop_error2,
-                    '',
-                    5000
+                  this.drag_drop_error2,
+                  '',
+                  5000
                 );
             }
         });
@@ -369,7 +368,7 @@ export class MapService {
     pointsActiveSubject = new BehaviorSubject<boolean>(false);
     public readonly pointsActiveValue: Observable<boolean> = this.pointsActiveSubject.asObservable();
     public readonly pointsInactiveValue: Observable<boolean> = this.pointsActiveValue.pipe(
-        map(active => !active)
+      map(active => !active)
     );
     selectedShapesSubject = new BehaviorSubject<[]>([]);
     public readonly selectedShapesValue: Observable<[]> = this.selectedShapesSubject.asObservable();
@@ -379,8 +378,6 @@ export class MapService {
     public readonly bufferDistanceValue: Observable<number> = this.bufferDistanceSubject.asObservable();
     concaveMaxEdgeLengthSubject = new BehaviorSubject<number>(0);
     public readonly concaveMaxEdgeLengthValue: Observable<number> = this.concaveMaxEdgeLengthSubject.asObservable();
-
-    atlasManager = new AtlasManager();
 
     mousePositionControl = new MousePosition({
         coordinateFormat: (coord) => {
@@ -805,8 +802,8 @@ export class MapService {
                     const radius = selectedClone.getGeometry().getRadius();
                     const edgeCoordinate = [center[0] + radius, center[1]];
                     let groundRadius = haversineDistance(
-                        transform(center, 'EPSG:3857', 'EPSG:4326'),
-                        transform(edgeCoordinate, 'EPSG:3857', 'EPSG:4326')
+                      transform(center, 'EPSG:3857', 'EPSG:4326'),
+                      transform(edgeCoordinate, 'EPSG:3857', 'EPSG:4326')
                     );
                     groundRadius = groundRadius / 1000;
                     const circleArea = Math.PI * groundRadius * groundRadius;
@@ -1030,57 +1027,57 @@ export class MapService {
                     const layerIndex = this.activeLayer + 'Source';
                     const viewResolution = this.view.getResolution();
                     if (this.activeLayer !== 'none'
-                        && this.activeLayer !== 'select'
-                        && this.activeLayer !== 'pointv'
-                        && this.activeLayer !== 'dragdrop1'
-                        && this.activeLayer !== 'dragdrop2'
-                        && this.activeLayer !== 'dragdrop3') {
+                      && this.activeLayer !== 'select'
+                      && this.activeLayer !== 'pointv'
+                      && this.activeLayer !== 'dragdrop1'
+                      && this.activeLayer !== 'dragdrop2'
+                      && this.activeLayer !== 'dragdrop3') {
                         const url = this.layers[layerIndex].getGetFeatureInfoUrl(
-                            evt.coordinate,
-                            viewResolution,
-                            'EPSG:3857',
-                            {'INFO_FORMAT': 'application/json'}
+                          evt.coordinate,
+                          viewResolution,
+                          'EPSG:3857',
+                          {'INFO_FORMAT': 'application/json'}
                         );
                         if (url) {
                             this.http.get(url).subscribe(
-                                (res) => {
-                                    if (res) {
-                                        let infoHTML = '';
-                                        const propArr = res['features'][0]['properties'];
-                                        if (this.overlayLayers[this.activeLayer]) {
-                                            const sourceVal = propArr['GRAY_INDEX'];
-                                            const lowCalVal = this.overlayLayers[this.activeLayer]['values']['rasmin'];
-                                            const highCalVal = this.overlayLayers[this.activeLayer]['values']['rasmax'];
-                                            const calcVal = this.overlayLayers[this.activeLayer]['values']['newval'];
-                                            if (sourceVal >= lowCalVal && sourceVal <= highCalVal) {
-                                                infoHTML += '<b>Value:</b> ' + calcVal + '<br />';
-                                            } else {
-                                                infoHTML += '<b>Value:</b> 0<br />';
-                                            }
-                                        } else {
-                                            for (const key in propArr) {
-                                                if (propArr[key]) {
-                                                    let valTag = '';
-                                                    if (key === 'GRAY_INDEX') {
-                                                        valTag = 'Value';
-                                                    } else {
-                                                        valTag = key;
-                                                    }
-                                                    infoHTML += '<b>' + valTag + ':</b> ' + propArr[key] + '<br />';
-                                                }
-                                            }
-                                        }
-                                        if (this.popupOverlay) {
-                                            this.setPopup(infoHTML, evt.coordinate);
-                                        }
-                                    }
-                                }
+                              (res) => {
+                                  if (res) {
+                                      let infoHTML = '';
+                                      const propArr = res['features'][0]['properties'];
+                                      if (this.overlayLayers[this.activeLayer]) {
+                                          const sourceVal = propArr['GRAY_INDEX'];
+                                          const lowCalVal = this.overlayLayers[this.activeLayer]['values']['rasmin'];
+                                          const highCalVal = this.overlayLayers[this.activeLayer]['values']['rasmax'];
+                                          const calcVal = this.overlayLayers[this.activeLayer]['values']['newval'];
+                                          if (sourceVal >= lowCalVal && sourceVal <= highCalVal) {
+                                              infoHTML += '<b>Value:</b> ' + calcVal + '<br />';
+                                          } else {
+                                              infoHTML += '<b>Value:</b> 0<br />';
+                                          }
+                                      } else {
+                                          for (const key in propArr) {
+                                              if (propArr[key]) {
+                                                  let valTag = '';
+                                                  if (key === 'GRAY_INDEX') {
+                                                      valTag = 'Value';
+                                                  } else {
+                                                      valTag = key;
+                                                  }
+                                                  infoHTML += '<b>' + valTag + ':</b> ' + propArr[key] + '<br />';
+                                              }
+                                          }
+                                      }
+                                      if (this.popupOverlay) {
+                                          this.setPopup(infoHTML, evt.coordinate);
+                                      }
+                                  }
+                              }
                             );
                         }
                     } else if (this.activeLayer === 'dragdrop1'
-                        || this.activeLayer === 'dragdrop2'
-                        || this.activeLayer === 'dragdrop3'
-                        || this.activeLayer === 'select') {
+                      || this.activeLayer === 'dragdrop2'
+                      || this.activeLayer === 'dragdrop3'
+                      || this.activeLayer === 'select') {
                         let infoHTML = '';
                         const selectedFeature = this.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
                             if (layer === this.layers[this.activeLayer]) {
@@ -1119,23 +1116,23 @@ export class MapService {
                         if (iFeature) {
                             infoHTML += '<b>occid:</b> ' + iFeature.get('occid') + '<br />';
                             infoHTML += '<b>CollectionName:</b> '
-                                + (iFeature.get('CollectionName') ? iFeature.get('CollectionName') : '') + '<br />';
+                              + (iFeature.get('CollectionName') ? iFeature.get('CollectionName') : '') + '<br />';
                             infoHTML += '<b>catalogNumber:</b> '
-                                + (iFeature.get('catalogNumber') ? iFeature.get('catalogNumber') : '') + '<br />';
+                              + (iFeature.get('catalogNumber') ? iFeature.get('catalogNumber') : '') + '<br />';
                             infoHTML += '<b>otherCatalogNumbers:</b> '
-                                + (iFeature.get('otherCatalogNumbers') ? iFeature.get('otherCatalogNumbers') : '') + '<br />';
+                              + (iFeature.get('otherCatalogNumbers') ? iFeature.get('otherCatalogNumbers') : '') + '<br />';
                             infoHTML += '<b>family:</b> ' + (iFeature.get('family') ? iFeature.get('family') : '') + '<br />';
                             infoHTML += '<b>sciname:</b> ' + (iFeature.get('sciname') ? iFeature.get('sciname') : '') + '<br />';
                             infoHTML += '<b>recordedBy:</b> ' + (iFeature.get('recordedBy') ? iFeature.get('recordedBy') : '') + '<br />';
                             infoHTML += '<b>recordNumber:</b> ' + (iFeature.get('recordNumber') ? iFeature.get('recordNumber') : '')
-                                + '<br />';
+                              + '<br />';
                             infoHTML += '<b>eventDate:</b> ' + (iFeature.get('displayDate') ? iFeature.get('displayDate') : '') + '<br />';
                             infoHTML += '<b>habitat:</b> ' + (iFeature.get('habitat') ? iFeature.get('habitat') : '') + '<br />';
                             infoHTML += '<b>associatedTaxa:</b> '
-                                + (iFeature.get('associatedTaxa') ? iFeature.get('associatedTaxa') : '') + '<br />';
+                              + (iFeature.get('associatedTaxa') ? iFeature.get('associatedTaxa') : '') + '<br />';
                             infoHTML += '<b>country:</b> ' + (iFeature.get('country') ? iFeature.get('country') : '') + '<br />';
                             infoHTML += '<b>StateProvince:</b> '
-                                + (iFeature.get('StateProvince') ? iFeature.get('StateProvince') : '') + '<br />';
+                              + (iFeature.get('StateProvince') ? iFeature.get('StateProvince') : '') + '<br />';
                             infoHTML += '<b>county:</b> ' + (iFeature.get('county') ? iFeature.get('county') : '') + '<br />';
                             infoHTML += '<b>locality:</b> ' + (iFeature.get('locality') ? iFeature.get('locality') : '') + '<br />';
                             if (iFeature.get('thumbnailurl')) {
@@ -1147,9 +1144,9 @@ export class MapService {
                             }
                         } else {
                             this.alertService.showErrorSnackbar(
-                                this.singleclick_error1,
-                                '',
-                                5000
+                              this.singleclick_error1,
+                              '',
+                              5000
                             );
                         }
                         this.clickedFeatures = [];
@@ -1165,9 +1162,9 @@ export class MapService {
                                         this.setActiveLayer('select');
                                     } catch (e) {
                                         this.alertService.showErrorSnackbar(
-                                            this.singleclick_error2,
-                                            '',
-                                            5000
+                                          this.singleclick_error2,
+                                          '',
+                                          5000
                                         );
                                     }
                                 }
@@ -1175,10 +1172,10 @@ export class MapService {
                         } else {
                             const viewResolution = this.view.getResolution();
                             const url = this.layers[layerIndex].getGetFeatureInfoUrl(
-                                evt.coordinate,
-                                viewResolution,
-                                'EPSG:3857',
-                                {'INFO_FORMAT': 'application/json'}
+                              evt.coordinate,
+                              viewResolution,
+                              'EPSG:3857',
+                              {'INFO_FORMAT': 'application/json'}
                             );
                             // selectObjectFromID(url, this.activeLayer);
                         }
@@ -1245,14 +1242,11 @@ export class MapService {
 
                 style = new Style({
                     image: new Circle({
-                        opacity: 1,
-                        scale: 1,
                         radius: radius,
                         stroke: stroke,
                         fill: new Fill({
                             color: [colorArr['r'], colorArr['g'], colorArr['b'], 0.8]
-                        }),
-                        atlasManager: this.atlasManager
+                        })
                     }),
                     text: new Text({
                         scale: 1,
@@ -1330,7 +1324,7 @@ export class MapService {
         }
         if (selection === 'ngstopo') {
             blsource = this.setBaseLayerSource('http://services.arcgisonline.com/arcgis/rest/services/NGS_Topo_US_2D/' +
-                'MapServer/tile/{z}/{y}/{x}');
+              'MapServer/tile/{z}/{y}/{x}');
         }
         if (selection === 'natgeoworld') {
             blsource = new XYZ({
@@ -1340,7 +1334,7 @@ export class MapService {
         }
         if (selection === 'esristreet') {
             blsource = this.setBaseLayerSource('http://services.arcgisonline.com/arcgis/rest/services/' +
-                'ESRI_StreetMap_World_2D/MapServer/tile/{z}/{y}/{x}');
+              'ESRI_StreetMap_World_2D/MapServer/tile/{z}/{y}/{x}');
         }
         baseLayer.setSource(blsource);
     }
@@ -1414,24 +1408,18 @@ export class MapService {
         if (recType.toLowerCase().indexOf('observation') !== -1) {
             style = new Style({
                 image: new RegularShape({
-                    opacity: 1,
-                    scale: 1,
                     fill: fill,
                     stroke: stroke,
                     points: 3,
-                    radius: 7,
-                    atlasManager: this.atlasManager
+                    radius: 7
                 })
             });
         } else {
             style = new Style({
                 image: new Circle({
-                    opacity: 1,
-                    scale: 1,
                     radius: 7,
                     fill: fill,
-                    stroke: stroke,
-                    atlasManager: this.atlasManager
+                    stroke: stroke
                 })
             });
         }
@@ -1455,9 +1443,9 @@ export class MapService {
             return true;
         } else {
             this.alertService.showErrorSnackbar(
-                this.drag_drop_max_error1,
-                '',
-                5000
+              this.drag_drop_max_error1,
+              '',
+              5000
             );
             return false;
         }
@@ -1544,8 +1532,8 @@ export class MapService {
                     x = x + n;
                 }
                 return urlTemplate.replace('{z}', z.toString())
-                    .replace('{y}', y.toString())
-                    .replace('{x}', x.toString());
+                  .replace('{y}', y.toString())
+                  .replace('{x}', x.toString());
             },
             projection: 'EPSG:4326',
             tileGrid: new TileGrid({
@@ -1605,13 +1593,13 @@ export class MapService {
                 });
                 if (dlType === 'kml') {
                     exportStr = exportStr.replace(
-                        /<kml xmlns="http:\/\/www.opengis.net\/kml\/2.2" xmlns:gx="http:\/\/www.google.com\/kml\/ext\/2.2" xmlns:xsi="http:\/\/www.w3.org\/2001\/XMLSchema-instance" xsi:schemaLocation="http:\/\/www.opengis.net\/kml\/2.2 https:\/\/developers.google.com\/kml\/schema\/kml22gx.xsd">/g,
-                        '<kml xmlns="http://www.opengis.net/kml/2.2"><Document id="root_doc">'
-                        + '<Folder><name>shapes_export</name>');
+                      /<kml xmlns="http:\/\/www.opengis.net\/kml\/2.2" xmlns:gx="http:\/\/www.google.com\/kml\/ext\/2.2" xmlns:xsi="http:\/\/www.w3.org\/2001\/XMLSchema-instance" xsi:schemaLocation="http:\/\/www.opengis.net\/kml\/2.2 https:\/\/developers.google.com\/kml\/schema\/kml22gx.xsd">/g,
+                      '<kml xmlns="http://www.opengis.net/kml/2.2"><Document id="root_doc">'
+                      + '<Folder><name>shapes_export</name>');
                     exportStr = exportStr.replace(
-                        /<Placemark>/g,
-                        '<Placemark><Style><LineStyle><color>ff000000</color><width>1</width></LineStyle>'
-                        + '<PolyStyle><color>4DAAAAAA</color><fill>1</fill></PolyStyle></Style>');
+                      /<Placemark>/g,
+                      '<Placemark><Style><LineStyle><color>ff000000</color><width>1</width></LineStyle>'
+                      + '<PolyStyle><color>4DAAAAAA</color><fill>1</fill></PolyStyle></Style>');
                     exportStr = exportStr.replace(/<Polygon>/g, '<Polygon><altitudeMode>clampToGround</altitudeMode>');
                     exportStr = exportStr.replace(/<\/kml>/g, '</Folder></Document></kml>');
                 }
@@ -1629,16 +1617,16 @@ export class MapService {
                 }
             } else {
                 this.alertService.showErrorSnackbar(
-                    this.no_shapes_selected,
-                    '',
-                    5000
+                  this.no_shapes_selected,
+                  '',
+                  5000
                 );
             }
         } else {
             this.alertService.showErrorSnackbar(
-                this.select_download_type,
-                '',
-                5000
+              this.select_download_type,
+              '',
+              5000
             );
         }
     }
@@ -1696,16 +1684,16 @@ export class MapService {
                 });
             } else {
                 this.alertService.showErrorSnackbar(
-                    this.buffer_error1,
-                    '',
-                    5000
+                  this.buffer_error1,
+                  '',
+                  5000
                 );
             }
         } else {
             this.alertService.showErrorSnackbar(
-                this.buffer_error2,
-                '',
-                5000
+              this.buffer_error2,
+              '',
+              5000
             );
         }
     }
@@ -1747,9 +1735,9 @@ export class MapService {
             }
         } else {
             this.alertService.showErrorSnackbar(
-                this.difference_error1,
-                '',
-                5000
+              this.difference_error1,
+              '',
+              5000
             );
         }
     }
@@ -1790,16 +1778,16 @@ export class MapService {
                 this.selectsource.addFeature(interpoly);
             } else {
                 this.alertService.showErrorSnackbar(
-                    this.intersect_error1,
-                    '',
-                    5000
+                  this.intersect_error1,
+                  '',
+                  5000
                 );
             }
         } else {
             this.alertService.showErrorSnackbar(
-                this.intersect_error2,
-                '',
-                5000
+              this.intersect_error2,
+              '',
+              5000
             );
         }
     }
@@ -1848,9 +1836,9 @@ export class MapService {
             }
         } else {
             this.alertService.showErrorSnackbar(
-                this.union_error1,
-                '',
-                5000
+              this.union_error1,
+              '',
+              5000
             );
         }
     }
@@ -1866,9 +1854,9 @@ export class MapService {
                     features = this.getTurfPointFeaturesetSelected();
                 } else {
                     this.alertService.showErrorSnackbar(
-                        this.concave_error1,
-                        '',
-                        5000
+                      this.concave_error1,
+                      '',
+                      5000
                     );
                     return;
                 }
@@ -1879,9 +1867,9 @@ export class MapService {
                     concavepoly = this.vectorService.getConcavePolyFeature(features, Number(maxEdge));
                 } catch (e) {
                     this.alertService.showErrorSnackbar(
-                        this.concave_error2,
-                        '',
-                        5000
+                      this.concave_error2,
+                      '',
+                      5000
                     );
                 }
                 if (concavepoly) {
@@ -1891,17 +1879,17 @@ export class MapService {
                 }
             } else {
                 this.alertService.showErrorSnackbar(
-                    this.concave_error3,
-                    '',
-                    5000
+                  this.concave_error3,
+                  '',
+                  5000
                 );
             }
             this.concaveMaxEdgeLengthSubject.next(0);
         } else {
             this.alertService.showErrorSnackbar(
-                this.concave_error4,
-                '',
-                5000
+              this.concave_error4,
+              '',
+              5000
             );
         }
     }
@@ -1916,9 +1904,9 @@ export class MapService {
                 features = this.getTurfPointFeaturesetSelected();
             } else {
                 this.alertService.showErrorSnackbar(
-                    this.convex_error1,
-                    '',
-                    5000
+                  this.convex_error1,
+                  '',
+                  5000
                 );
                 return;
             }
@@ -1932,9 +1920,9 @@ export class MapService {
             }
         } else {
             this.alertService.showErrorSnackbar(
-                this.convex_error2,
-                '',
-                5000
+              this.convex_error2,
+              '',
+              5000
             );
         }
     }
