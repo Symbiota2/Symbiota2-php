@@ -19,14 +19,16 @@ To setup i18n internationalization support for your plugin, follow these steps:
   installation for the additional languages. For each additional language, follow these steps:
   - Determine the [ISO 639-1 code for the language](https://www.loc.gov/standards/iso639-2/php/code_list.php){:target="_blank"}.
   - **If you are using a Mac or Linux machine** run the following from the root directory of your Symbiota2 installation 
-    (replacing `<iso-639-1-code>` with the ISO 639-1 code for the language):
+    (replacing `<iso-639-1-code>` with the ISO 639-1 code for the language and adjusting for the correct paths to the `src` and 
+    `i18n` directories of your plugin):
     ```shell
-    ngx-translate-extract --input ./src/ui --output ./src/ui/assets/i18n/<iso-639-1-code>.json --sort
+    ngx-translate-extract --input ./path/to/plugin/src --output ./path/to/plugin/i18n/<iso-639-1-code>.json --sort
     ```
   - **If you are using a Windows machine** run the following from the root directory of your Symbiota2 installation 
-    (replacing `<iso-639-1-code>` with the ISO 639-1 code for the language):
+    (replacing `<iso-639-1-code>` with the ISO 639-1 code for the language and adjusting for the correct paths to the `src` and 
+    `i18n` directories of your plugin):
     ```shell
-    ngx-translate-extract --input .\\src\\ui --output .\\src\\ui\\assets\\i18n\\<iso-639-1-code>.json --sort
+    ngx-translate-extract --input .\\path\\to\\plugin\\src --output .\\path\\to\\plugin\\i18n\\<iso-639-1-code>.json --sort
     ```
 
 ### [Back to index](./index.html)
