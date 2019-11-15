@@ -33,6 +33,7 @@ export interface RetrieveLogin {
 @Injectable()
 export class AuthService {
     private subject = new BehaviorSubject<CurrentUser>(undefined);
+    private authenticationComplete = false;
     private logoutTimer: any;
     private warningTimer: any;
     private warningDialog: any;
@@ -79,6 +80,7 @@ export class AuthService {
         http.get<CurrentUser>('/api/users/authuser').subscribe(
             user => {
                 this.subject.next(user ? user : ANONYMOUS_USER);
+                this.authenticationComplete = true;
                 this.spinnerService.hide();
                 // console.log(user);
             }
@@ -120,6 +122,7 @@ export class AuthService {
                     this.password = password;
                 }
                 this.subject.next(user);
+                this.authenticationComplete = true;
                 if (redirect) {
                     this.router.navigate([redirect]);
                 }
@@ -148,6 +151,7 @@ export class AuthService {
                 clearTimeout(this.logoutTimer);
                 clearTimeout(this.warningTimer);
                 this.subject.next(ANONYMOUS_USER);
+                this.authenticationComplete = false;
                 this.spinnerService.hide();
             }
         );
@@ -234,6 +238,20 @@ export class AuthService {
     }
 
     validatePermissions(permissions: any[]) {
+        if (this.authenticationComplete) {
+            return this.performPermissionValidation(permissions);
+        } else {
+            this.http.get<CurrentUser>('/api/users/authuser').subscribe(
+                user => {
+                    this.subject.next(user ? user : ANONYMOUS_USER);
+                    this.authenticationComplete = true;
+                    return this.performPermissionValidation(permissions);
+                }
+            );
+        }
+    }
+
+    performPermissionValidation(permissions: any[]) {
         let validated = false;
         if (this.subject.getValue() && this.subject.getValue().id) {
             const currentPermissions = Object.assign({}, this.subject.getValue().permissions);
@@ -261,6 +279,20 @@ export class AuthService {
     }
 
     validateAccess(permissions: any[]) {
+        if (this.authenticationComplete) {
+            this.performAccessValidation(permissions);
+        } else {
+            this.http.get<CurrentUser>('/api/users/authuser').subscribe(
+                user => {
+                    this.subject.next(user ? user : ANONYMOUS_USER);
+                    this.authenticationComplete = true;
+                    this.performAccessValidation(permissions);
+                }
+            );
+        }
+    }
+
+    performAccessValidation(permissions: any[]) {
         if (this.subject.getValue() && this.subject.getValue().id) {
             let accessGranted = false;
             const currentPermissions = Object.assign({}, this.subject.getValue().permissions);

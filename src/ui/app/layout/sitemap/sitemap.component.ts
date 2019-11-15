@@ -23,9 +23,14 @@ export class SitemapComponent implements OnInit {
 
     portalAdminLinks = [
         {
+            'link_path': '/plugininstaller',
+            'link_text_translation_key': 'core.layout.sitemap.install_plugins_link_text',
+            'index': 1
+        },
+        {
             'link_path': '/pluginadmin',
             'link_text_translation_key': 'core.layout.sitemap.manage_plugins_link_text',
-            'index': 1
+            'index': 2
         }
     ];
 
