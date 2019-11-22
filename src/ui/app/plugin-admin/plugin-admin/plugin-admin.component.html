@@ -16,7 +16,7 @@
             <div *ngIf="plugin.description">{{plugin.description}}</div>
             <div>{{ 'core.plugin_admin.plugin_admin.version' | translate:{'version':plugin.version} }}</div>
         </mat-card-content>
-        <mat-card-actions>
+        <mat-card-actions class="rightJustifiedContainer">
             <button mat-raised-button color="primary" *ngIf="plugin.enabled" (click)="onDisablePlugin(plugin.name)">{{ 'core.plugin_admin.plugin_admin.disable' | translate }}</button>
             <button mat-raised-button color="primary" *ngIf="!plugin.enabled" (click)="onEnablePlugin(plugin.name)">{{ 'core.plugin_admin.plugin_admin.enable' | translate }}</button>
             <button mat-raised-button color="primary" *ngIf="plugin.updateAvailable" (click)="onUpdatePlugin(plugin.name)">{{ 'core.plugin_admin.plugin_admin.update' | translate }}</button>

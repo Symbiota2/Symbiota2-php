@@ -1029,6 +1029,7 @@
     "html2canvas": "^1.0.0-rc.5",
     "json-merger": "^1.1.1",
     "jszip": "^3.2.2",
+    "ngx-material-file-input": "^2.0.0",
     "npm-check-updates": "^3.2.0",
     "ol": "^6.1.0",
     "rxjs": "^6.5.3",

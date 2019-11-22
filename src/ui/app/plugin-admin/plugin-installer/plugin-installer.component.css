@@ -2,14 +2,25 @@
     margin: 10px;
 }
 
-.all-button {
-    margin: 0 15px;
-}
-
 .enabledText {
     color: green;
 }
 
 .warningText {
     color: red;
+}
+
+mat-form-field {
+    width: 90%;
+}
+
+.rightJustifiedContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+form mat-card-actions {
+    margin-bottom: 0;
+    padding-bottom: 0;
 }

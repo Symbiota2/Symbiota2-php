@@ -17,11 +17,14 @@ import {
     MatSelectModule,
     MatTreeModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatSnackBarModule,
     MatDialogModule,
     MatTabsModule,
-    MatTableModule
+    MatTableModule,
+    MatSlideToggleModule
 } from '@angular/material';
+import {MaterialFileInputModule} from 'ngx-material-file-input';
 
 @NgModule({
     imports: [
@@ -42,10 +45,13 @@ import {
         MatSelectModule,
         MatTreeModule,
         MatProgressSpinnerModule,
+        MatProgressBarModule,
         MatSnackBarModule,
         MatDialogModule,
         MatTabsModule,
-        MatTableModule
+        MatTableModule,
+        MatSlideToggleModule,
+        MaterialFileInputModule
     ],
     exports: [
         MatButtonModule,
@@ -65,10 +71,13 @@ import {
         MatSelectModule,
         MatTreeModule,
         MatProgressSpinnerModule,
+        MatProgressBarModule,
         MatSnackBarModule,
         MatDialogModule,
         MatTabsModule,
-        MatTableModule
+        MatTableModule,
+        MatSlideToggleModule,
+        MaterialFileInputModule
     ]
 })
 export class MaterialModule {
