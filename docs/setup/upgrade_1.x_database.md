@@ -9,6 +9,8 @@ layout: default
 If you are using a Symbiota 1.x database with your installation of Symbiota2, you must first verify that your 
 Symbiota 1.x database is using the most reccent schema version by doing the following:
 
+**It is highly recommended to make a backup of your database before proceeding.**
+
 - Establish a connection to your database.
 - Run the following sql query on your database to determine the schema version:
     ```sql
@@ -23,9 +25,11 @@ patch on your database by doing the following:
 
 - Make sure you have [configured the database parameters in your .env file](./configure_env_file_database.html).
 - Additionally, if you are using Docker, make sure you have [built the Docker containers](./build_docker_setup.html).
-- In your terminal window run:
+- If your database is using the default Symbiota 1.x schema, in your terminal window run:
     ``` 
     php bin/console doctrine:database:import config/sql/db_schema-1.1_patch.sql --env=dev
     ```
-
+- If your database has been modified outside of the Symbiota 1.x db_schema-x and db_schema_patch-x sql files, you will
+    have to execute the `config/sql/db_schema-1.1_patch.sql` file manually on your database, and adjust the scripts
+    included within the file in the event that they differ from your database schema and cause and error.
 ### [Back to index](./index.html)

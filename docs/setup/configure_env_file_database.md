@@ -6,7 +6,7 @@ layout: default
 
 # Configure the database parameters in the .env file
 
-The .env file in the root directory of the Symbiota2 installation configures the database connection.
+The `.env` file in the root directory of the Symbiota2 installation configures the database connection.
 Symbiota2 is configured to use the MySQL DBMS container within the Docker setup by default. If you are
 planning on using this DBMS for your database, as well as the nginx and php containers within 
 the Docker setup for your server, there is no need to do anything further. If you are planning on using 
