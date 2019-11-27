@@ -761,6 +761,10 @@ INSERT IGNORE INTO omoccurgeoindex(tid,decimallatitude,decimallongitude)
   FROM omoccurrences AS o LEFT JOIN omoccurgeoindex AS g ON o.tid = g.tid
   WHERE ISNULL(g.tid) AND o.tid IS NOT NULL AND o.decimallatitude IS NOT NULL AND o.decimallongitude IS NOT NULL;
 
+ALTER TABLE `omoccurpoints`
+  DROP COLUMN `errradiuspoly`,
+  DROP COLUMN `footprintpoly`;
+
 ALTER TABLE `schemaversion`
   CHANGE COLUMN `dateapplied` `modifiedtimestamp` timestamp(0) NOT NULL DEFAULT current_timestamp AFTER `versionnumber`;
 
