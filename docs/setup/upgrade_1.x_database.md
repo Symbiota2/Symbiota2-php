@@ -32,4 +32,6 @@ patch on your database by doing the following:
 - If your database has been modified outside of the Symbiota 1.x db_schema-x and db_schema_patch-x sql files, you will
     have to execute the `config/sql/db_schema-1.1_patch.sql` file manually on your database, and adjust the scripts
     included within the file in the event that they differ from your database schema and cause and error.
+- Once the `config/sql/db_schema-1.1_patch.sql` file has been successfully executed on the database, follow the steps outlined 
+    in [setting up the Symbiota2 database](./setup_symbiota2_database.html) to complete the process of upgrading a Symbiota 1.x database.
 ### [Back to index](./index.html)

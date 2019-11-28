@@ -97,8 +97,11 @@ ALTER TABLE `kmcharacterlang`
   DROP INDEX `FK_charlang_lang_idx`;
 
 ALTER TABLE `kmcharheading`
+  DROP PRIMARY KEY,
   DROP FOREIGN KEY `FK_kmcharheading_lang`,
-  DROP INDEX `FK_kmcharheading_lang_idx`;
+  DROP INDEX `FK_kmcharheading_lang_idx`,
+  CHANGE `hid` `hid` INT UNSIGNED AUTO_INCREMENT NOT NULL,
+  ADD PRIMARY KEY (`hid`);
 
 ALTER TABLE `kmcs`
   DROP PRIMARY KEY,
@@ -209,6 +212,8 @@ UPDATE users AS u LEFT JOIN userlogin AS ul ON u.uid = ul.uid
   SET u.username = ul.username,
   u.`password` = ul.`password`,
   u.lastlogindate = ul.lastlogindate;
+
+RENAME TABLE userlogin TO s1_userlogin;
 
 ALTER TABLE `omcollpuboccurlink`
   DROP FOREIGN KEY `FK_ompuboccid`,
@@ -751,8 +756,19 @@ INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrank
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (270, 'Subform', 260, 180);
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (300, 'Cultivated', 220, 220);
 
+UPDATE taxonunits AS tu LEFT JOIN taxonunits AS tu2 ON tu.dirparentrankid = tu2.rankid
+  SET tu.dirparentrankid = tu2.taxonunitid;
+
+UPDATE taxonunits AS tu LEFT JOIN taxonunits AS tu2 ON tu.reqparentrankid = tu2.rankid
+  SET tu.reqparentrankid = tu2.taxonunitid;
+
 UPDATE taxa AS t LEFT JOIN taxonunits AS u ON t.RankId = u.rankid
   SET t.RankId = u.taxonunitid;
+
+CREATE TABLE s1_taxa_archive
+  SELECT * FROM taxa WHERE ISNULL(RankId);
+
+DELETE FROM taxa WHERE ISNULL(RankId);
 
 TRUNCATE TABLE omoccurgeoindex;
 
@@ -764,6 +780,31 @@ INSERT IGNORE INTO omoccurgeoindex(tid,decimallatitude,decimallongitude)
 ALTER TABLE `omoccurpoints`
   DROP COLUMN `errradiuspoly`,
   DROP COLUMN `footprintpoly`;
+
+CREATE TABLE s1_guidimages_archive
+  SELECT * FROM guidimages WHERE imgid NOT IN(SELECT imgid FROM images);
+
+DELETE FROM guidimages WHERE imgid NOT IN(SELECT imgid FROM images);
+
+CREATE TABLE s1_guidoccurdeterminations_archive
+  SELECT * FROM guidoccurdeterminations WHERE detid NOT IN(SELECT detid FROM omoccurdeterminations);
+
+DELETE FROM guidoccurdeterminations WHERE detid NOT IN(SELECT detid FROM omoccurdeterminations);
+
+CREATE TABLE s1_guidoccurrences_archive
+  SELECT * FROM guidoccurrences WHERE occid NOT IN(SELECT occid FROM omoccurrences);
+
+DELETE FROM guidoccurrences WHERE occid NOT IN(SELECT occid FROM omoccurrences);
+
+DELETE FROM taxaenumtree WHERE tid NOT IN(SELECT TID FROM taxa);
+
+DELETE FROM taxaenumtree WHERE parenttid NOT IN(SELECT TID FROM taxa);
+
+DELETE FROM taxstatus WHERE tid NOT IN(SELECT TID FROM taxa);
+
+DELETE FROM taxstatus WHERE parenttid NOT IN(SELECT TID FROM taxa);
+
+DELETE FROM taxstatus WHERE tidaccepted NOT IN(SELECT TID FROM taxa);
 
 ALTER TABLE `schemaversion`
   CHANGE COLUMN `dateapplied` `modifiedtimestamp` timestamp(0) NOT NULL DEFAULT current_timestamp AFTER `versionnumber`;
