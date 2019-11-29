@@ -64,13 +64,6 @@ you must edit the .env file by doing the following:
       DATABASE_URL=postgres://postgres:password@127.0.0.1:5434/symbiota
       ```
 
-- If you plan to use SQLite, uncomment line 29 so that lines 28-30 look like the following:
-    ```shell
-    ######TO USE SQLITE UNCOMMENT THIS LINE###############################
-    DATABASE_URL=sqlite:///%kernel.project_dir%/data/sqlite/symbiota.db
-    ######################################################################
-    ```
-
 - If you plan to use a DBMS that is installed locally on your machine, follow these steps:
   - Uncomment lines 33-35 so that lines 32-36 look like the following:
     ```shell
