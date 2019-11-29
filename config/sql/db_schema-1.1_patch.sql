@@ -3,10 +3,14 @@ ALTER TABLE `agents`
   CHANGE COLUMN `living` `living` varchar(255) NOT NULL;
 
 ALTER TABLE `kmchartaxalink`
+  DROP FOREIGN KEY `FK_chartaxalink_tid`,
+  DROP INDEX `FK_CharTaxaLink-TID`,
   CHANGE COLUMN `EditabilityInherited` `EditabilityInherited` int(1) DEFAULT NULL;
 
 ALTER TABLE `fmchklstchildren`
-  DROP FOREIGN KEY `FK_fmchklstchild_child`;
+  DROP FOREIGN KEY `FK_fmchklstchild_child`,
+  DROP FOREIGN KEY `FK_fmchklstchild_clid`,
+  DROP INDEX `FK_fmchklstchild_clid_idx`;
 
 ALTER TABLE `uploaddetermtemp`
   ADD COLUMN `updetid` int(20) NOT NULL AUTO_INCREMENT FIRST,
@@ -29,14 +33,21 @@ ALTER TABLE `uploadtaxa`
   ADD PRIMARY KEY (`uptid`);
 
 ALTER TABLE `fmchklsttaxalink`
+  DROP PRIMARY KEY,
   DROP FOREIGN KEY `FK_chklsttaxalink_cid`,
-  DROP FOREIGN KEY `FK_chklsttaxalink_tid`;
+  DROP FOREIGN KEY `FK_chklsttaxalink_tid`,
+  ADD COLUMN `cltlid` int(10) NOT NULL AUTO_INCREMENT FIRST,
+  ADD PRIMARY KEY (`cltlid`),
+  ADD UNIQUE `FK_clidtidmorph_id` (`TID`, `CLID`, `morphospecies`) comment '';
 
 ALTER TABLE `fmchklsttaxastatus`
   DROP FOREIGN KEY `FK_fmchklsttaxastatus_clidtid`;
 
 ALTER TABLE `fmcltaxacomments`
-  DROP FOREIGN KEY `FK_clcomment_cltaxa`;
+  DROP FOREIGN KEY `FK_clcomment_cltaxa`,
+  CHANGE COLUMN `uid` `createduid` int(10) UNSIGNED NOT NULL AFTER `comment`,
+  DROP FOREIGN KEY `FK_clcomment_users`,
+  DROP INDEX `FK_clcomment_users`;
 
 ALTER TABLE `fmvouchers`
   DROP FOREIGN KEY `FK_vouchers_cl`;
@@ -47,59 +58,20 @@ ALTER TABLE `fmchklstcoordinates`
 ALTER TABLE `referencechklsttaxalink`
   DROP FOREIGN KEY `FK_refchktaxalink_clidtid`;
 
-ALTER TABLE `fmchklsttaxalink`
-  DROP PRIMARY KEY;
-
-ALTER TABLE `fmchklsttaxalink`
-  ADD COLUMN `cltlid` int(10) NOT NULL AUTO_INCREMENT FIRST,
-  ADD PRIMARY KEY (`cltlid`);
-
-ALTER TABLE `fmchklsttaxalink`
-  ADD UNIQUE `FK_clidtidmorph_id` (`TID`, `CLID`, `morphospecies`) comment '';
-
-ALTER TABLE `kmcs`
-  DROP PRIMARY KEY;
-
-ALTER TABLE `omoccureditlocks`
-  CHANGE COLUMN `uid` `createduid` int(11) NOT NULL AFTER `occid`;
-
-ALTER TABLE `kmcs`
-  ADD COLUMN `kmcsid` int(10) NOT NULL AUTO_INCREMENT FIRST,
-  ADD PRIMARY KEY (`kmcsid`);
-
-ALTER TABLE `kmcs`
-  ADD UNIQUE `FK_cidclid_id` (`cid`, `cs`) comment '';
-
 ALTER TABLE `kmchardependance`
   DROP PRIMARY KEY,
   DROP FOREIGN KEY `FK_chardependance_cs`,
   DROP FOREIGN KEY `FK_chardependance_cid`,
   DROP INDEX `FK_chardependance_cid_idx`,
-  DROP INDEX `FK_chardependance_cs_idx`;
-
-RENAME TABLE `kmchardependance` TO `kmchardependence`;
-
-ALTER TABLE `kmchardependence`
+  DROP INDEX `FK_chardependance_cs_idx`,
+  DROP COLUMN `InitialTimeStamp`,
   ADD COLUMN `kmcsid` int(10) NOT NULL AFTER `CID`;
 
-UPDATE kmchardependence AS d LEFT JOIN kmcs AS cs ON d.CIDDependance = cs.cid AND d.CSDependance = cs.cs
-  SET d.kmcsid = cs.kmcsid;
-
-ALTER TABLE `kmchardependance`
-  DROP COLUMN `CIDDependance`,
-  DROP COLUMN `CSDependance`,
-  DROP COLUMN `InitialTimeStamp`;
+RENAME TABLE `kmchardependance` TO `kmchardependence`;
 
 ALTER TABLE `kmcsimages`
   DROP FOREIGN KEY `FK_kscsimages_kscs`,
   ADD COLUMN `kmcsid` int(10) NOT NULL AFTER `csimgid`;
-
-UPDATE kmcsimages AS i LEFT JOIN kmcs AS cs ON i.cid = cs.cid AND i.cs = cs.cs
-  SET i.kmcsid = cs.kmcsid;
-
-ALTER TABLE `kmcsimages`
-  DROP COLUMN `cid`,
-  DROP COLUMN `cs`;
 
 ALTER TABLE `kmcslang`
   DROP PRIMARY KEY,
@@ -108,59 +80,124 @@ ALTER TABLE `kmcslang`
   DROP FOREIGN KEY `FK_cslang_1`,
   ADD COLUMN `kmcsid` int(10) NOT NULL AFTER `cid`;
 
-UPDATE kmcslang AS l LEFT JOIN kmcs AS cs ON l.cid = cs.cid AND l.cs = cs.cs
-  SET l.kmcsid = cs.kmcsid;
-
-ALTER TABLE `kmcslang`
-  DROP COLUMN `cid`,
-
 ALTER TABLE `kmdescr`
   CHANGE COLUMN `DateEntered` `InitialTimeStamp` timestamp(0) NOT NULL DEFAULT current_timestamp AFTER `Notes`,
   DROP FOREIGN KEY `FK_descr_cs`,
   ADD COLUMN `kmcsid` int(10) NOT NULL AFTER `CID`;
 
-UPDATE kmdescr AS d LEFT JOIN kmcs AS cs ON d.CID = cs.cid AND d.CS = cs.cs
-  SET d.kmcsid = cs.kmcsid;
-
 ALTER TABLE `kmdescrdeletions`
   ADD COLUMN `kmcsid` int(10) NOT NULL AFTER `CID`;
+
+ALTER TABLE `kmcharacters`
+  DROP FOREIGN KEY `FK_charheading`,
+  DROP INDEX `FK_charheading_idx`;
+
+ALTER TABLE `kmcharacterlang`
+  DROP FOREIGN KEY `FK_charlang_lang`,
+  DROP INDEX `FK_charlang_lang_idx`;
+
+ALTER TABLE `kmcharheading`
+  DROP PRIMARY KEY,
+  DROP FOREIGN KEY `FK_kmcharheading_lang`,
+  DROP INDEX `FK_kmcharheading_lang_idx`,
+  CHANGE `hid` `hid` INT UNSIGNED AUTO_INCREMENT NOT NULL,
+  ADD PRIMARY KEY (`hid`);
+
+ALTER TABLE `kmcs`
+  DROP PRIMARY KEY,
+  DROP FOREIGN KEY `FK_cs_chars`,
+  DROP INDEX `FK_cs_chars`,
+  ADD COLUMN `kmcsid` int(10) NOT NULL AUTO_INCREMENT FIRST,
+  ADD PRIMARY KEY (`kmcsid`),
+  ADD UNIQUE `FK_cidclid_id` (`cid`, `cs`) comment '';
+
+UPDATE kmchardependence AS d LEFT JOIN kmcs AS cs ON d.CIDDependance = cs.cid AND d.CSDependance = cs.cs
+  SET d.kmcsid = cs.kmcsid;
+
+ALTER TABLE `kmchardependence`
+  DROP COLUMN `CIDDependance`,
+  DROP COLUMN `CSDependance`;
+
+UPDATE kmcsimages AS i LEFT JOIN kmcs AS cs ON i.cid = cs.cid AND i.cs = cs.cs
+  SET i.kmcsid = cs.kmcsid;
+
+ALTER TABLE `kmcsimages`
+  DROP COLUMN `cid`,
+  DROP COLUMN `cs`;
+
+UPDATE kmcslang AS l LEFT JOIN kmcs AS cs ON l.cid = cs.cid AND l.cs = cs.cs
+  SET l.kmcsid = cs.kmcsid;
+
+ALTER TABLE `kmcslang`
+  DROP COLUMN `cid`;
+
+UPDATE kmdescr AS d LEFT JOIN kmcs AS cs ON d.CID = cs.cid AND d.CS = cs.cs
+  SET d.kmcsid = cs.kmcsid;
 
 UPDATE kmdescrdeletions AS d LEFT JOIN kmcs AS cs ON d.CID = cs.cid AND d.CS = cs.cs
   SET d.kmcsid = cs.kmcsid;
 
-ALTER TABLE `omoccurdatasetlink`
-  DROP PRIMARY KEY;
+ALTER TABLE `omoccureditlocks`
+  CHANGE COLUMN `uid` `createduid` int(11) NOT NULL AFTER `occid`;
 
 ALTER TABLE `omoccurdatasetlink`
+  DROP PRIMARY KEY,
   ADD COLUMN `ocdatlid` int(10) NOT NULL AUTO_INCREMENT FIRST,
-  ADD PRIMARY KEY (`ocdatlid`);
+  ADD PRIMARY KEY (`ocdatlid`),
+  DROP FOREIGN KEY `FK_omoccurdatasetlink_datasetid`,
+  DROP FOREIGN KEY `FK_omoccurdatasetlink_occid`,
+  DROP INDEX `FK_omoccurdatasetlink_datasetid`,
+  DROP INDEX `FK_omoccurdatasetlink_occid`;
 
 ALTER TABLE `tmtraitdependencies`
-  DROP FOREIGN KEY `FK_tmdepend_traitid`;
+  DROP FOREIGN KEY `FK_tmdepend_traitid`,
+  DROP FOREIGN KEY `FK_tmdepend_stateid`,
+  DROP INDEX `FK_tmdepend_stateid_idx`;
 
 ALTER TABLE `taxavernaculars`
   DROP INDEX `unique-key`,
-  ADD UNIQUE `unique_key` (`Language`, `VernacularName`, `TID`) comment '';
+  ADD UNIQUE `unique_key` (`Language`, `VernacularName`, `TID`) comment '',
+  DROP FOREIGN KEY `FK_vern_lang`,
+  DROP FOREIGN KEY `FK_vernaculars_tid`,
+  DROP INDEX `tid1`,
+  DROP INDEX `FK_vern_lang_idx`;
 
 ALTER TABLE `omoccurrencesfulltext`
   DROP INDEX `ft_occur_locality`,
   ADD FULLTEXT `ft_occur_locality` (`locality`(100)) comment '';
 
+REPLACE omoccurrencesfulltext(occid,locality,recordedby)
+  SELECT occid, CONCAT_WS("; ", municipality, locality), recordedby
+  FROM omoccurrences;
+
 ALTER TABLE `omoccurrences`
   CHANGE COLUMN `dateEntered` `InitialTimeStamp` datetime(0) NULL DEFAULT NULL AFTER `dynamicFields`,
   CHANGE COLUMN `dateLastModified` `modifiedTimeStamp` timestamp(0) NOT NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP AFTER `InitialTimeStamp`,
-  DROP FOREIGN KEY `FK_omoccurrences_recbyid`;
+  DROP FOREIGN KEY `FK_omoccurrences_recbyid`,
+  DROP INDEX `FK_recordedbyid`,
+  DROP FOREIGN KEY `FK_omoccurrences_tid`,
+  DROP FOREIGN KEY `FK_omoccurrences_uid`,
+  DROP INDEX `FK_omoccurrences_tid`,
+  DROP INDEX `FK_omoccurrences_uid`,
+  CHANGE COLUMN `tidinterpreted` `tid` int(10) UNSIGNED NULL DEFAULT NULL AFTER `sciname`;
 
 UPDATE `omoccurrences`
   SET modifiedTimeStamp = modified
   WHERE (modified IS NOT NULL AND ISNULL(modifiedTimeStamp))
-	OR (modified > modifiedTimeStamp AND modified IS NOT NULL AND modifiedTimeStamp IS NOT NULL);
+  OR (modified > modifiedTimeStamp AND modified IS NOT NULL AND modifiedTimeStamp IS NOT NULL);
+
+UPDATE omoccurrences SET tid = NULL;
+
+UPDATE `omoccurrences` AS o LEFT JOIN taxa AS t ON o.sciname = t.SciName AND o.scientificNameAuthorship = t.Author
+  SET o.tid = t.TID
+  WHERE t.TID IS NOT NULL;
+
+UPDATE omoccurrences AS o LEFT JOIN taxa AS t ON o.sciname = t.SciName
+  SET o.tid = t.TID
+  WHERE t.TID IS NOT NULL AND ISNULL(o.tid) AND ISNULL(o.scientificNameAuthorship) AND ISNULL(t.Author);
 
 ALTER TABLE `omoccurrences`
   DROP COLUMN `modified`;
-
-ALTER TABLE `omoccurrences`
-  DROP INDEX `FK_recordedbyid`;
 
 ALTER TABLE `specprocessorrawlabelsfulltext`
   DROP INDEX `Index_ocr_fulltext`,
@@ -172,17 +209,15 @@ ALTER TABLE `users`
   ADD COLUMN `lastlogindate` datetime AFTER `usergroups`;
 
 UPDATE users AS u LEFT JOIN userlogin AS ul ON u.uid = ul.uid
-SET u.username = ul.username,
+  SET u.username = ul.username,
   u.`password` = ul.`password`,
   u.lastlogindate = ul.lastlogindate;
+
+RENAME TABLE userlogin TO s1_userlogin;
 
 ALTER TABLE `omcollpuboccurlink`
   DROP FOREIGN KEY `FK_ompuboccid`,
   DROP INDEX `FK_ompuboccid_idx`;
-
-ALTER TABLE `kmcharacters`
-  DROP FOREIGN KEY `FK_charheading`,
-  DROP INDEX `FK_charheading_idx`;
 
 ALTER TABLE `taxaprofilepubdesclink`
   DROP FOREIGN KEY `FK_tppubdesclink_id`,
@@ -190,9 +225,7 @@ ALTER TABLE `taxaprofilepubdesclink`
 
 ALTER TABLE `tmtraittaxalink`
   DROP FOREIGN KEY `FK_traittaxalink_tid`,
-  DROP INDEX `FK_traittaxalink_tid_idx`;
-
-ALTER TABLE `tmtraittaxalink`
+  DROP INDEX `FK_traittaxalink_tid_idx`,
   DROP FOREIGN KEY `FK_traittaxalink_traitid`,
   DROP INDEX `FK_traittaxalink_traitid_idx`;
 
@@ -204,11 +237,8 @@ ALTER TABLE `taxstatus`
   DROP INDEX `FK_taxstatus_tidacc`,
   DROP INDEX `FK_taxstatus_taid`,
   DROP INDEX `Index_parenttid`,
-  DROP INDEX `Index_hierarchy`;
-
-ALTER TABLE `taxstatus` DROP PRIMARY KEY;
-
-ALTER TABLE `taxstatus`
+  DROP INDEX `Index_hierarchy`,
+  DROP PRIMARY KEY,
   ADD COLUMN `tsid` int(10) UNSIGNED NOT NULL AUTO_INCREMENT FIRST,
   ADD PRIMARY KEY (`tsid`);
 
@@ -229,10 +259,6 @@ ALTER TABLE `taxaprofilepubmaplink`
 ALTER TABLE `taxaprofilepubimagelink`
   DROP FOREIGN KEY `FK_tppubimagelink_id`,
   DROP INDEX `FK_tppubimagelink_id_idx`;
-
-ALTER TABLE `kmchartaxalink`
-  DROP FOREIGN KEY `FK_chartaxalink_tid`,
-  DROP INDEX `FK_CharTaxaLink-TID`;
 
 ALTER TABLE `omoccurduplicatelink`
   DROP FOREIGN KEY `FK_omoccurdupelink_dupeid`,
@@ -317,12 +343,6 @@ ALTER TABLE `taxaresourcelinks`
   DROP FOREIGN KEY `FK_taxaresource_tid`,
   DROP INDEX `FK_taxaresource_tid_idx`;
 
-ALTER TABLE `taxavernaculars`
-  DROP FOREIGN KEY `FK_vern_lang`,
-  DROP FOREIGN KEY `FK_vernaculars_tid`,
-  DROP INDEX `tid1`,
-  DROP INDEX `FK_vern_lang_idx`;
-
 ALTER TABLE `glossaryimages`
   CHANGE COLUMN `uid` `createduid` int(10) UNSIGNED NULL DEFAULT NULL AFTER `createdBy`,
   DROP FOREIGN KEY `FK_glossaryimages_glossid`,
@@ -350,6 +370,11 @@ ALTER TABLE `omcrowdsourcecentral`
   DROP FOREIGN KEY `FK_omcrowdsourcecentral_collid`,
   DROP INDEX `Index_omcrowdsourcecentral_collid`,
   DROP INDEX `FK_omcrowdsourcecentral_collid`;
+
+UPDATE omcrowdsourcecentral AS c INNER JOIN omcrowdsourcequeue AS q ON c.omcsid = q.omcsid
+  INNER JOIN userroles AS r ON c.collid = r.tablepk AND q.uidprocessor = r.uid
+  SET q.isvolunteer = 0
+  WHERE r.role IN("CollAdmin","CollEditor") AND q.isvolunteer = 1;
 
 ALTER TABLE `omcrowdsourcequeue`
   DROP FOREIGN KEY `FK_omcrowdsourcequeue_occid`,
@@ -389,12 +414,6 @@ ALTER TABLE `omoccurcomments`
   DROP INDEX `fk_omoccurcomments_occid`,
   DROP INDEX `fk_omoccurcomments_uid`;
 
-ALTER TABLE `omoccurdatasetlink`
-  DROP FOREIGN KEY `FK_omoccurdatasetlink_datasetid`,
-  DROP FOREIGN KEY `FK_omoccurdatasetlink_occid`,
-  DROP INDEX `FK_omoccurdatasetlink_datasetid`,
-  DROP INDEX `FK_omoccurdatasetlink_occid`;
-
 ALTER TABLE `omoccurdatasets`
   CHANGE COLUMN `uid` `createduid` int(11) UNSIGNED NULL DEFAULT NULL AFTER `sortsequence`,
   DROP FOREIGN KEY `FK_omcollections_collid`,
@@ -423,7 +442,14 @@ ALTER TABLE `omoccuredits`
   DROP FOREIGN KEY `fk_omoccuredits_occid`,
   DROP FOREIGN KEY `fk_omoccuredits_uid`,
   DROP INDEX `fk_omoccuredits_uid`,
-  DROP INDEX `fk_omoccuredits_occid`;
+  DROP INDEX `fk_omoccuredits_occid`,
+  ADD COLUMN `editType` INT NULL DEFAULT 0 COMMENT '0 = general edit, 1 = batch edit' AFTER `AppliedStatus`;
+
+UPDATE omoccuredits AS e INNER JOIN (SELECT initialtimestamp, uid, count(DISTINCT occid) AS cnt
+  FROM omoccuredits
+  GROUP BY initialtimestamp, uid
+  HAVING cnt > 2) AS inntab ON e.initialtimestamp = inntab.initialtimestamp AND e.uid = inntab.uid
+  SET edittype = 1;
 
 ALTER TABLE `omoccurexchange`
   DROP FOREIGN KEY `FK_occexch_coll`,
@@ -449,23 +475,6 @@ ALTER TABLE `omoccurloans`
   DROP INDEX `FK_occurloans_borrinst`,
   DROP INDEX `FK_occurloans_owncoll`,
   DROP INDEX `FK_occurloans_borrcoll`;
-
-ALTER TABLE `omoccurrences`
-  DROP FOREIGN KEY `FK_omoccurrences_tid`,
-  DROP FOREIGN KEY `FK_omoccurrences_uid`,
-  DROP INDEX `FK_omoccurrences_tid`,
-  DROP INDEX `FK_omoccurrences_uid`,
-  CHANGE COLUMN `tidinterpreted` `tid` int(10) UNSIGNED NULL DEFAULT NULL AFTER `sciname`;
-
-UPDATE omoccurrences SET tid = NULL;
-
-UPDATE `omoccurrences` AS o LEFT JOIN taxa AS t ON o.sciname = t.SciName AND o.scientificNameAuthorship = t.Author
-  SET o.tid = t.TID
-  WHERE t.TID IS NOT NULL;
-
-UPDATE omoccurrences AS o LEFT JOIN taxa AS t ON o.sciname = t.SciName
-  SET o.tid = t.TID
-  WHERE t.TID IS NOT NULL AND ISNULL(o.tid) AND ISNULL(o.scientificNameAuthorship) AND ISNULL(t.Author);
 
 ALTER TABLE `omoccurrencetypes`
   DROP FOREIGN KEY `FK_occurtype_occid`,
@@ -519,15 +528,6 @@ ALTER TABLE `fmchecklists`
   CHANGE COLUMN `DateLastModified` `modifiedTimeStamp` datetime(0) NULL DEFAULT NULL AFTER `expiration`,
   DROP FOREIGN KEY `FK_checklists_uid`,
   DROP INDEX `FK_checklists_uid`;
-
-ALTER TABLE `fmchklstchildren`
-  DROP FOREIGN KEY `FK_fmchklstchild_clid`,
-  DROP INDEX `FK_fmchklstchild_clid_idx`;
-
-ALTER TABLE `fmcltaxacomments`
-  CHANGE COLUMN `uid` `createduid` int(10) UNSIGNED NOT NULL AFTER `comment`,
-  DROP FOREIGN KEY `FK_clcomment_users`,
-  DROP INDEX `FK_clcomment_users`;
 
 ALTER TABLE `fmprojectcategories`
   DROP FOREIGN KEY `FK_fmprojcat_pid`,
@@ -603,18 +603,6 @@ ALTER TABLE `institutions`
   CHANGE COLUMN `IntialTimeStamp` `InitialTimeStamp` timestamp(0) NOT NULL DEFAULT current_timestamp AFTER `modifiedTimeStamp`,
   DROP FOREIGN KEY `FK_inst_uid`,
   DROP INDEX `FK_inst_uid_idx`;
-
-ALTER TABLE `kmcharacterlang`
-  DROP FOREIGN KEY `FK_charlang_lang`,
-  DROP INDEX `FK_charlang_lang_idx`;
-
-ALTER TABLE `kmcharheading`
-  DROP FOREIGN KEY `FK_kmcharheading_lang`,
-  DROP INDEX `FK_kmcharheading_lang_idx`;
-
-ALTER TABLE `kmcs`
-  DROP FOREIGN KEY `FK_cs_chars`,
-  DROP INDEX `FK_cs_chars`;
 
 ALTER TABLE `lkupcounty`
   DROP FOREIGN KEY `fk_stateprovince`,
@@ -693,10 +681,6 @@ ALTER TABLE `tmstates`
   DROP INDEX `FK_tmstate_uidcreated_idx`,
   DROP INDEX `FK_tmstate_uidmodified_idx`;
 
-ALTER TABLE `tmtraitdependencies`
-  DROP FOREIGN KEY `FK_tmdepend_stateid`,
-  DROP INDEX `FK_tmdepend_stateid_idx`;
-
 ALTER TABLE `tmtraits`
   CHANGE COLUMN `datelastmodified` `modifiedTimeStamp` datetime(0) NULL DEFAULT NULL AFTER `modifieduid`,
   DROP FOREIGN KEY `FK_traits_uidcreated`,
@@ -726,12 +710,12 @@ ALTER TABLE `taxalinks`
   DROP FOREIGN KEY `FK_taxalinks_taxa`;
 
 ALTER TABLE `taxonunits`
-  DROP INDEX IF EXISTS `UNIQUE_taxonunits`;
+  DROP INDEX `UNIQUE_taxonunits`;
 
 DELETE FROM taxonunits
-WHERE RankName IN("Organism","Kingdom","Subkingdom","Division","Phylum","Subdivision","Subphylum","Superclass",
-	"Class","Subclass","Order","Suborder","Family","Subfamily","Tribe","Subtribe","Genus","Subgenus",
-	"Section","Subsection","Species","Subspecies","Variety","Morph","Subvariety","Form","Subform","Cultivated");
+  WHERE RankName IN("Organism","Kingdom","Subkingdom","Division","Phylum","Subdivision","Subphylum","Superclass",
+  "Class","Subclass","Order","Suborder","Family","Subfamily","Tribe","Subtribe","Genus","Subgenus",
+  "Section","Subsection","Species","Subspecies","Variety","Morph","Subvariety","Form","Subform","Cultivated");
 
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (1, 'Organism', 1, 1);
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (10, 'Kingdom', 1, 1);
@@ -772,37 +756,101 @@ INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrank
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (270, 'Subform', 260, 180);
 INSERT INTO `taxonunits`(`rankid`, `rankname`, `dirparentrankid`, `reqparentrankid`) VALUES (300, 'Cultivated', 220, 220);
 
+UPDATE taxonunits AS tu LEFT JOIN taxonunits AS tu2 ON tu.dirparentrankid = tu2.rankid
+  SET tu.dirparentrankid = tu2.taxonunitid;
+
+UPDATE taxonunits AS tu LEFT JOIN taxonunits AS tu2 ON tu.reqparentrankid = tu2.rankid
+  SET tu.reqparentrankid = tu2.taxonunitid;
+
 UPDATE taxa AS t LEFT JOIN taxonunits AS u ON t.RankId = u.rankid
   SET t.RankId = u.taxonunitid;
+
+CREATE TABLE s1_taxa_archive
+  SELECT * FROM taxa WHERE ISNULL(RankId);
+
+DELETE FROM taxa WHERE ISNULL(RankId);
 
 TRUNCATE TABLE omoccurgeoindex;
 
 INSERT IGNORE INTO omoccurgeoindex(tid,decimallatitude,decimallongitude)
-  SELECT DISTINCT o.tidinterpreted, round(o.decimallatitude,3), round(o.decimallongitude,3)
-  FROM omoccurrences o LEFT JOIN omoccurgeoindex g ON o.tidinterpreted = g.tid
-  WHERE g.tid IS NULL AND o.tidinterpreted IS NOT NULL AND o.decimallatitude IS NOT NULL AND o.decimallongitude IS NOT NULL;
+  SELECT DISTINCT o.tid, round(o.decimallatitude,3), round(o.decimallongitude,3)
+  FROM omoccurrences AS o LEFT JOIN omoccurgeoindex AS g ON o.tid = g.tid
+  WHERE ISNULL(g.tid) AND o.tid IS NOT NULL AND o.decimallatitude IS NOT NULL AND o.decimallongitude IS NOT NULL;
 
-REPLACE omoccurrencesfulltext(occid,locality,recordedby)
-  SELECT occid, CONCAT_WS("; ", municipality, locality), recordedby
-  FROM omoccurrences;
+ALTER TABLE `omoccurpoints`
+  DROP COLUMN `errradiuspoly`,
+  DROP COLUMN `footprintpoly`;
 
-#Add edittype field and run update query to tag batch updates (edittype = 1)
-ALTER TABLE `omoccuredits`
-  ADD COLUMN `editType` INT NULL DEFAULT 0 COMMENT '0 = general edit, 1 = batch edit' AFTER `AppliedStatus`;
+CREATE TABLE s1_guidimages_archive
+  SELECT * FROM guidimages WHERE imgid NOT IN(SELECT imgid FROM images);
 
-UPDATE omoccuredits e INNER JOIN (SELECT initialtimestamp, uid, count(DISTINCT occid) as cnt
-FROM omoccuredits
-GROUP BY initialtimestamp, uid
-HAVING cnt > 2) as inntab ON e.initialtimestamp = inntab.initialtimestamp AND e.uid = inntab.uid
-SET edittype = 1;
+DELETE FROM guidimages WHERE imgid NOT IN(SELECT imgid FROM images);
 
-#Tag all collection admin and editors as non-volunteer crowdsource editors
-UPDATE omcrowdsourcecentral c INNER JOIN omcrowdsourcequeue q ON c.omcsid = q.omcsid
-  INNER JOIN userroles r ON c.collid = r.tablepk AND q.uidprocessor = r.uid
-  SET q.isvolunteer = 0
-  WHERE r.role IN("CollAdmin","CollEditor") AND q.isvolunteer = 1;
+CREATE TABLE s1_guidoccurdeterminations_archive
+  SELECT * FROM guidoccurdeterminations WHERE detid NOT IN(SELECT detid FROM omoccurdeterminations);
+
+DELETE FROM guidoccurdeterminations WHERE detid NOT IN(SELECT detid FROM omoccurdeterminations);
+
+CREATE TABLE s1_guidoccurrences_archive
+  SELECT * FROM guidoccurrences WHERE occid NOT IN(SELECT occid FROM omoccurrences);
+
+DELETE FROM guidoccurrences WHERE occid NOT IN(SELECT occid FROM omoccurrences);
+
+DELETE FROM taxaenumtree WHERE tid NOT IN(SELECT TID FROM taxa);
+
+DELETE FROM taxaenumtree WHERE parenttid NOT IN(SELECT TID FROM taxa);
+
+DELETE FROM taxstatus WHERE tid NOT IN(SELECT TID FROM taxa);
+
+DELETE FROM taxstatus WHERE parenttid NOT IN(SELECT TID FROM taxa);
+
+DELETE FROM taxstatus WHERE tidaccepted NOT IN(SELECT TID FROM taxa);
 
 ALTER TABLE `schemaversion`
   CHANGE COLUMN `dateapplied` `modifiedtimestamp` timestamp(0) NOT NULL DEFAULT current_timestamp AFTER `versionnumber`;
 
 INSERT INTO `schemaversion`(`versionnumber`) VALUES ('2.0');
+
+RENAME TABLE actionrequest TO s1_actionrequest;
+RENAME TABLE actionrequesttype TO s1_actionrequesttype;
+RENAME TABLE adminstats TO s1_adminstats;
+RENAME TABLE agentlinks TO s1_agentlinks;
+RENAME TABLE agentnames TO s1_agentnames;
+RENAME TABLE agentnumberpattern TO s1_agentnumberpattern;
+RENAME TABLE agentrelations TO s1_agentrelations;
+RENAME TABLE agents TO s1_agents;
+RENAME TABLE agentsfulltext TO s1_agentsfulltext;
+RENAME TABLE agentteams TO s1_agentteams;
+RENAME TABLE chotomouskey TO s1_chotomouskey;
+RENAME TABLE configpage TO s1_configpage;
+RENAME TABLE configpageattributes TO s1_configpageattributes;
+RENAME TABLE ctnametypes TO s1_ctnametypes;
+RENAME TABLE ctrelationshiptypes TO s1_ctrelationshiptypes;
+RENAME TABLE fmchklsttaxastatus TO s1_fmchklsttaxastatus;
+RENAME TABLE geothescontinent TO s1_geothescontinent;
+RENAME TABLE geothescountry TO s1_geothescountry;
+RENAME TABLE geothescounty TO s1_geothescounty;
+RENAME TABLE geothesmunicipality TO s1_geothesmunicipality;
+RENAME TABLE geothesstateprovince TO s1_geothesstateprovince;
+RENAME TABLE imageannotations TO s1_imageannotations;
+RENAME TABLE imageprojectlink TO s1_imageprojectlink;
+RENAME TABLE imageprojects TO s1_imageprojects;
+RENAME TABLE omcollectors TO s1_omcollectors;
+RENAME TABLE omcollpublications TO s1_omcollpublications;
+RENAME TABLE omcollpuboccurlink TO s1_omcollpuboccurlink;
+RENAME TABLE omcollsecondary TO s1_omcollsecondary;
+RENAME TABLE omoccurrencetypes TO s1_omoccurrencetypes;
+RENAME TABLE referenceagentlinks TO s1_referenceagentlinks;
+RENAME TABLE salixwordstats TO s1_salixwordstats;
+RENAME TABLE specprocessorrawlabelsfulltext TO s1_specprocessorrawlabelsfulltext;
+RENAME TABLE specprocnlp TO s1_specprocnlp;
+RENAME TABLE specprocnlpfrag TO s1_specprocnlpfrag;
+RENAME TABLE specprocnlpversion TO s1_specprocnlpversion;
+RENAME TABLE taxaprofilepubdesclink TO s1_taxaprofilepubdesclink;
+RENAME TABLE taxaprofilepubimagelink TO s1_taxaprofilepubimagelink;
+RENAME TABLE taxaprofilepubmaplink TO s1_taxaprofilepubmaplink;
+RENAME TABLE taxaprofilepubs TO s1_taxaprofilepubs;
+RENAME TABLE unknowncomments TO s1_unknowncomments;
+RENAME TABLE unknownimages TO s1_unknownimages;
+RENAME TABLE unknowns TO s1_unknowns;
+RENAME TABLE userpermissions TO s1_userpermissions;

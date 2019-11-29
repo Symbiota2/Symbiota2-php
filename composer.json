@@ -9,6 +9,7 @@
         "ext-iconv": "*",
         "ext-json": "^1.5",
         "api-platform/api-pack": "^1.1",
+        "creof/doctrine2-spatial": "^1.2",
         "easycorp/easyadmin-bundle": "^2.0",
         "lexik/jwt-authentication-bundle": "^2.6",
         "sensio/framework-extra-bundle": "^5.2",

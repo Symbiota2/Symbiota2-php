@@ -108,7 +108,7 @@ class Edits implements InitialTimestampInterface
      *
      * @ORM\ManyToOne(targetEntity="Core\Entity\Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid", nullable=false)
+     *   @ORM\JoinColumn(name="uid", referencedColumnName="uid")
      * })
      */
     private $userId;
