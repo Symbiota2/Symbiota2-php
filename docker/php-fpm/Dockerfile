@@ -4,14 +4,17 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
     && apt-get -y --no-install-recommends install \
+        php7.3-curl \
+        php7.3-gd \
+        php7.3-mbstring \
         php7.3-mysql \
+        php7.3-odbc \
         php7.3-pgsql \
         php7.3-sqlite3 \
-        php7.3-gd \
-        php7.3-odbc \
+        php7.3-xml \
+        php7.3-xmlrpc \
         php7.3-zip \
         php-yaml \
-        php-xml \
         libjpeg-dev \
         libpng-dev \
         libpq-dev \
