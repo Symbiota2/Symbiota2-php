@@ -54,7 +54,7 @@ export class PluginInstallerComponent {
         );
     }
 
-    onFileUploadClick(event) {
+    onFileUploadClick() {
         this.fileUpload.nativeElement.click();
     }
 
