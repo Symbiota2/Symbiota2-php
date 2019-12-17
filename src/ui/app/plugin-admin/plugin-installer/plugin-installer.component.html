@@ -1,21 +1,28 @@
 <mat-card class="plugin-card">
-    <form #installPluginForm=ngForm>
+    <form>
         To install a plugin that is not included in the plugin registry:<br />
         <mat-form-field>
-            <input type="text" matInput placeholder="Enter the url for the plugin zip file" name="pluginurl">
+            <input type="text" matInput placeholder="Enter the url for the plugin zip file" name="pluginurl" [(ngModel)]="pluginUploadUrl" (change)="verifyPluginUrl($event)">
         </mat-form-field>
         <br />
         or
         <br />
-        <mat-form-field>
-            <ngx-mat-file-input #removableInput placeholder="Click here to upload a plugin zip file" [accept]="'.zip'"></ngx-mat-file-input>
-            <button mat-icon-button matSuffix *ngIf="!removableInput.empty" (click)="removableInput.clear($event)">
-                <mat-icon>clear</mat-icon>
+        <div class="fileUploadDiv">
+            <button *ngIf="!pluginUploadFile" mat-raised-button color="primary" (click)="onFileUploadClick($event)">
+                <mat-icon>folder</mat-icon>
+                Click here to upload a plugin zip file
             </button>
-        </mat-form-field>
+            <div *ngIf="pluginUploadFileName">
+                <span>{{pluginUploadFileName}}</span>
+                <button mat-icon-button color="primary" (click)="removeFile()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+        </div>
+        <input #fileUpload type="file" class="fileupload" name="pluginfile" (change)="verifyPluginFile($event)">
         <br />
         <mat-card-actions class="rightJustifiedContainer">
-            <button mat-raised-button color="primary">Install</button>
+            <button mat-raised-button color="primary" [disabled]="pluginUploadFormDisabled">Install</button>
         </mat-card-actions>
     </form>
 </mat-card>

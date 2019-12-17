@@ -122,7 +122,6 @@ export class SignupComponent implements OnInit {
             'human-entry': new FormControl(null, [Validators.required]),
             'human-verified': new FormControl(null, [Validators.required, SignupComponent.checkHumanVerified.bind(this)])
         }, [SignupComponent.checkPasswords.bind(this)]);
-
     }
 
     onSignup(form: FormGroup) {

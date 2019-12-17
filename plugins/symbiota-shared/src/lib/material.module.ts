@@ -24,7 +24,6 @@ import {
     MatTableModule,
     MatSlideToggleModule
 } from '@angular/material';
-import {MaterialFileInputModule} from 'ngx-material-file-input';
 
 @NgModule({
     imports: [
@@ -50,8 +49,7 @@ import {MaterialFileInputModule} from 'ngx-material-file-input';
         MatDialogModule,
         MatTabsModule,
         MatTableModule,
-        MatSlideToggleModule,
-        MaterialFileInputModule
+        MatSlideToggleModule
     ],
     exports: [
         MatButtonModule,
@@ -76,8 +74,7 @@ import {MaterialFileInputModule} from 'ngx-material-file-input';
         MatDialogModule,
         MatTabsModule,
         MatTableModule,
-        MatSlideToggleModule,
-        MaterialFileInputModule
+        MatSlideToggleModule
     ]
 })
 export class MaterialModule {

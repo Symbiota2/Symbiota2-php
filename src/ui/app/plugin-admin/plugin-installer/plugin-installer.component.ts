@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild, ElementRef} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -17,8 +17,13 @@ import {AvailablePlugin} from '../available-plugin.model';
     styleUrls: ['./plugin-installer.component.css'],
 })
 export class PluginInstallerComponent {
+    @ViewChild('fileUpload',  { read: ElementRef, static: false }) fileUpload: ElementRef;
     availablePlugins: any;
     installedPlugins: any;
+    pluginUploadUrl: string;
+    pluginUploadFile: any;
+    pluginUploadFileName: string;
+    pluginUploadFormDisabled = true;
     accessPermissions = [
         'SuperAdmin'
     ];
@@ -47,6 +52,53 @@ export class PluginInstallerComponent {
                 this.spinnerService.hide();
             }
         );
+    }
+
+    onFileUploadClick(event) {
+        this.fileUpload.nativeElement.click();
+    }
+
+    removeFile() {
+        this.pluginUploadFile = null;
+        this.pluginUploadFileName = null;
+        this.fileUpload.nativeElement.value = null;
+        this.validatePluginUploadForm();
+    }
+
+    verifyPluginUrl(event) {
+        const url = event.target.value;
+        if(url.substr(url.length - 4) === ".zip") {
+            this.removeFile();
+            this.pluginUploadUrl = url;
+        } else {
+            this.pluginUploadUrl = null;
+            this.alertService.showErrorSnackbar(
+                'The url you entered is not for a .zip file',
+                '',
+                5000
+            );
+        }
+        this.validatePluginUploadForm();
+    }
+
+    verifyPluginFile(event) {
+        this.pluginUploadFile = event.target.files[0];
+        this.pluginUploadFileName = event.target.files[0].name;
+        if(this.pluginUploadFileName.substr(this.pluginUploadFileName.length - 4) === ".zip") {
+            this.pluginUploadUrl = null;
+        } else {
+            this.removeFile();
+            this.alertService.showErrorSnackbar(
+                'The file you selected is not a zip file',
+                '',
+                5000
+            );
+        }
+        this.validatePluginUploadForm();
+    }
+
+    validatePluginUploadForm() {
+        this.pluginUploadFormDisabled = !(this.pluginUploadUrl || this.pluginUploadFileName);
     }
 
     onInstallPlugin(plugin: string) {

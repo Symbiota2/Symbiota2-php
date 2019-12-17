@@ -24,3 +24,12 @@ form mat-card-actions {
     margin-bottom: 0;
     padding-bottom: 0;
 }
+
+.fileUploadDiv {
+    margin-top: 8px;
+    height: 30px;
+}
+
+.fileupload {
+    display:none;
+}
