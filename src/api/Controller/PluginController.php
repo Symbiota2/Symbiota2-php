@@ -71,12 +71,17 @@ class PluginController extends AbstractController
      */
     public function getPluginRegistry(): Response
     {
-        $fileContents = '';
-        if($this->filesystem->exists($this->rootDir.'/plugin-registry.json')) {
-            $fileContents = file_get_contents($this->rootDir.'/plugin-registry.json');
+        $localArr = array();
+        $mainContents = file_get_contents('https://raw.githubusercontent.com/Symbiota2/Symbiota2/master/plugin-registry.json');
+        $mainArr = json_decode($mainContents, true);
+        if($this->filesystem->exists($this->rootDir.'/local-plugin-registry.json')) {
+            $localContents = file_get_contents($this->rootDir.'/local-plugin-registry.json');
+            $localArr = json_decode($localContents, true);
         }
-
-        return new Response($fileContents);
+        $responseArr = array_merge($mainArr,$localArr);
+        return new JsonResponse(
+            $responseArr
+        );
     }
 
     /**
@@ -224,6 +229,39 @@ class PluginController extends AbstractController
             $returnCode = 1;
         }
         $this->deleteSessionTempDir();
+        return new JsonResponse(
+            $returnCode
+        );
+    }
+
+    /**
+     * @Route(
+     *     name="install_local_plugin",
+     *     path="/api/installlocalplugin",
+     *     methods={"POST"}
+     * )
+     * @IsGranted("SuperAdmin")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function installLocalPlugin(Request $request): JsonResponse
+    {
+        $returnCode = 0;
+        $dataArr = json_decode($request->getContent(), true);
+        $this->pluginName = $dataArr['pluginname'];
+        $this->tempPluginRootDir = $this->rootDir.'/plugins/'.$this->pluginName;
+        $this->pluginInstallDir = $this->rootDir.'/plugins/'.$this->pluginName;
+        if($this->filesystem->exists($this->tempPluginRootDir.'/config.json')) {
+            if($this->validatePluginConfig()) {
+                $this->setPluginConfigFile();
+            }
+            else{
+                $returnCode = 5;
+            }
+        }
+        else{
+            $returnCode = 3;
+        }
         return new JsonResponse(
             $returnCode
         );

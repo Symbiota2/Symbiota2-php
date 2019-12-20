@@ -77,6 +77,7 @@ Homestead.yaml
 /tsconfig.json.bak
 /package.json
 /package.json.bak
+/local-plugin-registry.json
 /docs/.sass-cache/
 /docs/_site/
 /docs/Gemfile.lock

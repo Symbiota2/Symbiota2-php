@@ -21,6 +21,7 @@ export class PluginInstallerComponent {
     availablePlugins: any;
     installedPlugins: any;
     pluginUploadUrl: string;
+    pluginUploadName: string;
     pluginUploadFile: any;
     pluginUploadFileName: string;
     pluginUploadFormDisabled = true;
@@ -134,13 +135,18 @@ export class PluginInstallerComponent {
 
     onInstallRegisteredPlugin(pluginName: string) {
         const registeredPlugin = this.availablePlugins.find(x => x.name === pluginName);
+        this.pluginUploadName = pluginName;
         this.pluginUploadUrl = registeredPlugin.source;
         this.installPlugin();
     }
 
     installPlugin() {
         if(this.pluginUploadUrl) {
-            this.installPluginByUrl();
+            if(this.pluginUploadUrl !== 'local') {
+                this.installPluginByUrl();
+            } else {
+                this.installLocalPlugin();
+            }
         }
 
         if(this.pluginUploadFile) {
@@ -162,6 +168,15 @@ export class PluginInstallerComponent {
     installPluginByUrl() {
         this.spinnerService.show();
         this.http.post<any>('/api/installpluginurl', {'uploadurl': this.pluginUploadUrl}).subscribe(
+            (res) => {
+                this.processResponse(res);
+            }
+        );
+    }
+
+    installLocalPlugin() {
+        this.spinnerService.show();
+        this.http.post<any>('/api/installlocalplugin', {'pluginname': this.pluginUploadName}).subscribe(
             (res) => {
                 this.processResponse(res);
             }

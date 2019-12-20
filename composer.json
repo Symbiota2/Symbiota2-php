@@ -66,6 +66,7 @@
             "@php -r \"file_exists('./config/packages/api_platform.yaml') || copy('./config/packages/api_platform.yaml.dist', './config/packages/api_platform.yaml');\"",
             "@php -r \"file_exists('./config/packages/doctrine.yaml') || copy('./config/packages/doctrine.yaml.dist', './config/packages/doctrine.yaml');\"",
             "@php -r \"file_exists('./config/plugin-config.json') || copy('./config/plugin-config.json.dist', './config/plugin-config.json');\"",
+            "@php -r \"file_exists('./local-plugin-registry.json') || copy('./local-plugin-registry.json.dist', './local-plugin-registry.json');\"",
             "@php -r \"file_exists('./temp') || mkdir('./temp');\""
         ],
         "post-install-cmd": [
