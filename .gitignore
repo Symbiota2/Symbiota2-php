@@ -6,6 +6,7 @@
 /.env.*.local
 /composer.lock
 /public/bundles/
+/temp/
 /var/
 /vendor/
 ###< symfony/framework-bundle >###

@@ -1,13 +1,13 @@
 import {Component, ViewChild, ElementRef} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog} from '@angular/material/dialog';
-
-import {PluginDependencyDialogComponent} from '../plugin-dependency-dialog/plugin-dependency-dialog.component';
+import {TranslateService} from '@ngx-translate/core';
 
 import {PluginLoaderService} from 'symbiota-plugin-loader';
 import {SpinnerOverlayService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
 import {AuthService} from 'symbiota-auth';
+import {ConfigurationService} from 'symbiota-shared';
 
 import {AvailablePlugin} from '../available-plugin.model';
 
@@ -27,12 +27,22 @@ export class PluginInstallerComponent {
     accessPermissions = [
         'SuperAdmin'
     ];
+    successResponse = '';
+    errorResponse = [
+        'Plugin successfully installed',
+        'ERROR: Cannot download plugin',
+        'ERROR: Cannot extract zip archive',
+        'ERROR: Zip archive does not contain plugin config file',
+        'ERROR: Invalid plugin config file'
+    ];
 
     constructor(
         private pluginLoader: PluginLoaderService,
         private spinnerService: SpinnerOverlayService,
         private alertService: AlertService,
         private authService: AuthService,
+        private translate: TranslateService,
+        private configService: ConfigurationService,
         private http: HttpClient,
         public dialog: MatDialog
     ) {
@@ -42,7 +52,7 @@ export class PluginInstallerComponent {
             pluginList => {
                 this.availablePlugins = Object.assign([], pluginList);
                 this.installedPlugins = this.pluginLoader.pluginData;
-                pluginList.forEach((plugin, index) => {
+                pluginList.forEach((plugin) => {
                     if (this.installedPlugins.filter(r => r.name === plugin.name).length > 0) {
                         const pluginIndex = this.availablePlugins.findIndex(i => i.name === plugin.name);
                         this.availablePlugins.splice(pluginIndex, 1);
@@ -52,6 +62,18 @@ export class PluginInstallerComponent {
                 this.spinnerService.hide();
             }
         );
+        this.configService.selectedLanguageValue.subscribe(value => {
+            this.setTranslations();
+        });
+    }
+
+    setTranslations() {
+        this.translate.get('core.user.service.create_confirmation').subscribe((res: string) => {
+            // this.create_confirmation = res;
+        });
+        this.translate.get('core.user.service.create_error').subscribe((res: string) => {
+            // this.create_error = res;
+        });
     }
 
     onFileUploadClick() {
@@ -101,7 +123,61 @@ export class PluginInstallerComponent {
         this.pluginUploadFormDisabled = !(this.pluginUploadUrl || this.pluginUploadFileName);
     }
 
-    onInstallPlugin(plugin: string) {
+    onInstallRegisteredPlugin(pluginName: string) {
+        const registeredPlugin = this.availablePlugins.find(x => x.name === pluginName);
+        this.pluginUploadUrl = registeredPlugin.source;
+        this.installPlugin();
+    }
 
+    installPlugin() {
+        if(this.pluginUploadUrl) {
+            this.installPluginByUrl();
+        }
+
+        if(this.pluginUploadFile) {
+            this.installPluginByFile();
+        }
+    }
+
+    installPluginByFile() {
+        const formData = new FormData();
+        this.spinnerService.show();
+        formData.append('uploadfile', this.pluginUploadFile);
+        this.http.post<any>('/api/installpluginfile', formData).subscribe(
+            (res) => {
+                this.processResponse(res);
+            }
+        );
+    }
+
+    installPluginByUrl() {
+        this.spinnerService.show();
+        this.http.post<any>('/api/installpluginurl', {'uploadurl': this.pluginUploadUrl}).subscribe(
+            (res) => {
+                this.processResponse(res);
+            }
+        );
+    }
+
+    processResponse(res) {
+        if(res > 0) {
+            /*this.alertService.showErrorSnackbar(
+                this.responseArr[res],
+                '',
+                5000
+            );*/
+            this.pluginUploadUrl = null;
+            this.pluginUploadFile = null;
+            this.pluginUploadFileName = null;
+            this.fileUpload.nativeElement.value = null;
+            this.spinnerService.hide();
+        } else {
+            /*this.alertService.showSnackbar(
+                this.responseArr[res],
+                '',
+                5000
+            );*/
+            location.reload();
+        }
     }
 }
