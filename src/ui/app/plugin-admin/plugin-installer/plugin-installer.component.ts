@@ -28,13 +28,7 @@ export class PluginInstallerComponent {
         'SuperAdmin'
     ];
     successResponse = '';
-    errorResponse = [
-        'Plugin successfully installed',
-        'ERROR: Cannot download plugin',
-        'ERROR: Cannot extract zip archive',
-        'ERROR: Zip archive does not contain plugin config file',
-        'ERROR: Invalid plugin config file'
-    ];
+    errorResponse = {};
 
     constructor(
         private pluginLoader: PluginLoaderService,
@@ -68,11 +62,26 @@ export class PluginInstallerComponent {
     }
 
     setTranslations() {
-        this.translate.get('core.user.service.create_confirmation').subscribe((res: string) => {
-            // this.create_confirmation = res;
+        this.translate.get('core.plugin_admin.plugin-installer.install_success_response').subscribe((res: string) => {
+            this.successResponse = res;
         });
-        this.translate.get('core.user.service.create_error').subscribe((res: string) => {
-            // this.create_error = res;
+        this.translate.get('core.plugin_admin.plugin-installer.install_error_response1').subscribe((res: string) => {
+            this.errorResponse['errorRes1'] = res;
+        });
+        this.translate.get('core.plugin_admin.plugin-installer.install_error_response2').subscribe((res: string) => {
+            this.errorResponse['errorRes2'] = res;
+        });
+        this.translate.get('core.plugin_admin.plugin-installer.install_error_response3').subscribe((res: string) => {
+            this.errorResponse['errorRes3'] = res;
+        });
+        this.translate.get('core.plugin_admin.plugin-installer.install_error_response4').subscribe((res: string) => {
+            this.errorResponse['errorRes4'] = res;
+        });
+        this.translate.get('core.plugin_admin.plugin-installer.install_error_response5').subscribe((res: string) => {
+            this.errorResponse['errorRes5'] = res;
+        });
+        this.translate.get('core.plugin_admin.plugin-installer.install_error_response6').subscribe((res: string) => {
+            this.errorResponse['errorRes6'] = res;
         });
     }
 
@@ -95,7 +104,7 @@ export class PluginInstallerComponent {
         } else {
             this.pluginUploadUrl = null;
             this.alertService.showErrorSnackbar(
-                'The url you entered is not for a .zip file',
+                this.errorResponse['errorRes5'],
                 '',
                 5000
             );
@@ -111,7 +120,7 @@ export class PluginInstallerComponent {
         } else {
             this.removeFile();
             this.alertService.showErrorSnackbar(
-                'The file you selected is not a zip file',
+                this.errorResponse['errorRes6'],
                 '',
                 5000
             );
@@ -161,22 +170,23 @@ export class PluginInstallerComponent {
 
     processResponse(res) {
         if(res > 0) {
-            /*this.alertService.showErrorSnackbar(
-                this.responseArr[res],
+            const responseLabel = 'errorRes' + res;
+            this.alertService.showErrorSnackbar(
+                this.errorResponse[responseLabel],
                 '',
                 5000
-            );*/
+            );
             this.pluginUploadUrl = null;
             this.pluginUploadFile = null;
             this.pluginUploadFileName = null;
             this.fileUpload.nativeElement.value = null;
             this.spinnerService.hide();
         } else {
-            /*this.alertService.showSnackbar(
-                this.responseArr[res],
+            this.alertService.showSnackbar(
+                this.successResponse,
                 '',
                 5000
-            );*/
+            );
             location.reload();
         }
     }
