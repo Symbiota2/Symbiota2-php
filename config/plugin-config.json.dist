@@ -12,7 +12,8 @@
     "api_namespace": "Checklist",
     "ui_filename": "checklist.umd.js",
     "ui_module_name": "ChecklistModule",
-    "enabled": true
+    "enabled": true,
+    "database_extension": true
   },
   {
     "name": "collection",
@@ -31,7 +32,8 @@
         "provider": "user-profile-collection-tab"
       }
     ],
-    "enabled": true
+    "enabled": true,
+    "database_extension": true
   },
   {
     "name": "crowd-source",
@@ -45,7 +47,8 @@
     "api_namespace": "CrowdSource",
     "ui_filename": "crowd-source.umd.js",
     "ui_module_name": "CrowdSourceModule",
-    "enabled": true
+    "enabled": true,
+    "database_extension": true
   },
   {
     "name": "exsiccati",
@@ -59,7 +62,8 @@
     "api_namespace": "Exsiccati",
     "ui_filename": "exsiccati.umd.js",
     "ui_module_name": "ExsiccatiModule",
-    "enabled": true
+    "enabled": true,
+    "database_extension": true
   },
   {
     "name": "glossary",
@@ -73,7 +77,8 @@
     "api_namespace": "Glossary",
     "ui_filename": "glossary.umd.js",
     "ui_module_name": "GlossaryModule",
-    "enabled": true
+    "enabled": true,
+    "database_extension": true
   },
   {
     "name": "image-processor",
@@ -88,7 +93,8 @@
     "api_namespace": "ImageProcessor",
     "ui_filename": "image-processor.umd.js",
     "ui_module_name": "ImageProcessorModule",
-    "enabled": true
+    "enabled": true,
+    "database_extension": true
   },
   {
     "name": "key",
@@ -102,7 +108,8 @@
     "api_namespace": "Key",
     "ui_filename": "key.umd.js",
     "ui_module_name": "KeyModule",
-    "enabled": true
+    "enabled": true,
+    "database_extension": true
   },
   {
     "name": "media",
@@ -116,7 +123,8 @@
     "api_namespace": "Media",
     "ui_filename": "media.umd.js",
     "ui_module_name": "MediaModule",
-    "enabled": true
+    "enabled": true,
+    "database_extension": true
   },
   {
     "name": "occurrence",
@@ -131,7 +139,8 @@
     "api_namespace": "Occurrence",
     "ui_filename": "occurrence.umd.js",
     "ui_module_name": "OccurrenceModule",
-    "enabled": true
+    "enabled": true,
+    "database_extension": true
   },
   {
     "name": "occurrence-association",
@@ -145,7 +154,8 @@
     "api_namespace": "OccurrenceAssociation",
     "ui_filename": "occurrence-association.umd.js",
     "ui_module_name": "OccurrenceAssociationModule",
-    "enabled": true
+    "enabled": true,
+    "database_extension": true
   },
   {
     "name": "occurrence-comment",
@@ -159,7 +169,8 @@
     "api_namespace": "OccurrenceComment",
     "ui_filename": "occurrence-comment.umd.js",
     "ui_module_name": "OccurrenceCommentModule",
-    "enabled": true
+    "enabled": true,
+    "database_extension": true
   },
   {
     "name": "occurrence-dataset",
@@ -173,7 +184,8 @@
     "api_namespace": "OccurrenceDataset",
     "ui_filename": "occurrence-dataset.umd.js",
     "ui_module_name": "OccurrenceDatasetModule",
-    "enabled": true
+    "enabled": true,
+    "database_extension": true
   },
   {
     "name": "occurrence-genetic",
@@ -187,7 +199,8 @@
     "api_namespace": "OccurrenceGenetic",
     "ui_filename": "occurrence-genetic.umd.js",
     "ui_module_name": "OccurrenceGeneticModule",
-    "enabled": true
+    "enabled": true,
+    "database_extension": true
   },
   {
     "name": "occurrence-loan",
@@ -201,7 +214,8 @@
     "api_namespace": "OccurrenceLoan",
     "ui_filename": "occurrence-loan.umd.js",
     "ui_module_name": "OccurrenceLoanModule",
-    "enabled": true
+    "enabled": true,
+    "database_extension": true
   },
   {
     "name": "occurrence-search",
@@ -220,7 +234,8 @@
         "provider": "occurrence-search"
       }
     ],
-    "enabled": true
+    "enabled": true,
+    "database_extension": false
   },
   {
     "name": "reference",
@@ -231,7 +246,8 @@
     "api_namespace": "Reference",
     "ui_filename": "reference.umd.js",
     "ui_module_name": "ReferenceModule",
-    "enabled": true
+    "enabled": true,
+    "database_extension": true
   },
   {
     "name": "taxa",
@@ -242,7 +258,8 @@
     "api_namespace": "Taxa",
     "ui_filename": "taxa.umd.js",
     "ui_module_name": "TaxaModule",
-    "enabled": true
+    "enabled": true,
+    "database_extension": true
   },
   {
     "name": "traits",
@@ -256,6 +273,7 @@
     "api_namespace": "Traits",
     "ui_filename": "traits.umd.js",
     "ui_module_name": "TraitsModule",
-    "enabled": true
+    "enabled": true,
+    "database_extension": true
   }
 ]

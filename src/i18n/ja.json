@@ -56,7 +56,6 @@
 	"core.plugin_admin.plugin_admin.enabled": "有効",
 	"core.plugin_admin.plugin_admin.no_plugins_installed": "現在インストールされているプラグインはありません",
 	"core.plugin_admin.plugin_admin.update": "更新",
-	"core.plugin_admin.plugin_admin.update_all": "すべて更新",
 	"core.plugin_admin.plugin_admin.update_available": "利用可能なアップデート",
 	"core.plugin_admin.plugin_admin.version": "バージョン： {{version}}",
 	"core.plugin_admin.plugin_dependency.cancel_button": "キャンセル",

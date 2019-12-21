@@ -322,6 +322,7 @@ class PluginController extends AbstractController
     private function setPluginConfigFile()
     {
         $newConfigArr = array();
+        $databaseExtension = false;
         if($this->pluginFile) {
             $this->pluginConfigArr['source'] = 'upload';
         }
@@ -344,6 +345,10 @@ class PluginController extends AbstractController
                 if(!$this->pluginUpdate) {
                     $this->pluginConfigArr['enabled'] = false;
                 }
+                if($this->tempPluginRootDir.'/api/Entity') {
+                    $databaseExtension = true;
+                }
+                $this->pluginConfigArr['database_extension'] = $databaseExtension;
                 $newConfigArr[] = $this->pluginConfigArr;
             }
             $jsonToSave = json_encode($newConfigArr);

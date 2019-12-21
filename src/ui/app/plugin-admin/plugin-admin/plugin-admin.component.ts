@@ -19,7 +19,6 @@ import {AvailablePlugin} from '../available-plugin.model';
 export class PluginAdminComponent {
     availablePlugins: any;
     installedPlugins: any;
-    updatesAvailable = false;
     allPluginsEnabled = true;
     allPluginsDisabled = true;
     accessPermissions = [
@@ -62,15 +61,12 @@ export class PluginAdminComponent {
                 const currentVersionArr = currentPlugin.version.split('.');
                 if (Number(currentVersionArr[0]) > Number(installedVersionArr[0])) {
                     updateAvailable = true;
-                    this.updatesAvailable = true;
                 }
                 if (Number(currentVersionArr[1]) > Number(installedVersionArr[1])) {
                     updateAvailable = true;
-                    this.updatesAvailable = true;
                 }
                 if (Number(currentVersionArr[2]) > Number(installedVersionArr[2])) {
                     updateAvailable = true;
-                    this.updatesAvailable = true;
                 }
             }
             plugin.updateAvailable = updateAvailable;
@@ -85,10 +81,6 @@ export class PluginAdminComponent {
     onDisableAll() {
         const pluginArr = this.getAllPlugins();
         this.disablePlugins(pluginArr);
-    }
-
-    onUpdateAll() {
-        const pluginArr = this.getAllPlugins();
     }
 
     onDisablePlugin(plugin: string) {

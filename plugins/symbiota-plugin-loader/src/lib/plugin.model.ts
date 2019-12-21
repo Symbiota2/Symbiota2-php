@@ -19,4 +19,5 @@ export interface Plugin {
     component_hooks?: ComponentHook[];
     link_hooks?: LinkHook[];
     enabled: boolean;
+    database_extension: boolean;
 }

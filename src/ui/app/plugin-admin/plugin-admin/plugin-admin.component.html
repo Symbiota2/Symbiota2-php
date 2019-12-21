@@ -1,7 +1,6 @@
 <div class="plugin-card">
     <button class="all-button" mat-raised-button color="primary" *ngIf="!allPluginsEnabled" (click)="onEnableAll()">{{ 'core.plugin_admin.plugin_admin.enable_all' | translate }}</button>
     <button class="all-button" mat-raised-button color="primary" *ngIf="!allPluginsDisabled" (click)="onDisableAll()">{{ 'core.plugin_admin.plugin_admin.disable_all' | translate }}</button>
-    <button class="all-button" mat-raised-button color="primary" *ngIf="updatesAvailable" (click)="onUpdateAll()">{{ 'core.plugin_admin.plugin_admin.update_all' | translate }}</button>
 </div>
 <mat-divider></mat-divider>
 <ng-container *ngIf="installedPlugins && installedPlugins.length > 1">

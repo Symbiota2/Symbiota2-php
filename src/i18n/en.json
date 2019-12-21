@@ -56,7 +56,6 @@
 	"core.plugin_admin.plugin_admin.enabled": "ENABLED",
 	"core.plugin_admin.plugin_admin.no_plugins_installed": "There are no plugins currently installed",
 	"core.plugin_admin.plugin_admin.update": "UPDATE",
-	"core.plugin_admin.plugin_admin.update_all": "UPDATE ALL",
 	"core.plugin_admin.plugin_admin.update_available": "UPDATE AVAILABLE",
 	"core.plugin_admin.plugin_admin.version": "Version: {{version}}",
 	"core.plugin_admin.plugin_dependency.cancel_button": "Cancel",

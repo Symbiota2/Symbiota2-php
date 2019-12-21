@@ -56,7 +56,6 @@
 	"core.plugin_admin.plugin_admin.enabled": "تمكين",
 	"core.plugin_admin.plugin_admin.no_plugins_installed": "لا توجد إضافات مثبتة حاليًا",
 	"core.plugin_admin.plugin_admin.update": "تحديث",
-	"core.plugin_admin.plugin_admin.update_all": "تحديث الجميع",
 	"core.plugin_admin.plugin_admin.update_available": "التحديث متاح",
 	"core.plugin_admin.plugin_admin.version": "الإصدار: {{version}}",
 	"core.plugin_admin.plugin_dependency.cancel_button": "إلغاء",

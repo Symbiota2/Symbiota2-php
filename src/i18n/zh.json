@@ -56,7 +56,6 @@
 	"core.plugin_admin.plugin_admin.enabled": "启用",
 	"core.plugin_admin.plugin_admin.no_plugins_installed": "当前没有安装插件",
 	"core.plugin_admin.plugin_admin.update": "更新",
-	"core.plugin_admin.plugin_admin.update_all": "全部更新",
 	"core.plugin_admin.plugin_admin.update_available": "更新可用",
 	"core.plugin_admin.plugin_admin.version": "版本： {{version}}",
 	"core.plugin_admin.plugin_dependency.cancel_button": "取消",

@@ -56,7 +56,6 @@
 	"core.plugin_admin.plugin_admin.enabled": "فعال شده است",
 	"core.plugin_admin.plugin_admin.no_plugins_installed": "در حال حاضر افزونه ای نصب نشده است",
 	"core.plugin_admin.plugin_admin.update": "به روز رسانی",
-	"core.plugin_admin.plugin_admin.update_all": "همه رو آپدیت کن",
 	"core.plugin_admin.plugin_admin.update_available": "به روز رسانی در دسترس است",
 	"core.plugin_admin.plugin_admin.version": "نسخه: {{version}}",
 	"core.plugin_admin.plugin_dependency.cancel_button": "لغو",

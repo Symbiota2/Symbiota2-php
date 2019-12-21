@@ -56,7 +56,6 @@
 	"core.plugin_admin.plugin_admin.enabled": "Включено",
 	"core.plugin_admin.plugin_admin.no_plugins_installed": "Там нет плагинов в настоящее время установлены",
 	"core.plugin_admin.plugin_admin.update": "Обновить",
-	"core.plugin_admin.plugin_admin.update_all": "ОБНОВИТЬ ВСЕ",
 	"core.plugin_admin.plugin_admin.update_available": "ДОСТУПНО ОБНОВЛЕНИЕ",
 	"core.plugin_admin.plugin_admin.version": "Версия: {{version}}",
 	"core.plugin_admin.plugin_dependency.cancel_button": "отменить",

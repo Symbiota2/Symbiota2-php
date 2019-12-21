@@ -56,7 +56,6 @@
 	"core.plugin_admin.plugin_admin.enabled": "فعال",
 	"core.plugin_admin.plugin_admin.no_plugins_installed": "فی الحال کوئی پلگ ان انسٹال نہیں ہے",
 	"core.plugin_admin.plugin_admin.update": "اپ ڈیٹ",
-	"core.plugin_admin.plugin_admin.update_all": "تمام تجدید کریں",
 	"core.plugin_admin.plugin_admin.update_available": "تازہ ترین دستیاب۔",
 	"core.plugin_admin.plugin_admin.version": "ورژن: {{version}}",
 	"core.plugin_admin.plugin_dependency.cancel_button": "منسوخ کریں",

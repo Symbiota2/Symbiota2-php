@@ -56,7 +56,6 @@
 	"core.plugin_admin.plugin_admin.enabled": "सक्रिय",
 	"core.plugin_admin.plugin_admin.no_plugins_installed": "वर्तमान में कोई प्लगइन्स स्थापित नहीं हैं",
 	"core.plugin_admin.plugin_admin.update": "अद्यतन करें",
-	"core.plugin_admin.plugin_admin.update_all": "सब अद्यतित",
 	"core.plugin_admin.plugin_admin.update_available": "अपडेट उपलब्ध",
 	"core.plugin_admin.plugin_admin.version": "संस्करण: {{version}}",
 	"core.plugin_admin.plugin_dependency.cancel_button": "रद्द करना",
