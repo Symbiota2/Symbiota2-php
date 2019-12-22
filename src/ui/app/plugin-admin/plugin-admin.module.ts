@@ -9,12 +9,14 @@ import {PluginAdminRoutingModule} from './plugin-admin-routing.module';
 import {PluginAdminComponent} from './plugin-admin/plugin-admin.component';
 import {PluginDependencyDialogComponent} from './plugin-dependency-dialog/plugin-dependency-dialog.component';
 import {PluginInstallerComponent} from './plugin-installer/plugin-installer.component';
+import {AlterDatabaseWarningDialogComponent} from './alter-database-warning-dialog/alter-database-warning-dialog.component';
 
 @NgModule({
     declarations: [
         PluginAdminComponent,
         PluginDependencyDialogComponent,
-        PluginInstallerComponent
+        PluginInstallerComponent,
+        AlterDatabaseWarningDialogComponent
     ],
     imports: [
         CommonModule,
@@ -23,7 +25,8 @@ import {PluginInstallerComponent} from './plugin-installer/plugin-installer.comp
         TranslateModule
     ],
     entryComponents: [
-        PluginDependencyDialogComponent
+        PluginDependencyDialogComponent,
+        AlterDatabaseWarningDialogComponent
     ]
 })
 export class PluginAdminModule {

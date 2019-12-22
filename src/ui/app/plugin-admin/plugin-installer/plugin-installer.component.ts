@@ -99,7 +99,7 @@ export class PluginInstallerComponent {
 
     verifyPluginUrl(event) {
         const url = event.target.value;
-        if(url.substr(url.length - 4) === ".zip") {
+        if (url.substr(url.length - 4) === ".zip") {
             this.removeFile();
             this.pluginUploadUrl = url;
         } else {
@@ -116,7 +116,7 @@ export class PluginInstallerComponent {
     verifyPluginFile(event) {
         this.pluginUploadFile = event.target.files[0];
         this.pluginUploadFileName = event.target.files[0].name;
-        if(this.pluginUploadFileName.substr(this.pluginUploadFileName.length - 4) === ".zip") {
+        if (this.pluginUploadFileName.substr(this.pluginUploadFileName.length - 4) === ".zip") {
             this.pluginUploadUrl = null;
         } else {
             this.removeFile();
@@ -141,8 +141,8 @@ export class PluginInstallerComponent {
     }
 
     installPlugin() {
-        if(this.pluginUploadUrl) {
-            if(this.pluginUploadUrl !== 'local') {
+        if (this.pluginUploadUrl) {
+            if (this.pluginUploadUrl !== 'local') {
                 this.installPluginByUrl();
             } else {
                 this.installLocalPlugin();
