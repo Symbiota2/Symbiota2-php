@@ -1,23 +1,5 @@
 {
     "autoload": {
-        "psr-4": {
-            "Checklist\\":"plugins/checklist/api/",
-            "Collection\\":"plugins/collection/api/",
-            "CrowdSource\\":"plugins/crowd-source/api/",
-            "Exsiccati\\":"plugins/exsiccati/api/",
-            "Glossary\\":"plugins/glossary/api/",
-            "ImageProcessor\\":"plugins/image-processor/api/",
-            "Key\\":"plugins/key/api/",
-            "Media\\":"plugins/media/api/",
-            "OccurrenceAssociation\\":"plugins/occurrence-association/api/",
-            "OccurrenceComment\\":"plugins/occurrence-comment/api/",
-            "OccurrenceDataset\\":"plugins/occurrence-dataset/api/",
-            "OccurrenceGenetic\\":"plugins/occurrence-genetic/api/",
-            "OccurrenceLoan\\":"plugins/occurrence-loan/api/",
-            "Occurrence\\":"plugins/occurrence/api/",
-            "Reference\\":"plugins/reference/api/",
-            "Taxa\\":"plugins/taxa/api/",
-            "Traits\\":"plugins/traits/api/"
-        }
+        "psr-4": {}
     }
 }

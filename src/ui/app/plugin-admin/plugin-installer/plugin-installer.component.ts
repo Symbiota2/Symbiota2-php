@@ -45,6 +45,7 @@ export class PluginInstallerComponent {
         this.spinnerService.show();
         http.get<AvailablePlugin[]>('/api/pluginregistry').subscribe(
             pluginList => {
+                console.log(pluginList);
                 this.availablePlugins = Object.assign([], pluginList);
                 this.installedPlugins = this.pluginLoader.pluginData;
                 pluginList.forEach((plugin) => {
