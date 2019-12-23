@@ -287,7 +287,7 @@ export class PluginAdminComponent {
             this.http.post('/api/disableplugin', {'plugin': plugin}).subscribe(
                 () => {
                     this.alertService.showSnackbar(
-                        plugin + ' has been disabled',
+                        plugin + ' ' + 'has been disabled',
                         '',
                         5000
                     );
@@ -307,7 +307,7 @@ export class PluginAdminComponent {
             this.http.post('/api/enableplugin', {'plugin': plugin}).subscribe(
                 () => {
                     this.alertService.showSnackbar(
-                        plugin + ' has been enabled',
+                        plugin + ' ' + 'has been enabled',
                         '',
                         5000
                     );
@@ -322,12 +322,22 @@ export class PluginAdminComponent {
     }
 
     updatePlugins() {
+        let url: string;
+        let body: object;
         this.spinnerService.show();
         this.enablePluginArr.forEach((plugin) => {
-            this.http.post('/api/updateplugin', {'plugin': plugin}).subscribe(
+            const updatePluginSource = this.installedPlugins.find(x => x.name === plugin);
+            if (updatePluginSource === 'local') {
+                url = '/api/installlocalplugin';
+                body = {'pluginname': plugin};
+            } else {
+                url = '/api/updateplugin';
+                body = {'uploadurl': updatePluginSource};
+            }
+            this.http.post(url, body).subscribe(
                 () => {
                     this.alertService.showSnackbar(
-                        plugin + ' has been updated',
+                        plugin + ' ' + 'has been updated',
                         '',
                         5000
                     );
@@ -347,7 +357,7 @@ export class PluginAdminComponent {
             this.http.post('/api/deleteplugin', {'plugin': plugin}).subscribe(
                 () => {
                     this.alertService.showSnackbar(
-                        plugin + ' has been deleted',
+                        plugin + ' ' + 'has been deleted',
                         '',
                         5000
                     );
