@@ -380,25 +380,23 @@ class PluginController extends AbstractController
         if($this->filesystem->exists($this->rootDir.'/config/plugin-config.json')) {
             $fileContentsJson = file_get_contents($this->rootDir.'/config/plugin-config.json');
             $configArr = json_decode($fileContentsJson, true);
-            if($configArr) {
-                foreach($configArr as $i => $pArr) {
-                    if($pArr['name'] === $this->pluginName) {
-                        $this->pluginConfigArr['enabled'] = $pArr['enabled'];
-                        $this->pluginUpdate = true;
-                    }
-                    else {
-                        $newConfigArr[] = $pArr;
-                    }
+            foreach($configArr as $i => $pArr) {
+                if($pArr['name'] === $this->pluginName) {
+                    $this->pluginConfigArr['enabled'] = $pArr['enabled'];
+                    $this->pluginUpdate = true;
                 }
-                if(!$this->pluginUpdate) {
-                    $this->pluginConfigArr['enabled'] = false;
+                else {
+                    $newConfigArr[] = $pArr;
                 }
-                if($this->tempPluginRootDir.'/api/Entity') {
-                    $databaseExtension = true;
-                }
-                $this->pluginConfigArr['database_extension'] = $databaseExtension;
-                $newConfigArr[] = $this->pluginConfigArr;
             }
+            if(!$this->pluginUpdate) {
+                $this->pluginConfigArr['enabled'] = false;
+            }
+            if($this->tempPluginRootDir.'/api/Entity') {
+                $databaseExtension = true;
+            }
+            $this->pluginConfigArr['database_extension'] = $databaseExtension;
+            $newConfigArr[] = $this->pluginConfigArr;
             $jsonToSave = json_encode($newConfigArr);
             $this->filesystem->dumpFile($this->rootDir.'/config/plugin-config.json', $jsonToSave);
         }

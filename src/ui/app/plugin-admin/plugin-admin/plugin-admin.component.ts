@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {MatDialog} from '@angular/material/dialog';
 
 import {PluginDependencyDialogComponent} from '../plugin-dependency-dialog/plugin-dependency-dialog.component';
+import {AlterDatabaseWarningDialogComponent} from '../alter-database-warning-dialog/alter-database-warning-dialog.component';
 
 import {PluginLoaderService} from 'symbiota-plugin-loader';
 import {SpinnerOverlayService} from 'symbiota-shared';
@@ -170,7 +171,7 @@ export class PluginAdminComponent {
     }
 
     showAlterDatabaseWarning() {
-        const dialogRef = this.dialog.open(PluginDependencyDialogComponent, {
+        const dialogRef = this.dialog.open(AlterDatabaseWarningDialogComponent, {
             width: '450px'
         });
 
@@ -257,7 +258,7 @@ export class PluginAdminComponent {
 
     setDependentPluginsArr(pluginName: string) {
         this.installedPlugins.forEach((plugin) => {
-            if (plugin.dependencies && plugin.enabled) {
+            if ('dependencies' in plugin && plugin.enabled) {
                 plugin.dependencies.forEach((dep) => {
                     if (dep === pluginName) {
                         this.dependentPluginArr.push({name: plugin.name, title: plugin.title});
@@ -269,7 +270,7 @@ export class PluginAdminComponent {
 
     setRequiredPluginsArr(pluginName: string) {
         const enablePlugin = this.installedPlugins.find(x => x.name === pluginName);
-        if (enablePlugin.dependencies) {
+        if ('dependencies' in enablePlugin) {
             enablePlugin.dependencies.forEach((dep) => {
                 const depPlugin = this.installedPlugins.find(x => x.name === dep);
                 if (!depPlugin) {
