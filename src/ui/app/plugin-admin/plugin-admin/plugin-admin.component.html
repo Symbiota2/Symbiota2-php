@@ -10,8 +10,8 @@
             <mat-card-subtitle class="enabledText" *ngIf="plugin.enabled">{{ 'core.plugin_admin.plugin_admin.enabled' | translate }}</mat-card-subtitle>
             <mat-card-subtitle class="warningText" *ngIf="!plugin.enabled">{{ 'core.plugin_admin.plugin_admin.disabled' | translate }}</mat-card-subtitle>
             <mat-card-subtitle class="warningText" *ngIf="plugin.updateAvailable">{{ 'core.plugin_admin.plugin_admin.update_available' | translate }}</mat-card-subtitle>
-            <mat-card-subtitle class="warningText" *ngIf="plugin.class === 'unregistered'">Unregistered Plugin</mat-card-subtitle>
-            <mat-card-subtitle class="warningText" *ngIf="plugin.class === 'upload'">Uploaded Plugin</mat-card-subtitle>
+            <mat-card-subtitle class="warningText" *ngIf="plugin.class === 'unregistered'">{{ 'core.plugin_admin.plugin_admin.unregistered_plugin' | translate }}</mat-card-subtitle>
+            <mat-card-subtitle class="warningText" *ngIf="plugin.class === 'upload'">{{ 'core.plugin_admin.plugin_admin.uploaded_plugin' | translate }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
             <div *ngIf="plugin.description">{{plugin.description}}</div>

@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog} from '@angular/material/dialog';
+import {TranslateService} from '@ngx-translate/core';
 
 import {PluginDependencyDialogComponent} from '../plugin-dependency-dialog/plugin-dependency-dialog.component';
 import {AlterDatabaseWarningDialogComponent} from '../alter-database-warning-dialog/alter-database-warning-dialog.component';
@@ -9,6 +10,7 @@ import {PluginLoaderService} from 'symbiota-plugin-loader';
 import {SpinnerOverlayService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
 import {AuthService} from 'symbiota-auth';
+import {ConfigurationService} from 'symbiota-shared';
 
 import {AvailablePlugin} from '../available-plugin.model';
 
@@ -19,7 +21,7 @@ import {AvailablePlugin} from '../available-plugin.model';
 })
 export class PluginAdminComponent {
     availablePlugins: any;
-    installedPlugins: any;
+    installedPlugins = [];
     method: string;
     allPluginsEnabled = true;
     allPluginsDisabled = true;
@@ -32,12 +34,25 @@ export class PluginAdminComponent {
     accessPermissions = [
         'SuperAdmin'
     ];
+    reqNotInstalledText: string;
+    disabledPluginsReqText: string;
+    enableActionText: string;
+    disableActionText: string;
+    deleteActionText: string;
+    reqByOtherEnabledText: string;
+    hasBeenEnabledText: string;
+    hasBeenDisabledText: string;
+    hasBeenUpdatedText: string;
+    hasBeenDeletedText: string;
+    errorUpdatingDatabaseText: string;
 
     constructor(
         private pluginLoader: PluginLoaderService,
         private spinnerService: SpinnerOverlayService,
         private alertService: AlertService,
         private authService: AuthService,
+        private translate: TranslateService,
+        private configService: ConfigurationService,
         private http: HttpClient,
         public dialog: MatDialog
     ) {
@@ -52,6 +67,45 @@ export class PluginAdminComponent {
                 this.spinnerService.hide();
             }
         );
+        this.configService.selectedLanguageValue.subscribe(value => {
+            this.setTranslations();
+        });
+    }
+
+    setTranslations() {
+        this.translate.get('core.plugin_admin.plugin_admin.req_not_installed_text').subscribe((res: string) => {
+            this.reqNotInstalledText = res;
+        });
+        this.translate.get('core.plugin_admin.plugin_admin.disabled_plugins_req_text').subscribe((res: string) => {
+            this.disabledPluginsReqText = res;
+        });
+        this.translate.get('core.plugin_admin.plugin_admin.enable_action_text').subscribe((res: string) => {
+            this.enableActionText = res;
+        });
+        this.translate.get('core.plugin_admin.plugin_admin.disable_action_text').subscribe((res: string) => {
+            this.disableActionText = res;
+        });
+        this.translate.get('core.plugin_admin.plugin_admin.delete_action_text').subscribe((res: string) => {
+            this.deleteActionText = res;
+        });
+        this.translate.get('core.plugin_admin.plugin_admin.req_by_other_enabled_text').subscribe((res: string) => {
+            this.reqByOtherEnabledText = res;
+        });
+        this.translate.get('core.plugin_admin.plugin_admin.has_been_enabled_text').subscribe((res: string) => {
+            this.hasBeenEnabledText = res;
+        });
+        this.translate.get('core.plugin_admin.plugin_admin.has_been_disabled_text').subscribe((res: string) => {
+            this.hasBeenDisabledText = res;
+        });
+        this.translate.get('core.plugin_admin.plugin_admin.has_been_updated_text').subscribe((res: string) => {
+            this.hasBeenUpdatedText = res;
+        });
+        this.translate.get('core.plugin_admin.plugin_admin.has_been_deleted_text').subscribe((res: string) => {
+            this.hasBeenDeletedText = res;
+        });
+        this.translate.get('core.plugin_admin.plugin_admin.error_updating_database_text').subscribe((res: string) => {
+            this.errorUpdatingDatabaseText = res;
+        });
     }
 
     primePluginData() {
@@ -128,15 +182,17 @@ export class PluginAdminComponent {
     validateEnablePlugins() {
         this.enablePluginArr.forEach((plugin) => {
             const enablePlugin = this.installedPlugins.find(x => x.name === plugin);
-            if (enablePlugin.database_extension) {
-                this.alterDatabase = true;
+            if (enablePlugin.enabled) {
+                if (enablePlugin.database_extension) {
+                    this.alterDatabase = true;
+                }
+                this.setRequiredPluginsArr(plugin);
             }
-            this.setRequiredPluginsArr(plugin);
         });
         if (this.uninstalledPluginArr.length > 0) {
             const uninstallStr = this.uninstalledPluginArr.join();
             this.alertService.showErrorSnackbar(
-                'The following plugins are required, but are not installed: ' + uninstallStr,
+                this.reqNotInstalledText + ' ' + uninstallStr,
                 '',
                 5000
             );
@@ -154,10 +210,12 @@ export class PluginAdminComponent {
     validateDisablePlugins() {
         this.disablePluginArr.forEach((plugin) => {
             const disablePlugin = this.installedPlugins.find(x => x.name === plugin);
-            if (disablePlugin.database_extension) {
-                this.alterDatabase = true;
+            if (disablePlugin.enabled) {
+                if (disablePlugin.database_extension) {
+                    this.alterDatabase = true;
+                }
+                this.setDependentPluginsArr(plugin);
             }
-            this.setDependentPluginsArr(plugin);
         });
         if (this.alterDatabase) {
             this.showAlterDatabaseWarning();
@@ -202,9 +260,9 @@ export class PluginAdminComponent {
         const dialogRef = this.dialog.open(PluginDependencyDialogComponent, {
             width: '450px',
             data: {
-                openText: 'The following disabled plugins are required by this plugin',
+                openText: this.disabledPluginsReqText,
                 dependencies: depNameArr,
-                action: 'enable'
+                action: this.enableActionText
             }
         });
 
@@ -222,9 +280,9 @@ export class PluginAdminComponent {
         const depNameArr = [];
         let actionText: string;
         if (this.method === 'disable') {
-            actionText = 'disable';
+            actionText = this.disableActionText;
         } else {
-            actionText = 'delete';
+            actionText = this.deleteActionText;
         }
         this.dependentPluginArr.forEach((dep) => {
             depNameArr.push(dep.title);
@@ -232,7 +290,7 @@ export class PluginAdminComponent {
         const dialogRef = this.dialog.open(PluginDependencyDialogComponent, {
             width: '450px',
             data: {
-                openText: 'This plugin is required for the following other plugins that are currently enabled',
+                openText: this.reqByOtherEnabledText,
                 dependencies: depNameArr,
                 action: actionText
             }
@@ -288,14 +346,31 @@ export class PluginAdminComponent {
             this.http.post('/api/disableplugin', {'plugin': plugin}).subscribe(
                 () => {
                     this.alertService.showSnackbar(
-                        plugin + ' ' + 'has been disabled',
+                        plugin + ' ' + this.hasBeenDisabledText,
                         '',
                         5000
                     );
                     const pluginIndex = this.disablePluginArr.findIndex(i => i === plugin);
                     this.disablePluginArr.splice(pluginIndex, 1);
                     if (this.disablePluginArr.length === 0) {
-                        location.reload();
+                        if (this.alterDatabase) {
+                            this.http.get<boolean>('/api/updatedatabase').subscribe(
+                                (res) => {
+                                    if (res) {
+                                        location.reload();
+                                    } else {
+                                        this.alertService.showErrorSnackbar(
+                                            this.errorUpdatingDatabaseText,
+                                            '',
+                                            5000
+                                        );
+                                        this.spinnerService.hide();
+                                    }
+                                }
+                            );
+                        } else {
+                            location.reload();
+                        }
                     }
                  }
             );
@@ -308,14 +383,31 @@ export class PluginAdminComponent {
             this.http.post('/api/enableplugin', {'plugin': plugin}).subscribe(
                 () => {
                     this.alertService.showSnackbar(
-                        plugin + ' ' + 'has been enabled',
+                        plugin + ' ' + this.hasBeenEnabledText,
                         '',
                         5000
                     );
                     const pluginIndex = this.enablePluginArr.findIndex(i => i === plugin);
                     this.enablePluginArr.splice(pluginIndex, 1);
                     if (this.enablePluginArr.length === 0) {
-                        location.reload();
+                        if (this.alterDatabase) {
+                            this.http.get<boolean>('/api/updatedatabase').subscribe(
+                                (res) => {
+                                    if (res) {
+                                        location.reload();
+                                    } else {
+                                        this.alertService.showErrorSnackbar(
+                                            this.errorUpdatingDatabaseText,
+                                            '',
+                                            5000
+                                        );
+                                        this.spinnerService.hide();
+                                    }
+                                }
+                            );
+                        } else {
+                            location.reload();
+                        }
                     }
                 }
             );
@@ -338,14 +430,31 @@ export class PluginAdminComponent {
             this.http.post(url, body).subscribe(
                 () => {
                     this.alertService.showSnackbar(
-                        plugin + ' ' + 'has been updated',
+                        plugin + ' ' + this.hasBeenUpdatedText,
                         '',
                         5000
                     );
                     const pluginIndex = this.enablePluginArr.findIndex(i => i === plugin);
                     this.enablePluginArr.splice(pluginIndex, 1);
                     if (this.enablePluginArr.length === 0) {
-                        location.reload();
+                        if (this.alterDatabase) {
+                            this.http.get<boolean>('/api/updatedatabase').subscribe(
+                                (res) => {
+                                    if (res) {
+                                        location.reload();
+                                    } else {
+                                        this.alertService.showErrorSnackbar(
+                                            this.errorUpdatingDatabaseText,
+                                            '',
+                                            5000
+                                        );
+                                        this.spinnerService.hide();
+                                    }
+                                }
+                            );
+                        } else {
+                            location.reload();
+                        }
                     }
                 }
             );
@@ -358,14 +467,31 @@ export class PluginAdminComponent {
             this.http.post('/api/deleteplugin', {'plugin': plugin}).subscribe(
                 () => {
                     this.alertService.showSnackbar(
-                        plugin + ' ' + 'has been deleted',
+                        plugin + ' ' + this.hasBeenDeletedText,
                         '',
                         5000
                     );
                     const pluginIndex = this.disablePluginArr.findIndex(i => i === plugin);
                     this.disablePluginArr.splice(pluginIndex, 1);
                     if (this.disablePluginArr.length === 0) {
-                        location.reload();
+                        if (this.alterDatabase) {
+                            this.http.get<boolean>('/api/updatedatabase').subscribe(
+                                (res) => {
+                                    if (res) {
+                                        location.reload();
+                                    } else {
+                                        this.alertService.showErrorSnackbar(
+                                            this.errorUpdatingDatabaseText,
+                                            '',
+                                            5000
+                                        );
+                                        this.spinnerService.hide();
+                                    }
+                                }
+                            );
+                        } else {
+                            location.reload();
+                        }
                     }
                 }
             );
