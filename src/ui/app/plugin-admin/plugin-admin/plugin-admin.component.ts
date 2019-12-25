@@ -20,8 +20,9 @@ import {AvailablePlugin} from '../available-plugin.model';
     styleUrls: ['./plugin-admin.component.css']
 })
 export class PluginAdminComponent {
-    availablePlugins: any;
+    availablePlugins = [];
     installedPlugins = [];
+    all = false;
     method: string;
     allPluginsEnabled = true;
     allPluginsDisabled = true;
@@ -61,10 +62,9 @@ export class PluginAdminComponent {
         http.get<AvailablePlugin[]>('/api/pluginregistry').subscribe(
             pluginList => {
                 this.availablePlugins = pluginList;
-                this.installedPlugins = this.pluginLoader.pluginData;
+                this.installedPlugins = Object.assign([], this.pluginLoader.pluginData);
                 this.installedPlugins.sort((a, b) => a.title.localeCompare(b.title));
                 this.primePluginData();
-                this.spinnerService.hide();
             }
         );
         this.configService.selectedLanguageValue.subscribe(value => {
@@ -140,6 +140,7 @@ export class PluginAdminComponent {
             }
             plugin.updateAvailable = updateAvailable;
         });
+        this.spinnerService.hide();
     }
 
     resetGlobals() {
@@ -154,14 +155,16 @@ export class PluginAdminComponent {
     onEnableAll() {
         this.resetGlobals();
         this.method = 'enable';
-        this.enablePluginArr = Object.assign([], this.getAllPlugins());
+        this.enablePluginArr = this.getAllPlugins();
+        this.all = true;
         this.validateEnablePlugins();
     }
 
     onDisableAll() {
         this.resetGlobals();
         this.method = 'disable';
-        this.disablePluginArr = Object.assign([], this.getAllPlugins());
+        this.disablePluginArr = this.getAllPlugins();
+        this.all = true;
         this.validateDisablePlugins();
     }
 
@@ -182,7 +185,7 @@ export class PluginAdminComponent {
     validateEnablePlugins() {
         this.enablePluginArr.forEach((plugin) => {
             const enablePlugin = this.installedPlugins.find(x => x.name === plugin);
-            if (enablePlugin.enabled) {
+            if (enablePlugin.enabled || (this.method === 'enable' && !enablePlugin.enabled)) {
                 if (enablePlugin.database_extension) {
                     this.alterDatabase = true;
                 }
@@ -318,7 +321,7 @@ export class PluginAdminComponent {
         this.installedPlugins.forEach((plugin) => {
             if ('dependencies' in plugin && plugin.enabled) {
                 plugin.dependencies.forEach((dep) => {
-                    if (dep === pluginName) {
+                    if (dep === pluginName && (this.disablePluginArr.indexOf(dep) === -1)) {
                         this.dependentPluginArr.push({name: plugin.name, title: plugin.title});
                     }
                 });
@@ -333,7 +336,7 @@ export class PluginAdminComponent {
                 const depPlugin = this.installedPlugins.find(x => x.name === dep);
                 if (!depPlugin) {
                     this.uninstalledPluginArr.push(dep);
-                } else if (!depPlugin.enabled && (this.enablePluginArr.indexOf(dep.name) === -1)) {
+                } else if (!depPlugin.enabled && (this.enablePluginArr.indexOf(dep) === -1)) {
                     this.requiredPluginArr.push({name: depPlugin.name, title: depPlugin.title});
                 }
             });
@@ -342,76 +345,127 @@ export class PluginAdminComponent {
 
     disablePlugins() {
         this.spinnerService.show();
-        this.disablePluginArr.forEach((plugin) => {
-            this.http.post('/api/disableplugin', {'plugin': plugin}).subscribe(
-                () => {
-                    this.alertService.showSnackbar(
-                        plugin + ' ' + this.hasBeenDisabledText,
-                        '',
-                        5000
-                    );
-                    const pluginIndex = this.disablePluginArr.findIndex(i => i === plugin);
-                    this.disablePluginArr.splice(pluginIndex, 1);
-                    if (this.disablePluginArr.length === 0) {
-                        if (this.alterDatabase) {
-                            this.http.get<boolean>('/api/updatedatabase').subscribe(
-                                (res) => {
-                                    if (res) {
-                                        location.reload();
-                                    } else {
-                                        this.alertService.showErrorSnackbar(
-                                            this.errorUpdatingDatabaseText,
-                                            '',
-                                            5000
-                                        );
-                                        this.spinnerService.hide();
+        if (!this.all) {
+            this.disablePluginArr.forEach((plugin) => {
+                this.http.post('/api/disableplugin', {'plugin': plugin}).subscribe(
+                    () => {
+                        this.alertService.showSnackbar(
+                            plugin + ' ' + this.hasBeenDisabledText,
+                            '',
+                            5000
+                        );
+                        const pluginIndex = this.disablePluginArr.findIndex(i => i === plugin);
+                        this.disablePluginArr.splice(pluginIndex, 1);
+                        if (this.disablePluginArr.length === 0) {
+                            if (this.alterDatabase) {
+                                this.http.get<boolean>('/api/updatedatabase').subscribe(
+                                    (res) => {
+                                        if (res) {
+                                            location.reload();
+                                        } else {
+                                            this.alertService.showErrorSnackbar(
+                                                this.errorUpdatingDatabaseText,
+                                                '',
+                                                5000
+                                            );
+                                            this.spinnerService.hide();
+                                        }
                                     }
-                                }
-                            );
-                        } else {
-                            location.reload();
+                                );
+                            } else {
+                                location.reload();
+                            }
                         }
                     }
-                 }
+                );
+            });
+        } else {
+            this.http.get('/api/disablepluginall').subscribe(
+                () => {
+                    if (this.alterDatabase) {
+                        this.http.get<boolean>('/api/updatedatabase').subscribe(
+                            (res) => {
+                                if (res) {
+                                    location.reload();
+                                } else {
+                                    this.alertService.showErrorSnackbar(
+                                        this.errorUpdatingDatabaseText,
+                                        '',
+                                        5000
+                                    );
+                                    this.spinnerService.hide();
+                                }
+                            }
+                        );
+                    } else {
+                        location.reload();
+                    }
+                }
             );
-        });
+        }
     }
 
     enablePlugins() {
         this.spinnerService.show();
-        this.enablePluginArr.forEach((plugin) => {
-            this.http.post('/api/enableplugin', {'plugin': plugin}).subscribe(
-                () => {
-                    this.alertService.showSnackbar(
-                        plugin + ' ' + this.hasBeenEnabledText,
-                        '',
-                        5000
-                    );
-                    const pluginIndex = this.enablePluginArr.findIndex(i => i === plugin);
-                    this.enablePluginArr.splice(pluginIndex, 1);
-                    if (this.enablePluginArr.length === 0) {
-                        if (this.alterDatabase) {
-                            this.http.get<boolean>('/api/updatedatabase').subscribe(
-                                (res) => {
-                                    if (res) {
-                                        location.reload();
-                                    } else {
-                                        this.alertService.showErrorSnackbar(
-                                            this.errorUpdatingDatabaseText,
-                                            '',
-                                            5000
-                                        );
-                                        this.spinnerService.hide();
+        if (!this.all) {
+            this.enablePluginArr.forEach((plugin) => {
+                this.http.post('/api/enableplugin', {'plugin': plugin}).subscribe(
+                    () => {
+                        this.alertService.showSnackbar(
+                            plugin + ' ' + this.hasBeenEnabledText,
+                            '',
+                            5000
+                        );
+                        console.log(plugin);
+                        const pluginIndex = this.enablePluginArr.findIndex(i => i === plugin);
+                        this.enablePluginArr.splice(pluginIndex, 1);
+                        if (this.enablePluginArr.length === 0) {
+                            if (this.alterDatabase) {
+                                this.http.get<boolean>('/api/updatedatabase').subscribe(
+                                    (res) => {
+                                        if (res) {
+                                            location.reload();
+                                        } else {
+                                            this.alertService.showErrorSnackbar(
+                                                this.errorUpdatingDatabaseText,
+                                                '',
+                                                5000
+                                            );
+                                            this.spinnerService.hide();
+                                        }
                                     }
-                                }
-                            );
-                        } else {
-                            location.reload();
+                                );
+                            } else {
+                                location.reload();
+                            }
                         }
+                    }
+                );
+            });
+        } else {
+            this.http.get('/api/enablepluginall').subscribe(
+                () => {
+                    if (this.alterDatabase) {
+                        this.http.get<boolean>('/api/updatedatabase').subscribe(
+                            (res) => {
+                                if (res) {
+                                    location.reload();
+                                } else {
+                                    this.alertService.showErrorSnackbar(
+                                        this.errorUpdatingDatabaseText,
+                                        '',
+                                        5000
+                                    );
+                                    this.spinnerService.hide();
+                                }
+                            }
+                        );
+                    } else {
+                        location.reload();
                     }
                 }
             );
-        });
+        }
     }
 
     updatePlugins() {

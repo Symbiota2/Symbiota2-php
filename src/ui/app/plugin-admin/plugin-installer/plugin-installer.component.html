@@ -26,8 +26,8 @@
         </mat-card-actions>
     </form>
 </mat-card>
-<mat-divider></mat-divider>
-<ng-container *ngIf="availablePlugins && availablePlugins.length > 1">
+<mat-divider *ngIf="(availablePlugins | json) != '[]'"></mat-divider>
+<ng-container *ngIf="(availablePlugins | json) != '[]'">
     <mat-card class="plugin-card" *ngFor="let plugin of availablePlugins">
         <mat-card-header>
             <mat-card-title>{{plugin.title}}</mat-card-title>
@@ -41,7 +41,7 @@
         </mat-card-actions>
     </mat-card>
 </ng-container>
-<ng-container *ngIf="availablePlugins && availablePlugins.length < 1">
+<ng-container *ngIf="(availablePlugins | json) == '[]'">
     <mat-card class="plugin-card">
         <mat-card-content>
             <div>{{ 'core.plugin_admin.plugin-installer.no_registered_plugins_available' | translate }}</div>

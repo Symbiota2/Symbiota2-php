@@ -2,7 +2,6 @@
 
 namespace Core\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,7 +16,6 @@ use ZipArchive;
 
 class PluginController extends AbstractController
 {
-    private $em;
     private $filesystem;
     private $finder;
     private $params;
@@ -34,11 +32,9 @@ class PluginController extends AbstractController
     private $pluginUpdate = false;
 
     public function __construct(
-        EntityManagerInterface $em,
         ParameterBagInterface $params
     )
     {
-        $this->em = $em;
         $this->filesystem = new Filesystem();
         $this->finder = new Finder();
         $this->params = $params;
@@ -123,6 +119,44 @@ class PluginController extends AbstractController
 
     /**
      * @Route(
+     *     name="disable_plugin_all",
+     *     path="/api/disablepluginall",
+     *     methods={"GET"}
+     * )
+     * @IsGranted("SuperAdmin")
+     * @return JsonResponse
+     */
+    public function disablePluginAll(): JsonResponse
+    {
+        $pluginConfigArr = $this->getPluginConfigArr();
+        if($pluginConfigArr) {
+            foreach($pluginConfigArr as $i => $pArr) {
+                if($pArr['enabled']) {
+                    $this->pluginName = $pArr['name'];
+                    $this->pluginConfigArr = $pluginConfigArr[$this->pluginName];
+                    if(isset($this->pluginConfigArr['api_namespace'])) {
+                        $this->APINamespace = $this->pluginConfigArr['api_namespace'];
+                        $this->removePluginFromApiPlatformYaml();
+                        $this->removePluginFromDoctrineYaml();
+                        $this->removePluginFromComposerJson();
+                    }
+                    if(isset($this->pluginConfigArr['ui_filename'])) {
+                        $this->removePluginUMDFile();
+                    }
+                    if($this->filesystem->exists($this->rootDir.'/plugins/'.$this->pluginName.'/i18n')) {
+                        $this->removePluginTranslations();
+                    }
+                    $this->disablePluginInConfig();
+                }
+            }
+        }
+        return new JsonResponse(
+            true
+        );
+    }
+
+    /**
+     * @Route(
      *     name="delete_plugin",
      *     path="/api/deleteplugin",
      *     methods={"POST"}
@@ -150,8 +184,8 @@ class PluginController extends AbstractController
             if($this->filesystem->exists($this->rootDir.'/plugins/'.$this->pluginName.'/i18n')) {
                 $this->removePluginTranslations();
             }
-            $this->disablePluginInConfig();
-            if($this->pluginConfigArr['ui_filename'] !== 'local') {
+            $this->removePluginInConfig();
+            if($this->pluginConfigArr['source'] !== 'local') {
                 $this->filesystem->remove([$this->rootDir.'/plugins/'.$this->pluginName]);
             }
         }
@@ -190,6 +224,44 @@ class PluginController extends AbstractController
                 $this->addPluginTranslations();
             }
             $this->enablePluginInConfig();
+        }
+        return new JsonResponse(
+            true
+        );
+    }
+
+    /**
+     * @Route(
+     *     name="enable_plugin_all",
+     *     path="/api/enablepluginall",
+     *     methods={"GET"}
+     * )
+     * @IsGranted("SuperAdmin")
+     * @return JsonResponse
+     */
+    public function enablePluginAll(): JsonResponse
+    {
+        $pluginConfigArr = $this->getPluginConfigArr();
+        if($pluginConfigArr) {
+            foreach($pluginConfigArr as $i => $pArr) {
+                if(!$pArr['enabled']) {
+                    $this->pluginName = $pArr['name'];
+                    $this->pluginConfigArr = $pluginConfigArr[$this->pluginName];
+                    if(isset($this->pluginConfigArr['api_namespace'])) {
+                        $this->APINamespace = $this->pluginConfigArr['api_namespace'];
+                        $this->addPluginToApiPlatformYaml();
+                        $this->addPluginToDoctrineYaml();
+                        $this->addPluginToComposerJson();
+                    }
+                    if(isset($this->pluginConfigArr['ui_filename'])) {
+                        $this->addPluginUMDFile();
+                    }
+                    if($this->filesystem->exists($this->rootDir.'/plugins/'.$this->pluginName.'/i18n')) {
+                        $this->addPluginTranslations();
+                    }
+                    $this->enablePluginInConfig();
+                }
+            }
         }
         return new JsonResponse(
             true
@@ -358,7 +430,7 @@ class PluginController extends AbstractController
     {
         $configContentsJson = file_get_contents($this->tempPluginRootDir.'/config.json');
         $configArr = json_decode($configContentsJson, true);
-        if($configArr['name'] && $configArr['title'] && $configArr['version'] && ($configArr['api_namespace'] || $configArr['ui_filename'])) {
+        if($configArr['name'] && $configArr['title'] && $configArr['version'] && (isset($configArr['api_namespace']) || isset($configArr['ui_filename']))) {
             $this->pluginConfigArr = $configArr;
             $this->pluginName = $this->pluginConfigArr['name'];
             $this->pluginInstallDir = $this->rootDir.'/plugins/'.$this->pluginName;
@@ -367,7 +439,7 @@ class PluginController extends AbstractController
         return false;
     }
 
-    private function setPluginConfigFile()
+    private function setPluginConfigFile(): void
     {
         $newConfigArr = array();
         $databaseExtension = false;
@@ -392,7 +464,7 @@ class PluginController extends AbstractController
             if(!$this->pluginUpdate) {
                 $this->pluginConfigArr['enabled'] = false;
             }
-            if($this->tempPluginRootDir.'/api/Entity') {
+            if($this->filesystem->exists($this->tempPluginRootDir.'/api/Entity')) {
                 $databaseExtension = true;
             }
             $this->pluginConfigArr['database_extension'] = $databaseExtension;
@@ -402,14 +474,14 @@ class PluginController extends AbstractController
         }
     }
 
-    private function setMainPluginTempDir()
+    private function setMainPluginTempDir(): void
     {
         if(!$this->filesystem->exists($this->rootDir.'/temp/plugins')) {
             $this->filesystem->mkdir($this->rootDir.'/temp/plugins', 0777);
         }
     }
 
-    private function setSessionTempDir()
+    private function setSessionTempDir(): void
     {
         if($this->filesystem->exists($this->rootDir.'/temp/plugins/'.session_id())) {
             $this->filesystem->remove([$this->rootDir.'/temp/plugins/'.session_id()]);
@@ -418,7 +490,7 @@ class PluginController extends AbstractController
         $this->tempPluginDir = $this->rootDir.'/temp/plugins/'.session_id();
     }
 
-    private function setPluginInstallDir()
+    private function setPluginInstallDir(): void
     {
         if($this->filesystem->exists($this->pluginInstallDir)) {
             $this->filesystem->remove([$this->pluginInstallDir]);
@@ -426,7 +498,7 @@ class PluginController extends AbstractController
         $this->filesystem->mkdir($this->pluginInstallDir, 0777);
     }
 
-    private function deleteSessionTempDir()
+    private function deleteSessionTempDir(): void
     {
         if($this->filesystem->exists($this->tempPluginDir)) {
             $this->filesystem->remove([$this->tempPluginDir]);
@@ -448,7 +520,7 @@ class PluginController extends AbstractController
         return $returnArr;
     }
 
-    private function removePluginUMDFile()
+    private function removePluginUMDFile(): void
     {
         $umdFile = $this->pluginConfigArr['ui_filename'];
         if($this->filesystem->exists($this->rootDir.'/src/ui/assets/js/plugins/'.$umdFile)) {
@@ -456,7 +528,7 @@ class PluginController extends AbstractController
         }
     }
 
-    private function addPluginUMDFile()
+    private function addPluginUMDFile(): void
     {
         $umdFile = $this->pluginConfigArr['ui_filename'];
         if($this->filesystem->exists($this->rootDir.'/plugins/'.$this->pluginName.'/bundles/'.$umdFile)) {
@@ -467,7 +539,7 @@ class PluginController extends AbstractController
         }
     }
 
-    private function removePluginTranslations()
+    private function removePluginTranslations(): void
     {
         $this->finder->files()->in($this->rootDir.'/plugins/'.$this->pluginName.'/i18n');
         if($this->finder->hasResults()) {
@@ -489,7 +561,7 @@ class PluginController extends AbstractController
         }
     }
 
-    private function addPluginTranslations()
+    private function addPluginTranslations(): void
     {
         $this->finder->files()->in($this->rootDir.'/plugins/'.$this->pluginName.'/i18n');
         if($this->finder->hasResults()) {
@@ -511,7 +583,7 @@ class PluginController extends AbstractController
         }
     }
 
-    private function removePluginFromApiPlatformYaml()
+    private function removePluginFromApiPlatformYaml(): void
     {
         $newPathsArr = array();
         if($this->filesystem->exists($this->rootDir.'/config/packages/api_platform.yaml')) {
@@ -529,7 +601,7 @@ class PluginController extends AbstractController
         }
     }
 
-    private function addPluginToApiPlatformYaml()
+    private function addPluginToApiPlatformYaml(): void
     {
         if($this->filesystem->exists($this->rootDir.'/config/packages/api_platform.yaml')) {
             $apiPlatformYamlContents = Yaml::parseFile($this->rootDir.'/config/packages/api_platform.yaml');
@@ -542,7 +614,7 @@ class PluginController extends AbstractController
         }
     }
 
-    private function removePluginFromDoctrineYaml()
+    private function removePluginFromDoctrineYaml(): void
     {
         if($this->filesystem->exists($this->rootDir.'/config/packages/doctrine.yaml')) {
             $doctrineYamlContents = Yaml::parseFile($this->rootDir.'/config/packages/doctrine.yaml');
@@ -554,7 +626,7 @@ class PluginController extends AbstractController
         }
     }
 
-    private function addPluginToDoctrineYaml()
+    private function addPluginToDoctrineYaml(): void
     {
         if($this->filesystem->exists($this->rootDir.'/config/packages/doctrine.yaml')) {
             $doctrineYamlContents = Yaml::parseFile($this->rootDir.'/config/packages/doctrine.yaml');
@@ -570,7 +642,7 @@ class PluginController extends AbstractController
         }
     }
 
-    private function removePluginFromComposerJson()
+    private function removePluginFromComposerJson(): void
     {
         if($this->filesystem->exists($this->rootDir.'/plugin-composer.json')) {
             $fileContentsJson = file_get_contents($this->rootDir.'/plugin-composer.json');
@@ -584,7 +656,7 @@ class PluginController extends AbstractController
         }
     }
 
-    private function addPluginToComposerJson()
+    private function addPluginToComposerJson(): void
     {
         if($this->filesystem->exists($this->rootDir.'/plugin-composer.json')) {
             $fileContentsJson = file_get_contents($this->rootDir.'/plugin-composer.json');
@@ -599,7 +671,7 @@ class PluginController extends AbstractController
         }
     }
 
-    private function disablePluginInConfig()
+    private function disablePluginInConfig(): void
     {
         $newConfigArr = array();
         if($this->filesystem->exists($this->rootDir.'/config/plugin-config.json')) {
@@ -618,7 +690,25 @@ class PluginController extends AbstractController
         }
     }
 
-    private function enablePluginInConfig()
+    private function removePluginInConfig(): void
+    {
+        $newConfigArr = array();
+        if($this->filesystem->exists($this->rootDir.'/config/plugin-config.json')) {
+            $fileContentsJson = file_get_contents($this->rootDir.'/config/plugin-config.json');
+            $configArr = json_decode($fileContentsJson, true);
+            if($configArr) {
+                foreach($configArr as $i => $pArr){
+                    if($pArr['name'] !== $this->pluginName) {
+                        $newConfigArr[] = $pArr;
+                    }
+                }
+            }
+            $jsonToSave = json_encode($newConfigArr);
+            $this->filesystem->dumpFile($this->rootDir.'/config/plugin-config.json', $jsonToSave);
+        }
+    }
+
+    private function enablePluginInConfig(): void
     {
         $newConfigArr = array();
         if($this->filesystem->exists($this->rootDir.'/config/plugin-config.json')) {

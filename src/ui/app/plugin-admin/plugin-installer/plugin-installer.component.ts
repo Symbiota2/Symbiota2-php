@@ -25,6 +25,7 @@ export class PluginInstallerComponent {
     pluginUploadFile: any;
     pluginUploadFileName: string;
     pluginUploadFormDisabled = true;
+    registered = false;
     accessPermissions = [
         'SuperAdmin'
     ];
@@ -137,6 +138,7 @@ export class PluginInstallerComponent {
         const registeredPlugin = this.availablePlugins.find(x => x.name === pluginName);
         this.pluginUploadName = pluginName;
         this.pluginUploadUrl = registeredPlugin.source;
+        this.registered = true;
         this.installPlugin();
     }
 
@@ -191,18 +193,23 @@ export class PluginInstallerComponent {
                 '',
                 5000
             );
-            this.pluginUploadUrl = null;
-            this.pluginUploadFile = null;
-            this.pluginUploadFileName = null;
-            this.fileUpload.nativeElement.value = null;
-            this.spinnerService.hide();
         } else {
             this.alertService.showSnackbar(
                 this.successResponse,
                 '',
                 5000
             );
-            location.reload();
+            if (this.registered) {
+                const pluginIndex = this.availablePlugins.findIndex(i => i.name === this.pluginUploadName);
+                this.availablePlugins.splice(pluginIndex, 1);
+            }
         }
+        this.pluginUploadUrl = null;
+        this.pluginUploadFile = null;
+        this.pluginUploadFileName = null;
+        this.fileUpload.nativeElement.value = null;
+        this.registered = false;
+        this.pluginLoader.initialize();
+        this.spinnerService.hide();
     }
 }

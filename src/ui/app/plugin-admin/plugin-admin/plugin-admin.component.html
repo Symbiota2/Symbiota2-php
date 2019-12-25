@@ -2,8 +2,8 @@
     <button class="all-button" mat-raised-button color="primary" *ngIf="!allPluginsEnabled" (click)="onEnableAll()">{{ 'core.plugin_admin.plugin_admin.enable_all' | translate }}</button>
     <button class="all-button" mat-raised-button color="primary" *ngIf="!allPluginsDisabled" (click)="onDisableAll()">{{ 'core.plugin_admin.plugin_admin.disable_all' | translate }}</button>
 </div>
-<mat-divider></mat-divider>
-<ng-container *ngIf="installedPlugins && installedPlugins.length > 1">
+<mat-divider *ngIf="(installedPlugins | json) != '[]'"></mat-divider>
+<ng-container *ngIf="(installedPlugins | json) != '[]'">
     <mat-card class="plugin-card" *ngFor="let plugin of installedPlugins">
         <mat-card-header>
             <mat-card-title>{{plugin.title}}</mat-card-title>
@@ -26,7 +26,7 @@
         </mat-card-actions>
     </mat-card>
 </ng-container>
-<ng-container *ngIf="installedPlugins && installedPlugins.length < 1">
+<ng-container *ngIf="(installedPlugins | json) == '[]'">
     <mat-card class="plugin-card">
         <mat-card-content>
             <div>{{ 'core.plugin_admin.plugin_admin.no_plugins_installed' | translate }}</div>

@@ -8,6 +8,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "^1.5",
+        "ext-zip": "*",
         "api-platform/api-pack": "^1.1",
         "easycorp/easyadmin-bundle": "^2.0",
         "lexik/jwt-authentication-bundle": "^2.6",
@@ -26,8 +27,7 @@
         "symfony/validator": "4.2.*",
         "symfony/yaml": "4.2.*",
         "vich/uploader-bundle": "^1.8",
-        "wikimedia/composer-merge-plugin": "^1.4",
-        "ext-zip": "*"
+        "wikimedia/composer-merge-plugin": "^1.4"
     },
     "config": {
         "preferred-install": "dist",

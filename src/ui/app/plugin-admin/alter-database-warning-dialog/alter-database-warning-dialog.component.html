@@ -1,7 +1,7 @@
 <div mat-dialog-content>
-    <div>This action will result in changes to the database. It is advisable to make a backup of the database before proceeding.</div>
+    <div>{{ 'core.plugin_admin.alter_database_warning.open_text' | translate }}</div>
 </div>
 <div mat-dialog-actions>
-    <button mat-button [mat-dialog-close]="true">Proceed</button>
-    <button mat-button [mat-dialog-close]="false">Cancel</button>
+    <button mat-button [mat-dialog-close]="true">{{ 'core.plugin_admin.alter_database_warning.proceed_button' | translate }}</button>
+    <button mat-button [mat-dialog-close]="false">{{ 'core.plugin_admin.alter_database_warning.cancel_button' | translate }}</button>
 </div>
