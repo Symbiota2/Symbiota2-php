@@ -1,0 +1,1 @@
+INSERT INTO taxauthority(taxauthid, isprimary, name) VALUES (1, 1, 'Central Thesaurus')

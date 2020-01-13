@@ -20,4 +20,5 @@ export interface Plugin {
     link_hooks?: LinkHook[];
     enabled: boolean;
     database_extension: boolean;
+    default_data: boolean;
 }

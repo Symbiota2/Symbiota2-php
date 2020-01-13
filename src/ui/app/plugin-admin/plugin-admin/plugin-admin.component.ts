@@ -27,6 +27,7 @@ export class PluginAdminComponent {
     allPluginsEnabled = true;
     allPluginsDisabled = true;
     alterDatabase = false;
+    loadPluginData = [];
     enablePluginArr = [];
     disablePluginArr = [];
     uninstalledPluginArr = [];
@@ -144,7 +145,9 @@ export class PluginAdminComponent {
     }
 
     resetGlobals() {
+        this.all = false;
         this.alterDatabase = false;
+        this.loadPluginData = Object.assign([], []);
         this.enablePluginArr = Object.assign([], []);
         this.disablePluginArr = Object.assign([], []);
         this.uninstalledPluginArr = Object.assign([], []);
@@ -168,6 +171,13 @@ export class PluginAdminComponent {
         this.validateDisablePlugins();
     }
 
+    onSetSampleData() {
+        this.spinnerService.show();
+        this.resetGlobals();
+        this.enablePluginArr = this.getAllEnabledPlugins();
+        this.resetEnabledPlugins();
+    }
+
     onEnableUpdatePlugin(plugin: string, method: string) {
         this.resetGlobals();
         this.method = method;
@@ -188,6 +198,9 @@ export class PluginAdminComponent {
             if (enablePlugin.enabled || (this.method === 'enable' && !enablePlugin.enabled)) {
                 if (enablePlugin.database_extension) {
                     this.alterDatabase = true;
+                }
+                if (enablePlugin.default_data) {
+                    this.loadPluginData.push(plugin);
                 }
                 this.setRequiredPluginsArr(plugin);
             }
@@ -317,6 +330,16 @@ export class PluginAdminComponent {
         return returnArr;
     }
 
+    getAllEnabledPlugins() {
+        const returnArr = [];
+        this.installedPlugins.forEach((plugin) => {
+            if (plugin.enabled) {
+                returnArr.push(plugin.name);
+            }
+        });
+        return returnArr;
+    }
+
     setDependentPluginsArr(pluginName: string) {
         this.installedPlugins.forEach((plugin) => {
             if ('dependencies' in plugin && plugin.enabled) {
@@ -358,20 +381,7 @@ export class PluginAdminComponent {
                         this.disablePluginArr.splice(pluginIndex, 1);
                         if (this.disablePluginArr.length === 0) {
                             if (this.alterDatabase) {
-                                this.http.get<boolean>('/api/updatedatabase').subscribe(
-                                    (res) => {
-                                        if (res) {
-                                            location.reload();
-                                        } else {
-                                            this.alertService.showErrorSnackbar(
-                                                this.errorUpdatingDatabaseText,
-                                                '',
-                                                5000
-                                            );
-                                            this.spinnerService.hide();
-                                        }
-                                    }
-                                );
+                                this.updateDatabase();
                             } else {
                                 location.reload();
                             }
@@ -383,20 +393,7 @@ export class PluginAdminComponent {
             this.http.get('/api/disablepluginall').subscribe(
                 () => {
                     if (this.alterDatabase) {
-                        this.http.get<boolean>('/api/updatedatabase').subscribe(
-                            (res) => {
-                                if (res) {
-                                    location.reload();
-                                } else {
-                                    this.alertService.showErrorSnackbar(
-                                        this.errorUpdatingDatabaseText,
-                                        '',
-                                        5000
-                                    );
-                                    this.spinnerService.hide();
-                                }
-                            }
-                        );
+                        this.updateDatabase();
                     } else {
                         location.reload();
                     }
@@ -416,26 +413,16 @@ export class PluginAdminComponent {
                             '',
                             5000
                         );
-                        console.log(plugin);
                         const pluginIndex = this.enablePluginArr.findIndex(i => i === plugin);
                         this.enablePluginArr.splice(pluginIndex, 1);
                         if (this.enablePluginArr.length === 0) {
                             if (this.alterDatabase) {
-                                this.http.get<boolean>('/api/updatedatabase').subscribe(
-                                    (res) => {
-                                        if (res) {
-                                            location.reload();
-                                        } else {
-                                            this.alertService.showErrorSnackbar(
-                                                this.errorUpdatingDatabaseText,
-                                                '',
-                                                5000
-                                            );
-                                            this.spinnerService.hide();
-                                        }
-                                    }
-                                );
-                            } else {
+                                this.updateDatabase();
+                            }
+                            if (!this.alterDatabase && this.loadPluginData.length !== 0) {
+                                this.loadDefaultData();
+                            }
+                            if (!this.alterDatabase && this.requiredPluginArr.length === 0) {
                                 location.reload();
                             }
                         }
@@ -446,21 +433,12 @@ export class PluginAdminComponent {
             this.http.get('/api/enablepluginall').subscribe(
                 () => {
                     if (this.alterDatabase) {
-                        this.http.get<boolean>('/api/updatedatabase').subscribe(
-                            (res) => {
-                                if (res) {
-                                    location.reload();
-                                } else {
-                                    this.alertService.showErrorSnackbar(
-                                        this.errorUpdatingDatabaseText,
-                                        '',
-                                        5000
-                                    );
-                                    this.spinnerService.hide();
-                                }
-                            }
-                        );
-                    } else {
+                        this.updateDatabase();
+                    }
+                    if (!this.alterDatabase && this.loadPluginData.length !== 0) {
+                        this.loadDefaultData();
+                    }
+                    if (!this.alterDatabase && this.requiredPluginArr.length === 0) {
                         location.reload();
                     }
                 }
@@ -492,20 +470,7 @@ export class PluginAdminComponent {
                     this.enablePluginArr.splice(pluginIndex, 1);
                     if (this.enablePluginArr.length === 0) {
                         if (this.alterDatabase) {
-                            this.http.get<boolean>('/api/updatedatabase').subscribe(
-                                (res) => {
-                                    if (res) {
-                                        location.reload();
-                                    } else {
-                                        this.alertService.showErrorSnackbar(
-                                            this.errorUpdatingDatabaseText,
-                                            '',
-                                            5000
-                                        );
-                                        this.spinnerService.hide();
-                                    }
-                                }
-                            );
+                            this.updateDatabase();
                         } else {
                             location.reload();
                         }
@@ -529,20 +494,7 @@ export class PluginAdminComponent {
                     this.disablePluginArr.splice(pluginIndex, 1);
                     if (this.disablePluginArr.length === 0) {
                         if (this.alterDatabase) {
-                            this.http.get<boolean>('/api/updatedatabase').subscribe(
-                                (res) => {
-                                    if (res) {
-                                        location.reload();
-                                    } else {
-                                        this.alertService.showErrorSnackbar(
-                                            this.errorUpdatingDatabaseText,
-                                            '',
-                                            5000
-                                        );
-                                        this.spinnerService.hide();
-                                    }
-                                }
-                            );
+                            this.updateDatabase();
                         } else {
                             location.reload();
                         }
@@ -552,4 +504,76 @@ export class PluginAdminComponent {
         });
     }
 
+    updateDatabase() {
+        this.http.post('/api/updatedatabase', {}).subscribe(
+            (res) => {
+                if (res) {
+                    if (this.method === 'enable' && this.loadPluginData.length > 0) {
+                        this.loadDefaultData();
+                    } else {
+                        location.reload();
+                    }
+                } else {
+                    this.alertService.showErrorSnackbar(
+                        this.errorUpdatingDatabaseText,
+                        '',
+                        5000
+                    );
+                    this.spinnerService.hide();
+                }
+            }
+        );
+    }
+
+    loadDefaultData() {
+        this.loadPluginData.forEach((plugin) => {
+            this.http.post('/api/loadplugindata', {'plugin': plugin}).subscribe(
+                (res) => {
+                    const pluginIndex = this.loadPluginData.findIndex(i => i === plugin);
+                    this.loadPluginData.splice(pluginIndex, 1);
+                    if (this.loadPluginData.length === 0) {
+                        location.reload();
+                    }
+                }
+            );
+        });
+    }
+
+    resetEnabledPlugins() {
+        this.http.post('/api/resetpluginsdisable', {'pluginarr': this.enablePluginArr}).subscribe(
+            () => {
+                this.http.post('/api/updatedatabase', {}).subscribe(
+                    () => {
+                        this.http.post('/api/resetpluginsenable', {'pluginarr': this.enablePluginArr}).subscribe(
+                            () => {
+                                this.http.post('/api/updatedatabase', {}).subscribe(
+                                    () => {
+                                        this.http.post('/api/resetpluginsdata', {'pluginarr': this.enablePluginArr}).subscribe(
+                                            () => {
+                                                this.setSampleData();
+                                            }
+                                        );
+                                    }
+                                );
+                            }
+                        );
+                    }
+                );
+            }
+        );
+    }
+
+    setSampleData() {
+        this.enablePluginArr.push('core');
+        this.http.post('/api/loadsampledata', {'pluginarr': this.enablePluginArr}).subscribe(
+            (res) => {
+                this.spinnerService.hide();
+                this.alertService.showSnackbar(
+                    'Sample data has been loaded',
+                    '',
+                    5000
+                );
+            }
+        );
+    }
 }

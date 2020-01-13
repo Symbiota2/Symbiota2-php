@@ -1,6 +1,7 @@
 <div class="plugin-card">
     <button class="all-button" mat-raised-button color="primary" *ngIf="!allPluginsEnabled" (click)="onEnableAll()">{{ 'core.plugin_admin.plugin_admin.enable_all' | translate }}</button>
     <button class="all-button" mat-raised-button color="primary" *ngIf="!allPluginsDisabled" (click)="onDisableAll()">{{ 'core.plugin_admin.plugin_admin.disable_all' | translate }}</button>
+    <button class="all-button" mat-raised-button color="primary" *ngIf="(installedPlugins | json) != '[]'" (click)="onSetSampleData()">SET SAMPLE DATA</button>
 </div>
 <mat-divider *ngIf="(installedPlugins | json) != '[]'"></mat-divider>
 <ng-container *ngIf="(installedPlugins | json) != '[]'">

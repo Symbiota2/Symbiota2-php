@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.config.json",
+    "start": "ng serve --live-reload false --proxy-config proxy.config.json",
     "ie-start": "ng serve --proxy-config proxy.config.json --configuration es5",
     "build": "ng build",
     "test": "ng test",

@@ -2,6 +2,8 @@
 
 namespace Core\Controller;
 
+use Doctrine\DBAL\DBALException;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,6 +18,7 @@ use ZipArchive;
 
 class PluginController extends AbstractController
 {
+    private $em;
     private $filesystem;
     private $finder;
     private $params;
@@ -30,11 +33,48 @@ class PluginController extends AbstractController
     private $pluginInstallDir;
     private $pluginUrl;
     private $pluginUpdate = false;
+    private $pluginEnableOrderArr = [
+        'core',
+        'taxa',
+        'collection',
+        'occurrence',
+        'media',
+        'checklist',
+        'crowd-source',
+        'exsiccati',
+        'glossary',
+        'image-processor',
+        'key',
+        'occurrence-association',
+        'occurrence-comment',
+        'occurrence-dataset',
+        'occurrence-loan',
+        'traits'
+    ];
+    private $pluginDisableOrderArr = [
+        'traits',
+        'occurrence-loan',
+        'occurrence-dataset',
+        'occurrence-comment',
+        'occurrence-association',
+        'key',
+        'image-processor',
+        'glossary',
+        'exsiccati',
+        'crowd-source',
+        'checklist',
+        'media',
+        'occurrence',
+        'collection',
+        'taxa'
+    ];
 
     public function __construct(
+        EntityManagerInterface $em,
         ParameterBagInterface $params
     )
     {
+        $this->em = $em;
         $this->filesystem = new Filesystem();
         $this->finder = new Finder();
         $this->params = $params;
@@ -111,6 +151,134 @@ class PluginController extends AbstractController
                 $this->removePluginTranslations();
             }
             $this->disablePluginInConfig();
+        }
+        return new JsonResponse(
+            true
+        );
+    }
+
+    /**
+     * @Route(
+     *     name="reset_plugins_disable",
+     *     path="/api/resetpluginsdisable",
+     *     methods={"POST"}
+     * )
+     * @IsGranted("SuperAdmin")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function resetPluginsDisable(Request $request): JsonResponse
+    {
+        set_time_limit(180);
+        $pluginConfigArr = $this->getPluginConfigArr();
+        $dataArr = json_decode($request->getContent(), true);
+        $pluginArr = $dataArr['pluginarr'];
+        foreach($this->pluginDisableOrderArr as $plugin) {
+            if(in_array($plugin, $pluginArr, true)) {
+                $this->pluginName = $plugin;
+                $this->pluginConfigArr = $pluginConfigArr[$this->pluginName];
+                if(isset($this->pluginConfigArr['api_namespace'])) {
+                    $this->APINamespace = $this->pluginConfigArr['api_namespace'];
+                    $this->removePluginFromApiPlatformYaml();
+                    $this->removePluginFromDoctrineYaml();
+                    $this->removePluginFromComposerJson();
+                }
+                if(isset($this->pluginConfigArr['ui_filename'])) {
+                    $this->removePluginUMDFile();
+                }
+                if($this->filesystem->exists($this->rootDir.'/plugins/'.$this->pluginName.'/i18n')) {
+                    $this->removePluginTranslations();
+                }
+                $this->disablePluginInConfig();
+            }
+        }
+        return new JsonResponse(
+            true
+        );
+    }
+
+    /**
+     * @Route(
+     *     name="reset_plugins_enable",
+     *     path="/api/resetpluginsenable",
+     *     methods={"POST"}
+     * )
+     * @IsGranted("SuperAdmin")
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function resetPluginsEnable(Request $request): JsonResponse
+    {
+        set_time_limit(180);
+        $pluginConfigArr = $this->getPluginConfigArr();
+        $dataArr = json_decode($request->getContent(), true);
+        $pluginArr = $dataArr['pluginarr'];
+        foreach($this->pluginEnableOrderArr as $plugin) {
+            if(in_array($plugin, $pluginArr, true)) {
+                $this->pluginName = $plugin;
+                $this->pluginConfigArr = $pluginConfigArr[$this->pluginName];
+                if(isset($this->pluginConfigArr['api_namespace'])) {
+                    $this->APINamespace = $this->pluginConfigArr['api_namespace'];
+                    $this->addPluginToApiPlatformYaml();
+                    $this->addPluginToDoctrineYaml();
+                    $this->addPluginToComposerJson();
+                }
+                if(isset($this->pluginConfigArr['ui_filename'])) {
+                    $this->addPluginUMDFile();
+                }
+                if($this->filesystem->exists($this->rootDir.'/plugins/'.$this->pluginName.'/i18n')) {
+                    $this->addPluginTranslations();
+                }
+                $this->enablePluginInConfig();
+            }
+        }
+        return new JsonResponse(
+            true
+        );
+    }
+
+    /**
+     * @Route(
+     *     name="reset_plugins_data",
+     *     path="/api/resetpluginsdata",
+     *     methods={"POST"}
+     * )
+     * @IsGranted("SuperAdmin")
+     * @param Request $request
+     * @return JsonResponse
+     * @throws DBALException
+     */
+    public function resetPluginsData(Request $request): JsonResponse
+    {
+        set_time_limit(180);
+        $dataArr = json_decode($request->getContent(), true);
+        $pluginArr = $dataArr['pluginarr'];
+        $this->finder->in($this->rootDir.'/config/sql/default');
+        $this->finder->name('*.sql');
+        $this->finder->files();
+        $this->finder->sortByName();
+        if($this->finder->hasResults()) {
+            foreach( $this->finder as $file ){
+                $sql = $file->getContents();
+                $this->em->getConnection()->exec($sql);
+                $this->em->flush();
+            }
+        }
+        foreach($pluginArr as $plugin) {
+            if($this->filesystem->exists($this->rootDir.'/plugins/'.$plugin.'/data')) {
+                $finder = new Finder();
+                $finder->in($this->rootDir.'/plugins/'.$plugin.'/data');
+                $finder->name('*.sql');
+                $finder->files();
+                $finder->sortByName();
+                if($finder->hasResults()) {
+                    foreach( $finder as $file ){
+                        $sql = $file->getContents();
+                        $this->em->getConnection()->exec($sql);
+                        $this->em->flush();
+                    }
+                }
+            }
         }
         return new JsonResponse(
             true
@@ -387,6 +555,84 @@ class PluginController extends AbstractController
         );
     }
 
+    /**
+     * @Route(
+     *     name="load_plugin_data",
+     *     path="/api/loadplugindata",
+     *     methods={"POST"}
+     * )
+     * @IsGranted("SuperAdmin")
+     * @param Request $request
+     * @return JsonResponse
+     * @throws DBALException
+     */
+    public function loadPluginData(Request $request): JsonResponse
+    {
+        $dataArr = json_decode($request->getContent(), true);
+        $this->pluginName = $dataArr['plugin'];
+        if($this->filesystem->exists($this->rootDir.'/plugins/'.$this->pluginName.'/data')) {
+            $this->finder->in($this->rootDir.'/plugins/'.$this->pluginName.'/data');
+            $this->finder->name('*.sql');
+            $this->finder->files();
+            $this->finder->sortByName();
+            if($this->finder->hasResults()) {
+                foreach( $this->finder as $file ){
+                    $sql = $file->getContents();
+                    $this->em->getConnection()->exec($sql);
+                    $this->em->flush();
+                }
+            }
+        }
+        return new JsonResponse(
+            true
+        );
+    }
+
+    /**
+     * @Route(
+     *     name="load_plugin_sample_data",
+     *     path="/api/loadsampledata",
+     *     methods={"POST"}
+     * )
+     * @IsGranted("SuperAdmin")
+     * @param Request $request
+     * @return JsonResponse
+     * @throws DBALException
+     */
+    public function loadPluginSampleData(Request $request): JsonResponse
+    {
+        set_time_limit(180);
+        $dataArr = json_decode($request->getContent(), true);
+        $pluginArr = $dataArr['pluginarr'];
+        if(!$this->filesystem->exists($this->rootDir.'/config/sql/dev')) {
+            $zip = new ZipArchive;
+            $zip->open($this->rootDir.'/config/sql/symbiota2_dev_db.zip');
+            $zip->extractTo($this->rootDir.'/config/sql/');
+            $zip->close();
+        }
+        foreach($this->pluginEnableOrderArr as $plugin) {
+            if(in_array($plugin, $pluginArr, true)) {
+                if($this->filesystem->exists($this->rootDir.'/config/sql/dev/'.$plugin)) {
+                    $finder = new Finder();
+                    $finder->in($this->rootDir.'/config/sql/dev/'.$plugin);
+                    $finder->name('*.sql');
+                    $finder->files();
+                    $finder->sortByName();
+                    if($finder->hasResults()) {
+                        foreach( $finder as $file ){
+                            $sql = $file->getContents();
+                            $this->em->getConnection()->exec($sql);
+                            $this->em->flush();
+                        }
+                    }
+                }
+            }
+        }
+        return new JsonResponse(
+            true
+        );
+    }
+
     private function setPluginFileFromUrl(): bool
     {
         $this->pluginFileName = basename($this->pluginUrl);
@@ -443,6 +689,7 @@ class PluginController extends AbstractController
     {
         $newConfigArr = array();
         $databaseExtension = false;
+        $defaultData = false;
         if($this->pluginFile) {
             $this->pluginConfigArr['source'] = 'upload';
         }
@@ -468,6 +715,10 @@ class PluginController extends AbstractController
                 $databaseExtension = true;
             }
             $this->pluginConfigArr['database_extension'] = $databaseExtension;
+            if($this->filesystem->exists($this->tempPluginRootDir.'/data')) {
+                $defaultData = true;
+            }
+            $this->pluginConfigArr['default_data'] = $defaultData;
             $newConfigArr[] = $this->pluginConfigArr;
             $jsonToSave = json_encode($newConfigArr);
             $this->filesystem->dumpFile($this->rootDir.'/config/plugin-config.json', $jsonToSave);

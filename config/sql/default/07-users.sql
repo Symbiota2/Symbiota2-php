@@ -1,0 +1,1 @@
+INSERT INTO users(uid, firstname, lastname, username, password, email, ispublic, InitialTimeStamp, verified) VALUES (1, 'General', 'Administrator', 'admin', '$2y$13$hf01Dqnk.yzLADw0jbwjme/7Vn/TlR9M.MeOu39FQf4vEwBacRZIe', 'NA', 0, '2018-05-15 12:01:01', 1)

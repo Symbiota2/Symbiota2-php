@@ -26,7 +26,7 @@ class PortalController extends AbstractController
      * @Route(
      *     name="update_database",
      *     path="/api/updatedatabase",
-     *     methods={"GET"}
+     *     methods={"POST"}
      * )
      * @IsGranted("SuperAdmin")
      * @return JsonResponse

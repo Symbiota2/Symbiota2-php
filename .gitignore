@@ -59,7 +59,6 @@ Homestead.yaml
 /.rnd
 /package-lock.json
 /config/sql/dev/
-/config/sql/default/
 /docker/data/
 
 /*.yml

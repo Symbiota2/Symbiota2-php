@@ -20,11 +20,9 @@
     ],
     "paths": {
       "checklist": [
-        "dist/checklist",
         "dist/checklist"
       ],
       "checklist/*": [
-        "dist/checklist/*",
         "dist/checklist/*"
       ],
       "collection": [
@@ -46,11 +44,9 @@
         "dist/taxa/*"
       ],
       "occurrence-search": [
-        "dist/occurrence-search",
         "dist/occurrence-search"
       ],
       "occurrence-search/*": [
-        "dist/occurrence-search/*",
         "dist/occurrence-search/*"
       ],
       "symbiota-spatial": [
