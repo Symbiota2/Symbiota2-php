@@ -19,7 +19,6 @@ layout: default
     - [Build Docker containers](./build_docker_setup.html)
   - [To upgrade a Symbiota 1.x database to use with Symbiota2](./upgrade_1.x_database.html)
   - [Setup the Symbiota2 database](./setup_symbiota2_database.html)
-  - [Populate the database with data](./populate_database.html)
   - [If Docker openssl container is not being used](./docker_no_openssl.html)
   - [If Docker nginx and php containers are not being used](./docker_no_php_nginx.html)
 - **[Start frontend Angular server and application urls](./frontend_server_urls.html)**
