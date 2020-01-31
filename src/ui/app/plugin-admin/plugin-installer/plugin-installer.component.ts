@@ -9,7 +9,7 @@ import {AlertService} from 'symbiota-shared';
 import {AuthService} from 'symbiota-auth';
 import {ConfigurationService} from 'symbiota-shared';
 
-import {AvailablePlugin} from '../available-plugin.model';
+import {AvailablePlugin} from '../interfaces/available-plugin.interface';
 
 @Component({
     selector: 'app-plugin-installer',

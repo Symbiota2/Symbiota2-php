@@ -1,4 +1,4 @@
-import {ChildRoute} from "./child-route.model";
+import {ChildRoute} from './child-route.interface';
 
 export interface Route {
     path: string;

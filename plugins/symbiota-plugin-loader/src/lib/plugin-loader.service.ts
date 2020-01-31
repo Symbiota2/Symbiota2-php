@@ -13,7 +13,7 @@ import {SpinnerOverlayService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
 import {ConfigurationService} from 'symbiota-shared';
 
-import {Plugin} from './plugin.model';
+import {Plugin} from './interfaces/plugin.interface';
 
 import * as AngularCdkCollections from '@angular/cdk/collections';
 import * as AngularCdkTree from '@angular/cdk/tree';

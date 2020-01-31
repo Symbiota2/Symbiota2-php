@@ -8,7 +8,7 @@ import {SpinnerOverlayService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
 import {ConfigurationService} from 'symbiota-shared';
 
-import {User} from './user.model';
+import {NewUser} from './interfaces/user.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -60,7 +60,7 @@ export class UserService {
         biography: string,
         isPublic: number
     ) {
-        const userData: User = {
+        const userData: NewUser = {
             username: username,
             password: password,
             retypedPassword: retypedPassword,

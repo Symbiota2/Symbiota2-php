@@ -2,15 +2,22 @@
 @import "indigo-green-theme.css";
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
-html, body {
-}
-
 body {
     width: 100%;
     height: 100%;
     margin: 0;
     font-family: Verdana, Geneva, sans-serif;
     background-color: #91BDB7;
+}
+
+fieldset {
+    border: 2px solid grey;
+    border-radius: 5px;
+}
+
+legend {
+    padding: 0 5px;
+    color: grey;
 }
 
 .error-snackbar {
@@ -20,4 +27,8 @@ body {
 
 .dynamic-tab-content {
     padding: 20px;
+}
+
+.flex-container {
+    display: flex;
 }

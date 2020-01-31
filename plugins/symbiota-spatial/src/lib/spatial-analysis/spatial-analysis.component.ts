@@ -4,7 +4,7 @@ import OlMap from 'ol/Map';
 
 import {MapService} from '../map.service';
 
-import {Layer} from '../layer.model';
+import {Layer} from '../interfaces/layer.interface';
 
 @Component({
     selector: 'symbiota-spatial-spatial-analysis',

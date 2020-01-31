@@ -6,7 +6,7 @@ import {AuthService} from 'symbiota-auth';
 import {LoginComponentService} from 'symbiota-auth';
 import {ConfigurationService} from 'symbiota-shared';
 
-import {CurrentUser} from '../../user/current-user.model';
+import {CurrentUser} from '../../user/interfaces/user.interface';
 
 @Component({
     selector: 'app-sidepanel-links',

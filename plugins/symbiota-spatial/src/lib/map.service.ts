@@ -40,7 +40,7 @@ import {AlertService} from 'symbiota-shared';
 import {SharedToolsService} from 'symbiota-shared';
 import {VectorToolsService} from './vector-tools.service';
 
-import {Layer} from './layer.model';
+import {Layer} from './interfaces/layer.interface';
 import {map} from 'rxjs/operators';
 
 @Injectable({

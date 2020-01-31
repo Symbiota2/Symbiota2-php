@@ -1,7 +1,7 @@
-import {Route} from "./route.model";
-import {TabHook} from "./tab-hook.model";
-import {ComponentHook} from "./component-hook.model";
-import {LinkHook} from "./link-hook.model";
+import {Route} from './route.interface';
+import {TabHook} from './tab-hook.interface';
+import {ComponentHook} from './component-hook.interface';
+import {LinkHook} from './link-hook.interface';
 
 export interface Plugin {
     name: string;

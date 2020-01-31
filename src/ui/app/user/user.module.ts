@@ -11,12 +11,14 @@ import {UserProfileComponent} from './user-profile/user-profile.component';
 import {EditProfileComponent} from './edit-profile/edit-profile.component';
 
 import {UserService} from './user.service';
+import {UserFormComponent} from './user-form/user-form.component';
 
 @NgModule({
     declarations: [
         SignupComponent,
         UserProfileComponent,
-        EditProfileComponent
+        EditProfileComponent,
+        UserFormComponent
     ],
     imports: [
         CommonModule,

@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators, FormBuilder} from '@angular/forms';
-import {HttpClient} from '@angular/common/http';
 
 import {UserService} from '../user.service';
 import {SpinnerOverlayService} from 'symbiota-shared';
@@ -16,7 +15,6 @@ export class SignupComponent implements OnInit {
     createaccountForm: FormGroup;
 
     constructor(
-        private http: HttpClient,
         public userService: UserService,
         public spinnerService: SpinnerOverlayService,
         public fb: FormBuilder

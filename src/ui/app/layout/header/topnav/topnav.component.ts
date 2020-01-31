@@ -4,7 +4,7 @@ import {TranslateService} from "@ngx-translate/core";
 
 import {AuthService} from 'symbiota-auth';
 import {LoginComponentService} from 'symbiota-auth';
-import {CurrentUser} from '../../../user/current-user.model';
+import {CurrentUser} from '../../../user/interfaces/user.interface';
 import {ConfigurationService} from 'symbiota-shared';
 
 @Component({

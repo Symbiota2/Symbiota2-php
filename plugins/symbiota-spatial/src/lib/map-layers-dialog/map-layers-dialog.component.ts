@@ -1,7 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
-import {Layer} from '../layer.model';
+import {Layer} from '../interfaces/layer.interface';
 
 @Component({
     selector: 'app-map-layers-dialog',

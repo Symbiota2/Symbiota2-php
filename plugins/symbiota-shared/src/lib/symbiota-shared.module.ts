@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {ReactiveFormsModule} from '@angular/forms';
 import {FormsModule} from '@angular/forms';
+import {LayoutModule} from '@angular/cdk/layout';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from "@ngx-translate/core";
 
@@ -20,6 +21,7 @@ import {SharedToolsService} from './shared-tools.service';
         FlexLayoutModule,
         ReactiveFormsModule,
         FormsModule,
+        LayoutModule,
         CommonModule,
         MaterialModule,
         TranslateModule
@@ -28,6 +30,7 @@ import {SharedToolsService} from './shared-tools.service';
         FlexLayoutModule,
         ReactiveFormsModule,
         FormsModule,
+        LayoutModule,
         CommonModule,
         MaterialModule,
         SpinnerOverlayComponent,

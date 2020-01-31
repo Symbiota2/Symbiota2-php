@@ -11,8 +11,8 @@ import {AlertService} from 'symbiota-shared';
 import {LoginComponentService} from './login-component.service';
 import {ConfigurationService} from 'symbiota-shared';
 
-import {AuthData} from './auth-data.model';
-import {CurrentUser} from './current-user.model';
+import {AuthData} from './interfaces/auth-data.interface';
+import {CurrentUser} from './interfaces/current-user.interface';
 
 const ANONYMOUS_USER: CurrentUser = {
     id: undefined,
