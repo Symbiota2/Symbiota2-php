@@ -807,6 +807,7 @@ export class MapService {
                     );
                     groundRadius = groundRadius / 1000;
                     const circleArea = Math.PI * groundRadius * groundRadius;
+
                     totalAreaCalc += circleArea;
                 }
             }
@@ -1752,26 +1753,60 @@ export class MapService {
             }
         });
         if (shapeCount === 2) {
-            const features = [];
+            const featuresOne = [];
+            const featuresTwo = [];
+            let pass = 1;
+            let intersection: any;
             const geoJSONFormat = new GeoJSON();
             this.selectInteraction.getFeatures().forEach((feature) => {
                 if (feature) {
                     const selectedClone = feature.clone();
                     const geoType = selectedClone.getGeometry().getType();
-                    const selectiongeometry = selectedClone.getGeometry();
-                    const fixedselectgeometry = selectiongeometry.transform(this.mapProjection, this.wgs84Projection);
-                    const geojsonStr = geoJSONFormat.writeGeometry(fixedselectgeometry);
-                    const featCoords = JSON.parse(geojsonStr).coordinates;
-                    if (geoType !== 'Circle') {
-                        features.push(this.vectorService.getTurfFeature(geoType, featCoords));
-                    } else {
-                        const center = fixedselectgeometry.getCenter();
-                        const radius = fixedselectgeometry.getRadius();
-                        features.push(this.vectorService.getWGS84CirclePoly(center, radius));
+                    if (geoType === 'Polygon' || geoType === 'MultiPolygon' || geoType === 'Circle') {
+                        const selectiongeometry = selectedClone.getGeometry();
+                        const fixedselectgeometry = selectiongeometry.transform(this.mapProjection, this.wgs84Projection);
+                        const geojsonStr = geoJSONFormat.writeGeometry(fixedselectgeometry);
+                        const featCoords = JSON.parse(geojsonStr).coordinates;
+                        if (geoType === 'Polygon') {
+                            if (pass === 1) {
+                                featuresOne.push(this.vectorService.getTurfFeature(geoType, featCoords));
+                            } else {
+                                featuresTwo.push(this.vectorService.getTurfFeature(geoType, featCoords));
+                            }
+                        } else if (geoType === 'MultiPolygon') {
+                            for (let e in featCoords) {
+                                if(pass === 1){
+                                    featuresOne.push(this.vectorService.getTurfFeature('Polygon', featCoords[e]));
+                                }
+                                else{
+                                    featuresTwo.push(this.vectorService.getTurfFeature('Polygon', featCoords[e]));
+                                }
+                            }
+                        } else {
+                            const center = fixedselectgeometry.getCenter();
+                            const radius = fixedselectgeometry.getRadius();
+                            if (pass === 1) {
+                                featuresOne.push(this.vectorService.getWGS84CirclePoly(center, radius));
+                            } else {
+                                featuresTwo.push(this.vectorService.getWGS84CirclePoly(center, radius));
+                            }
+                        }
+                        pass++;
                     }
                 }
             });
-            const intersection = this.vectorService.getIntersectFeature(features[0], features[1]);
+            for (let i in featuresOne) {
+                for (let e in featuresTwo) {
+                    var tempPoly = this.vectorService.getIntersectFeature(featuresOne[i],featuresTwo[e]);
+                    if(tempPoly){
+                        if(intersection){
+                            intersection = this.vectorService.getUnionFeature(intersection,tempPoly);
+                        } else{
+                            intersection = tempPoly;
+                        }
+                    }
+                }
+            }
             if (intersection) {
                 const interpoly = geoJSONFormat.readFeature(intersection);
                 interpoly.getGeometry().transform(this.wgs84Projection, this.mapProjection);
