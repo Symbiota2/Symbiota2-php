@@ -18,13 +18,13 @@ export class VectorToolsService {
 
     constructor() {}
 
-    writeWfsWktString(type, geocoords) {
+    writeMySQLWktString(type, geocoords) {
         let wktStr = '';
         let coordStr = '';
-        let coordRingStr = '';
         if (type === 'Polygon') {
             for (const i in geocoords) {
                 if (geocoords[i]) {
+                    coordStr += '(';
                     for (const c in geocoords[i]) {
                         if (geocoords[i][c]) {
                             const lat = geocoords[i][c][1];
@@ -32,31 +32,36 @@ export class VectorToolsService {
                             coordStr += lat + ' ' + long + ',';
                         }
                     }
+                    coordStr = coordStr.substring(0,coordStr.length-1);
+                    coordStr += '),';
                 }
             }
             coordStr = coordStr.substring(0, (coordStr.length - 1));
-            wktStr = 'POLYGON((' + coordStr + '))';
+            wktStr = 'POLYGON(' + coordStr + ')';
         } else if (type === 'MultiPolygon') {
             for (const i in geocoords) {
                 if (geocoords[i]) {
+                    coordStr += '(';
                     for (const r in geocoords[i]) {
                         if (geocoords[i][r]) {
-                            coordRingStr = '';
+                            coordStr += '(';
                             for (const c in geocoords[i][r]) {
                                 if (geocoords[i][r][c]) {
                                     const lat = geocoords[i][r][c][1];
                                     const long = geocoords[i][r][c][0];
-                                    coordRingStr += lat + ' ' + long + ',';
+                                    coordStr += lat + ' ' + long + ',';
                                 }
                             }
-                            coordRingStr = coordRingStr.substring(0, (coordRingStr.length - 1));
-                            coordStr += '(' + coordRingStr + '),';
+                            coordStr = coordStr.substring(0,coordStr.length-1);
+                            coordStr += '),';
                         }
                     }
+                    coordStr = coordStr.substring(0,coordStr.length-1);
+                    coordStr += '),';
                 }
             }
             coordStr = coordStr.substring(0, (coordStr.length - 1));
-            wktStr = 'MULTIPOLYGON((' + coordStr + '))';
+            wktStr = 'MULTIPOLYGON(' + coordStr + ')';
         }
 
         return wktStr;

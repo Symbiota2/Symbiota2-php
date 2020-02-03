@@ -795,7 +795,7 @@ export class MapService {
                     const fixedgeometry = simplegeometry.transform(this.mapProjection, this.wgs84Projection);
                     const wmswktString = wktFormat.writeGeometry(fixedgeometry);
                     const geocoords = fixedgeometry.getCoordinates();
-                    const wfswktString = this.vectorService.writeWfsWktString(geoType, geocoords);
+                    const mysqlWktString = this.vectorService.writeMySQLWktString(geoType, geocoords);
                 }
                 if (geoType === 'Circle') {
                     const center = selectedClone.getGeometry().getCenter();
