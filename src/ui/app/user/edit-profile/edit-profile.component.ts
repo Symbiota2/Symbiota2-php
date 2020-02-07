@@ -1,41 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators, FormBuilder} from '@angular/forms';
-import {HttpClient} from '@angular/common/http';
-import {
-    Controls,
-    takeUntilDestroyed,
-    DataInput,
-    NgxRootFormComponent
-} from 'ngx-sub-form';
 
 import {UserService} from '../user.service';
 import {SpinnerOverlayService} from 'symbiota-shared';
-
-interface OneListingForm {
-    id: string;
-    title: string;
-    imageUrl: string;
-    price: number;
-}
 
 @Component({
     selector: 'app-edit-profile',
     templateUrl: './edit-profile.component.html',
     styleUrls: ['./edit-profile.component.css']
 })
-export class EditProfileComponent extends NgxRootFormComponent<OneListingForm> implements OnInit {
-    @DataInput()
-
-    dataInput: any;
-    dataOutput: import("@angular/core").EventEmitter<any>;
-    protected getFormControls(): Controls<OneListingForm> {
-        return {
-            id: new FormControl(null, Validators.required),
-            title: new FormControl(null, Validators.required),
-            imageUrl: new FormControl(null, Validators.required),
-            price: new FormControl(null, Validators.required),
-        };
-    }
+export class EditProfileComponent implements OnInit {
     isPublicValue = 0;
     debouncer: any;
     createaccountForm: FormGroup;
@@ -43,12 +17,10 @@ export class EditProfileComponent extends NgxRootFormComponent<OneListingForm> i
     public readonlyFormControl: FormControl = new FormControl(false);
 
     constructor(
-        private http: HttpClient,
         public userService: UserService,
         public spinnerService: SpinnerOverlayService,
         public fb: FormBuilder
-    ) {
-        super();}
+    ) {}
 
     static checkLoginSpaces(control: FormControl): { [s: string]: boolean } {
         if (/[^0-9A-Za-z_!@#$-+]/.test(control.value)) {
