@@ -1209,7 +1209,7 @@ export class MapService {
                 const clusterindex = feature.get('identifiers');
                 if (this.selections.length > 0) {
                     for (const i in this.selections) {
-                        if (clusterindex.indexOf(this.selections[i]) !== -1) {
+                        if (clusterindex.indexOf(this.selections[i].toString()) !== -1) {
                             selected = true;
                         }
                     }
@@ -1382,7 +1382,7 @@ export class MapService {
             recType = 'observation';
         }
         if (this.selections.length > 0) {
-            const occid = feature.get('occid');
+            const occid = Number(feature.get('occid'));
             if (this.selections.indexOf(occid) !== -1) {
                 selected = true;
             }
