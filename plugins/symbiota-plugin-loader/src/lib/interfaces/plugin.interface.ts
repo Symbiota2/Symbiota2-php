@@ -18,6 +18,7 @@ export interface Plugin {
     tab_hooks?: TabHook[];
     component_hooks?: ComponentHook[];
     link_hooks?: LinkHook[];
+    primed: boolean;
     enabled: boolean;
     database_extension: boolean;
     default_data: boolean;
