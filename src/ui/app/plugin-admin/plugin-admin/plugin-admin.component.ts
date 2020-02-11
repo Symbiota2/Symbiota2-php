@@ -68,7 +68,7 @@ export class PluginAdminComponent {
                 this.primePluginData();
             }
         );
-        this.configService.selectedLanguageValue.subscribe(value => {
+        this.configService.selectedLanguageValue.subscribe(() => {
             this.setTranslations();
         });
     }
@@ -199,7 +199,7 @@ export class PluginAdminComponent {
                 if (enablePlugin.database_extension) {
                     this.alterDatabase = true;
                 }
-                if (enablePlugin.default_data) {
+                if (enablePlugin.default_data && !enablePlugin.primed) {
                     this.loadPluginData.push(plugin);
                 }
                 this.setRequiredPluginsArr(plugin);
@@ -229,9 +229,7 @@ export class PluginAdminComponent {
             if (disablePlugin.database_extension && this.method === 'delete') {
                 this.alterDatabase = true;
             }
-            if (disablePlugin.enabled) {
-                this.setDependentPluginsArr(plugin);
-            }
+            this.setDependentPluginsArr(plugin);
         });
         if (this.alterDatabase) {
             this.showAlterDatabaseWarning();
@@ -341,26 +339,88 @@ export class PluginAdminComponent {
     }
 
     setDependentPluginsArr(pluginName: string) {
+        const secondaryDeps = [];
+        const tertiaryDeps = [];
         this.installedPlugins.forEach((plugin) => {
             if ('dependencies' in plugin && plugin.enabled) {
                 plugin.dependencies.forEach((dep) => {
-                    if (dep === pluginName && (this.disablePluginArr.indexOf(dep) === -1)) {
+                    if (dep === pluginName && (this.disablePluginArr.indexOf(plugin.name) === -1)) {
+                        secondaryDeps.push(plugin.name);
                         this.dependentPluginArr.push({name: plugin.name, title: plugin.title});
                     }
                 });
             }
         });
+        if (secondaryDeps.length > 0) {
+            secondaryDeps.forEach((dep) => {
+                const secDepPlugin = this.installedPlugins.find(x => x.name === dep);
+                if (secDepPlugin && 'dependencies' in secDepPlugin && secDepPlugin.enabled) {
+                    secDepPlugin.dependencies.forEach((sdep) => {
+                        if (sdep === dep && (this.disablePluginArr.indexOf(secDepPlugin.name) === -1)) {
+                            tertiaryDeps.push(secDepPlugin.name);
+                            this.dependentPluginArr.push({name: secDepPlugin.name, title: secDepPlugin.title});
+                        }
+                    });
+                }
+            });
+        }
+        if (tertiaryDeps.length > 0) {
+            tertiaryDeps.forEach((dep) => {
+                const terDepPlugin = this.installedPlugins.find(x => x.name === dep);
+                if (terDepPlugin && 'dependencies' in terDepPlugin && terDepPlugin.enabled) {
+                    terDepPlugin.dependencies.forEach((tdep) => {
+                        if (tdep === dep && (this.disablePluginArr.indexOf(terDepPlugin.name) === -1)) {
+                            this.dependentPluginArr.push({name: terDepPlugin.name, title: terDepPlugin.title});
+                        }
+                    });
+                }
+            });
+        }
     }
 
     setRequiredPluginsArr(pluginName: string) {
         const enablePlugin = this.installedPlugins.find(x => x.name === pluginName);
+        const secondaryDeps = [];
+        const tertiaryDeps = [];
         if ('dependencies' in enablePlugin) {
             enablePlugin.dependencies.forEach((dep) => {
                 const depPlugin = this.installedPlugins.find(x => x.name === dep);
-                if (!depPlugin) {
+                if (depPlugin) {
+                    if ('dependencies' in depPlugin) {
+                        secondaryDeps.push.apply(secondaryDeps, depPlugin.dependencies);
+                    }
+                    if (!depPlugin.enabled && (this.enablePluginArr.indexOf(dep) === -1)) {
+                        this.requiredPluginArr.push({name: depPlugin.name, title: depPlugin.title});
+                    }
+                } else {
                     this.uninstalledPluginArr.push(dep);
-                } else if (!depPlugin.enabled && (this.enablePluginArr.indexOf(dep) === -1)) {
-                    this.requiredPluginArr.push({name: depPlugin.name, title: depPlugin.title});
+                }
+            });
+        }
+        if (secondaryDeps.length > 0) {
+            secondaryDeps.forEach((dep) => {
+                const secDepPlugin = this.installedPlugins.find(x => x.name === dep);
+                if (secDepPlugin) {
+                    if ('dependencies' in secDepPlugin) {
+                        tertiaryDeps.push.apply(tertiaryDeps, secDepPlugin.dependencies);
+                    }
+                    if (!secDepPlugin.enabled && (this.enablePluginArr.indexOf(dep) === -1)) {
+                        this.requiredPluginArr.push({name: secDepPlugin.name, title: secDepPlugin.title});
+                    }
+                } else {
+                    this.uninstalledPluginArr.push(dep);
+                }
+            });
+        }
+        if (tertiaryDeps.length > 0) {
+            tertiaryDeps.forEach((dep) => {
+                const terDepPlugin = this.installedPlugins.find(x => x.name === dep);
+                if (terDepPlugin) {
+                    if (!terDepPlugin.enabled && (this.enablePluginArr.indexOf(dep) === -1)) {
+                        this.requiredPluginArr.push({name: terDepPlugin.name, title: terDepPlugin.title});
+                    }
+                } else {
+                    this.uninstalledPluginArr.push(dep);
                 }
             });
         }
@@ -528,7 +588,7 @@ export class PluginAdminComponent {
     loadDefaultData() {
         this.loadPluginData.forEach((plugin) => {
             this.http.post('/api/loadplugindata', {'plugin': plugin}).subscribe(
-                (res) => {
+                () => {
                     const pluginIndex = this.loadPluginData.findIndex(i => i === plugin);
                     this.loadPluginData.splice(pluginIndex, 1);
                     if (this.loadPluginData.length === 0) {
@@ -566,7 +626,7 @@ export class PluginAdminComponent {
     setSampleData() {
         this.enablePluginArr.push('core');
         this.http.post('/api/loadsampledata', {'pluginarr': this.enablePluginArr}).subscribe(
-            (res) => {
+            () => {
                 this.spinnerService.hide();
                 this.alertService.showSnackbar(
                     'Sample data has been loaded',

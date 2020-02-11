@@ -178,6 +178,8 @@ class PluginController extends AbstractController
                 if(isset($this->pluginConfigArr['api_namespace'])) {
                     $this->APINamespace = $this->pluginConfigArr['api_namespace'];
                     $this->removePluginFromApiPlatformYaml();
+                    $this->removePluginFromDoctrineYaml();
+                    $this->removePluginFromComposerJson();
                 }
                 if(isset($this->pluginConfigArr['ui_filename'])) {
                     $this->removePluginUMDFile();
@@ -695,6 +697,7 @@ class PluginController extends AbstractController
             $configArr = json_decode($fileContentsJson, true);
             foreach($configArr as $i => $pArr) {
                 if($pArr['name'] === $this->pluginName) {
+                    $this->pluginConfigArr['primed'] = $pArr['primed'];
                     $this->pluginConfigArr['enabled'] = $pArr['enabled'];
                     $this->pluginUpdate = true;
                 }
@@ -703,6 +706,7 @@ class PluginController extends AbstractController
                 }
             }
             if(!$this->pluginUpdate) {
+                $this->pluginConfigArr['primed'] = false;
                 $this->pluginConfigArr['enabled'] = false;
             }
             if($this->filesystem->exists($this->tempPluginRootDir.'/api/Entity')) {
@@ -977,6 +981,7 @@ class PluginController extends AbstractController
             if($configArr) {
                 foreach($configArr as $i => $pArr){
                     if($pArr['name'] === $this->pluginName) {
+                        $pArr['primed'] = true;
                         $pArr['enabled'] = true;
                     }
                     $newConfigArr[] = $pArr;
