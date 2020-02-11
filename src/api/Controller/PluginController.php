@@ -774,6 +774,10 @@ class PluginController extends AbstractController
     private function removePluginUMDFile(): void
     {
         $umdFile = $this->pluginConfigArr['ui_filename'];
+        $umdMapFile = $umdFile . '.map';
+        if($this->filesystem->exists($this->rootDir.'/src/ui/assets/js/plugins/'.$umdMapFile)) {
+            $this->filesystem->remove([$this->rootDir.'/src/ui/assets/js/plugins/'.$umdMapFile]);
+        }
         if($this->filesystem->exists($this->rootDir.'/src/ui/assets/js/plugins/'.$umdFile)) {
             $this->filesystem->remove([$this->rootDir.'/src/ui/assets/js/plugins/'.$umdFile]);
         }
@@ -782,6 +786,13 @@ class PluginController extends AbstractController
     private function addPluginUMDFile(): void
     {
         $umdFile = $this->pluginConfigArr['ui_filename'];
+        $umdMapFile = $umdFile . '.map';
+        if($this->filesystem->exists($this->rootDir.'/plugins/'.$this->pluginName.'/bundles/'.$umdMapFile)) {
+            $this->filesystem->copy($this->rootDir.'/plugins/'.$this->pluginName.'/bundles/'.$umdMapFile, $this->rootDir.'/src/ui/assets/js/plugins/'.$umdMapFile);
+        }
+        elseif($this->filesystem->exists($this->rootDir.'/dist/'.$this->pluginName.'/bundles/'.$umdMapFile)) {
+            $this->filesystem->copy($this->rootDir.'/dist/'.$this->pluginName.'/bundles/'.$umdMapFile, $this->rootDir.'/src/ui/assets/js/plugins/'.$umdMapFile);
+        }
         if($this->filesystem->exists($this->rootDir.'/plugins/'.$this->pluginName.'/bundles/'.$umdFile)) {
             $this->filesystem->copy($this->rootDir.'/plugins/'.$this->pluginName.'/bundles/'.$umdFile, $this->rootDir.'/src/ui/assets/js/plugins/'.$umdFile);
         }
