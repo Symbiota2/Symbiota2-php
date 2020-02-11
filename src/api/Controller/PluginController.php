@@ -141,8 +141,6 @@ class PluginController extends AbstractController
             if(isset($this->pluginConfigArr['api_namespace'])) {
                 $this->APINamespace = $this->pluginConfigArr['api_namespace'];
                 $this->removePluginFromApiPlatformYaml();
-                $this->removePluginFromDoctrineYaml();
-                $this->removePluginFromComposerJson();
             }
             if(isset($this->pluginConfigArr['ui_filename'])) {
                 $this->removePluginUMDFile();
@@ -180,8 +178,6 @@ class PluginController extends AbstractController
                 if(isset($this->pluginConfigArr['api_namespace'])) {
                     $this->APINamespace = $this->pluginConfigArr['api_namespace'];
                     $this->removePluginFromApiPlatformYaml();
-                    $this->removePluginFromDoctrineYaml();
-                    $this->removePluginFromComposerJson();
                 }
                 if(isset($this->pluginConfigArr['ui_filename'])) {
                     $this->removePluginUMDFile();
@@ -305,8 +301,6 @@ class PluginController extends AbstractController
                     if(isset($this->pluginConfigArr['api_namespace'])) {
                         $this->APINamespace = $this->pluginConfigArr['api_namespace'];
                         $this->removePluginFromApiPlatformYaml();
-                        $this->removePluginFromDoctrineYaml();
-                        $this->removePluginFromComposerJson();
                     }
                     if(isset($this->pluginConfigArr['ui_filename'])) {
                         $this->removePluginUMDFile();
@@ -893,14 +887,16 @@ class PluginController extends AbstractController
         if($this->filesystem->exists($this->rootDir.'/config/packages/doctrine.yaml')) {
             $doctrineYamlContents = Yaml::parseFile($this->rootDir.'/config/packages/doctrine.yaml');
             $mappingsArr = $doctrineYamlContents['doctrine']['orm']['mappings'];
-            $mappingsArr[$this->APINamespace]['is_bundle'] = false;
-            $mappingsArr[$this->APINamespace]['type'] = 'annotation';
-            $mappingsArr[$this->APINamespace]['dir'] = '%kernel.project_dir%/plugins/'.$this->pluginName.'/api/Entity';
-            $mappingsArr[$this->APINamespace]['prefix'] = $this->APINamespace.'\Entity';
-            $mappingsArr[$this->APINamespace]['alias'] = $this->APINamespace;
-            $doctrineYamlContents['doctrine']['orm']['mappings'] = $mappingsArr;
-            $yamlToSave = Yaml::dump($doctrineYamlContents);
-            $this->filesystem->dumpFile($this->rootDir.'/config/packages/doctrine.yaml', $yamlToSave);
+            if(!array_key_exists($this->APINamespace, $mappingsArr)) {
+                $mappingsArr[$this->APINamespace]['is_bundle'] = false;
+                $mappingsArr[$this->APINamespace]['type'] = 'annotation';
+                $mappingsArr[$this->APINamespace]['dir'] = '%kernel.project_dir%/plugins/'.$this->pluginName.'/api/Entity';
+                $mappingsArr[$this->APINamespace]['prefix'] = $this->APINamespace.'\Entity';
+                $mappingsArr[$this->APINamespace]['alias'] = $this->APINamespace;
+                $doctrineYamlContents['doctrine']['orm']['mappings'] = $mappingsArr;
+                $yamlToSave = Yaml::dump($doctrineYamlContents);
+                $this->filesystem->dumpFile($this->rootDir.'/config/packages/doctrine.yaml', $yamlToSave);
+            }
         }
     }
 
@@ -925,11 +921,13 @@ class PluginController extends AbstractController
             $composerArr = json_decode($fileContentsJson, true);
             $psr4Arr = $composerArr['autoload']['psr-4'];
             $targetIndex = $this->APINamespace.'\\';
-            $targetValue = 'plugins/'.$this->pluginName.'/api/';
-            $psr4Arr[$targetIndex] = $targetValue;
-            $composerArr['autoload']['psr-4'] = $psr4Arr;
-            $jsonToSave = json_encode($composerArr);
-            $this->filesystem->dumpFile($this->rootDir.'/plugin-composer.json', $jsonToSave);
+            if(!array_key_exists($targetIndex, $psr4Arr)) {
+                $targetValue = 'plugins/'.$this->pluginName.'/api/';
+                $psr4Arr[$targetIndex] = $targetValue;
+                $composerArr['autoload']['psr-4'] = $psr4Arr;
+                $jsonToSave = json_encode($composerArr);
+                $this->filesystem->dumpFile($this->rootDir.'/plugin-composer.json', $jsonToSave);
+            }
         }
     }
 

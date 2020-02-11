@@ -226,10 +226,10 @@ export class PluginAdminComponent {
     validateDisablePlugins() {
         this.disablePluginArr.forEach((plugin) => {
             const disablePlugin = this.installedPlugins.find(x => x.name === plugin);
+            if (disablePlugin.database_extension && this.method === 'delete') {
+                this.alterDatabase = true;
+            }
             if (disablePlugin.enabled) {
-                if (disablePlugin.database_extension) {
-                    this.alterDatabase = true;
-                }
                 this.setDependentPluginsArr(plugin);
             }
         });
