@@ -92,11 +92,39 @@ class PluginController extends AbstractController
     public function getPluginConfigurations(): Response
     {
         $fileContents = '';
+        $pluginsArr = Array();
         if($this->filesystem->exists($this->rootDir.'/config/plugin-config.json')) {
             $fileContents = file_get_contents($this->rootDir.'/config/plugin-config.json');
         }
+        if($fileContents) {
+            $pluginsArr = json_decode($fileContents, true);
+            foreach($pluginsArr as $plugin => $pluginArr){
+                if($pluginArr['source'] === 'local' && $pluginArr['enabled']) {
+                    $pluginName = $pluginArr['name'];
+                    if($this->filesystem->exists($this->rootDir.'/plugins/'.$pluginName.'/config.json')) {
+                        $confContents = file_get_contents($this->rootDir.'/plugins/'.$pluginName.'/config.json');
+                        $confArr = json_decode($confContents, true);
+                        $pluginArr['title'] = ($confArr['title'] ?? null);
+                        $pluginArr['description'] = ($confArr['description'] ?? null);
+                        $pluginArr['project_url'] = ($confArr['project_url'] ?? null);
+                        $pluginArr['dependencies'] = ($confArr['dependencies'] ?? null);
+                        $pluginArr['api_namespace'] = ($confArr['api_namespace'] ?? null);
+                        $pluginArr['ui_filename'] = ($confArr['ui_filename'] ?? null);
+                        $pluginArr['ui_module_name'] = ($confArr['ui_module_name'] ?? null);
+                        $pluginArr['ui_routes'] = ($confArr['ui_routes'] ?? null);
+                        $pluginArr['tab_hooks'] = ($confArr['tab_hooks'] ?? null);
+                        $pluginArr['component_hooks'] = ($confArr['component_hooks'] ?? null);
+                        $pluginArr['link_hooks'] = ($confArr['link_hooks'] ?? null);
+                    }
+                    $pluginsArr[$plugin] = $pluginArr;
+                }
+            }
 
-        return new Response($fileContents);
+        }
+
+        return new JsonResponse(
+            $pluginsArr
+        );
     }
 
     /**

@@ -49,7 +49,15 @@ class UserController extends AbstractController
         $user = $token->getUser();
 
         if (!$token || !$token->isAuthenticated() || !$user instanceof Users) {
-            return new JsonResponse([]);
+            if ($token) {
+                $res = new Response();
+                $res->headers->clearCookie('BEARER');
+                $res->send();
+                return $res;
+            }
+            else {
+                return new JsonResponse([]);
+            }
         }
 
         $userId = $user->getId();
