@@ -21,5 +21,9 @@ To run the initial setup scripts for your Symbiota2 database follow these steps:
     ```
 - Enter 'y' when prompted to confirm the execution of the migration scripts
 
+- Populate the default data in your database by running:
+    ```shell
+    php bin/console doctrine:database:import config/sql/default/* --env=dev
+    ```
 
 ### [Back to index](./index.html)
