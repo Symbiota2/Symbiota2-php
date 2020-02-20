@@ -12,7 +12,7 @@ use Core\Entity\ModifiedTimestampInterface;
 /**
  * Ranks
  *
- * @ORM\Table(name="taxonunits", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQUE_taxonunits", columns={"rankid", "rankname"})})
+ * @ORM\Table(name="taxonunits", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQUE_taxonunits", columns={"rankid", "rankname"})}, indexes={@ORM\Index(name="idx_rankid", columns={"rankid"}), @ORM\Index(name="idx_rankname", columns={"rankname"})})
  * @ORM\Entity()
  * @ApiResource(
  *     routePrefix="/taxa",

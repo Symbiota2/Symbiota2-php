@@ -342,7 +342,7 @@ export class PluginAdminComponent {
         const secondaryDeps = [];
         const tertiaryDeps = [];
         this.installedPlugins.forEach((plugin) => {
-            if ('dependencies' in plugin && plugin.enabled) {
+            if (plugin.dependencies && plugin.enabled) {
                 plugin.dependencies.forEach((dep) => {
                     if (dep === pluginName && (this.disablePluginArr.indexOf(plugin.name) === -1)) {
                         secondaryDeps.push(plugin.name);
@@ -354,7 +354,7 @@ export class PluginAdminComponent {
         if (secondaryDeps.length > 0) {
             secondaryDeps.forEach((dep) => {
                 const secDepPlugin = this.installedPlugins.find(x => x.name === dep);
-                if (secDepPlugin && 'dependencies' in secDepPlugin && secDepPlugin.enabled) {
+                if (secDepPlugin && secDepPlugin.dependencies && secDepPlugin.enabled) {
                     secDepPlugin.dependencies.forEach((sdep) => {
                         if (sdep === dep && (this.disablePluginArr.indexOf(secDepPlugin.name) === -1)) {
                             tertiaryDeps.push(secDepPlugin.name);
@@ -367,7 +367,7 @@ export class PluginAdminComponent {
         if (tertiaryDeps.length > 0) {
             tertiaryDeps.forEach((dep) => {
                 const terDepPlugin = this.installedPlugins.find(x => x.name === dep);
-                if (terDepPlugin && 'dependencies' in terDepPlugin && terDepPlugin.enabled) {
+                if (terDepPlugin && terDepPlugin.dependencies && terDepPlugin.enabled) {
                     terDepPlugin.dependencies.forEach((tdep) => {
                         if (tdep === dep && (this.disablePluginArr.indexOf(terDepPlugin.name) === -1)) {
                             this.dependentPluginArr.push({name: terDepPlugin.name, title: terDepPlugin.title});
@@ -382,7 +382,7 @@ export class PluginAdminComponent {
         const enablePlugin = this.installedPlugins.find(x => x.name === pluginName);
         const secondaryDeps = [];
         const tertiaryDeps = [];
-        if ('dependencies' in enablePlugin) {
+        if (enablePlugin.dependencies) {
             enablePlugin.dependencies.forEach((dep) => {
                 const depPlugin = this.installedPlugins.find(x => x.name === dep);
                 if (depPlugin) {
@@ -401,7 +401,7 @@ export class PluginAdminComponent {
             secondaryDeps.forEach((dep) => {
                 const secDepPlugin = this.installedPlugins.find(x => x.name === dep);
                 if (secDepPlugin) {
-                    if ('dependencies' in secDepPlugin) {
+                    if (secDepPlugin.dependencies) {
                         tertiaryDeps.push.apply(tertiaryDeps, secDepPlugin.dependencies);
                     }
                     if (!secDepPlugin.enabled && (this.enablePluginArr.indexOf(dep) === -1)) {
