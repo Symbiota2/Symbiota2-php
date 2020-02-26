@@ -8,13 +8,13 @@ import {TranslateModule} from "@ngx-translate/core";
 
 import {MaterialModule} from './material.module';
 
-import {SpinnerOverlayComponent} from './spinner-overlay/spinner-overlay.component';
-import {CaptchaComponent} from './captcha/captcha.component';
+import {SpinnerOverlayComponent} from './components/spinner-overlay/spinner-overlay.component';
+import {CaptchaComponent} from './components/captcha/captcha.component';
 
-import {SpinnerOverlayService} from './spinner-overlay.service';
-import {AlertService} from './alert.service';
-import {ConfigurationService} from './configuration.service';
-import {SharedToolsService} from './shared-tools.service';
+import {SpinnerOverlayService} from './services/spinner-overlay.service';
+import {AlertService} from './services/alert.service';
+import {ConfigurationService} from './services/configuration.service';
+import {SharedToolsService} from './services/shared-tools.service';
 
 @NgModule({
     imports: [

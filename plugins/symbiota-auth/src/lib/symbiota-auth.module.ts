@@ -4,11 +4,11 @@ import {TranslateModule} from "@ngx-translate/core";
 
 import {SymbiotaSharedModule} from 'symbiota-shared';
 
-import {LoginComponent} from './login/login.component';
-import {SessionExpireWarningDialogComponent} from './session-expire-warning-dialog/session-expire-warning-dialog.component';
+import {LoginComponent} from './components/login/login.component';
+import {SessionExpireWarningDialogComponent} from './components/session-expire-warning-dialog/session-expire-warning-dialog.component';
 
-import {AuthService} from './auth.service';
-import {LoginComponentService} from "./login-component.service";
+import {AuthService} from './services/auth.service';
+import {LoginComponentService} from "./services/login-component.service";
 
 @NgModule({
     imports: [

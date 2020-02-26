@@ -5,15 +5,15 @@ import {SymbiotaSharedModule} from 'symbiota-shared';
 import {SymbiotaPluginModule} from 'symbiota-plugin';
 import {AppRoutingModule} from '../app-routing.module';
 
-import {LayoutComponent} from './layout/layout.component';
-import {HomeComponent} from './home/home.component';
-import {FooterComponent} from './footer/footer.component';
-import {BannerComponent} from './header/banner/banner.component';
-import {TopnavComponent} from './header/topnav/topnav.component';
-import {HeaderComponent} from './header/header.component';
-import {SidepanelComponent} from './sidepanel/sidepanel.component';
-import {SitemapComponent} from './sitemap/sitemap.component';
-import {SidepanelLinksComponent} from './sidepanel-links/sidepanel-links.component';
+import {LayoutComponent} from './containers/layout/layout.component';
+import {HomeComponent} from './components/home/home.component';
+import {FooterComponent} from './components/footer/footer.component';
+import {BannerComponent} from './components/banner/banner.component';
+import {TopnavComponent} from './components/topnav/topnav.component';
+import {HeaderComponent} from './containers/header/header.component';
+import {SidepanelComponent} from './outlets/sidepanel/sidepanel.component';
+import {SitemapComponent} from './outlets/sitemap/sitemap.component';
+import {SidepanelLinksComponent} from './components/sidepanel-links/sidepanel-links.component';
 
 @NgModule({
     declarations: [

@@ -4,7 +4,7 @@ import {TranslateModule} from "@ngx-translate/core";
 
 import {SymbiotaPluginModule} from 'symbiota-plugin';
 
-import {PluginLoaderService} from './plugin-loader.service';
+import {PluginLoaderService} from './services/plugin-loader.service';
 
 @NgModule({
     declarations: [],

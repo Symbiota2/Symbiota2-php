@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
-import {HomeComponent} from './layout/home/home.component';
-import {SitemapComponent} from './layout/sitemap/sitemap.component';
+import {HomeComponent} from './layout/components/home/home.component';
+import {SitemapComponent} from './layout/outlets/sitemap/sitemap.component';
 
 import {PluginLoaderService} from 'symbiota-plugin-loader';
 import {PluginRouterService} from 'symbiota-plugin';

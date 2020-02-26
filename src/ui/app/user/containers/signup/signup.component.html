@@ -1,0 +1,162 @@
+<section class="createaccount-form">
+    <form (submit)="onSignup(createaccountForm)" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="createaccountForm"
+          id="createaccountFormObj">
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.signup.login_box' | translate }}" name="username" formControlName="username" maxlength="45">
+            <mat-error
+                *ngIf="createaccountForm.get('username').errors && createaccountForm.get('username').errors['required']">
+                {{ 'core.user.signup.blank_error' | translate }}
+            </mat-error>
+            <mat-error
+                *ngIf="createaccountForm.get('username').errors && createaccountForm.get('username').errors['spaces']">
+                {{ 'core.user.signup.login_spaces_error' | translate }}
+            </mat-error>
+            <mat-error
+                    *ngIf="createaccountForm.get('username').errors && createaccountForm.get('username').errors['CheckingLogin']">
+                {{ 'core.user.signup.login_checking' | translate }}
+            </mat-error>
+            <mat-error
+                *ngIf="createaccountForm.get('username').errors && createaccountForm.get('username').errors['LoginAlreadyUsed']">
+                {{ 'core.user.signup.login_used_error' | translate }}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input type="password" matInput placeholder="{{ 'core.user.signup.password_box' | translate }}" name="password" id="password" minlength="6"
+                   formControlName="password" maxlength="45">
+            <mat-hint>{{ 'core.user.signup.password_length' | translate }}</mat-hint>
+            <mat-error
+                *ngIf="createaccountForm.get('password').errors && createaccountForm.get('password').errors['required']">
+                {{ 'core.user.signup.blank_error' | translate }}
+            </mat-error>
+            <mat-error
+                *ngIf="createaccountForm.get('password').errors && createaccountForm.get('password').errors['minlength']">
+                {{ 'core.user.signup.password_long_error' | translate }}
+            </mat-error>
+            <mat-error
+                *ngIf="createaccountForm.get('password').errors && createaccountForm.get('password').errors['spaces']">
+                {{ 'core.user.signup.password_space_error' | translate }}
+            </mat-error>
+            <mat-error
+                *ngIf="createaccountForm.get('password').errors && createaccountForm.get('password').errors['numbers']">
+                {{ 'core.user.signup.password_number_error' | translate }}
+            </mat-error>
+            <mat-error
+                *ngIf="createaccountForm.get('password').errors && createaccountForm.get('password').errors['letters']">
+                {{ 'core.user.signup.password_letter_error' | translate }}
+            </mat-error>
+            <mat-error
+                *ngIf="createaccountForm.get('password').errors && createaccountForm.get('password').errors['PasswordsDoNotMatch']">
+                {{ 'core.user.signup.password_match_error' | translate }}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input type="password" matInput placeholder="{{ 'core.user.signup.password_again_box' | translate }}" name="retypedPassword" id="retypedPassword" minlength="6"
+                   formControlName="retypedPassword" maxlength="45">
+            <mat-hint>{{ 'core.user.signup.password_again_hint' | translate }}</mat-hint>
+            <mat-error
+                *ngIf="createaccountForm.get('retypedPassword').errors && createaccountForm.get('retypedPassword').errors['required']">
+                {{ 'core.user.signup.blank_error' | translate }}
+            </mat-error>
+            <mat-error
+                *ngIf="createaccountForm.get('retypedPassword').errors && createaccountForm.get('retypedPassword').errors['minlength']">
+                {{ 'core.user.signup.password_long_error' | translate }}
+            </mat-error>
+            <mat-error
+                *ngIf="createaccountForm.get('retypedPassword').errors && createaccountForm.get('retypedPassword').errors['spaces']">
+                {{ 'core.user.signup.password_space_error' | translate }}
+            </mat-error>
+            <mat-error
+                *ngIf="createaccountForm.get('retypedPassword').errors && createaccountForm.get('retypedPassword').errors['numbers']">
+                {{ 'core.user.signup.password_number_error' | translate }}
+            </mat-error>
+            <mat-error
+                *ngIf="createaccountForm.get('retypedPassword').errors && createaccountForm.get('retypedPassword').errors['letters']">
+                {{ 'core.user.signup.password_letter_error' | translate }}
+            </mat-error>
+            <mat-error
+                *ngIf="createaccountForm.get('retypedPassword').errors && createaccountForm.get('retypedPassword').errors['PasswordsDoNotMatch']">
+                {{ 'core.user.signup.password_match_error' | translate }}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.signup.first_name_box' | translate }}" name="firstName" formControlName="firstName"
+                   maxlength="45">
+            <mat-error
+                *ngIf="createaccountForm.get('firstName').errors && createaccountForm.get('firstName').errors['required']">
+                {{ 'core.user.signup.blank_error' | translate }}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.signup.middle_initial_box' | translate }}" name="middleInitial"
+                   formControlName="middleInitial" maxlength="2">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.signup.last_name_box' | translate }}" name="lastName" formControlName="lastName"
+                   maxlength="45">
+            <mat-error
+                *ngIf="createaccountForm.get('lastName').errors && createaccountForm.get('lastName').errors['required']">
+                {{ 'core.user.signup.blank_error' | translate }}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input type="email" matInput placeholder="{{ 'core.user.signup.email_address_box' | translate }}" name="email" email formControlName="email"
+                   maxlength="100">
+            <mat-error
+                *ngIf="createaccountForm.get('email').errors && createaccountForm.get('email').errors['required']">
+                {{ 'core.user.signup.blank_error' | translate }}
+            </mat-error>
+            <mat-error *ngIf="createaccountForm.get('email').errors && createaccountForm.get('email').errors['email']">
+                {{ 'core.user.signup.email_invalid_error' | translate }}
+            </mat-error>
+            <mat-error
+                    *ngIf="createaccountForm.get('email').errors && createaccountForm.get('email').errors['CheckingEmail']">
+                {{ 'core.user.signup.email_checking' | translate }}
+            </mat-error>
+            <mat-error
+                *ngIf="createaccountForm.get('email').errors && createaccountForm.get('email').errors['EmailAlreadyUsed']">
+                {{ 'core.user.signup.email_registered_error' | translate }}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.signup.title_box' | translate }}" name="title" formControlName="title" maxlength="150">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.signup.institution_box' | translate }}" name="institution" formControlName="institution"
+                   maxlength="200">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.signup.department_box' | translate }}" name="department" formControlName="department"
+                   maxlength="200">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.signup.street_address_box' | translate }}" name="address" formControlName="address"
+                   maxlength="255">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.signup.city_box' | translate }}" name="city" formControlName="city" maxlength="100">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.signup.state_box' | translate }}" name="state" formControlName="state" maxlength="50">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.signup.zip_code_box' | translate }}" name="zip" formControlName="zip" maxlength="15">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.signup.country_box' | translate }}" name="country" formControlName="country" maxlength="50">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.signup.url_box' | translate }}" name="url" formControlName="url" maxlength="400">
+        </mat-form-field>
+        <mat-form-field>
+            <textarea matInput placeholder="{{ 'core.user.signup.biography_box' | translate }}" name="biography" formControlName="biography" #biography
+                      maxlength="1500"></textarea>
+            <mat-hint align="end">{{ biography.value?.length }} / 1500</mat-hint>
+        </mat-form-field>
+        <mat-checkbox name="isPublic" formControlName="isPublic" (change)="setIsPublicValue($event)">
+            {{ 'core.user.signup.is_public_text' | translate }}
+        </mat-checkbox>
+        <symbiota-shared-captcha [parent]="createaccountForm" (getProvenHumanChange)="setHumanVerified($event)"></symbiota-shared-captcha>
+        <button type="submit" mat-raised-button color="primary" [disabled]="createaccountForm.invalid">{{ 'core.user.signup.create_profile_button' | translate }}
+        </button>
+    </form>
+</section>

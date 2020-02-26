@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
-import {SignupComponent} from './signup/signup.component';
-import {UserProfileComponent} from './user-profile/user-profile.component';
+import {SignupComponent} from './containers/signup/signup.component';
+import {UserProfileComponent} from './outlets/user-profile/user-profile.component';
 
 const routes: Routes = [
     { path: 'signup', component: SignupComponent },

@@ -7,20 +7,20 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {LayoutModule} from './layout/layout.module';
 import {UserModule} from './user/user.module';
-import {PluginAdminModule} from './plugin-admin/plugin-admin.module';
+import {PluginModule} from './plugin/plugin.module';
 import {AppRoutingModule} from './app-routing.module';
 import {SymbiotaPluginModule} from 'symbiota-plugin';
 import {SymbiotaPluginLoaderModule} from 'symbiota-plugin-loader';
 import {SymbiotaSpatialModule} from 'symbiota-spatial';
 import {SymbiotaSharedModule} from 'symbiota-shared';
 import {SymbiotaAuthModule} from 'symbiota-auth';
-import {ErrorRoutingModule} from './error-handlers/error-routing.module';
+import {ErrorModule} from './error/error.module';
 
 import {AppComponent} from './app.component';
 
 import {ConfigurationService} from 'symbiota-shared';
 import {PluginLoaderService} from 'symbiota-plugin-loader';
-import {ErrorHandlerService} from './error-handlers/error-handler.service';
+import {ErrorHandlerService} from './error/services/error-handler.service';
 
 export function setupConfigServiceFactory(
     service: ConfigurationService
@@ -47,7 +47,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         BrowserAnimationsModule,
         LayoutModule,
         UserModule,
-        PluginAdminModule,
+        PluginModule,
         HttpClientModule,
         AppRoutingModule,
         SymbiotaPluginModule,
@@ -55,7 +55,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         SymbiotaSpatialModule,
         SymbiotaSharedModule,
         SymbiotaAuthModule,
-        ErrorRoutingModule,
+        ErrorModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

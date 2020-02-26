@@ -3,12 +3,12 @@ import {CommonModule} from '@angular/common';
 
 import {SymbiotaSharedModule} from 'symbiota-shared';
 
-import {PluginOutletComponent} from './plugin-outlet/plugin-outlet.component';
+import {PluginOutletComponent} from './outlets/plugin-outlet/plugin-outlet.component';
 
-import {PluginRouterService} from './plugin-router.service';
-import {PluginComponentService} from './plugin-component.service';
-import {PluginTabService} from './plugin-tab.service';
-import {PluginLinkService} from './plugin-link.service';
+import {PluginRouterService} from './services/plugin-router.service';
+import {PluginComponentService} from './services/plugin-component.service';
+import {PluginTabService} from './services/plugin-tab.service';
+import {PluginLinkService} from './services/plugin-link.service';
 
 @NgModule({
     declarations: [

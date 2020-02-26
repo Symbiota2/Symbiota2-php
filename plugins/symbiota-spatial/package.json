@@ -4,12 +4,12 @@
   "peerDependencies": {
     "@angular/common": "^8.0.3",
     "@angular/core": "^8.0.3",
+    "@greentheorystudio/ol": "^6.2.4",
     "@ngx-translate/core": "^11.0.1",
     "@turf/turf": "^5.1.6",
     "file-saver": "^2.0.2",
     "html2canvas": "^1.0.0-rc.3",
     "jszip": "^3.2.1",
-    "ol": "^5.3.3",
     "shpjs": "^3.4.3",
     "symbiota-auth": "file:../../dist/symbiota-auth/symbiota-auth-0.0.1.tgz",
     "symbiota-plugin": "file:dist/symbiota-plugin/symbiota-plugin-0.0.1.tgz",
