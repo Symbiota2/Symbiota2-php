@@ -4,7 +4,7 @@
   "peerDependencies": {
     "@angular/common": "^8.0.3",
     "@angular/core": "^8.0.3",
-    "@greentheorystudio/ol": "^6.2.4",
+    "@greentheorystudio/ol": "^6.2.6",
     "@ngx-translate/core": "^11.0.1",
     "@turf/turf": "^5.1.6",
     "file-saver": "^2.0.2",

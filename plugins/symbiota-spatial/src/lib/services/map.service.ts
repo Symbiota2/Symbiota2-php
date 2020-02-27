@@ -1324,8 +1324,10 @@ export class MapService {
             });
         }
         if (selection === 'ngstopo') {
-            blsource = this.setBaseLayerSource('http://services.arcgisonline.com/arcgis/rest/services/NGS_Topo_US_2D/' +
-              'MapServer/tile/{z}/{y}/{x}');
+            blsource = new XYZ({
+                url: 'http://services.arcgisonline.com/arcgis/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}',
+                crossOrigin: 'anonymous'
+            });
         }
         if (selection === 'natgeoworld') {
             blsource = new XYZ({
@@ -1334,8 +1336,10 @@ export class MapService {
             });
         }
         if (selection === 'esristreet') {
-            blsource = this.setBaseLayerSource('http://services.arcgisonline.com/arcgis/rest/services/' +
-              'ESRI_StreetMap_World_2D/MapServer/tile/{z}/{y}/{x}');
+            blsource = new XYZ({
+                url: 'http://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+                crossOrigin: 'anonymous'
+            });
         }
         baseLayer.setSource(blsource);
     }

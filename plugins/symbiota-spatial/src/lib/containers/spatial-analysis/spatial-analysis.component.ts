@@ -11,7 +11,7 @@ import {Layer} from '../../interfaces/layer.interface';
     templateUrl: './spatial-analysis.component.html',
     encapsulation: ViewEncapsulation.None,
     styleUrls: [
-        '../../../../../../node_modules/ol/ol.css',
+        '../../../../../../node_modules/@greentheorystudio/ol/ol.css',
         './symbiota-ol.css',
         './spatial-analysis.component.css'
     ]
