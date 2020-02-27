@@ -1030,7 +1030,7 @@
     "@angular/platform-browser": "^8.0.0",
     "@angular/platform-browser-dynamic": "^8.0.0",
     "@angular/router": "^8.0.0",
-    "@greentheorystudio/ol": "^6.2.4",
+    "@greentheorystudio/ol": "^6.2.6",
     "@ngrx/store": "^8.4.0",
     "@nguniversal/express-engine": "^8.1.1",
     "@nguniversal/module-map-ngfactory-loader": "^8.1.1",
