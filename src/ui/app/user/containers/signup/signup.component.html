@@ -155,7 +155,7 @@
         <mat-checkbox name="isPublic" formControlName="isPublic" (change)="setIsPublicValue($event)">
             {{ 'core.user.signup.is_public_text' | translate }}
         </mat-checkbox>
-        <symbiota-shared-captcha [parent]="createaccountForm" (getProvenHumanChange)="setHumanVerified($event)"></symbiota-shared-captcha>
+        <symbiota-shared-captcha [parent]="createaccountForm"></symbiota-shared-captcha>
         <button type="submit" mat-raised-button color="primary" [disabled]="createaccountForm.invalid">{{ 'core.user.signup.create_profile_button' | translate }}
         </button>
     </form>

@@ -1,12 +1,14 @@
-<section class="captcha-section" [formGroup]="parent">
-    <section>
-        <canvas #canvas></canvas>
-    </section>
-    <mat-form-field>
-        <input type="text" matInput placeholder="{{ 'symbiota-shared.captcha.hint_text' | translate }}" (keyup)="verifyUserInput($event)" name="human-entry" [errorStateMatcher]="errorMatcher" formControlName="human-entry" maxlength="45">
-        <input type="hidden" name="human-verified" formControlName="human-verified">
-        <mat-error *ngIf="parent.get('human-verified').errors && parent.get('human-verified').errors['notHuman']">
-            {{ 'symbiota-shared.captcha.error_text' | translate }}
-        </mat-error>
-    </mat-form-field>
-</section>
+<div class="captcha-section" [formGroup]="parent">
+    <div formGroupName="captcha">
+        <section>
+            <canvas #canvas></canvas>
+        </section>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'symbiota-shared.captcha.hint_text' | translate }}" (keyup)="verifyUserInput($event)" formControlName="human_entry" maxlength="45">
+            <div class="error-text" *ngIf="notHuman">
+                {{ 'symbiota-shared.captcha.error_text' | translate }}
+            </div>
+        </mat-form-field>
+        <input id="human_verified" type="hidden" formControlName="human_verified" value="nothuman">
+    </div>
+</div>

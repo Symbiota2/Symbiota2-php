@@ -1,12 +1,5 @@
-import {Component, Input, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter} from '@angular/core';
-import {FormGroup, FormControl, FormGroupDirective, NgForm} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material';
-
-class CaptchaErrorMatcher implements ErrorStateMatcher {
-    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-        return control.dirty && form.invalid;
-    }
-}
+import {Component, Input, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
+import {FormGroup} from '@angular/forms';
 
 @Component({
     selector: 'symbiota-shared-captcha',
@@ -15,16 +8,28 @@ class CaptchaErrorMatcher implements ErrorStateMatcher {
 })
 export class CaptchaComponent implements AfterViewInit {
     @Input() parent: FormGroup;
-    @Output() getProvenHumanChange = new EventEmitter<boolean>();
     @ViewChild('canvas', { static: false }) public canvas: ElementRef;
 
     private randNumber: number;
-    private provenHuman: boolean;
     private cx: CanvasRenderingContext2D;
-    errorMatcher = new CaptchaErrorMatcher();
 
     public ngAfterViewInit() {
         this.setCanvas();
+    }
+
+    get notHuman() {
+        return (
+            this.parent.get('captcha.human_verified').hasError('notHuman') &&
+            this.parent.get('captcha.human_entry').dirty &&
+            !this.required('human_entry')
+        );
+    }
+
+    required(name: string) {
+        return (
+            this.parent.get(`captcha.${name}`).hasError('required') &&
+            this.parent.get(`captcha.${name}`).touched
+        );
     }
 
     setCanvas() {
@@ -36,14 +41,14 @@ export class CaptchaComponent implements AfterViewInit {
     }
 
     verifyUserInput(event) {
-        this.provenHuman = event.target.value === this.randNumber.toString();
-        if (this.provenHuman) {
+        let entryVerified = ((event.target.value === this.randNumber.toString()) ? 'human' : 'nothuman');
+        if (entryVerified === 'human') {
             setTimeout(() => {
-                this.provenHuman = event.target.value === this.randNumber.toString();
-                this.getProvenHumanChange.emit(this.provenHuman);
+                entryVerified = ((this.parent.get('captcha.human_entry').value === this.randNumber.toString()) ? 'human' : 'nothuman');
+                this.parent.get('captcha.human_verified').setValue(entryVerified);
             }, 500);
         } else {
-            this.getProvenHumanChange.emit(this.provenHuman);
+            this.parent.get('captcha.human_verified').setValue(entryVerified);
         }
     }
 }

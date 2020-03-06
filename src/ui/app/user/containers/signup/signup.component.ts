@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators, FormBuilder} from '@angular/forms';
+import {Component} from '@angular/core';
+import {FormControl, FormGroup, Validators, FormBuilder, AbstractControl} from '@angular/forms';
 
 import {UserService} from '../../services/user.service';
+import {CaptchaValidators} from 'symbiota-shared';
 import {SpinnerOverlayService} from 'symbiota-shared';
 
 @Component({
@@ -9,10 +10,40 @@ import {SpinnerOverlayService} from 'symbiota-shared';
     templateUrl: './signup.component.html',
     styleUrls: ['./signup.component.css']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent {
     isPublicValue = 0;
     debouncer: any;
-    createaccountForm: FormGroup;
+
+    createaccountForm = this.fb.group({
+        'username': new FormControl(null, {
+            validators: [Validators.required, SignupComponent.checkLoginSpaces.bind(this)],
+            asyncValidators: this.checkUsername.bind(this)
+        }),
+        'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
+        'retypedPassword': new FormControl(null, [Validators.required, Validators.minLength(6)]),
+        'firstName': new FormControl(null, [Validators.required]),
+        'middleInitial': new FormControl(null),
+        'lastName': new FormControl(null, [Validators.required]),
+        'email': new FormControl(null, {
+            validators: [Validators.required, Validators.email],
+            asyncValidators: this.checkEmail.bind(this)
+        }),
+        'title': new FormControl(null),
+        'institution': new FormControl(null),
+        'department': new FormControl(null),
+        'address': new FormControl(null),
+        'city': new FormControl(null),
+        'state': new FormControl(null),
+        'zip': new FormControl(null),
+        'country': new FormControl(null),
+        'url': new FormControl(null),
+        'biography': new FormControl(null),
+        'isPublic': new FormControl(null),
+        captcha: this.fb.group({
+            human_entry: ['', Validators.required],
+            human_verified: ['', [Validators.required, CaptchaValidators.checkHuman]]
+        })
+    }, [SignupComponent.checkPasswords.bind(this)]);
 
     constructor(
         public userService: UserService,
@@ -23,13 +54,6 @@ export class SignupComponent implements OnInit {
     static checkLoginSpaces(control: FormControl): { [s: string]: boolean } {
         if (/[^0-9A-Za-z_!@#$-+]/.test(control.value)) {
             return {'spaces': true};
-        }
-        return null;
-    }
-
-    static checkHumanVerified(control: FormControl): { [s: string]: boolean } {
-        if (control.value === false) {
-            return {'notHuman': true};
         }
         return null;
     }
@@ -89,37 +113,6 @@ export class SignupComponent implements OnInit {
             } else { pwdControl.setErrors(pwdErr); }
         }
         return null;
-    }
-
-    ngOnInit() {
-        this.createaccountForm = this.fb.group({
-            'username': new FormControl(null, {
-                validators: [Validators.required, SignupComponent.checkLoginSpaces.bind(this)],
-                asyncValidators: this.checkUsername.bind(this)
-            }),
-            'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
-            'retypedPassword': new FormControl(null, [Validators.required, Validators.minLength(6)]),
-            'firstName': new FormControl(null, [Validators.required]),
-            'middleInitial': new FormControl(null),
-            'lastName': new FormControl(null, [Validators.required]),
-            'email': new FormControl(null, {
-                validators: [Validators.required, Validators.email],
-                asyncValidators: this.checkEmail.bind(this)
-            }),
-            'title': new FormControl(null),
-            'institution': new FormControl(null),
-            'department': new FormControl(null),
-            'address': new FormControl(null),
-            'city': new FormControl(null),
-            'state': new FormControl(null),
-            'zip': new FormControl(null),
-            'country': new FormControl(null),
-            'url': new FormControl(null),
-            'biography': new FormControl(null),
-            'isPublic': new FormControl(null),
-            'human-entry': new FormControl(null, [Validators.required]),
-            'human-verified': new FormControl(null, [Validators.required, SignupComponent.checkHumanVerified.bind(this)])
-        }, [SignupComponent.checkPasswords.bind(this)]);
     }
 
     onSignup(form: FormGroup) {
@@ -191,9 +184,5 @@ export class SignupComponent implements OnInit {
         } else {
             this.isPublicValue = 0;
         }
-    }
-
-    setHumanVerified(event) {
-        this.createaccountForm.controls['human-verified'].setValue(event);
     }
 }

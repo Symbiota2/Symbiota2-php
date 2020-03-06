@@ -32,3 +32,15 @@ legend {
 .flex-container {
     display: flex;
 }
+
+.error-text {
+    background: #B52D30;
+    color: #fff;
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    border-radius: 0 0 3px 3px;
+    line-height: 1;
+    padding: 6px 10px;
+    margin-top: -1px;
+}
