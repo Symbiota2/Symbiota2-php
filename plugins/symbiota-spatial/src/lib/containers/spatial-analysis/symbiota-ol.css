@@ -3,7 +3,7 @@
 }
 
 .ol-zoom {
-    top: 42px;
+    top: 50px;
     left: auto;
     right: .5em;
 }
@@ -18,7 +18,7 @@
     top: 4.75em;
     left: auto;
     right: .5em;
-    height:240px;
+    height:256px;
 }
 
 .ol-touch .ol-zoom .ol-zoom-out {
