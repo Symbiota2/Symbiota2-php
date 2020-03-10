@@ -9,16 +9,18 @@ import {UserRoutingModule} from './user-routing.module';
 import {SignupComponent} from './containers/signup/signup.component';
 import {UserProfileComponent} from './outlets/user-profile/user-profile.component';
 import {EditProfileComponent} from './containers/edit-profile/edit-profile.component';
+import {UserPasswordComponent} from './components/user-password/user-password.component';
+import {UserMetadataComponent} from './components/user-metadata/user-metadata.component';
 
 import {UserService} from './services/user.service';
-import {UserFormComponent} from './components/user-form/user-form.component';
 
 @NgModule({
     declarations: [
         SignupComponent,
         UserProfileComponent,
         EditProfileComponent,
-        UserFormComponent
+        UserPasswordComponent,
+        UserMetadataComponent
     ],
     imports: [
         CommonModule,

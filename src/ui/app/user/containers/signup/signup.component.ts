@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
-import {FormControl, FormGroup, Validators, FormBuilder, AbstractControl} from '@angular/forms';
+import {FormControl, FormGroup, Validators, FormBuilder} from '@angular/forms';
 
 import {UserService} from '../../services/user.service';
 import {CaptchaValidators} from 'symbiota-shared';
+import {UserMetadataValidators} from '../../components/user-metadata/user-metadata.validators';
 import {SpinnerOverlayService} from 'symbiota-shared';
 
 @Component({
@@ -11,106 +12,49 @@ import {SpinnerOverlayService} from 'symbiota-shared';
     styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
-    isPublicValue = 0;
     debouncer: any;
-
-    createaccountForm = this.fb.group({
-        'username': new FormControl(null, {
-            validators: [Validators.required, SignupComponent.checkLoginSpaces.bind(this)],
-            asyncValidators: this.checkUsername.bind(this)
-        }),
-        'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
-        'retypedPassword': new FormControl(null, [Validators.required, Validators.minLength(6)]),
-        'firstName': new FormControl(null, [Validators.required]),
-        'middleInitial': new FormControl(null),
-        'lastName': new FormControl(null, [Validators.required]),
-        'email': new FormControl(null, {
-            validators: [Validators.required, Validators.email],
-            asyncValidators: this.checkEmail.bind(this)
-        }),
-        'title': new FormControl(null),
-        'institution': new FormControl(null),
-        'department': new FormControl(null),
-        'address': new FormControl(null),
-        'city': new FormControl(null),
-        'state': new FormControl(null),
-        'zip': new FormControl(null),
-        'country': new FormControl(null),
-        'url': new FormControl(null),
-        'biography': new FormControl(null),
-        'isPublic': new FormControl(null),
-        captcha: this.fb.group({
-            human_entry: ['', Validators.required],
-            human_verified: ['', [Validators.required, CaptchaValidators.checkHuman]]
-        })
-    }, [SignupComponent.checkPasswords.bind(this)]);
 
     constructor(
         public userService: UserService,
+        public userMetadataValidator: UserMetadataValidators,
         public spinnerService: SpinnerOverlayService,
         public fb: FormBuilder
     ) {}
 
+    createaccountForm = this.fb.group({
+        username_group: this.fb.group({
+            username: ['', [Validators.required, SignupComponent.checkLoginSpaces.bind(this)], [this.checkUsername.bind(this)]]
+        }),
+        user_metadata: this.fb.group({
+            firstName: ['', [Validators.required]],
+            middleInitial: ['', null],
+            lastName: ['', [Validators.required]],
+            email: ['', [Validators.required, Validators.email], [this.userMetadataValidator.checkEmail.bind(this)] ],
+            title: ['', null],
+            institution: ['', null],
+            department: ['', null],
+            address: ['', null],
+            city: ['', null],
+            state: ['', null],
+            zip: ['', null],
+            country: ['', null],
+            url: ['', null],
+            biography: ['', null],
+            isPublic: ['', null]
+        }),
+        user_password: this.fb.group({
+            password: ['', [Validators.required, Validators.minLength(6)]],
+            retypedPassword: ['', [Validators.required, Validators.minLength(6)]]
+        }),
+        captcha: this.fb.group({
+            human_entry: ['', Validators.required],
+            human_verified: ['', [Validators.required, CaptchaValidators.checkHuman]]
+        })
+    });
+
     static checkLoginSpaces(control: FormControl): { [s: string]: boolean } {
         if (/[^0-9A-Za-z_!@#$-+]/.test(control.value)) {
             return {'spaces': true};
-        }
-        return null;
-    }
-
-    static checkPasswords(form: FormGroup): { [s: string]: boolean } {
-        const pwdControl = form.get('password');
-        const pwd2Control = form.get('retypedPassword');
-        if (pwdControl != null && pwd2Control != null && form.dirty) {
-            const pwdVal = pwdControl.value;
-            const pwd2Val = pwd2Control.value;
-            const pwdErr = {};
-            const pwd2Err = {};
-            if (pwdVal !== pwd2Val) {
-                pwdErr['PasswordsDoNotMatch'] = true;
-                pwd2Err['PasswordsDoNotMatch'] = true;
-            }
-            if (pwdControl.touched) {
-                if (pwdVal) {
-                    const re_num = /[0-9]/;
-                    const re_letter = /[A-Za-z]/;
-                    if (pwdVal.length < 6) {
-                        pwdErr['minlength'] = true;
-                    } else if (pwdVal.charAt(0) === ' ' || pwdVal.slice(-1) === ' ') {
-                        pwdErr['spaces'] = true;
-                    } else if (!re_num.test(pwdVal)) {
-                        pwdErr['numbers'] = true;
-                    } else if (!re_letter.test(pwdVal)) {
-                        pwdErr['letters'] = true;
-                    }
-                } else {
-                    pwdErr['required'] = true;
-                }
-                if (Object.keys(pwdErr).length === 0) {
-                    pwdControl.setErrors(null);
-                } else {
-                    pwdControl.setErrors(pwdErr);
-                }
-                pwdControl.markAsTouched();
-            }
-            if (pwd2Control.touched) {
-                if (pwd2Val) {
-                    if (pwd2Val.length < 6) {
-                        pwd2Err['minlength'] = true;
-                    } else if (pwd2Val.charAt(0) === ' ' || pwd2Val.slice(-1) === ' ') {
-                        pwd2Err['spaces'] = true;
-                    }
-                } else {
-                    pwd2Err['required'] = true;
-                }
-                if (Object.keys(pwd2Err).length === 0) {
-                    pwd2Control.setErrors(null);
-                } else { pwd2Control.setErrors(pwd2Err); }
-                pwd2Control.markAsTouched();
-            }
-            if (Object.keys(pwdErr).length === 0) {
-                pwdControl.setErrors(null);
-            } else { pwdControl.setErrors(pwdErr); }
         }
         return null;
     }
@@ -138,7 +82,38 @@ export class SignupComponent {
             form.value.country,
             form.value.url,
             form.value.biography,
-            this.isPublicValue
+            form.value.isPublic
+        );
+    }
+
+    get usernameRequired() {
+        return (
+            this.createaccountForm.get('username_group.username').dirty &&
+            this.required('username')
+        );
+    }
+
+    get usernameSpaces() {
+        return (
+            this.createaccountForm.get('username_group.username').hasError('spaces') &&
+            this.createaccountForm.get('username_group.username').dirty &&
+            !this.required('username')
+        );
+    }
+
+    get usernameCheckingLogin() {
+        return (
+            this.createaccountForm.get('username_group.username').hasError('CheckingLogin') &&
+            this.createaccountForm.get('username_group.username').dirty &&
+            !this.required('username')
+        );
+    }
+
+    get usernameLoginAlreadyUsed() {
+        return (
+            this.createaccountForm.get('username_group.username').hasError('LoginAlreadyUsed') &&
+            this.createaccountForm.get('username_group.username').dirty &&
+            !this.required('username')
         );
     }
 
@@ -160,29 +135,10 @@ export class SignupComponent {
         });
     }
 
-    checkEmail(control: FormControl): any {
-        clearTimeout(this.debouncer);
-        control.setErrors({'CheckingEmail': true});
-        return new Promise(resolve => {
-            this.debouncer = setTimeout(() => {
-                this.userService.checkEmail(control.value).subscribe((res) => {
-                    if (res.available) {
-                        resolve({'EmailAlreadyUsed': true});
-                    } else {
-                        resolve(null);
-                    }
-                }, (err) => {
-                    resolve(null);
-                });
-            }, 1000);
-        });
-    }
-
-    setIsPublicValue(event) {
-        if (event.checked === true) {
-            this.isPublicValue = 1;
-        } else {
-            this.isPublicValue = 0;
-        }
+    required(name: string) {
+        return (
+            this.createaccountForm.get(`username_group.${name}`).hasError('required') &&
+            this.createaccountForm.get(`username_group.${name}`).touched
+        );
     }
 }

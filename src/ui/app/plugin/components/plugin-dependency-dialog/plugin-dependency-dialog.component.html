@@ -3,9 +3,9 @@
     <ul>
         <li *ngFor="let dep of data.dependencies">{{dep}}</li>
     </ul>
-    <div>{{ 'core.plugin_admin.plugin_dependency.verify_line' | translate:{'action':data.action} }}</div>
+    <div>{{ 'core.plugin.plugin_dependency_dialog.verify_line' | translate:{'action':data.action} }}</div>
 </div>
 <div mat-dialog-actions>
-    <button mat-button [mat-dialog-close]="true">{{ 'core.plugin_admin.plugin_dependency.yes_button' | translate }}</button>
-    <button mat-button [mat-dialog-close]="false">{{ 'core.plugin_admin.plugin_dependency.cancel_button' | translate }}</button>
+    <button mat-button [mat-dialog-close]="true">{{ 'core.plugin.plugin_dependency_dialog.yes_button' | translate }}</button>
+    <button mat-button [mat-dialog-close]="false">{{ 'core.plugin.plugin_dependency_dialog.cancel_button' | translate }}</button>
 </div>

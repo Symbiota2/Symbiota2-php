@@ -74,37 +74,37 @@ export class PluginAdminComponent {
     }
 
     setTranslations() {
-        this.translate.get('core.plugin_admin.plugin_admin.req_not_installed_text').subscribe((res: string) => {
+        this.translate.get('core.plugin.plugin_admin.req_not_installed_text').subscribe((res: string) => {
             this.reqNotInstalledText = res;
         });
-        this.translate.get('core.plugin_admin.plugin_admin.disabled_plugins_req_text').subscribe((res: string) => {
+        this.translate.get('core.plugin.plugin_admin.disabled_plugins_req_text').subscribe((res: string) => {
             this.disabledPluginsReqText = res;
         });
-        this.translate.get('core.plugin_admin.plugin_admin.enable_action_text').subscribe((res: string) => {
+        this.translate.get('core.plugin.plugin_admin.enable_action_text').subscribe((res: string) => {
             this.enableActionText = res;
         });
-        this.translate.get('core.plugin_admin.plugin_admin.disable_action_text').subscribe((res: string) => {
+        this.translate.get('core.plugin.plugin_admin.disable_action_text').subscribe((res: string) => {
             this.disableActionText = res;
         });
-        this.translate.get('core.plugin_admin.plugin_admin.delete_action_text').subscribe((res: string) => {
+        this.translate.get('core.plugin.plugin_admin.delete_action_text').subscribe((res: string) => {
             this.deleteActionText = res;
         });
-        this.translate.get('core.plugin_admin.plugin_admin.req_by_other_enabled_text').subscribe((res: string) => {
+        this.translate.get('core.plugin.plugin_admin.req_by_other_enabled_text').subscribe((res: string) => {
             this.reqByOtherEnabledText = res;
         });
-        this.translate.get('core.plugin_admin.plugin_admin.has_been_enabled_text').subscribe((res: string) => {
+        this.translate.get('core.plugin.plugin_admin.has_been_enabled_text').subscribe((res: string) => {
             this.hasBeenEnabledText = res;
         });
-        this.translate.get('core.plugin_admin.plugin_admin.has_been_disabled_text').subscribe((res: string) => {
+        this.translate.get('core.plugin.plugin_admin.has_been_disabled_text').subscribe((res: string) => {
             this.hasBeenDisabledText = res;
         });
-        this.translate.get('core.plugin_admin.plugin_admin.has_been_updated_text').subscribe((res: string) => {
+        this.translate.get('core.plugin.plugin_admin.has_been_updated_text').subscribe((res: string) => {
             this.hasBeenUpdatedText = res;
         });
-        this.translate.get('core.plugin_admin.plugin_admin.has_been_deleted_text').subscribe((res: string) => {
+        this.translate.get('core.plugin.plugin_admin.has_been_deleted_text').subscribe((res: string) => {
             this.hasBeenDeletedText = res;
         });
-        this.translate.get('core.plugin_admin.plugin_admin.error_updating_database_text').subscribe((res: string) => {
+        this.translate.get('core.plugin.plugin_admin.error_updating_database_text').subscribe((res: string) => {
             this.errorUpdatingDatabaseText = res;
         });
     }

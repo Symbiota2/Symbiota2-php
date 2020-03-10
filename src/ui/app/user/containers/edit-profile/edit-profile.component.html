@@ -1,1 +1,7 @@
-<p>edit-profile works!</p>
+<section class="editProfileContainer">
+    <form [formGroup]="editProfileForm" class="editProfileForm">
+        <app-user-metadata [parent]="editProfileForm"></app-user-metadata>
+        <button type="submit" mat-raised-button color="primary" [disabled]="editProfileForm.invalid">{{ 'core.user.edit_profile.save_edits_button' | translate }}
+        </button>
+    </form>
+</section>

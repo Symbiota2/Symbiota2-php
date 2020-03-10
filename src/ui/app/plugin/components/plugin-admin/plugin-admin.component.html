@@ -1,6 +1,6 @@
 <div class="plugin-card">
-    <button class="all-button" mat-raised-button color="primary" *ngIf="!allPluginsEnabled" (click)="onEnableAll()">{{ 'core.plugin_admin.plugin_admin.enable_all' | translate }}</button>
-    <button class="all-button" mat-raised-button color="primary" *ngIf="!allPluginsDisabled" (click)="onDisableAll()">{{ 'core.plugin_admin.plugin_admin.disable_all' | translate }}</button>
+    <button class="all-button" mat-raised-button color="primary" *ngIf="!allPluginsEnabled" (click)="onEnableAll()">{{ 'core.plugin.plugin_admin.enable_all' | translate }}</button>
+    <button class="all-button" mat-raised-button color="primary" *ngIf="!allPluginsDisabled" (click)="onDisableAll()">{{ 'core.plugin.plugin_admin.disable_all' | translate }}</button>
     <button class="all-button" mat-raised-button color="primary" *ngIf="(installedPlugins | json) != '[]'" (click)="onSetSampleData()">SET SAMPLE DATA</button>
 </div>
 <mat-divider *ngIf="(installedPlugins | json) != '[]'"></mat-divider>
@@ -8,29 +8,29 @@
     <mat-card class="plugin-card" *ngFor="let plugin of installedPlugins">
         <mat-card-header>
             <mat-card-title>{{plugin.title}}</mat-card-title>
-            <mat-card-subtitle class="enabledText" *ngIf="plugin.enabled">{{ 'core.plugin_admin.plugin_admin.enabled' | translate }}</mat-card-subtitle>
-            <mat-card-subtitle class="warningText" *ngIf="!plugin.enabled">{{ 'core.plugin_admin.plugin_admin.disabled' | translate }}</mat-card-subtitle>
-            <mat-card-subtitle class="warningText" *ngIf="plugin.updateAvailable">{{ 'core.plugin_admin.plugin_admin.update_available' | translate }}</mat-card-subtitle>
-            <mat-card-subtitle class="warningText" *ngIf="plugin.class === 'unregistered'">{{ 'core.plugin_admin.plugin_admin.unregistered_plugin' | translate }}</mat-card-subtitle>
-            <mat-card-subtitle class="warningText" *ngIf="plugin.class === 'upload'">{{ 'core.plugin_admin.plugin_admin.uploaded_plugin' | translate }}</mat-card-subtitle>
+            <mat-card-subtitle class="enabledText" *ngIf="plugin.enabled">{{ 'core.plugin.plugin_admin.enabled' | translate }}</mat-card-subtitle>
+            <mat-card-subtitle class="warningText" *ngIf="!plugin.enabled">{{ 'core.plugin.plugin_admin.disabled' | translate }}</mat-card-subtitle>
+            <mat-card-subtitle class="warningText" *ngIf="plugin.updateAvailable">{{ 'core.plugin.plugin_admin.update_available' | translate }}</mat-card-subtitle>
+            <mat-card-subtitle class="warningText" *ngIf="plugin.class === 'unregistered'">{{ 'core.plugin.plugin_admin.unregistered_plugin' | translate }}</mat-card-subtitle>
+            <mat-card-subtitle class="warningText" *ngIf="plugin.class === 'upload'">{{ 'core.plugin.plugin_admin.uploaded_plugin' | translate }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
             <div *ngIf="plugin.description">{{plugin.description}}</div>
-            <div>{{ 'core.plugin_admin.plugin_admin.version' | translate:{'version':plugin.version} }}</div>
+            <div>{{ 'core.plugin.version' | translate:{'version':plugin.version} }}</div>
         </mat-card-content>
         <mat-card-actions class="rightJustifiedContainer">
-            <button mat-raised-button color="primary" *ngIf="plugin.enabled" (click)="onDisableDeletePlugin(plugin.name, 'disable')">{{ 'core.plugin_admin.plugin_admin.disable' | translate }}</button>
-            <button mat-raised-button color="primary" *ngIf="!plugin.enabled" (click)="onEnableUpdatePlugin(plugin.name, 'enable')">{{ 'core.plugin_admin.plugin_admin.enable' | translate }}</button>
-            <button mat-raised-button color="primary" *ngIf="plugin.updateAvailable" (click)="onEnableUpdatePlugin(plugin.name, 'update')">{{ 'core.plugin_admin.plugin_admin.update' | translate }}</button>
-            <button mat-raised-button color="primary" *ngIf="plugin.class === 'unregistered'" (click)="onEnableUpdatePlugin(plugin.name, 'update')">{{ 'core.plugin_admin.plugin_admin.update' | translate }}</button>
-            <button mat-raised-button color="primary" (click)="onDisableDeletePlugin(plugin.name, 'delete')">{{ 'core.plugin_admin.plugin_admin.delete' | translate }}</button>
+            <button mat-raised-button color="primary" *ngIf="plugin.enabled" (click)="onDisableDeletePlugin(plugin.name, 'disable')">{{ 'core.plugin.plugin_admin.disable' | translate }}</button>
+            <button mat-raised-button color="primary" *ngIf="!plugin.enabled" (click)="onEnableUpdatePlugin(plugin.name, 'enable')">{{ 'core.plugin.plugin_admin.enable' | translate }}</button>
+            <button mat-raised-button color="primary" *ngIf="plugin.updateAvailable" (click)="onEnableUpdatePlugin(plugin.name, 'update')">{{ 'core.plugin.plugin_admin.update' | translate }}</button>
+            <button mat-raised-button color="primary" *ngIf="plugin.class === 'unregistered'" (click)="onEnableUpdatePlugin(plugin.name, 'update')">{{ 'core.plugin.plugin_admin.update' | translate }}</button>
+            <button mat-raised-button color="primary" (click)="onDisableDeletePlugin(plugin.name, 'delete')">{{ 'core.plugin.plugin_admin.delete' | translate }}</button>
         </mat-card-actions>
     </mat-card>
 </ng-container>
 <ng-container *ngIf="(installedPlugins | json) == '[]'">
     <mat-card class="plugin-card">
         <mat-card-content>
-            <div>{{ 'core.plugin_admin.plugin_admin.no_plugins_installed' | translate }}</div>
+            <div>{{ 'core.plugin.plugin_admin.no_plugins_installed' | translate }}</div>
         </mat-card-content>
     </mat-card>
 </ng-container>

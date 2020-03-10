@@ -64,25 +64,25 @@ export class PluginInstallerComponent {
     }
 
     setTranslations() {
-        this.translate.get('core.plugin_admin.plugin-installer.install_success_response').subscribe((res: string) => {
+        this.translate.get('core.plugin.plugin_installer.install_success_response').subscribe((res: string) => {
             this.successResponse = res;
         });
-        this.translate.get('core.plugin_admin.plugin-installer.install_error_response1').subscribe((res: string) => {
+        this.translate.get('core.plugin.plugin_installer.install_error_response1').subscribe((res: string) => {
             this.errorResponse['errorRes1'] = res;
         });
-        this.translate.get('core.plugin_admin.plugin-installer.install_error_response2').subscribe((res: string) => {
+        this.translate.get('core.plugin.plugin_installer.install_error_response2').subscribe((res: string) => {
             this.errorResponse['errorRes2'] = res;
         });
-        this.translate.get('core.plugin_admin.plugin-installer.install_error_response3').subscribe((res: string) => {
+        this.translate.get('core.plugin.plugin_installer.install_error_response3').subscribe((res: string) => {
             this.errorResponse['errorRes3'] = res;
         });
-        this.translate.get('core.plugin_admin.plugin-installer.install_error_response4').subscribe((res: string) => {
+        this.translate.get('core.plugin.plugin_installer.install_error_response4').subscribe((res: string) => {
             this.errorResponse['errorRes4'] = res;
         });
-        this.translate.get('core.plugin_admin.plugin-installer.install_error_response5').subscribe((res: string) => {
+        this.translate.get('core.plugin.plugin_installer.install_error_response5').subscribe((res: string) => {
             this.errorResponse['errorRes5'] = res;
         });
-        this.translate.get('core.plugin_admin.plugin-installer.install_error_response6').subscribe((res: string) => {
+        this.translate.get('core.plugin.plugin_installer.install_error_response6').subscribe((res: string) => {
             this.errorResponse['errorRes6'] = res;
         });
     }

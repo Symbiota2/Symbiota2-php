@@ -1,0 +1,69 @@
+<div [formGroup]="parent">
+    <div class="userMetadataContainer" formGroupName="user_metadata">
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.user_metadata.first_name_box' | translate }}" formControlName="firstName" maxlength="45">
+            <div class="error-text" *ngIf="firstNameRequired">
+                {{ 'core.user.blank_error' | translate }}
+            </div>
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.user_metadata.middle_initial_box' | translate }}" formControlName="middleInitial" maxlength="2">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.user_metadata.last_name_box' | translate }}" formControlName="lastName" maxlength="45">
+            <div class="error-text" *ngIf="lastNameRequired">
+                {{ 'core.user.blank_error' | translate }}
+            </div>
+        </mat-form-field>
+        <mat-form-field>
+            <input type="email" matInput placeholder="{{ 'core.user.user_metadata.email_address_box' | translate }}" email formControlName="email" maxlength="100">
+            <div class="error-text" *ngIf="emailRequired">
+                {{ 'core.user.blank_error' | translate }}
+            </div>
+            <div class="error-text" *ngIf="emailInvalid">
+                {{ 'core.user.user_metadata.email_invalid_error' | translate }}
+            </div>
+            <div class="error-text" *ngIf="emailCheckingEmail">
+                {{ 'core.user.user_metadata.email_checking' | translate }}
+            </div>
+            <div class="error-text" *ngIf="emailEmailAlreadyUsed">
+                {{ 'core.user.user_metadata.email_registered_error' | translate }}
+            </div>
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.user_metadata.title_box' | translate }}" formControlName="title" maxlength="150">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.user_metadata.institution_box' | translate }}" formControlName="institution" maxlength="200">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.user_metadata.department_box' | translate }}" formControlName="department" maxlength="200">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.user_metadata.street_address_box' | translate }}" formControlName="address" maxlength="255">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.user_metadata.city_box' | translate }}" formControlName="city" maxlength="100">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.user_metadata.state_box' | translate }}" formControlName="state" maxlength="50">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.user_metadata.zip_code_box' | translate }}" formControlName="zip" maxlength="15">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.user_metadata.country_box' | translate }}" formControlName="country" maxlength="50">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="{{ 'core.user.user_metadata.url_box' | translate }}" formControlName="url" maxlength="400">
+        </mat-form-field>
+        <mat-form-field>
+            <textarea matInput placeholder="{{ 'core.user.user_metadata.biography_box' | translate }}" formControlName="biography" #biography maxlength="1500"></textarea>
+            <mat-hint align="end">{{ biography.value?.length }} / 1500</mat-hint>
+        </mat-form-field>
+        <mat-checkbox (change)="setIsPublicValue($event)">
+            {{ 'core.user.user_metadata.is_public_text' | translate }}
+        </mat-checkbox>
+        <input type="hidden" formControlName="isPublic">
+    </div>
+</div>

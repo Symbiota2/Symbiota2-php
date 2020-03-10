@@ -1,16 +1,16 @@
 <mat-card class="plugin-card">
     <form>
-        {{ 'core.plugin_admin.plugin-installer.to_install_plugin_not_on_registry' | translate }}:<br />
+        {{ 'core.plugin.plugin_installer.to_install_plugin_not_on_registry' | translate }}:<br />
         <mat-form-field>
-            <input type="text" matInput placeholder="{{ 'core.plugin_admin.plugin-installer.enter_url_for_plugin' | translate }}" name="pluginurl" [(ngModel)]="pluginUploadUrl" (change)="verifyPluginUrl($event)">
+            <input type="text" matInput placeholder="{{ 'core.plugin.plugin_installer.enter_url_for_plugin' | translate }}" name="pluginurl" [(ngModel)]="pluginUploadUrl" (change)="verifyPluginUrl($event)">
         </mat-form-field>
         <br />
-        {{ 'core.plugin_admin.plugin-installer.or' | translate }}
+        {{ 'core.plugin.plugin_installer.or' | translate }}
         <br />
         <div class="fileUploadDiv">
             <button *ngIf="!pluginUploadFile" mat-raised-button color="primary" (click)="onFileUploadClick()">
                 <mat-icon>folder</mat-icon>
-                {{ 'core.plugin_admin.plugin-installer.click_to_upload' | translate }}
+                {{ 'core.plugin.plugin_installer.click_to_upload' | translate }}
             </button>
             <div *ngIf="pluginUploadFileName">
                 <span>{{pluginUploadFileName}}</span>
@@ -22,7 +22,7 @@
         <input #fileUpload type="file" class="fileupload" name="pluginfile" (change)="verifyPluginFile($event)">
         <br />
         <mat-card-actions class="rightJustifiedContainer">
-            <button mat-raised-button color="primary" [disabled]="pluginUploadFormDisabled" (click)="installPlugin()">{{ 'core.plugin_admin.plugin-installer.install_button' | translate }}</button>
+            <button mat-raised-button color="primary" [disabled]="pluginUploadFormDisabled" (click)="installPlugin()">{{ 'core.plugin.plugin_installer.install_button' | translate }}</button>
         </mat-card-actions>
     </form>
 </mat-card>
@@ -34,17 +34,17 @@
         </mat-card-header>
         <mat-card-content>
             <div *ngIf="plugin.description">{{plugin.description}}</div>
-            <div>{{ 'core.plugin_admin.plugin_admin.version' | translate:{'version':plugin.version} }}</div>
+            <div>{{ 'core.plugin.version' | translate:{'version':plugin.version} }}</div>
         </mat-card-content>
         <mat-card-actions class="rightJustifiedContainer">
-            <button mat-raised-button color="primary" *ngIf="!plugin.enabled" (click)="onInstallRegisteredPlugin(plugin.name)">{{ 'core.plugin_admin.plugin-installer.install_button' | translate }}</button>
+            <button mat-raised-button color="primary" *ngIf="!plugin.enabled" (click)="onInstallRegisteredPlugin(plugin.name)">{{ 'core.plugin.plugin_installer.install_button' | translate }}</button>
         </mat-card-actions>
     </mat-card>
 </ng-container>
 <ng-container *ngIf="(availablePlugins | json) == '[]'">
     <mat-card class="plugin-card">
         <mat-card-content>
-            <div>{{ 'core.plugin_admin.plugin-installer.no_registered_plugins_available' | translate }}</div>
+            <div>{{ 'core.plugin.plugin_installer.no_registered_plugins_available' | translate }}</div>
         </mat-card-content>
     </mat-card>
 </ng-container>
