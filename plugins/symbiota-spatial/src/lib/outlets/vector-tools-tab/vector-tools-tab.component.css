@@ -17,6 +17,8 @@
 
 .buffer-input {
     width: 50px;
+    padding: initial;
+    display: initial;
 }
 
 .top-div-child {
