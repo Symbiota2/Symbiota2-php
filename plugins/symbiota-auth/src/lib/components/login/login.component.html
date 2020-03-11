@@ -1,23 +1,38 @@
 <section class="login-form">
     <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #loginForm=ngForm>
-        <mat-form-field>
-            <input type="text" matInput ngModel placeholder="{{ 'symbiota-auth.login.login_box' | translate }}" name="username" #usernameInput="ngModel" maxlength="45" />
-            <mat-error *ngIf="usernameInput.invalid">{{ 'symbiota-auth.login.login_error' | translate }}</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-            <input type="password" matInput ngModel placeholder="{{ 'symbiota-auth.login.password_box' | translate }}" name="password" #passwordInput="ngModel" minlength="6" />
-            <mat-error *ngIf="passwordInput.invalid">{{ 'symbiota-auth.login.password_error' | translate }}</mat-error>
-        </mat-form-field>
+        <div class="usernameFormElement">
+            <label>
+                {{ 'symbiota-auth.login.login_box' | translate }}
+                <input type="text" ngModel class="usernameInputBox" name="username" #usernameInput="ngModel" maxlength="45" />
+            </label>
+            <div class="error-text" *ngIf="usernameInput.invalid">
+                {{ 'symbiota-auth.login.login_error' | translate }}
+            </div>
+        </div>
+        <div class="passwordFormElement">
+            <label>
+                {{ 'symbiota-auth.login.password_box' | translate }}
+                <input type="password" ngModel class="passwordInputBox" name="password" #passwordInput="ngModel" minlength="6" />
+            </label>
+            <div class="error-text" *ngIf="passwordInput.invalid">
+                {{ 'symbiota-auth.login.password_error' | translate }}
+            </div>
+        </div>
         <mat-checkbox name="maintainLogin" ngModel (change)="setMaintainLogin($event)">{{ 'symbiota-auth.login.remember_me' | translate }}</mat-checkbox>
         <button mat-raised-button color="primary" (click)="onLogin(loginForm)">{{ 'symbiota-auth.login.login_button' | translate }}</button>
         <a class="helper-link" (click)="noAccount()">{{ 'symbiota-auth.login.no_account_text' | translate }}</a>
         <a class="helper-link" (click)="onResetPassword(loginForm)">{{ 'symbiota-auth.login.cant_remember_password' | translate }}</a>
         <a class="helper-link" (click)="toggleRetrieveLogin()">{{ 'symbiota-auth.login.cant_remember_login' | translate }}</a>
         <ng-container *ngIf="show">
-            <mat-form-field>
-                <input type="email" matInput ngModel placeholder="{{ 'symbiota-auth.login.email_box' | translate }}" name="email" #emailInput="ngModel" email required />
-                <mat-error *ngIf="emailInput.invalid">{{ 'symbiota-auth.login.email_error' | translate }}</mat-error>
-            </mat-form-field>
+            <div class="emailFormElement">
+                <label>
+                    {{ 'symbiota-auth.login.email_box' | translate }}
+                    <input type="email" ngModel class="emailInputBox" name="email" #emailInput="ngModel" email required />
+                </label>
+                <div class="error-text" *ngIf="emailInput.invalid">
+                    {{ 'symbiota-auth.login.email_error' | translate }}
+                </div>
+            </div>
             <button mat-raised-button color="primary" (click)="onRetrieveLogin(loginForm)">{{ 'symbiota-auth.login.retrieve_login_button' | translate }}</button>
         </ng-container>
     </form>

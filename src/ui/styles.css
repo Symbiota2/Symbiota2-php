@@ -1,4 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
 @import "indigo-green-theme.css";
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
@@ -7,7 +6,27 @@ body {
     height: 100%;
     margin: 0;
     font-family: Verdana, Geneva, sans-serif;
+    -webkit-font-smoothing: antialiased;
     background-color: #91BDB7;
+}
+
+input[type=text],
+input[type=email],
+input[type=number],
+input[type=password],
+textarea {
+    display: block;
+    background: #fff;
+    font-size: 13px;
+    padding: 6px 30px 6px 10px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+label {
+    font-size: 13px;
+    line-height: 1.5;
+    font-weight: bold;
+    display: block;
 }
 
 fieldset {
@@ -34,13 +53,17 @@ legend {
 }
 
 .error-text {
-    background: #B52D30;
-    color: #fff;
     font-weight: 500;
     font-size: 12px;
     text-transform: uppercase;
-    border-radius: 0 0 3px 3px;
     line-height: 1;
+    background: #B52D30;
+    color: #fff;
+    border-radius: 0 0 3px 3px;
     padding: 6px 10px;
-    margin-top: -1px;
+}
+
+.input-hint-text {
+    line-height: 1.1em;
+    font-size: 75%;
 }

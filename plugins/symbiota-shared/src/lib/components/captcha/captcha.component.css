@@ -4,10 +4,20 @@ canvas {
     width: 400px;
 }
 
-mat-form-field {
-    width: 400px;
-}
-
 .captchaContainer {
     margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.human_entryFormElement {
+    margin-bottom: 10px;
+    clear: both;
+}
+
+.human_entryInputBox {
+    width: 200px;
 }

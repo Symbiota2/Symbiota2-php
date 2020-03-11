@@ -1,26 +1,42 @@
 <section class="signupContainer">
     <form [formGroup]="createaccountForm" (submit)="onSignup(createaccountForm)" class="signupForm">
-        <div formGroupName="username_group">
-            <mat-form-field>
-                <input type="text" matInput placeholder="{{ 'core.user.signup.login_box' | translate }}" formControlName="username" maxlength="45">
-                <div class="error-text" *ngIf="usernameRequired">
-                    {{ 'core.user.blank_error' | translate }}
-                </div>
-                <div class="error-text" *ngIf="usernameSpaces">
-                    {{ 'core.user.signup.login_spaces_error' | translate }}
-                </div>
-                <div class="error-text" *ngIf="usernameCheckingLogin">
-                    {{ 'core.user.signup.login_checking' | translate }}
-                </div>
-                <div class="error-text" *ngIf="usernameLoginAlreadyUsed">
-                    {{ 'core.user.signup.login_used_error' | translate }}
-                </div>
-            </mat-form-field>
+        <div class="topRow">
+            <mat-card class="credentialsSection">
+                <mat-card-content class="credentialsContainer">
+                    <div formGroupName="username_group">
+                        <div class="usernameFormElement">
+                            <label>
+                                {{ 'core.user.signup.login_box' | translate }}
+                                <input type="text" class="usernameInputBox" formControlName="username" maxlength="45">
+                            </label>
+                            <div class="error-text" *ngIf="usernameRequired">
+                                {{ 'core.user.blank_error' | translate }}
+                            </div>
+                            <div class="error-text" *ngIf="usernameSpaces">
+                                {{ 'core.user.signup.login_spaces_error' | translate }}
+                            </div>
+                            <div class="error-text" *ngIf="usernameCheckingLogin">
+                                {{ 'core.user.signup.login_checking' | translate }}
+                            </div>
+                            <div class="error-text" *ngIf="usernameLoginAlreadyUsed">
+                                {{ 'core.user.signup.login_used_error' | translate }}
+                            </div>
+                        </div>
+                    </div>
+                    <app-user-password class="signupForm" [parent]="createaccountForm" [reset]="false"></app-user-password>
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="metadataSection">
+                <mat-card-content class="metadataContainer">
+                    <app-user-metadata [parent]="createaccountForm"></app-user-metadata>
+                </mat-card-content>
+            </mat-card>
         </div>
-        <app-user-password class="signupForm" [parent]="createaccountForm" [reset]="false"></app-user-password>
-        <app-user-metadata [parent]="createaccountForm"></app-user-metadata>
-        <symbiota-shared-captcha [parent]="createaccountForm"></symbiota-shared-captcha>
-        <button type="submit" mat-raised-button color="primary" [disabled]="createaccountForm.invalid">{{ 'core.user.signup.create_profile_button' | translate }}
-        </button>
+        <mat-card class="captchaSection">
+            <mat-card-content class="captchaContainer">
+                <symbiota-shared-captcha [parent]="createaccountForm"></symbiota-shared-captcha>
+                <button type="submit" mat-raised-button color="primary" [disabled]="createaccountForm.invalid">{{ 'core.user.signup.create_profile_button' | translate }}</button>
+            </mat-card-content>
+        </mat-card>
     </form>
 </section>

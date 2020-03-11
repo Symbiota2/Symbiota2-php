@@ -1,4 +1,8 @@
-mat-form-field {
+.usernameFormElement, .passwordFormElement, .emailFormElement {
+    margin-bottom: 10px;
+}
+
+.usernameInputBox, .passwordInputBox, .emailInputBox {
     width: 300px;
 }
 

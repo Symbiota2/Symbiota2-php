@@ -1,12 +1,138 @@
-mat-form-field {
+.userMetadataContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.firstNameFormElement {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.firstNameInputBox {
+    width: 200px;
+}
+
+.middleInitialFormElement {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.middleInitialInputBox {
+    width: 35px;
+}
+
+.lastNameFormElement {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.lastNameInputBox {
+    width: 200px;
+}
+
+.emailFormElement {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.emailInputBox {
     width: 400px;
 }
 
-.userMetadataContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
+.titleFormElement {
     margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.titleInputBox {
+    width: 75px;
+}
+
+.institutionFormElement {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.institutionInputBox {
+    width: 250px;
+}
+
+.departmentFormElement {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.departmentInputBox {
+    width: 150px;
+}
+
+.addressFormElement {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.addressInputBox {
+    width: 300px;
+}
+
+.cityFormElement {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.cityInputBox {
+    width: 150px;
+}
+
+.stateFormElement {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.stateInputBox {
+    width: 150px;
+}
+
+.zipFormElement {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.zipInputBox {
+    width: 50px;
+}
+
+.countryFormElement {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.countryInputBox {
+    width: 100px;
+}
+
+.urlFormElement {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.urlInputBox {
+    width: 400px;
+}
+
+.biographyFormElement {
+    margin-bottom: 10px;
+    margin-right: 10px;
+    clear: both;
+}
+
+.biographyInputBox {
+    width: 400px;
+    resize: vertical;
+}
+
+.isPublicFormElement {
+    margin-bottom: 10px;
+    margin-right: 10px;
 }

@@ -1,12 +1,51 @@
-mat-form-field {
-    width: 400px;
+.usernameFormElement {
+    margin-bottom: 10px;
 }
 
-.signupForm {
+.usernameInputBox {
+    width: 250px;
+}
+
+.topRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.credentialsSection {
+    margin: 10px;
+    min-width: 295px;
+    height: 250px;
+    display: block;
+}
+
+.credentialsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
+
+.metadataSection {
+    display: block;
+    min-width: 375px;
+    margin: 10px;
+}
+
+.metadataContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+
+.captchaSection {
+    margin: 15px;
+    clear: both;
+}
+
+.captchaContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     align-content: center;
-    margin-bottom: 10px;
 }
