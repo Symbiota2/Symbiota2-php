@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormControl, FormGroup, Validators, FormBuilder} from '@angular/forms';
+import {FormControl, Validators, FormBuilder} from '@angular/forms';
 
 import {UserService} from '../../services/user.service';
 import {CaptchaValidators} from 'symbiota-shared';
@@ -23,24 +23,24 @@ export class SignupComponent {
 
     createaccountForm = this.fb.group({
         username_group: this.fb.group({
-            username: ['', [Validators.required, SignupComponent.checkLoginSpaces.bind(this)], [this.checkUsername.bind(this)]]
+            username: [null, [Validators.required, SignupComponent.checkLoginSpaces.bind(this)], [this.checkUsername.bind(this)]]
         }),
         user_metadata: this.fb.group({
-            firstName: ['', [Validators.required]],
-            middleInitial: ['', null],
-            lastName: ['', [Validators.required]],
-            email: ['', [Validators.required, Validators.email], [this.userMetadataValidator.checkEmail.bind(this)] ],
-            title: ['', null],
-            institution: ['', null],
-            department: ['', null],
-            address: ['', null],
-            city: ['', null],
-            state: ['', null],
-            zip: ['', null],
-            country: ['', null],
-            url: ['', null],
-            biography: ['', null],
-            isPublic: ['', null]
+            firstName: [null, [Validators.required]],
+            middleInitial: [null, null],
+            lastName: [null, [Validators.required]],
+            email: [null, [Validators.required, Validators.email], [this.userMetadataValidator.checkEmail.bind(this)] ],
+            title: [null, null],
+            institution: [null, null],
+            department: [null, null],
+            address: [null, null],
+            city: [null, null],
+            state: [null, null],
+            zip: [null, null],
+            country: [null, null],
+            url: [null, null],
+            biography: [null, null],
+            isPublic: [0, null]
         }),
         user_password: this.fb.group({
             password: ['', [Validators.required, Validators.minLength(6)]],
@@ -59,31 +59,17 @@ export class SignupComponent {
         return null;
     }
 
-    onSignup(form: FormGroup) {
-        if (form.invalid) {
+    onSignup() {
+        if (this.createaccountForm.invalid) {
             return;
         }
-        this.spinnerService.show();
-        this.userService.createUser(
-            form.value.username,
-            form.value.password,
-            form.value.retypedPassword,
-            form.value.firstName,
-            form.value.middleInitial,
-            form.value.lastName,
-            form.value.email,
-            form.value.title,
-            form.value.institution,
-            form.value.department,
-            form.value.address,
-            form.value.city,
-            form.value.state,
-            form.value.zip,
-            form.value.country,
-            form.value.url,
-            form.value.biography,
-            form.value.isPublic
+        const formData = Object.assign({},
+            this.createaccountForm.get('username_group').value,
+            this.createaccountForm.get('user_metadata').value,
+            this.createaccountForm.get('user_password').value
         );
+        this.spinnerService.show();
+        this.userService.createUser(formData);
     }
 
     get usernameRequired() {
@@ -123,12 +109,12 @@ export class SignupComponent {
         return new Promise(resolve => {
             this.debouncer = setTimeout(() => {
                 this.userService.checkUsername(control.value).subscribe((res) => {
-                    if (res.available) {
+                    if (res.in_use) {
                         resolve({'LoginAlreadyUsed': true});
                     } else {
                         resolve(null);
                     }
-                }, (err) => {
+                }, () => {
                     resolve(null);
                 });
             }, 1000);

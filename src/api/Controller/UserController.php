@@ -187,17 +187,25 @@ class UserController extends AbstractController
      */
     public function checkUsername($username)
     {
-        $repository = $this->em->getRepository('Core\Entity\Users');
-        $result = $repository->findBy(['username' => $username]);
+        $in_use = false;
+        $userId = 0;
 
-        if (!$result) {
-            return new JsonResponse([
-                'available' => false
-            ]);
+        $token = $this->tokenStorage->getToken();
+        $user = $token->getUser();
+
+        if ($token && $user instanceof Users) {
+            $userId = $user->getId();
+        }
+
+        $repository = $this->em->getRepository('Core\Entity\Users');
+        $result = $repository->findOneBy(['username' => $username]);
+
+        if ($result && ($result->getId() !== $userId)) {
+            $in_use = true;
         }
 
         return new JsonResponse([
-            'available' => true
+            'in_use' => $in_use
         ]);
     }
 
@@ -210,17 +218,25 @@ class UserController extends AbstractController
      */
     public function checkEmail($email)
     {
-        $repository = $this->em->getRepository('Core\Entity\Users');
-        $result = $repository->findBy(['email' => $email]);
+        $in_use = false;
+        $userId = 0;
 
-        if (!$result) {
-            return new JsonResponse([
-                'available' => false
-            ]);
+        $token = $this->tokenStorage->getToken();
+        $user = $token->getUser();
+
+        if ($token && $user instanceof Users) {
+            $userId = $user->getId();
+        }
+
+        $repository = $this->em->getRepository('Core\Entity\Users');
+        $result = $repository->findOneBy(['email' => $email]);
+
+        if ($result && ($result->getId() !== $userId)) {
+            $in_use = true;
         }
 
         return new JsonResponse([
-            'available' => true
+            'in_use' => $in_use
         ]);
     }
 }

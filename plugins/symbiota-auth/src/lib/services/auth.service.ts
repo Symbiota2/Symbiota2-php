@@ -30,7 +30,9 @@ export interface RetrieveLogin {
     email: string;
 }
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class AuthService {
     private subject = new BehaviorSubject<CurrentUser>(undefined);
     private authenticationComplete = false;
@@ -44,7 +46,7 @@ export class AuthService {
         filter(user => !!user)
     );
     maintainLogin$: Observable<number> = this.user$.pipe(
-        map(user => user.maintainLogin)
+        map(user => (user.maintainLogin ? user.maintainLogin : 0))
     );
     tokenExpire$: Observable<number> = this.user$.pipe(
         map(user => user.tokenExpire)
@@ -57,6 +59,9 @@ export class AuthService {
     );
     isLoggedOut$: Observable<boolean> = this.isAuthenticated$.pipe(
         map(isAuthenticated => !isAuthenticated)
+    );
+    currentUserId$: Observable<number> = this.user$.pipe(
+        map(user => user.id)
     );
 
     login_failed: string;
@@ -77,15 +82,8 @@ export class AuthService {
         private configService: ConfigurationService
     ) {
         this.spinnerService.show();
-        http.get<CurrentUser>('/api/users/authuser').subscribe(
-            user => {
-                this.subject.next(user ? user : ANONYMOUS_USER);
-                this.authenticationComplete = true;
-                this.spinnerService.hide();
-                // console.log(user);
-            }
-        );
-        this.configService.selectedLanguageValue.subscribe(value => {
+        this.authenticateCurrentUser();
+        this.configService.selectedLanguageValue.subscribe(() => {
             this.setTranslations();
         });
     }
@@ -111,6 +109,16 @@ export class AuthService {
         });
     }
 
+    authenticateCurrentUser() {
+        this.http.get<CurrentUser>('/api/users/authuser').subscribe(
+            user => {
+                this.subject.next(user ? user : ANONYMOUS_USER);
+                this.authenticationComplete = true;
+                this.spinnerService.hide();
+            }
+        );
+    }
+
     login(username: string, password: string, maintainLogin: number, redirect: string) {
         const authData: AuthData = { username: username, password: password, maintainLogin: maintainLogin };
         clearTimeout(this.logoutTimer);
@@ -124,12 +132,11 @@ export class AuthService {
                 this.subject.next(user);
                 this.authenticationComplete = true;
                 if (redirect) {
-                    this.router.navigate([redirect]);
+                    this.router.navigate([redirect]).then(() => {});
                 }
                 this.spinnerService.hide();
-                // console.log(user);
             },
-            error => {
+            () => {
                 this.spinnerService.hide();
                 this.alertService.showErrorSnackbar(
                     this.login_failed,
@@ -142,19 +149,20 @@ export class AuthService {
 
     logout() {
         this.spinnerService.show();
-        this.router.navigate(['/']);
-        this.http.get('/api/logout').subscribe(
-            () => {
-                this.maintainLogin$ = undefined;
-                this.username = '';
-                this.password = '';
-                clearTimeout(this.logoutTimer);
-                clearTimeout(this.warningTimer);
-                this.subject.next(ANONYMOUS_USER);
-                this.authenticationComplete = false;
-                this.spinnerService.hide();
-            }
-        );
+        this.router.navigate(['/']).then(() => {
+            this.http.get('/api/logout').subscribe(
+                () => {
+                    this.maintainLogin$ = undefined;
+                    this.username = '';
+                    this.password = '';
+                    clearTimeout(this.logoutTimer);
+                    clearTimeout(this.warningTimer);
+                    this.subject.next(ANONYMOUS_USER);
+                    this.authenticationComplete = false;
+                    this.spinnerService.hide();
+                }
+            );
+        });
     }
 
     resetPassword(username: string) {
@@ -202,7 +210,6 @@ export class AuthService {
     }
 
     setWarningTimer(duration: number, dialog: any) {
-        // console.log('Setting timer: ' + duration);
         if (this.username && this.password) {
             this.warningTimer = setTimeout(() => {
                 this.warningDialog = this.dialog.open(dialog, {
@@ -214,7 +221,6 @@ export class AuthService {
     }
 
     setLogoutTimer(duration: number) {
-        // console.log('Setting timer: ' + duration);
         this.logoutTimer = setTimeout(() => {
             if (this.warningDialog) {
                 this.warningDialog.close();
@@ -227,6 +233,14 @@ export class AuthService {
                 5000
             );
         }, duration * 1000);
+    }
+
+    getCurrentId() {
+        let id = 0;
+        if (this.subject.getValue() && this.subject.getValue().id) {
+            id = this.subject.getValue().id;
+        }
+        return id;
     }
 
     getCurrentPermissions() {
@@ -259,7 +273,7 @@ export class AuthService {
                 return true;
             } else {
                 const currentPermKeys = Object.keys(currentPermissions);
-                permissions.forEach((perm, index) => {
+                permissions.forEach((perm) => {
                     if (typeof perm === 'string') {
                         if (currentPermKeys.includes(perm)) {
                             validated = true;
@@ -301,7 +315,7 @@ export class AuthService {
                 return;
             } else {
                 const currentPermKeys = Object.keys(currentPermissions);
-                permissions.forEach((perm, index) => {
+                permissions.forEach((perm) => {
                     if (typeof perm === 'string') {
                         if (currentPermKeys.includes(perm)) {
                             accessGranted = true;
@@ -319,7 +333,7 @@ export class AuthService {
                 });
             }
             if (accessGranted === false) {
-                this.router.navigate(['/']);
+                this.router.navigate(['/']).then(() => {});
             }
         } else {
             const routerSub = this.router.events.subscribe(val => {
@@ -327,9 +341,10 @@ export class AuthService {
                     this.redirectUrl = val.url.toString();
                 }
             });
-            this.router.navigate(['/']);
-            this.loginComponentService.openLoginDialog(this.redirectUrl);
-            routerSub.unsubscribe();
+            this.router.navigate(['/']).then(() => {
+                this.loginComponentService.openLoginDialog(this.redirectUrl);
+                routerSub.unsubscribe();
+            });
         }
     }
 }

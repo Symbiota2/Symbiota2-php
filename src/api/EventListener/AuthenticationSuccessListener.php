@@ -26,7 +26,7 @@ class AuthenticationSuccessListener
         $user = $event->getUser();
         $userId = $user->getId();
         $request = json_decode($this->requestStack->getCurrentRequest()->getContent(),true);
-        $maintainLogin = (array_key_exists('maintainLogin', $request)?$request['maintainLogin']:0);
+        $maintainLogin = (array_key_exists('maintainLogin', $request) ? $request['maintainLogin'] : 0);
 
         if (!$user instanceof Users) {
             return;

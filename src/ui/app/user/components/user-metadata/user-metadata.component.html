@@ -105,7 +105,7 @@
         </div>
         <div class="isPublicFormElement">
             <label>
-                <input type="checkbox" (change)="setIsPublicValue($event)" /> {{ 'core.user.user_metadata.is_public_text' | translate }}
+                <input type="checkbox" (change)="setIsPublicValue($event)" [checked]="isPublicValue" /> {{ 'core.user.user_metadata.is_public_text' | translate }}
             </label>
             <input type="hidden" formControlName="isPublic">
         </div>

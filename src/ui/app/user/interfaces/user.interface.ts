@@ -21,7 +21,6 @@ export interface NewUser extends BaseUser {
     password: string;
     retypedPassword: string;
 }
-
 export interface CurrentUser {
     id: number;
     firstName: string;

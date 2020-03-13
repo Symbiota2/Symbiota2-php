@@ -86,7 +86,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @ORM\Column(name="uid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Groups({"get", "get-roles", "get-checklist-info", "SuperAdmin"})
+     * @Groups({"get-roles", "get-checklist-info"})
      */
     private $id;
 
@@ -122,7 +122,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=45)
-     * @Groups({"get", "get-roles", "get-checklist-info", "post", "SuperAdmin"})
+     * @Groups({"get-roles", "get-checklist-info", "post"})
      * @Assert\NotBlank(groups={"post"})
      * @Assert\Length(min=6, max=45, groups={"post"})
      */
@@ -267,7 +267,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=100)
-     * @Groups({"post", "put", "get_admin", "get-owner"})
+     * @Groups({"get", "post", "put", "get_admin", "get-owner"})
      * @Assert\NotBlank(groups={"post"})
      * @Assert\Email(groups={"post"})
      * @Assert\Length(max=100, groups={"post"})
@@ -305,7 +305,6 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var \DateTime|null
      *
      * @ORM\Column(name="lastlogindate", type="datetime", nullable=true)
-     * @Groups({"get"})
      */
     private $lastLoginDate;
 
@@ -313,7 +312,6 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var \DateTime
      *
      * @ORM\Column(name="InitialTimeStamp", type="datetime")
-     * @Groups({"get"})
      */
     private $initialTimestamp;
 
@@ -321,7 +319,6 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var \DateTime|null
      *
      * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
-     * @Groups({"get"})
      */
     private $modifiedTimestamp;
 
@@ -329,7 +326,6 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var int
      *
      * @ORM\Column(name="verified", type="integer")
-     * @Groups({"get"})
      */
     private $verified = 0;
 
@@ -344,14 +340,12 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var string|null
      *
      * @ORM\Column(name="verification_token", type="string", length=40, nullable=true)
-     * @Groups({"get"})
      */
     private $verificationToken;
 
     /**
      * @ORM\OneToMany(targetEntity="Core\Entity\UserRoles", mappedBy="userId")
      * @ApiSubresource()
-     * @Groups({"get"})
      */
     private $permissions;
 
@@ -363,13 +357,11 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
 
     /**
      * @var int|null
-     * @Groups({"get"})
      */
     private $maintainLogin = 0;
 
     /**
      * @var int|null
-     * @Groups({"get"})
      */
     private $tokenExpiration = 0;
 

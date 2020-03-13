@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -14,9 +15,12 @@ import {NewUser} from '../interfaces/user.interface';
     providedIn: 'root'
 })
 export class UserService {
-
     create_confirmation: string;
     create_error: string;
+    reset_password_success: string;
+    save_edits_confirmation: string;
+    save_edits_error: string;
+    errorResponse = {};
 
     constructor(
         private http: HttpClient,
@@ -26,7 +30,7 @@ export class UserService {
         private translate: TranslateService,
         private configService: ConfigurationService
     ) {
-        this.configService.selectedLanguageValue.subscribe(value => {
+        this.configService.selectedLanguageValue.subscribe(() => {
             this.setTranslations();
         });
     }
@@ -38,59 +42,33 @@ export class UserService {
         this.translate.get('core.user.service.create_error').subscribe((res: string) => {
             this.create_error = res;
         });
+        this.translate.get('core.user.service.reset_password_success').subscribe((res: string) => {
+            this.reset_password_success = res;
+        });
+        this.translate.get('core.user.service.save_edits_success').subscribe((res: string) => {
+            this.save_edits_confirmation = res;
+        });
+        this.translate.get('core.user.service.save_edits_error').subscribe((res: string) => {
+            this.save_edits_error = res;
+        });
+        this.translate.get('core.user.service.reset_password_error_response1').subscribe((res: string) => {
+            this.errorResponse['errorRes1'] = res;
+        });
     }
 
-    createUser(
-        username: string,
-        password: string,
-        retypedPassword: string,
-        firstName: string,
-        middleInitial: string,
-        lastName: string,
-        email: string,
-        title: string,
-        institution: string,
-        department: string,
-        address: string,
-        city: string,
-        state: string,
-        zip: string,
-        country: string,
-        url: string,
-        biography: string,
-        isPublic: number
-    ) {
-        const userData: NewUser = {
-            username: username,
-            password: password,
-            retypedPassword: retypedPassword,
-            firstName: firstName,
-            middleInitial: middleInitial,
-            lastName: lastName,
-            email: email,
-            title: title,
-            institution: institution,
-            department: department,
-            address: address,
-            city: city,
-            state: state,
-            zip: zip,
-            country: country,
-            url: url,
-            biography: biography,
-            isPublic: isPublic
-        };
-        this.http.post('/api/users', userData).subscribe(
+    createUser(user: NewUser) {
+        this.http.post('/api/users', user).subscribe(
             () => {
                 this.spinnerService.hide();
-                this.router.navigate(['/']);
-                this.alertService.showSnackbar(
-                    this.create_confirmation,
-                    '',
-                    5000
-                );
+                this.router.navigate(['/']).then(() => {
+                    this.alertService.showSnackbar(
+                        this.create_confirmation,
+                        '',
+                        5000
+                    );
+                });
             },
-            error => {
+            () => {
                 this.spinnerService.hide();
                 this.alertService.showErrorSnackbar(
                     this.create_error,
@@ -99,6 +77,54 @@ export class UserService {
                 );
             }
         );
+    }
+
+    saveUserProfileEdits(data: any, id: number) {
+        this.http.put('/api/users/' + id, data).subscribe(
+            () => {
+                this.spinnerService.hide();
+                this.alertService.showSnackbar(
+                    this.save_edits_confirmation,
+                    '',
+                    5000
+                );
+            },
+            () => {
+                this.spinnerService.hide();
+                this.alertService.showErrorSnackbar(
+                    this.save_edits_error,
+                    '',
+                    5000
+                );
+            }
+        );
+    }
+
+    resetUserPassword(data: any, id: number) {
+        this.http.put('/api/users/' + id + '/changepassword', data).subscribe(
+            (res) => {
+                if(res > 0) {
+                    this.spinnerService.hide();
+                    const responseLabel = 'errorRes' + res;
+                    this.alertService.showErrorSnackbar(
+                        this.errorResponse[responseLabel],
+                        '',
+                        5000
+                    );
+                } else {
+                    this.spinnerService.hide();
+                    this.alertService.showSnackbar(
+                        this.reset_password_success,
+                        '',
+                        5000
+                    );
+                }
+            },
+        );
+    }
+
+    getUserById(id: number): Observable<any> {
+        return this.http.get<any>('/api/users/' + id);
     }
 
     checkUsername(username) {

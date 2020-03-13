@@ -1,6 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 
+import {BaseUser} from '../../interfaces/user.interface';
+
 @Component({
     selector: 'app-user-metadata',
     templateUrl: './user-metadata.component.html',
@@ -8,6 +10,7 @@ import {FormGroup} from '@angular/forms';
 })
 export class UserMetadataComponent {
     @Input() parent: FormGroup;
+    @Input() user: BaseUser;
 
     get firstNameRequired() {
         return (
@@ -52,6 +55,10 @@ export class UserMetadataComponent {
             this.parent.get('user_metadata.email').dirty &&
             !this.required('email')
         );
+    }
+
+    get isPublicValue() {
+        return this.parent.get('user_metadata.isPublic').value === 1;
     }
 
     setIsPublicValue(event) {

@@ -19,12 +19,12 @@ export class UserMetadataValidators {
         return new Promise(resolve => {
             this.debouncer = setTimeout(() => {
                 this.userService.checkEmail(control.value).subscribe((res) => {
-                    if (res.available) {
+                    if (res.in_use) {
                         resolve({'EmailAlreadyUsed': true});
                     } else {
                         resolve(null);
                     }
-                }, (err) => {
+                }, () => {
                     resolve(null);
                 });
             }, 1000);

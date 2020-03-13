@@ -1,7 +1,30 @@
-<section class="editProfileContainer">
+<section class="signupContainer">
     <form [formGroup]="editProfileForm" class="editProfileForm">
-        <app-user-metadata [parent]="editProfileForm"></app-user-metadata>
-        <button type="submit" mat-raised-button color="primary" [disabled]="editProfileForm.invalid">{{ 'core.user.edit_profile.save_edits_button' | translate }}
-        </button>
+        <div class="topRow">
+            <mat-card class="passwordResetSection">
+                <h3>{{ 'core.user.edit_profile.reset_password_button' | translate }}</h3>
+                <mat-card-content class="passwordResetContainer">
+                    <div formGroupName="oldPassword_group">
+                        <div class="oldPasswordFormElement">
+                            <label>
+                                {{ 'core.user.edit_profile.old_password_box' | translate }}
+                                <input type="password" class="oldPasswordInputBox" formControlName="oldPassword" />
+                            </label>
+                        </div>
+                    </div>
+                    <div formGroupName="user_password">
+                        <app-user-password class="signupForm" [parent]="editProfileForm" [reset]="true"></app-user-password>
+                    </div>
+                </mat-card-content>
+                <button type="button" mat-raised-button color="primary" (click)="onResetPassword()" [disabled]="resetPasswordErrors">{{ 'core.user.edit_profile.reset_password_button' | translate }}</button>
+            </mat-card>
+            <mat-card class="metadataSection">
+                <h3>Edit your profile {{ 'core.user.edit_profile.edit_profile_box_title' | translate }}</h3>
+                <mat-card-content class="metadataContainer">
+                    <app-user-metadata [parent]="editProfileForm"></app-user-metadata>
+                </mat-card-content>
+                <button type="button" mat-raised-button color="primary" (click)="onSaveEdits()" [disabled]="editProfileErrors">{{ 'core.user.edit_profile.save_edits_button' | translate }}</button>
+            </mat-card>
+        </div>
     </form>
 </section>

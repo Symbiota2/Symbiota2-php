@@ -1,12 +1,39 @@
-mat-form-field {
-    width: 400px;
+.oldPasswordFormElement {
+    margin-bottom: 10px;
 }
 
-.editProfileForm {
+.oldPasswordInputBox {
+    width: 250px;
+}
+
+.topRow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.passwordResetSection {
+    margin: 10px;
+    min-width: 295px;
+    display: block;
+}
+
+.passwordResetContainer {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    margin-bottom: 10px;
+    justify-content: left;
+}
+
+.metadataSection {
+    display: block;
+    min-width: 440px;
+    max-width: 600px;
+    margin: 10px;
+}
+
+.metadataContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
 }

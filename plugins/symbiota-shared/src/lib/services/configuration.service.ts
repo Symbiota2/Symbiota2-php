@@ -10,7 +10,6 @@ import {AlertService} from './alert.service';
     providedIn: 'root'
 })
 export class ConfigurationService {
-
     data: any;
     selectedLanguageSubject = new BehaviorSubject<string>('en');
     public readonly selectedLanguageValue: Observable<string> = this.selectedLanguageSubject.asObservable();

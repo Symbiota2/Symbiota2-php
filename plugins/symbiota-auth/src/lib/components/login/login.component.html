@@ -9,7 +9,7 @@
         <div class="passwordFormElement">
             <label>
                 {{ 'symbiota-auth.login.password_box' | translate }}
-                <input type="password" ngModel class="passwordInputBox" name="password" #passwordInput="ngModel" minlength="6" />
+                <input type="password" ngModel class="passwordInputBox" name="password" #passwordInput="ngModel" minlength="5" />
             </label>
         </div>
         <mat-checkbox name="maintainLogin" ngModel (change)="setMaintainLogin($event)">{{ 'symbiota-auth.login.remember_me' | translate }}</mat-checkbox>

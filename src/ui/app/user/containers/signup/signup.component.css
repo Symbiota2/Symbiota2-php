@@ -9,13 +9,13 @@
 .topRow {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
 }
 
 .credentialsSection {
     margin: 10px;
     min-width: 295px;
-    height: 250px;
     display: block;
 }
 
@@ -27,7 +27,8 @@
 
 .metadataSection {
     display: block;
-    min-width: 375px;
+    min-width: 440px;
+    max-width: 600px;
     margin: 10px;
 }
 

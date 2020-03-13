@@ -15,10 +15,8 @@ import {CurrentUser} from './user/interfaces/user.interface';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-    isLoggedIn$: Observable<boolean>;
-    isLoggedOut$: Observable<boolean>;
-    currentUser$: Observable<CurrentUser>;
     maintainLogin = 0;
+    tokenExpire = 0;
     selectedLanguage: string;
 
     constructor(
@@ -35,18 +33,12 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.isLoggedIn$ = this.authService.isAuthenticated$;
-        this.isLoggedOut$ = this.authService.isLoggedOut$;
-        this.currentUser$ = this.authService.user$;
-        this.authService.maintainLogin$.subscribe(
-            (val: number) => {
-                this.maintainLogin = val;
-            }
-        );
-        this.authService.tokenExpire$.subscribe(
-            (seconds: number) => {
-                if (!this.maintainLogin && seconds) {
-                    this.setSessionTimers(seconds);
+        this.authService.user$.subscribe(
+            (user: CurrentUser) => {
+                this.maintainLogin = user.maintainLogin;
+                this.tokenExpire = user.tokenExpire;
+                if (!this.maintainLogin && this.tokenExpire) {
+                    this.setSessionTimers(this.tokenExpire);
                 }
             }
         );
