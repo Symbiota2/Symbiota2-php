@@ -19,7 +19,7 @@
                 <button type="button" mat-raised-button color="primary" (click)="onResetPassword()" [disabled]="resetPasswordErrors">{{ 'core.user.edit_profile.reset_password_button' | translate }}</button>
             </mat-card>
             <mat-card class="metadataSection">
-                <h3>Edit your profile {{ 'core.user.edit_profile.edit_profile_box_title' | translate }}</h3>
+                <h3>{{ 'core.user.edit_profile.edit_profile_box_title' | translate }}</h3>
                 <mat-card-content class="metadataContainer">
                     <app-user-metadata [parent]="editProfileForm"></app-user-metadata>
                 </mat-card-content>
