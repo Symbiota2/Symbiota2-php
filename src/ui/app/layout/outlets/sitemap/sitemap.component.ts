@@ -1,9 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
 
 import {PluginComponentService} from 'symbiota-plugin';
 import {PluginLinkService} from 'symbiota-plugin';
 import {AuthService} from 'symbiota-auth';
+
+import {CorePermissions} from '../../../user/interfaces/permission.interface';
+import {LinkHook} from '../../../plugin/interfaces/link-hook.interface';
+import {ComponentHook} from '../../../plugin/interfaces/component-hook.interface';
 
 @Component({
     selector: 'app-sitemap',
@@ -11,15 +14,15 @@ import {AuthService} from 'symbiota-auth';
     styleUrls: ['./sitemap.component.css']
 })
 export class SitemapComponent implements OnInit {
-    currentPermissions$: Observable<object>;
+    currentPermissions: CorePermissions;
 
-    generalLinksArr = [];
-    portalAdminLinksArr = [];
-    dataManagementLinksArr = [];
+    generalLinksArr: LinkHook[];
+    portalAdminLinksArr: LinkHook[];
+    dataManagementLinksArr: LinkHook[];
 
-    generalComponentsArr = [];
-    portalAdminComponentsArr = [];
-    dataManagementComponentsArr = [];
+    generalComponentsArr: ComponentHook[];
+    portalAdminComponentsArr: ComponentHook[];
+    dataManagementComponentsArr: ComponentHook[];
 
     portalAdminLinks = [
         {
@@ -42,8 +45,7 @@ export class SitemapComponent implements OnInit {
         this.generalLinksArr = Object.assign([], this.linkService.getOutletLinks('sitemap-general'));
         this.generalLinksArr.sort((a, b) => a.index - b.index);
 
-        this.portalAdminLinksArr = Object.assign([], this.linkService.getOutletLinks('sitemap-portal-admin'));
-        this.portalAdminLinksArr = this.portalAdminLinksArr.concat(this.portalAdminLinks);
+        this.portalAdminLinksArr = Object.assign([], this.linkService.getOutletLinks('sitemap-portal-admin'), this.portalAdminLinks);
         this.portalAdminLinksArr.sort((a, b) => a.index - b.index);
 
         this.dataManagementLinksArr = Object.assign([], this.linkService.getOutletLinks('sitemap-data-management'));
@@ -60,6 +62,8 @@ export class SitemapComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.currentPermissions$ = this.authService.userPermissions$;
+        this.authService.user$.subscribe(value => {
+            this.currentPermissions = Object.assign({}, value.permissions);
+        });
     }
 }

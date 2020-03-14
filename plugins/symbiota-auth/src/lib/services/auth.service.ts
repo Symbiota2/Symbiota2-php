@@ -45,23 +45,11 @@ export class AuthService {
     user$: Observable<CurrentUser> = this.subject.asObservable().pipe(
         filter(user => !!user)
     );
-    maintainLogin$: Observable<number> = this.user$.pipe(
-        map(user => (user.maintainLogin ? user.maintainLogin : 0))
-    );
-    tokenExpire$: Observable<number> = this.user$.pipe(
-        map(user => user.tokenExpire)
-    );
-    userPermissions$: Observable<object> = this.user$.pipe(
-        map(user => user.permissions)
-    );
     isAuthenticated$: Observable<boolean> = this.user$.pipe(
         map(user => !!user.id)
     );
     isLoggedOut$: Observable<boolean> = this.isAuthenticated$.pipe(
         map(isAuthenticated => !isAuthenticated)
-    );
-    currentUserId$: Observable<number> = this.user$.pipe(
-        map(user => user.id)
     );
 
     login_failed: string;
@@ -152,7 +140,6 @@ export class AuthService {
         this.router.navigate(['/']).then(() => {
             this.http.get('/api/logout').subscribe(
                 () => {
-                    this.maintainLogin$ = undefined;
                     this.username = '';
                     this.password = '';
                     clearTimeout(this.logoutTimer);

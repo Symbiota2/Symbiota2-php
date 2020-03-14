@@ -1,8 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 
-import {BaseUser} from '../../interfaces/user.interface';
-
 @Component({
     selector: 'app-user-metadata',
     templateUrl: './user-metadata.component.html',
@@ -10,7 +8,6 @@ import {BaseUser} from '../../interfaces/user.interface';
 })
 export class UserMetadataComponent {
     @Input() parent: FormGroup;
-    @Input() user: BaseUser;
 
     get firstNameRequired() {
         return (

@@ -1,6 +1,5 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
-import {Observable} from 'rxjs';
 
 import {SessionExpireWarningDialogComponent} from 'symbiota-auth';
 
