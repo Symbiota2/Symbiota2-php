@@ -9,7 +9,6 @@ import {TranslateService} from "@ngx-translate/core";
 import {SpinnerOverlayService} from 'symbiota-shared';
 import {AlertService} from 'symbiota-shared';
 import {LoginComponentService} from './login-component.service';
-import {ConfigurationService} from 'symbiota-shared';
 
 import {AuthData} from '../interfaces/auth-data.interface';
 import {CurrentUser} from '../interfaces/current-user.interface';
@@ -66,35 +65,10 @@ export class AuthService {
         private loginComponentService: LoginComponentService,
         public dialog: MatDialog,
         private router: Router,
-        private translate: TranslateService,
-        private configService: ConfigurationService
+        private translate: TranslateService
     ) {
         this.spinnerService.show();
         this.authenticateCurrentUser();
-        this.configService.selectedLanguageValue.subscribe(() => {
-            this.setTranslations();
-        });
-    }
-
-    setTranslations() {
-        this.translate.get('symbiota-auth.auth-service.login_failed').subscribe((res: string) => {
-            this.login_failed = res;
-        });
-        this.translate.get('symbiota-auth.auth-service.login_sent').subscribe((res: string) => {
-            this.login_sent = res;
-        });
-        this.translate.get('symbiota-auth.auth-service.new_password_sent').subscribe((res: string) => {
-            this.new_password_sent = res;
-        });
-        this.translate.get('symbiota-auth.auth-service.no_account_found').subscribe((res: string) => {
-            this.no_account_found = res;
-        });
-        this.translate.get('symbiota-auth.auth-service.no_account_found_email').subscribe((res: string) => {
-            this.no_account_found_email = res;
-        });
-        this.translate.get('symbiota-auth.auth-service.session_expired').subscribe((res: string) => {
-            this.session_expired = res;
-        });
     }
 
     authenticateCurrentUser() {
@@ -125,12 +99,14 @@ export class AuthService {
                 this.spinnerService.hide();
             },
             () => {
-                this.spinnerService.hide();
-                this.alertService.showErrorSnackbar(
-                    this.login_failed,
-                    '',
-                    5000
-                );
+                this.translate.get('symbiota-auth.auth-service.login_failed').subscribe((text: string) => {
+                    this.spinnerService.hide();
+                    this.alertService.showErrorSnackbar(
+                        text,
+                        '',
+                        5000
+                    );
+                });
             }
         );
     }
@@ -158,17 +134,21 @@ export class AuthService {
             res => {
                 this.spinnerService.hide();
                 if (res.result) {
-                    this.alertService.showSnackbar(
-                        this.new_password_sent,
-                        '',
-                        5000
-                    );
+                    this.translate.get('symbiota-auth.auth-service.new_password_sent').subscribe((text: string) => {
+                        this.alertService.showSnackbar(
+                            text,
+                            '',
+                            5000
+                        );
+                    });
                 } else {
-                    this.alertService.showErrorSnackbar(
-                        this.no_account_found,
-                        '',
-                        5000
-                    );
+                    this.translate.get('symbiota-auth.auth-service.no_account_found').subscribe((text: string) => {
+                        this.alertService.showErrorSnackbar(
+                            text,
+                            '',
+                            5000
+                        );
+                    });
                 }
             }
         );
@@ -180,17 +160,21 @@ export class AuthService {
             res => {
                 this.spinnerService.hide();
                 if (res.result) {
-                    this.alertService.showSnackbar(
-                        this.login_sent,
-                        '',
-                        5000
-                    );
+                    this.translate.get('symbiota-auth.auth-service.login_sent').subscribe((text: string) => {
+                        this.alertService.showSnackbar(
+                            text,
+                            '',
+                            5000
+                        );
+                    });
                 } else {
-                    this.alertService.showErrorSnackbar(
-                        this.no_account_found_email,
-                        '',
-                        5000
-                    );
+                    this.translate.get('symbiota-auth.auth-service.no_account_found_email').subscribe((text: string) => {
+                        this.alertService.showErrorSnackbar(
+                            text,
+                            '',
+                            5000
+                        );
+                    });
                 }
             }
         );
@@ -214,11 +198,13 @@ export class AuthService {
                 this.warningDialog = '';
             }
             this.logout();
-            this.alertService.showErrorSnackbar(
-                this.session_expired,
-                '',
-                5000
-            );
+            this.translate.get('symbiota-auth.auth-service.session_expired').subscribe((text: string) => {
+                this.alertService.showErrorSnackbar(
+                    text,
+                    '',
+                    5000
+                );
+            });
         }, duration * 1000);
     }
 
