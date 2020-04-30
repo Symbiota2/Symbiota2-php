@@ -75,3 +75,16 @@ legend {
     line-height: 1.1em;
     font-size: 75%;
 }
+
+.link {
+    cursor: pointer;
+    color: blue;
+}
+
+.clear {
+    clear: both;
+}
+
+.bold {
+    font-weight: bold;
+}

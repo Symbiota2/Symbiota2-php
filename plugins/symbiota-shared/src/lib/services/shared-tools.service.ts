@@ -4,9 +4,6 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class SharedToolsService {
-
-    constructor() {}
-
     hexToRgb(hex) {
         const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
         return result ? {

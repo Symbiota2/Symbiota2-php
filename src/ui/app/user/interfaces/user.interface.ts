@@ -21,10 +21,25 @@ export interface NewUser extends BaseUser {
     password: string;
     retypedPassword: string;
 }
+
 export interface CurrentUser {
     id: number;
     firstName: string;
     permissions: object;
     maintainLogin: number;
     tokenExpire: number;
+}
+
+export interface UserListItem {
+    id: number;
+    firstName: string;
+    middleInitial: string;
+    lastName: string;
+    username: string;
+}
+
+export interface UserDetail extends BaseUser {
+    id: number;
+    username: string;
+    lastLoginDate: string;
 }

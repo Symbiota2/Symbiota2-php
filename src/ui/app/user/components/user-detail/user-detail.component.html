@@ -1,0 +1,34 @@
+<mat-card *ngIf="user" class="upper-cards">
+    <mat-card-header>
+        {{user.firstName}} {{user.middleInitial}} {{user.lastName}} (#{{user.id}})
+    </mat-card-header>
+    <mat-card-content>
+        <div class="clear">
+            <span class="bold">{{ 'core.user.user_detail.title' | translate }}:</span> {{user.title}}
+        </div>
+        <div class="clear">
+            <span class="bold">{{ 'core.user.user_detail.institution' | translate }}:</span> {{user.institution}}
+        </div>
+        <div class="clear">
+            <span class="bold">{{ 'core.user.user_detail.city' | translate }}:</span> {{user.city}}
+        </div>
+        <div class="clear">
+            <span class="bold">{{ 'core.user.user_detail.state' | translate }}:</span> {{user.state}}
+        </div>
+        <div class="clear">
+            <span class="bold">{{ 'core.user.user_detail.zip' | translate }}:</span> {{user.zip}}
+        </div>
+        <div class="clear">
+            <span class="bold">{{ 'core.user.user_detail.country' | translate }}:</span> {{user.country}}
+        </div>
+        <div class="clear">
+            <span class="bold">{{ 'core.user.user_detail.email' | translate }}:</span> {{user.email}}
+        </div>
+        <div class="clear">
+            <span class="bold">{{ 'core.user.user_detail.url' | translate }}:</span> {{user.url}}
+        </div>
+        <div class="clear">
+            <span class="bold">{{ 'core.user.user_detail.login' | translate }}:</span> {{user.username}} ({{ 'core.user.user_detail.last_login' | translate }}: {{user.lastLoginDate | date}})
+        </div>
+    </mat-card-content>
+</mat-card>

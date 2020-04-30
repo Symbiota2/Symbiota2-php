@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Validators, FormBuilder} from '@angular/forms';
 
 import {UserService} from '../../services/user.service';
+import {SharedUserService} from 'symbiota-shared';
 import {AuthService} from 'symbiota-auth';
 import {SpinnerOverlayService} from 'symbiota-shared';
 
@@ -45,6 +46,7 @@ export class EditProfileComponent implements OnInit {
 
     constructor(
         public userService: UserService,
+        public sharedUserService: SharedUserService,
         public authService: AuthService,
         public userMetadataValidator: UserMetadataValidators,
         public fb: FormBuilder,
@@ -55,7 +57,7 @@ export class EditProfileComponent implements OnInit {
         this.authService.user$.subscribe(value => {
             this.userId = value.id;
             if (this.userId > 0) {
-                this.userService.getUserById(this.userId).subscribe( data => {
+                this.sharedUserService.getUserById(this.userId).subscribe( data => {
                     this.editProfileForm.get('user_metadata').patchValue(data);
                 });
                 this.maintainLogin = value.maintainLogin;

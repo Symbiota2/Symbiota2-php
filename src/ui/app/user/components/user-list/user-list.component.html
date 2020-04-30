@@ -1,0 +1,36 @@
+<mat-card class="userListFilterSection upper-cards">
+    <mat-card-header>
+        {{ 'core.user.user_list.filter_section_header' | translate }}
+    </mat-card-header>
+    <div class="filterContainer">
+        <div class="lastNameFilterElement">
+            <label>
+                {{ 'core.user.user_list.last_name_filter_box' | translate }}
+                <input type="text" [(ngModel)]="lastNameFilter" class="lastNameInputBox" (keyup)="processLastNameFilter()">
+            </label>
+        </div>
+        <div class="usernameFilterElement">
+            <label>
+                {{ 'core.user.user_list.username_filter_box' | translate }}
+                <input type="text" [(ngModel)]="usernameFilter" class="usernameInputBox" (keyup)="processUsernameFilter()">
+            </label>
+        </div>
+    </div>
+</mat-card>
+
+<mat-card class="userListSection upper-cards">
+    <mat-card-content>
+        <ng-container *ngIf="(userList | json) == '[]'">
+            <div>{{ 'core.user.user_list.no_filter_entered' | translate }}</div>
+        </ng-container>
+        <ng-container *ngIf="(userList | json) != '[]'">
+            <ul>
+                <li *ngFor="let user of userList">
+                    <a class="link" (click)="processUserSelection(user.id)">
+                        {{user.lastName}}, {{user.firstName}} {{user.middleInitial}} ({{user.username}})
+                    </a>
+                </li>
+            </ul>
+        </ng-container>
+    </mat-card-content>
+</mat-card>

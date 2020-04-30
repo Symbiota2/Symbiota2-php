@@ -1,0 +1,24 @@
+<mat-card class="upper-cards">
+    <mat-card-header>
+        {{ 'core.user.user_permissions_available.assign_new_permissions' | translate }}
+    </mat-card-header>
+    <mat-card-content>
+        <app-super-admin-available-permission></app-super-admin-available-permission>
+        <ng-container *ngIf="globalPermissionComponentsArr.length > 0">
+            <ng-container *ngFor="let component of globalPermissionComponentsArr">
+                <app-plugin-outlet class="dynamic-tab-content" *ngIf="component.module" [file]="component.filename" [module]="component.module" [provider]="component.provider" [child]="true"></app-plugin-outlet>
+                <ng-container *ngIf="!component.module">
+                    <ng-container *ngComponentOutlet="component.component"></ng-container>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+        <ng-container *ngIf="itemPermissionComponentsArr.length > 0">
+            <ng-container *ngFor="let component of itemPermissionComponentsArr">
+                <app-plugin-outlet class="dynamic-tab-content" *ngIf="component.module" [file]="component.filename" [module]="component.module" [provider]="component.provider" [child]="true"></app-plugin-outlet>
+                <ng-container *ngIf="!component.module">
+                    <ng-container *ngComponentOutlet="component.component"></ng-container>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </mat-card-content>
+</mat-card>

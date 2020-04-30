@@ -1,0 +1,19 @@
+<ng-container *ngIf="!userInfo">
+    <app-user-list (selectedUid)="onUserSelection($event)"></app-user-list>
+</ng-container>
+
+<ng-container *ngIf="userInfo">
+    <div class="returnLink">
+        <a class="link" (click)="resetUid()">
+            {{ 'core.user.user_management.return_user_list_link' | translate }}
+        </a>
+    </div>
+    <div class="loginAsLink">
+        <a class="link" (click)="loginAs()">
+            {{ 'core.user.user_management.login_as_user' | translate }}
+        </a>
+    </div>
+    <app-user-detail [user]="userInfo"></app-user-detail>
+    <app-user-permissions-current></app-user-permissions-current>
+    <app-user-permissions-available></app-user-permissions-available>
+</ng-container>

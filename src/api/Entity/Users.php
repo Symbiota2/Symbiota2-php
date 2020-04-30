@@ -4,7 +4,6 @@ namespace Core\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,11 +22,13 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *      SearchFilter::class,
  *      properties={
  *          "username": "exact",
+ *          "lastName": "start",
  *          "email": "exact"
  *      }
  * )
  * @ApiResource(
- *      itemOperations={
+ *     attributes={"order"={"lastName": "ASC", "firstName": "ASC"}},
+ *     itemOperations={
  *          "get"={
  *              "access_control"="is_granted('SuperAdmin', object) or object == user",
  *              "normalization_context"={
@@ -57,9 +58,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *      },
  *      collectionOperations={
  *          "get"={
- *              "access_control"="is_granted('HasPermissions', object) or is_granted('IS_AUTHENTICATED_ANONYMOUSLY')",
+ *              "access_control"="is_granted('UserAdmin', object)",
  *              "normalization_context"={
- *                  "groups"={"public"}
+ *                  "groups"={"user_list"}
  *              }
  *          },
  *          "post"={
@@ -86,7 +87,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @ORM\Column(name="uid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Groups({"get-roles", "get-checklist-info"})
+     * @Groups({"get", "user_list"})
      */
     private $id;
 
@@ -94,7 +95,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var string|null
      *
      * @ORM\Column(name="firstname", type="string", length=45, nullable=true)
-     * @Groups({"get", "get-roles", "get-checklist-info", "post", "put", "SuperAdmin"})
+     * @Groups({"get", "post", "put", "user_list"})
      * @Assert\Length(max=45, groups={"post"})
      */
     private $firstName;
@@ -103,7 +104,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var string|null
      *
      * @ORM\Column(name="middleinitial", type="string", length=2, nullable=true)
-     * @Groups({"get", "get-roles", "get-checklist-info", "post", "put", "SuperAdmin"})
+     * @Groups({"get", "post", "put", "user_list"})
      * @Assert\Length(max=2, groups={"post"})
      */
     private $middleInitial;
@@ -112,7 +113,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", length=45)
-     * @Groups({"get", "get-roles", "get-checklist-info", "post", "put", "SuperAdmin"})
+     * @Groups({"get", "post", "put", "user_list"})
      * @Assert\NotBlank(groups={"post"})
      * @Assert\Length(max=45, groups={"post"})
      */
@@ -122,7 +123,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=45)
-     * @Groups({"get-roles", "get-checklist-info", "post"})
+     * @Groups({"get", "post", "user_list"})
      * @Assert\NotBlank(groups={"post"})
      * @Assert\Length(min=6, max=45, groups={"post"})
      */
@@ -186,7 +187,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var string|null
      *
      * @ORM\Column(name="title", type="string", length=150, nullable=true)
-     * @Groups({"get", "post", "put", "SuperAdmin"})
+     * @Groups({"get", "post", "put"})
      * @Assert\Length(max=150, groups={"post"})
      */
     private $title;
@@ -305,6 +306,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
      * @var \DateTime|null
      *
      * @ORM\Column(name="lastlogindate", type="datetime", nullable=true)
+     * @Groups({"get"})
      */
     private $lastLoginDate;
 
@@ -344,8 +346,9 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
     private $verificationToken;
 
     /**
+     * @var UserRoles
+     *
      * @ORM\OneToMany(targetEntity="Core\Entity\UserRoles", mappedBy="userId")
-     * @ApiSubresource()
      */
     private $permissions;
 

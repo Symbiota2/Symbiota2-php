@@ -44,7 +44,7 @@ class AuthenticationSuccessListener
             $data['token'],
             time() + $cookieExp,
             '',
-            'localhost'
+            $_SERVER['SERVER_NAME']
         );
 
         $q = $this->em->createQuery('SELECT ur FROM Core\Entity\UserRoles ur WHERE ur.userId = '.$userId);

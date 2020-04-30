@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -121,10 +120,6 @@ export class UserService {
                 }
             },
         );
-    }
-
-    getUserById(id: number): Observable<any> {
-        return this.http.get<any>('/api/users/' + id);
     }
 
     checkUsername(username) {

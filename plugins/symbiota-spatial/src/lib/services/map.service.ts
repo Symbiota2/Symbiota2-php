@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {MatDialog} from '@angular/material/dialog';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateService} from '@ngx-translate/core';
 import OlMap from '@greentheorystudio/ol/Map';
 import XYZ from '@greentheorystudio/ol/source/XYZ';
 import {FullScreen, ZoomSlider, ScaleLine, MousePosition} from '@greentheorystudio/ol/control';
@@ -27,7 +27,7 @@ import {
     Stroke,
     Text,
     RegularShape,
-    Style
+    Style,
 } from '@greentheorystudio/ol/style';
 import Overlay from '@greentheorystudio/ol/Overlay';
 import shp from 'shpjs';
@@ -44,18 +44,18 @@ import {Layer} from '../interfaces/layer.interface';
 import {map} from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class MapService {
 
     constructor(
-      private configService: ConfigurationService,
-      private alertService: AlertService,
-      private vectorService: VectorToolsService,
-      private sharedTools: SharedToolsService,
-      private http: HttpClient,
-      private dialog: MatDialog,
-      private translate: TranslateService
+        private configService: ConfigurationService,
+        private alertService: AlertService,
+        private vectorService: VectorToolsService,
+        private sharedTools: SharedToolsService,
+        private http: HttpClient,
+        private dialog: MatDialog,
+        private translate: TranslateService,
     ) {
         this.activeLayerValue.subscribe(value => {
             this.activeLayer = value.toString();
@@ -67,7 +67,7 @@ export class MapService {
         });
 
         this.mapCenter = (
-          configService.data.MAP_INITIAL_CENTER ? JSON.parse(configService.data.MAP_INITIAL_CENTER) : [-110.90713, 32.21976]
+            configService.data.MAP_INITIAL_CENTER ? JSON.parse(configService.data.MAP_INITIAL_CENTER) : [-110.90713, 32.21976]
         );
         this.mapZoom = (configService.data.MAP_INITIAL_ZOOM ? configService.data.MAP_INITIAL_ZOOM : 7);
         for (let z = 0; z < 20; ++z) {
@@ -115,7 +115,7 @@ export class MapService {
                             features = geoJSONFormat.readFeatures(geoJSONFormat.writeFeatures(features));
                         }
                         this.layers[sourceIndex] = new VectorSource({
-                            features: features
+                            features: features,
                         });
                         this.layers[this.dragDropTarget].setStyle(MapService.getDragDropStyle);
                         this.layers[this.dragDropTarget].setSource(this.layers[sourceIndex]);
@@ -124,7 +124,7 @@ export class MapService {
                             title: filename,
                             layerType: 'vector',
                             removable: true,
-                            visible: true
+                            visible: true,
                         });
                         this.map.getView().fit(this.layers[sourceIndex].getExtent());
                     }
@@ -135,10 +135,10 @@ export class MapService {
                                 const sourceIndex = this.dragDropTarget + 'Source';
                                 const res = this.map.getView().getResolution();
                                 const features = geoJSONFormat.readFeatures(geojson, {
-                                    featureProjection: 'EPSG:3857'
+                                    featureProjection: 'EPSG:3857',
                                 });
                                 this.layers[sourceIndex] = new VectorSource({
-                                    features: features
+                                    features: features,
                                 });
                                 this.layers[this.dragDropTarget].setStyle(MapService.getDragDropStyle);
                                 this.layers[this.dragDropTarget].setSource(this.layers[sourceIndex]);
@@ -147,7 +147,7 @@ export class MapService {
                                     title: filename,
                                     layerType: 'vector',
                                     removable: true,
-                                    visible: true
+                                    visible: true,
                                 });
                                 this.map.getView().fit(this.layers[sourceIndex].getExtent());
                             });
@@ -156,15 +156,15 @@ export class MapService {
                 }
             } else if (fileType === 'shp' || fileType === 'dbf') {
                 this.alertService.showErrorSnackbar(
-                  this.drag_drop_error1,
-                  '',
-                  5000
+                    this.drag_drop_error1,
+                    '',
+                    5000,
                 );
             } else {
                 this.alertService.showErrorSnackbar(
-                  this.drag_drop_error2,
-                  '',
-                  5000
+                    this.drag_drop_error2,
+                    '',
+                    5000,
                 );
             }
         });
@@ -336,19 +336,19 @@ export class MapService {
         name: 'none',
         title: this.none_select_option,
         removable: false,
-        visible: true
+        visible: true,
     };
     shapeLayerSelectOption = {
         name: 'select',
         title: this.shapes_select_option,
         layerType: 'vector',
         removable: true,
-        visible: true
+        visible: true,
     };
     drawToolSelectedSubject = new BehaviorSubject<string>('None');
     public readonly drawToolSelectedValue: Observable<string> = this.drawToolSelectedSubject.asObservable();
     layersSelectorSubject = new BehaviorSubject<Layer[]>([
-        this.noneLayerSelectOption
+        this.noneLayerSelectOption,
     ]);
     public readonly layersSelectorArr: Observable<Layer[]> = this.layersSelectorSubject.asObservable();
     activeLayerSubject = new BehaviorSubject<string>('none');
@@ -368,7 +368,7 @@ export class MapService {
     pointsActiveSubject = new BehaviorSubject<boolean>(false);
     public readonly pointsActiveValue: Observable<boolean> = this.pointsActiveSubject.asObservable();
     public readonly pointsInactiveValue: Observable<boolean> = this.pointsActiveValue.pipe(
-      map(active => !active)
+        map(active => !active),
     );
     selectedShapesSubject = new BehaviorSubject<[]>([]);
     public readonly selectedShapesValue: Observable<[]> = this.selectedShapesSubject.asObservable();
@@ -403,7 +403,7 @@ export class MapService {
         },
         className: 'mousecoordinates',
         projection: 'EPSG:4326',
-        undefinedHTML: '&nbsp;'
+        undefinedHTML: '&nbsp;',
     });
 
     zoomSliderControl = new ZoomSlider();
@@ -412,12 +412,12 @@ export class MapService {
 
     scaleLineControl_us = new ScaleLine({
         className: 'mapscale_us',
-        units: 'us'
+        units: 'us',
     });
 
     scaleLineControl_metric = new ScaleLine({
         className: 'mapscale_metric',
-        units: 'metric'
+        units: 'metric',
     });
 
     dragAndDropInteraction = new DragAndDrop({
@@ -426,24 +426,24 @@ export class MapService {
             GeoJSON,
             IGC,
             KML,
-            TopoJSON
-        ]
+            TopoJSON,
+        ],
     });
 
     mapProjection = new Projection({
-        code: 'EPSG:3857'
+        code: 'EPSG:3857',
     });
 
     wgs84Projection = new Projection({
         code: 'EPSG:4326',
-        units: 'degrees'
+        units: 'degrees',
     });
 
     baseLayer = new TileLayer({
         source: new XYZ({
             url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
-            crossOrigin: 'anonymous'
-        })
+            crossOrigin: 'anonymous',
+        }),
     });
 
     selectsource = new VectorSource({wrapX: false});
@@ -451,28 +451,28 @@ export class MapService {
         source: this.selectsource,
         style: new Style({
             fill: new Fill({
-                color: 'rgba(255, 255, 255, 0.4)'
+                color: 'rgba(255, 255, 255, 0.4)',
             }),
             stroke: new Stroke({
                 color: '#3399CC',
-                width: 2
+                width: 2,
             }),
             image: new Circle({
                 radius: 7,
                 stroke: new Stroke({
                     color: '#3399CC',
-                    width: 2
+                    width: 2,
                 }),
                 fill: new Fill({
-                    color: 'rgba(255, 255, 255, 0.4)'
-                })
-            })
-        })
+                    color: 'rgba(255, 255, 255, 0.4)',
+                }),
+            }),
+        }),
     });
 
     pointvectorsource = new VectorSource({wrapX: false});
     pointvectorlayer = new VectorLayer({
-        source: this.pointvectorsource
+        source: this.pointvectorsource,
     });
 
     heatmaplayer = new Heatmap({
@@ -491,60 +491,60 @@ export class MapService {
         gradient: ['#00f', '#0ff', '#0f0', '#ff0', '#f00'],
         blur: parseInt(this.heatMapBlur, 10),
         radius: parseInt(this.heatMapRadius, 10),
-        visible: false
+        visible: false,
     });
 
     blankdragdropsource = new VectorSource({wrapX: false});
     dragdroplayer1 = new VectorLayer({
-        source: this.blankdragdropsource
+        source: this.blankdragdropsource,
     });
     dragdroplayer2 = new VectorLayer({
-        source: this.blankdragdropsource
+        source: this.blankdragdropsource,
     });
     dragdroplayer3 = new VectorLayer({
-        source: this.blankdragdropsource
+        source: this.blankdragdropsource,
     });
 
     spiderLayer = new VectorLayer({
         source: new VectorSource({
             features: new Collection(),
-            useSpatialIndex: true
-        })
+            useSpatialIndex: true,
+        }),
     });
 
     selectInteraction = new Select({
         layers: [
-            this.selectlayer
+            this.selectlayer,
         ],
         condition: (evt) => {
             return (evt.type === 'click' && this.activeLayer === 'select' && !evt.originalEvent.altKey);
         },
         style: new Style({
             fill: new Fill({
-                color: 'rgba(255, 255, 255, 0.5)'
+                color: 'rgba(255, 255, 255, 0.5)',
             }),
             stroke: new Stroke({
                 color: 'rgba(0, 153, 255, 1)',
-                width: 5
+                width: 5,
             }),
             image: new Circle({
                 radius: 7,
                 stroke: new Stroke({
                     color: 'rgba(0, 153, 255, 1)',
-                    width: 2
+                    width: 2,
                 }),
                 fill: new Fill({
-                    color: 'rgba(0, 153, 255, 1)'
-                })
-            })
+                    color: 'rgba(0, 153, 255, 1)',
+                }),
+            }),
         }),
-        toggleCondition: clickCondition
+        toggleCondition: clickCondition,
     });
 
     pointInteraction = new Select({
         layers: [
             this.layers['pointv'],
-            this.layers['spider']
+            this.layers['spider'],
         ],
         condition: (evt) => {
             if (evt.type === 'click' && this.activeLayer === 'pointv') {
@@ -559,7 +559,7 @@ export class MapService {
                         if (!spiderclick) {
                             const blankSource = new VectorSource({
                                 features: new Collection(),
-                                useSpatialIndex: true
+                                useSpatialIndex: true,
                             });
                             this.layers['spider'].setSource(blankSource);
                             for (const i in this.hiddenClusters) {
@@ -595,7 +595,7 @@ export class MapService {
         toggleCondition: clickCondition,
         multi: true,
         hitTolerance: 2,
-        style: this.getPointStyle
+        style: this.getPointStyle,
     });
 
     selectedFeatures = this.selectInteraction.getFeatures();
@@ -612,9 +612,9 @@ export class MapService {
             image: new Circle({
                 radius: feature.get('radius'),
                 fill: new Fill({
-                    color: 'rgba(255, 255, 255, 0.01)'
-                })
-            })
+                    color: 'rgba(255, 255, 255, 0.01)',
+                }),
+            }),
         });
         feature.setStyle(invisibleStyle);
     }
@@ -625,57 +625,57 @@ export class MapService {
             'Point': new Style({
                 image: new Circle({
                     fill: new Fill({
-                        color: 'rgba(170, 170, 170, 0.3)'
+                        color: 'rgba(170, 170, 170, 0.3)',
                     }),
                     radius: 5,
                     stroke: new Stroke({
                         color: '#000000',
-                        width: 1
-                    })
-                })
+                        width: 1,
+                    }),
+                }),
             }),
             'LineString': new Style({
                 stroke: new Stroke({
                     color: '#000000',
-                    width: 3
-                })
+                    width: 3,
+                }),
             }),
             'Polygon': new Style({
                 fill: new Fill({
-                    color: 'rgba(170, 170, 170, 0.3)'
+                    color: 'rgba(170, 170, 170, 0.3)',
                 }),
                 stroke: new Stroke({
                     color: '#000000',
-                    width: 1
-                })
+                    width: 1,
+                }),
             }),
             'MultiPoint': new Style({
                 image: new Circle({
                     fill: new Fill({
-                        color: 'rgba(170, 170, 170, 0.3)'
+                        color: 'rgba(170, 170, 170, 0.3)',
                     }),
                     radius: 5,
                     stroke: new Stroke({
                         color: '#000000',
-                        width: 1
-                    })
-                })
+                        width: 1,
+                    }),
+                }),
             }),
             'MultiLineString': new Style({
                 stroke: new Stroke({
                     color: '#000000',
-                    width: 3
-                })
+                    width: 3,
+                }),
             }),
             'MultiPolygon': new Style({
                 fill: new Fill({
-                    color: 'rgba(170, 170, 170, 0.3)'
+                    color: 'rgba(170, 170, 170, 0.3)',
                 }),
                 stroke: new Stroke({
                     color: '#000000',
-                    width: 1
-                })
-            })
+                    width: 1,
+                }),
+            }),
         };
         if (featureStyleFunction) {
             return featureStyleFunction.call(feature, resolution);
@@ -696,7 +696,9 @@ export class MapService {
     toggleLayer(value: boolean, layer: string) {
         const currentArr = this.layersSelectorSubject.value;
         currentArr.forEach((arrLayer, index) => {
-            if (arrLayer.name === layer) { arrLayer.visible = value; }
+            if (arrLayer.name === layer) {
+                arrLayer.visible = value;
+            }
         });
         this.layersSelectorSubject.next(currentArr);
         this.setActiveLayer('none');
@@ -802,8 +804,8 @@ export class MapService {
                     const radius = selectedClone.getGeometry().getRadius();
                     const edgeCoordinate = [center[0] + radius, center[1]];
                     let groundRadius = haversineDistance(
-                      transform(center, 'EPSG:3857', 'EPSG:4326'),
-                      transform(edgeCoordinate, 'EPSG:3857', 'EPSG:4326')
+                        transform(center, 'EPSG:3857', 'EPSG:4326'),
+                        transform(edgeCoordinate, 'EPSG:3857', 'EPSG:4326'),
                     );
                     groundRadius = groundRadius / 1000;
                     const circleArea = Math.PI * groundRadius * groundRadius;
@@ -923,8 +925,8 @@ export class MapService {
             element: this.popupContainer,
             autoPan: true,
             autoPanAnimation: {
-                duration: 250
-            }
+                duration: 250,
+            },
         });
 
         this.popupCloser.onclick = () => {
@@ -950,8 +952,8 @@ export class MapService {
             element: this.finderPopupContainer,
             autoPan: true,
             autoPanAnimation: {
-                duration: 250
-            }
+                duration: 250,
+            },
         });
 
         this.finderPopupCloser.onclick = () => {
@@ -981,7 +983,9 @@ export class MapService {
     removeLayerFromSelectorArr(name: string) {
         const currentArr = this.layersSelectorSubject.value;
         currentArr.forEach((layer, index) => {
-            if (layer.name === name) { currentArr.splice(index, 1); }
+            if (layer.name === name) {
+                currentArr.splice(index, 1);
+            }
         });
         this.layersSelectorSubject.next(currentArr);
     }
@@ -998,9 +1002,9 @@ export class MapService {
                     this.layers['select'],
                     this.layers['pointv'],
                     this.layers['heat'],
-                    this.layers['spider']
+                    this.layers['spider'],
                 ],
-                view: this.view
+                view: this.view,
             });
 
             this.map.getView().on('change:resolution', (event) => {
@@ -1009,7 +1013,7 @@ export class MapService {
                     source.clear();
                     const blankSource = new VectorSource({
                         features: new Collection(),
-                        useSpatialIndex: true
+                        useSpatialIndex: true,
                     });
                     this.layers['spider'].setSource(blankSource);
                     for (const i in this.hiddenClusters) {
@@ -1028,57 +1032,57 @@ export class MapService {
                     const layerIndex = this.activeLayer + 'Source';
                     const viewResolution = this.view.getResolution();
                     if (this.activeLayer !== 'none'
-                      && this.activeLayer !== 'select'
-                      && this.activeLayer !== 'pointv'
-                      && this.activeLayer !== 'dragdrop1'
-                      && this.activeLayer !== 'dragdrop2'
-                      && this.activeLayer !== 'dragdrop3') {
+                        && this.activeLayer !== 'select'
+                        && this.activeLayer !== 'pointv'
+                        && this.activeLayer !== 'dragdrop1'
+                        && this.activeLayer !== 'dragdrop2'
+                        && this.activeLayer !== 'dragdrop3') {
                         const url = this.layers[layerIndex].getGetFeatureInfoUrl(
-                          evt.coordinate,
-                          viewResolution,
-                          'EPSG:3857',
-                          {'INFO_FORMAT': 'application/json'}
+                            evt.coordinate,
+                            viewResolution,
+                            'EPSG:3857',
+                            {'INFO_FORMAT': 'application/json'},
                         );
                         if (url) {
                             this.http.get(url).subscribe(
-                              (res) => {
-                                  if (res) {
-                                      let infoHTML = '';
-                                      const propArr = res['features'][0]['properties'];
-                                      if (this.overlayLayers[this.activeLayer]) {
-                                          const sourceVal = propArr['GRAY_INDEX'];
-                                          const lowCalVal = this.overlayLayers[this.activeLayer]['values']['rasmin'];
-                                          const highCalVal = this.overlayLayers[this.activeLayer]['values']['rasmax'];
-                                          const calcVal = this.overlayLayers[this.activeLayer]['values']['newval'];
-                                          if (sourceVal >= lowCalVal && sourceVal <= highCalVal) {
-                                              infoHTML += '<b>Value:</b> ' + calcVal + '<br />';
-                                          } else {
-                                              infoHTML += '<b>Value:</b> 0<br />';
-                                          }
-                                      } else {
-                                          for (const key in propArr) {
-                                              if (propArr.hasOwnProperty(key)) {
-                                                  let valTag = '';
-                                                  if (key === 'GRAY_INDEX') {
-                                                      valTag = 'Value';
-                                                  } else {
-                                                      valTag = key;
-                                                  }
-                                                  infoHTML += '<b>' + valTag + ':</b> ' + propArr[key] + '<br />';
-                                              }
-                                          }
-                                      }
-                                      if (this.popupOverlay) {
-                                          this.setPopup(infoHTML, evt.coordinate);
-                                      }
-                                  }
-                              }
+                                (res) => {
+                                    if (res) {
+                                        let infoHTML = '';
+                                        const propArr = res['features'][0]['properties'];
+                                        if (this.overlayLayers[this.activeLayer]) {
+                                            const sourceVal = propArr['GRAY_INDEX'];
+                                            const lowCalVal = this.overlayLayers[this.activeLayer]['values']['rasmin'];
+                                            const highCalVal = this.overlayLayers[this.activeLayer]['values']['rasmax'];
+                                            const calcVal = this.overlayLayers[this.activeLayer]['values']['newval'];
+                                            if (sourceVal >= lowCalVal && sourceVal <= highCalVal) {
+                                                infoHTML += '<b>Value:</b> ' + calcVal + '<br />';
+                                            } else {
+                                                infoHTML += '<b>Value:</b> 0<br />';
+                                            }
+                                        } else {
+                                            for (const key in propArr) {
+                                                if (propArr.hasOwnProperty(key)) {
+                                                    let valTag = '';
+                                                    if (key === 'GRAY_INDEX') {
+                                                        valTag = 'Value';
+                                                    } else {
+                                                        valTag = key;
+                                                    }
+                                                    infoHTML += '<b>' + valTag + ':</b> ' + propArr[key] + '<br />';
+                                                }
+                                            }
+                                        }
+                                        if (this.popupOverlay) {
+                                            this.setPopup(infoHTML, evt.coordinate);
+                                        }
+                                    }
+                                },
                             );
                         }
                     } else if (this.activeLayer === 'dragdrop1'
-                      || this.activeLayer === 'dragdrop2'
-                      || this.activeLayer === 'dragdrop3'
-                      || this.activeLayer === 'select') {
+                        || this.activeLayer === 'dragdrop2'
+                        || this.activeLayer === 'dragdrop3'
+                        || this.activeLayer === 'select') {
                         let infoHTML = '';
                         const selectedFeature = this.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
                             if (layer === this.layers[this.activeLayer]) {
@@ -1117,23 +1121,23 @@ export class MapService {
                         if (iFeature) {
                             infoHTML += '<b>occid:</b> ' + iFeature.get('occid') + '<br />';
                             infoHTML += '<b>CollectionName:</b> '
-                              + (iFeature.get('CollectionName') ? iFeature.get('CollectionName') : '') + '<br />';
+                                + (iFeature.get('CollectionName') ? iFeature.get('CollectionName') : '') + '<br />';
                             infoHTML += '<b>catalogNumber:</b> '
-                              + (iFeature.get('catalogNumber') ? iFeature.get('catalogNumber') : '') + '<br />';
+                                + (iFeature.get('catalogNumber') ? iFeature.get('catalogNumber') : '') + '<br />';
                             infoHTML += '<b>otherCatalogNumbers:</b> '
-                              + (iFeature.get('otherCatalogNumbers') ? iFeature.get('otherCatalogNumbers') : '') + '<br />';
+                                + (iFeature.get('otherCatalogNumbers') ? iFeature.get('otherCatalogNumbers') : '') + '<br />';
                             infoHTML += '<b>family:</b> ' + (iFeature.get('family') ? iFeature.get('family') : '') + '<br />';
                             infoHTML += '<b>sciname:</b> ' + (iFeature.get('sciname') ? iFeature.get('sciname') : '') + '<br />';
                             infoHTML += '<b>recordedBy:</b> ' + (iFeature.get('recordedBy') ? iFeature.get('recordedBy') : '') + '<br />';
                             infoHTML += '<b>recordNumber:</b> ' + (iFeature.get('recordNumber') ? iFeature.get('recordNumber') : '')
-                              + '<br />';
+                                + '<br />';
                             infoHTML += '<b>eventDate:</b> ' + (iFeature.get('displayDate') ? iFeature.get('displayDate') : '') + '<br />';
                             infoHTML += '<b>habitat:</b> ' + (iFeature.get('habitat') ? iFeature.get('habitat') : '') + '<br />';
                             infoHTML += '<b>associatedTaxa:</b> '
-                              + (iFeature.get('associatedTaxa') ? iFeature.get('associatedTaxa') : '') + '<br />';
+                                + (iFeature.get('associatedTaxa') ? iFeature.get('associatedTaxa') : '') + '<br />';
                             infoHTML += '<b>country:</b> ' + (iFeature.get('country') ? iFeature.get('country') : '') + '<br />';
                             infoHTML += '<b>StateProvince:</b> '
-                              + (iFeature.get('StateProvince') ? iFeature.get('StateProvince') : '') + '<br />';
+                                + (iFeature.get('StateProvince') ? iFeature.get('StateProvince') : '') + '<br />';
                             infoHTML += '<b>county:</b> ' + (iFeature.get('county') ? iFeature.get('county') : '') + '<br />';
                             infoHTML += '<b>locality:</b> ' + (iFeature.get('locality') ? iFeature.get('locality') : '') + '<br />';
                             if (iFeature.get('thumbnailurl')) {
@@ -1145,9 +1149,9 @@ export class MapService {
                             }
                         } else {
                             this.alertService.showErrorSnackbar(
-                              this.singleclick_error1,
-                              '',
-                              5000
+                                this.singleclick_error1,
+                                '',
+                                5000,
                             );
                         }
                         this.clickedFeatures = [];
@@ -1163,9 +1167,9 @@ export class MapService {
                                         this.setActiveLayer('select');
                                     } catch (e) {
                                         this.alertService.showErrorSnackbar(
-                                          this.singleclick_error2,
-                                          '',
-                                          5000
+                                            this.singleclick_error2,
+                                            '',
+                                            5000,
                                         );
                                     }
                                 }
@@ -1173,10 +1177,10 @@ export class MapService {
                         } else {
                             const viewResolution = this.view.getResolution();
                             const url = this.layers[layerIndex].getGetFeatureInfoUrl(
-                              evt.coordinate,
-                              viewResolution,
-                              'EPSG:3857',
-                              {'INFO_FORMAT': 'application/json'}
+                                evt.coordinate,
+                                viewResolution,
+                                'EPSG:3857',
+                                {'INFO_FORMAT': 'application/json'},
                             );
                             // selectObjectFromID(url, this.activeLayer);
                         }
@@ -1246,20 +1250,20 @@ export class MapService {
                         radius: radius,
                         stroke: stroke,
                         fill: new Fill({
-                            color: [colorArr['r'], colorArr['g'], colorArr['b'], 0.8]
-                        })
+                            color: [colorArr['r'], colorArr['g'], colorArr['b'], 0.8],
+                        }),
                     }),
                     text: new Text({
                         scale: 1,
                         text: size.toString(),
                         fill: new Fill({
-                            color: '#fff'
+                            color: '#fff',
                         }),
                         stroke: new Stroke({
                             color: 'rgba(0, 0, 0, 0.6)',
-                            width: 3
-                        })
-                    })
+                            width: 3,
+                        }),
+                    }),
                 });
             } else {
                 const originalFeature = feature.get('features')[0];
@@ -1274,7 +1278,7 @@ export class MapService {
         if (selection !== 'None') {
             this.draw = new Draw({
                 source: this.selectsource,
-                type: (selection)
+                type: (selection),
             });
 
             this.draw.on('drawend', (evt) => {
@@ -1302,7 +1306,7 @@ export class MapService {
         if (selection === 'worldtopo') {
             blsource = new XYZ({
                 url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
-                crossOrigin: 'anonymous'
+                crossOrigin: 'anonymous',
             });
         }
         if (selection === 'openstreet') {
@@ -1314,31 +1318,31 @@ export class MapService {
         if (selection === 'worldimagery') {
             blsource = new XYZ({
                 url: 'http://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-                crossOrigin: 'anonymous'
+                crossOrigin: 'anonymous',
             });
         }
         if (selection === 'ocean') {
             blsource = new XYZ({
                 url: 'http://services.arcgisonline.com/arcgis/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}',
-                crossOrigin: 'anonymous'
+                crossOrigin: 'anonymous',
             });
         }
         if (selection === 'ngstopo') {
             blsource = new XYZ({
                 url: 'http://services.arcgisonline.com/arcgis/rest/services/USA_Topo_Maps/MapServer/tile/{z}/{y}/{x}',
-                crossOrigin: 'anonymous'
+                crossOrigin: 'anonymous',
             });
         }
         if (selection === 'natgeoworld') {
             blsource = new XYZ({
                 url: 'http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}',
-                crossOrigin: 'anonymous'
+                crossOrigin: 'anonymous',
             });
         }
         if (selection === 'esristreet') {
             blsource = new XYZ({
                 url: 'http://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
-                crossOrigin: 'anonymous'
+                crossOrigin: 'anonymous',
             });
         }
         baseLayer.setSource(blsource);
@@ -1416,16 +1420,16 @@ export class MapService {
                     fill: fill,
                     stroke: stroke,
                     points: 3,
-                    radius: 7
-                })
+                    radius: 7,
+                }),
             });
         } else {
             style = new Style({
                 image: new Circle({
                     radius: 7,
                     fill: fill,
-                    stroke: stroke
-                })
+                    stroke: stroke,
+                }),
             });
         }
 
@@ -1448,9 +1452,9 @@ export class MapService {
             return true;
         } else {
             this.alertService.showErrorSnackbar(
-              this.drag_drop_max_error1,
-              '',
-              5000
+                this.drag_drop_max_error1,
+                '',
+                5000,
             );
             return false;
         }
@@ -1495,7 +1499,7 @@ export class MapService {
                     const pos = [center[0] + rad * Math.sin(acos), center[1] + rad * Math.cos(acos)];
                     const cf = new Feature({
                         features: [spiderFeatures[i]],
-                        geometry: new Point(pos)
+                        geometry: new Point(pos),
                     });
                     const style = this.setClusterSymbol(cf);
                     cf.setStyle(style);
@@ -1505,7 +1509,7 @@ export class MapService {
         } else {
             let acos = 0;
             const dec = 30;
-            const max = Math.min (60, spiderFeatures.length);
+            const max = Math.min(60, spiderFeatures.length);
             for (const i in spiderFeatures) {
                 if (spiderFeatures[i]) {
                     const rad2 = dec / 2 + dec * acos / (2 * Math.PI);
@@ -1515,7 +1519,7 @@ export class MapService {
                     const pos = [center[0] + dx, center[1] + dy];
                     const cf = new Feature({
                         features: [spiderFeatures[i]],
-                        geometry: new Point(pos)
+                        geometry: new Point(pos),
                     });
                     const style = this.setClusterSymbol(cf);
                     cf.setStyle(style);
@@ -1537,16 +1541,16 @@ export class MapService {
                     x = x + n;
                 }
                 return urlTemplate.replace('{z}', z.toString())
-                  .replace('{y}', y.toString())
-                  .replace('{x}', x.toString());
+                    .replace('{y}', y.toString())
+                    .replace('{x}', x.toString());
             },
             projection: 'EPSG:4326',
             tileGrid: new TileGrid({
                 origin: getTopLeft(this.projectionExtent),
                 resolutions: this.resolutions,
-                tileSize: 512
+                tileSize: 512,
             }),
-            crossOrigin: 'anonymous'
+            crossOrigin: 'anonymous',
         });
     }
 
@@ -1564,8 +1568,8 @@ export class MapService {
         const dialogRef = this.dialog.open(MapSettingsDialogComponent, {
             width: '500px',
             data: {
-                mapService: mapService
-            }
+                mapService: mapService,
+            },
         });
     }
 
@@ -1573,8 +1577,8 @@ export class MapService {
         const dialogRef = this.dialog.open(MapLayersDialogComponent, {
             width: '500px',
             data: {
-                mapService: mapService
-            }
+                mapService: mapService,
+            },
         });
     }
 
@@ -1594,17 +1598,17 @@ export class MapService {
                 const fixedFeatures = this.setDownloadFeatures(features);
                 let exportStr = format.writeFeatures(fixedFeatures, {
                     'dataProjection': this.wgs84Projection,
-                    'featureProjection': this.mapProjection
+                    'featureProjection': this.mapProjection,
                 });
                 if (dlType === 'kml') {
                     exportStr = exportStr.replace(
-                      /<kml xmlns="http:\/\/www.opengis.net\/kml\/2.2" xmlns:gx="http:\/\/www.google.com\/kml\/ext\/2.2" xmlns:xsi="http:\/\/www.w3.org\/2001\/XMLSchema-instance" xsi:schemaLocation="http:\/\/www.opengis.net\/kml\/2.2 https:\/\/developers.google.com\/kml\/schema\/kml22gx.xsd">/g,
-                      '<kml xmlns="http://www.opengis.net/kml/2.2"><Document id="root_doc">'
-                      + '<Folder><name>shapes_export</name>');
+                        /<kml xmlns="http:\/\/www.opengis.net\/kml\/2.2" xmlns:gx="http:\/\/www.google.com\/kml\/ext\/2.2" xmlns:xsi="http:\/\/www.w3.org\/2001\/XMLSchema-instance" xsi:schemaLocation="http:\/\/www.opengis.net\/kml\/2.2 https:\/\/developers.google.com\/kml\/schema\/kml22gx.xsd">/g,
+                        '<kml xmlns="http://www.opengis.net/kml/2.2"><Document id="root_doc">'
+                        + '<Folder><name>shapes_export</name>');
                     exportStr = exportStr.replace(
-                      /<Placemark>/g,
-                      '<Placemark><Style><LineStyle><color>ff000000</color><width>1</width></LineStyle>'
-                      + '<PolyStyle><color>4DAAAAAA</color><fill>1</fill></PolyStyle></Style>');
+                        /<Placemark>/g,
+                        '<Placemark><Style><LineStyle><color>ff000000</color><width>1</width></LineStyle>'
+                        + '<PolyStyle><color>4DAAAAAA</color><fill>1</fill></PolyStyle></Style>');
                     exportStr = exportStr.replace(/<Polygon>/g, '<Polygon><altitudeMode>clampToGround</altitudeMode>');
                     exportStr = exportStr.replace(/<\/kml>/g, '</Folder></Document></kml>');
                 }
@@ -1622,16 +1626,16 @@ export class MapService {
                 }
             } else {
                 this.alertService.showErrorSnackbar(
-                  this.no_shapes_selected,
-                  '',
-                  5000
+                    this.no_shapes_selected,
+                    '',
+                    5000,
                 );
             }
         } else {
             this.alertService.showErrorSnackbar(
-              this.select_download_type,
-              '',
-              5000
+                this.select_download_type,
+                '',
+                5000,
             );
         }
     }
@@ -1689,16 +1693,16 @@ export class MapService {
                 });
             } else {
                 this.alertService.showErrorSnackbar(
-                  this.buffer_error1,
-                  '',
-                  5000
+                    this.buffer_error1,
+                    '',
+                    5000,
                 );
             }
         } else {
             this.alertService.showErrorSnackbar(
-              this.buffer_error2,
-              '',
-              5000
+                this.buffer_error2,
+                '',
+                5000,
             );
         }
     }
@@ -1740,9 +1744,9 @@ export class MapService {
             }
         } else {
             this.alertService.showErrorSnackbar(
-              this.difference_error1,
-              '',
-              5000
+                this.difference_error1,
+                '',
+                5000,
             );
         }
     }
@@ -1779,10 +1783,9 @@ export class MapService {
                             }
                         } else if (geoType === 'MultiPolygon') {
                             for (let e in featCoords) {
-                                if(pass === 1){
+                                if (pass === 1) {
                                     featuresOne.push(this.vectorService.getTurfFeature('Polygon', featCoords[e]));
-                                }
-                                else{
+                                } else {
                                     featuresTwo.push(this.vectorService.getTurfFeature('Polygon', featCoords[e]));
                                 }
                             }
@@ -1801,11 +1804,11 @@ export class MapService {
             });
             for (let i in featuresOne) {
                 for (let e in featuresTwo) {
-                    var tempPoly = this.vectorService.getIntersectFeature(featuresOne[i],featuresTwo[e]);
-                    if(tempPoly){
-                        if(intersection){
-                            intersection = this.vectorService.getUnionFeature(intersection,tempPoly);
-                        } else{
+                    var tempPoly = this.vectorService.getIntersectFeature(featuresOne[i], featuresTwo[e]);
+                    if (tempPoly) {
+                        if (intersection) {
+                            intersection = this.vectorService.getUnionFeature(intersection, tempPoly);
+                        } else {
                             intersection = tempPoly;
                         }
                     }
@@ -1817,16 +1820,16 @@ export class MapService {
                 this.selectsource.addFeature(interpoly);
             } else {
                 this.alertService.showErrorSnackbar(
-                  this.intersect_error1,
-                  '',
-                  5000
+                    this.intersect_error1,
+                    '',
+                    5000,
                 );
             }
         } else {
             this.alertService.showErrorSnackbar(
-              this.intersect_error2,
-              '',
-              5000
+                this.intersect_error2,
+                '',
+                5000,
             );
         }
     }
@@ -1875,9 +1878,9 @@ export class MapService {
             }
         } else {
             this.alertService.showErrorSnackbar(
-              this.union_error1,
-              '',
-              5000
+                this.union_error1,
+                '',
+                5000,
             );
         }
     }
@@ -1893,9 +1896,9 @@ export class MapService {
                     features = this.getTurfPointFeaturesetSelected();
                 } else {
                     this.alertService.showErrorSnackbar(
-                      this.concave_error1,
-                      '',
-                      5000
+                        this.concave_error1,
+                        '',
+                        5000,
                     );
                     return;
                 }
@@ -1906,9 +1909,9 @@ export class MapService {
                     concavepoly = this.vectorService.getConcavePolyFeature(features, Number(maxEdge));
                 } catch (e) {
                     this.alertService.showErrorSnackbar(
-                      this.concave_error2,
-                      '',
-                      5000
+                        this.concave_error2,
+                        '',
+                        5000,
                     );
                 }
                 if (concavepoly) {
@@ -1918,17 +1921,17 @@ export class MapService {
                 }
             } else {
                 this.alertService.showErrorSnackbar(
-                  this.concave_error3,
-                  '',
-                  5000
+                    this.concave_error3,
+                    '',
+                    5000,
                 );
             }
             this.concaveMaxEdgeLengthSubject.next(0);
         } else {
             this.alertService.showErrorSnackbar(
-              this.concave_error4,
-              '',
-              5000
+                this.concave_error4,
+                '',
+                5000,
             );
         }
     }
@@ -1943,9 +1946,9 @@ export class MapService {
                 features = this.getTurfPointFeaturesetSelected();
             } else {
                 this.alertService.showErrorSnackbar(
-                  this.convex_error1,
-                  '',
-                  5000
+                    this.convex_error1,
+                    '',
+                    5000,
                 );
                 return;
             }
@@ -1959,9 +1962,9 @@ export class MapService {
             }
         } else {
             this.alertService.showErrorSnackbar(
-              this.convex_error2,
-              '',
-              5000
+                this.convex_error2,
+                '',
+                5000,
             );
         }
     }

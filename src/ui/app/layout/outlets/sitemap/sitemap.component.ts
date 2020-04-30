@@ -34,6 +34,11 @@ export class SitemapComponent implements OnInit {
             'link_path': '/pluginadmin',
             'link_text_translation_key': 'core.layout.sitemap.manage_plugins_link_text',
             'index': 2
+        },
+        {
+            'link_path': '/usermanagement',
+            'link_text_translation_key': 'core.layout.sitemap.user_management_link_text',
+            'index': 3
         }
     ];
 

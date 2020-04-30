@@ -3,34 +3,57 @@
 namespace Core\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * UserRoles
  *
- * @ORM\Table(name="userroles", indexes={@ORM\Index(name="Index_userroles_table", columns={"tablepk"}), @ORM\Index(name="FK_usrroles_uid2_idx", columns={"uidassignedby"}), @ORM\Index(name="FK_userroles_uid_idx", columns={"uid"})})
- * @ORM\Entity()
- * @ApiResource(
- *     collectionOperations={
- *          "post"={
- *              "access_control"="is_granted('SuperAdmin', object)",
- *              "normalization_context"={
- *                 "groups"={"get-roles"}
- *              }
- *          },
- *          "api_users_permissions_get_subresource"={
- *              "normalization_context"={
- *                  "groups"={"get-roles"}
- *              }
- *          }
- *      },
- *      denormalizationContext={
- *          "groups"={"post"}
+ * @ApiFilter(
+ *      SearchFilter::class,
+ *      properties={
+ *          "userId": "exact"
  *      }
  * )
+ * @ApiResource(
+ *     itemOperations={
+ *         "get"={
+ *             "access_control"="is_granted('UserAdmin', object)",
+ *             "normalization_context"={
+ *                 "groups"={"get"}
+ *             }
+ *         },
+ *         "delete"={
+ *            "access_control"="is_granted('UserAdmin', object)",
+ *            "normalization_context"={
+ *               "groups"={"get"}
+ *            }
+ *        }
+ *     },
+ *     collectionOperations={
+ *         "get"={
+ *              "access_control"="is_granted('UserAdmin', object)",
+ *              "normalization_context"={
+ *                  "groups"={"get"}
+ *              }
+ *         },
+ *         "post"={
+ *             "access_control"="is_granted('UserAdmin', object)",
+ *             "denormalization_context"={
+ *                 "groups"={"post"}
+ *             },
+ *             "normalization_context"={
+ *                "groups"={"get"}
+ *             }
+ *         }
+ *     }
+ * )
+ * @ORM\Table(name="userroles", indexes={@ORM\Index(name="Index_userroles_table", columns={"tablepk"}), @ORM\Index(name="FK_usrroles_uid2_idx", columns={"uidassignedby"}), @ORM\Index(name="FK_userroles_uid_idx", columns={"uid"})})
+ * @ORM\Entity()
  */
 class UserRoles implements UserIdAssignedByInterface, InitialTimestampInterface
 {
@@ -40,18 +63,18 @@ class UserRoles implements UserIdAssignedByInterface, InitialTimestampInterface
      * @ORM\Column(name="userroleid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Groups({"get-roles"})
+     * @Groups({"get"})
      */
     private $id;
 
     /**
-     * @var \Core\Entity\Users
+     * @var Users
      *
      * @ORM\ManyToOne(targetEntity="Core\Entity\Users")
      * @ORM\JoinColumns({
      *      @ORM\JoinColumn(name="uid", referencedColumnName="uid", nullable=false)
      * })
-     * @Groups({"post"})
+     * @Groups({"post","get"})
      */
     private $userId;
 
@@ -61,7 +84,7 @@ class UserRoles implements UserIdAssignedByInterface, InitialTimestampInterface
      * @ORM\Column(name="role", type="string", length=45)
      * @Assert\NotBlank()
      * @Assert\Length(max=45)
-     * @Groups({"post", "get-roles"})
+     * @Groups({"post", "get"})
      */
     private $role;
 
@@ -70,18 +93,18 @@ class UserRoles implements UserIdAssignedByInterface, InitialTimestampInterface
      *
      * @ORM\Column(name="tablepk", type="integer", nullable=true)
      * @Assert\Type(type="integer")
-     * @Groups({"post", "get-roles"})
+     * @Groups({"post", "get"})
      */
     private $tableId;
 
     /**
-     * @var \Core\Entity\Users
+     * @var Users
      *
      * @ORM\ManyToOne(targetEntity="Core\Entity\Users")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="uidassignedby", referencedColumnName="uid")
      * })
-     * @Groups({"get-roles"})
+     * @Groups({"post", "get"})
      */
     private $userIdAssignedBy;
 

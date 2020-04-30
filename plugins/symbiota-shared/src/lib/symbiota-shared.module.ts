@@ -11,10 +11,12 @@ import {MaterialModule} from './material.module';
 import {SpinnerOverlayComponent} from './components/spinner-overlay/spinner-overlay.component';
 import {CaptchaComponent} from './components/captcha/captcha.component';
 
+import {PermissionService} from './services/permission.service';
 import {SpinnerOverlayService} from './services/spinner-overlay.service';
 import {AlertService} from './services/alert.service';
 import {ConfigurationService} from './services/configuration.service';
 import {SharedToolsService} from './services/shared-tools.service';
+import {SharedUserService} from './services/shared-user.service';
 
 @NgModule({
     imports: [
@@ -41,10 +43,12 @@ import {SharedToolsService} from './services/shared-tools.service';
         CaptchaComponent
     ],
     providers: [
+        PermissionService,
         SpinnerOverlayService,
         AlertService,
         ConfigurationService,
-        SharedToolsService
+        SharedToolsService,
+        SharedUserService
     ],
     entryComponents: [
         SpinnerOverlayComponent,

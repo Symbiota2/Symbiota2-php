@@ -1,0 +1,32 @@
+.upper-cards {
+    margin-bottom: 15px;
+}
+
+.filterContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.lastNameFilterElement {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.lastNameInputBox {
+    width: 200px;
+}
+
+.usernameFilterElement {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.usernameInputBox {
+    width: 200px;
+}
+
+mat-card-header {
+    margin-bottom: 10px;
+    margin-left: -25px;
+}

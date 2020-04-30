@@ -25,7 +25,7 @@ use Core\Entity\Users;
  *     itemOperations={
  *          "get"={
  *             "normalization_context"={
- *                 "groups"={"get-checklist-info"}
+ *                 "groups"={"get"}
  *             }
  *          },
  *          "put"={
@@ -54,7 +54,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @ORM\Column(name="CLID", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Groups({"get", "get-checklist-info"})
+     * @Groups({"get"})
      * @ApiProperty(iri="http://schema.org/identifier")
      */
     private $id;
@@ -65,7 +65,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @ORM\Column(name="Name", type="string", length=100)
      * @Assert\NotBlank()
      * @Assert\Length(max=100)
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      * @ApiProperty(iri="http://schema.org/name")
      */
     private $name;
@@ -75,7 +75,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="Title", type="string", length=150, nullable=true)
      * @Assert\Length(max=150)
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      * @ApiProperty(iri="http://purl.org/dc/terms/title")
      */
     private $title;
@@ -85,7 +85,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="Locality", type="string", length=500, nullable=true)
      * @Assert\Length(max=500)
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      * @ApiProperty(iri="http://dbpedia.org/ontology/Locality")
      */
     private $locality;
@@ -95,7 +95,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="Publication", type="string", length=500, nullable=true)
      * @Assert\Length(max=500)
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      * @ApiProperty(iri="http://schema.org/publication")
      */
     private $publication;
@@ -105,7 +105,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="Abstract", type="text", length=65535, nullable=true)
      * @Assert\Length(max=65535)
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      * @ApiProperty(iri="http://purl.org/dc/terms/description")
      */
     private $abstract;
@@ -115,7 +115,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="Authors", type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      * @ApiProperty(iri="http://www.aktors.org/ontology/portal#has-author")
      */
     private $authors;
@@ -125,7 +125,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="Type", type="string", length=50, nullable=true, options={"default"="static"})
      * @Assert\Length(max=50)
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      */
     private $type = 'static';
 
@@ -134,7 +134,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="politicalDivision", type="string", length=45, nullable=true)
      * @Assert\Length(max=45)
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      */
     private $politicalDivision;
 
@@ -143,7 +143,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="dynamicsql", type="string", length=500, nullable=true)
      * @Assert\Length(max=500)
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      */
     private $dynamicSql;
 
@@ -152,7 +152,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="Parent", type="string", length=50, nullable=true)
      * @Assert\Length(max=50)
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      */
     private $parent;
 
@@ -163,7 +163,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parentclid", referencedColumnName="CLID")
      * })
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      */
     private $parentChecklistId;
 
@@ -172,7 +172,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="Notes", type="string", length=500, nullable=true)
      * @Assert\Length(max=500)
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      */
     private $notes;
 
@@ -181,7 +181,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="LatCentroid", type="float", precision=9, scale=6, nullable=true)
      * @Assert\Type(type="float")
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      */
     private $latitudeCentroid;
 
@@ -190,7 +190,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="LongCentroid", type="float", precision=9, scale=6, nullable=true)
      * @Assert\Type(type="float")
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      */
     private $longitudeCentroid;
 
@@ -199,7 +199,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="pointradiusmeters", type="integer", nullable=true, options={"unsigned"=true})
      * @Assert\Type(type="integer")
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      */
     private $pointRadiusInMeters;
 
@@ -208,7 +208,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="footprintWKT", type="text", length=65535, nullable=true)
      * @Assert\Length(max=65535)
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      */
     private $footprintWkt;
 
@@ -217,7 +217,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="percenteffort", type="integer", nullable=true)
      * @Assert\Type(type="integer")
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      */
     private $percentEffort;
 
@@ -226,7 +226,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="Access", type="string", length=45, nullable=true, options={"default"="private"})
      * @Assert\Length(max=45)
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      */
     private $access = 'private';
 
@@ -235,7 +235,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="defaultSettings", type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      */
     private $defaultSettings;
 
@@ -244,7 +244,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="iconUrl", type="string", length=150, nullable=true)
      * @Assert\Length(max=150)
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      */
     private $iconUrl;
 
@@ -253,7 +253,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="headerUrl", type="string", length=150, nullable=true)
      * @Assert\Length(max=150)
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      */
     private $headerUrl;
 
@@ -264,7 +264,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="createduid", referencedColumnName="uid")
      * })
-     * @Groups({"get", "get-checklist-info"})
+     * @Groups({"get"})
      */
     private $createdUserId;
 
@@ -273,7 +273,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="SortSequence", type="integer", options={"default"=50,"unsigned"=true})
      * @Assert\Type(type="integer")
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      */
     private $sortSequence = 50;
 
@@ -282,7 +282,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="expiration", type="integer", nullable=true, options={"unsigned"=true})
      * @Assert\Type(type="integer")
-     * @Groups({"get", "get-checklist-info", "post", "put"})
+     * @Groups({"get", "post", "put"})
      */
     private $expiration;
 
@@ -291,7 +291,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
      * @Assert\DateTime
-     * @Groups({"get", "get-checklist-info"})
+     * @Groups({"get"})
      */
     private $modifiedTimestamp;
 
@@ -300,7 +300,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="InitialTimeStamp", type="datetime")
      * @Assert\DateTime
-     * @Groups({"get", "get-checklist-info"})
+     * @Groups({"get"})
      */
     private $initialTimestamp;
 
@@ -308,7 +308,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Checklist\Entity\ChecklistProjects", mappedBy="checklistId")
-     * @Groups({"get", "get-checklist-info"})
+     * @Groups({"get"})
      */
     private $projectId;
 
@@ -317,7 +317,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      */
     public function __construct()
     {
-        $this->projectId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->projectId = new ArrayCollection();
     }
 
     public function getId(): ?int

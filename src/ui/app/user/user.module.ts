@@ -11,8 +11,15 @@ import {UserProfileComponent} from './outlets/user-profile/user-profile.componen
 import {EditProfileComponent} from './containers/edit-profile/edit-profile.component';
 import {UserPasswordComponent} from './components/user-password/user-password.component';
 import {UserMetadataComponent} from './components/user-metadata/user-metadata.component';
+import {UserManagementComponent} from './containers/user-management/user-management.component';
+import {UserListComponent} from './components/user-list/user-list.component';
+import {UserDetailComponent} from './components/user-detail/user-detail.component';
 
 import {UserService} from './services/user.service';
+import { UserPermissionsCurrentComponent } from './outlets/user-permissions-current/user-permissions-current.component';
+import { UserPermissionsAvailableComponent } from './outlets/user-permissions-available/user-permissions-available.component';
+import { SuperAdminCurrentPermissionComponent } from './components/super-admin-current-permission/super-admin-current-permission.component';
+import { SuperAdminAvailablePermissionComponent } from './components/super-admin-available-permission/super-admin-available-permission.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +27,14 @@ import {UserService} from './services/user.service';
         UserProfileComponent,
         EditProfileComponent,
         UserPasswordComponent,
-        UserMetadataComponent
+        UserMetadataComponent,
+        UserListComponent,
+        UserPermissionsCurrentComponent,
+        UserPermissionsAvailableComponent,
+        UserManagementComponent,
+        UserDetailComponent,
+        SuperAdminCurrentPermissionComponent,
+        SuperAdminAvailablePermissionComponent
     ],
     imports: [
         CommonModule,

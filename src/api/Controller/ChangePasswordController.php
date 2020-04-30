@@ -39,7 +39,7 @@ class ChangePasswordController
         $returnCode = 0;
 
         if (!$user instanceof Users) {
-            return;
+            return false;
         }
 
         $request = json_decode($this->requestStack->getCurrentRequest()->getContent(),true);
@@ -80,7 +80,7 @@ class ChangePasswordController
                 $token,
                 time() + $cookieExp,
                 '',
-                'localhost'
+                $_SERVER['SERVER_NAME']
             );
             $response->headers->setCookie($cookie);
         }
