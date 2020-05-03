@@ -1,1 +1,6 @@
-{}
+{
+	"key.key_admin_available_permission.identification_key_admin": "مدیر کلیدی شناسایی",
+	"key.key_admin_current_permission.identification_key_admin": "مدیر کلیدی شناسایی",
+	"key.key_editor_available_permission.identification_key_editor": "ویرایشگر کلید شناسایی",
+	"key.key_editor_current_permission.identification_key_editor": "ویرایشگر کلید شناسایی"
+}

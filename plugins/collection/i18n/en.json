@@ -1,3 +1,5 @@
 {
+	"collection.rare_species_reader_available_permission.rare_species_reader": "Can read Rare Species data for all collections",
+	"collection.rare_species_reader_current_permission.rare_species_reader": "Can read Rare Species data for all collections",
 	"collection.specimen_management_tab": "Specimen Management"
 }

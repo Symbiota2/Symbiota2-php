@@ -56,13 +56,13 @@ export class SitemapComponent implements OnInit {
         this.dataManagementLinksArr = Object.assign([], this.linkService.getOutletLinks('sitemap-data-management'));
         this.dataManagementLinksArr.sort((a, b) => a.index - b.index);
 
-        this.generalComponentsArr = Object.assign([], this.componentService.getOutletComponents('sitemap-general'));
+        this.generalComponentsArr = Object.assign([], this.componentService.getOutletComponents('sitemap-general', {}));
         this.generalComponentsArr.sort((a, b) => a.index - b.index);
 
-        this.portalAdminComponentsArr = Object.assign([], this.componentService.getOutletComponents('sitemap-portal-admin'));
+        this.portalAdminComponentsArr = Object.assign([], this.componentService.getOutletComponents('sitemap-portal-admin', {}));
         this.portalAdminComponentsArr.sort((a, b) => a.index - b.index);
 
-        this.dataManagementComponentsArr = Object.assign([], this.componentService.getOutletComponents('sitemap-data-management'));
+        this.dataManagementComponentsArr = Object.assign([], this.componentService.getOutletComponents('sitemap-data-management', {}));
         this.dataManagementComponentsArr.sort((a, b) => a.index - b.index);
     }
 

@@ -1,1 +1,6 @@
-{}
+{
+	"taxa.taxon_profile_editor_available_permission.taxon_profile_editor": "محرر ملف تعريف Taxon",
+	"taxa.taxon_profile_editor_current_permission.taxon_profile_editor": "محرر ملف تعريف Taxon",
+	"taxa.taxonomy_editor_available_permission.taxonomy_editor": "محرر التصنيف",
+	"taxa.taxonomy_editor_current_permission.taxonomy_editor": "محرر التصنيف"
+}

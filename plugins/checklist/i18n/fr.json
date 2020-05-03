@@ -1,1 +1,4 @@
-{}
+{
+	"checklist.rare_species_admin_available_permission.rare_species_admin": "Administrateur des espèces rares (ajouter / supprimer des espèces de la liste)",
+	"checklist.rare_species_admin_current_permission.rare_species_admin": "Administrateur des espèces rares (ajouter / supprimer des espèces de la liste)"
+}

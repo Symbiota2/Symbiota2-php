@@ -6,18 +6,16 @@
         <app-super-admin-available-permission></app-super-admin-available-permission>
         <ng-container *ngIf="globalPermissionComponentsArr.length > 0">
             <ng-container *ngFor="let component of globalPermissionComponentsArr">
-                <app-plugin-outlet class="dynamic-tab-content" *ngIf="component.module" [file]="component.filename" [module]="component.module" [provider]="component.provider" [child]="true"></app-plugin-outlet>
-                <ng-container *ngIf="!component.module">
-                    <ng-container *ngComponentOutlet="component.component"></ng-container>
-                </ng-container>
+                <div>
+                    <app-plugin-outlet *ngIf="component.module" [file]="component.filename" [module]="component.module" [provider]="component.provider" [child]="true" [params]="component.params" (changeEmitter)="processPermissionChange()"></app-plugin-outlet>
+                </div>
             </ng-container>
         </ng-container>
         <ng-container *ngIf="itemPermissionComponentsArr.length > 0">
             <ng-container *ngFor="let component of itemPermissionComponentsArr">
-                <app-plugin-outlet class="dynamic-tab-content" *ngIf="component.module" [file]="component.filename" [module]="component.module" [provider]="component.provider" [child]="true"></app-plugin-outlet>
-                <ng-container *ngIf="!component.module">
-                    <ng-container *ngComponentOutlet="component.component"></ng-container>
-                </ng-container>
+                <div>
+                    <app-plugin-outlet *ngIf="component.module" [file]="component.filename" [module]="component.module" [provider]="component.provider" [child]="true" [params]="component.params" (changeEmitter)="processPermissionChange()"></app-plugin-outlet>
+                </div>
             </ng-container>
         </ng-container>
     </mat-card-content>

@@ -1,0 +1,11 @@
+.delete-icon {
+    color: red;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.current-permission-line {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}

@@ -1,1 +1,4 @@
-{}
+{
+	"checklist.rare_species_admin_available_permission.rare_species_admin": "稀有物种管理员（从列表中添加/删除物种）",
+	"checklist.rare_species_admin_current_permission.rare_species_admin": "稀有物种管理员（从列表中添加/删除物种）"
+}

@@ -16,7 +16,7 @@ import {AddPermission} from '../interfaces/permission.interface';
 export class PermissionService {
     private userIdSubject = new BehaviorSubject<number>(null);
     public readonly userId: Observable<number> = this.userIdSubject.asObservable();
-    private userIdValue: number;
+    public userIdValue: number;
     private currentPermissionsSubject = new BehaviorSubject<UserPermission[]>([]);
     public readonly currentPermissions: Observable<UserPermission[]> = this.currentPermissionsSubject.asObservable();
     setUserPermissionErrorText: string;

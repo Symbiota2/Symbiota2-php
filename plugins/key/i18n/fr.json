@@ -1,1 +1,6 @@
-{}
+{
+	"key.key_admin_available_permission.identification_key_admin": "Administrateur de clé d'identification",
+	"key.key_admin_current_permission.identification_key_admin": "Administrateur de clé d'identification",
+	"key.key_editor_available_permission.identification_key_editor": "Éditeur de clé d'identification",
+	"key.key_editor_current_permission.identification_key_editor": "Éditeur de clé d'identification"
+}

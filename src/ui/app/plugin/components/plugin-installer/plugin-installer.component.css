@@ -1,3 +1,11 @@
+.pluginurlFormElement {
+    margin: 10px 0 10px 0;
+}
+
+.pluginurlInputBox {
+    width: 90%;
+}
+
 .plugin-card {
     margin: 10px;
 }
@@ -8,10 +16,6 @@
 
 .warningText {
     color: red;
-}
-
-mat-form-field {
-    width: 90%;
 }
 
 .rightJustifiedContainer {

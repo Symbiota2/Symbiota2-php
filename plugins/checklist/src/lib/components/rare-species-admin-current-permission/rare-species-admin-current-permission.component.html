@@ -1,0 +1,5 @@
+<ng-container *ngIf="rareSpeciesAdminPermission">
+    <li>
+        <span class="current-permission-line">{{ 'checklist.rare_species_admin_current_permission.rare_species_admin' | translate }} <mat-icon class="delete-icon" (click)="onPermissionDelete(rareSpeciesAdminPermission.id)">clear</mat-icon></span>
+    </li>
+</ng-container>

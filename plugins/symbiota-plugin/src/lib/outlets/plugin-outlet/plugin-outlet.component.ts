@@ -8,7 +8,7 @@ import {
     ViewContainerRef,
     Compiler,
     ComponentRef,
-    Input
+    Input, Output, EventEmitter
 } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
@@ -26,6 +26,7 @@ export class PluginOutletComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() provider: string;
     @Input() params: any;
     @Input() child = false;
+    @Output() changeEmitter = new EventEmitter<any>();
 
     component: ComponentRef<any>;
 
@@ -61,6 +62,11 @@ export class PluginOutletComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.component = this.content.createComponent(componentFactory);
         this.component.instance.params = this.params;
+        if (this.component.instance.changeEmitter) {
+            this.component.instance.changeEmitter.subscribe((data) => {
+                this.changeEmitter.emit(data);
+            });
+        }
     }
 
     ngOnDestroy() {

@@ -1,1 +1,6 @@
-{}
+{
+	"key.key_admin_available_permission.identification_key_admin": "पहचान कुंजी व्यवस्थापक",
+	"key.key_admin_current_permission.identification_key_admin": "पहचान कुंजी व्यवस्थापक",
+	"key.key_editor_available_permission.identification_key_editor": "पहचान प्रमुख संपादक",
+	"key.key_editor_current_permission.identification_key_editor": "पहचान प्रमुख संपादक"
+}

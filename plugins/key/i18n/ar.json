@@ -1,1 +1,6 @@
-{}
+{
+	"key.key_admin_available_permission.identification_key_admin": "مسؤول مفتاح التعريف",
+	"key.key_admin_current_permission.identification_key_admin": "مسؤول مفتاح التعريف",
+	"key.key_editor_available_permission.identification_key_editor": "محرر مفتاح التعريف",
+	"key.key_editor_current_permission.identification_key_editor": "محرر مفتاح التعريف"
+}

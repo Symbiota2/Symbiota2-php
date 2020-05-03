@@ -18,7 +18,20 @@ export class PluginComponentService {
         });
     }
 
-    getOutletComponents(outlet: string) {
-        return (this.pluginComponents[outlet] ? this.pluginComponents[outlet] : []);
+    getOutletComponents(outlet: string, params: any) {
+        if (this.pluginComponents[outlet]) {
+            if (params === {}) {
+                return this.pluginComponents[outlet];
+            } else {
+                const newArray = [];
+                this.pluginComponents[outlet].forEach((component) => {
+                    component.params = Object.assign({}, params);
+                    newArray.push(component);
+                });
+                return newArray;
+            }
+        } else {
+            return [];
+        }
     }
 }

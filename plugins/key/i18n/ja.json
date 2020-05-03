@@ -1,1 +1,6 @@
-{}
+{
+	"key.key_admin_available_permission.identification_key_admin": "識別キー管理者",
+	"key.key_admin_current_permission.identification_key_admin": "識別キー管理者",
+	"key.key_editor_available_permission.identification_key_editor": "識別キーエディター",
+	"key.key_editor_current_permission.identification_key_editor": "識別キーエディター"
+}

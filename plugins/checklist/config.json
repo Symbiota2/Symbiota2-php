@@ -10,5 +10,17 @@
   ],
   "api_namespace": "Checklist",
   "ui_filename": "checklist.umd.js",
-  "ui_module_name": "ChecklistModule"
+  "ui_module_name": "ChecklistModule",
+  "component_hooks": [
+    {
+      "outlet": "global-permission-available",
+      "index": 6,
+      "provider": "rare-species-admin-available-permission"
+    },
+    {
+      "outlet": "global-permission-current",
+      "index": 6,
+      "provider": "rare-species-admin-current-permission"
+    }
+  ]
 }

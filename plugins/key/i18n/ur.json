@@ -1,1 +1,6 @@
-{}
+{
+	"key.key_admin_available_permission.identification_key_admin": "شناخت کلیدی ایڈمنسٹریٹر",
+	"key.key_admin_current_permission.identification_key_admin": "شناخت کلیدی ایڈمنسٹریٹر",
+	"key.key_editor_available_permission.identification_key_editor": "شناخت کلیدی ایڈیٹر",
+	"key.key_editor_current_permission.identification_key_editor": "شناخت کلیدی ایڈیٹر"
+}

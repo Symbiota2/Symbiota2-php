@@ -1,0 +1,3 @@
+<ng-container *ngIf="!rareSpeciesAdminPermission">
+    <mat-checkbox class="clear" ngModel (click)="onPermissionAdd()"> {{ 'checklist.rare_species_admin_available_permission.rare_species_admin' | translate }}</mat-checkbox>
+</ng-container>

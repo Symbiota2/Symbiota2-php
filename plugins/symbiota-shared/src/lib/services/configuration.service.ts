@@ -39,7 +39,6 @@ export class ConfigurationService {
                         '',
                         5000
                     );
-                    console.log(error);
                     resolve(this.data);
                 }
             );

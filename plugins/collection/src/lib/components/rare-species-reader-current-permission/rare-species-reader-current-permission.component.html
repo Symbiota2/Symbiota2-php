@@ -1,0 +1,5 @@
+<ng-container *ngIf="rareSpeciesReaderPermission">
+    <li>
+        <span class="current-permission-line">{{ 'collection.rare_species_reader_current_permission.rare_species_reader' | translate }} <mat-icon class="delete-icon" (click)="onPermissionDelete(rareSpeciesReaderPermission.id)">clear</mat-icon></span>
+    </li>
+</ng-container>

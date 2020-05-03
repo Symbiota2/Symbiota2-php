@@ -79,7 +79,6 @@ export class PluginLoaderService {
                         '',
                         5000
                     );
-                    console.log(error);
                     resolve(this.pluginData);
                 }
             );
@@ -95,10 +94,10 @@ export class PluginLoaderService {
     resolvePluginDependencies() {
         this.pluginData.forEach((plugin, index) => {
             if (plugin.enabled && plugin.ui_filename && plugin.dependencies) {
-                plugin.dependencies.forEach((depName, index2) => {
+                plugin.dependencies.forEach((depName) => {
                     const dep = this.pluginData.find(x => x.name === depName);
                     if (dep.enabled && dep.ui_filename && dep.dependencies) {
-                        dep.dependencies.forEach((secDepName, index3) => {
+                        dep.dependencies.forEach((secDepName) => {
                             const secDep = this.pluginData.find(x => x.name === secDepName);
                             if (!this.pluginIsLoaded(secDep.name)) {
                                 this.loadPlugin(secDep);
@@ -115,7 +114,7 @@ export class PluginLoaderService {
     }
 
     loadPlugins() {
-        this.pluginData.forEach((plugin, index) => {
+        this.pluginData.forEach((plugin) => {
             if (plugin.enabled && plugin.ui_filename && !this.pluginIsLoaded(plugin.name)) {
                 this.loadPlugin(plugin);
             }
@@ -144,7 +143,7 @@ export class PluginLoaderService {
         const moduleName = plugin.ui_module_name;
         let route: Route = {};
 
-        routes.forEach((rt, index) => {
+        routes.forEach((rt) => {
             let routeData = {};
             const data = {
                 file: plugin.ui_filename,
@@ -163,7 +162,7 @@ export class PluginLoaderService {
                 const children = rt.children;
                 let childRoute: Route = {};
 
-                children.forEach((childrt, index2) => {
+                children.forEach((childrt) => {
                     let childRouteData = {};
                     const childData = {
                         file: plugin.ui_filename,

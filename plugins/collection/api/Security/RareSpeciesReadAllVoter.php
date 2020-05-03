@@ -1,6 +1,6 @@
 <?php
 
-namespace Taxa\Security;
+namespace Collection\Security;
 
 use Core\Entity\Users;
 use Doctrine\ORM\EntityManagerInterface;

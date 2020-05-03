@@ -1,1 +1,6 @@
-{}
+{
+	"key.key_admin_available_permission.identification_key_admin": "识别码管理员",
+	"key.key_admin_current_permission.identification_key_admin": "识别码管理员",
+	"key.key_editor_available_permission.identification_key_editor": "识别码编辑器",
+	"key.key_editor_current_permission.identification_key_editor": "识别码编辑器"
+}

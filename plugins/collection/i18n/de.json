@@ -1,3 +1,5 @@
 {
+	"collection.rare_species_reader_available_permission.rare_species_reader": "Kann Daten zu seltenen Arten für alle Sammlungen lesen",
+	"collection.rare_species_reader_current_permission.rare_species_reader": "Kann Daten zu seltenen Arten für alle Sammlungen lesen",
 	"collection.specimen_management_tab": "Probenverwaltung"
 }

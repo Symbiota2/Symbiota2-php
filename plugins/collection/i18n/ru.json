@@ -1,3 +1,5 @@
 {
+	"collection.rare_species_reader_available_permission.rare_species_reader": "Может читать данные редких видов для всех коллекций",
+	"collection.rare_species_reader_current_permission.rare_species_reader": "Может читать данные редких видов для всех коллекций",
 	"collection.specimen_management_tab": "Управление образцами"
 }

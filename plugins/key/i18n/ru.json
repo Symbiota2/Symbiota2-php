@@ -1,1 +1,6 @@
-{}
+{
+	"key.key_admin_available_permission.identification_key_admin": "Идентификационный ключ администратора",
+	"key.key_admin_current_permission.identification_key_admin": "Идентификационный ключ администратора",
+	"key.key_editor_available_permission.identification_key_editor": "Редактор идентификационных ключей",
+	"key.key_editor_current_permission.identification_key_editor": "Редактор идентификационных ключей"
+}

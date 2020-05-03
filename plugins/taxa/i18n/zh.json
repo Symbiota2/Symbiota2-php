@@ -1,1 +1,6 @@
-{}
+{
+	"taxa.taxon_profile_editor_available_permission.taxon_profile_editor": "分类单元配置文件编辑器",
+	"taxa.taxon_profile_editor_current_permission.taxon_profile_editor": "分类单元配置文件编辑器",
+	"taxa.taxonomy_editor_available_permission.taxonomy_editor": "分类法编辑器",
+	"taxa.taxonomy_editor_current_permission.taxonomy_editor": "分类法编辑器"
+}

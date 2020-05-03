@@ -1,0 +1,5 @@
+<ng-container *ngIf="keyEditorPermission">
+    <li>
+        <span class="current-permission-line">{{ 'key.key_editor_current_permission.identification_key_editor' | translate }} <mat-icon class="delete-icon" (click)="onPermissionDelete(keyEditorPermission.id)">clear</mat-icon></span>
+    </li>
+</ng-container>

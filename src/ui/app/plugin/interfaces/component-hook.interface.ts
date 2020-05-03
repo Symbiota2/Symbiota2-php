@@ -5,4 +5,5 @@ export interface ComponentHook {
     component?: any;
     module?: any;
     filename?: any;
+    params?: any;
 }

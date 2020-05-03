@@ -14,5 +14,17 @@
       "index": 1,
       "provider": "user-profile-collection-tab"
     }
+  ],
+  "component_hooks": [
+    {
+      "outlet": "global-permission-available",
+      "index": 7,
+      "provider": "rare-species-reader-available-permission"
+    },
+    {
+      "outlet": "global-permission-current",
+      "index": 7,
+      "provider": "rare-species-reader-current-permission"
+    }
   ]
 }

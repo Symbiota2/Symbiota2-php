@@ -1,10 +1,12 @@
 <mat-card class="plugin-card">
     <form>
         {{ 'core.plugin.plugin_installer.to_install_plugin_not_on_registry' | translate }}:<br />
-        <mat-form-field>
-            <input type="text" matInput placeholder="{{ 'core.plugin.plugin_installer.enter_url_for_plugin' | translate }}" name="pluginurl" [(ngModel)]="pluginUploadUrl" (change)="verifyPluginUrl($event)">
-        </mat-form-field>
-        <br />
+        <div class="pluginurlFormElement">
+            <label>
+                {{ 'core.plugin.plugin_installer.enter_url_for_plugin' | translate }}
+                <input type="text" class="pluginurlInputBox" name="pluginurl" [(ngModel)]="pluginUploadUrl" (change)="verifyPluginUrl($event)">
+            </label>
+        </div>
         {{ 'core.plugin.plugin_installer.or' | translate }}
         <br />
         <div class="fileUploadDiv">

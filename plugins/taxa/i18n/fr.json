@@ -1,1 +1,6 @@
-{}
+{
+	"taxa.taxon_profile_editor_available_permission.taxon_profile_editor": "Éditeur de profil de taxon",
+	"taxa.taxon_profile_editor_current_permission.taxon_profile_editor": "Éditeur de profil de taxon",
+	"taxa.taxonomy_editor_available_permission.taxonomy_editor": "Éditeur de taxonomie",
+	"taxa.taxonomy_editor_current_permission.taxonomy_editor": "Éditeur de taxonomie"
+}

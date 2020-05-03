@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {CollectionListData} from './collection-list-data.model';
+
+import {CollectionListData} from '../interfaces/collection-list-data.interface';
 
 @Injectable({
     providedIn: 'root'

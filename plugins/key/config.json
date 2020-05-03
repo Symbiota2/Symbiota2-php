@@ -9,5 +9,27 @@
   ],
   "api_namespace": "Key",
   "ui_filename": "key.umd.js",
-  "ui_module_name": "KeyModule"
+  "ui_module_name": "KeyModule",
+  "component_hooks": [
+    {
+      "outlet": "global-permission-available",
+      "index": 4,
+      "provider": "key-admin-available-permission"
+    },
+    {
+      "outlet": "global-permission-available",
+      "index": 5,
+      "provider": "key-editor-available-permission"
+    },
+    {
+      "outlet": "global-permission-current",
+      "index": 4,
+      "provider": "key-admin-current-permission"
+    },
+    {
+      "outlet": "global-permission-current",
+      "index": 5,
+      "provider": "key-editor-current-permission"
+    }
+  ]
 }

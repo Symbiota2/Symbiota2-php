@@ -1,1 +1,4 @@
-{}
+{
+	"checklist.rare_species_admin_available_permission.rare_species_admin": "希少種管理者（リストから種を追加/削除）",
+	"checklist.rare_species_admin_current_permission.rare_species_admin": "希少種管理者（リストから種を追加/削除）"
+}

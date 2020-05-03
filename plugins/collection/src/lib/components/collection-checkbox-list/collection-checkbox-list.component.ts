@@ -3,7 +3,7 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {BehaviorSubject} from 'rxjs';
-import {CollectionListService} from '../collection-list.service';
+import {CollectionListService} from '../../services/collection-list.service';
 
 export class DataNode {
     name: string;
