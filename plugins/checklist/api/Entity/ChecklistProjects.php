@@ -3,13 +3,11 @@
 namespace Checklist\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Core\Entity\InitialTimestampInterface;
-use Core\Entity\InitialTimestampTrait;
 
 /**
  * ChecklistProjects Checklists are organized into projects, there can be many checklists in a project and a
@@ -19,19 +17,53 @@ use Core\Entity\InitialTimestampTrait;
  * @ORM\Entity()
  * @ApiResource(
  *     routePrefix="/checklist",
- *     itemOperations={"get"},
- *     collectionOperations={"get"}
+ *     attributes={"order"={"projectName": "ASC"}},
+ *     itemOperations={
+ *         "get"={
+ *             "normalization_context"={
+ *                 "groups"={"get"}
+ *             }
+ *         },
+ *         "put"={
+ *            "access_control"="is_granted('ProjAdmin', object)",
+ *            "normalization_context"={
+ *               "groups"={"get"}
+ *            }
+ *         },
+ *         "delete"={
+ *            "access_control"="is_granted('ProjAdmin', object)",
+ *            "normalization_context"={
+ *               "groups"={"get"}
+ *            }
+ *        }
+ *     },
+ *     collectionOperations={
+ *         "get"={
+ *              "normalization_context"={
+ *                  "groups"={"get-list"}
+ *              }
+ *         },
+ *         "post"={
+ *             "access_control"="is_granted('IS_AUTHENTICATED_FULLY')",
+ *             "denormalization_context"={
+ *                 "groups"={"post"}
+ *             },
+ *             "normalization_context"={
+ *                "groups"={"get"}
+ *             }
+ *         }
+ *     }
  * )
  */
 class ChecklistProjects implements InitialTimestampInterface
 {
-    use InitialTimestampTrait;
     /**
      * @var int The id is auto-generated.  Every Checklist project has a unique id.
      *
      * @ORM\Column(name="pid", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups({"get", "get-list"})
      */
     private $id;
 
@@ -39,6 +71,7 @@ class ChecklistProjects implements InitialTimestampInterface
      * @var string
      *
      * @ORM\Column(name="projname", type="string", length=60)
+     * @Groups({"get", "post", "put", "get-list"})
      * @Assert\NotBlank()
      * @Assert\Length(max=60)
      */
@@ -48,6 +81,7 @@ class ChecklistProjects implements InitialTimestampInterface
      * @var string|null
      *
      * @ORM\Column(name="displayname", type="string", length=150, nullable=true)
+     * @Groups({"get", "post", "put", "get-list"})
      * @Assert\Length(max=150)
      */
     private $displayName;
@@ -56,6 +90,7 @@ class ChecklistProjects implements InitialTimestampInterface
      * @var string|null
      *
      * @ORM\Column(name="managers", type="string", length=150, nullable=true)
+     * @Groups({"get", "post", "put"})
      * @Assert\Length(max=150)
      */
     private $managers;
@@ -64,6 +99,7 @@ class ChecklistProjects implements InitialTimestampInterface
      * @var string|null
      *
      * @ORM\Column(name="briefdescription", type="string", length=300, nullable=true)
+     * @Groups({"get", "post", "put", "get-list"})
      * @Assert\Length(max=300)
      */
     private $briefDescription;
@@ -72,6 +108,7 @@ class ChecklistProjects implements InitialTimestampInterface
      * @var string|null
      *
      * @ORM\Column(name="fulldescription", type="string", length=2000, nullable=true)
+     * @Groups({"get", "post", "put"})
      * @Assert\Length(max=2000)
      */
     private $fullDescription;
@@ -80,6 +117,7 @@ class ChecklistProjects implements InitialTimestampInterface
      * @var string|null
      *
      * @ORM\Column(name="notes", type="string", length=250, nullable=true)
+     * @Groups({"get", "post", "put"})
      * @Assert\Length(max=250)
      */
     private $notes;
@@ -88,6 +126,7 @@ class ChecklistProjects implements InitialTimestampInterface
      * @var string|null
      *
      * @ORM\Column(name="iconUrl", type="string", length=150, nullable=true)
+     * @Groups({"get", "post", "put", "get-list"})
      * @Assert\Length(max=150)
      */
     private $iconUrl;
@@ -96,6 +135,7 @@ class ChecklistProjects implements InitialTimestampInterface
      * @var string|null
      *
      * @ORM\Column(name="headerUrl", type="string", length=150, nullable=true)
+     * @Groups({"get", "post", "put"})
      * @Assert\Length(max=150)
      */
     private $headerUrl;
@@ -104,6 +144,7 @@ class ChecklistProjects implements InitialTimestampInterface
      * @var int
      *
      * @ORM\Column(name="occurrencesearch", type="integer", options={"unsigned"=true})
+     * @Groups({"get", "post", "put"})
      * @Assert\NotBlank()
      * @Assert\Type(type="integer")
      */
@@ -113,6 +154,7 @@ class ChecklistProjects implements InitialTimestampInterface
      * @var int
      *
      * @ORM\Column(name="ispublic", type="integer", options={"unsigned"=true})
+     * @Groups({"get", "post", "put"})
      * @Assert\NotBlank()
      * @Assert\Type(type="integer")
      */
@@ -122,6 +164,7 @@ class ChecklistProjects implements InitialTimestampInterface
      * @var string|null
      *
      * @ORM\Column(name="dynamicProperties", type="text", length=65535, nullable=true)
+     * @Groups({"get", "post", "put"})
      * @Assert\Length(max=65535)
      */
     private $dynamicProperties;
@@ -133,6 +176,7 @@ class ChecklistProjects implements InitialTimestampInterface
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="parentpid", referencedColumnName="pid")
      * })
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $parentProjectId;
 
@@ -140,6 +184,7 @@ class ChecklistProjects implements InitialTimestampInterface
      * @var int
      *
      * @ORM\Column(name="SortSequence", type="integer", options={"default"="50","unsigned"=true})
+     * @Groups({"get", "post", "put", "get-list"})
      * @Assert\NotBlank()
      * @Assert\Type(type="integer")
      */
@@ -151,7 +196,7 @@ class ChecklistProjects implements InitialTimestampInterface
      * ORM\Column(name="InitialTimeStamp", type="datetime")
      * Assert\DateTime
      */
-    //private $initialTimestamp;
+    private $initialTimestamp;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -325,7 +370,7 @@ class ChecklistProjects implements InitialTimestampInterface
         return $this;
     }
 
-    /*
+
     public function getInitialTimestamp(): ?\DateTimeInterface
     {
         return $this->initialTimestamp;
@@ -337,7 +382,7 @@ class ChecklistProjects implements InitialTimestampInterface
 
         return $this;
     }
-    */
+
     public function getParentProjectId(): ?self
     {
         return $this->parentProjectId;
