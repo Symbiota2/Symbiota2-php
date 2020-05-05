@@ -16,12 +16,12 @@ class RareSpeciesReadAllVoter extends Voter
         $this->em = $em;
     }
 
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
         return ($attribute === 'RareSppReadAll');
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
         $vote = false;
 

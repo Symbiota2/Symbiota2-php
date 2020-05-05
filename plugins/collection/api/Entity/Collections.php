@@ -3,6 +3,7 @@
 namespace Collection\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,8 +18,45 @@ use Core\Entity\Users;
  * @ORM\Table(name="omcollections", uniqueConstraints={@ORM\UniqueConstraint(name="Index_inst", columns={"InstitutionCode", "CollectionCode"})}, indexes={@ORM\Index(name="FK_collid_iid_idx", columns={"iid"})})
  * @ORM\Entity()
  * @ApiResource(
- *     itemOperations={"get"},
- *     collectionOperations={"get"}
+ *     attributes={"order"={"collectionName": "ASC"}},
+ *     itemOperations={
+ *          "get"={
+ *             "normalization_context"={
+ *                 "groups"={"get"}
+ *             }
+ *          },
+ *          "put"={
+ *              "access_control"="is_granted('CollAdmin', object)",
+ *              "denormalization_context"={
+ *                  "groups"={"put"}
+ *              },
+ *              "normalization_context"={
+ *                  "groups"={"get"}
+ *              }
+ *          },
+ *          "delete"={
+ *            "access_control"="is_granted('CollAdmin', object)",
+ *            "normalization_context"={
+ *               "groups"={"get"}
+ *             }
+ *          }
+ *      },
+ *      collectionOperations={
+ *          "get"={
+ *              "normalization_context"={
+ *                  "groups"={"get-list"}
+ *              }
+ *          },
+ *          "post"={
+ *              "access_control"="is_granted('SuperAdmin', object)",
+ *              "denormalization_context"={
+ *                  "groups"={"post"}
+ *              },
+ *              "normalization_context"={
+ *                "groups"={"get"}
+ *              }
+ *          }
+ *      }
  * )
  */
 class Collections implements InitialTimestampInterface
@@ -29,6 +67,7 @@ class Collections implements InitialTimestampInterface
      * @ORM\Column(name="CollID", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups({"get", "get-list"})
      */
     private $id;
 
@@ -38,6 +77,7 @@ class Collections implements InitialTimestampInterface
      * @ORM\Column(name="InstitutionCode", type="string", length=45)
      * @Assert\NotBlank()
      * @Assert\Length(max=45)
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $institutionCode;
 
@@ -46,6 +86,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="CollectionCode", type="string", length=45, nullable=true)
      * @Assert\Length(max=45)
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $collectionCode;
 
@@ -55,6 +96,7 @@ class Collections implements InitialTimestampInterface
      * @ORM\Column(name="CollectionName", type="string", length=150)
      * @Assert\NotBlank()
      * @Assert\Length(max=150)
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $collectionName;
 
@@ -63,6 +105,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="collectionId", type="string", length=100, nullable=true)
      * @Assert\Length(max=100)
+     * @Groups({"get", "post", "put"})
      */
     private $collectionId;
 
@@ -71,16 +114,18 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="datasetName", type="string", length=100, nullable=true)
      * @Assert\Length(max=100)
+     * @Groups({"get", "post", "put"})
      */
     private $datasetName;
 
     /**
-     * @var \Collection\Entity\Institutions
+     * @var Institutions
      *
      * @ORM\ManyToOne(targetEntity="Collection\Entity\Institutions")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="iid", referencedColumnName="iid")
      * })
+     * @Groups({"get", "post", "put"})
      */
     private $institutionId;
 
@@ -89,6 +134,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="fulldescription", type="string", length=2000, nullable=true)
      * @Assert\Length(max=2000)
+     * @Groups({"get", "post", "put"})
      */
     private $fullDescription;
 
@@ -97,6 +143,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="Homepage", type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
+     * @Groups({"get", "post", "put"})
      */
     private $homepage;
 
@@ -105,6 +152,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="IndividualUrl", type="string", length=500, nullable=true)
      * @Assert\Length(max=500)
+     * @Groups({"get", "post", "put"})
      */
     private $individualUrl;
 
@@ -113,6 +161,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="Contact", type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
+     * @Groups({"get", "post", "put"})
      */
     private $contact;
 
@@ -122,6 +171,7 @@ class Collections implements InitialTimestampInterface
      * @ORM\Column(name="email", type="string", length=45, nullable=true)
      * @Assert\Length(max=45)
      * @Assert\Email()
+     * @Groups({"get", "post", "put"})
      */
     private $email;
 
@@ -130,6 +180,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="latitudedecimal", type="float", precision=8, scale=6, nullable=true)
      * @Assert\Type(type="float")
+     * @Groups({"get", "post", "put"})
      */
     private $latitudeDecimal;
 
@@ -138,6 +189,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="longitudedecimal", type="float", precision=9, scale=6, nullable=true)
      * @Assert\Type(type="float")
+     * @Groups({"get", "post", "put"})
      */
     private $longitudeDecimal;
 
@@ -146,6 +198,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="icon", type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $icon;
 
@@ -154,6 +207,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="CollType", type="string", length=45, options={"default"="Preserved Specimens","comment"="Preserved Specimens, General Observations, Observations"})
      * @Assert\Length(max=45)
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $collectionType = 'Preserved Specimens';
 
@@ -162,6 +216,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="ManagementType", type="string", length=45, nullable=true, options={"default"="Snapshot","comment"="Snapshot, Live Data"})
      * @Assert\Length(max=45)
+     * @Groups({"get", "post", "put"})
      */
     private $managementType = 'Snapshot';
 
@@ -171,6 +226,7 @@ class Collections implements InitialTimestampInterface
      * @ORM\Column(name="PublicEdits", type="integer", options={"default"="1","unsigned"=true})
      * @Assert\NotBlank()
      * @Assert\Type(type="integer")
+     * @Groups({"get", "post", "put"})
      */
     private $publicEdits = 1;
 
@@ -179,6 +235,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="collectionguid", type="string", length=45, nullable=true)
      * @Assert\Length(max=45)
+     * @Groups({"get", "post", "put"})
      */
     private $collectionGuid;
 
@@ -195,6 +252,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="guidtarget", type="string", length=45, nullable=true)
      * @Assert\Length(max=45)
+     * @Groups({"get", "post", "put"})
      */
     private $guidTarget;
 
@@ -203,6 +261,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="rightsHolder", type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
+     * @Groups({"get", "post", "put"})
      */
     private $rightsHolder;
 
@@ -211,6 +270,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="rights", type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
+     * @Groups({"get", "post", "put"})
      */
     private $rights;
 
@@ -219,6 +279,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="usageTerm", type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
+     * @Groups({"get", "post", "put"})
      */
     private $usageTerm;
 
@@ -227,6 +288,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="publishToGbif", type="integer", nullable=true)
      * @Assert\Type(type="integer")
+     * @Groups({"get", "post", "put"})
      */
     private $publishToGbif;
 
@@ -235,6 +297,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="publishToIdigbio", type="integer", nullable=true)
      * @Assert\Type(type="integer")
+     * @Groups({"get", "post", "put"})
      */
     private $publishToIdigbio;
 
@@ -243,6 +306,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="aggKeysStr", type="string", length=1000, nullable=true)
      * @Assert\Length(max=1000)
+     * @Groups({"get", "post", "put"})
      */
     private $aggregatorKeyJson;
 
@@ -251,6 +315,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="dwcaUrl", type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $dwcaUrl;
 
@@ -259,6 +324,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="bibliographicCitation", type="string", length=1000, nullable=true)
      * @Assert\Length(max=1000)
+     * @Groups({"get", "post", "put"})
      */
     private $bibliographicCitation;
 
@@ -267,6 +333,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="accessrights", type="string", length=1000, nullable=true)
      * @Assert\Length(max=1000)
+     * @Groups({"get", "post", "put"})
      */
     private $accessRights;
 
@@ -275,6 +342,7 @@ class Collections implements InitialTimestampInterface
      *
      * @ORM\Column(name="SortSeq", type="integer", nullable=true, options={"unsigned"=true})
      * @Assert\Type(type="integer")
+     * @Groups({"get", "post", "put"})
      */
     private $sortSequence;
 
@@ -305,6 +373,7 @@ class Collections implements InitialTimestampInterface
      *     @ORM\JoinColumn(name="uid", referencedColumnName="uid")
      *   }
      * )
+     * @Groups({"get", "post", "put"})
      */
     private $userId;
 
@@ -313,8 +382,8 @@ class Collections implements InitialTimestampInterface
      */
     public function __construct()
     {
-        $this->collectionCategoryId = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->userId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->collectionCategoryId = new ArrayCollection();
+        $this->userId = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -670,12 +739,12 @@ class Collections implements InitialTimestampInterface
         return $this;
     }
 
-    public function getInitialTimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?DateTimeInterface
     {
         return $this->initialTimestamp;
     }
 
-    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
+    public function setInitialTimestamp(DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
         $this->initialTimestamp = $initialTimestamp;
 

@@ -11,19 +11,18 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class RareSpeciesReaderVoter extends Voter
 {
     private $em;
-    private $collectionId = 0;
 
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
 
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
         return ($attribute === 'RareSppReader');
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
         $vote = false;
 
@@ -32,10 +31,10 @@ class RareSpeciesReaderVoter extends Voter
         }
 
         if ($subject instanceof Collections) {
-            $this->collectionId = $subject->getId();
+            $collectionId = $subject->getId();
         }
         else {
-            $this->collectionId = $subject->getCollectionId();
+            $collectionId = $subject->getCollectionId();
         }
 
         $authenticatedUserId = $token->getUser()->getId();
@@ -55,23 +54,17 @@ class RareSpeciesReaderVoter extends Voter
                 $token->getUser()->addCurrentPermissions('RareSppReadAll');
                 $vote = true;
             }
-            if($role === 'CollAdmin') {
-                if($row[0]->getTableId() == $this->collectionId) {
-                    $token->getUser()->addCurrentPermissions('CollAdmin');
-                    $vote = true;
-                }
+            if(($role === 'CollAdmin') && $row[0]->getTableId() === $collectionId) {
+                $token->getUser()->addCurrentPermissions('CollAdmin');
+                $vote = true;
             }
-            if($role === 'CollEditor') {
-                if($row[0]->getTableId() == $this->collectionId) {
-                    $token->getUser()->addCurrentPermissions('CollEditor');
-                    $vote = true;
-                }
+            if(($role === 'CollEditor') && $row[0]->getTableId() === $collectionId) {
+                $token->getUser()->addCurrentPermissions('CollEditor');
+                $vote = true;
             }
-            if($role === 'RareSppReader') {
-                if($row[0]->getTableId() == $this->collectionId) {
-                    $token->getUser()->addCurrentPermissions('RareSppReader');
-                    $vote = true;
-                }
+            if(($role === 'RareSppReader') && $row[0]->getTableId() === $collectionId) {
+                $token->getUser()->addCurrentPermissions('RareSppReader');
+                $vote = true;
             }
         }
 

@@ -3,6 +3,8 @@
 namespace Collection\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,8 +19,45 @@ use Core\Entity\InitialTimestampInterface;
  * @ORM\Entity()
  * @ApiResource(
  *     routePrefix="/collection",
- *     itemOperations={"get"},
- *     collectionOperations={"get"}
+ *     attributes={"order"={"sortSequence": "ASC", "category": "ASC"}},
+ *     itemOperations={
+ *          "get"={
+ *             "normalization_context"={
+ *                 "groups"={"get"}
+ *             }
+ *          },
+ *          "put"={
+ *              "access_control"="is_granted('SuperAdmin', object)",
+ *              "denormalization_context"={
+ *                  "groups"={"put"}
+ *              },
+ *              "normalization_context"={
+ *                  "groups"={"get"}
+ *              }
+ *          },
+ *          "delete"={
+ *            "access_control"="is_granted('SuperAdmin', object)",
+ *            "normalization_context"={
+ *               "groups"={"get"}
+ *             }
+ *          }
+ *      },
+ *      collectionOperations={
+ *          "get"={
+ *              "normalization_context"={
+ *                  "groups"={"get-list"}
+ *              }
+ *          },
+ *          "post"={
+ *              "access_control"="is_granted('SuperAdmin', object)",
+ *              "denormalization_context"={
+ *                  "groups"={"post"}
+ *              },
+ *              "normalization_context"={
+ *                "groups"={"get"}
+ *              }
+ *          }
+ *      }
  * )
  */
 class Categories implements InitialTimestampInterface
@@ -29,6 +68,7 @@ class Categories implements InitialTimestampInterface
      * @ORM\Column(name="ccpk", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups({"get", "get-list"})
      */
     private $id;
 
@@ -37,6 +77,7 @@ class Categories implements InitialTimestampInterface
      *
      * @ORM\Column(name="category", type="string", length=75)
      * @Assert\Length(max=75)
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $category;
 
@@ -45,6 +86,7 @@ class Categories implements InitialTimestampInterface
      *
      * @ORM\Column(name="icon", type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $icon;
 
@@ -53,6 +95,7 @@ class Categories implements InitialTimestampInterface
      *
      * @ORM\Column(name="acronym", type="string", length=45, nullable=true)
      * @Assert\Length(max=45)
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $acronym;
 
@@ -61,6 +104,7 @@ class Categories implements InitialTimestampInterface
      *
      * @ORM\Column(name="url", type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $url;
 
@@ -69,6 +113,7 @@ class Categories implements InitialTimestampInterface
      *
      * @ORM\Column(name="inclusive", type="integer", nullable=true, options={"default"="1"})
      * @Assert\Type(type="integer")
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $inclusive = 1;
 
@@ -77,11 +122,21 @@ class Categories implements InitialTimestampInterface
      *
      * @ORM\Column(name="notes", type="string", length=250, nullable=true)
      * @Assert\Length(max=250)
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $notes;
 
     /**
-     * @var \DateTime
+     * @var int|null
+     *
+     * @ORM\Column(name="SortSeq", type="integer", nullable=true, options={"unsigned"=true})
+     * @Assert\Type(type="integer")
+     * @Groups({"get", "post", "put", "get-list"})
+     */
+    private $sortSequence;
+
+    /**
+     * @var DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
      * @Assert\DateTime
@@ -89,7 +144,7 @@ class Categories implements InitialTimestampInterface
     private $initialTimestamp;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
      * @ORM\ManyToMany(targetEntity="Collection\Entity\Collections", inversedBy="collectionCategoryId")
      * @ORM\JoinTable(name="omcollcatlink",
@@ -100,6 +155,7 @@ class Categories implements InitialTimestampInterface
      *     @ORM\JoinColumn(name="collid", referencedColumnName="CollID")
      *   }
      * )
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $collectionId;
 
@@ -108,7 +164,7 @@ class Categories implements InitialTimestampInterface
      */
     public function __construct()
     {
-        $this->collectionId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->collectionId = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -188,12 +244,24 @@ class Categories implements InitialTimestampInterface
         return $this;
     }
 
-    public function getInitialTimestamp(): ?\DateTimeInterface
+    public function getSortSequence(): ?int
+    {
+        return $this->sortSequence;
+    }
+
+    public function setSortSequence(?int $sortSequence): self
+    {
+        $this->sortSequence = $sortSequence;
+
+        return $this;
+    }
+
+    public function getInitialTimestamp(): ?DateTimeInterface
     {
         return $this->initialTimestamp;
     }
 
-    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
+    public function setInitialTimestamp(DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
         $this->initialTimestamp = $initialTimestamp;
 

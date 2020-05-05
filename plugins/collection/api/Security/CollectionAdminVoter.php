@@ -11,19 +11,18 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class CollectionAdminVoter extends Voter
 {
     private $em;
-    private $collectionId = 0;
 
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
 
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
         return ($attribute === 'CollAdmin');
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
         $vote = false;
 
@@ -32,10 +31,10 @@ class CollectionAdminVoter extends Voter
         }
 
         if ($subject instanceof Collections) {
-            $this->collectionId = $subject->getId();
+            $collectionId = $subject->getId();
         }
         else {
-            $this->collectionId = $subject->getCollectionId();
+            $collectionId = $subject->getCollectionId();
         }
 
         $authenticatedUserId = $token->getUser()->getId();
@@ -47,11 +46,9 @@ class CollectionAdminVoter extends Voter
                 $token->getUser()->addCurrentPermissions('SuperAdmin');
                 $vote = true;
             }
-            if($role === 'CollAdmin') {
-                if($row[0]->getTableId() == $this->collectionId) {
-                    $token->getUser()->addCurrentPermissions('CollAdmin');
-                    $vote = true;
-                }
+            if(($role === 'CollAdmin') && $row[0]->getTableId() === $collectionId) {
+                $token->getUser()->addCurrentPermissions('CollAdmin');
+                $vote = true;
             }
         }
 
