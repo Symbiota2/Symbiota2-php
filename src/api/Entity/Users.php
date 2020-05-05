@@ -48,7 +48,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *              "validation_groups"={"put"}
  *          },
  *          "change_password"={
- *              "access_control"="is_granted('SuperAdmin', object) and object == user",
+ *              "access_control"="is_granted('SuperAdmin', object) or object == user",
  *              "method"="PUT",
  *              "path"="/users/{id}/changepassword",
  *              "controller"=ChangePasswordController::class,

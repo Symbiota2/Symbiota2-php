@@ -25,7 +25,7 @@ use Core\Entity\InitialTimestampInterface;
  *             }
  *         },
  *         "put"={
- *              "access_control"="is_granted('ProjAdmin', object)",
+ *              "access_control"="is_granted('ProjAdmin', object.id)",
  *              "denormalization_context"={
  *                  "groups"={"put"}
  *              },
@@ -34,7 +34,7 @@ use Core\Entity\InitialTimestampInterface;
  *              }
  *         },
  *         "delete"={
- *              "access_control"="is_granted('ProjAdmin', object)",
+ *              "access_control"="is_granted('ProjAdmin', object.id)",
  *              "normalization_context"={
  *                  "groups"={"get"}
  *               }

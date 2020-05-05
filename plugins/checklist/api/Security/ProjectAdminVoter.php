@@ -3,7 +3,6 @@
 namespace Checklist\Security;
 
 use Core\Entity\Users;
-use Checklist\Entity\ChecklistProjects;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -30,13 +29,6 @@ class ProjectAdminVoter extends Voter
             return false;
         }
 
-        if ($subject instanceof ChecklistProjects) {
-            $projectId = $subject->getId();
-        }
-        else {
-            $projectId = $subject->getProjectId();
-        }
-
         $authenticatedUserId = $token->getUser()->getId();
         $q = $this->em->createQuery('SELECT ur FROM Core\Entity\UserRoles ur WHERE ur.userId = '.$authenticatedUserId);
         $resultArr = $q->iterate();
@@ -46,7 +38,7 @@ class ProjectAdminVoter extends Voter
                 $token->getUser()->addCurrentPermissions('SuperAdmin');
                 $vote = true;
             }
-            if(($role === 'ProjAdmin') && $row[0]->getTableId() === $projectId) {
+            if(($role === 'ProjAdmin') && $row[0]->getTableId() === $subject) {
                 $token->getUser()->addCurrentPermissions('ProjAdmin');
                 $vote = true;
             }

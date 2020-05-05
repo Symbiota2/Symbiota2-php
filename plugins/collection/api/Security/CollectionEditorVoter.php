@@ -30,13 +30,6 @@ class CollectionEditorVoter extends Voter
             return false;
         }
 
-        if ($subject instanceof Collections) {
-            $collectionId = $subject->getId();
-        }
-        else {
-            $collectionId = $subject->getCollectionId();
-        }
-
         $authenticatedUserId = $token->getUser()->getId();
         $q = $this->em->createQuery('SELECT ur FROM Core\Entity\UserRoles ur WHERE ur.userId = '.$authenticatedUserId);
         $resultArr = $q->iterate();
@@ -46,11 +39,11 @@ class CollectionEditorVoter extends Voter
                 $token->getUser()->addCurrentPermissions('SuperAdmin');
                 $vote = true;
             }
-            if(($role === 'CollAdmin') && $row[0]->getTableId() === $collectionId) {
+            if(($role === 'CollAdmin') && $row[0]->getTableId() === $subject) {
                 $token->getUser()->addCurrentPermissions('CollAdmin');
                 $vote = true;
             }
-            if(($role === 'CollEditor') && $row[0]->getTableId() === $collectionId) {
+            if(($role === 'CollEditor') && $row[0]->getTableId() === $subject) {
                 $token->getUser()->addCurrentPermissions('CollEditor');
                 $vote = true;
             }

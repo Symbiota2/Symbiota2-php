@@ -2,6 +2,7 @@
 
 namespace Collection\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -11,12 +12,19 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Core\Entity\InitialTimestampInterface;
 use Core\Entity\Users;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * Collections
  *
  * @ORM\Table(name="omcollections", uniqueConstraints={@ORM\UniqueConstraint(name="Index_inst", columns={"InstitutionCode", "CollectionCode"})}, indexes={@ORM\Index(name="FK_collid_iid_idx", columns={"iid"})})
  * @ORM\Entity()
+ * @ApiFilter(
+ *      SearchFilter::class,
+ *      properties={
+ *          "collectionType": "exact"
+ *      }
+ * )
  * @ApiResource(
  *     attributes={"order"={"collectionName": "ASC"}},
  *     itemOperations={
@@ -26,7 +34,7 @@ use Core\Entity\Users;
  *             }
  *          },
  *          "put"={
- *              "access_control"="is_granted('CollAdmin', object)",
+ *              "access_control"="is_granted('CollAdmin', object.id)",
  *              "denormalization_context"={
  *                  "groups"={"put"}
  *              },
@@ -35,7 +43,7 @@ use Core\Entity\Users;
  *              }
  *          },
  *          "delete"={
- *            "access_control"="is_granted('CollAdmin', object)",
+ *            "access_control"="is_granted('CollAdmin', object.id)",
  *            "normalization_context"={
  *               "groups"={"get"}
  *             }

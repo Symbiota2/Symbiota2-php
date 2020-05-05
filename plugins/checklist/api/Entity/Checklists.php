@@ -29,7 +29,7 @@ use Core\Entity\Users;
  *             }
  *          },
  *          "put"={
- *              "access_control"="is_granted('ClAdmin', object)",
+ *              "access_control"="is_granted('ClAdmin', object.id)",
  *              "denormalization_context"={
  *                  "groups"={"put"}
  *              },
@@ -38,7 +38,7 @@ use Core\Entity\Users;
  *              }
  *          },
  *          "delete"={
- *            "access_control"="is_granted('ClAdmin', object)",
+ *            "access_control"="is_granted('ClAdmin', object.id)",
  *            "normalization_context"={
  *               "groups"={"get"}
  *             }
