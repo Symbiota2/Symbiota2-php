@@ -3,6 +3,8 @@
 namespace Core\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -13,8 +15,20 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="schemaversion", uniqueConstraints={@ORM\UniqueConstraint(name="versionnumber_UNIQUE", columns={"versionnumber"})})
  * @ORM\Entity()
  * @ApiResource(
- *     itemOperations={"get"},
- *     collectionOperations={"get"}
+ *     itemOperations={
+ *          "get"={
+ *             "normalization_context"={
+ *                 "groups"={"get"}
+ *             }
+ *          },
+ *      },
+ *      collectionOperations={
+ *          "get"={
+ *              "normalization_context"={
+ *                  "groups"={"get"}
+ *              }
+ *          }
+ *      }
  * )
  */
 class SchemaVersion implements ModifiedTimestampInterface
@@ -25,6 +39,7 @@ class SchemaVersion implements ModifiedTimestampInterface
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups({"get"})
      */
     private $id;
 
@@ -34,11 +49,12 @@ class SchemaVersion implements ModifiedTimestampInterface
      * @ORM\Column(name="versionnumber", type="string", length=20)
      * @Assert\NotBlank()
      * @Assert\Length(max=20)
+     * @Groups({"get"})
      */
     private $versionNumber;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="modifiedtimestamp", type="datetime", nullable=true)
      * @Assert\DateTime
@@ -62,12 +78,12 @@ class SchemaVersion implements ModifiedTimestampInterface
         return $this;
     }
 
-    public function getModifiedTimestamp(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?DateTimeInterface
     {
         return $this->modifiedTimestamp;
     }
 
-    public function setModifiedTimestamp(\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
+    public function setModifiedTimestamp(DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
         $this->modifiedTimestamp = $modifiedTimestamp;
 

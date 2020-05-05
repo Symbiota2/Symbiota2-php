@@ -4,6 +4,8 @@ namespace Core\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -303,7 +305,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
     private $isPublic = 1;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="lastlogindate", type="datetime", nullable=true)
      * @Groups({"get"})
@@ -311,14 +313,14 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
     private $lastLoginDate;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="InitialTimeStamp", type="datetime")
      */
     private $initialTimestamp;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
      * @ORM\Column(name="modifiedTimeStamp", type="datetime", nullable=true)
      */
@@ -585,26 +587,26 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
         return $this;
     }
 
-    public function getLastLoginDate(): ?\DateTimeInterface
+    public function getLastLoginDate(): ?DateTimeInterface
     {
         return $this->lastLoginDate;
     }
 
-    public function setLastLoginDate(?\DateTimeInterface $lastLoginDate): self
+    public function setLastLoginDate(?DateTimeInterface $lastLoginDate): self
     {
         $this->lastLoginDate = $lastLoginDate;
 
         return $this;
     }
 
-    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
+    public function setInitialTimestamp(DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
         $this->initialTimestamp = $initialTimestamp;
 
         return $this;
     }
 
-    public function getInitialTimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?DateTimeInterface
     {
         return $this->initialTimestamp;
     }
@@ -621,12 +623,12 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
         return $this;
     }
 
-    public function getModifiedTimestamp(): ?\DateTimeInterface
+    public function getModifiedTimestamp(): ?DateTimeInterface
     {
         return $this->modifiedTimestamp;
     }
 
-    public function setModifiedTimestamp(\DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
+    public function setModifiedTimestamp(DateTimeInterface $modifiedTimestamp): ModifiedTimestampInterface
     {
         $this->modifiedTimestamp = $modifiedTimestamp;
 
@@ -682,7 +684,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
 
     public function addCurrentPermissions(?string $currentPermissions): self
     {
-        if(!in_array($currentPermissions, $this->currentPermissions)) {
+        if(!in_array($currentPermissions, $this->currentPermissions, true)) {
             $this->currentPermissions[] = $currentPermissions;
         }
 
@@ -723,7 +725,7 @@ class Users implements UserInterface, InitialTimestampInterface, ModifiedTimesta
         return $this->id;
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
 
     }

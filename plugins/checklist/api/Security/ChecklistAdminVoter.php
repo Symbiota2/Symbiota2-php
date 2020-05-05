@@ -11,19 +11,18 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class ChecklistAdminVoter extends Voter
 {
     private $em;
-    private $checklistId = 0;
 
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
 
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
         return ($attribute === 'ClAdmin');
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
         $vote = false;
 
@@ -32,10 +31,10 @@ class ChecklistAdminVoter extends Voter
         }
 
         if ($subject instanceof Checklists) {
-            $this->checklistId = $subject->getId();
+            $checklistId = $subject->getId();
         }
         else {
-            $this->checklistId = $subject->getChecklistId();
+            $checklistId = $subject->getChecklistId();
         }
 
         $authenticatedUserId = $token->getUser()->getId();
@@ -47,11 +46,9 @@ class ChecklistAdminVoter extends Voter
                 $token->getUser()->addCurrentPermissions('SuperAdmin');
                 $vote = true;
             }
-            if($role === 'ClAdmin') {
-                if($row[0]->getTableId() == $this->checklistId) {
-                    $token->getUser()->addCurrentPermissions('ClAdmin');
-                    $vote = true;
-                }
+            if(($role === 'ClAdmin') && $row[0]->getTableId() === $checklistId) {
+                $token->getUser()->addCurrentPermissions('ClAdmin');
+                $vote = true;
             }
         }
 

@@ -4,6 +4,8 @@ namespace Core\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -109,7 +111,7 @@ class UserRoles implements UserIdAssignedByInterface, InitialTimestampInterface
     private $userIdAssignedBy;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime")
      */
@@ -144,12 +146,12 @@ class UserRoles implements UserIdAssignedByInterface, InitialTimestampInterface
         return $this;
     }
 
-    public function getInitialTimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?DateTimeInterface
     {
         return $this->initialTimestamp;
     }
 
-    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
+    public function setInitialTimestamp(DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
         $this->initialTimestamp = $initialTimestamp;
 

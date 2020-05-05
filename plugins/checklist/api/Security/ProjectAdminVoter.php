@@ -11,19 +11,18 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class ProjectAdminVoter extends Voter
 {
     private $em;
-    private $projectId = 0;
 
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
 
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
         return ($attribute === 'ProjAdmin');
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
         $vote = false;
 
@@ -32,10 +31,10 @@ class ProjectAdminVoter extends Voter
         }
 
         if ($subject instanceof ChecklistProjects) {
-            $this->projectId = $subject->getId();
+            $projectId = $subject->getId();
         }
         else {
-            $this->projectId = $subject->getProjectId();
+            $projectId = $subject->getProjectId();
         }
 
         $authenticatedUserId = $token->getUser()->getId();
@@ -47,11 +46,9 @@ class ProjectAdminVoter extends Voter
                 $token->getUser()->addCurrentPermissions('SuperAdmin');
                 $vote = true;
             }
-            if($role === 'ProjAdmin') {
-                if($row[0]->getTableId() == $this->projectId) {
-                    $token->getUser()->addCurrentPermissions('ProjAdmin');
-                    $vote = true;
-                }
+            if(($role === 'ProjAdmin') && $row[0]->getTableId() === $projectId) {
+                $token->getUser()->addCurrentPermissions('ProjAdmin');
+                $vote = true;
             }
         }
 

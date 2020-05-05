@@ -3,8 +3,8 @@
 namespace Core\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -15,8 +15,20 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="adminlanguages", uniqueConstraints={@ORM\UniqueConstraint(name="index_langname_unique", columns={"langname"})})
  * @ORM\Entity()
  * @ApiResource(
- *     itemOperations={"get"},
- *     collectionOperations={"get"}
+ *     itemOperations={
+ *          "get"={
+ *             "normalization_context"={
+ *                 "groups"={"get"}
+ *             }
+ *          },
+ *      },
+ *      collectionOperations={
+ *          "get"={
+ *              "normalization_context"={
+ *                  "groups"={"get"}
+ *              }
+ *          }
+ *      }
  * )
  */
 class LookupLanguages implements InitialTimestampInterface
@@ -27,6 +39,7 @@ class LookupLanguages implements InitialTimestampInterface
      * @ORM\Column(name="langid", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups({"get"})
      */
     private $id;
 
@@ -36,6 +49,7 @@ class LookupLanguages implements InitialTimestampInterface
      * @ORM\Column(name="langname", type="string", length=45)
      * @Assert\NotBlank()
      * @Assert\Length(max=45)
+     * @Groups({"get"})
      */
     private $languageName;
 
@@ -44,6 +58,7 @@ class LookupLanguages implements InitialTimestampInterface
      *
      * @ORM\Column(name="iso639_1", type="string", length=10, nullable=true)
      * @Assert\Length(max=10)
+     * @Groups({"get"})
      */
     private $iso6391;
 
@@ -52,6 +67,7 @@ class LookupLanguages implements InitialTimestampInterface
      *
      * @ORM\Column(name="iso639_2", type="string", length=10, nullable=true)
      * @Assert\Length(max=10)
+     * @Groups({"get"})
      */
     private $iso6392;
 
@@ -60,11 +76,12 @@ class LookupLanguages implements InitialTimestampInterface
      *
      * @ORM\Column(name="notes", type="string", length=45, nullable=true)
      * @Assert\Length(max=45)
+     * @Groups({"get"})
      */
     private $notes;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="initialtimestamp", type="datetime", nullable=true)
      * @Assert\DateTime
@@ -132,12 +149,12 @@ class LookupLanguages implements InitialTimestampInterface
         return $this;
     }
 
-    public function getInitialTimestamp(): ?\DateTimeInterface
+    public function getInitialTimestamp(): ?DateTimeInterface
     {
         return $this->initialTimestamp;
     }
 
-    public function setInitialTimestamp(\DateTimeInterface $initialTimestamp): InitialTimestampInterface
+    public function setInitialTimestamp(DateTimeInterface $initialTimestamp): InitialTimestampInterface
     {
         $this->initialTimestamp = $initialTimestamp;
 

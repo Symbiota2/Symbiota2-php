@@ -16,12 +16,12 @@ class UserAdminVoter extends Voter
         $this->em = $em;
     }
 
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
         return ($attribute === 'UserAdmin');
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
         if(!$token->getUser() instanceof Users) {
             return false;

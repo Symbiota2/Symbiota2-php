@@ -25,17 +25,20 @@ use Core\Entity\InitialTimestampInterface;
  *             }
  *         },
  *         "put"={
- *            "access_control"="is_granted('ProjAdmin', object)",
- *            "normalization_context"={
- *               "groups"={"get"}
- *            }
+ *              "access_control"="is_granted('ProjAdmin', object)",
+ *              "denormalization_context"={
+ *                  "groups"={"put"}
+ *              },
+ *              "normalization_context"={
+ *                  "groups"={"get"}
+ *              }
  *         },
  *         "delete"={
- *            "access_control"="is_granted('ProjAdmin', object)",
- *            "normalization_context"={
- *               "groups"={"get"}
- *            }
- *        }
+ *              "access_control"="is_granted('ProjAdmin', object)",
+ *              "normalization_context"={
+ *                  "groups"={"get"}
+ *               }
+ *         }
  *     },
  *     collectionOperations={
  *         "get"={
@@ -193,8 +196,8 @@ class ChecklistProjects implements InitialTimestampInterface
     /**
      * var \DateTime
      *
-     * ORM\Column(name="InitialTimeStamp", type="datetime")
-     * Assert\DateTime
+     * @ORM\Column(name="InitialTimeStamp", type="datetime")
+     * @Assert\DateTime
      */
     private $initialTimestamp;
 

@@ -22,8 +22,47 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *      }
  * )
  * @ApiResource(
- *     itemOperations={"get"},
- *     collectionOperations={"get"}
+ *     attributes={"order"={"configurationName": "ASC"}},
+ *     itemOperations={
+ *          "get"={
+ *              "access_control"="is_granted('SuperAdmin', object)",
+*               "normalization_context"={
+ *                  "groups"={"get"}
+ *              }
+ *          },
+ *          "put"={
+ *              "access_control"="is_granted('SuperAdmin', object)",
+ *              "denormalization_context"={
+ *                  "groups"={"put"}
+ *              },
+ *              "normalization_context"={
+ *                  "groups"={"get"}
+ *              }
+ *          },
+ *          "delete"={
+ *              "access_control"="is_granted('SuperAdmin', object)",
+ *              "normalization_context"={
+ *                  "groups"={"get"}
+ *              }
+ *          }
+ *      },
+ *      collectionOperations={
+ *          "get"={
+ *              "access_control"="is_granted('SuperAdmin', object)",
+ *              "normalization_context"={
+ *                  "groups"={"get-list"}
+ *              }
+ *          },
+ *          "post"={
+ *              "access_control"="is_granted('SuperAdmin', object)",
+ *              "denormalization_context"={
+ *                  "groups"={"post"}
+*               },
+ *              "normalization_context"={
+ *                "groups"={"get"}
+ *              }
+ *          }
+ *      }
  * )
  */
 class Configurations
@@ -34,6 +73,7 @@ class Configurations
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Groups({"get", "get-list"})
      */
     private $id;
 
@@ -43,6 +83,7 @@ class Configurations
      * @ORM\Column(name="configname", type="string", length=100)
      * @Assert\NotBlank()
      * @Assert\Length(max=100)
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $configurationName;
 
@@ -51,6 +92,7 @@ class Configurations
      *
      * @ORM\Column(name="configvalue", type="string", length=5000)
      * @Assert\Length(max=5000)
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $configurationValue;
 
@@ -60,6 +102,7 @@ class Configurations
      * @ORM\Column(name="configside", type="string", length=10)
      * @Assert\NotBlank()
      * @Assert\Length(max=10)
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $configurationSide;
 

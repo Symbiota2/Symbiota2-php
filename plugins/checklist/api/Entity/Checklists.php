@@ -32,15 +32,31 @@ use Core\Entity\Users;
  *              "access_control"="is_granted('ClAdmin', object)",
  *              "denormalization_context"={
  *                  "groups"={"put"}
+ *              },
+ *              "normalization_context"={
+ *                  "groups"={"get"}
  *              }
+ *          },
+ *          "delete"={
+ *            "access_control"="is_granted('ClAdmin', object)",
+ *            "normalization_context"={
+ *               "groups"={"get"}
+ *             }
  *          }
  *      },
  *      collectionOperations={
- *          "get",
+ *          "get"={
+ *              "normalization_context"={
+ *                  "groups"={"get-list"}
+ *              }
+ *          },
  *          "post"={
  *              "access_control"="is_granted('IS_AUTHENTICATED_FULLY')",
  *              "denormalization_context"={
  *                  "groups"={"post"}
+ *              },
+ *              "normalization_context"={
+ *                "groups"={"get"}
  *              }
  *          }
  *      }
@@ -54,7 +70,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @ORM\Column(name="CLID", type="integer", options={"unsigned"=true})
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @Groups({"get"})
+     * @Groups({"get", "get-list"})
      * @ApiProperty(iri="http://schema.org/identifier")
      */
     private $id;
@@ -65,7 +81,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @ORM\Column(name="Name", type="string", length=100)
      * @Assert\NotBlank()
      * @Assert\Length(max=100)
-     * @Groups({"get", "post", "put"})
+     * @Groups({"get", "post", "put", "get-list"})
      * @ApiProperty(iri="http://schema.org/name")
      */
     private $name;
@@ -75,7 +91,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="Title", type="string", length=150, nullable=true)
      * @Assert\Length(max=150)
-     * @Groups({"get", "post", "put"})
+     * @Groups({"get", "post", "put", "get-list"})
      * @ApiProperty(iri="http://purl.org/dc/terms/title")
      */
     private $title;
@@ -226,7 +242,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="Access", type="string", length=45, nullable=true, options={"default"="private"})
      * @Assert\Length(max=45)
-     * @Groups({"get", "post", "put"})
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $access = 'private';
 
@@ -244,7 +260,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="iconUrl", type="string", length=150, nullable=true)
      * @Assert\Length(max=150)
-     * @Groups({"get", "post", "put"})
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $iconUrl;
 
@@ -273,7 +289,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      *
      * @ORM\Column(name="SortSequence", type="integer", options={"default"=50,"unsigned"=true})
      * @Assert\Type(type="integer")
-     * @Groups({"get", "post", "put"})
+     * @Groups({"get", "post", "put", "get-list"})
      */
     private $sortSequence = 50;
 
@@ -308,7 +324,7 @@ class Checklists implements CreatedUserIdInterface, InitialTimestampInterface, M
      * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Checklist\Entity\ChecklistProjects", mappedBy="checklistId")
-     * @Groups({"get"})
+     * @Groups({"get", "get-list"})
      */
     private $projectId;
 
