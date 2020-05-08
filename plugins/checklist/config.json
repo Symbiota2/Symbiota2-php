@@ -21,6 +21,26 @@
       "outlet": "global-permission-current",
       "index": 6,
       "provider": "rare-species-admin-current-permission"
+    },
+    {
+      "outlet": "item-permission-available",
+      "index": 2,
+      "provider": "project-available-permission"
+    },
+    {
+      "outlet": "item-permission-current",
+      "index": 2,
+      "provider": "project-current-permission"
+    },
+    {
+      "outlet": "item-permission-available",
+      "index": 3,
+      "provider": "checklist-available-permission"
+    },
+    {
+      "outlet": "item-permission-current",
+      "index": 3,
+      "provider": "checklist-current-permission"
     }
   ]
 }

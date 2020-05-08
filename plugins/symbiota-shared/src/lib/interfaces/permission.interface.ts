@@ -1,7 +1,3 @@
-export interface CorePermissions {
-    SuperAdmin?: any;
-}
-
 export interface UserPermission {
     id: number;
     role: string;

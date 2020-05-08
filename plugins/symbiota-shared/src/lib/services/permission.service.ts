@@ -33,6 +33,9 @@ export class PermissionService {
         this.userId.subscribe(value => {
             this.userIdValue = value;
         });
+        this.configService.selectedLanguageValue.subscribe(() => {
+            this.setTranslations();
+        });
     }
 
     setTranslations() {
@@ -57,7 +60,7 @@ export class PermissionService {
                 this.currentPermissionsSubject.next(userPermissions['hydra:member']);
                 this.spinnerService.hide();
             },
-            (res) => {
+            () => {
                 this.spinnerService.hide();
                 this.alertService.showErrorSnackbar(
                     this.setUserPermissionErrorText,
@@ -71,7 +74,7 @@ export class PermissionService {
     createPermission(permission: AddPermission) {
         this.spinnerService.show();
         this.http.post('/api/userroles', permission).subscribe(
-            (permission:UserPermission) => {
+            () => {
                 this.setUserPermissions();
             },
             () => {

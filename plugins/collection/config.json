@@ -25,6 +25,16 @@
       "outlet": "global-permission-current",
       "index": 7,
       "provider": "rare-species-reader-current-permission"
+    },
+    {
+      "outlet": "item-permission-available",
+      "index": 1,
+      "provider": "collection-available-permission"
+    },
+    {
+      "outlet": "item-permission-current",
+      "index": 1,
+      "provider": "collection-current-permission"
     }
   ]
 }
