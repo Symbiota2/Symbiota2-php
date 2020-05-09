@@ -1,1 +1,41 @@
-<p>collection-available-permission works!</p>
+<mat-expansion-panel *ngIf="collectionList !== []">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Collection Permissions
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="table">
+        <div class="row">
+            <div class="checkbox-cell">
+                Admin
+            </div>
+            <div class="checkbox-cell">
+                Editor
+            </div>
+            <div class="checkbox-cell">
+                Rare
+            </div>
+            <div class="collection-name-cell"></div>
+        </div>
+        <ng-container *ngFor="let collection of collectionList">
+            <div class="row">
+                <div class="checkbox-cell">
+                    <mat-checkbox *ngIf="adminCollectionPermissions.indexOf(collection.id) > -1" ngModel disabled></mat-checkbox>
+                    <mat-checkbox *ngIf="adminCollectionPermissions.indexOf(collection.id) === -1" ngModel (click)="onPermissionAdd('CollAdmin', collection.id)"></mat-checkbox>
+                </div>
+                <div class="checkbox-cell">
+                    <mat-checkbox *ngIf="editorCollectionPermissions.indexOf(collection.id) > -1" ngModel disabled></mat-checkbox>
+                    <mat-checkbox *ngIf="editorCollectionPermissions.indexOf(collection.id) === -1" ngModel (click)="onPermissionAdd('CollEditor', collection.id)"></mat-checkbox>
+                </div>
+                <div class="checkbox-cell">
+                    <mat-checkbox *ngIf="rareCollectionPermissions.indexOf(collection.id) > -1" ngModel disabled></mat-checkbox>
+                    <mat-checkbox *ngIf="rareCollectionPermissions.indexOf(collection.id) === -1" ngModel (click)="onPermissionAdd('RareSppReader', collection.id)"></mat-checkbox>
+                </div>
+                <div class="collection-name-cell">
+                    {{collection.collectionName}} ({{collection.institutionCode}}<ng-container *ngIf="collection.collectionCode">:{{collection.collectionCode}}</ng-container>)
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</mat-expansion-panel>

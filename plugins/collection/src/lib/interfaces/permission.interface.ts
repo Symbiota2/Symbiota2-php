@@ -9,3 +9,8 @@ export interface AddPermission {
     role: string;
     tableId?: number;
 }
+
+export interface CurrentPermission {
+    permissionId: number;
+    collectionName: string;
+}

@@ -18,6 +18,7 @@ import {Plugin} from '../interfaces/plugin.interface';
 import * as AngularCdkCollections from '@angular/cdk/collections';
 import * as AngularCdkTree from '@angular/cdk/tree';
 import * as AngularCommon from '@angular/common';
+import * as AngularCommonHttp from '@angular/common/http';
 import * as AngularCore from '@angular/core';
 import * as AngularFlexLayout from '@angular/flex-layout';
 import * as AngularForms from '@angular/forms';
@@ -59,7 +60,7 @@ export class PluginLoaderService {
         private translate: TranslateService,
         private configService: ConfigurationService
     ) {
-        this.configService.selectedLanguageValue.subscribe(value => {
+        this.configService.selectedLanguageValue.subscribe(() => {
             this.setTranslations();
         });
     }
@@ -72,7 +73,7 @@ export class PluginLoaderService {
                     this.resolvePluginDependencies();
                     resolve(this.pluginData);
                 },
-                (error) => {
+                () => {
                     this.spinnerService.hide();
                     this.alertService.showErrorSnackbar(
                         this.configurations_failed,
@@ -92,7 +93,7 @@ export class PluginLoaderService {
     }
 
     resolvePluginDependencies() {
-        this.pluginData.forEach((plugin, index) => {
+        this.pluginData.forEach((plugin) => {
             if (plugin.enabled && plugin.ui_filename && plugin.dependencies) {
                 plugin.dependencies.forEach((depName) => {
                     const dep = this.pluginData.find(x => x.name === depName);
@@ -122,7 +123,7 @@ export class PluginLoaderService {
     }
 
     private loadPlugin(plugin: Plugin) {
-        this.activatePlugin(plugin);
+        this.activatePlugin(plugin).then();
         if (!!plugin.ui_routes) {
             this.collectPluginRoutes(plugin);
         }
@@ -140,11 +141,10 @@ export class PluginLoaderService {
 
     collectPluginRoutes(plugin: Plugin) {
         const routes = plugin.ui_routes;
-        const moduleName = plugin.ui_module_name;
         let route: Route = {};
 
         routes.forEach((rt) => {
-            let routeData = {};
+            let routeData: {};
             const data = {
                 file: plugin.ui_filename,
                 module: plugin.ui_module_name,
@@ -163,12 +163,7 @@ export class PluginLoaderService {
                 let childRoute: Route = {};
 
                 children.forEach((childrt) => {
-                    let childRouteData = {};
-                    const childData = {
-                        file: plugin.ui_filename,
-                        module: plugin.ui_module_name,
-                        provider: childrt.provider
-                    };
+                    let childRouteData: {};
 
                     if (childrt.data) {
                         childRouteData = Object.assign({}, data, childrt.data);
@@ -220,6 +215,7 @@ export class PluginLoaderService {
         SystemJS.set('@angular/cdk/collections', SystemJS.newModule(AngularCdkCollections));
         SystemJS.set('@angular/cdk/tree', SystemJS.newModule(AngularCdkTree));
         SystemJS.set('@angular/common', SystemJS.newModule(AngularCommon));
+        SystemJS.set('@angular/common/http', SystemJS.newModule(AngularCommonHttp));
         SystemJS.set('@angular/core', SystemJS.newModule(AngularCore));
         SystemJS.set('@angular/flex-layout', SystemJS.newModule(AngularFlexLayout));
         SystemJS.set('@angular/forms', SystemJS.newModule(AngularForms));
@@ -262,7 +258,9 @@ export class PluginLoaderService {
     removePluginFromLoadedPluginList(name) {
         const currentList = (this.loadedPlugins ? this.loadedPlugins.value : []);
         currentList.forEach((plugin, index) => {
-            if (plugin === name) { currentList.splice(index, 1); }
+            if (plugin === name) {
+                currentList.splice(index, 1);
+            }
         });
         this.loadedPlugins.next(currentList);
     }

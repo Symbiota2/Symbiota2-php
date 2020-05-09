@@ -1,1 +1,32 @@
-<p>collection-current-permission works!</p>
+<ng-container *ngIf="collectionList !== []">
+    <li *ngIf="adminCollectionPermissions !== []">
+        <span class="current-permission-category">Administrator for the following collections</span>
+        <ul>
+            <ng-container *ngFor="let adminPermission of adminCollectionPermissions">
+                <li>
+                    <span class="current-permission-line">{{adminPermission.collectionName}} <mat-icon class="delete-icon" (click)="onPermissionDelete(adminPermission.permissionId)">clear</mat-icon></span>
+                </li>
+            </ng-container>
+        </ul>
+    </li>
+    <li *ngIf="editorCollectionPermissions !== []">
+        <span class="current-permission-category">Editor for the following collections</span>
+        <ul>
+            <ng-container *ngFor="let editorPermission of editorCollectionPermissions">
+                <li>
+                    <span class="current-permission-line">{{editorPermission.collectionName}} <mat-icon class="delete-icon" (click)="onPermissionDelete(editorPermission.permissionId)">clear</mat-icon></span>
+                </li>
+            </ng-container>
+        </ul>
+    </li>
+    <li *ngIf="rareCollectionPermissions !== []">
+        <span class="current-permission-category">View and map rare species for the following collections</span>
+        <ul>
+            <ng-container *ngFor="let rarePermission of rareCollectionPermissions">
+                <li>
+                    <span class="current-permission-line">{{rarePermission.collectionName}} <mat-icon class="delete-icon" (click)="onPermissionDelete(rarePermission.permissionId)">clear</mat-icon></span>
+                </li>
+            </ng-container>
+        </ul>
+    </li>
+</ng-container>
