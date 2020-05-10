@@ -6,13 +6,14 @@ import {UserPermission} from '../../interfaces/permission.interface';
 import {AddPermission} from '../../interfaces/permission.interface';
 
 @Component({
-    selector: 'key-key-editor-available-permission',
-    templateUrl: './key-editor-available-permission.component.html',
-    styleUrls: ['./key-editor-available-permission.component.css'],
+    selector: 'key-key-available-permission',
+    templateUrl: './key-available-permission.component.html',
+    styleUrls: ['./key-available-permission.component.css'],
 })
-export class KeyEditorAvailablePermissionComponent implements OnInit {
+export class KeyAvailablePermissionComponent implements OnInit {
     @Input() params: any;
     @Output() changeEmitter = new EventEmitter<any>();
+    keyAdminPermission: UserPermission | null;
     keyEditorPermission: UserPermission | null;
     userId: number;
 
@@ -20,10 +21,10 @@ export class KeyEditorAvailablePermissionComponent implements OnInit {
         public permissionService: PermissionService
     ) {}
 
-    onPermissionAdd() {
+    onPermissionAdd(permission: string) {
         const newPermission: AddPermission = {
             userId: '/api/users/' + this.userId,
-            role: 'KeyEditor'
+            role: permission
         };
         this.permissionService.createPermission(newPermission);
         this.changeEmitter.emit();
@@ -34,6 +35,7 @@ export class KeyEditorAvailablePermissionComponent implements OnInit {
             this.userId = value;
         });
         this.params.currentPermissions.subscribe(value => {
+            this.keyAdminPermission = (value ? value.find(x => x.role === 'KeyAdmin') : null);
             this.keyEditorPermission = (value ? value.find(x => x.role === 'KeyEditor') : null);
         });
     }

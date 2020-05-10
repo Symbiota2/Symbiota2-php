@@ -1,0 +1,10 @@
+<ng-container *ngIf="!keyAdminPermission">
+    <div>
+        <mat-checkbox ngModel (click)="onPermissionAdd('KeyAdmin')"> {{ 'key.key_admin_available_permission.identification_key_admin' | translate }}</mat-checkbox>
+    </div>
+</ng-container>
+<ng-container *ngIf="!keyEditorPermission">
+    <div>
+        <mat-checkbox ngModel (click)="onPermissionAdd('KeyEditor')"> {{ 'key.key_editor_available_permission.identification_key_editor' | translate }}</mat-checkbox>
+    </div>
+</ng-container>

@@ -6,13 +6,14 @@ import {UserPermission} from '../../interfaces/permission.interface';
 import {AddPermission} from '../../interfaces/permission.interface';
 
 @Component({
-    selector: 'taxa-taxon-profile-editor-available-permission',
-    templateUrl: './taxon-profile-editor-available-permission.component.html',
-    styleUrls: ['./taxon-profile-editor-available-permission.component.css'],
+    selector: 'taxa-taxon-available-permission',
+    templateUrl: './taxon-available-permission.component.html',
+    styleUrls: ['./taxon-available-permission.component.css'],
 })
-export class TaxonProfileEditorAvailablePermissionComponent implements OnInit {
+export class TaxonAvailablePermissionComponent implements OnInit {
     @Input() params: any;
     @Output() changeEmitter = new EventEmitter<any>();
+    taxonomyEditorPermission: UserPermission | null;
     taxonProfileEditorPermission: UserPermission | null;
     userId: number;
 
@@ -20,10 +21,10 @@ export class TaxonProfileEditorAvailablePermissionComponent implements OnInit {
         public permissionService: PermissionService
     ) {}
 
-    onPermissionAdd() {
+    onPermissionAdd(permission: string) {
         const newPermission: AddPermission = {
             userId: '/api/users/' + this.userId,
-            role: 'TaxonProfile'
+            role: permission
         };
         this.permissionService.createPermission(newPermission);
         this.changeEmitter.emit();
@@ -34,6 +35,7 @@ export class TaxonProfileEditorAvailablePermissionComponent implements OnInit {
             this.userId = value;
         });
         this.params.currentPermissions.subscribe(value => {
+            this.taxonomyEditorPermission = (value ? value.find(x => x.role === 'Taxonomy') : null);
             this.taxonProfileEditorPermission = (value ? value.find(x => x.role === 'TaxonProfile') : null);
         });
     }

@@ -14,22 +14,12 @@
     {
       "outlet": "global-permission-available",
       "index": 4,
-      "provider": "key-admin-available-permission"
-    },
-    {
-      "outlet": "global-permission-available",
-      "index": 5,
-      "provider": "key-editor-available-permission"
+      "provider": "key-available-permission"
     },
     {
       "outlet": "global-permission-current",
       "index": 4,
-      "provider": "key-admin-current-permission"
-    },
-    {
-      "outlet": "global-permission-current",
-      "index": 5,
-      "provider": "key-editor-current-permission"
+      "provider": "key-current-permission"
     }
   ]
 }

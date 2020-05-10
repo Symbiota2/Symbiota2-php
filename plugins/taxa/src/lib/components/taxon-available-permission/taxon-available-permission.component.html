@@ -1,0 +1,10 @@
+<ng-container *ngIf="!taxonomyEditorPermission">
+    <div>
+        <mat-checkbox ngModel (click)="onPermissionAdd('Taxonomy')"> {{ 'taxa.taxonomy_editor_available_permission.taxonomy_editor' | translate }}</mat-checkbox>
+    </div>
+</ng-container>
+<ng-container *ngIf="!taxonProfileEditorPermission">
+    <div>
+        <mat-checkbox ngModel (click)="onPermissionAdd('TaxonProfile')"> {{ 'taxa.taxon_profile_editor_available_permission.taxon_profile_editor' | translate }}</mat-checkbox>
+    </div>
+</ng-container>

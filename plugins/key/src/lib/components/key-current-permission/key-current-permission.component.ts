@@ -5,14 +5,15 @@ import {PermissionService} from 'symbiota-shared';
 import {UserPermission} from '../../interfaces/permission.interface';
 
 @Component({
-    selector: 'taxa-taxonomy-editor-current-permission',
-    templateUrl: './taxonomy-editor-current-permission.component.html',
-    styleUrls: ['./taxonomy-editor-current-permission.component.css'],
+    selector: 'key-key-current-permission',
+    templateUrl: './key-current-permission.component.html',
+    styleUrls: ['./key-current-permission.component.css'],
 })
-export class TaxonomyEditorCurrentPermissionComponent implements OnInit {
+export class KeyCurrentPermissionComponent implements OnInit {
     @Input() params: any;
     @Output() changeEmitter = new EventEmitter<any>();
-    taxonomyEditorPermission: UserPermission | null;
+    keyAdminPermission: UserPermission | null;
+    keyEditorPermission: UserPermission | null;
 
     constructor(
         public permissionService: PermissionService
@@ -25,7 +26,8 @@ export class TaxonomyEditorCurrentPermissionComponent implements OnInit {
 
     ngOnInit() {
         this.params.currentPermissions.subscribe(value => {
-            this.taxonomyEditorPermission = (value ? value.find(x => x.role === 'Taxonomy') : null);
+            this.keyAdminPermission = (value ? value.find(x => x.role === 'KeyAdmin') : null);
+            this.keyEditorPermission = (value ? value.find(x => x.role === 'KeyEditor') : null);
         });
     }
 }

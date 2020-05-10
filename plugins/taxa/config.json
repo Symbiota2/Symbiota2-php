@@ -9,24 +9,14 @@
   "ui_module_name": "TaxaModule",
   "component_hooks": [
     {
-      "outlet": "global-permission-available",
-      "index": 2,
-      "provider": "taxonomy-editor-available-permission"
-    },
-    {
-      "outlet": "global-permission-available",
-      "index": 3,
-      "provider": "taxon-profile-editor-available-permission"
-    },
-    {
       "outlet": "global-permission-current",
       "index": 2,
-      "provider": "taxonomy-editor-current-permission"
+      "provider": "taxonomy-current-permission"
     },
     {
-      "outlet": "global-permission-current",
-      "index": 3,
-      "provider": "taxon-profile-editor-current-permission"
+      "outlet": "global-permission-available",
+      "index": 2,
+      "provider": "taxonomy-available-permission"
     }
   ]
 }

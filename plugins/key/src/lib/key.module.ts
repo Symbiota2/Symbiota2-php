@@ -4,17 +4,13 @@ import {TranslateModule} from '@ngx-translate/core';
 import {SymbiotaAuthModule} from 'symbiota-auth';
 import {SymbiotaSharedModule} from 'symbiota-shared';
 
-import {KeyAdminAvailablePermissionComponent} from './components/key-admin-available-permission/key-admin-available-permission.component';
-import {KeyAdminCurrentPermissionComponent} from './components/key-admin-current-permission/key-admin-current-permission.component';
-import {KeyEditorAvailablePermissionComponent} from './components/key-editor-available-permission/key-editor-available-permission.component';
-import {KeyEditorCurrentPermissionComponent} from './components/key-editor-current-permission/key-editor-current-permission.component';
+import {KeyAvailablePermissionComponent} from './components/key-available-permission/key-available-permission.component';
+import {KeyCurrentPermissionComponent} from './components/key-current-permission/key-current-permission.component';
 
 @NgModule({
     declarations: [
-        KeyAdminAvailablePermissionComponent,
-        KeyAdminCurrentPermissionComponent,
-        KeyEditorAvailablePermissionComponent,
-        KeyEditorCurrentPermissionComponent
+        KeyAvailablePermissionComponent,
+        KeyCurrentPermissionComponent
     ],
     imports: [
         TranslateModule,
@@ -22,41 +18,23 @@ import {KeyEditorCurrentPermissionComponent} from './components/key-editor-curre
         SymbiotaSharedModule
     ],
     entryComponents: [
-        KeyAdminAvailablePermissionComponent,
-        KeyAdminCurrentPermissionComponent,
-        KeyEditorAvailablePermissionComponent,
-        KeyEditorCurrentPermissionComponent
+        KeyAvailablePermissionComponent,
+        KeyCurrentPermissionComponent
     ],
     providers: [
         {
-            provide: 'key-admin-available-permission',
+            provide: 'key-available-permission',
             useValue: [{
-                name: 'key-key-admin-available-permission',
-                component: KeyAdminAvailablePermissionComponent
+                name: 'key-key-available-permission',
+                component: KeyAvailablePermissionComponent
             }],
             multi: true
         },
         {
-            provide: 'key-admin-current-permission',
+            provide: 'key-current-permission',
             useValue: [{
-                name: 'key-key-admin-current-permission',
-                component: KeyAdminCurrentPermissionComponent
-            }],
-            multi: true
-        },
-        {
-            provide: 'key-editor-current-permission',
-            useValue: [{
-                name: 'key-key-editor-current-permission',
-                component: KeyEditorCurrentPermissionComponent
-            }],
-            multi: true
-        },
-        {
-            provide: 'key-editor-available-permission',
-            useValue: [{
-                name: 'key-key-editor-available-permission',
-                component: KeyEditorAvailablePermissionComponent
+                name: 'key-key-current-permission',
+                component: KeyCurrentPermissionComponent
             }],
             multi: true
         }
