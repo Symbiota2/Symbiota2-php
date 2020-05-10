@@ -3,7 +3,6 @@ import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 
 import {ChecklistListItem} from '../interfaces/checklist.interface';
-import {CollectionListItem} from '../../../../collection/src/lib/interfaces/collection.interface';
 
 @Injectable({
     providedIn: 'root',

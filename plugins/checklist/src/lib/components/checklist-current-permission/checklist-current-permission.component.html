@@ -1,5 +1,5 @@
-<ng-container *ngIf="checklistList !== []">
-    <li *ngIf="checklistPermissions !== []">
+<ng-container *ngIf="checklistList.length > 0">
+    <li *ngIf="checklistPermissions.length > 0">
         <span class="current-permission-category">{{ 'checklist.checklist_current_permission.admin_for' | translate }}</span>
         <ul>
             <ng-container *ngFor="let permission of checklistPermissions">

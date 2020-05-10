@@ -36,7 +36,7 @@ export class ProjectCurrentPermissionComponent implements OnInit {
                 this.params.currentPermissions.subscribe(value => {
                     this.projectPermissions = [];
                     value.forEach((permission) => {
-                        if (permission && permission.role === 'CollAdmin') {
+                        if (permission && permission.role === 'ProjAdmin') {
                             const project = this.projectList.find(x => x.id === permission.tableId);
                             if (project) {
                                 this.projectPermissions.push({

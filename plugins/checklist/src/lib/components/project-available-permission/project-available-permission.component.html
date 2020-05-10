@@ -1,4 +1,4 @@
-<mat-expansion-panel *ngIf="projectList !== []">
+<mat-expansion-panel *ngIf="projectList.length > 0">
     <mat-expansion-panel-header>
         <mat-panel-title>
             {{ 'checklist.project_available_permission.inventory_project_management' | translate }}
@@ -6,10 +6,8 @@
     </mat-expansion-panel-header>
 
     <ng-container *ngFor="let project of projectList">
-        <div class="checkbox-cell">
-            <mat-checkbox *ngIf="projectPermissions.indexOf(project.id) > -1" ngModel disabled></mat-checkbox>
-            <mat-checkbox *ngIf="projectPermissions.indexOf(project.id) === -1" ngModel (click)="onPermissionAdd(project.id)"></mat-checkbox>
+        <div *ngIf="projectPermissions.indexOf(project.id) === -1">
+            <mat-checkbox ngModel (click)="onPermissionAdd(project.id)">{{project.projectName}}</mat-checkbox>
         </div>
-        {{project.projectName}}
     </ng-container>
 </mat-expansion-panel>

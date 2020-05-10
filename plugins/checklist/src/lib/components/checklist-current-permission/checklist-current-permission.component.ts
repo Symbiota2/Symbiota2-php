@@ -36,7 +36,7 @@ export class ChecklistCurrentPermissionComponent implements OnInit {
                 this.params.currentPermissions.subscribe(value => {
                     this.checklistPermissions = [];
                     value.forEach((permission) => {
-                        if (permission && permission.role === 'CollAdmin') {
+                        if (permission && permission.role === 'ClAdmin') {
                             const checklist = this.checklistList.find(x => x.id === permission.tableId);
                             if (checklist) {
                                 this.checklistPermissions.push({
