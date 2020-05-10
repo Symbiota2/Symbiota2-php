@@ -1,4 +1,8 @@
 {
+	"checklist.checklist_available_permission.checklist_management": "Gestione della lista di controllo",
+	"checklist.checklist_current_permission.admin_for": "Amministratore per le seguenti liste di controllo",
+	"checklist.project_available_permission.inventory_project_management": "Gestione del progetto di inventario",
+	"checklist.project_current_permission.admin_for": "Amministratore per i seguenti progetti di inventario",
 	"checklist.rare_species_admin_available_permission.rare_species_admin": "Amministratore di specie rare (aggiungi / rimuovi specie dall'elenco)",
 	"checklist.rare_species_admin_current_permission.rare_species_admin": "Amministratore di specie rare (aggiungi / rimuovi specie dall'elenco)"
 }

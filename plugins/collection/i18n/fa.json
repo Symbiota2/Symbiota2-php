@@ -1,4 +1,11 @@
 {
+	"collection.collection_available_permission.admin": "مدیر",
+	"collection.collection_available_permission.collection_permissions": "مجوزهای مجموعه",
+	"collection.collection_available_permission.editor": "ویرایشگر",
+	"collection.collection_available_permission.rare": "نادر",
+	"collection.collection_current_permission.admin_for": "سرپرست مجموعه های زیر",
+	"collection.collection_current_permission.editor_for": "ویرایشگر مجموعه های زیر",
+	"collection.collection_current_permission.rare_for": "گونه های نادر را برای مجموعه های زیر مشاهده و نقشه برداری کنید",
 	"collection.rare_species_reader_available_permission.rare_species_reader": "می توانید داده های نادر گونه ها را برای همه مجموعه ها بخوانید",
 	"collection.rare_species_reader_current_permission.rare_species_reader": "می توانید داده های نادر گونه ها را برای همه مجموعه ها بخوانید",
 	"collection.specimen_management_tab": "مدیریت نمونه"

@@ -2,8 +2,8 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 import {PermissionService} from 'symbiota-shared';
 import {CollectionService} from '../../services/collection.service';
-import {CollectionListItem} from '../../interfaces/collection.interface';
 
+import {CollectionListItem} from '../../interfaces/collection.interface';
 import {CurrentPermission} from '../../interfaces/permission.interface';
 
 @Component({
@@ -22,7 +22,9 @@ export class CollectionCurrentPermissionComponent implements OnInit {
     constructor(
         public permissionService: PermissionService,
         public collectionService: CollectionService
-    ) {}
+    ) {
+        this.collectionService.setCollectionList();
+    }
 
     onPermissionDelete(id: number) {
         this.permissionService.deletePermissionById(id);
@@ -73,5 +75,4 @@ export class CollectionCurrentPermissionComponent implements OnInit {
             }
         });
     }
-
 }

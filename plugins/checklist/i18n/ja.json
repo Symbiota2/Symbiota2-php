@@ -1,4 +1,8 @@
 {
+	"checklist.checklist_available_permission.checklist_management": "チェックリスト管理",
+	"checklist.checklist_current_permission.admin_for": "次のチェックリストの管理者",
+	"checklist.project_available_permission.inventory_project_management": "在庫プロジェクト管理",
+	"checklist.project_current_permission.admin_for": "次の在庫プロジェクトの管理者",
 	"checklist.rare_species_admin_available_permission.rare_species_admin": "希少種管理者（リストから種を追加/削除）",
 	"checklist.rare_species_admin_current_permission.rare_species_admin": "希少種管理者（リストから種を追加/削除）"
 }

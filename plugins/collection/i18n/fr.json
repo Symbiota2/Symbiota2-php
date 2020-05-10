@@ -1,4 +1,11 @@
 {
+	"collection.collection_available_permission.admin": "Admin",
+	"collection.collection_available_permission.collection_permissions": "Autorisations de collecte",
+	"collection.collection_available_permission.editor": "Éditeur",
+	"collection.collection_available_permission.rare": "Rare",
+	"collection.collection_current_permission.admin_for": "Administrateur pour les collections suivantes",
+	"collection.collection_current_permission.editor_for": "Editeur pour les collections suivantes",
+	"collection.collection_current_permission.rare_for": "Visualisez et cartographiez les espèces rares pour les collections suivantes",
 	"collection.rare_species_reader_available_permission.rare_species_reader": "Peut lire les données sur les espèces rares pour toutes les collections",
 	"collection.rare_species_reader_current_permission.rare_species_reader": "Peut lire les données sur les espèces rares pour toutes les collections",
 	"collection.specimen_management_tab": "Gestion des échantillons"

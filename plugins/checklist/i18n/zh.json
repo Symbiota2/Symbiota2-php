@@ -1,4 +1,8 @@
 {
+	"checklist.checklist_available_permission.checklist_management": "清单管理",
+	"checklist.checklist_current_permission.admin_for": "下列清单的管理员",
+	"checklist.project_available_permission.inventory_project_management": "库存项目管理",
+	"checklist.project_current_permission.admin_for": "以下库存项目的管理员",
 	"checklist.rare_species_admin_available_permission.rare_species_admin": "稀有物种管理员（从列表中添加/删除物种）",
 	"checklist.rare_species_admin_current_permission.rare_species_admin": "稀有物种管理员（从列表中添加/删除物种）"
 }

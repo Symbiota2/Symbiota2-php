@@ -1,6 +1,6 @@
 <ng-container *ngIf="collectionList !== []">
     <li *ngIf="adminCollectionPermissions !== []">
-        <span class="current-permission-category">Administrator for the following collections</span>
+        <span class="current-permission-category">{{ 'collection.collection_current_permission.admin_for' | translate }}</span>
         <ul>
             <ng-container *ngFor="let adminPermission of adminCollectionPermissions">
                 <li>
@@ -10,7 +10,7 @@
         </ul>
     </li>
     <li *ngIf="editorCollectionPermissions !== []">
-        <span class="current-permission-category">Editor for the following collections</span>
+        <span class="current-permission-category">{{ 'collection.collection_current_permission.editor_for' | translate }}</span>
         <ul>
             <ng-container *ngFor="let editorPermission of editorCollectionPermissions">
                 <li>
@@ -20,7 +20,7 @@
         </ul>
     </li>
     <li *ngIf="rareCollectionPermissions !== []">
-        <span class="current-permission-category">View and map rare species for the following collections</span>
+        <span class="current-permission-category">{{ 'collection.collection_current_permission.rare_for' | translate }}</span>
         <ul>
             <ng-container *ngFor="let rarePermission of rareCollectionPermissions">
                 <li>

@@ -1,4 +1,8 @@
 {
+	"checklist.checklist_available_permission.checklist_management": "चेकलिस्ट प्रबंधन",
+	"checklist.checklist_current_permission.admin_for": "निम्नलिखित चेकलिस्ट के लिए प्रशासक",
+	"checklist.project_available_permission.inventory_project_management": "इन्वेंटरी प्रोजेक्ट मैनेजमेंट",
+	"checklist.project_current_permission.admin_for": "निम्नलिखित इन्वेंट्री परियोजनाओं के लिए प्रशासक",
 	"checklist.rare_species_admin_available_permission.rare_species_admin": "दुर्लभ प्रजाति प्रशासक (सूची से प्रजातियों को जोड़ें / हटाएं)",
 	"checklist.rare_species_admin_current_permission.rare_species_admin": "दुर्लभ प्रजाति प्रशासक (सूची से प्रजातियों को जोड़ें / हटाएं)"
 }

@@ -1,20 +1,20 @@
 <mat-expansion-panel *ngIf="collectionList !== []">
     <mat-expansion-panel-header>
         <mat-panel-title>
-            Collection Permissions
+            {{ 'collection.collection_available_permission.collection_permissions' | translate }}
         </mat-panel-title>
     </mat-expansion-panel-header>
 
     <div class="table">
         <div class="row">
             <div class="checkbox-cell">
-                Admin
+                {{ 'collection.collection_available_permission.admin' | translate }}
             </div>
             <div class="checkbox-cell">
-                Editor
+                {{ 'collection.collection_available_permission.editor' | translate }}
             </div>
             <div class="checkbox-cell">
-                Rare
+                {{ 'collection.collection_available_permission.rare' | translate }}
             </div>
             <div class="collection-name-cell"></div>
         </div>

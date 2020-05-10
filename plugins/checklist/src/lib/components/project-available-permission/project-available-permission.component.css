@@ -1,0 +1,8 @@
+mat-expansion-panel {
+    margin-top: 20px;
+}
+
+.checkbox-cell {
+    display: table-cell;
+    width: 45px;
+}

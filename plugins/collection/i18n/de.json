@@ -1,4 +1,11 @@
 {
+	"collection.collection_available_permission.admin": "Admin",
+	"collection.collection_available_permission.collection_permissions": "Sammlungsberechtigungen",
+	"collection.collection_available_permission.editor": "Editor",
+	"collection.collection_available_permission.rare": "Selten",
+	"collection.collection_current_permission.admin_for": "Administrator für die folgenden Sammlungen",
+	"collection.collection_current_permission.editor_for": "Editor für folgende Sammlungen",
+	"collection.collection_current_permission.rare_for": "Zeigen Sie seltene Arten für die folgenden Sammlungen an und kartieren Sie sie",
 	"collection.rare_species_reader_available_permission.rare_species_reader": "Kann Daten zu seltenen Arten für alle Sammlungen lesen",
 	"collection.rare_species_reader_current_permission.rare_species_reader": "Kann Daten zu seltenen Arten für alle Sammlungen lesen",
 	"collection.specimen_management_tab": "Probenverwaltung"

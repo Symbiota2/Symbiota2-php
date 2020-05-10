@@ -24,6 +24,7 @@ export class CollectionAvailablePermissionComponent implements OnInit {
         public permissionService: PermissionService,
         public collectionService: CollectionService
     ) {
+        this.collectionService.setCollectionList();
         this.collectionService.collectionList.subscribe(value => {
             this.collectionList = value;
         });

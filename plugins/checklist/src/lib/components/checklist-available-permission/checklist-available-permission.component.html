@@ -1,1 +1,15 @@
-<p>checklist-available-permission works!</p>
+<mat-expansion-panel *ngIf="checklistList !== []">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            {{ 'checklist.checklist_available_permission.checklist_management' | translate }}
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <ng-container *ngFor="let checklist of checklistList">
+        <div class="checkbox-cell">
+            <mat-checkbox *ngIf="checklistPermissions.indexOf(checklist.id) > -1" ngModel disabled></mat-checkbox>
+            <mat-checkbox *ngIf="checklistPermissions.indexOf(checklist.id) === -1" ngModel (click)="onPermissionAdd(checklist.id)"></mat-checkbox>
+        </div>
+        {{checklist.name}}
+    </ng-container>
+</mat-expansion-panel>

@@ -1,4 +1,8 @@
 {
+	"checklist.checklist_available_permission.checklist_management": "چیک لسٹ مینجمنٹ",
+	"checklist.checklist_current_permission.admin_for": "درج ذیل چیک لسٹس کیلئے ایڈمنسٹریٹر",
+	"checklist.project_available_permission.inventory_project_management": "انوینٹری پروجیکٹ مینجمنٹ",
+	"checklist.project_current_permission.admin_for": "درج ذیل انوینٹری منصوبوں کے لئے ایڈمنسٹریٹر",
 	"checklist.rare_species_admin_available_permission.rare_species_admin": "نایاب اقسام کے منتظم (فہرست سے پرجاتیوں کو شامل / ختم کریں)",
 	"checklist.rare_species_admin_current_permission.rare_species_admin": "نایاب اقسام کے منتظم (فہرست سے پرجاتیوں کو شامل / ختم کریں)"
 }

@@ -1,4 +1,8 @@
 {
+	"checklist.checklist_available_permission.checklist_management": "إدارة قائمة المراجعة",
+	"checklist.checklist_current_permission.admin_for": "مسؤول قوائم المراجعة التالية",
+	"checklist.project_available_permission.inventory_project_management": "إدارة مشروع الجرد",
+	"checklist.project_current_permission.admin_for": "مسؤول عن مشروعات الجرد التالية",
 	"checklist.rare_species_admin_available_permission.rare_species_admin": "مسؤول الأنواع النادرة (إضافة / إزالة الأنواع من القائمة)",
 	"checklist.rare_species_admin_current_permission.rare_species_admin": "مسؤول الأنواع النادرة (إضافة / إزالة الأنواع من القائمة)"
 }

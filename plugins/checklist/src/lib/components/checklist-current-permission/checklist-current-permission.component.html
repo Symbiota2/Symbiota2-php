@@ -1,1 +1,12 @@
-<p>checklist-current-permission works!</p>
+<ng-container *ngIf="checklistList !== []">
+    <li *ngIf="checklistPermissions !== []">
+        <span class="current-permission-category">{{ 'checklist.checklist_current_permission.admin_for' | translate }}</span>
+        <ul>
+            <ng-container *ngFor="let permission of checklistPermissions">
+                <li>
+                    <span class="current-permission-line">{{permission.itemName}} <mat-icon class="delete-icon" (click)="onPermissionDelete(permission.permissionId)">clear</mat-icon></span>
+                </li>
+            </ng-container>
+        </ul>
+    </li>
+</ng-container>

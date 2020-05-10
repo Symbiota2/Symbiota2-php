@@ -1,4 +1,8 @@
 {
+	"checklist.checklist_available_permission.checklist_management": "Управление контрольным списком",
+	"checklist.checklist_current_permission.admin_for": "Администратор для следующих контрольных списков",
+	"checklist.project_available_permission.inventory_project_management": "Управление проектами инвентаризации",
+	"checklist.project_current_permission.admin_for": "Администратор для следующих проектов инвентаризации",
 	"checklist.rare_species_admin_available_permission.rare_species_admin": "Администратор редких видов (добавление / удаление видов из списка)",
 	"checklist.rare_species_admin_current_permission.rare_species_admin": "Администратор редких видов (добавление / удаление видов из списка)"
 }

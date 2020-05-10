@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 import {CollectionListItem} from '../interfaces/collection.interface';
-import {BehaviorSubject, Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -13,9 +13,7 @@ export class CollectionService {
 
     constructor(
         private http: HttpClient
-    ) {
-        this.setCollectionList();
-    }
+    ) {}
 
     setCollectionList() {
         this.http.get<any>('/api/collections').subscribe(
