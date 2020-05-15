@@ -12,7 +12,7 @@
   "ui_routes": [
     {
       "path": "searchcollections",
-      "provider": "occurrence-search"
+      "provider": "search-criteria"
     }
   ]
 }

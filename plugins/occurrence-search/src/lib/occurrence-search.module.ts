@@ -5,7 +5,7 @@ import {CollectionModule} from 'collection';
 import {SymbiotaAuthModule} from 'symbiota-auth';
 import {SymbiotaSharedModule} from 'symbiota-shared';
 
-import {OccurrenceSearchComponent} from './occurrence-search/occurrence-search.component';
+import {SearchCriteriaComponent} from './outlets/search-criteria/search-criteria.component';
 
 @NgModule({
     imports: [
@@ -15,20 +15,17 @@ import {OccurrenceSearchComponent} from './occurrence-search/occurrence-search.c
         SymbiotaSharedModule
     ],
     declarations: [
-        OccurrenceSearchComponent
-    ],
-    exports: [
-        OccurrenceSearchComponent
+        SearchCriteriaComponent
     ],
     entryComponents: [
-        OccurrenceSearchComponent
+        SearchCriteriaComponent
     ],
     providers: [
         {
-            provide: 'occurrence-search',
+            provide: 'search-criteria',
             useValue: [{
-                name: 'occurrence-search-search',
-                component: OccurrenceSearchComponent
+                name: 'occurrence-search-search-criteria',
+                component: SearchCriteriaComponent
             }],
             multi: true
         }
