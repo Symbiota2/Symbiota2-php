@@ -4,33 +4,36 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.1.3",
+        "php": "^7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "^1.5",
         "ext-zip": "*",
-        "api-platform/api-pack": "^1.1",
-        "easycorp/easyadmin-bundle": "^2.0",
-        "lexik/jwt-authentication-bundle": "^2.6",
-        "sensio/framework-extra-bundle": "^5.2",
+        "api-platform/api-pack": "^1.2",
+        "easycorp/easyadmin-bundle": "^3.0",
+        "lexik/jwt-authentication-bundle": "^2.8",
+        "sensio/framework-extra-bundle": "^5.5",
         "symfony/apache-pack": "^1.0",
-        "symfony/console": "4.2.*",
-        "symfony/dotenv": "4.2.*",
-        "symfony/flex": "^1.1",
-        "symfony/form": "4.2.*",
-        "symfony/framework-bundle": "4.2.*",
+        "symfony/console": "5.1.*",
+        "symfony/dotenv": "5.1.*",
+        "symfony/flex": "^1.3.1",
+        "symfony/form": "5.1.*",
+        "symfony/framework-bundle": "5.1.*",
         "symfony/orm-pack": "^1.0",
-        "symfony/security-csrf": "4.2.*",
+        "symfony/security-csrf": "5.1.*",
         "symfony/serializer-pack": "^1.0",
-        "symfony/swiftmailer-bundle": "^3.2",
-        "symfony/twig-bundle": "4.2.*",
-        "symfony/validator": "4.2.*",
-        "symfony/yaml": "4.2.*",
-        "vich/uploader-bundle": "^1.8",
+        "symfony/swiftmailer-bundle": "^3.4",
+        "symfony/twig-bundle": "5.1.*",
+        "symfony/validator": "5.1.*",
+        "symfony/yaml": "5.1.*",
+        "vich/uploader-bundle": "^1.14",
         "wikimedia/composer-merge-plugin": "^1.4"
     },
     "config": {
-        "preferred-install": "dist",
+        "optimize-autoloader": true,
+        "preferred-install": {
+            "*": "dist"
+        },
         "sort-packages": true
     },
     "autoload": {
@@ -47,6 +50,7 @@
         "paragonie/random_compat": "2.*",
         "symfony/polyfill-ctype": "*",
         "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php72": "*",
         "symfony/polyfill-php71": "*",
         "symfony/polyfill-php70": "*",
         "symfony/polyfill-php56": "*"
@@ -134,14 +138,14 @@
             "merge-scripts": true
         },
         "symfony": {
-            "allow-contrib": true,
-            "require": "4.2.*"
+            "allow-contrib": false,
+            "require": "5.1.*"
         }
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
-        "doctrine/doctrine-fixtures-bundle": "^3.0",
-        "fzaninotto/faker": "^1.8",
-        "symfony/maker-bundle": "^1.10"
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "fzaninotto/faker": "^1.9",
+        "symfony/maker-bundle": "^1.19"
     }
 }
