@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, OnDestroy, ViewEncapsulation} from '@angular/core';
 
-import OlMap from '@greentheorystudio/ol/Map';
+import OlMap from 'ol/Map';
 
 import {MapService} from '../../services/map.service';
 
@@ -11,7 +11,7 @@ import {Layer} from '../../interfaces/layer.interface';
     templateUrl: './spatial-analysis.component.html',
     encapsulation: ViewEncapsulation.None,
     styleUrls: [
-        '../../../../../../node_modules/@greentheorystudio/ol/ol.css',
+        '../../../../../../node_modules/ol/ol.css',
         './symbiota-ol.css',
         './spatial-analysis.component.css'
     ]
