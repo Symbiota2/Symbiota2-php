@@ -10,6 +10,7 @@
         "ext-json": "^1.5",
         "ext-zip": "*",
         "api-platform/api-pack": "^1.2",
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
         "easycorp/easyadmin-bundle": "^3.0",
         "lexik/jwt-authentication-bundle": "^2.8",
         "sensio/framework-extra-bundle": "^5.5",
@@ -17,14 +18,10 @@
         "symfony/console": "5.1.*",
         "symfony/dotenv": "5.1.*",
         "symfony/flex": "^1.3.1",
-        "symfony/form": "5.1.*",
         "symfony/framework-bundle": "5.1.*",
+        "symfony/maker-bundle": "^1.19",
         "symfony/orm-pack": "^1.0",
-        "symfony/security-csrf": "5.1.*",
-        "symfony/serializer-pack": "^1.0",
         "symfony/swiftmailer-bundle": "^3.4",
-        "symfony/twig-bundle": "5.1.*",
-        "symfony/validator": "5.1.*",
         "symfony/yaml": "5.1.*",
         "vich/uploader-bundle": "^1.14",
         "wikimedia/composer-merge-plugin": "^1.4"
@@ -144,8 +141,6 @@
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
-        "doctrine/doctrine-fixtures-bundle": "^3.3",
-        "fzaninotto/faker": "^1.9",
-        "symfony/maker-bundle": "^1.19"
+        "fzaninotto/faker": "^1.9"
     }
 }
