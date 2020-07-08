@@ -3,6 +3,7 @@
 namespace Core\Service;
 
 use Core\Entity\Users;
+use Twig\Environment as TwigEnvironment;
 use Swift_Message;
 
 class MailerService
@@ -10,7 +11,7 @@ class MailerService
     private $mailer;
     private $twig;
 
-    public function __construct(\Swift_Mailer $mailer, \Twig_Environment $twig)
+    public function __construct(\Swift_Mailer $mailer, TwigEnvironment $twig)
     {
         $this->mailer = $mailer;
         $this->twig = $twig;

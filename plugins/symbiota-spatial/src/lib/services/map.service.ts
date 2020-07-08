@@ -3,24 +3,23 @@ import {HttpClient} from '@angular/common/http';
 import {MatDialog} from '@angular/material/dialog';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
-import OlMap from '@greentheorystudio/ol/Map';
-import XYZ from '@greentheorystudio/ol/source/XYZ';
-import {FullScreen, ZoomSlider, ScaleLine, MousePosition} from '@greentheorystudio/ol/control';
-import {GPX, GeoJSON, IGC, KML, TopoJSON, WKT} from '@greentheorystudio/ol/format';
-import {DragAndDrop, Select, Draw} from '@greentheorystudio/ol/interaction';
-import {format} from '@greentheorystudio/ol/coordinate';
-import Feature from '@greentheorystudio/ol/Feature';
-import {getDistance as haversineDistance} from '@greentheorystudio/ol/sphere';
-import Point from '@greentheorystudio/ol/geom/Point';
-import {createEmpty, extend, getTopLeft, getWidth} from '@greentheorystudio/ol/extent';
-import {Heatmap, Tile as TileLayer, Vector as VectorLayer} from '@greentheorystudio/ol/layer';
-import {Cluster, OSM, Stamen, Vector as VectorSource, TileImage} from '@greentheorystudio/ol/source';
-import TileGrid from '@greentheorystudio/ol/tilegrid/TileGrid';
-import {Projection, fromLonLat, transform, get} from '@greentheorystudio/ol/proj';
-import Collection from '@greentheorystudio/ol/Collection';
-import {click as clickCondition} from '@greentheorystudio/ol/events/condition';
-import OlView from '@greentheorystudio/ol/View';
-import {PropertyCluster} from '@greentheorystudio/ol/source';
+import OlMap from 'ol/Map';
+import XYZ from 'ol/source/XYZ';
+import {FullScreen, ZoomSlider, ScaleLine, MousePosition} from 'ol/control';
+import {GPX, GeoJSON, IGC, KML, TopoJSON, WKT} from 'ol/format';
+import {DragAndDrop, Select, Draw} from 'ol/interaction';
+import {format} from 'ol/coordinate';
+import Feature from 'ol/Feature';
+import {getDistance as haversineDistance} from 'ol/sphere';
+import Point from 'ol/geom/Point';
+import {createEmpty, extend, getTopLeft, getWidth} from 'ol/extent';
+import {Heatmap, Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
+import {OSM, Stamen, Vector as VectorSource, TileImage} from 'ol/source';
+import TileGrid from 'ol/tilegrid/TileGrid';
+import {Projection, transform, get} from 'ol/proj';
+import Collection from 'ol/Collection';
+import {click as clickCondition} from 'ol/events/condition';
+import OlView from 'ol/View';
 import {
     Circle,
     Fill,
@@ -28,8 +27,8 @@ import {
     Text,
     RegularShape,
     Style,
-} from '@greentheorystudio/ol/style';
-import Overlay from '@greentheorystudio/ol/Overlay';
+} from 'ol/style';
+import Overlay from 'ol/Overlay';
 import shp from 'shpjs';
 
 import {MapSettingsDialogComponent} from '../outlets/map-settings-dialog/map-settings-dialog.component';
@@ -91,16 +90,6 @@ export class MapService {
             center: transform(this.mapCenter, 'EPSG:4326', 'EPSG:3857'),
         });
 
-        this.selectedPointFeatures.on('add', (event) => {
-            // setSpatialParamBox();
-            // buildQueryStrings();
-        });
-
-        this.selectedPointFeatures.on('remove', (event) => {
-            // setSpatialParamBox();
-            // buildQueryStrings();
-        });
-
         this.dragAndDropInteraction.on('addfeatures', (event) => {
             let filename = event.file.name.split('.');
             const fileType = filename.pop();
@@ -133,7 +122,6 @@ export class MapService {
                         this.sharedTools.getArrayBuffer(event.file).then((data) => {
                             shp(data).then((geojson) => {
                                 const sourceIndex = this.dragDropTarget + 'Source';
-                                const res = this.map.getView().getResolution();
                                 const features = geoJSONFormat.readFeatures(geojson, {
                                     featureProjection: 'EPSG:3857',
                                 });
@@ -241,19 +229,15 @@ export class MapService {
             }
         });
 
-        this.selectedFeatures.on('add', (event) => {
-            // setSpatialParamBox();
-            // buildQueryStrings();
+        this.selectedFeatures.on('add', () => {
             this.processShapeSelectionChange();
         });
 
-        this.selectedFeatures.on('remove', (event) => {
-            // setSpatialParamBox();
-            // buildQueryStrings();
+        this.selectedFeatures.on('remove', () => {
             this.processShapeSelectionChange();
         });
 
-        this.selectsource.on('change', (event) => {
+        this.selectsource.on('change', () => {
             if (!this.draw) {
                 const featureCnt = this.selectsource.getFeatures().length;
                 if (featureCnt > 0) {
@@ -296,7 +280,6 @@ export class MapService {
     shapes_select_option = '';
 
     map: OlMap;
-    mapId = 'analysis';
     view: OlView;
     layers = {};
     draw: any;
@@ -477,11 +460,8 @@ export class MapService {
 
     heatmaplayer = new Heatmap({
         source: this.pointvectorsource,
-        weight: (feature) => {
+        weight: () => {
             const showPoint = true;
-            /* if (dateSliderActive) {
-                showPoint = validateFeatureDate(feature);
-            } */
             if (showPoint) {
                 return 1;
             } else {
@@ -599,7 +579,6 @@ export class MapService {
     });
 
     selectedFeatures = this.selectInteraction.getFeatures();
-    selectedPointFeatures = this.pointInteraction.getFeatures();
 
     projection = get('EPSG:4326');
     projectionExtent = this.projection.getExtent();
@@ -695,7 +674,7 @@ export class MapService {
 
     toggleLayer(value: boolean, layer: string) {
         const currentArr = this.layersSelectorSubject.value;
-        currentArr.forEach((arrLayer, index) => {
+        currentArr.forEach((arrLayer) => {
             if (arrLayer.name === layer) {
                 arrLayer.visible = value;
             }
@@ -716,8 +695,6 @@ export class MapService {
             this.shapeActive = false;
         } else if (layerID === 'pointv') {
             this.clearSelections();
-            // adjustSelectionsTab();
-            // removeDateSlider();
             this.pointvectorsource = new VectorSource({wrapX: false});
             this.layers['pointv'].setSource(this.pointvectorsource);
             this.layers['heat'].setSource(this.pointvectorsource);
@@ -755,7 +732,6 @@ export class MapService {
             if (feature) {
                 const selectedClone = feature.clone();
                 const geoType = selectedClone.getGeometry().getType();
-                const wktFormat = new WKT();
                 const geoJSONFormat = new GeoJSON();
                 if (geoType === 'MultiPolygon' || geoType === 'Polygon') {
                     const selectiongeometry = selectedClone.getGeometry();
@@ -770,11 +746,9 @@ export class MapService {
                         for (const e in polyCoords) {
                             if (polyCoords.hasOwnProperty(e)) {
                                 let singlePoly = this.vectorService.getTurfFeature('Polygon', polyCoords[e]);
-                                // console.log('start multipolygon length: '+singlePoly.geometry.coordinates.length);
                                 if (singlePoly.geometry.coordinates.length > 10) {
                                     singlePoly = this.vectorService.getSimplifiedFeature(singlePoly);
                                 }
-                                // console.log('end multipolygon length: '+singlePoly.geometry.coordinates.length);
                                 polyCoords[e] = singlePoly.geometry.coordinates;
                             }
                         }
@@ -784,20 +758,16 @@ export class MapService {
                         let areaFeat = this.vectorService.getTurfFeature(geoType, polyCoords);
                         const area_km = this.vectorService.getFeatureArea(areaFeat);
                         totalAreaCalc += area_km;
-                        // console.log('start multipolygon length: '+areaFeat.geometry.coordinates.length);
                         if (areaFeat.geometry.coordinates.length > 10) {
                             areaFeat = this.vectorService.getSimplifiedFeature(areaFeat);
                         }
-                        // console.log('end multipolygon length: '+areaFeat.geometry.coordinates.length);
                         polyCoords = areaFeat.geometry.coordinates;
                         turfSimple = this.vectorService.getTurfFeature(geoType, polyCoords);
                     }
                     const polySimple = geoJSONFormat.readFeature(turfSimple, {featureProjection: 'EPSG:3857'});
                     const simplegeometry = polySimple.getGeometry();
                     const fixedgeometry = simplegeometry.transform(this.mapProjection, this.wgs84Projection);
-                    const wmswktString = wktFormat.writeGeometry(fixedgeometry);
                     const geocoords = fixedgeometry.getCoordinates();
-                    const mysqlWktString = this.vectorService.writeMySQLWktString(geoType, geocoords);
                 }
                 if (geoType === 'Circle') {
                     const center = selectedClone.getGeometry().getCenter();
@@ -831,7 +801,6 @@ export class MapService {
             }
         }
         this.layers['pointv'].getSource().changed();
-        // adjustSelectionsTab();
     }
 
     findOccPoint(occid) {
@@ -845,17 +814,13 @@ export class MapService {
 
     setClusterPointsValue(value: boolean) {
         this.clusterPointsSubject.next(value);
-        if (this.clusterPointsSubject.value) {
-            // this.removeDateSlider();
-            // this.loadPointWFSLayer(0);
-        } else {
+        if (!this.clusterPointsSubject.value) {
             this.layers['pointv'].setSource(this.pointvectorsource);
         }
     }
 
     setClusterDistanceValue(value: number) {
         this.clusterDistanceSubject.next(value);
-        // this.clustersource.setDistance(this.clusterDistanceSubject.value);
     }
 
     setShowHeatMapValue(value: boolean) {
@@ -881,39 +846,6 @@ export class MapService {
     setHeatMapBlurValue(value: number) {
         this.heatMapBlurSubject.next(value);
         this.layers['heat'].setBlur(parseInt(this.heatMapBlurSubject.value.toString(), 10));
-    }
-
-    setDateSliderActiveValue(value: boolean) {
-        this.dateSliderActiveSubject.next(value);
-        /* if (this.dateSliderActiveSubject.value) {
-            if (dsOldestDate && dsNewestDate) {
-                if (dsOldestDate !== dsNewestDate) {
-                    if (!this.clusterPointsSubject.value) {
-                        // var dual = document.getElementById("dsdualtype").checked;
-                        // createDateSlider(true);
-                    } else {
-                        this.returnClusters = true;
-                        this.setClusterPointsValue(false);
-                        // createDateSlider(true);
-                    }
-                } else {
-                    this.alertService.showErrorSnackbar(
-                        'The current records on the map do not have a range of dates for the Date Slider to populate.',
-                        '',
-                        5000
-                    );
-                }
-            } else {
-                this.dateSliderActiveSubject.next(false);
-                this.alertService.showErrorSnackbar(
-                    'Points must be loaded onto the map to use the Date Slider.',
-                    '',
-                    5000
-                );
-            }
-        } else {
-            // removeDateSlider();
-        } */
     }
 
     initializePopup(container: any, content: any, closer: any) {
@@ -965,11 +897,6 @@ export class MapService {
         this.map.addOverlay(this.finderPopupOverlay);
     }
 
-    setFinderPopup(content: string, position: any) {
-        this.finderPopupContent.innerHTML = content;
-        this.finderPopupOverlay.setPosition(position);
-    }
-
     setActiveLayer(value: string) {
         this.activeLayerSubject.next(value);
     }
@@ -1007,7 +934,7 @@ export class MapService {
                 view: this.view,
             });
 
-            this.map.getView().on('change:resolution', (event) => {
+            this.map.getView().on('change:resolution', () => {
                 if (this.spiderCluster) {
                     const source = this.layers['spider'].getSource();
                     source.clear();
@@ -1157,7 +1084,6 @@ export class MapService {
                         this.clickedFeatures = [];
                     }
                 } else {
-                    const layerIndex = this.activeLayer + 'Source';
                     if (this.activeLayer !== 'none' && this.activeLayer !== 'select' && this.activeLayer !== 'pointv') {
                         if (this.activeLayer === 'dragdrop1' || this.activeLayer === 'dragdrop2' || this.activeLayer === 'dragdrop3') {
                             this.map.forEachFeatureAtPixel(evt.pixel, (feature, layer) => {
@@ -1174,15 +1100,6 @@ export class MapService {
                                     }
                                 }
                             });
-                        } else {
-                            const viewResolution = this.view.getResolution();
-                            const url = this.layers[layerIndex].getGetFeatureInfoUrl(
-                                evt.coordinate,
-                                viewResolution,
-                                'EPSG:3857',
-                                {'INFO_FORMAT': 'application/json'},
-                            );
-                            // selectObjectFromID(url, this.activeLayer);
                         }
                     }
                 }
@@ -1193,7 +1110,7 @@ export class MapService {
     }
 
     getPointStyle(feature) {
-        let style = '';
+        let style: string;
         if (this.clusterPointsSubject.value) {
             style = this.setClusterSymbol(feature);
         } else {
@@ -1209,7 +1126,7 @@ export class MapService {
         if (feature.get('features')) {
             const size = feature.get('features').length;
             if (size > 1) {
-                const features = feature.get('features');
+                feature.get('features');
                 const clusterindex = feature.get('identifiers');
                 if (this.selections.length > 0) {
                     for (const i in this.selections) {
@@ -1226,7 +1143,7 @@ export class MapService {
                     hexcolor = '#' + this.taxaSymbology[cKey]['color'];
                 }
                 const colorArr = this.sharedTools.hexToRgb(hexcolor);
-                let radius = 0;
+                let radius: number;
                 if (size < 10) {
                     radius = 10;
                 } else if (size < 100) {
@@ -1281,7 +1198,7 @@ export class MapService {
                 type: (selection),
             });
 
-            this.draw.on('drawend', (evt) => {
+            this.draw.on('drawend', () => {
                 this.drawToolSelectedSubject.next('None');
                 this.map.removeInteraction(this.draw);
                 if (!this.shapeActive) {
@@ -1353,16 +1270,12 @@ export class MapService {
         const occid = Number(feature.get('occid'));
         if (this.selections.indexOf(occid) < 0) {
             this.selections.push(occid);
-            // var infoArr = getPointInfoArr(sFeature);
-            // updateSelections(occid,infoArr);
         } else {
             const index = this.selections.indexOf(occid);
             this.selections.splice(index, 1);
-            // removeSelectionRecord(occid);
         }
         const style = (sFeature.get('features') ? this.setClusterSymbol(sFeature) : this.setSymbol(sFeature));
         sFeature.setStyle(style);
-        // adjustSelectionsTab();
     }
 
     showFeature(feature) {
@@ -1377,12 +1290,9 @@ export class MapService {
 
     setSymbol(feature) {
         const showPoint = true;
-        /* if (dateSliderActive) {
-            showPoint = validateFeatureDate(feature);
-        } */
-        let style = '';
-        let stroke = '';
-        let fill = '';
+        let style: string;
+        let stroke: string;
+        let fill: string;
         let selected = false;
         const cKey = feature.get(this.clusterKey);
         let recType = feature.get('CollType');
@@ -1509,7 +1419,6 @@ export class MapService {
         } else {
             let acos = 0;
             const dec = 30;
-            const max = Math.min(60, spiderFeatures.length);
             for (const i in spiderFeatures) {
                 if (spiderFeatures[i]) {
                     const rad2 = dec / 2 + dec * acos / (2 * Math.PI);
@@ -1531,7 +1440,7 @@ export class MapService {
 
     setBaseLayerSource(urlTemplate) {
         return new TileImage({
-            tileUrlFunction: function(tileCoord, pixelRatio, projection) {
+            tileUrlFunction: function(tileCoord) {
                 const z = tileCoord[0];
                 let x = tileCoord[1];
                 const y = -tileCoord[2] - 1;

@@ -9,7 +9,7 @@ import union from '@turf/union';
 import concave from '@turf/concave';
 import convex from '@turf/convex';
 import circle from '@turf/circle';
-import {getDistance as haversineDistance} from '@greentheorystudio/ol/sphere';
+import {getDistance as haversineDistance} from 'ol/sphere';
 
 @Injectable({
     providedIn: 'root'

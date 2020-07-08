@@ -1,4 +1,5 @@
 api_platform:
     formats: { jsonld: [application/ld+json], jsonhal: [application/hal+json], jsonapi: [application/vnd.api+json], json: [application/json], xml: [application/xml, text/xml], yaml: [application/x-yaml], csv: [text/csv], html: [text/html] }
     mapping: { paths: ['%kernel.project_dir%/src/api/Entity'] }
+    swagger: { versions: [3] }
     path_segment_name_generator: Core\Operation\EntityPathSegmentNameGenerator
