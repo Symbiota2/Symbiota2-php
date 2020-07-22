@@ -6,12 +6,19 @@
         {{ 'core.layout.header.topnav.menu_button' | translate }}
     </div>
     <div fxFlex fxLayout fxLayoutAlign="left center" class="left-links" fxHide.lt-md>
-        <ul fxLayout fxLayoutGap="40px" class="navigation-items">
-            <li><a routerLink="/">{{ 'core.layout.header.topnav.home_link' | translate }}</a></li>
-            <li><a [matMenuTriggerFor]="search">{{ 'core.layout.header.topnav.search_link' | translate }}</a></li>
-            <li><a [matMenuTriggerFor]="images">{{ 'core.layout.header.topnav.images_link' | translate }}</a></li>
-            <li><a [matMenuTriggerFor]="symbiota">{{ 'core.layout.header.topnav.symbiota_link' | translate }}</a></li>
-        </ul>
+        <ng-container *ngIf="navigationData !== undefined"></ng-container>
+        <ng-container *ngIf="navigationData === undefined">
+            <ul fxLayout fxLayoutGap="40px" class="navigation-items">
+                <li><a routerLink="/">{{ 'core.layout.header.topnav.home_link' | translate }}</a></li>
+                <ng-container *ngIf="pluginLinksArr.length > 0">
+                    <li *ngFor="let link of pluginLinksArr">
+                        <a routerLink="{{link.link_path}}" *ngIf="link.link_text">{{link.link_text}}</a>
+                        <a routerLink="{{link.link_path}}" *ngIf="link.link_text_translation_key">{{ link.link_text_translation_key | translate }}</a>
+                    </li>
+                </ng-container>
+                <li><a [matMenuTriggerFor]="symbiota">{{ 'core.layout.header.topnav.symbiota_link' | translate }}</a></li>
+            </ul>
+        </ng-container>
     </div>
     <div fxFlex fxLayout fxLayoutAlign="end center" class="right-links" fxHide.xs>
         <ul fxLayout fxLayoutGap="15px" class="navigation-items">
@@ -40,20 +47,7 @@
             </li>
         </ul>
     </div>
-    <mat-menu #search="matMenu">
-        <ul fxLayout="column" fxLayoutGap="15px" class="navigation-items-sub">
-            <li mat-menu-item><a routerLink="/searchcollections">{{ 'core.layout.header.topnav.search_collections_link' | translate }}</a></li>
-            <li mat-menu-item><a routerLink="/spatial">{{ 'core.layout.header.topnav.spatial_search_link' | translate }}</a></li>
-            <li mat-menu-item><a routerLink="/dynamicchecklist">{{ 'core.layout.header.topnav.dynamic_checklist_link' | translate }}</a></li>
-            <li mat-menu-item><a routerLink="/taxonomyexplorer">{{ 'core.layout.header.topnav.taxonomy_explorer_link' | translate }}</a></li>
-        </ul>
-    </mat-menu>
-    <mat-menu #images="matMenu">
-        <ul fxLayout="column" fxLayoutGap="15px" class="navigation-items-sub">
-            <li mat-menu-item><a routerLink="/imagesearch">{{ 'core.layout.header.topnav.image_search_link' | translate }}</a></li>
-            <li mat-menu-item><a routerLink="/imagelibrary">{{ 'core.layout.header.topnav.image_library_link' | translate }}</a></li>
-        </ul>
-    </mat-menu>
+    <ng-container *ngIf="navigationData !== undefined"></ng-container>
     <mat-menu #symbiota="matMenu">
         <ul fxLayout="column" fxLayoutGap="15px" class="navigation-items-sub">
             <li mat-menu-item><a href="http://symbiota.org/docs/" target="_blank">{{ 'core.layout.header.topnav.symbiota_docs_link' | translate }}</a></li>

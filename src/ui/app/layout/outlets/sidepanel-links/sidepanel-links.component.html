@@ -7,10 +7,17 @@
                 <li *ngIf="isLoggedIn$ | async" (click)="onLogout()"><a>{{ 'core.layout.header.topnav.logout_link' | translate }}</a></li>
                 <li *ngIf="isLoggedOut$ | async" (click)="onLogin()"><a>{{ 'core.layout.header.topnav.login_link' | translate }}</a></li>
                 <li *ngIf="isLoggedOut$ | async"><a routerLink="/signup">{{ 'core.layout.header.topnav.new_account_link' | translate }}</a></li>
-                <li><a routerLink="#">{{ 'core.layout.header.topnav.home_link' | translate }}</a></li>
-                <li><a [matMenuTriggerFor]="searchSide">{{ 'core.layout.header.topnav.search_link' | translate }}</a></li>
-                <li><a [matMenuTriggerFor]="imagesSide">{{ 'core.layout.header.topnav.images_link' | translate }}</a></li>
-                <li><a [matMenuTriggerFor]="symbiotaSide">{{ 'core.layout.header.topnav.symbiota_link' | translate }}</a></li>
+                <ng-container *ngIf="navigationData !== undefined"></ng-container>
+                <ng-container *ngIf="navigationData === undefined">
+                    <li><a routerLink="#">{{ 'core.layout.header.topnav.home_link' | translate }}</a></li>
+                    <ng-container *ngIf="pluginLinksArr.length > 0">
+                        <li *ngFor="let link of pluginLinksArr">
+                            <a routerLink="{{link.link_path}}" *ngIf="link.link_text">{{link.link_text}}</a>
+                            <a routerLink="{{link.link_path}}" *ngIf="link.link_text_translation_key">{{ link.link_text_translation_key | translate }}</a>
+                        </li>
+                    </ng-container>
+                    <li><a [matMenuTriggerFor]="symbiotaSide">{{ 'core.layout.header.topnav.symbiota_link' | translate }}</a></li>
+                </ng-container>
                 <li><a routerLink="/sitemap">{{ 'core.layout.header.topnav.sitemap_link' | translate }}</a></li>
                 <li>
                     <select [(ngModel)]="selectedLanguage" (change)="useLanguage($event.target)">
@@ -31,24 +38,10 @@
                 </li>
             </ul>
         </div>
-        <mat-menu #searchSide="matMenu">
-            <ul fxLayout="column" fxLayoutGap="15px" class="navigation-items-sub">
-                <li mat-menu-item><a routerLink="/searchcollections">{{ 'core.layout.header.topnav.search_collections_link' | translate }}</a></li>
-                <li mat-menu-item><a routerLink="/spatial">{{ 'core.layout.header.topnav.spatial_search_link' | translate }}</a></li>
-                <li mat-menu-item><a routerLink="/dynamicchecklist">{{ 'core.layout.header.topnav.dynamic_checklist_link' | translate }}</a></li>
-                <li mat-menu-item><a routerLink="/taxonomyexplorer">{{ 'core.layout.header.topnav.taxonomy_explorer_link' | translate }}</a></li>
-            </ul>
-        </mat-menu>
-        <mat-menu #imagesSide="matMenu">
-            <ul fxLayout="column" fxLayoutGap="15px" class="navigation-items-sub">
-                <li mat-menu-item><a routerLink="/imagesearch">{{ 'core.layout.header.topnav.image_search_link' | translate }}</a></li>
-                <li mat-menu-item><a routerLink="/imagelibrary">{{ 'core.layout.header.topnav.image_library_link' | translate }}</a></li>
-            </ul>
-        </mat-menu>
+        <ng-container *ngIf="navigationData !== undefined"></ng-container>
         <mat-menu #symbiotaSide="matMenu">
             <ul fxLayout="column" fxLayoutGap="15px" class="navigation-items-sub">
-                <li mat-menu-item><a href="http://symbiota.org/docs/" target="_blank">{{ 'core.layout.header.topnav.symbiota_docs_link' | translate }}</a>
-                </li>
+                <li mat-menu-item><a href="http://symbiota.org/docs/" target="_blank">{{ 'core.layout.header.topnav.symbiota_docs_link' | translate }}</a></li>
                 <li mat-menu-item><a href="http://symbiota.org/docs/symbiota-introduction/symbiota-help-pages/" target="_blank">{{ 'core.layout.header.topnav.symbiota_help_link' | translate }}</a></li>
                 <li mat-menu-item><a href="http://symbiota.org/docs/google-group/" target="_blank">{{ 'core.layout.header.topnav.symbiota_google_group_link' | translate }}</a></li>
             </ul>
