@@ -32,7 +32,7 @@ export class ConfigurationService {
                     resolve(this.data);
                     this.spinnerService.hide();
                 },
-                (error) => {
+                () => {
                     this.spinnerService.hide();
                     this.alertService.showErrorSnackbar(
                         this.configuration_failed,

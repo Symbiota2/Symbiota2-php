@@ -4,7 +4,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 
-import {SidepanelLinksComponent} from '../../components/sidepanel-links/sidepanel-links.component';
+import {SidepanelLinksComponent} from '../sidepanel-links/sidepanel-links.component';
 import {VectorToolsTabComponent} from 'symbiota-spatial';
 import {PointToolsTabComponent} from 'symbiota-spatial';
 import {LayoutComponent} from '../../containers/layout/layout.component';

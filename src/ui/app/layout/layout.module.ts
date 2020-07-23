@@ -9,11 +9,11 @@ import {LayoutComponent} from './containers/layout/layout.component';
 import {HomeComponent} from './components/home/home.component';
 import {FooterComponent} from './components/footer/footer.component';
 import {BannerComponent} from './components/banner/banner.component';
-import {TopnavComponent} from './components/topnav/topnav.component';
+import {TopnavComponent} from './outlets/topnav/topnav.component';
 import {HeaderComponent} from './containers/header/header.component';
 import {SidepanelComponent} from './outlets/sidepanel/sidepanel.component';
 import {SitemapComponent} from './outlets/sitemap/sitemap.component';
-import {SidepanelLinksComponent} from './components/sidepanel-links/sidepanel-links.component';
+import {SidepanelLinksComponent} from './outlets/sidepanel-links/sidepanel-links.component';
 
 @NgModule({
     declarations: [

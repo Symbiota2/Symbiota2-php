@@ -3,9 +3,12 @@ import {Observable} from 'rxjs';
 import {TranslateService} from "@ngx-translate/core";
 
 import {AuthService} from 'symbiota-auth';
+import {PluginLinkService} from 'symbiota-plugin';
 import {LoginComponentService} from 'symbiota-auth';
-import {CurrentUser} from '../../../user/interfaces/user.interface';
 import {ConfigurationService} from 'symbiota-shared';
+
+import {LinkHook} from '../../../plugin/interfaces/link-hook.interface';
+import {CurrentUser} from '../../../user/interfaces/user.interface';
 
 @Component({
     selector: 'header-topnav',
@@ -19,9 +22,12 @@ export class TopnavComponent implements OnInit {
     isLoggedOut$: Observable<boolean>;
     currentUser$: Observable<CurrentUser>;
     selectedLanguage: string;
+    navigationData: any;
+    pluginLinksArr: LinkHook[];
 
     constructor(
         private authService: AuthService,
+        private linkService: PluginLinkService,
         private loginComponentService: LoginComponentService,
         private translate: TranslateService,
         private configService: ConfigurationService
@@ -29,6 +35,13 @@ export class TopnavComponent implements OnInit {
         this.configService.selectedLanguageValue.subscribe(value => {
             this.selectedLanguage = value.toString();
         });
+
+        if (configService.data && configService.data.hasOwnProperty('NAVIGATION_DATA')) {
+            this.navigationData = configService.data.NAVIGATION_DATA;
+        } else {
+            this.pluginLinksArr = Object.assign([], this.linkService.getOutletLinks('topnav-navigation-links'));
+            this.pluginLinksArr.sort((a, b) => a.index - b.index);
+        }
     }
 
     ngOnInit() {

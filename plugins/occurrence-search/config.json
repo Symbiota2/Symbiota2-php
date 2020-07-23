@@ -14,5 +14,31 @@
       "path": "searchcollections",
       "provider": "search-criteria"
     }
+  ],
+  "link_hooks": [
+    {
+      "outlet": "topnav-navigation-links",
+      "link_path": "/searchcollections",
+      "link_text_translation_key": "core.layout.header.topnav.search_collections_link",
+      "index": 1
+    },
+    {
+      "outlet": "topnav-navigation-links",
+      "link_path": "/spatial",
+      "link_text_translation_key": "core.layout.header.topnav.spatial_search_link",
+      "index": 1
+    },
+    {
+      "outlet": "sidepanel-links-navigation-links",
+      "link_path": "/searchcollections",
+      "link_text_translation_key": "core.layout.header.topnav.search_collections_link",
+      "index": 1
+    },
+    {
+      "outlet": "sidepanel-links-navigation-links",
+      "link_path": "/spatial",
+      "link_text_translation_key": "core.layout.header.topnav.spatial_search_link",
+      "index": 1
+    }
   ]
 }

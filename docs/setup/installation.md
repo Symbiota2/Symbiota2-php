@@ -6,7 +6,7 @@ layout: default
 
 # Install the software
 
-Symbiota2 uses the Symfony framework and requires [Composer](https://getcomposer.org/doc/00-intro.md), [node.js 10 or greater](https://nodejs.org/en/), and [PHP 7.1 or greater](http://php.net/manual/en/install.php) to be installed. In addition, the following PHP extensions need to be enabled:
+Symbiota2 uses the Symfony framework and requires [Composer](https://getcomposer.org/doc/00-intro.md), [node.js 10 or greater](https://nodejs.org/en/), and [PHP 7.2.5 or greater](http://php.net/manual/en/install.php) to be installed. In addition, the following PHP extensions need to be enabled:
 
 - Ctype
 - iconv
