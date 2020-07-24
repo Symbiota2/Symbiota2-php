@@ -7,7 +7,7 @@ use Core\Entity\Users;
 use Core\Service\MailerService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class UserRegisterPostSubscriber implements EventSubscriberInterface
@@ -26,7 +26,7 @@ class UserRegisterPostSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function sendRegisterConfirmation(GetResponseForControllerResultEvent $event)
+    public function sendRegisterConfirmation(ViewEvent $event)
     {
         $user = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();

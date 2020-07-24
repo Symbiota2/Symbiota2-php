@@ -7,7 +7,7 @@ use Core\Entity\InitialTimestampInterface;
 use Core\Entity\ModifiedTimestampInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class TimestampSubscriber implements EventSubscriberInterface
@@ -19,7 +19,7 @@ class TimestampSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function setTimestamp(GetResponseForControllerResultEvent $event)
+    public function setTimestamp(ViewEvent $event)
     {
         $entity = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();

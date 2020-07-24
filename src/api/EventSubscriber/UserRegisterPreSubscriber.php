@@ -7,7 +7,7 @@ use Core\Entity\Users;
 use Core\Guard\TokenGenerator;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -32,7 +32,7 @@ class UserRegisterPreSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function registerUser(GetResponseForControllerResultEvent $event)
+    public function registerUser(ViewEvent $event)
     {
         $user = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
