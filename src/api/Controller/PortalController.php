@@ -44,7 +44,8 @@ class PortalController extends AbstractController
             );
         }
         $migrationInput = new ArrayInput([
-            'command' => 'doctrine:migrations:migrate'
+            'command' => 'doctrine:migrations:migrate',
+            '--no-interaction' => true
         ]);
         try {
             $this->application->run($migrationInput);

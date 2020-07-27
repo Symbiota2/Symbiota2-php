@@ -3,8 +3,7 @@ namespace Occurrence\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Serializer\Annotation\Groups;
+use Core\Spatial\PHP\Types\Geometry\Point;
 use Symfony\Component\Validator\Constraints as Assert;
 use Core\Entity\InitialTimestampInterface;
 
@@ -41,7 +40,7 @@ class Points implements InitialTimestampInterface
     private $occurrenceId;
 
     /**
-     * @var point
+     * @var Point
      *
      * @ORM\Column(name="point", type="point")
      */

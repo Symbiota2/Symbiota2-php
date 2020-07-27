@@ -24,7 +24,7 @@
         "symfony/web-server-bundle": "4.4",
         "symfony/yaml": "5.1.*",
         "vich/uploader-bundle": "^1.14",
-        "wikimedia/composer-merge-plugin": "^1.4"
+        "wikimedia/composer-merge-plugin": "^1.4.1"
     },
     "config": {
         "optimize-autoloader": true,
