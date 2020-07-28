@@ -3,6 +3,7 @@
 	"collection.collection_available_permission.collection_permissions": "Autorisations de collecte",
 	"collection.collection_available_permission.editor": "Éditeur",
 	"collection.collection_available_permission.rare": "Rare",
+	"collection.collection_checkbox_selector.select_all": "Tout sélectionner",
 	"collection.collection_current_permission.admin_for": "Administrateur pour les collections suivantes",
 	"collection.collection_current_permission.editor_for": "Editeur pour les collections suivantes",
 	"collection.collection_current_permission.rare_for": "Visualisez et cartographiez les espèces rares pour les collections suivantes",

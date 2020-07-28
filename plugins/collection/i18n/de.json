@@ -3,6 +3,7 @@
 	"collection.collection_available_permission.collection_permissions": "Sammlungsberechtigungen",
 	"collection.collection_available_permission.editor": "Editor",
 	"collection.collection_available_permission.rare": "Selten",
+	"collection.collection_checkbox_selector.select_all": "Wählen Sie Alle",
 	"collection.collection_current_permission.admin_for": "Administrator für die folgenden Sammlungen",
 	"collection.collection_current_permission.editor_for": "Editor für folgende Sammlungen",
 	"collection.collection_current_permission.rare_for": "Zeigen Sie seltene Arten für die folgenden Sammlungen an und kartieren Sie sie",

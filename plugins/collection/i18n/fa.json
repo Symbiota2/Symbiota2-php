@@ -3,6 +3,7 @@
 	"collection.collection_available_permission.collection_permissions": "مجوزهای مجموعه",
 	"collection.collection_available_permission.editor": "ویرایشگر",
 	"collection.collection_available_permission.rare": "نادر",
+	"collection.collection_checkbox_selector.select_all": "انتخاب همه",
 	"collection.collection_current_permission.admin_for": "سرپرست مجموعه های زیر",
 	"collection.collection_current_permission.editor_for": "ویرایشگر مجموعه های زیر",
 	"collection.collection_current_permission.rare_for": "گونه های نادر را برای مجموعه های زیر مشاهده و نقشه برداری کنید",

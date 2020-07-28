@@ -3,6 +3,7 @@
 	"collection.collection_available_permission.collection_permissions": "أذونات المجموعة",
 	"collection.collection_available_permission.editor": "محرر",
 	"collection.collection_available_permission.rare": "نادر",
+	"collection.collection_checkbox_selector.select_all": "اختر الكل",
 	"collection.collection_current_permission.admin_for": "مسؤول عن المجموعات التالية",
 	"collection.collection_current_permission.editor_for": "محرر المجموعات التالية",
 	"collection.collection_current_permission.rare_for": "عرض وخريطة الأنواع النادرة للمجموعات التالية",

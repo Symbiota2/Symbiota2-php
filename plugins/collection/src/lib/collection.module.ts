@@ -12,7 +12,6 @@ import {CollectionCurrentPermissionComponent} from './components/collection-curr
 import {CollectionAvailablePermissionComponent} from './components/collection-available-permission/collection-available-permission.component';
 import {CollectionCheckboxSelectorComponent} from './components/collection-checkbox-selector/collection-checkbox-selector.component';
 
-import {CollectionListService} from './services/collection-list.service';
 import {CollectionService} from './services/collection.service';
 
 @NgModule({
@@ -44,7 +43,6 @@ import {CollectionService} from './services/collection.service';
     ],
     providers: [
         CollectionService,
-        CollectionListService,
         {
             provide: 'user-profile-collection-tab',
             useValue: [{

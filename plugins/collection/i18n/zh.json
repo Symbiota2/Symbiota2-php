@@ -3,6 +3,7 @@
 	"collection.collection_available_permission.collection_permissions": "收集权限",
 	"collection.collection_available_permission.editor": "编辑",
 	"collection.collection_available_permission.rare": "罕见",
+	"collection.collection_checkbox_selector.select_all": "全选",
 	"collection.collection_current_permission.admin_for": "以下集合的管理员",
 	"collection.collection_current_permission.editor_for": "以下集合的编辑器",
 	"collection.collection_current_permission.rare_for": "查看和映射以下集合的稀有物种",

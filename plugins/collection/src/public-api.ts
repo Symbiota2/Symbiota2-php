@@ -2,7 +2,6 @@
  * Public API Surface of collection
  */
 
-export * from './lib/services/collection-list.service';
 export * from './lib/services/collection.service';
 export * from './lib/components/collection-checkbox-selector/collection-checkbox-selector.component';
 export * from './lib/components/rare-species-reader-available-permission/rare-species-reader-available-permission.component';

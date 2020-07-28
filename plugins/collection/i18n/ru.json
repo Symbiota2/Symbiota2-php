@@ -3,6 +3,7 @@
 	"collection.collection_available_permission.collection_permissions": "Разрешения на сбор",
 	"collection.collection_available_permission.editor": "редактор",
 	"collection.collection_available_permission.rare": "редкий",
+	"collection.collection_checkbox_selector.select_all": "Выбрать все",
 	"collection.collection_current_permission.admin_for": "Администратор для следующих коллекций",
 	"collection.collection_current_permission.editor_for": "Редактор для следующих коллекций",
 	"collection.collection_current_permission.rare_for": "Просмотр и отображение редких видов для следующих коллекций",

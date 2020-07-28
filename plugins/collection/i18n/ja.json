@@ -3,6 +3,7 @@
 	"collection.collection_available_permission.collection_permissions": "コレクションのアクセス許可",
 	"collection.collection_available_permission.editor": "編集者",
 	"collection.collection_available_permission.rare": "珍しい",
+	"collection.collection_checkbox_selector.select_all": "すべて選択",
 	"collection.collection_current_permission.admin_for": "次のコレクションの管理者",
 	"collection.collection_current_permission.editor_for": "次のコレクションのエディター",
 	"collection.collection_current_permission.rare_for": "次のコレクションの希少種の表示とマッピング",

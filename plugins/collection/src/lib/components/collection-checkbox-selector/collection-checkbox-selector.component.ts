@@ -40,6 +40,7 @@ export class DataFlatNode {
     collectionType: string;
     dwcaUrl: string;
     level: number;
+    category?: string;
     expandable: boolean;
 }
 
@@ -115,6 +116,7 @@ export class CollectionCheckboxSelectorComponent implements AfterViewInit {
     treeFlattener: MatTreeFlattener<DataNode, DataFlatNode>;
     dataSource: MatTreeFlatDataSource<DataNode, DataFlatNode>;
     checklistSelection = new SelectionModel<DataFlatNode>(true);
+    loaded = false;
 
     getLevel = (node: DataFlatNode) => node.level;
     isExpandable = (node: DataFlatNode) => node.expandable;
@@ -128,6 +130,7 @@ export class CollectionCheckboxSelectorComponent implements AfterViewInit {
         flatNode.collectionCode = node.collectionCode;
         flatNode.collectionName = node.collectionName;
         flatNode.icon = node.icon;
+        flatNode.category = node.category;
         flatNode.collectionType = node.collectionType;
         flatNode.dwcaUrl = node.dwcaUrl;
         flatNode.level = level;
@@ -144,7 +147,14 @@ export class CollectionCheckboxSelectorComponent implements AfterViewInit {
 
         database.dataChange.subscribe(data => {
             this.dataSource.data = data;
+            this.loadFirstNode();
         });
+    }
+
+    loadFirstNode() {
+        if (this.loaded) {
+            this.treeControl.expand(this.tree.treeControl.dataNodes[0]);
+        }
     }
 
     descendantsAllSelected(node: DataFlatNode): boolean {
@@ -165,6 +175,7 @@ export class CollectionCheckboxSelectorComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.treeControl.expand(this.tree.treeControl.dataNodes[0]);
+        this.loaded = true;
+        this.loadFirstNode();
     }
 }
