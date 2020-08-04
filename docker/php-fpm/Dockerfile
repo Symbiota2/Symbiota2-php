@@ -24,4 +24,7 @@ RUN apt-get update \
     && apt-get -y install git \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
+# Allows container to run as any uid
+RUN touch /run/php-fpm.pid && chmod 777 /run/php-fpm.pid 
+
 WORKDIR "/symbiota2"
