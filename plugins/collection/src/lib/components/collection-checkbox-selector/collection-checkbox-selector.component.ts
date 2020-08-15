@@ -5,7 +5,7 @@ import {
     Input,
     Injectable,
     ViewChild,
-    Output
+    Output, OnChanges, SimpleChange, SimpleChanges
 } from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {FlatTreeControl} from '@angular/cdk/tree';
@@ -106,9 +106,9 @@ export class CollectionTreeData {
     styleUrls: ['./collection-checkbox-selector.component.css'],
     providers: [CollectionTreeData]
 })
-export class CollectionCheckboxSelectorComponent implements AfterViewInit {
-    @Input() selections: string | number[];
-    @Output() changeEmitter = new EventEmitter<string | number[]>();
+export class CollectionCheckboxSelectorComponent implements AfterViewInit, OnChanges {
+    @Input() selections: number[];
+    @Output() selectionsChange = new EventEmitter<number[]>();
     @ViewChild('colltree', {static: false}) tree;
     flatNodeMap = new Map<DataFlatNode, DataNode>();
     nestedNodeMap = new Map<DataNode, DataFlatNode>();
@@ -177,5 +177,29 @@ export class CollectionCheckboxSelectorComponent implements AfterViewInit {
     ngAfterViewInit() {
         this.loaded = true;
         this.loadFirstNode();
+
+        // Emit leaf node IDs when checkboxes change
+        this.checklistSelection.changed.subscribe(() => {
+            this.selectionsChange.emit(
+                this.checklistSelection.selected
+                    .filter((node) => node.collectionName)
+                    .map((collection) => collection.id)
+            );
+        });
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.selections) {
+            this.onSelectionChanges(changes.selections.currentValue);
+        }
+    }
+
+    // Called when Input member "selections" changes
+    onSelectionChanges(selections: number[]) {
+        const newSelections = this.treeControl.dataNodes.filter((node) => {
+            return node.collectionName && selections.includes(node.id);
+        });
+
+        this.checklistSelection.select(...newSelections);
     }
 }

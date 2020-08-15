@@ -1,15 +1,15 @@
-import {NgModule} from '@angular/core';
-import {TranslateModule} from "@ngx-translate/core";
+import { NgModule } from "@angular/core";
+import { TranslateModule } from "@ngx-translate/core";
 
-import {CollectionModule} from 'collection';
-import {SymbiotaAuthModule} from 'symbiota-auth';
-import {SymbiotaSharedModule} from 'symbiota-shared';
+import { CollectionModule } from "collection";
+import { SymbiotaAuthModule } from "symbiota-auth";
+import { SymbiotaSharedModule } from "symbiota-shared";
 
-import {SearchCriteriaComponent} from './outlets/search-criteria/search-criteria.component';
-import { CollectionSelectPageComponent } from './components/collection-select-page/collection-select-page.component';
-import { SearchCriteriaPageComponent } from './components/search-criteria-page/search-criteria-page.component';
-import { SearchResultsPageComponent } from './components/search-results-page/search-results-page.component';
-import { BindQueryParamsDirective } from './directives/bind-query-params.directive';
+import { SearchCriteriaComponent } from "./outlets/search-criteria/search-criteria.component";
+import { CollectionSelectPageComponent } from "./components/pages/collection-select-page/collection-select-page.component";
+import { SearchCriteriaPageComponent } from "./components/pages/search-criteria-page/search-criteria-page.component";
+import { SearchResultsPageComponent } from "./components/pages/search-results-page/search-results-page.component";
+import { SelectComponent } from './components/select/select.component';
 
 @NgModule({
     imports: [
@@ -23,21 +23,20 @@ import { BindQueryParamsDirective } from './directives/bind-query-params.directi
         CollectionSelectPageComponent,
         SearchCriteriaPageComponent,
         SearchResultsPageComponent,
-        BindQueryParamsDirective
+        SelectComponent
     ],
     entryComponents: [
         SearchCriteriaComponent
     ],
     providers: [
         {
-            provide: 'search-criteria',
+            provide: "search-criteria",
             useValue: [{
-                name: 'occurrence-search-search-criteria',
+                name: "occurrence-search-search-criteria",
                 component: SearchCriteriaComponent
             }],
             multi: true
         }
     ]
 })
-export class OccurrenceSearchModule {
-}
+export class OccurrenceSearchModule { }

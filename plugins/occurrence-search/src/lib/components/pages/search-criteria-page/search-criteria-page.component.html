@@ -1,0 +1,16 @@
+<div class="row" [formGroup]="formGroup">
+    <div class="col-auto">
+        <occurrence-search-select
+            title="Taxon search type"
+            [options]="TaxonSearchOpts"
+            [formControlName]="SEARCH_TYPE"
+        >
+        </occurrence-search-select>
+    </div>
+    <div class="col-auto">
+        <mat-form-field>
+            <mat-label>Search</mat-label>
+            <input [formControlName]="SEARCH_STR" matInput>
+        </mat-form-field>
+    </div>
+</div>
