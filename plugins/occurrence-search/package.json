@@ -8,5 +8,10 @@
     "collection": "file:../../dist/collection/collection-0.0.1.tgz",
     "symbiota-auth": "file:../../dist/symbiota-auth/symbiota-auth-0.0.1.tgz",
     "symbiota-shared": "file:../../dist/symbiota-shared/symbiota-shared-0.0.1.tgz"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^3.9.0",
+    "@typescript-eslint/parser": "^3.9.0",
+    "eslint": "^7.7.0"
   }
 }
