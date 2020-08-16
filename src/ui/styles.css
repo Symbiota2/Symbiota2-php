@@ -10,18 +10,19 @@ body {
     background-color: #91BDB7;
 }
 
-input[type=text],
-input[type=email],
-input[type=number],
-input[type=password],
-textarea {
-    display: block;
-    background: #fff;
-    font-size: 13px;
-    padding: 6px 30px 6px 10px;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-}
+/* This breaks material inputs, is there a reason it's here? */
+/*input[type=text],*/
+/*input[type=email],*/
+/*input[type=number],*/
+/*input[type=password],*/
+/*textarea {*/
+/*    display: block;*/
+/*    background: #fff;*/
+/*    font-size: 13px;*/
+/*    padding: 6px 30px 6px 10px;*/
+/*    border-radius: 3px;*/
+/*    border: 1px solid #ccc;*/
+/*}*/
 
 button {
     border: 0;
