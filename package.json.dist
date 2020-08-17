@@ -1052,7 +1052,6 @@
     "rxjs": "^6.5.3",
     "shpjs": "^3.4.3",
     "systemjs": "^0.21.6",
-    "tslib": "^1.9.0",
     "web-animations-js": "^2.3.2",
     "zone.js": "^0.10.2"
   },
