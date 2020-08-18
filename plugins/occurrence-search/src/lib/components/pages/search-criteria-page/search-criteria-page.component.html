@@ -1,14 +1,9 @@
-<div class="row">
+<div class="row" [formGroup]="formGroup">
     <div class="col-auto">
         <occurrence-search-select
             title="Taxon search type"
             [options]="TaxonSearchOpts"
-            [value]="(
-                searchCriteria.taxa.searchType ?
-                searchCriteria.taxa.searchType.toString() :
-                ''
-            )"
-            (valueChange)="onTaxonTypeChanged($event)"
+            [formControlName]="FORM_KEY_TAXON_TYPE"
         >
         </occurrence-search-select>
     </div>
@@ -17,8 +12,7 @@
             <mat-label>Search</mat-label>
             <input
                 matInput
-                [ngModel]="searchCriteria.taxa.searchStr"
-                (ngModelChange)="onTaxonSearchChanged($event)"
+                [formControlName]="FORM_KEY_TAXON_SEARCH"
             >
         </mat-form-field>
     </div>

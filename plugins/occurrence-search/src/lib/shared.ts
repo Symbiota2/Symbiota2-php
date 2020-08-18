@@ -1,3 +1,7 @@
+export const FORM_KEY_COLLIDS = "collectionID";
+export const FORM_KEY_TAXON_TYPE = "taxonSearchType";
+export const FORM_KEY_TAXON_SEARCH = "taxonSearchStr";
+
 export enum TaxonSearchType {
     TYPE_FAM_OR_SCINAME,
     TYPE_FAM_ONLY,

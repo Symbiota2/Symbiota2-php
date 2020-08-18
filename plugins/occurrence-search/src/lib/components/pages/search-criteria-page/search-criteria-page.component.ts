@@ -1,9 +1,10 @@
-import { Component, forwardRef } from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { Component, OnInit } from "@angular/core";
+import { ControlContainer, FormGroup, } from "@angular/forms";
 import {
-    SearchCriteriaFormValues,
-    TaxonSearchType
-} from "../../../interfaces/searchCriteria";
+    TaxonSearchType,
+    FORM_KEY_TAXON_TYPE,
+    FORM_KEY_TAXON_SEARCH
+} from "../../../shared";
 
 const TaxonSearchOpts = [
     { name: "Family or scientific name", value: TaxonSearchType.TYPE_FAM_OR_SCINAME.toString() },
@@ -14,59 +15,20 @@ const TaxonSearchOpts = [
 ];
 
 @Component({
-    selector: "occurrence-search-search-criteria-page",
+    selector: "[formGroup] occurrence-search-search-criteria-page, [formGroupName] occurrence-search-search-criteria-page",
     templateUrl: "./search-criteria-page.component.html",
-    styleUrls: ["../../../occurrence-search.less"],
-    providers: [{
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => SearchCriteriaPageComponent),
-        multi: true
-    }]
+    styleUrls: ["../../../occurrence-search.less"]
 })
-export class SearchCriteriaPageComponent implements ControlValueAccessor {
+export class SearchCriteriaPageComponent implements OnInit {
+    public formGroup: FormGroup;
+
     public TaxonSearchOpts = TaxonSearchOpts;
+    public FORM_KEY_TAXON_TYPE = FORM_KEY_TAXON_TYPE;
+    public FORM_KEY_TAXON_SEARCH = FORM_KEY_TAXON_SEARCH;
 
-    public searchCriteria: SearchCriteriaFormValues = {
-        taxa: {
-            searchType: null,
-            searchStr: ""
-        }
-    };
-    private changeListener: (value: SearchCriteriaFormValues) => void;
+    constructor(private controlContainer: ControlContainer) {}
 
-    onTaxonTypeChanged(value: string) {
-        const newValue = Object.assign(this.searchCriteria, {
-            taxa: Object.assign(
-                this.searchCriteria.taxa,
-                { searchType: parseInt(value) }
-            )
-        });
-
-        if (this.changeListener) {
-            this.changeListener(newValue);
-        }
+    ngOnInit() {
+        this.formGroup = <FormGroup> this.controlContainer.control;
     }
-
-    onTaxonSearchChanged(value: string) {
-        const newValue = Object.assign(this.searchCriteria, {
-            taxa: Object.assign(
-                this.searchCriteria.taxa,
-                { searchStr: value }
-            )
-        });
-
-        if (this.changeListener) {
-            this.changeListener(newValue);
-        }
-    }
-
-    registerOnChange(fn: (value: SearchCriteriaFormValues) => void) {
-        this.changeListener = fn;
-    }
-
-    writeValue(values: SearchCriteriaFormValues): void {
-        this.searchCriteria = values;
-    }
-
-    registerOnTouched(fn: any): void {}
 }
