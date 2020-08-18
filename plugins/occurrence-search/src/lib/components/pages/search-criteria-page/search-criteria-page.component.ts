@@ -1,42 +1,34 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
-
-enum TaxonSearchType {
-    TYPE_FAM_OR_SCINAME,
-    TYPE_FAM_ONLY,
-    TYPE_SCINAME_ONLY,
-    TYPE_HIGHER_TAXON,
-    TYPE_COMMON_NAME
-}
+import { ControlContainer, FormGroup, } from "@angular/forms";
+import {
+    TaxonSearchType,
+    FORM_KEY_TAXON_TYPE,
+    FORM_KEY_TAXON_SEARCH
+} from "../../../shared";
 
 const TaxonSearchOpts = [
-    { name: "Family or scientific name", value: TaxonSearchType.TYPE_FAM_OR_SCINAME },
-    { name: "Family only", value: TaxonSearchType.TYPE_FAM_ONLY },
-    { name: "Scientific name only", value: TaxonSearchType.TYPE_SCINAME_ONLY },
-    { name: "Higher taxonomy", value: TaxonSearchType.TYPE_HIGHER_TAXON },
-    { name: "Common name", value: TaxonSearchType.TYPE_COMMON_NAME }
+    { name: "Family or scientific name", value: TaxonSearchType.TYPE_FAM_OR_SCINAME.toString() },
+    { name: "Family only", value: TaxonSearchType.TYPE_FAM_ONLY.toString() },
+    { name: "Scientific name only", value: TaxonSearchType.TYPE_SCINAME_ONLY.toString() },
+    { name: "Higher taxonomy", value: TaxonSearchType.TYPE_HIGHER_TAXON.toString() },
+    { name: "Common name", value: TaxonSearchType.TYPE_COMMON_NAME.toString() }
 ];
 
 @Component({
-    selector: "occurrence-search-search-criteria-page",
+    selector: "[formGroup] occurrence-search-search-criteria-page, [formGroupName] occurrence-search-search-criteria-page",
     templateUrl: "./search-criteria-page.component.html",
     styleUrls: ["../../../occurrence-search.less"]
 })
 export class SearchCriteriaPageComponent implements OnInit {
+    public formGroup: FormGroup;
+
     public TaxonSearchOpts = TaxonSearchOpts;
-    public SEARCH_TYPE = "taxonSearchType";
-    public SEARCH_STR = "taxonSearchStr";
+    public FORM_KEY_TAXON_TYPE = FORM_KEY_TAXON_TYPE;
+    public FORM_KEY_TAXON_SEARCH = FORM_KEY_TAXON_SEARCH;
 
-    public formGroup = new FormGroup({
-        [this.SEARCH_TYPE]: new FormControl(""),
-        [this.SEARCH_STR]: new FormControl("")
-    });
-
-    constructor() { }
+    constructor(private controlContainer: ControlContainer) {}
 
     ngOnInit() {
-        this.formGroup.valueChanges.subscribe((changes) => {
-            console.log(changes);
-        });
+        this.formGroup = <FormGroup> this.controlContainer.control;
     }
 }

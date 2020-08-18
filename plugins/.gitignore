@@ -1,6 +1,7 @@
 *
 !*/
 !.gitignore
+!.eslintrc.yml
 !/checklist/**
 !/collection/**
 !/crowd-source/**

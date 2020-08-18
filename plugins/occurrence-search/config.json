@@ -1,44 +1,48 @@
 {
-  "name": "occurrence-search",
-  "title": "Search Occurrences Plugin",
-  "source": "local",
-  "version": "0.0.1",
-  "description": "A plugin that adds the Search Collections module to Symbiota.",
-  "dependencies": [
-    "collection"
-  ],
-  "ui_filename": "occurrence-search.umd.js",
-  "ui_module_name": "OccurrenceSearchModule",
-  "ui_routes": [
-    {
-      "path": "searchcollections",
-      "provider": "search-criteria"
-    }
-  ],
-  "link_hooks": [
-    {
-      "outlet": "topnav-navigation-links",
-      "link_path": "/searchcollections",
-      "link_text_translation_key": "core.layout.header.topnav.search_collections_link",
-      "index": 1
-    },
-    {
-      "outlet": "topnav-navigation-links",
-      "link_path": "/spatial",
-      "link_text_translation_key": "core.layout.header.topnav.spatial_search_link",
-      "index": 1
-    },
-    {
-      "outlet": "sidepanel-links-navigation-links",
-      "link_path": "/searchcollections",
-      "link_text_translation_key": "core.layout.header.topnav.search_collections_link",
-      "index": 1
-    },
-    {
-      "outlet": "sidepanel-links-navigation-links",
-      "link_path": "/spatial",
-      "link_text_translation_key": "core.layout.header.topnav.spatial_search_link",
-      "index": 1
-    }
-  ]
+    "name": "occurrence-search",
+    "title": "Search Occurrences Plugin",
+    "source": "local",
+    "version": "0.0.1",
+    "description": "A plugin that adds the Search Collections module to Symbiota.",
+    "dependencies": [
+        "occurrence"
+    ],
+    "ui_filename": "occurrence-search.umd.js",
+    "ui_module_name": "OccurrenceSearchModule",
+    "ui_routes": [
+        {
+            "path": "searchcollections",
+            "provider": "search-criteria"
+        },
+        {
+            "path": "searchcollections/results",
+            "provider": "search-results"
+        }
+    ],
+    "link_hooks": [
+        {
+            "outlet": "topnav-navigation-links",
+            "link_path": "/searchcollections",
+            "link_text_translation_key": "core.layout.header.topnav.search_collections_link",
+            "index": 1
+        },
+        {
+            "outlet": "topnav-navigation-links",
+            "link_path": "/spatial",
+            "link_text_translation_key": "core.layout.header.topnav.spatial_search_link",
+            "index": 1
+        },
+        {
+            "outlet": "sidepanel-links-navigation-links",
+            "link_path": "/searchcollections",
+            "link_text_translation_key": "core.layout.header.topnav.search_collections_link",
+            "index": 1
+        },
+        {
+            "outlet": "sidepanel-links-navigation-links",
+            "link_path": "/spatial",
+            "link_text_translation_key": "core.layout.header.topnav.spatial_search_link",
+            "index": 1
+        }
+    ]
 }

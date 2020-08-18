@@ -1,9 +1,9 @@
-import { Component, forwardRef, Input } from "@angular/core";
 import {
-    ControlValueAccessor,
-    FormControl,
-    NG_VALUE_ACCESSOR
-} from "@angular/forms";
+    Component,
+    forwardRef,
+    Input,
+} from "@angular/core";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 interface SelectOption {
     name: string,
@@ -11,7 +11,7 @@ interface SelectOption {
 }
 
 @Component({
-    selector: "occurrence-search-select",
+    selector: "[formControl] occurrence-search-select, [formControlName] occurrence-search-select",
     templateUrl: "./select.component.html",
     providers: [{
         provide: NG_VALUE_ACCESSOR,
@@ -22,18 +22,20 @@ interface SelectOption {
 export class SelectComponent implements ControlValueAccessor {
     @Input() title = "";
     @Input() options: SelectOption[];
+    @Input() required = false;
 
-    public value = new FormControl("");
+    public value: string;
 
-    constructor() {}
+    public onChangeListener: (any) => void;
 
-    registerOnChange(fn: (value: string) => void) {
-        this.value.valueChanges.subscribe(fn);
+    registerOnChange(fn: (any) => void): void {
+        this.onChangeListener = fn;
     }
 
-    writeValue(value: string): void {
-        this.value.setValue(value);
+    writeValue(value: any): void {
+        this.value = value.toString();
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     registerOnTouched(fn: any): void {}
 }

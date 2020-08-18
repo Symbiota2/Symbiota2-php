@@ -3,14 +3,17 @@
         <occurrence-search-select
             title="Taxon search type"
             [options]="TaxonSearchOpts"
-            [formControlName]="SEARCH_TYPE"
+            [formControlName]="FORM_KEY_TAXON_TYPE"
         >
         </occurrence-search-select>
     </div>
     <div class="col-auto">
         <mat-form-field>
             <mat-label>Search</mat-label>
-            <input [formControlName]="SEARCH_STR" matInput>
+            <input
+                matInput
+                [formControlName]="FORM_KEY_TAXON_SEARCH"
+            >
         </mat-form-field>
     </div>
 </div>

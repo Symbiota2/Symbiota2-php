@@ -1,17 +1,26 @@
 {
-  "extends": "../../tslint.json",
-  "rules": {
-    "directive-selector": [
-      true,
-      "attribute",
-      "occurrenceSearch",
-      "camelCase"
-    ],
-    "component-selector": [
-      true,
-      "element",
-      "occurrence-search",
-      "kebab-case"
-    ]
-  }
+    "extends": "../../tslint.json",
+    "rules": {
+        "directive-selector": [
+            true,
+            "attribute",
+            "occurrenceSearch",
+            "camelCase"
+        ],
+        "component-selector": [
+            true,
+            "element",
+            "occurrence-search",
+            "kebab-case"
+        ],
+        "indent": [
+            true,
+            "spaces",
+            4
+        ],
+        "quotemark": [
+            true,
+            "double"
+        ]
+    }
 }

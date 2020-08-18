@@ -1,6 +1,6 @@
 <mat-form-field>
-    <mat-select [formControl]="value">
-        <mat-label>{{ title }}</mat-label>
+    <mat-label>{{ title }}</mat-label>
+    <mat-select [required]="required" [value]="value" (valueChange)="onChangeListener($event)">
         <mat-option *ngFor="let opt of options" [value]="opt.value">
             {{ opt.name }}
         </mat-option>

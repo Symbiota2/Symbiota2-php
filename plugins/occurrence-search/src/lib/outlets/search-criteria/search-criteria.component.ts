@@ -1,11 +1,15 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import {
+    FORM_KEY_COLLIDS,
+    FORM_KEY_TAXON_TYPE,
+    FORM_KEY_TAXON_SEARCH
+} from "../../shared";
 
 enum Page {
     PAGE_COLLECTION_SELECT,
-    PAGE_SEARCH_CRITERIA,
-    PAGE_SEARCH_RESULTS,
+    PAGE_SEARCH_CRITERIA
 }
 
 @Component({
@@ -16,27 +20,23 @@ enum Page {
 export class SearchCriteriaComponent implements OnInit {
     public Page = Page;
 
-    public Q_PARAM_COLLIDS = "collectionID";
+    public Q_PARAM_PAGE = "page";
 
-    public FORM_GROUP_TAXON = "taxon";
-    public Q_PARAM_TAXON_SEARCH_TYPE = "searchType";
-    public Q_PARAM_TAXON_SEARCH_STR = "searchStr";
+    public currentPage: Page = Page.PAGE_COLLECTION_SELECT;
+    public searchParams: FormGroup;
+    public FORM_KEY_COLLIDS = FORM_KEY_COLLIDS;
 
-    public currentPage = Page.PAGE_COLLECTION_SELECT;
-
-    public searchParams = new FormGroup({
-        [this.Q_PARAM_COLLIDS]: new FormControl([]),
-        [this.FORM_GROUP_TAXON]: new FormGroup({
-            [this.Q_PARAM_TAXON_SEARCH_TYPE]: new FormControl(""),
-            [this.Q_PARAM_TAXON_SEARCH_STR]: new FormControl("")
-        })
-    });
-
-    constructor(private router: Router, private currentRoute: ActivatedRoute) {}
+    constructor(
+        private formBuilder: FormBuilder,
+        private router: Router,
+        private currentRoute: ActivatedRoute
+    ) {}
 
     ngOnInit() {
-        this.searchParams.valueChanges.subscribe(() => {
-            console.log(this.searchParams.value);
+        this.searchParams = this.formBuilder.group({
+            [FORM_KEY_COLLIDS]: [],
+            [FORM_KEY_TAXON_TYPE]: "",
+            [FORM_KEY_TAXON_SEARCH]: "",
         });
     }
 
@@ -45,5 +45,15 @@ export class SearchCriteriaComponent implements OnInit {
         if (newPage in Page) {
             this.currentPage = newPage;
         }
+    }
+
+    async onSearch() {
+        return this.router.navigate(
+            ["results"],
+            {
+                queryParams: this.searchParams.value,
+                relativeTo: this.currentRoute
+            }
+        );
     }
 }

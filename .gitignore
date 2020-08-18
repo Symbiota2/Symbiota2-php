@@ -80,3 +80,7 @@ Homestead.yaml
 /docs/.sass-cache/
 /docs/_site/
 /docs/Gemfile.lock
+
+###> symfony/web-server-bundle ###
+/.web-server-pid
+###< symfony/web-server-bundle ###

@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col">
+        <h1>Search results</h1>
+    </div>
+    <div class="col text-end">
+        <a [routerLink]="['..']">Back to search</a>
+    </div>
+</div>
+<div *ngFor="let occurrence of results" class="row">
+    <div class="col">
+        <occurrence-search-search-result [occurrence]="occurrence">
+        </occurrence-search-search-result>
+    </div>
+</div>
