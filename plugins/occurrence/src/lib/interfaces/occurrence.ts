@@ -107,7 +107,7 @@ export interface Occurrence {
     modifiedTimestamp?: Date
     taxaId?: string
     observerUserId?: string
-    collectionId?: number
+    collectionId?: string
     duplicateId?: string[]
     chronostratigraphyId?: string[]
 }

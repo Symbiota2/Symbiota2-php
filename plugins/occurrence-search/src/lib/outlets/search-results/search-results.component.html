@@ -6,8 +6,18 @@
         <a [routerLink]="['..']">Back to search</a>
     </div>
 </div>
-<div class="row">
+<div *ngFor="let occurrence of results" class="row">
     <div class="col">
-        <pre>{{ results | json }}</pre>
+        <occurrence-search-search-result
+            [occurrenceID]="occurrence.id"
+            [catalogNumber]="occurrence.catalogNumber"
+            [collectionUrl]="occurrence.collectionId"
+            [scientificName]="occurrence.scientificName"
+            [recordedBy]="occurrence.recordedBy"
+            [eventDate]="occurrence.eventDate"
+            [country]="occurrence.country"
+            [stateProvince]="occurrence.stateProvince"
+        >
+        </occurrence-search-search-result>
     </div>
 </div>

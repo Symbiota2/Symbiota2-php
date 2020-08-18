@@ -12,6 +12,7 @@ import { SearchCriteriaPageComponent } from "./components/pages/search-criteria-
 import { SelectComponent } from "./components/select/select.component";
 import { SearchResultsComponent } from "./outlets/search-results/search-results.component";
 import { RouterModule } from "@angular/router";
+import { SearchResultComponent } from './components/search-result/search-result.component';
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import { RouterModule } from "@angular/router";
         CollectionSelectPageComponent,
         SearchCriteriaPageComponent,
         SelectComponent,
-        SearchResultsComponent
+        SearchResultsComponent,
+        SearchResultComponent
     ],
     entryComponents: [
         SearchCriteriaComponent,
