@@ -1,9 +1,9 @@
-import { Component, forwardRef, Input } from "@angular/core";
 import {
-    ControlValueAccessor,
-    FormControl,
-    NG_VALUE_ACCESSOR
-} from "@angular/forms";
+    Component,
+    EventEmitter,
+    Input,
+    Output
+} from "@angular/core";
 
 interface SelectOption {
     name: string,
@@ -12,28 +12,11 @@ interface SelectOption {
 
 @Component({
     selector: "occurrence-search-select",
-    templateUrl: "./select.component.html",
-    providers: [{
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => SelectComponent),
-        multi: true
-    }]
+    templateUrl: "./select.component.html"
 })
-export class SelectComponent implements ControlValueAccessor {
+export class SelectComponent {
     @Input() title = "";
     @Input() options: SelectOption[];
-
-    public value = new FormControl("");
-
-    constructor() {}
-
-    registerOnChange(fn: (value: string) => void) {
-        this.value.valueChanges.subscribe(fn);
-    }
-
-    writeValue(value: string): void {
-        this.value.setValue(value);
-    }
-
-    registerOnTouched(fn: any): void {}
+    @Input() value = "";
+    @Output() valueChange = new EventEmitter<string>();
 }

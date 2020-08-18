@@ -1,17 +1,16 @@
-import {NgModule} from '@angular/core';
-import {TranslateModule} from '@ngx-translate/core';
+import { NgModule } from "@angular/core";
+import { TranslateModule } from "@ngx-translate/core";
 
-import {SymbiotaAuthModule} from 'symbiota-auth';
-import {SymbiotaSharedModule} from 'symbiota-shared';
+import { SymbiotaAuthModule } from "symbiota-auth";
+import { SymbiotaSharedModule } from "symbiota-shared";
 
 @NgModule({
     declarations: [],
+    exports: [],
     imports: [
         TranslateModule,
         SymbiotaAuthModule,
         SymbiotaSharedModule
-    ],
-    exports: []
+    ]
 })
-export class OccurrenceModule {
-}
+export class OccurrenceModule {  }

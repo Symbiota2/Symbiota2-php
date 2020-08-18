@@ -1,5 +1,7 @@
 <div class="row">
-    <h1>Search {{ currentPage == Page.PAGE_SEARCH_RESULTS ? "Results" : "Collections" }}</h1>
+    <div class="col">
+        <h1>Search {{ currentPage == Page.PAGE_SEARCH_RESULTS ? "Results" : "Collections" }}</h1>
+    </div>
 </div>
 <form [formGroup]="searchParams">
     <div class="row">
@@ -12,6 +14,7 @@
             </occurrence-search-collection-select-page>
             <occurrence-search-search-criteria-page
                 *ngSwitchCase="Page.PAGE_SEARCH_CRITERIA"
+                [formControlName]="Q_PARAM_SEARCH_OPTS"
             >
             </occurrence-search-search-criteria-page>
             <occurrence-search-search-results-page
@@ -21,10 +24,14 @@
     </div>
     <div class="row">
         <div class="col-auto" *ngIf="currentPage > Page.PAGE_COLLECTION_SELECT">
-            <button mat-raised-button type="submit" (click)="onSwitchPage(-1)">Previous</button>
+            <button mat-raised-button (click)="onSwitchPage(-1)">Previous</button>
         </div>
         <div class="col-auto" *ngIf="currentPage < Page.PAGE_SEARCH_RESULTS">
-            <button mat-raised-button type="submit" color="primary" (click)="onSwitchPage(1)">
+            <button
+                mat-raised-button
+                color="primary"
+                (click)="currentPage == Page.PAGE_SEARCH_CRITERIA ? onSearch() : onSwitchPage(1)"
+            >
                 {{ currentPage == Page.PAGE_SEARCH_CRITERIA ? "Search" : "Next" }}
             </button>
         </div>
