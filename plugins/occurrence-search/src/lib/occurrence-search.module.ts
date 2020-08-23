@@ -13,6 +13,7 @@ import { SelectComponent } from "./components/select/select.component";
 import { SearchResultsComponent } from "./outlets/search-results/search-results.component";
 import { RouterModule } from "@angular/router";
 import { SearchResultComponent } from './components/search-result/search-result.component';
+import { SearchResultModalComponent } from './components/search-result-modal/search-result-modal.component';
 
 @NgModule({
     imports: [
@@ -29,7 +30,8 @@ import { SearchResultComponent } from './components/search-result/search-result.
         SearchCriteriaPageComponent,
         SelectComponent,
         SearchResultsComponent,
-        SearchResultComponent
+        SearchResultComponent,
+        SearchResultModalComponent
     ],
     entryComponents: [
         SearchCriteriaComponent,

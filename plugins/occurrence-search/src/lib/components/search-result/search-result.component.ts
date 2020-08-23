@@ -2,6 +2,9 @@ import {
     Component,
     Input,
 } from "@angular/core";
+import {Occurrence} from "occurrence";
+import {MatDialog} from "@angular/material/dialog";
+import {SearchResultModalComponent} from "../search-result-modal/search-result-modal.component";
 
 @Component({
     selector: "occurrence-search-search-result",
@@ -9,13 +12,7 @@ import {
     styleUrls: ["../../occurrence-search.less", "./search-result.component.less"]
 })
 export class SearchResultComponent {
-    @Input() occurrenceID: number;
-    @Input() catalogNumber: string;
-    @Input() collectionUrl: string;
-    @Input() scientificName: string;
-    @Input() recordedBy: string;
-    @Input() country: string;
-    @Input() stateProvince: string;
+    @Input() occurrence: Occurrence;
 
     // Coerce eventDate string to Date
     @Input()
@@ -31,4 +28,13 @@ export class SearchResultComponent {
     }
 
     private _eventDate: Date;
+
+    constructor(public dialog: MatDialog) {
+    }
+
+    openDialog(): void {
+        this.dialog.open(SearchResultModalComponent, {
+            data: this.occurrence
+        });
+    }
 }

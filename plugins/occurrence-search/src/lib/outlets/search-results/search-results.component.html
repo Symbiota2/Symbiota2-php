@@ -8,16 +8,7 @@
 </div>
 <div *ngFor="let occurrence of results" class="row">
     <div class="col">
-        <occurrence-search-search-result
-            [occurrenceID]="occurrence.id"
-            [catalogNumber]="occurrence.catalogNumber"
-            [collectionUrl]="occurrence.collectionId"
-            [scientificName]="occurrence.scientificName"
-            [recordedBy]="occurrence.recordedBy"
-            [eventDate]="occurrence.eventDate"
-            [country]="occurrence.country"
-            [stateProvince]="occurrence.stateProvince"
-        >
+        <occurrence-search-search-result [occurrence]="occurrence">
         </occurrence-search-search-result>
     </div>
 </div>
