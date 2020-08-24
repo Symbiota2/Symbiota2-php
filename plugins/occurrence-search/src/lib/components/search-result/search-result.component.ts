@@ -3,7 +3,7 @@ import {
     Input,
 } from "@angular/core";
 import {Occurrence} from "occurrence";
-import {MatDialog} from "@angular/material/dialog";
+import { MatDialog } from "@angular/material";
 import {SearchResultModalComponent} from "../search-result-modal/search-result-modal.component";
 
 @Component({
@@ -34,7 +34,8 @@ export class SearchResultComponent {
 
     openDialog(): void {
         this.dialog.open(SearchResultModalComponent, {
-            data: this.occurrence
+            data: Object.assign({}, this.occurrence, { eventDate: this.eventDate }),
+            width: "80rem"
         });
     }
 }

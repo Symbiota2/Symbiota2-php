@@ -1,28 +1,28 @@
 @row-y-margin: 1rem;
 @col-x-margin: 1rem;
 
-.mx(@size) {
+._mx(@size) {
   margin-left: @size;
   margin-right: @size;
 }
 
-.my(@size) {
+._my(@size) {
   margin-top: @size;
   margin-bottom: @size;
+}
+
+._col-all {
+  ._mx(@col-x-margin);
 }
 
 .row {
   display: flex;
   align-items: center;
-  .my(@row-y-margin);
+  ._my(@row-y-margin);
 
   @media screen and (max-width: 400px) {
     display: block;
   }
-}
-
-._col-all {
-  .mx(@col-x-margin);
 }
 
 .col {
@@ -38,3 +38,12 @@
 .text-end {
     text-align: end;
 }
+
+.align-items-start {
+  align-items: start;
+
+  .row {
+    align-items: start;
+  }
+}
+

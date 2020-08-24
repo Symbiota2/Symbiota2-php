@@ -12,8 +12,9 @@ import { SearchCriteriaPageComponent } from "./components/pages/search-criteria-
 import { SelectComponent } from "./components/select/select.component";
 import { SearchResultsComponent } from "./outlets/search-results/search-results.component";
 import { RouterModule } from "@angular/router";
-import { SearchResultComponent } from './components/search-result/search-result.component';
-import { SearchResultModalComponent } from './components/search-result-modal/search-result-modal.component';
+import { SearchResultComponent } from "./components/search-result/search-result.component";
+import { SearchResultModalComponent } from "./components/search-result-modal/search-result-modal.component";
+import { FieldRowComponent } from './components/search-result-modal/field-row.component';
 
 @NgModule({
     imports: [
@@ -31,11 +32,13 @@ import { SearchResultModalComponent } from './components/search-result-modal/sea
         SelectComponent,
         SearchResultsComponent,
         SearchResultComponent,
-        SearchResultModalComponent
+        SearchResultModalComponent,
+        FieldRowComponent
     ],
     entryComponents: [
         SearchCriteriaComponent,
-        SearchResultsComponent
+        SearchResultsComponent,
+        SearchResultModalComponent
     ],
     providers: [
         {

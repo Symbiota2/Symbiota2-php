@@ -1,8 +1,53 @@
-<h1 mat-dialog-title>{{ occurrence.scientificName }}</h1>
-<div mat-dialog-content>
-
+<div mat-dialog-title>
+    <h1>{{ occurrence.scientificName }}</h1>
+    <h2>{{ occurrence.catalogNumber }} | {{ occurrence.recordedBy }}</h2>
+</div>
+<div mat-dialog-content class="align-items-start">
+    <occurrence-search-field-row
+        label="Family"
+        value="{{ occurrence.family }}"
+    >
+    </occurrence-search-field-row>
+    <occurrence-search-field-row
+        label="Date"
+        value="{{ occurrence.eventDate }}"
+    >
+    </occurrence-search-field-row>
+    <div
+        class="row"
+        *ngIf="occurrence.locality || occurrence.stateProvince || occurrence.country"
+    >
+        <div class="col-auto"><b>Locality</b></div>
+        <div class="col">
+            {{[
+          occurrence.locality.trim(),
+          occurrence.stateProvince.trim(),
+          occurrence.country.trim()
+        ].join(", ")}}
+        </div>
+    </div>
+    <occurrence-search-field-row
+        label="Life stage"
+        value="{{ occurrence.lifeStage }}"
+    >
+    </occurrence-search-field-row>
+    <occurrence-search-field-row
+        label="Preparations"
+        value="{{ occurrence.preparations }}"
+    >
+    </occurrence-search-field-row>
+    <occurrence-search-field-row
+        label="Remarks"
+        value="{{ occurrence.occurrenceRemarks }}"
+    >
+    </occurrence-search-field-row>
+    <occurrence-search-field-row
+        label="Record ID"
+        value="{{ occurrence.recordNumber }}"
+    >
+    </occurrence-search-field-row>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onCloseClick()">Close</button>
-<!--  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>-->
+    <button mat-button (click)="onCloseClick()">Close</button>
+    <!--  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>-->
 </div>
