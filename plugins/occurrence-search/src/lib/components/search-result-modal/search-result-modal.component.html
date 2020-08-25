@@ -1,6 +1,21 @@
 <div mat-dialog-title>
-    <h1>{{ occurrence.scientificName }}</h1>
-    <h2>{{ occurrence.catalogNumber }} | {{ occurrence.recordedBy }}</h2>
+    <div class="row">
+        <div class="col">
+            <h1>{{ occurrence.scientificName }}</h1>
+        </div>
+        <div class="col-auto">
+            <button class="btn-close" (click)="onCloseClick()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2 class="mt-0">
+                {{ occurrence.catalogNumber }} | {{ occurrence.recordedBy }}
+            </h2>
+        </div>
+    </div>
 </div>
 <div mat-dialog-content class="align-items-start">
     <occurrence-search-field-row
@@ -17,8 +32,8 @@
         class="row"
         *ngIf="occurrence.locality || occurrence.stateProvince || occurrence.country"
     >
-        <div class="col-auto"><b>Locality</b></div>
-        <div class="col">
+        <div class="col-1 font-bold text-end">Locality</div>
+        <div class="col-9">
             {{[
           occurrence.locality.trim(),
           occurrence.stateProvince.trim(),
@@ -47,7 +62,4 @@
     >
     </occurrence-search-field-row>
 </div>
-<div mat-dialog-actions>
-    <button mat-button (click)="onCloseClick()">Close</button>
-    <!--  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>-->
-</div>
+

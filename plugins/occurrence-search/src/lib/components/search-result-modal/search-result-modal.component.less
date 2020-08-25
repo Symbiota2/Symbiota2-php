@@ -1,0 +1,48 @@
+@import "../../occurrence-search";
+
+.pointer {
+  cursor: pointer;
+}
+
+.bg-none {
+  background: none;
+
+  &:hover {
+    background: none;
+  }
+}
+
+.btn-close {
+  .bg-none();
+
+  cursor: pointer;
+  border-radius: 10%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:active {
+    box-shadow: inset 0 0 5px rgba(128, 128, 128, 0.5);
+  }
+
+  .mat-icon {
+    display: block;
+    flex-grow: 1;
+    transition: transform 150ms;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+}
+
+.field-row-label {
+  .col-1();
+  .text-end();
+  .font-bold();
+}
+
+.filed-row-value {
+  .col-9();
+}

@@ -3,12 +3,12 @@ import { Component, Input } from "@angular/core";
 @Component({
     selector: "occurrence-search-field-row",
     template: `
-        <div class="row" *ngIf="value">
-            <div class="col-auto"><b>{{ label }}</b></div>
-            <div class="col">{{ value.toString() }}</div>
+        <div class="row align-items-start" *ngIf="value">
+            <div class="field-row-label">{{ label }}</div>
+            <div class="filed-row-value">{{ value.toString() }}</div>
         </div>
     `,
-    styleUrls: ["../../occurrence-search.less"]
+    styleUrls: ["./search-result-modal.component.less"]
 })
 export class FieldRowComponent {
     @Input() label: string;

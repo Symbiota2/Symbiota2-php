@@ -27,6 +27,7 @@
 
 .col {
   flex-grow: 1;
+  flex-wrap: wrap;
   ._col-all();
 }
 
@@ -42,8 +43,39 @@
 .align-items-start {
   align-items: start;
 
-  .row {
+  > .row {
     align-items: start;
   }
 }
+
+.font-bold {
+  font-weight: bold;
+}
+
+// Define
+._gen-margin-utilities(@counter) when (@counter >= 0) {
+  .mt-@{counter} when (@counter = 0) {
+    margin-top: 0;
+  }
+  .mt-@{counter} when (@counter > 0) {
+    margin-top: @counter + "rem";
+  }
+  ._gen-margin-utilities((@counter - 1));
+}
+
+// Call
+._gen-margin-utilities(5);
+
+// Define
+._gen-col-classes(@counter) when (@counter > 0) {
+  .col-@{counter} {
+    .col();
+    width: percentage(@counter / 10);
+  }
+
+  ._gen-col-classes((@counter - 1));
+}
+
+// Call
+._gen-col-classes(9);
 
