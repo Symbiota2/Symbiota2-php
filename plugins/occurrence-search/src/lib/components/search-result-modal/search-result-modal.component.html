@@ -1,7 +1,7 @@
 <div mat-dialog-title>
-    <div class="row">
+    <div class="row my-0">
         <div class="col">
-            <h1>{{ occurrence.scientificName }}</h1>
+            <h2 class="my-0">{{ occurrence.scientificName }}</h2>
         </div>
         <div class="col-auto">
             <button class="btn-close" (click)="onCloseClick()">
@@ -9,11 +9,11 @@
             </button>
         </div>
     </div>
-    <div class="row">
+    <div class="row my-0">
         <div class="col">
-            <h2 class="mt-0">
+            <p class="font-grey">
                 {{ occurrence.catalogNumber }} | {{ occurrence.recordedBy }}
-            </h2>
+            </p>
         </div>
     </div>
 </div>
