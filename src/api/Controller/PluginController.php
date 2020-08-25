@@ -873,29 +873,42 @@ class PluginController extends AbstractController
 
     private function removePluginFromApiPlatformYaml(): void
     {
-        $newPathsArr = array();
+        $resourcePrefix = "{$this->rootDir}/plugins/{$this->pluginName}/api";
+
         if($this->filesystem->exists($this->rootDir.'/config/packages/api_platform.yaml')) {
             $apiPlatformYamlContents = Yaml::parseFile($this->rootDir.'/config/packages/api_platform.yaml');
             $pathsArr = $apiPlatformYamlContents['api_platform']['mapping']['paths'];
-            $targetPath = '%kernel.project_dir%/plugins/'.$this->pluginName.'/api/Entity';
-            foreach($pathsArr as $path){
-                if($path !== $targetPath) {
-                    $newPathsArr[] = $path;
-                }
-            }
-            $apiPlatformYamlContents['api_platform']['mapping']['paths'] = $newPathsArr;
+            $pathsArr = array_merge($pathsArr, $this->getResourcePaths($resourcePrefix));
+            $apiPlatformYamlContents['api_platform']['mapping']['paths'] = $pathsArr;
             $yamlToSave = Yaml::dump($apiPlatformYamlContents);
             $this->filesystem->dumpFile($this->rootDir.'/config/packages/api_platform.yaml', $yamlToSave);
         }
     }
 
+    private function getResourcePaths($prefix) {
+        $pathsArr = array();
+
+        $resourceDirs = ["Entity", "Controller"];
+        foreach ($resourceDirs as $resourceDir) {
+            $resourcePath = "{$prefix}/${resourceDir}";
+            error_log($resourcePath);
+            if ($this->filesystem->exists($resourcePath)) {
+                $pathsArr[] = $resourcePath;
+            }
+        }
+
+        return $pathsArr;
+    }
+
     private function addPluginToApiPlatformYaml(): void
     {
-        if($this->filesystem->exists($this->rootDir.'/config/packages/api_platform.yaml')) {
-            $apiPlatformYamlContents = Yaml::parseFile($this->rootDir.'/config/packages/api_platform.yaml');
+        $apiConfig = "{$this->rootDir}/config/packages/api_platform.yaml";
+        $resourcePrefix = "{$this->rootDir}/plugins/{$this->pluginName}/api";
+
+        if($this->filesystem->exists($apiConfig)) {
+            $apiPlatformYamlContents = Yaml::parseFile($apiConfig);
             $pathsArr = $apiPlatformYamlContents['api_platform']['mapping']['paths'];
-            $targetPath = '%kernel.project_dir%/plugins/'.$this->pluginName.'/api/Entity';
-            $pathsArr[] = $targetPath;
+            $pathsArr = array_merge($pathsArr, $this->getResourcePaths($resourcePrefix));
             $apiPlatformYamlContents['api_platform']['mapping']['paths'] = $pathsArr;
             $yamlToSave = Yaml::dump($apiPlatformYamlContents);
             $this->filesystem->dumpFile($this->rootDir.'/config/packages/api_platform.yaml', $yamlToSave);
@@ -904,7 +917,10 @@ class PluginController extends AbstractController
 
     private function removePluginFromDoctrineYaml(): void
     {
-        if($this->filesystem->exists($this->rootDir.'/config/packages/doctrine.yaml')) {
+        $doctrineConfig = "{$this->rootDir}/config/packages/doctrine.yaml";
+        $entityDir = "{$this->rootDir}/plugins/{$this->pluginName}/api/Entity";
+
+        if($this->filesystem->exists([$doctrineConfig, $entityDir])) {
             $doctrineYamlContents = Yaml::parseFile($this->rootDir.'/config/packages/doctrine.yaml');
             $mappingsArr = $doctrineYamlContents['doctrine']['orm']['mappings'];
             unset($mappingsArr[$this->APINamespace]);
@@ -916,13 +932,16 @@ class PluginController extends AbstractController
 
     private function addPluginToDoctrineYaml(): void
     {
-        if($this->filesystem->exists($this->rootDir.'/config/packages/doctrine.yaml')) {
+        $doctrineConfig = "{$this->rootDir}/config/packages/doctrine.yaml";
+        $entityDir = "{$this->rootDir}/plugins/{$this->pluginName}/api/Entity";
+
+        if($this->filesystem->exists([$doctrineConfig, $entityDir])) {
             $doctrineYamlContents = Yaml::parseFile($this->rootDir.'/config/packages/doctrine.yaml');
             $mappingsArr = $doctrineYamlContents['doctrine']['orm']['mappings'];
             if(!array_key_exists($this->APINamespace, $mappingsArr)) {
                 $mappingsArr[$this->APINamespace]['is_bundle'] = false;
                 $mappingsArr[$this->APINamespace]['type'] = 'annotation';
-                $mappingsArr[$this->APINamespace]['dir'] = '%kernel.project_dir%/plugins/'.$this->pluginName.'/api/Entity';
+                $mappingsArr[$this->APINamespace]['dir'] = $entityDir;
                 $mappingsArr[$this->APINamespace]['prefix'] = $this->APINamespace.'\Entity';
                 $mappingsArr[$this->APINamespace]['alias'] = $this->APINamespace;
                 $doctrineYamlContents['doctrine']['orm']['mappings'] = $mappingsArr;
