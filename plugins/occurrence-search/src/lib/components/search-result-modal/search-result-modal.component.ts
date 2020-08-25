@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 @Component({
     selector: "occurrence-search-search-result-modal",
     templateUrl: "./search-result-modal.component.html",
-    styleUrls: ["../../occurrence-search.less"]
+    styleUrls: ["./search-result-modal.component.less"]
 })
 export class SearchResultModalComponent {
     constructor(

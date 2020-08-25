@@ -1,19 +1,32 @@
-<div class="row" [formGroup]="formGroup">
-    <div class="col-auto">
-        <occurrence-search-select
-            title="Taxon search type"
-            [options]="TaxonSearchOpts"
-            [formControlName]="FORM_KEY_TAXON_TYPE"
-        >
-        </occurrence-search-select>
+<ng-container [formGroup]="formGroup">
+    <div class="row">
+        <div class="col">
+            <mat-form-field>
+                <mat-label>Catalog number</mat-label>
+                <input
+                    matInput
+                    [formControlName]="FORM_KEY_CAT_NUM"
+                >
+            </mat-form-field>
+        </div>
     </div>
-    <div class="col-auto">
-        <mat-form-field>
-            <mat-label>Search</mat-label>
-            <input
-                matInput
-                [formControlName]="FORM_KEY_TAXON_SEARCH"
+    <div class="row">
+        <div class="col-auto">
+            <occurrence-search-select
+                title="Taxon search type"
+                [options]="TaxonSearchOpts"
+                [formControlName]="FORM_KEY_TAXON_TYPE"
             >
-        </mat-form-field>
+            </occurrence-search-select>
+        </div>
+        <div class="col-auto">
+            <mat-form-field>
+                <mat-label>Search</mat-label>
+                <input
+                    matInput
+                    [formControlName]="FORM_KEY_TAXON_SEARCH"
+                >
+            </mat-form-field>
+        </div>
     </div>
-</div>
+</ng-container>

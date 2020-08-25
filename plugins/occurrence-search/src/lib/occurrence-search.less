@@ -1,14 +1,18 @@
-@row-y-margin: 1rem;
-@col-x-margin: 1rem;
+@row-y-margin: 0.5rem;
+@col-x-margin: 0.5rem;
+
+._m(@direction, @size) {
+  margin-@{direction}: @size;
+}
 
 ._mx(@size) {
-  margin-left: @size;
-  margin-right: @size;
+  ._m(left, @size);
+  ._m(right, @size);
 }
 
 ._my(@size) {
-  margin-top: @size;
-  margin-bottom: @size;
+  ._m(top, @size);
+  ._m(bottom, @size);
 }
 
 ._col-all {
@@ -27,6 +31,7 @@
 
 .col {
   flex-grow: 1;
+  flex-wrap: wrap;
   ._col-all();
 }
 
@@ -42,8 +47,77 @@
 .align-items-start {
   align-items: start;
 
-  .row {
+  > .row {
     align-items: start;
   }
 }
+
+.font-bold {
+  font-weight: bold;
+}
+
+// Define
+._gen-margin-utilities(@counter) when (@counter >= 0) {
+  .mt-@{counter} when (@counter = 0) {
+    ._m(top, @counter);
+  }
+  .mb-@{counter} when (@counter = 0) {
+    ._m(top, @counter);
+  }
+  .ml-@{counter} when (@counter = 0) {
+    ._m(left, @counter);
+  }
+  .mr-@{counter} when (@counter = 0) {
+    ._m(right, @counter);
+  }
+
+  .mx-@{counter} when (@counter = 0) {
+    ._m(left, @counter);
+    ._m(right, @counter);
+  }
+  .my-@{counter} when (@counter = 0) {
+    ._m(top, @counter);
+    ._m(bottom, @counter);
+  }
+
+  .mt-@{counter} when (@counter > 0) {
+    ._m(top, @counter + "rem");
+  }
+  .mb-@{counter} when (@counter > 0) {
+    ._m(bottom, @counter + "rem");
+  }
+  .ml-@{counter} when (@counter > 0) {
+    ._m(left, @counter + "rem");
+  }
+  .mr-@{counter} when (@counter > 0) {
+    ._m(right, @counter + "rem");
+  }
+
+  .mx-@{counter} when (@counter > 0) {
+    ._m(left, @counter + "rem");
+    ._m(right, @counter + "rem");
+  }
+  .my-@{counter} when (@counter > 0) {
+    ._m(top, @counter + "rem");
+    ._m(bottom, @counter + "rem");
+  }
+
+  ._gen-margin-utilities((@counter - 1));
+}
+
+// Call
+._gen-margin-utilities(5);
+
+// Define
+._gen-col-classes(@counter) when (@counter > 0) {
+  .col-@{counter} {
+    .col();
+    width: percentage(@counter / 10);
+  }
+
+  ._gen-col-classes((@counter - 1));
+}
+
+// Call
+._gen-col-classes(9);
 

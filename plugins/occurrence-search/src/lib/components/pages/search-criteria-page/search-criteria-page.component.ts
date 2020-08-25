@@ -1,17 +1,20 @@
 import { Component, OnInit } from "@angular/core";
 import { ControlContainer, FormGroup, } from "@angular/forms";
 import {
-    TaxonSearchType,
     FORM_KEY_TAXON_TYPE,
-    FORM_KEY_TAXON_SEARCH
+    FORM_KEY_TAXON_SEARCH,
+    FORM_KEY_CAT_NUM
 } from "../../../shared";
 
 const TaxonSearchOpts = [
-    { name: "Family or scientific name", value: TaxonSearchType.TYPE_FAM_OR_SCINAME.toString() },
-    { name: "Family only", value: TaxonSearchType.TYPE_FAM_ONLY.toString() },
-    { name: "Scientific name only", value: TaxonSearchType.TYPE_SCINAME_ONLY.toString() },
-    { name: "Higher taxonomy", value: TaxonSearchType.TYPE_HIGHER_TAXON.toString() },
-    { name: "Common name", value: TaxonSearchType.TYPE_COMMON_NAME.toString() }
+    { name: "Scientific name", value: "scientificName" },
+    { name: "Kingdom", value: "kingdom" },
+    { name: "Phylum", value: "phylum" },
+    { name: "Class", value: "class" },
+    { name: "Order", value: "order" },
+    { name: "Family", value: "family" },
+    { name: "Tribe", value: "tribe" },
+    { name: "Genus", value: "genus" }
 ];
 
 @Component({
@@ -25,6 +28,7 @@ export class SearchCriteriaPageComponent implements OnInit {
     public TaxonSearchOpts = TaxonSearchOpts;
     public FORM_KEY_TAXON_TYPE = FORM_KEY_TAXON_TYPE;
     public FORM_KEY_TAXON_SEARCH = FORM_KEY_TAXON_SEARCH;
+    public FORM_KEY_CAT_NUM = FORM_KEY_CAT_NUM;
 
     constructor(private controlContainer: ControlContainer) {}
 

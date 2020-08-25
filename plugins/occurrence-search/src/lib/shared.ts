@@ -1,6 +1,7 @@
 export const FORM_KEY_COLLIDS = "collectionID";
 export const FORM_KEY_TAXON_TYPE = "taxonSearchType";
 export const FORM_KEY_TAXON_SEARCH = "taxonSearchStr";
+export const FORM_KEY_CAT_NUM = "catalogNumber";
 
 export enum TaxonSearchType {
     TYPE_FAM_OR_SCINAME,
@@ -15,6 +16,3 @@ export interface TaxonSearchCriteria {
     searchStr: string
 }
 
-export interface SearchCriteriaFormValues {
-    taxa: TaxonSearchCriteria
-}

@@ -2,6 +2,8 @@
 
 namespace Occurrence\Entity;
 
+require_once __DIR__ . "/../Filters/SearchByHigherTaxon.php";
+
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -13,6 +15,10 @@ use Core\Entity\ModifiedTimestampInterface;
 use Taxa\Entity\Taxa;
 use Core\Entity\Users;
 use Collection\Entity\Collections;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use Occurrence\Filter\SearchByHigherTaxon;
 
 /**
  * Occurrences
@@ -22,6 +28,31 @@ use Collection\Entity\Collections;
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}
+ * )
+ * @ApiFilter(
+ *   NumericFilter::class,
+ *   properties={
+ *     "collection.id"
+ *   }
+ * )
+ * @ApiFilter(
+ *   SearchFilter::class,
+ *   properties={
+ *     "catalogNumber": "start",
+ *     "family": "start",
+ *     "genus": "start",
+ *     "scientificName": "word_start",
+ *   }
+ * )
+ * @ApiFilter(
+ *     SearchByHigherTaxon::class,
+ *     properties={
+ *       SearchByHigherTaxon::NAME_KINGDOM,
+ *       SearchByHigherTaxon::NAME_PHYLUM,
+ *       SearchByHigherTaxon::NAME_CLASS,
+ *       SearchByHigherTaxon::NAME_ORDER,
+ *       SearchByHigherTaxon::NAME_TRIBE
+ *     }
  * )
  */
 class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterface
@@ -43,7 +74,7 @@ class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterfa
      *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID", nullable=false)
      * })
      */
-    private $collectionId;
+    private $collection;
 
     /**
      * @var string|null
@@ -165,7 +196,7 @@ class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterfa
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
      */
-    private $taxaId;
+    private $taxon;
 
     /**
      * @var string|null
@@ -2089,14 +2120,14 @@ class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterfa
         return $this;
     }
 
-    public function getTaxaId(): ?Taxa
+    public function getTaxon(): ?Taxa
     {
-        return $this->taxaId;
+        return $this->taxon;
     }
 
-    public function setTaxaId(?Taxa $taxaId): self
+    public function setTaxon(?Taxa $taxon): self
     {
-        $this->taxaId = $taxaId;
+        $this->taxon = $taxon;
 
         return $this;
     }
@@ -2113,14 +2144,14 @@ class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterfa
         return $this;
     }
 
-    public function getCollectionId(): ?Collections
+    public function getCollection(): ?Collections
     {
-        return $this->collectionId;
+        return $this->collection;
     }
 
-    public function setCollectionId(?Collections $collectionId): self
+    public function setCollection(?Collections $collection): self
     {
-        $this->collectionId = $collectionId;
+        $this->collection = $collection;
 
         return $this;
     }

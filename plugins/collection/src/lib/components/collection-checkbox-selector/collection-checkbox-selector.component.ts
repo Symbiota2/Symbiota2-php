@@ -5,7 +5,7 @@ import {
     Input,
     Injectable,
     ViewChild,
-    Output, OnChanges, SimpleChange, SimpleChanges
+    Output, OnChanges, SimpleChange, SimpleChanges, OnInit, ChangeDetectorRef
 } from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {FlatTreeControl} from '@angular/cdk/tree';
@@ -13,6 +13,7 @@ import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {BehaviorSubject} from 'rxjs';
 
 import {CollectionService} from '../../services/collection.service';
+import {takeUntil} from "rxjs/operators";
 
 export class DataNode {
     id: number;
@@ -42,6 +43,10 @@ export class DataFlatNode {
     level: number;
     category?: string;
     expandable: boolean;
+
+    isCollection(): boolean {
+        return this.collectionName != null;
+    }
 }
 
 @Injectable()
@@ -141,6 +146,7 @@ export class CollectionCheckboxSelectorComponent implements AfterViewInit, OnCha
     };
 
     constructor(private database: CollectionTreeData) {
+
         this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel, this.isExpandable, this.getChildren);
         this.treeControl = new FlatTreeControl<DataFlatNode>(this.getLevel, this.isExpandable);
         this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
@@ -168,24 +174,16 @@ export class CollectionCheckboxSelectorComponent implements AfterViewInit, OnCha
         return result && !this.descendantsAllSelected(node);
     }
 
-    todoItemSelectionToggle(node: DataFlatNode): void {
+    toggleSelection(node: DataFlatNode): void {
         this.checklistSelection.toggle(node);
         const descendants = this.treeControl.getDescendants(node);
         this.checklistSelection.isSelected(node) ? this.checklistSelection.select(...descendants) : this.checklistSelection.deselect(...descendants);
+        this.emitUiToggleEvent();
     }
 
     ngAfterViewInit() {
         this.loaded = true;
         this.loadFirstNode();
-
-        // Emit leaf node IDs when checkboxes change
-        this.checklistSelection.changed.subscribe(() => {
-            this.selectionsChange.emit(
-                this.checklistSelection.selected
-                    .filter((node) => node.collectionName)
-                    .map((collection) => collection.id)
-            );
-        });
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -194,12 +192,30 @@ export class CollectionCheckboxSelectorComponent implements AfterViewInit, OnCha
         }
     }
 
+    emitUiToggleEvent() {
+        this.selectionsChange.emit(
+            this.checklistSelection.selected
+                .filter((node) => node.isCollection())
+                .map((collection) => collection.id)
+        );
+    }
+
+    uiToggleSelection(node: DataFlatNode) {
+        this.checklistSelection.toggle(node);
+        this.emitUiToggleEvent();
+    }
+
     // Called when Input member "selections" changes
     onSelectionChanges(selections: number[]) {
-        const newSelections = this.treeControl.dataNodes.filter((node) => {
-            return node.collectionName && selections.includes(node.id);
+        this.treeControl.dataNodes.forEach((node) => {
+            if (node.isCollection()) {
+                if (selections.includes(node.id)) {
+                    this.checklistSelection.select(node);
+                }
+                else {
+                    this.checklistSelection.deselect(node);
+                }
+            }
         });
-
-        this.checklistSelection.select(...newSelections);
     }
 }
