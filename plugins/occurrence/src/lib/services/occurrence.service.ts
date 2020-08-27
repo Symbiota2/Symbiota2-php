@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { OccurrenceModule } from "../occurrence.module";
 import { Occurrence } from "../interfaces/Occurrence";
 import {OccurrenceSearchParams} from "../interfaces/OccurrenceSearchParams";
+import {first} from "rxjs/operators";
 
 const API_BASE_URL = "/api/occurrences";
 const DEFAULT_HEADERS = {
@@ -23,10 +24,12 @@ export class OccurrenceService {
     }
 
     getOccurrences(params?: OccurrenceSearchParams): Observable<Occurrence[]> {
-        return this.httpGet<Occurrence[]>(API_BASE_URL, { params });
+        return this.httpGet<Occurrence[]>(API_BASE_URL, { params })
+            .pipe(first());
     }
 
     getOccurrenceByID(id: number): Observable<Occurrence> {
-        return this.httpGet<Occurrence>(`${API_BASE_URL}/${id}`);
+        return this.httpGet<Occurrence>(`${API_BASE_URL}/${id}`)
+            .pipe(first());
     }
 }

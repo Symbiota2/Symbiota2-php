@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {Occurrence, OccurrenceService} from "occurrence";
+import {Occurrence, OccurrenceService, OccurrenceSearchParams} from "occurrence";
 import {ActivatedRoute} from "@angular/router";
 import {
     FORM_KEY_COLLIDS,
@@ -7,7 +7,7 @@ import {
     FORM_KEY_TAXON_TYPE,
     TaxonSearchType
 } from "../../shared";
-import {first} from "rxjs/operators";
+import { first } from "rxjs/operators";
 
 @Component({
     selector: "occurrence-search-search-results",
@@ -28,7 +28,7 @@ export class SearchResultsComponent implements OnInit {
 
     ngOnInit() {
         const incomingQParams = this.currentRoute.snapshot.queryParamMap;
-        const outgoingQParams = {};
+        const outgoingQParams: OccurrenceSearchParams = {};
 
         if (incomingQParams.has(FORM_KEY_COLLIDS)) {
             this.collectionIDs = incomingQParams.getAll(FORM_KEY_COLLIDS)
@@ -43,14 +43,19 @@ export class SearchResultsComponent implements OnInit {
             this.taxonSearchText = incomingQParams.get(FORM_KEY_TAXON_SEARCH);
 
             switch (this.taxonSearchType) {
+                // TODO: Family OR Sciname
                 case TaxonSearchType.TYPE_FAM_OR_SCINAME:
                     break;
                 case TaxonSearchType.TYPE_FAM_ONLY:
+                    outgoingQParams["family"] = this.taxonSearchText;
                     break;
                 case TaxonSearchType.TYPE_SCINAME_ONLY:
+                    outgoingQParams["scientificName"] = this.taxonSearchText;
                     break;
                 case TaxonSearchType.TYPE_HIGHER_TAXON:
+                    outgoingQParams["higherTaxon"] = this.taxonSearchText;
                     break;
+                // TODO: Common name
                 case TaxonSearchType.TYPE_COMMON_NAME:
                     break;
                 default:

@@ -54,7 +54,7 @@ class SearchByHigherTaxon extends AbstractContextAwareFilter {
                 "WITH",
                 $queryBuilder->expr()->eq("o.taxon", "{$parameterName}.id")
             )
-            ->where(
+            ->AndWhere(
                 $queryBuilder->expr()->in("{$parameterName}.id", $higherTaxonResults)
             );
     }
