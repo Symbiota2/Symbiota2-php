@@ -16,6 +16,7 @@ use Collection\Entity\Collections;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use Occurrence\Filter\HigherTaxonomyFilter;
 
 /**
  * Occurrences
@@ -36,8 +37,8 @@ use ApiPlatform\Core\Annotation\ApiFilter;
  *   SearchFilter::class,
  *   properties={
  *     "catalogNumber": "start",
- *     "family": "start",
- *     "scientificName": "word_start"
+ *     "scientificName": "word_start",
+ *     "family": "start"
  *   }
  * )
  */
@@ -182,7 +183,7 @@ class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterfa
      *   @ORM\JoinColumn(name="tid", referencedColumnName="TID")
      * })
      */
-    private $taxaId;
+    private $taxon;
 
     /**
      * @var string|null
@@ -2106,14 +2107,14 @@ class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterfa
         return $this;
     }
 
-    public function getTaxaId(): ?Taxa
+    public function getTaxon(): ?Taxa
     {
-        return $this->taxaId;
+        return $this->taxon;
     }
 
-    public function setTaxaId(?Taxa $taxaId): self
+    public function setTaxon(?Taxa $taxon): self
     {
-        $this->taxaId = $taxaId;
+        $this->taxon = $taxon;
 
         return $this;
     }
