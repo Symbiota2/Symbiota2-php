@@ -20,23 +20,43 @@ class SearchByTaxon extends AbstractContextAwareFilter {
 
         // Find all taxa who have a parent matching the given $value
         $em = $queryBuilder->getEntityManager();
-        $higherTaxonResults = $em->createQueryBuilder()
+        $qb = $em->createQueryBuilder();
+
+        $higherTaxonResults = $qb
             ->select("r")
             ->from(Relationships::class, "r")
-            ->innerJoin(Taxa::class, "pt", "WITH", "pt.id = r.parentTaxaId")
-            ->where("pt.scientificName LIKE :parentTaxon")
+            ->innerJoin(
+                Taxa::class,
+                "pt",
+                "WITH",
+                $qb->expr()->eq("r.parentTaxaId", "pt.id")
+            )
+            ->where($qb->expr()->like("pt.scientificName", ":parentTaxon"))
             ->setParameter("parentTaxon", "{$value}%")
             ->getQuery()
             ->getResult();
 
+        // We only need the tids
         $higherTaxonResults = array_map(function (Relationships $relationship) {
             return $relationship->getTaxaId()->getId();
         }, $higherTaxonResults);
 
+        // If the array is empty, DQL syntax error
+        if (count($higherTaxonResults) === 0) {
+            $higherTaxonResults[] = 0;
+        }
+
         // Apply the filter using found taxa
         $queryBuilder
-            ->innerJoin(Taxa::class, $parameterName, "WITH", "o.taxon = {$parameterName}.id")
-            ->where($queryBuilder->expr()->in("{$parameterName}.id", $higherTaxonResults));
+            ->innerJoin(
+                Taxa::class,
+                $parameterName,
+                "WITH",
+                $queryBuilder->expr()->eq("o.taxon", "{$parameterName}.id")
+            )
+            ->where(
+                $queryBuilder->expr()->in("{$parameterName}.id", $higherTaxonResults)
+            );
     }
 
     public function getDescription(string $resourceClass): array {
@@ -53,7 +73,7 @@ class SearchByTaxon extends AbstractContextAwareFilter {
                 'swagger' => [
                     'description' => 'Return all occurrences with a parent matching the given taxon',
                     'name' => 'Higher taxonomy',
-                    'type' => 'TEST',
+                    'type' => 'query'
                 ],
             ];
         }
