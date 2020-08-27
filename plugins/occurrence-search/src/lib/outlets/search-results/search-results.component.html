@@ -6,7 +6,7 @@
         <a [routerLink]="['..']">Back to search</a>
     </div>
 </div>
-<div *ngFor="let occurrence of results" class="row">
+<div *ngFor="let occurrence of occurrences" class="row">
     <div class="col">
         <occurrence-search-search-result [occurrence]="occurrence">
         </occurrence-search-search-result>

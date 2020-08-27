@@ -8,7 +8,7 @@ use Doctrine\ORM\QueryBuilder;
 use Taxa\Entity\Relationships;
 use Taxa\Entity\Taxa;
 
-class SearchByTaxon extends AbstractContextAwareFilter {
+class SearchByHigherTaxon extends AbstractContextAwareFilter {
 
     protected function filterProperty(string $property, $value, QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null) {
         if ($property !== "higherTaxon") {
