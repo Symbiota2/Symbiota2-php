@@ -13,6 +13,9 @@ use Core\Entity\ModifiedTimestampInterface;
 use Taxa\Entity\Taxa;
 use Core\Entity\Users;
 use Collection\Entity\Collections;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
 
 /**
  * Occurrences
@@ -22,6 +25,20 @@ use Collection\Entity\Collections;
  * @ApiResource(
  *     itemOperations={"get"},
  *     collectionOperations={"get"}
+ * )
+ * @ApiFilter(
+ *   NumericFilter::class,
+ *   properties={
+ *     "collection.id"
+ *   }
+ * )
+ * @ApiFilter(
+ *   SearchFilter::class,
+ *   properties={
+ *     "catalogNumber": "start",
+ *     "family": "start",
+ *     "scientificName": "word_start"
+ *   }
  * )
  */
 class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterface
@@ -43,7 +60,7 @@ class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterfa
      *   @ORM\JoinColumn(name="collid", referencedColumnName="CollID", nullable=false)
      * })
      */
-    private $collectionId;
+    private $collection;
 
     /**
      * @var string|null
@@ -2113,14 +2130,14 @@ class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterfa
         return $this;
     }
 
-    public function getCollectionId(): ?Collections
+    public function getCollection(): ?Collections
     {
-        return $this->collectionId;
+        return $this->collection;
     }
 
-    public function setCollectionId(?Collections $collectionId): self
+    public function setCollection(?Collections $collection): self
     {
-        $this->collectionId = $collectionId;
+        $this->collection = $collection;
 
         return $this;
     }
