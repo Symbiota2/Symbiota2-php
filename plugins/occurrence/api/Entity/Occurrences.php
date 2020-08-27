@@ -2,6 +2,8 @@
 
 namespace Occurrence\Entity;
 
+require_once __DIR__ . "/../Filters/SearchByTaxon.php";
+
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -16,7 +18,7 @@ use Collection\Entity\Collections;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
 use ApiPlatform\Core\Annotation\ApiFilter;
-use Occurrence\Filter\HigherTaxonomyFilter;
+use Occurrence\Filter\SearchByTaxon;
 
 /**
  * Occurrences
@@ -40,6 +42,10 @@ use Occurrence\Filter\HigherTaxonomyFilter;
  *     "scientificName": "word_start",
  *     "family": "start"
  *   }
+ * )
+ * @ApiFilter(
+ *     SearchByTaxon::class,
+ *     properties={"higherTaxon"}
  * )
  */
 class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterface
