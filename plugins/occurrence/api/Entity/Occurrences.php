@@ -39,13 +39,19 @@ use Occurrence\Filter\SearchByHigherTaxon;
  *   SearchFilter::class,
  *   properties={
  *     "catalogNumber": "start",
+ *     "family": "start",
+ *     "genus": "start",
  *     "scientificName": "word_start",
- *     "family": "start"
  *   }
  * )
  * @ApiFilter(
  *     SearchByHigherTaxon::class,
- *     properties={"higherTaxon"}
+ *     properties={
+ *       SearchByHigherTaxon::NAME_KINGDOM,
+ *       SearchByHigherTaxon::NAME_PHYLUM,
+ *       SearchByHigherTaxon::NAME_CLASS,
+ *       SearchByHigherTaxon::NAME_ORDER,
+ *     }
  * )
  */
 class Occurrences implements InitialTimestampInterface, ModifiedTimestampInterface

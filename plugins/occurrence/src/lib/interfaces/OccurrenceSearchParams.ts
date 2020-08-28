@@ -1,8 +1,11 @@
 export interface OccurrenceSearchParams {
     "collection.id"?: number | number[],
-    catalogNumber?: string,
-    scientificName?: string
+    page?: number,
+    kingdom?: string,
+    phylum?: string,
+    class?: string,
+    order?: string,
     family?: string,
-    higherTaxon?: string
-    page?: number
+    scientificName?: string,
+    catalogNumber?: string
 }

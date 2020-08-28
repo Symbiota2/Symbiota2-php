@@ -33,35 +33,12 @@ export class SearchResultsComponent implements OnInit {
         if (incomingQParams.has(FORM_KEY_COLLIDS)) {
             this.collectionIDs = incomingQParams.getAll(FORM_KEY_COLLIDS)
                 .map((collID) => parseInt(collID));
-
             outgoingQParams["collection.id"] = this.collectionIDs;
         }
 
-        // TODO: Search by taxon
-        if (incomingQParams.has(FORM_KEY_TAXON_TYPE) && incomingQParams.has(FORM_KEY_TAXON_SEARCH)) {
-            this.taxonSearchType = parseInt(incomingQParams.get(FORM_KEY_TAXON_TYPE));
-            this.taxonSearchText = incomingQParams.get(FORM_KEY_TAXON_SEARCH);
-
-            switch (this.taxonSearchType) {
-                // TODO: Family OR Sciname
-                case TaxonSearchType.TYPE_FAM_OR_SCINAME:
-                    break;
-                case TaxonSearchType.TYPE_FAM_ONLY:
-                    outgoingQParams["family"] = this.taxonSearchText;
-                    break;
-                case TaxonSearchType.TYPE_SCINAME_ONLY:
-                    outgoingQParams["scientificName"] = this.taxonSearchText;
-                    break;
-                case TaxonSearchType.TYPE_HIGHER_TAXON:
-                    outgoingQParams["higherTaxon"] = this.taxonSearchText;
-                    break;
-                // TODO: Common name
-                case TaxonSearchType.TYPE_COMMON_NAME:
-                    break;
-                default:
-                    break;
-            }
-        }
+        incomingQParams.keys.forEach((k) => {
+            outgoingQParams[k] = incomingQParams.get(k);
+        });
 
         const resultObs = this.occurrenceService.getOccurrences(outgoingQParams);
         resultObs.pipe(first()).subscribe((occurrences: Occurrence[]) => {

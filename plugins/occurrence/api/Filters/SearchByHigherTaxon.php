@@ -4,47 +4,46 @@ namespace Occurrence\Filter;
 
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\AbstractContextAwareFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Taxa\Entity\Ranks;
 use Taxa\Entity\Relationships;
 use Taxa\Entity\Taxa;
 
 class SearchByHigherTaxon extends AbstractContextAwareFilter {
+    public const NAME_KINGDOM = "kingdom";
+    public const NAME_PHYLUM = "phylum";
+    public const NAME_CLASS = "class";
+    public const NAME_ORDER = "order";
+    public const VALID_PROPS = [
+        SearchByHigherTaxon::NAME_KINGDOM,
+        SearchByHigherTaxon::NAME_PHYLUM,
+        SearchByHigherTaxon::NAME_CLASS,
+        SearchByHigherTaxon::NAME_ORDER
+    ];
 
     protected function filterProperty(string $property, $value, QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null) {
-        if ($property !== "higherTaxon") {
+        if (!in_array($property, SearchByHigherTaxon::VALID_PROPS)) {
             return;
         }
 
         // Generate a unique parameter name to avoid collisions with other filters
         $parameterName = $queryNameGenerator->generateParameterName($property);
 
-        // Find all taxa who have a parent matching the given $value
+        // Find valid children
         $em = $queryBuilder->getEntityManager();
-        $qb = $em->createQueryBuilder();
+        $higherTaxonResults = $this->getChildrenForTaxon(
+            $em,
+            $property,
+            $value
+        );
 
-        $higherTaxonResults = $qb
-            ->select("r")
-            ->from(Relationships::class, "r")
-            ->innerJoin(
-                Taxa::class,
-                "pt",
-                "WITH",
-                $qb->expr()->eq("r.parentTaxaId", "pt.id")
-            )
-            ->where($qb->expr()->like("pt.scientificName", ":parentTaxon"))
-            ->setParameter("parentTaxon", "{$value}%")
-            ->getQuery()
-            ->getResult();
-
-        // We only need the tids
-        $higherTaxonResults = array_map(function (Relationships $relationship) {
-            return $relationship->getTaxaId()->getId();
-        }, $higherTaxonResults);
-
-        // If the array is empty, DQL syntax error
-        if (count($higherTaxonResults) === 0) {
-            $higherTaxonResults[] = 0;
-        }
+        // If we feed the next query an empty array we get an error
+        $higherTaxonResults = (
+            count($higherTaxonResults) > 0 ?
+            $higherTaxonResults :
+            [""]
+        );
 
         // Apply the filter using found taxa
         $queryBuilder
@@ -79,5 +78,46 @@ class SearchByHigherTaxon extends AbstractContextAwareFilter {
         }
 
         return $description;
+    }
+
+    /**
+     * Find the taxonIDs of all taxa who have a parent matching the given
+     * $taxonSciName
+     * @param EntityManagerInterface $em The entity manager for building Queries
+     * @param string $parentRank The rank of the parent taxon
+     * @param string $parentSciName The scientific name to find children for
+     * @return array Array of taxonIDs that are children of $taxonSciName
+     */
+    private function getChildrenForTaxon(
+        EntityManagerInterface $em,
+        string $parentRank,
+        string $parentSciName): array {
+
+        $qb = $em->createQueryBuilder();
+
+        $taxaRelations = $qb->select("r")->from(Relationships::class, "r")
+            ->innerJoin(
+                Taxa::class,
+                "pt",
+                "WITH",
+                $qb->expr()->eq("r.parentTaxaId", "pt.id")
+            )
+            ->innerJoin(
+                Ranks::class,
+                "pr",
+                "WITH",
+                $qb->expr()->eq("pt.rankId", "pr.id")
+            )
+            ->where($qb->expr()->eq("LOWER(pr.rankName)", "LOWER(:parentRank)"))
+            ->andWhere($qb->expr()->like("pt.scientificName", ":parentTaxon"))
+            ->setParameter("parentRank", $parentRank)
+            ->setParameter("parentTaxon", "{$parentSciName}%")
+            ->getQuery()
+            ->getResult();
+
+        return array_map(function (Relationships $relation) {
+            // Return the ID of the child taxon for each relation
+            return $relation->getTaxaId()->getId();
+        }, $taxaRelations);
     }
 }

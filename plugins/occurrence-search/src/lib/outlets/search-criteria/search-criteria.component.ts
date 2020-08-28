@@ -6,6 +6,7 @@ import {
     FORM_KEY_TAXON_TYPE,
     FORM_KEY_TAXON_SEARCH
 } from "../../shared";
+import {OccurrenceSearchParams} from "occurrence";
 
 enum Page {
     PAGE_COLLECTION_SELECT,
@@ -48,10 +49,18 @@ export class SearchCriteriaComponent implements OnInit {
     }
 
     async onSearch() {
+        const taxonSearchType = this.searchParams.get(FORM_KEY_TAXON_TYPE).value;
+        const taxonSearchText = this.searchParams.get(FORM_KEY_TAXON_SEARCH).value;
+
+        const queryParams: OccurrenceSearchParams = {
+            "collection.id": this.searchParams.get(FORM_KEY_COLLIDS).value,
+            [taxonSearchType]: taxonSearchText
+        };
+
         return this.router.navigate(
             ["results"],
             {
-                queryParams: this.searchParams.value,
+                queryParams,
                 relativeTo: this.currentRoute
             }
         );
