@@ -51,6 +51,7 @@ use Occurrence\Filter\SearchByHigherTaxon;
  *       SearchByHigherTaxon::NAME_PHYLUM,
  *       SearchByHigherTaxon::NAME_CLASS,
  *       SearchByHigherTaxon::NAME_ORDER,
+ *       SearchByHigherTaxon::NAME_TRIBE
  *     }
  * )
  */

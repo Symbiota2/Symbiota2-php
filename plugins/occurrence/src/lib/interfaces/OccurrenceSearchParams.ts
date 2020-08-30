@@ -6,6 +6,7 @@ export interface OccurrenceSearchParams {
     class?: string,
     order?: string,
     family?: string,
+    tribe?: string,
     scientificName?: string,
     catalogNumber?: string
 }
