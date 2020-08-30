@@ -52,13 +52,28 @@ export class SearchCriteriaComponent implements OnInit {
     }
 
     async onSearch() {
-        const taxonSearchType = this.searchParams.get(FORM_KEY_TAXON_TYPE).value;
-        const taxonSearchText = this.searchParams.get(FORM_KEY_TAXON_SEARCH).value;
+        let taxonSearchType = this.searchParams.get(FORM_KEY_TAXON_TYPE).value;
+        let taxonSearchText = this.searchParams.get(FORM_KEY_TAXON_SEARCH).value;
+        let collIDs = this.searchParams.get(FORM_KEY_COLLIDS).value;
+        let catalogNumber = this.searchParams.get(FORM_KEY_CAT_NUM).value;
+
+        if (taxonSearchType === "" || taxonSearchText === "") {
+            taxonSearchType = null;
+            taxonSearchText = null;
+        }
+
+        if (collIDs.length === 0) {
+            collIDs = null;
+        }
+
+        if (catalogNumber === "") {
+            catalogNumber = null;
+        }
 
         const queryParams: OccurrenceSearchParams = {
-            "collection.id": this.searchParams.get(FORM_KEY_COLLIDS).value,
+            "collection.id": collIDs,
             [taxonSearchType]: taxonSearchText,
-            [FORM_KEY_CAT_NUM]: this.searchParams.get(FORM_KEY_CAT_NUM).value
+            [FORM_KEY_CAT_NUM]: catalogNumber
         };
 
         return this.router.navigate(

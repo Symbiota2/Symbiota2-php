@@ -16,6 +16,3 @@ export interface TaxonSearchCriteria {
     searchStr: string
 }
 
-export interface SearchCriteriaFormValues {
-    taxa: TaxonSearchCriteria
-}

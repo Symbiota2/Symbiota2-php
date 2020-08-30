@@ -36,9 +36,14 @@ export class SearchResultsComponent implements OnInit {
             outgoingQParams["collection.id"] = this.collectionIDs;
         }
 
-        incomingQParams.keys.forEach((k) => {
-            outgoingQParams[k] = incomingQParams.get(k);
-        });
+        if (incomingQParams.has(FORM_KEY_TAXON_TYPE) &&
+            incomingQParams.has(FORM_KEY_TAXON_SEARCH)) {
+
+            const searchType = incomingQParams.get(FORM_KEY_TAXON_TYPE);
+            outgoingQParams[searchType] = incomingQParams.get(
+                FORM_KEY_TAXON_SEARCH
+            );
+        }
 
         const resultObs = this.occurrenceService.getOccurrences(outgoingQParams);
         resultObs.pipe(first()).subscribe((occurrences: Occurrence[]) => {
