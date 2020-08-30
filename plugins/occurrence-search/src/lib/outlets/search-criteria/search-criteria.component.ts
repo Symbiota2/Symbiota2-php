@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import {
     FORM_KEY_COLLIDS,
     FORM_KEY_TAXON_TYPE,
-    FORM_KEY_TAXON_SEARCH
+    FORM_KEY_TAXON_SEARCH,
+    FORM_KEY_CAT_NUM
 } from "../../shared";
 import {OccurrenceSearchParams} from "occurrence";
 
@@ -25,6 +26,7 @@ export class SearchCriteriaComponent implements OnInit {
 
     public currentPage: Page = Page.PAGE_COLLECTION_SELECT;
     public searchParams: FormGroup;
+
     public FORM_KEY_COLLIDS = FORM_KEY_COLLIDS;
 
     constructor(
@@ -38,6 +40,7 @@ export class SearchCriteriaComponent implements OnInit {
             [FORM_KEY_COLLIDS]: [],
             [FORM_KEY_TAXON_TYPE]: "",
             [FORM_KEY_TAXON_SEARCH]: "",
+            [FORM_KEY_CAT_NUM]: ""
         });
     }
 
@@ -54,7 +57,8 @@ export class SearchCriteriaComponent implements OnInit {
 
         const queryParams: OccurrenceSearchParams = {
             "collection.id": this.searchParams.get(FORM_KEY_COLLIDS).value,
-            [taxonSearchType]: taxonSearchText
+            [taxonSearchType]: taxonSearchText,
+            [FORM_KEY_CAT_NUM]: this.searchParams.get(FORM_KEY_CAT_NUM).value
         };
 
         return this.router.navigate(

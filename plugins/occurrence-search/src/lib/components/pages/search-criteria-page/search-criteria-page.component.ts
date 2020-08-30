@@ -2,7 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { ControlContainer, FormGroup, } from "@angular/forms";
 import {
     FORM_KEY_TAXON_TYPE,
-    FORM_KEY_TAXON_SEARCH
+    FORM_KEY_TAXON_SEARCH,
+    FORM_KEY_CAT_NUM
 } from "../../../shared";
 
 const TaxonSearchOpts = [
@@ -12,6 +13,7 @@ const TaxonSearchOpts = [
     { name: "Class", value: "class" },
     { name: "Order", value: "order" },
     { name: "Family", value: "family" },
+    { name: "Tribe", value: "tribe" },
     { name: "Genus", value: "genus" }
 ];
 
@@ -26,6 +28,7 @@ export class SearchCriteriaPageComponent implements OnInit {
     public TaxonSearchOpts = TaxonSearchOpts;
     public FORM_KEY_TAXON_TYPE = FORM_KEY_TAXON_TYPE;
     public FORM_KEY_TAXON_SEARCH = FORM_KEY_TAXON_SEARCH;
+    public FORM_KEY_CAT_NUM = FORM_KEY_CAT_NUM;
 
     constructor(private controlContainer: ControlContainer) {}
 
