@@ -12,7 +12,7 @@
     <div class="row my-0">
         <div class="col">
             <p class="font-grey">
-                {{ occurrence.catalogNumber }} | {{ occurrence.recordedBy }}
+                {{ [occurrence.catalogNumber, occurrence.recordedBy].join(" | ") }}
             </p>
         </div>
     </div>

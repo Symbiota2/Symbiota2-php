@@ -6,6 +6,7 @@ enum OccurrenceSex {
 // Same order as /api docs
 export interface Occurrence {
     id: number
+    collection: string
     sourcePrimaryKey?: string
     basisOfRecord?: string
     occurrenceIdentifier?: string

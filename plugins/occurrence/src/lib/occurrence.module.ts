@@ -3,6 +3,7 @@ import { TranslateModule } from "@ngx-translate/core";
 
 import { SymbiotaAuthModule } from "symbiota-auth";
 import { SymbiotaSharedModule } from "symbiota-shared";
+import {CollectionModule} from "collection";
 
 @NgModule({
     declarations: [],
@@ -10,7 +11,8 @@ import { SymbiotaSharedModule } from "symbiota-shared";
     imports: [
         TranslateModule,
         SymbiotaAuthModule,
-        SymbiotaSharedModule
+        SymbiotaSharedModule,
+        CollectionModule
     ]
 })
 export class OccurrenceModule {  }

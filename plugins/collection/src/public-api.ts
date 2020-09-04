@@ -10,3 +10,4 @@ export * from './lib/components/collection-current-permission/collection-current
 export * from './lib/components/collection-available-permission/collection-available-permission.component';
 export * from './lib/containers/user-profile-collection-tab/user-profile-collection-tab.component';
 export * from './lib/collection.module';
+export * from './lib/interfaces/collection.interface';

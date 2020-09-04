@@ -1,4 +1,4 @@
-export interface CollectionListItem {
+export interface Collection {
     id: number;
     institutionCode: string;
     collectionCode: string;
@@ -17,5 +17,5 @@ export interface Category {
     inclusive: number;
     notes: string;
     sortSequence: number;
-    collectionId: CollectionListItem[];
+    collectionId: Collection[];
 }

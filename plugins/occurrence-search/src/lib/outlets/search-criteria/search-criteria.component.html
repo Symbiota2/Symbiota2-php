@@ -3,41 +3,60 @@
         <h1>Search Collections</h1>
     </div>
 </div>
-<form [formGroup]="searchParams">
-    <div class="row">
-        <!-- Current page -->
-        <div class="col" [ngSwitch]="currentPage">
-            <occurrence-search-collection-select-page
-                *ngSwitchDefault
-                [formControlName]="FORM_KEY_COLLIDS"
-            >
-            </occurrence-search-collection-select-page>
-            <occurrence-search-search-criteria-page
-                *ngSwitchCase="Page.PAGE_SEARCH_CRITERIA"
-                [formGroup]="searchParams"
-            >
-            </occurrence-search-search-criteria-page>
+<form [formGroup]="formGroup">
+<div class="row">
+    <div class="col">
+        <div class="row">
+            <div class="col">
+                <mat-form-field>
+                    <mat-label>Catalog number</mat-label>
+                    <input
+                        matInput
+                        [formControlName]="FORM_KEY_CAT_NUM"
+                    >
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-auto">
+                <occurrence-search-select
+                    title="Taxon search type"
+                    [options]="TaxonSearchOpts"
+                    [formControlName]="FORM_KEY_TAXON_TYPE"
+                >
+                </occurrence-search-select>
+            </div>
+            <div class="col-auto">
+                <mat-form-field>
+                    <mat-label>Search</mat-label>
+                    <input
+                        matInput
+                        [formControlName]="FORM_KEY_TAXON_SEARCH"
+                    >
+                </mat-form-field>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-auto" *ngIf="currentPage > Page.PAGE_COLLECTION_SELECT">
-            <button
-                mat-raised-button
-                type="submit"
-                (click)="onSwitchPage(-1)"
-            >
-                Previous
-            </button>
-        </div>
-        <div class="col-auto" *ngIf="currentPage <= Page.PAGE_SEARCH_CRITERIA">
-            <button
-                mat-raised-button
-                color="primary"
-                [type]="currentPage == Page.PAGE_SEARCH_CRITERIA ? 'submit' : 'button'"
-                (click)="currentPage == Page.PAGE_SEARCH_CRITERIA ? onSearch() : onSwitchPage(1)"
-            >
-                {{ currentPage == Page.PAGE_SEARCH_CRITERIA ? "Search" : "Next" }}
-            </button>
-        </div>
+</div>
+<div class="row">
+    <div class="col-auto">
+        <button
+            mat-raised-button
+            (click)="back()"
+            type="button"
+        >
+            Previous
+        </button>
     </div>
+    <div class="col-auto">
+        <button
+            mat-raised-button
+            color="primary"
+            (click)="search()"
+            type="button"
+        >
+            Search
+        </button>
+    </div>
+</div>
 </form>

@@ -2,25 +2,41 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 
-import {CollectionListItem} from '../interfaces/collection.interface';
+import {Collection} from '../interfaces/collection.interface';
 import {Category} from '../interfaces/collection.interface';
+import {first} from "rxjs/operators";
 
 @Injectable({
     providedIn: 'root',
 })
 export class CollectionService {
-    private collectionListSubject = new BehaviorSubject<CollectionListItem[]>([]);
-    public readonly collectionList: Observable<CollectionListItem[]> = this.collectionListSubject.asObservable();
+    private static readonly CATEGORY_BASE_URL = "/api/collection/categories";
+    private static readonly COLLECTION_BASE_URL = "/api/collections";
+
+    private collectionListSubject = new BehaviorSubject<Collection[]>([]);
+    public readonly collectionList: Observable<Collection[]> = this.collectionListSubject.asObservable();
     private collectionTreeDataSubject = new BehaviorSubject<object>({});
     public readonly collectionTreeData: Observable<object> = this.collectionTreeDataSubject.asObservable();
 
-    constructor(
-        private http: HttpClient
-    ) {}
+    constructor(private http: HttpClient) {}
+
+    getCategories(): Observable<Category[]> {
+        return this.http.get<Category[]>(
+            CollectionService.CATEGORY_BASE_URL,
+            { headers: { accept: "application/json" } }
+        );
+    }
+
+    getCollectionByID(id: number): Observable<Collection> {
+        return this.http.get<Collection>(
+            `${CollectionService.COLLECTION_BASE_URL}/${id}`,
+            { headers: { accept: "application/json" } }
+        );
+    }
 
     setCollectionList() {
         this.http.get<any>('/api/collections').subscribe(
-            (collectionList: CollectionListItem[]) => {
+            (collectionList: Collection[]) => {
                 this.collectionListSubject.next(collectionList['hydra:member']);
             },
             () => {}
@@ -28,11 +44,11 @@ export class CollectionService {
     }
 
     setCollectionCategoryData() {
-        let collectionData: CollectionListItem[];
+        let collectionData: Collection[];
         let categoryData: Category[];
         this.collectionTreeDataSubject.next({});
         this.http.get<any>('/api/collections').subscribe(
-            (collectionList: CollectionListItem[]) => {
+            (collectionList: Collection[]) => {
                 collectionData = collectionList['hydra:member'];
                 this.http.get<any>('/api/collection/categories').subscribe(
                     (categoryList: Category[]) => {
@@ -46,7 +62,7 @@ export class CollectionService {
         );
     }
 
-    processCollectionTreeData(collectionData: CollectionListItem[], categoryData: Category[]) {
+    processCollectionTreeData(collectionData: Collection[], categoryData: Category[]) {
         const dataObject = {};
         dataObject['root'] = {};
         let index = 1;

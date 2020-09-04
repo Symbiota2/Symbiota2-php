@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col">
+        <h1>Search Collections</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <collection-collection-checkbox-selector
+            [collectionIDs]="collectionIDs"
+            (collectionIDsChange)="onCollectionIDsChanged($event)"
+        >
+        </collection-collection-checkbox-selector>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <button
+            mat-flat-button
+            color="primary"
+            (click)="onNext()"
+            [disabled]="collectionIDs.length == 0"
+        >
+            Next
+        </button>
+    </div>
+</div>

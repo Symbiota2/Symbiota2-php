@@ -12,6 +12,10 @@
     "ui_routes": [
         {
             "path": "searchcollections",
+            "provider": "search-collections"
+        },
+        {
+            "path": "searchcollections/criteria",
             "provider": "search-criteria"
         },
         {

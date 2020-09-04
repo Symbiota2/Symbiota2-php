@@ -1,5 +1,5 @@
 export interface OccurrenceSearchParams {
-    "collection.id"?: number | number[],
+    "collection.id[]"?: number | number[],
     page?: number,
     kingdom?: string,
     phylum?: string,
@@ -7,6 +7,18 @@ export interface OccurrenceSearchParams {
     order?: string,
     family?: string,
     tribe?: string,
-    scientificName?: string,
+    species?: string,
     catalogNumber?: string
 }
+
+// Valid taxon search types
+export const TaxonSearchTypes = [
+    "kingdom",
+    "phylum",
+    "class",
+    "order",
+    "family",
+    "tribe",
+    "genus",
+    "species"
+];

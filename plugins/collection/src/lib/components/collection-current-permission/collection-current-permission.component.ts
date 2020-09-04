@@ -3,7 +3,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {PermissionService} from 'symbiota-shared';
 import {CollectionService} from '../../services/collection.service';
 
-import {CollectionListItem} from '../../interfaces/collection.interface';
+import {Collection} from '../../interfaces/collection.interface';
 import {CurrentPermission} from '../../interfaces/permission.interface';
 
 @Component({
@@ -17,7 +17,7 @@ export class CollectionCurrentPermissionComponent implements OnInit {
     adminCollectionPermissions: CurrentPermission[] = [];
     editorCollectionPermissions: CurrentPermission[] = [];
     rareCollectionPermissions: CurrentPermission[] = [];
-    collectionList: CollectionListItem[];
+    collectionList: Collection[];
 
     constructor(
         public permissionService: PermissionService,

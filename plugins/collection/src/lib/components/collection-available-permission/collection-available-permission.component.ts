@@ -4,7 +4,7 @@ import {PermissionService} from 'symbiota-shared';
 import {CollectionService} from '../../services/collection.service';
 
 import {AddPermission} from '../../interfaces/permission.interface';
-import {CollectionListItem} from '../../interfaces/collection.interface';
+import {Collection} from '../../interfaces/collection.interface';
 
 @Component({
     selector: 'collection-collection-available-permission',
@@ -17,7 +17,7 @@ export class CollectionAvailablePermissionComponent implements OnInit {
     adminCollectionPermissions = [];
     editorCollectionPermissions = [];
     rareCollectionPermissions = [];
-    collectionList: CollectionListItem[];
+    collectionList: Collection[];
     userId: number;
 
     constructor(
