@@ -14,6 +14,7 @@ import { SearchResultComponent } from "./components/search-result/search-result.
 import { SearchResultModalComponent } from "./components/search-result-modal/search-result-modal.component";
 import { FieldRowComponent } from "./components/search-result-modal/field-row.component";
 import {SearchCollectionsComponent} from "./outlets/search-collections/search-collections.component";
+import {QueryParserService} from "./services/query-parser.service";
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import {SearchCollectionsComponent} from "./outlets/search-collections/search-co
         SearchResultsComponent
     ],
     providers: [
+        QueryParserService,
         {
             provide: "search-collections",
             useValue: [{

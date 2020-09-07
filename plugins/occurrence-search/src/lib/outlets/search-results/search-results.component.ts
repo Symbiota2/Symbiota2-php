@@ -1,18 +1,11 @@
 import {Component, OnInit} from "@angular/core";
 import {
     Occurrence, OccurrenceSearchParams,
-    OccurrenceService,
-    TaxonSearchTypes
+    OccurrenceService
 } from "occurrence";
 
 import {ActivatedRoute, Params, Router} from "@angular/router";
-
-import {
-    Q_PARAM_CAT_NUM,
-    Q_PARAM_COLLIDS,
-    Q_PARAM_TAXON_SEARCH,
-    Q_PARAM_TAXON_TYPE,
-} from "../../include";
+import {QueryParserService} from "../../services/query-parser.service";
 
 @Component({
     selector: "occurrence-search-search-results",
@@ -21,6 +14,7 @@ import {
 })
 export class SearchResultsComponent implements OnInit {
     private static readonly PREV_PAGE = "../criteria";
+    private static readonly COLLECTION_PAGE = "..";
 
     public isLoading = true;
     public occurrences: Occurrence[] = [];
@@ -34,34 +28,20 @@ export class SearchResultsComponent implements OnInit {
     constructor(
         private router: Router,
         private currentRoute: ActivatedRoute,
+        private queryParams: QueryParserService,
         private occurrenceService: OccurrenceService) { }
 
     ngOnInit() {
-        const incomingQParams = this.currentRoute.snapshot.queryParamMap;
+        this.collectionIDs = this.queryParams.getCollectionIDs();
+        this.catalogNumber = this.queryParams.getCatalogNumber();
+        this.taxonSearchType = this.queryParams.getTaxonSearchType();
+        this.taxonSearchStr = this.queryParams.getTaxonSearchStr();
 
-        if (incomingQParams.has(Q_PARAM_COLLIDS)) {
-            this.collectionIDs = incomingQParams.getAll(Q_PARAM_COLLIDS)
-                .map((collID) => parseInt(collID));
-
-            if (incomingQParams.has(Q_PARAM_CAT_NUM)) {
-                this.catalogNumber = incomingQParams.get(Q_PARAM_CAT_NUM);
-            }
-
-            if (incomingQParams.has(Q_PARAM_TAXON_TYPE) &&
-                incomingQParams.has(Q_PARAM_TAXON_SEARCH)) {
-
-                const searchType = incomingQParams.get(Q_PARAM_TAXON_TYPE);
-
-                if (TaxonSearchTypes.includes(searchType)) {
-                    this.taxonSearchType = searchType;
-                    this.taxonSearchStr = incomingQParams.get(Q_PARAM_TAXON_SEARCH);
-                }
-            }
-
+        if (this.collectionIDs.length > 0) {
             this.loadOccurrences();
         }
         else {
-            this.backToCriteria();
+            this.backToCollections();
         }
     }
 
@@ -75,35 +55,20 @@ export class SearchResultsComponent implements OnInit {
     }
 
     getCriteriaQueryParams(): Params {
-        const qParams = { [Q_PARAM_COLLIDS]: this.collectionIDs };
-
-        if (this.catalogNumber !== "") {
-            qParams[Q_PARAM_CAT_NUM] = this.catalogNumber;
-        }
-
-        if (this.taxonSearchType !== "" && this.taxonSearchStr !== "") {
-            qParams[Q_PARAM_TAXON_TYPE] = this.taxonSearchType;
-            qParams[Q_PARAM_TAXON_SEARCH] = this.taxonSearchStr;
-        }
-
-        return qParams;
+        return this.queryParams.getFrontendQueryBuilder()
+            .setCollectionIDs(this.collectionIDs)
+            .setCatalogNumber(this.catalogNumber)
+            .setTaxonSearch(this.taxonSearchType, this.taxonSearchStr)
+            .build();
     }
 
     getApiQueryParams(): OccurrenceSearchParams {
-        const qParams = {
-            "page": this.currentPage,
-            [Q_PARAM_COLLIDS]: this.collectionIDs
-        };
-
-        if (this.catalogNumber !== "") {
-            qParams[Q_PARAM_CAT_NUM] = this.catalogNumber;
-        }
-
-        if (this.taxonSearchType !== "" && this.taxonSearchStr !== "") {
-            qParams[this.taxonSearchType] = this.taxonSearchStr;
-        }
-
-        return qParams;
+        return this.queryParams.getApiQueryBuilder()
+            .setCollectionIDs(this.collectionIDs)
+            .setCatalogNumber(this.catalogNumber)
+            .setTaxonSearch(this.taxonSearchType, this.taxonSearchStr)
+            .setPage(this.currentPage)
+            .build();
     }
 
     async prevPage() {
@@ -121,6 +86,16 @@ export class SearchResultsComponent implements OnInit {
     async backToCriteria() {
         await this.router.navigate(
             [SearchResultsComponent.PREV_PAGE],
+            {
+                relativeTo: this.currentRoute,
+                queryParams: this.getCriteriaQueryParams()
+            }
+        );
+    }
+
+    async backToCollections() {
+        await this.router.navigate(
+            [SearchResultsComponent.COLLECTION_PAGE],
             {
                 relativeTo: this.currentRoute,
                 queryParams: this.getCriteriaQueryParams()

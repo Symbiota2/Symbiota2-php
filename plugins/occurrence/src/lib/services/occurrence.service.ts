@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import { Observable } from "rxjs";
 import { OccurrenceModule } from "../occurrence.module";
 import { Occurrence } from "../interfaces/Occurrence";
 import {OccurrenceSearchParams} from "../interfaces/OccurrenceSearchParams";
-import {CollectionService, Collection} from "collection";
-import {flatMap, mergeMap} from "rxjs/operators";
+import {Collection} from "collection";
+import {mergeMap} from "rxjs/operators";
 
 const API_BASE_URL = "/api/occurrences";
 const DEFAULT_HEADERS = {
@@ -16,6 +16,28 @@ const DEFAULT_HEADERS = {
     providedIn: OccurrenceModule
 })
 export class OccurrenceService {
+    public static readonly Q_PARAM_COLLIDS = "collection.id[]";
+    public static readonly Q_PARAM_RESULT_PAGE = "page";
+    public static readonly Q_PARAM_CAT_NUM = "catalogNumber";
+    public static readonly Q_PARAM_KINGDOM = "kingdom";
+    public static readonly Q_PARAM_PHYLUM = "phylum";
+    public static readonly Q_PARAM_CLASS = "class";
+    public static readonly Q_PARAM_ORDER = "order";
+    public static readonly Q_PARAM_FAMILY = "family";
+    public static readonly Q_PARAM_TRIBE = "tribe";
+    public static readonly Q_PARAM_GENUS = "genus";
+    public static readonly Q_PARAM_SPECIES = "species";
+
+    public static readonly VALID_TAXON_TYPES = [
+        OccurrenceService.Q_PARAM_KINGDOM,
+        OccurrenceService.Q_PARAM_PHYLUM,
+        OccurrenceService.Q_PARAM_CLASS,
+        OccurrenceService.Q_PARAM_ORDER,
+        OccurrenceService.Q_PARAM_FAMILY,
+        OccurrenceService.Q_PARAM_TRIBE,
+        OccurrenceService.Q_PARAM_GENUS,
+        OccurrenceService.Q_PARAM_SPECIES,
+    ];
 
     constructor(
         private http: HttpClient) {}

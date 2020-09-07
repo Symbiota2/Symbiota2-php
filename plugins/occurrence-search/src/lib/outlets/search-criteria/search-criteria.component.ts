@@ -3,13 +3,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup} from "@angular/forms";
 import {SearchCollectionsComponent} from "../search-collections/search-collections.component";
 
-import {
-    FORM_KEY_CAT_NUM,
-    FORM_KEY_TAXON_SEARCH,
-    FORM_KEY_TAXON_TYPE,
-    Q_PARAM_CAT_NUM,
-    Q_PARAM_COLLIDS, Q_PARAM_TAXON_SEARCH, Q_PARAM_TAXON_TYPE
-} from "../../include";
+import { QueryParserService } from "../../services/query-parser.service";
+import { OccurrenceService } from "occurrence";
 
 const TaxonSearchOpts = [
     { name: "Species", value: "scientificName" },
@@ -31,9 +26,9 @@ export class SearchCriteriaComponent implements OnInit {
     private static readonly NEXT_PAGE = "../results";
     private static readonly PREV_PAGE = "..";
 
-    public readonly FORM_KEY_CAT_NUM = FORM_KEY_CAT_NUM;
-    public readonly FORM_KEY_TAXON_TYPE = FORM_KEY_TAXON_TYPE;
-    public readonly FORM_KEY_TAXON_SEARCH = FORM_KEY_TAXON_SEARCH;
+    public readonly FORM_KEY_CAT_NUM = OccurrenceService.Q_PARAM_CAT_NUM;
+    public readonly FORM_KEY_TAXON_TYPE = QueryParserService.Q_PARAM_TAXON_TYPE;
+    public readonly FORM_KEY_TAXON_SEARCH = QueryParserService.Q_PARAM_TAXON_SEARCH;
 
     public readonly TaxonSearchOpts = TaxonSearchOpts;
 
@@ -47,30 +42,16 @@ export class SearchCriteriaComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private currentRoute: ActivatedRoute) {}
+        private currentRoute: ActivatedRoute,
+        private queryParser: QueryParserService) {}
 
     ngOnInit() {
-        const currentParams = this.currentRoute.snapshot.queryParamMap;
-
-        if (currentParams.has(Q_PARAM_COLLIDS)) {
-            this.collectionIDs = currentParams
-                .getAll(Q_PARAM_COLLIDS)
-                .map((collID) => parseInt(collID));
-        }
-
-        if (currentParams.has(Q_PARAM_CAT_NUM)) {
-            this.formGroup.patchValue({
-                [FORM_KEY_CAT_NUM]: currentParams.get(Q_PARAM_CAT_NUM)
-            });
-        }
-
-        if (currentParams.has(Q_PARAM_TAXON_TYPE) &&
-            currentParams.has(Q_PARAM_TAXON_SEARCH)) {
-            this.formGroup.patchValue({
-                [FORM_KEY_TAXON_TYPE]: currentParams.get(Q_PARAM_TAXON_TYPE),
-                [FORM_KEY_TAXON_SEARCH]: currentParams.get(Q_PARAM_TAXON_SEARCH)
-            });
-        }
+        this.collectionIDs = this.queryParser.getCollectionIDs();
+        this.formGroup.patchValue({
+            [this.FORM_KEY_CAT_NUM]: this.queryParser.getCatalogNumber(),
+            [this.FORM_KEY_TAXON_TYPE]: this.queryParser.getTaxonSearchType(),
+            [this.FORM_KEY_TAXON_SEARCH]: this.queryParser.getTaxonSearchStr(),
+        });
 
         if (this.collectionIDs.length === 0) {
             this.back();
@@ -79,20 +60,24 @@ export class SearchCriteriaComponent implements OnInit {
 
     private getQueryParams() {
         const qParams = {
-            [Q_PARAM_COLLIDS]: this.collectionIDs
+            [OccurrenceService.Q_PARAM_COLLIDS]: this.collectionIDs
         };
 
         const catNum = this.formGroup.get(this.FORM_KEY_CAT_NUM).value;
         const taxonType = this.formGroup.get(this.FORM_KEY_TAXON_TYPE).value;
         const taxonStr = this.formGroup.get(this.FORM_KEY_TAXON_SEARCH).value;
 
-        if (catNum !== "") {
-            qParams[Q_PARAM_CAT_NUM] = catNum;
-        }
+        qParams[OccurrenceService.Q_PARAM_CAT_NUM] = (
+            catNum === "" ? null : catNum
+        );
 
         if (taxonType !== "" && taxonStr !== "") {
-            qParams[Q_PARAM_TAXON_TYPE] = taxonType;
-            qParams[Q_PARAM_TAXON_SEARCH] = taxonStr;
+            qParams[QueryParserService.Q_PARAM_TAXON_TYPE] = taxonType;
+            qParams[QueryParserService.Q_PARAM_TAXON_SEARCH] = taxonStr;
+        }
+        else {
+            qParams[QueryParserService.Q_PARAM_TAXON_TYPE] = null;
+            qParams[QueryParserService.Q_PARAM_TAXON_SEARCH] = null;
         }
 
         return qParams;
@@ -111,7 +96,7 @@ export class SearchCriteriaComponent implements OnInit {
 
     async back() {
         const queryParams = {
-            [SearchCollectionsComponent.Q_PARAM_COLLIDS]: this.collectionIDs
+            [OccurrenceService.Q_PARAM_COLLIDS]: this.collectionIDs
         };
 
         await this.router.navigate(
