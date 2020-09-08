@@ -1,25 +1,56 @@
 <div class="row">
     <div class="col">
-        <h1>Search results</h1>
+        <div class="row">
+            <div class="col">
+                <h1>Search results</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                Showing {{ getFirstIndexOnPage() | number }}
+                through {{ getLastIndexOnPage() | number }}
+                of {{ totalResults | number }} total results
+            </div>
+        </div>
     </div>
     <div class="col-auto">
-        <button
-            mat-raised-button color="primary"
-            [disabled]="currentPage == 1"
-            (click)="prevPage()"
-        >
-            <mat-icon class="mat-icon-rtl-mirror">chevron_left</mat-icon>
-        </button>
-    </div>
-    <div class="col-auto">
-        <button mat-raised-button color="primary" (click)="nextPage()">
-            <mat-icon class="mat-icon-rtl-mirror">chevron_right</mat-icon>
-        </button>
-    </div>
-    <div class="col-auto">
-        <button mat-raised-button (click)="backToCriteria()">
-            Back to search
-        </button>
+        <div class="row">
+            <div class="col-auto">
+                <mat-form-field>
+                    <mat-label>Results per page</mat-label>
+                    <mat-select [value]="itemsPerPage" (valueChange)="onItemsPerPageChanged($event)">
+                        <mat-option value="25">25</mat-option>
+                        <mat-option value="50">50</mat-option>
+                        <mat-option value="100">100</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <button
+                    mat-raised-button color="primary"
+                    [disabled]="currentPage == 1"
+                    (click)="prevPage()"
+                >
+                    <mat-icon class="mat-icon-rtl-mirror">chevron_left</mat-icon>
+                </button>
+            </div>
+            <div class="col">
+                <button
+                    mat-raised-button color="primary"
+                    [disabled]="getLastIndexOnPage() === totalResults"
+                    (click)="nextPage()"
+                >
+                    <mat-icon class="mat-icon-rtl-mirror">chevron_right</mat-icon>
+                </button>
+            </div>
+            <div class="col">
+                <button mat-raised-button (click)="backToCriteria()">
+                    Back to search
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 <div class="row mh-30">

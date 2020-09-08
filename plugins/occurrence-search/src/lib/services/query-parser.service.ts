@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import {ActivatedRoute, ParamMap} from "@angular/router";
-import {OccurrenceService, TaxonSearchTypes} from "occurrence";
+import {OccurrenceService} from "occurrence";
 import {ApiQueryBuilder, FrontendQueryBuilder} from "./query-builder.class";
 
 
 @Injectable()
 export class QueryParserService {
-    public static readonly Q_PARAM_TAXON_TYPE = "taxonSearchType";
-    public static readonly Q_PARAM_TAXON_SEARCH = "taxonSearch";
+    public static readonly Q_PARAM_TAXON_TYPE = FrontendQueryBuilder.Q_PARAM_TAXON_TYPE;
+    public static readonly Q_PARAM_TAXON_SEARCH = FrontendQueryBuilder.Q_PARAM_TAXON_SEARCH;
 
     private _queryParams: ParamMap;
 
@@ -45,7 +45,7 @@ export class QueryParserService {
             );
 
             // Only return a valid taxon search type
-            if (TaxonSearchTypes.includes(searchType)) {
+            if (OccurrenceService.VALID_TAXON_TYPES.includes(searchType)) {
                 return searchType;
             }
         }
@@ -56,6 +56,38 @@ export class QueryParserService {
     public getTaxonSearchStr(): string {
         if (this.queryParams.has(QueryParserService.Q_PARAM_TAXON_SEARCH)) {
             return this.queryParams.get(QueryParserService.Q_PARAM_TAXON_SEARCH);
+        }
+
+        return "";
+    }
+
+    public getLocality(): string {
+        if (this.queryParams.has(OccurrenceService.Q_PARAM_LOCALITY)) {
+            return this.queryParams.get(OccurrenceService.Q_PARAM_LOCALITY);
+        }
+
+        return "";
+    }
+
+    public getProvince(): string {
+        if (this.queryParams.has(OccurrenceService.Q_PARAM_STATE)) {
+            return this.queryParams.get(OccurrenceService.Q_PARAM_STATE);
+        }
+
+        return "";
+    }
+
+    public getCountry(): string {
+        if (this.queryParams.has(OccurrenceService.Q_PARAM_COUNTRY)) {
+            return this.queryParams.get(OccurrenceService.Q_PARAM_COUNTRY);
+        }
+
+        return "";
+    }
+
+    public getCollector(): string {
+        if (this.queryParams.has(OccurrenceService.Q_PARAM_COLLECTOR)) {
+            return this.queryParams.get(OccurrenceService.Q_PARAM_COLLECTOR);
         }
 
         return "";

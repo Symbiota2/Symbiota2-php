@@ -3,8 +3,13 @@
         <div class="col">
             <h2 class="my-0">{{ occurrence.scientificName }}</h2>
         </div>
-        <div class="col-auto">
-            <button class="btn-close" (click)="onCloseClick()">
+        <div class="col-auto mx-0">
+            <button class="btn-icon" (click)="onEditClick()">
+                <mat-icon>create</mat-icon>
+            </button>
+        </div>
+        <div class="col-auto mx-0">
+            <button class="btn-icon" (click)="onCloseClick()">
                 <mat-icon>close</mat-icon>
             </button>
         </div>
@@ -20,7 +25,7 @@
 <div mat-dialog-content class="align-items-start">
     <occurrence-search-field-row
         label="Family"
-        value="{{ occurrence.family }}"
+        value="Test Family"
     >
     </occurrence-search-field-row>
     <occurrence-search-field-row
@@ -30,14 +35,14 @@
     </occurrence-search-field-row>
     <div
         class="row"
-        *ngIf="occurrence.locality || occurrence.stateProvince || occurrence.country"
+        *ngIf="occurrence.location.locality || occurrence.location.stateProvince || occurrence.location.country"
     >
         <div class="col-1 font-bold text-end">Locality</div>
         <div class="col-9">
             {{[
-          occurrence.locality.trim(),
-          occurrence.stateProvince.trim(),
-          occurrence.country.trim()
+          occurrence.location.locality.trim(),
+          occurrence.location.stateProvince.trim(),
+          occurrence.location.country.trim()
         ].join(", ")}}
         </div>
     </div>
@@ -53,7 +58,7 @@
     </occurrence-search-field-row>
     <occurrence-search-field-row
         label="Remarks"
-        value="{{ occurrence.occurrenceRemarks }}"
+        value="{{ occurrence.remarks }}"
     >
     </occurrence-search-field-row>
     <occurrence-search-field-row

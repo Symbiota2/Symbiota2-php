@@ -1,20 +1,20 @@
 import { Component, OnInit } from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
-import {FormControl, FormGroup} from "@angular/forms";
-import {SearchCollectionsComponent} from "../search-collections/search-collections.component";
+import { ActivatedRoute, Params, Router } from "@angular/router";
 
 import { QueryParserService } from "../../services/query-parser.service";
-import { OccurrenceService } from "occurrence";
+import { CountrySearchResult, OccurrenceService } from "occurrence";
+import { ProvinceSearchResult } from "occurrence/lib/interfaces/Province.interface";
+import { LocalitySearchResult } from "occurrence/lib/interfaces/Locality.interface";
 
 const TaxonSearchOpts = [
-    { name: "Species", value: "scientificName" },
-    { name: "Kingdom", value: "kingdom" },
-    { name: "Phylum", value: "phylum" },
-    { name: "Class", value: "class" },
-    { name: "Order", value: "order" },
-    { name: "Family", value: "family" },
-    { name: "Tribe", value: "tribe" },
-    { name: "Genus", value: "genus" }
+    { name: "Scientific name", value: OccurrenceService.Q_PARAM_SPECIES },
+    { name: "Genus", value: OccurrenceService.Q_PARAM_GENUS },
+    { name: "Tribe", value: OccurrenceService.Q_PARAM_TRIBE },
+    { name: "Family", value: OccurrenceService.Q_PARAM_FAMILY },
+    { name: "Order", value: OccurrenceService.Q_PARAM_ORDER },
+    { name: "Class", value: OccurrenceService.Q_PARAM_CLASS },
+    { name: "Phylum", value: OccurrenceService.Q_PARAM_PHYLUM },
+    { name: "Kingdom", value: OccurrenceService.Q_PARAM_KINGDOM }
 ];
 
 @Component({
@@ -26,63 +26,58 @@ export class SearchCriteriaComponent implements OnInit {
     private static readonly NEXT_PAGE = "../results";
     private static readonly PREV_PAGE = "..";
 
-    public readonly FORM_KEY_CAT_NUM = OccurrenceService.Q_PARAM_CAT_NUM;
-    public readonly FORM_KEY_TAXON_TYPE = QueryParserService.Q_PARAM_TAXON_TYPE;
-    public readonly FORM_KEY_TAXON_SEARCH = QueryParserService.Q_PARAM_TAXON_SEARCH;
-
     public readonly TaxonSearchOpts = TaxonSearchOpts;
 
-    public formGroup = new FormGroup({
-        [this.FORM_KEY_CAT_NUM]: new FormControl(""),
-        [this.FORM_KEY_TAXON_TYPE]: new FormControl(""),
-        [this.FORM_KEY_TAXON_SEARCH]: new FormControl("")
-    });
+    public countryOpts: CountrySearchResult[] = [];
+    public provinceOpts: ProvinceSearchResult[] = [];
+    public localityOpts: LocalitySearchResult[] = [];
 
     public collectionIDs: number[] = [];
+    public catalogNumber: string = "";
+    public taxonSearchType: string = "";
+    public taxonSearchStr: string = "";
+    public locality: string = "";
+    public province: string = "";
+    public country: string = "";
+    public collector: string = "";
 
     constructor(
         private router: Router,
         private currentRoute: ActivatedRoute,
-        private queryParser: QueryParserService) {}
+        private queryParser: QueryParserService,
+        private occurrenceService: OccurrenceService) { }
 
     ngOnInit() {
         this.collectionIDs = this.queryParser.getCollectionIDs();
-        this.formGroup.patchValue({
-            [this.FORM_KEY_CAT_NUM]: this.queryParser.getCatalogNumber(),
-            [this.FORM_KEY_TAXON_TYPE]: this.queryParser.getTaxonSearchType(),
-            [this.FORM_KEY_TAXON_SEARCH]: this.queryParser.getTaxonSearchStr(),
-        });
 
         if (this.collectionIDs.length === 0) {
-            this.back();
+            return this.back();
         }
+
+        this.occurrenceService.getCountries().subscribe((countries) => {
+            this.countryOpts = countries;
+        });
+
+        this.catalogNumber = this.queryParser.getCatalogNumber();
+        this.taxonSearchType = this.queryParser.getTaxonSearchType();
+        this.taxonSearchStr = this.queryParser.getTaxonSearchStr();
+        this.locality = this.queryParser.getLocality();
+        this.province = this.queryParser.getProvince();
+        this.country = this.queryParser.getCountry();
+        this.collector = this.queryParser.getCollector();
     }
 
-    private getQueryParams() {
-        const qParams = {
-            [OccurrenceService.Q_PARAM_COLLIDS]: this.collectionIDs
-        };
-
-        const catNum = this.formGroup.get(this.FORM_KEY_CAT_NUM).value;
-        const taxonType = this.formGroup.get(this.FORM_KEY_TAXON_TYPE).value;
-        const taxonStr = this.formGroup.get(this.FORM_KEY_TAXON_SEARCH).value;
-
-        qParams[OccurrenceService.Q_PARAM_CAT_NUM] = (
-            catNum === "" ? null : catNum
-        );
-
-        if (taxonType !== "" && taxonStr !== "") {
-            qParams[QueryParserService.Q_PARAM_TAXON_TYPE] = taxonType;
-            qParams[QueryParserService.Q_PARAM_TAXON_SEARCH] = taxonStr;
-        }
-        else {
-            qParams[QueryParserService.Q_PARAM_TAXON_TYPE] = null;
-            qParams[QueryParserService.Q_PARAM_TAXON_SEARCH] = null;
-        }
-
-        return qParams;
+    private getQueryParams(): Params {
+        return this.queryParser.getFrontendQueryBuilder()
+            .setCollectionIDs(this.collectionIDs)
+            .setCatalogNumber(this.catalogNumber)
+            .setTaxonSearch(this.taxonSearchType, this.taxonSearchStr)
+            .setLocality(this.locality)
+            .setProvince(this.province)
+            .setCountry(this.country)
+            .setCollector(this.collector)
+            .build();
     }
-
 
     async search() {
         await this.router.navigate(

@@ -34,7 +34,8 @@ import {QueryParserService} from "./services/query-parser.service";
         SearchCollectionsComponent,
         SelectComponent,
         SearchResultModalComponent,
-        FieldRowComponent
+        FieldRowComponent,
+        SelectComponent
     ],
     entryComponents: [
         SearchResultModalComponent,

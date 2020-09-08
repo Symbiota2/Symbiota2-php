@@ -3,6 +3,9 @@
 namespace Occurrence\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -16,7 +19,18 @@ use Core\Entity\InitialTimestampInterface;
  * @ApiResource(
  *     routePrefix="/occurrence",
  *     itemOperations={"get"},
- *     collectionOperations={"get"}
+ *     collectionOperations={"get"},
+ *     attributes={"pagination_enabled"=false}
+ * )
+ * @ApiFilter(
+ *      OrderFilter::class,
+ *      properties={
+ *          "stateName": "ASC"
+ *      }
+ * )
+ * @ApiFilter(
+ *     NumericFilter::class,
+ *     properties={"country.id"}
  * )
  */
 class LookupStateProvinces implements InitialTimestampInterface
@@ -38,7 +52,7 @@ class LookupStateProvinces implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="countryId", referencedColumnName="countryId", nullable=false)
      * })
      */
-    private $countryId;
+    private $country;
 
     /**
      * @var string
@@ -106,14 +120,14 @@ class LookupStateProvinces implements InitialTimestampInterface
         return $this;
     }
 
-    public function getCountryId(): ?LookupCountries
+    public function getCountry(): ?LookupCountries
     {
-        return $this->countryId;
+        return $this->country;
     }
 
-    public function setCountryId(?LookupCountries $countryId): self
+    public function setCountry(?LookupCountries $country): self
     {
-        $this->countryId = $countryId;
+        $this->country = $country;
 
         return $this;
     }

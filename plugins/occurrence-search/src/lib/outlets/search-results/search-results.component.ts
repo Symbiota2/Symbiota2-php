@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {
-    Occurrence, OccurrenceSearchParams,
+    OccurrenceSearchResult,
+    OccurrenceSearchResults,
     OccurrenceService
 } from "occurrence";
 
@@ -17,13 +18,19 @@ export class SearchResultsComponent implements OnInit {
     private static readonly COLLECTION_PAGE = "..";
 
     public isLoading = true;
-    public occurrences: Occurrence[] = [];
+    public currentPage = 1;
+    public totalResults = 0;
+    public itemsPerPage = OccurrenceService.DEFAULT_ITEMS_PER_PAGE;
+    public occurrences: OccurrenceSearchResult[] = [];
+
     private collectionIDs: number[] = [];
     private catalogNumber: string = "";
     private taxonSearchType: string = "";
     private taxonSearchStr: string = "";
-
-    public currentPage = 1;
+    private locality: string = "";
+    private province: string = "";
+    private country: string = "";
+    private collector: string = "";
 
     constructor(
         private router: Router,
@@ -33,11 +40,16 @@ export class SearchResultsComponent implements OnInit {
 
     ngOnInit() {
         this.collectionIDs = this.queryParams.getCollectionIDs();
-        this.catalogNumber = this.queryParams.getCatalogNumber();
-        this.taxonSearchType = this.queryParams.getTaxonSearchType();
-        this.taxonSearchStr = this.queryParams.getTaxonSearchStr();
 
         if (this.collectionIDs.length > 0) {
+            this.catalogNumber = this.queryParams.getCatalogNumber();
+            this.taxonSearchType = this.queryParams.getTaxonSearchType();
+            this.taxonSearchStr = this.queryParams.getTaxonSearchStr();
+            this.locality = this.queryParams.getLocality();
+            this.province = this.queryParams.getProvince();
+            this.country = this.queryParams.getCountry();
+            this.collector = this.queryParams.getCollector();
+
             this.loadOccurrences();
         }
         else {
@@ -48,8 +60,9 @@ export class SearchResultsComponent implements OnInit {
     loadOccurrences() {
         this.isLoading = true;
         this.occurrenceService.getOccurrences(this.getApiQueryParams())
-            .subscribe((occurrences: Occurrence[]) => {
-                this.occurrences = occurrences;
+            .subscribe((searchResults: OccurrenceSearchResults) => {
+                this.totalResults = searchResults.totalResults;
+                this.occurrences = searchResults.occurrences;
                 this.isLoading = false;
             });
     }
@@ -59,16 +72,45 @@ export class SearchResultsComponent implements OnInit {
             .setCollectionIDs(this.collectionIDs)
             .setCatalogNumber(this.catalogNumber)
             .setTaxonSearch(this.taxonSearchType, this.taxonSearchStr)
+            .setLocality(this.locality)
+            .setProvince(this.province)
+            .setCountry(this.country)
+            .setCollector(this.collector)
             .build();
     }
 
-    getApiQueryParams(): OccurrenceSearchParams {
+    getApiQueryParams(): Params {
         return this.queryParams.getApiQueryBuilder()
             .setCollectionIDs(this.collectionIDs)
             .setCatalogNumber(this.catalogNumber)
             .setTaxonSearch(this.taxonSearchType, this.taxonSearchStr)
+            .setLocality(this.locality)
+            .setProvince(this.province)
+            .setCountry(this.country)
+            .setCollector(this.collector)
             .setPage(this.currentPage)
+            .setItemsPerPage(this.itemsPerPage)
             .build();
+    }
+
+    onItemsPerPageChanged(itemsPerPage: string) {
+        this.itemsPerPage = parseInt(itemsPerPage);
+        this.loadOccurrences();
+    }
+
+    getFirstIndexOnPage() {
+        if (this.totalResults === 0) {
+            return 0;
+        }
+        return this.itemsPerPage * (this.currentPage - 1) + 1;
+    }
+
+    getLastIndexOnPage() {
+        const lastIdx = this.getFirstIndexOnPage() + this.itemsPerPage - 1;
+        if (lastIdx > this.totalResults) {
+            return this.totalResults;
+        }
+        return lastIdx;
     }
 
     async prevPage() {

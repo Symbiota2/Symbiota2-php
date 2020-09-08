@@ -5,9 +5,9 @@
     </mat-card-subtitle>
     <mat-card-content>
         <div>
-            {{ eventDate ? eventDate.toDateString() : "" }}
-            <span *ngIf="eventDate"> | </span>
-            {{ occurrence.stateProvince }}, {{ occurrence.country }}
+            {{ occurrence.eventDate ? occurrence.eventDate.toDateString() : "" }}
+            <span *ngIf="occurrence.eventDate"> | </span>
+            {{ occurrence.location.stateProvince }}, {{ occurrence.location.country }}
         </div>
     </mat-card-content>
 </mat-card>

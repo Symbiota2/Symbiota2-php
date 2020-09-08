@@ -30,7 +30,7 @@ export interface RetrieveLogin {
 }
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: "root",
 })
 export class AuthService {
     private subject = new BehaviorSubject<CurrentUser>(undefined);
@@ -40,7 +40,8 @@ export class AuthService {
     private warningDialog: any;
     private username: string;
     private password: string;
-    private redirectUrl = '';
+    private redirectUrl = "";
+
     user$: Observable<CurrentUser> = this.subject.asObservable().pipe(
         filter(user => !!user)
     );

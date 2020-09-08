@@ -36,8 +36,8 @@ export interface Occurrence {
     recordedBy?: string
     recordNumber?: string
     associatedCollectors?: string[]
-    eventDate?: Date
-    latestDateCollected?: Date
+    eventDate?: string
+    latestDateCollected?: string
     year?: number
     month?: number
     day?: number
@@ -104,8 +104,8 @@ export interface Occurrence {
     duplicateQuantity?: number
     labelProject?: number
     dynamicFields?: object
-    initialTimestamp?: Date
-    modifiedTimestamp?: Date
+    initialTimestamp?: string
+    modifiedTimestamp?: string
     taxaId?: string
     observerUserId?: string
     collectionId?: string

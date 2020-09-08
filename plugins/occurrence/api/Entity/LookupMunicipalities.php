@@ -2,7 +2,10 @@
 
 namespace Occurrence\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -16,7 +19,19 @@ use Core\Entity\InitialTimestampInterface;
  * @ApiResource(
  *     routePrefix="/occurrence",
  *     itemOperations={"get"},
- *     collectionOperations={"get"}
+ *     collectionOperations={"get"},
+ *     attributes={"pagination_enabled"=false}
+ * )
+ * @ApiFilter(
+ *      OrderFilter::class,
+ *      properties={
+ *          "municipalityName": "ASC"
+ *      }
+ * )
+ * @ApiFilter(
+ *     NumericFilter::class,
+ *     properties={"stateProvince.id"}
+ * )
  * )
  */
 class LookupMunicipalities implements InitialTimestampInterface
@@ -38,7 +53,7 @@ class LookupMunicipalities implements InitialTimestampInterface
      *   @ORM\JoinColumn(name="stateId", referencedColumnName="stateId", nullable=false)
      * })
      */
-    private $stateProvinceId;
+    private $stateProvince;
 
     /**
      * @var string
@@ -86,14 +101,14 @@ class LookupMunicipalities implements InitialTimestampInterface
         return $this;
     }
 
-    public function getStateProvinceId(): ?LookupStateProvinces
+    public function getStateProvince(): ?LookupStateProvinces
     {
-        return $this->stateProvinceId;
+        return $this->stateProvince;
     }
 
-    public function setStateProvinceId(?LookupStateProvinces $stateProvinceId): self
+    public function setStateProvince(?LookupStateProvinces $stateProvince): self
     {
-        $this->stateProvinceId = $stateProvinceId;
+        $this->stateProvince = $stateProvince;
 
         return $this;
     }

@@ -14,7 +14,7 @@ class SearchByHigherTaxon extends AbstractContextAwareFilter {
     public const NAME_KINGDOM = "kingdom";
     public const NAME_PHYLUM = "phylum";
     public const NAME_CLASS = "class";
-    public const NAME_ORDER = "order";
+    public const NAME_ORDER = "taxonOrder";
     public const NAME_TRIBE = "tribe";
 
     public const VALID_PROPS = [
@@ -79,6 +79,7 @@ class SearchByHigherTaxon extends AbstractContextAwareFilter {
                     "LOWER(:{$parameterName})"
                 )
             )
+            ->groupBy("o.id")
             ->setParameter($parameterValueName, "{$value}%")
             ->setParameter($parameterName, $property);
     }

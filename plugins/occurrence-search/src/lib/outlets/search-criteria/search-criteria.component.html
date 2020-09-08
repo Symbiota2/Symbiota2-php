@@ -3,35 +3,78 @@
         <h1>Search Collections</h1>
     </div>
 </div>
-<form [formGroup]="formGroup">
 <div class="row">
     <div class="col">
+        <!-- Catalog number -->
         <div class="row">
             <div class="col">
                 <mat-form-field>
                     <mat-label>Catalog number</mat-label>
                     <input
                         matInput
-                        [formControlName]="FORM_KEY_CAT_NUM"
+                        [(ngModel)]="catalogNumber"
                     >
                 </mat-form-field>
             </div>
         </div>
+        <!-- Taxonomy -->
         <div class="row">
             <div class="col-auto">
                 <occurrence-search-select
                     title="Taxon search type"
                     [options]="TaxonSearchOpts"
-                    [formControlName]="FORM_KEY_TAXON_TYPE"
+                    [(value)]="taxonSearchType"
                 >
                 </occurrence-search-select>
             </div>
             <div class="col-auto">
                 <mat-form-field>
-                    <mat-label>Search</mat-label>
+                    <mat-label>Taxon</mat-label>
                     <input
                         matInput
-                        [formControlName]="FORM_KEY_TAXON_SEARCH"
+                        [disabled]="taxonSearchType === ''"
+                        [(ngModel)]="taxonSearchStr"
+                    >
+                </mat-form-field>
+            </div>
+        </div>
+        <!-- Location -->
+        <div class="row">
+            <div class="col-auto">
+                <mat-form-field>
+                    <mat-label>Country</mat-label>
+                    <input
+                        matInput
+                        [(ngModel)]="country"
+                    >
+                </mat-form-field>
+            </div>
+            <div class="col-auto">
+                <mat-form-field>
+                    <mat-label>State/Province</mat-label>
+                    <input
+                        matInput
+                        [(ngModel)]="province"
+                    >
+                </mat-form-field>
+            </div>
+            <div class="col-auto">
+                <mat-form-field>
+                    <mat-label>Locality</mat-label>
+                    <input
+                        matInput
+                        [(ngModel)]="locality"
+                    >
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <mat-form-field>
+                    <mat-label>Collector</mat-label>
+                    <input
+                        matInput
+                        [(ngModel)]="collector"
                     >
                 </mat-form-field>
             </div>
@@ -59,4 +102,3 @@
         </button>
     </div>
 </div>
-</form>

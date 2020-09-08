@@ -27,7 +27,12 @@ use Occurrence\Filter\SearchByHigherTaxon;
  * @ORM\Entity()
  * @ApiResource(
  *     itemOperations={"get"},
- *     collectionOperations={"get"}
+ *     collectionOperations={"get"},
+ *     attributes={
+ *      "pagination_items_per_page"=25,
+ *      "pagination_client_items_per_page"=true,
+ *      "maximum_items_per_page"=100
+ *     }
  * )
  * @ApiFilter(
  *   NumericFilter::class,
@@ -42,6 +47,10 @@ use Occurrence\Filter\SearchByHigherTaxon;
  *     "family": "start",
  *     "genus": "start",
  *     "scientificName": "word_start",
+ *     "locality": "start",
+ *     "stateProvince": "start",
+ *     "country": "start",
+ *     "recordedBy": "word_start"
  *   }
  * )
  * @ApiFilter(
