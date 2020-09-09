@@ -1,6 +1,14 @@
 import {OccurrenceService} from "occurrence";
 import {Params} from "@angular/router";
 
+interface DateBeforeArgs {
+    before?: Date;
+}
+
+interface DateAfterArgs {
+    after?: Date;
+}
+
 abstract class QueryBuilder {
     protected queryParams: Record<string, any> = {};
 
@@ -51,8 +59,30 @@ abstract class QueryBuilder {
         return this;
     }
 
+    public setCollectedBefore(before: Date) {
+        if (before !== null) {
+            this.queryParams[OccurrenceService.Q_PARAM_DATE_BEFORE] = QueryBuilder.getDateString(before);
+        }
+        return this;
+    }
+
+    public setCollectedAfter(after: Date) {
+        if (after !== null) {
+            this.queryParams[OccurrenceService.Q_PARAM_DATE_AFTER] = QueryBuilder.getDateString(after);
+        }
+        return this;
+    }
+
     public build(): Params {
         return this.queryParams;
+    }
+
+    public static getDateString(date: Date) {
+        // JS month is zero-based
+        const year = date.getUTCFullYear().toString().padStart(2, "0");
+        const month = (date.getUTCMonth() + 1).toString().padStart(2, "0");
+        const day = date.getUTCDate().toString().padStart(2, "0");
+        return `${year}-${month}-${day}`;
     }
 
     protected setStringValue(key: string, value: string) {

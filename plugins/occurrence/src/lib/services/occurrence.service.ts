@@ -3,18 +3,13 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { OccurrenceModule } from "../occurrence.module";
 import { Occurrence } from "../interfaces/Occurrence.interface";
-import { OccurrenceSearchResults } from "../interfaces/OccurrenceSearchResults.interface";
+import {
+    OccurrenceSearchResult,
+    OccurrenceSearchResults
+} from "../interfaces/OccurrenceSearchResults.interface";
 import { map } from "rxjs/operators";
 import { Params } from "@angular/router";
-import { Country, CountrySearchResult } from "../interfaces/Country.interface";
-import {
-    Province,
-    ProvinceSearchResult
-} from "../interfaces/Province.interface";
-import {
-    Locality,
-    LocalitySearchResult
-} from "../interfaces/Locality.interface";
+import { CollectionDetails } from "collection";
 
 @Injectable({
     providedIn: OccurrenceModule
@@ -33,6 +28,8 @@ export class OccurrenceService {
     public static readonly Q_PARAM_RESULT_PAGE = "page";
     public static readonly Q_PARAM_CAT_NUM = "catalogNumber";
     public static readonly Q_PARAM_COLLECTOR = "recordedBy";
+    public static readonly Q_PARAM_DATE_BEFORE = "eventDate[before]";
+    public static readonly Q_PARAM_DATE_AFTER = "eventDate[after]";
 
     public static readonly Q_PARAM_LOCALITY = "locality";
     public static readonly Q_PARAM_STATE = "stateProvince";
@@ -74,20 +71,20 @@ export class OccurrenceService {
             }
         }
 
-        return this.http.get<Record<string, any>>(OccurrenceService.OCCURRENCE_BASE_URL, { params })
+        return this.http.get<Occurrence>(OccurrenceService.OCCURRENCE_BASE_URL, { params })
             .pipe(map((apiResult) => {
                 return {
                     totalResults: apiResult["hydra:totalItems"],
                     currentPage: apiResult["hydra:view"]["@id"],
                     nextPage: apiResult["hydra:view"]["hydra:next"],
                     lastPage: apiResult["hydra:view"]["hydra:last"],
-                    occurrences: apiResult["hydra:member"].map((occurrence: Occurrence) => {
+                    occurrences: apiResult["hydra:member"].map((occurrence) => {
                         return {
                             id: occurrence.id,
                             recordNumber: occurrence.recordNumber,
                             catalogNumber: occurrence.catalogNumber,
-                            collectionUrl: occurrence.collectionId,
-                            taxonUrl: occurrence.taxaId,
+                            collectionUrl: occurrence.collection,
+                            taxonUrl: occurrence.taxon,
                             scientificName: occurrence.scientificName,
                             recordedBy: occurrence.recordedBy,
                             lifeStage: occurrence.lifeStage,
@@ -98,64 +95,55 @@ export class OccurrenceService {
                                 stateProvince: occurrence.stateProvince,
                                 country: occurrence.country,
                             },
-                            eventDate: new Date(occurrence.eventDate)
+                            eventDate: new Date(occurrence.eventDate),
+                            verbatimEventDate: occurrence.verbatimEventDate
                         };
                     })
                 };
             }));
     }
 
-    getCountries(): Observable<CountrySearchResult[]> {
-        return this.http.get<Record<string, any>>(OccurrenceService.COUNTRY_BASE_URL)
-            .pipe(map((apiResult) => {
-                return apiResult["hydra:member"].map((country: Country) => {
-                    return {
-                        id: country.id,
-                        name: country.countryName
-                    };
-                });
+    getOccurrenceByID(id: number): Observable<OccurrenceSearchResult> {
+        return this.http.get<Occurrence>(`${OccurrenceService.OCCURRENCE_BASE_URL}/${id}`)
+            .pipe(map((occurrence) => {
+                return {
+                    id: occurrence.id,
+                    recordNumber: occurrence.recordNumber,
+                    catalogNumber: occurrence.catalogNumber,
+                    collectionUrl: occurrence.collection,
+                    taxonUrl: occurrence.taxon,
+                    scientificName: occurrence.scientificName,
+                    family: occurrence.family,
+                    recordedBy: occurrence.recordedBy,
+                    lifeStage: occurrence.lifeStage,
+                    preparations: occurrence.preparations,
+                    remarks: occurrence.occurrenceRemarks,
+                    location: {
+                        locality: occurrence.locality,
+                        stateProvince: occurrence.stateProvince,
+                        country: occurrence.country,
+                    },
+                    eventDate: new Date(occurrence.eventDate),
+                    verbatimEventDate: occurrence.verbatimEventDate
+                };
             }));
     }
 
-    getProvincesForCountry(countryID: number): Observable<ProvinceSearchResult[]> {
-        const params = {
-            [OccurrenceService.Q_PARAM_COUNTRY_ID]: countryID.toString()
-        };
-
-        return this.http.get<Record<string, any>>(
-            OccurrenceService.PROVINCE_BASE_URL,
-            { params }
-        ).pipe(map((apiResult) => {
-            return apiResult["hydra:member"].map((province: Province) => {
-                return {
-                    id: province.id,
-                    name: province.stateName,
-                    countryID: countryID
-                };
-            });
+    getCollectionForOccurrence(occurrenceCollectionUrl: string): Observable<CollectionDetails> {
+        return this.http.get<CollectionDetails>(occurrenceCollectionUrl).pipe(map((collection) => {
+            return {
+                id: collection.id,
+                institutionCode: collection.institutionCode,
+                collectionCode: collection.collectionCode,
+                collectionName: collection.collectionName,
+                icon: collection.icon,
+                collectionType: collection.collectionType,
+                dwcaUrl: collection.dwcaUrl,
+                email: collection.email,
+                rightsHolder: collection.rightsHolder,
+                rights: collection.rights,
+                usageTerm: collection.usageTerm
+            };
         }));
-    }
-
-    getMunicipalitiesForProvince(provinceID: number): Observable<LocalitySearchResult[]> {
-        const params = {
-            [OccurrenceService.Q_PARAM_PROVINCE_ID]: provinceID.toString()
-        };
-
-        return this.http.get<Record<string, any>>(
-            OccurrenceService.MUNICIPALITY_BASE_URL,
-            { params }
-        ).pipe(map((apiResult) => {
-            return apiResult["hydra:member"].map((locality: Locality) => {
-                return {
-                    id: locality.id,
-                    name: locality.municipalityName,
-                    countryID: provinceID
-                };
-            });
-        }));
-    }
-
-    getOccurrenceByID(id: number): Observable<Occurrence> {
-        return this.http.get<Occurrence>(`${OccurrenceService.OCCURRENCE_BASE_URL}/${id}`);
     }
 }

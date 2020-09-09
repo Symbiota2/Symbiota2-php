@@ -17,6 +17,7 @@ use Core\Entity\Users;
 use Collection\Entity\Collections;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use Occurrence\Filter\SearchByHigherTaxon;
 
@@ -31,13 +32,19 @@ use Occurrence\Filter\SearchByHigherTaxon;
  *     attributes={
  *      "pagination_items_per_page"=25,
  *      "pagination_client_items_per_page"=true,
- *      "maximum_items_per_page"=100
+ *      "pagination_maximum_items_per_page"=100
  *     }
  * )
  * @ApiFilter(
  *   NumericFilter::class,
  *   properties={
  *     "collection.id"
+ *   }
+ * )
+ * @ApiFilter(
+ *   DateFilter::class,
+ *   properties={
+ *     "eventDate": DateFilter::EXCLUDE_NULL
  *   }
  * )
  * @ApiFilter(

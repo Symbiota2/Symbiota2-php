@@ -7,7 +7,15 @@
             [checked]="collectionSelections.isSelected(node.id)"
             (change)="toggleCollection($event.source, node.id)"
         >
-            {{ node.name }}
+            <div class="v-middle">
+                <img
+                    class="collection-icon"
+                    *ngIf="node.icon"
+                    [src]="node.icon"
+                    alt="collection icon"
+                >
+                {{ node.name }}
+            </div>
         </mat-checkbox>
     </mat-tree-node>
 

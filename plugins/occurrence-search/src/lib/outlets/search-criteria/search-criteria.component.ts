@@ -2,9 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 
 import { QueryParserService } from "../../services/query-parser.service";
-import { CountrySearchResult, OccurrenceService } from "occurrence";
-import { ProvinceSearchResult } from "occurrence/lib/interfaces/Province.interface";
-import { LocalitySearchResult } from "occurrence/lib/interfaces/Locality.interface";
+import { OccurrenceService } from "occurrence";
 
 const TaxonSearchOpts = [
     { name: "Scientific name", value: OccurrenceService.Q_PARAM_SPECIES },
@@ -28,10 +26,6 @@ export class SearchCriteriaComponent implements OnInit {
 
     public readonly TaxonSearchOpts = TaxonSearchOpts;
 
-    public countryOpts: CountrySearchResult[] = [];
-    public provinceOpts: ProvinceSearchResult[] = [];
-    public localityOpts: LocalitySearchResult[] = [];
-
     public collectionIDs: number[] = [];
     public catalogNumber: string = "";
     public taxonSearchType: string = "";
@@ -40,35 +34,34 @@ export class SearchCriteriaComponent implements OnInit {
     public province: string = "";
     public country: string = "";
     public collector: string = "";
+    public collectionDateStart: Date = null;
+    public collectionDateEnd: Date = null;
 
     constructor(
         private router: Router,
         private currentRoute: ActivatedRoute,
-        private queryParser: QueryParserService,
-        private occurrenceService: OccurrenceService) { }
+        private queryParams: QueryParserService) { }
 
     ngOnInit() {
-        this.collectionIDs = this.queryParser.getCollectionIDs();
+        this.collectionIDs = this.queryParams.getCollectionIDs();
 
         if (this.collectionIDs.length === 0) {
             return this.back();
         }
 
-        this.occurrenceService.getCountries().subscribe((countries) => {
-            this.countryOpts = countries;
-        });
-
-        this.catalogNumber = this.queryParser.getCatalogNumber();
-        this.taxonSearchType = this.queryParser.getTaxonSearchType();
-        this.taxonSearchStr = this.queryParser.getTaxonSearchStr();
-        this.locality = this.queryParser.getLocality();
-        this.province = this.queryParser.getProvince();
-        this.country = this.queryParser.getCountry();
-        this.collector = this.queryParser.getCollector();
+        this.catalogNumber = this.queryParams.getCatalogNumber();
+        this.taxonSearchType = this.queryParams.getTaxonSearchType();
+        this.taxonSearchStr = this.queryParams.getTaxonSearchStr();
+        this.locality = this.queryParams.getLocality();
+        this.province = this.queryParams.getProvince();
+        this.country = this.queryParams.getCountry();
+        this.collector = this.queryParams.getCollector();
+        this.collectionDateStart = this.queryParams.getCollectedAfter();
+        this.collectionDateEnd = this.queryParams.getCollectedBefore();
     }
 
     private getQueryParams(): Params {
-        return this.queryParser.getFrontendQueryBuilder()
+        return this.queryParams.getFrontendQueryBuilder()
             .setCollectionIDs(this.collectionIDs)
             .setCatalogNumber(this.catalogNumber)
             .setTaxonSearch(this.taxonSearchType, this.taxonSearchStr)
@@ -76,6 +69,8 @@ export class SearchCriteriaComponent implements OnInit {
             .setProvince(this.province)
             .setCountry(this.country)
             .setCollector(this.collector)
+            .setCollectedAfter(this.collectionDateStart)
+            .setCollectedBefore(this.collectionDateEnd)
             .build();
     }
 

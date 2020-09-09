@@ -69,7 +69,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col-auto">
                 <mat-form-field>
                     <mat-label>Collector</mat-label>
                     <input
@@ -77,6 +77,22 @@
                         [(ngModel)]="collector"
                     >
                 </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-auto">
+                <occurrence-search-date-picker
+                    placeholder="Collection start date"
+                    [(value)]="collectionDateStart"
+                >
+                </occurrence-search-date-picker>
+            </div>
+            <div class="col-auto">
+                <occurrence-search-date-picker
+                    placeholder="Collection end date"
+                    [(value)]="collectionDateEnd"
+                >
+                </occurrence-search-date-picker>
             </div>
         </div>
     </div>

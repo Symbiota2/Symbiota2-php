@@ -91,25 +91,25 @@
   }
 
   .mt-@{counter} when (@counter > 0) {
-    ._m(top, @counter + "rem");
+    ._m(top, ~"@{counter}rem");
   }
   .mb-@{counter} when (@counter > 0) {
-    ._m(bottom, @counter + "rem");
+    ._m(bottom, ~"@{counter}rem");
   }
   .ml-@{counter} when (@counter > 0) {
-    ._m(left, @counter + "rem");
+    ._m(left, ~"@{counter}rem");
   }
   .mr-@{counter} when (@counter > 0) {
-    ._m(right, @counter + "rem");
+    ._m(right, ~"@{counter}rem");
   }
 
   .mx-@{counter} when (@counter > 0) {
-    ._m(left, @counter + "rem");
-    ._m(right, @counter + "rem");
+    ._m(left, ~"@{counter}rem");
+    ._m(right, ~"@{counter}rem");
   }
   .my-@{counter} when (@counter > 0) {
-    ._m(top, @counter + "rem");
-    ._m(bottom, @counter + "rem");
+    ._m(top, ~"@{counter}rem");
+    ._m(bottom, ~"@{counter}rem");
   }
 
   ._gen-margin-utilities((@counter - 1));

@@ -5,6 +5,7 @@ import {
 import { MatDialog } from "@angular/material";
 import {SearchResultModalComponent} from "../search-result-modal/search-result-modal.component";
 import { OccurrenceSearchResult } from "occurrence";
+import { ApiQueryBuilder } from "../../services/query-builder.class";
 
 @Component({
     selector: "occurrence-search-search-result",

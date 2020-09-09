@@ -93,6 +93,37 @@ export class QueryParserService {
         return "";
     }
 
+    public getCollectedBefore(): Date {
+        if (this.queryParams.has(OccurrenceService.Q_PARAM_DATE_BEFORE)) {
+            const dateStr = this.queryParams.get(OccurrenceService.Q_PARAM_DATE_BEFORE);
+            return QueryParserService.parseDate(dateStr);
+        }
+
+        return null;
+    }
+
+    public getCollectedAfter(): Date {
+        if (this.queryParams.has(OccurrenceService.Q_PARAM_DATE_AFTER)) {
+            const dateStr = this.queryParams.get(OccurrenceService.Q_PARAM_DATE_AFTER);
+            return QueryParserService.parseDate(dateStr);
+        }
+
+        return null;
+    }
+
+    private static parseDate(dateStr: string): Date {
+        try {
+            // In the format yyyy-mm-dd
+            // Months are zero-indexed in JS
+            const [year, month, day] = dateStr.split("-")
+                .map((part) => parseInt(part));
+            return new Date(year, month - 1, day);
+        }
+        catch (e) {
+            return null;
+        }
+    }
+
     public getApiQueryBuilder(): ApiQueryBuilder {
         return new ApiQueryBuilder();
     }

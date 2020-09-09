@@ -18,7 +18,10 @@
             <div class="col-auto">
                 <mat-form-field>
                     <mat-label>Results per page</mat-label>
-                    <mat-select [value]="itemsPerPage" (valueChange)="onItemsPerPageChanged($event)">
+                    <mat-select
+                        [value]="itemsPerPage.toString()"
+                        (valueChange)="onItemsPerPageChanged($event)"
+                    >
                         <mat-option value="25">25</mat-option>
                         <mat-option value="50">50</mat-option>
                         <mat-option value="100">100</mat-option>

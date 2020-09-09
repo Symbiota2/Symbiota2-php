@@ -1,15 +1,17 @@
 export interface OccurrenceSearchResult {
     id: number;
-    recordNumber: string;
     catalogNumber: string;
     collectionUrl: string;
-    taxonUrl: string;
-    scientificName: string;
-    recordedBy: string;
     eventDate: Date;
+    family: string;
     lifeStage: string;
     preparations: string;
+    recordedBy: string;
+    recordNumber: string;
     remarks: string;
+    scientificName: string;
+    taxonUrl: string;
+    verbatimEventDate: string;
 
     location: {
         locality: string;

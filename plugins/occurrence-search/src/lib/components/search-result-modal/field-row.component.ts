@@ -1,12 +1,10 @@
 import { Component, Input } from "@angular/core";
 
 @Component({
-    selector: "occurrence-search-field-row",
+    selector: "[occurrence-search-field-row]",
     template: `
-        <div class="row align-items-start" *ngIf="value">
-            <div class="field-row-label">{{ label }}</div>
-            <div class="filed-row-value">{{ value.toString() }}</div>
-        </div>
+        <td class="tbl-label">{{ label }}</td>
+        <td>{{ value ? value.toString() : "None" }}</td>
     `,
     styleUrls: ["./search-result-modal.component.less"]
 })

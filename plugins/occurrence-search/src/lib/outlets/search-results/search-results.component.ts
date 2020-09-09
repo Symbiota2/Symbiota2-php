@@ -31,6 +31,8 @@ export class SearchResultsComponent implements OnInit {
     private province: string = "";
     private country: string = "";
     private collector: string = "";
+    private collectionDateStart: Date = null;
+    private collectionDateEnd: Date = null;
 
     constructor(
         private router: Router,
@@ -49,6 +51,8 @@ export class SearchResultsComponent implements OnInit {
             this.province = this.queryParams.getProvince();
             this.country = this.queryParams.getCountry();
             this.collector = this.queryParams.getCollector();
+            this.collectionDateStart = this.queryParams.getCollectedAfter();
+            this.collectionDateEnd = this.queryParams.getCollectedBefore();
 
             this.loadOccurrences();
         }
@@ -76,6 +80,8 @@ export class SearchResultsComponent implements OnInit {
             .setProvince(this.province)
             .setCountry(this.country)
             .setCollector(this.collector)
+            .setCollectedBefore(this.collectionDateEnd)
+            .setCollectedAfter(this.collectionDateStart)
             .build();
     }
 
@@ -90,6 +96,8 @@ export class SearchResultsComponent implements OnInit {
             .setCollector(this.collector)
             .setPage(this.currentPage)
             .setItemsPerPage(this.itemsPerPage)
+            .setCollectedBefore(this.collectionDateEnd)
+            .setCollectedAfter(this.collectionDateStart)
             .build();
     }
 

@@ -85,7 +85,7 @@ export class CollectionTreeData {
 @Component({
     selector: "collection-collection-checkbox-selector",
     templateUrl: "./collection-checkbox-selector.component.html",
-    styleUrls: ["./collection-checkbox-selector.component.css"],
+    styleUrls: ["./collection-checkbox-selector.component.less"],
     providers: [CollectionTreeData]
 })
 export class CollectionCheckboxSelectorComponent implements OnChanges, OnInit {

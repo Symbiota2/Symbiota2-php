@@ -19,3 +19,11 @@ export interface Category {
     sortSequence: number;
     collectionId: Collection[];
 }
+
+// TODO: Collection vs CollectionSearchResutls
+export interface CollectionDetails extends Collection {
+    email: string;
+    rightsHolder: string;
+    rights: string;
+    usageTerm: string;
+}

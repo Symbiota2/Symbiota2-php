@@ -15,6 +15,7 @@ import { SearchResultModalComponent } from "./components/search-result-modal/sea
 import { FieldRowComponent } from "./components/search-result-modal/field-row.component";
 import {SearchCollectionsComponent} from "./outlets/search-collections/search-collections.component";
 import {QueryParserService} from "./services/query-parser.service";
+import { DatePickerComponent } from './components/date-picker/date-picker.component';
 
 @NgModule({
     imports: [
@@ -35,7 +36,8 @@ import {QueryParserService} from "./services/query-parser.service";
         SelectComponent,
         SearchResultModalComponent,
         FieldRowComponent,
-        SelectComponent
+        SelectComponent,
+        DatePickerComponent
     ],
     entryComponents: [
         SearchResultModalComponent,

@@ -1,11 +1,13 @@
 <mat-card (click)="openDialog()">
     <mat-card-title>{{ occurrence.scientificName }}</mat-card-title>
     <mat-card-subtitle>
-        {{ occurrence.catalogNumber }} | {{ occurrence.recordedBy }}
+        {{ occurrence.catalogNumber }}
+        <span *ngIf="occurrence.catalogNumber"> | </span>
+        {{ occurrence.recordedBy }}
     </mat-card-subtitle>
     <mat-card-content>
         <div>
-            {{ occurrence.eventDate ? occurrence.eventDate.toDateString() : "" }}
+            {{ occurrence.eventDate ? (occurrence.eventDate | date) : "" }}
             <span *ngIf="occurrence.eventDate"> | </span>
             {{ occurrence.location.stateProvince }}, {{ occurrence.location.country }}
         </div>

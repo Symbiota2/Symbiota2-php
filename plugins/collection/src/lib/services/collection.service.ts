@@ -4,7 +4,6 @@ import {BehaviorSubject, Observable} from 'rxjs';
 
 import {Collection} from '../interfaces/collection.interface';
 import {Category} from '../interfaces/collection.interface';
-import {first} from "rxjs/operators";
 
 @Injectable({
     providedIn: 'root',

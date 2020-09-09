@@ -1,8 +1,14 @@
 <div mat-dialog-title>
     <div class="row my-0">
-        <div class="col">
-            <h2 class="my-0">{{ occurrence.scientificName }}</h2>
-        </div>
+        <!-- TODO: Link to collection -->
+        <ng-container *ngIf="collectionLoaded">
+            <div class="col-auto">
+                <img *ngIf="collection.icon" [src]="collection.icon" alt="collection icon">
+            </div>
+            <div class="col">
+                <h2 class="my-0">{{ collection.collectionName }}</h2>
+            </div>
+        </ng-container>
         <div class="col-auto mx-0">
             <button class="btn-icon" (click)="onEditClick()">
                 <mat-icon>create</mat-icon>
@@ -14,57 +20,105 @@
             </button>
         </div>
     </div>
-    <div class="row my-0">
-        <div class="col">
-            <p class="font-grey">
-                {{ [occurrence.catalogNumber, occurrence.recordedBy].join(" | ") }}
-            </p>
-        </div>
-    </div>
 </div>
-<div mat-dialog-content class="align-items-start">
-    <occurrence-search-field-row
-        label="Family"
-        value="Test Family"
-    >
-    </occurrence-search-field-row>
-    <occurrence-search-field-row
-        label="Date"
-        value="{{ occurrence.eventDate }}"
-    >
-    </occurrence-search-field-row>
-    <div
-        class="row"
-        *ngIf="occurrence.location.locality || occurrence.location.stateProvince || occurrence.location.country"
-    >
-        <div class="col-1 font-bold text-end">Locality</div>
-        <div class="col-9">
-            {{[
-          occurrence.location.locality.trim(),
-          occurrence.location.stateProvince.trim(),
-          occurrence.location.country.trim()
-        ].join(", ")}}
-        </div>
-    </div>
-    <occurrence-search-field-row
-        label="Life stage"
-        value="{{ occurrence.lifeStage }}"
-    >
-    </occurrence-search-field-row>
-    <occurrence-search-field-row
-        label="Preparations"
-        value="{{ occurrence.preparations }}"
-    >
-    </occurrence-search-field-row>
-    <occurrence-search-field-row
-        label="Remarks"
-        value="{{ occurrence.remarks }}"
-    >
-    </occurrence-search-field-row>
-    <occurrence-search-field-row
-        label="Record ID"
-        value="{{ occurrence.recordNumber }}"
-    >
-    </occurrence-search-field-row>
+<div mat-dialog-content class="mt-0 align-items-start">
+    <table>
+        <tr occurrence-search-field-row
+            label="Catalog number"
+            value="{{ occurrence.catalogNumber }}"
+        >
+        </tr>
+
+        <tr occurrence-search-field-row
+            label="Scientific name"
+            value="{{ occurrence.scientificName }}"
+        >
+        </tr>
+
+        <tr occurrence-search-field-row
+            label="Family"
+            value="{{ occurrence.family }}"
+        >
+        </tr>
+
+        <tr occurrence-search-field-row
+            label="Collector"
+            value="{{ occurrence.recordedBy }}"
+        >
+        </tr>
+
+        <tr occurrence-search-field-row
+            label="Date"
+            value="{{ occurrence.eventDate ? (occurrence.eventDate | date) : null }}"
+        >
+        </tr>
+
+        <tr occurrence-search-field-row
+            label="Verbatim date"
+            value="{{ occurrence.verbatimEventDate }}"
+        >
+        </tr>
+
+        <!-- Location -->
+        <tr occurrence-search-field-row
+            label="Locality"
+            value="{{ occurrence.location.locality }}"
+        >
+        </tr>
+
+        <tr occurrence-search-field-row
+            label="State/Province"
+            value="{{ occurrence.location.stateProvince }}"
+        >
+        </tr>
+
+        <tr occurrence-search-field-row
+            label="Country"
+            value="{{ occurrence.location.country }}"
+        >
+        </tr>
+
+        <tr occurrence-search-field-row
+            label="Life stage"
+            value="{{ occurrence.lifeStage }}"
+        >
+        </tr>
+
+        <tr occurrence-search-field-row
+            label="Preparations"
+            value="{{ occurrence.preparations }}"
+        >
+        </tr>
+
+        <tr occurrence-search-field-row
+            label="Remarks"
+            value="{{ occurrence.remarks }}"
+        >
+        </tr>
+
+    </table>
+    <hr class="my-1">
+    <table *ngIf="collectionLoaded">
+        <tr occurrence-search-field-row
+            label="Access rights"
+            value="{{ collection.rights }}"
+        >
+        </tr>
+        <tr occurrence-search-field-row
+            label="Usage rights"
+            value="{{ collection.usageTerm }}"
+        >
+        </tr>
+        <tr occurrence-search-field-row
+            label="Rights holder"
+            value="{{ collection.rightsHolder }}"
+        >
+        </tr>
+        <tr occurrence-search-field-row
+            label="Record ID"
+            value="{{ occurrence.recordNumber }}"
+        >
+        </tr>
+    </table>
 </div>
 

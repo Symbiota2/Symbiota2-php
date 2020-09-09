@@ -1,5 +1,23 @@
 @import "../../occurrence-search";
 
+table {
+  border-spacing: 0.5rem;
+
+  tr {
+    vertical-align: top;
+  }
+}
+
+img {
+  max-height: 4rem;
+}
+
+.tbl-label {
+  .font-bold();
+  .text-end();
+  white-space: nowrap;
+}
+
 .pointer {
   cursor: pointer;
 }
@@ -40,16 +58,6 @@
       transform: scale(1.2);
     }
   }
-}
-
-.field-row-label {
-  .col-1();
-  .text-end();
-  .font-bold();
-}
-
-.filed-row-value {
-  .col-9();
 }
 
 .font-grey {
